@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">סמלים</string>
     <string name="emoji__category__flags" comment="Emoji category name">דגלים</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">לא נמצאו אימוג\'ים שנעשה בהם שימוש לאחרונה. ברגע שתתחיל להקליד אימוג\'ים הם יופיעו כאן באופן אוטומטי.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">כדי לגשת להיסטוריית האמוג׳י שלך, קודם יש לפתוח את נעילת המכשיר.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">טיפ למקצוענים: לחיצה ארוכה השתמשה לאחרונה באימוג\'ים כדי להסיר אותם מתצוגה זו שוב!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">הוסר {emoji} מאמוג\'ים שהיו בשימוש לאחרונה</string>
     <!-- Quick action strings -->
@@ -69,7 +70,7 @@
     <string name="quick_action__one_handed_mode" maxLength="12">ביד אחת</string>
     <string name="quick_action__one_handed_mode__tooltip">מתג מצב יד-אחת</string>
     <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">סמן גרור</string>
-    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">סמן גרור מיקום נוכחי</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">מקום נוכחי של סמן גרירה</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">כלום</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">שום פעולה</string>
     <string name="quick_actions_overflow__customize_actions_button">סדר פעולות</string>
@@ -88,7 +89,7 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">ברירת המחדל של המערכת</string>
     <string name="settings__home__title" comment="Title of the Home screen">ברוכים הבאים ל{app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard אינו מופעל במערכת ולכן לא יהיה זמין כשיטת קלט בעת בחירת סוג המלקדת. לחץ כאן כדי לפתור תקלה זו.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard אינו הוגדר כמקלדת ברירת המחדל. לחץ כאן כדי לפתור תקלה זו.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard לא הוגדר כמקלדת ברירת המחדל. לחיצה כאן תאפשר לפתור תקלה זו.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">שפות &amp; פריסות</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">הציגו שם שפה ב</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">תת-סוג</string>
@@ -129,15 +130,18 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">זמן שקיעה</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">ערכת נושא למצב יום</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">ערכת נושא למצב לילה</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">ערכת נושא נבחרת</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">התאם צבעים לאפליקציה</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">צבעי ערכת הנושא מתאימים לאלו שבאפליקציה הנוכחית, אם אפליקציית היעד תומכת בכך.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">נהל ערכות נושא מותקנות</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">נכסי אפליקצית FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">אחסון פנימי</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">ספק חיצוני</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">בחר ערכת נושא של יום</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">בחר ערכת נושא לילית</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">נהל ערכות נושא מותקנות</string>
+    <string name="settings__theme_editor__fine_tune__level">רמת עריכה</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">הצגת צבעים בתור</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">הצגת מקלדת אחרי החלוניות</string>
+    <string name="settings__theme_editor__add_rule">הוספת כלל</string>
+    <string name="settings__theme_editor__edit_rule">עריכת כלל</string>
+    <string name="settings__theme_editor__rule_groups">קבוצות</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">מקלדת</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>
@@ -242,7 +246,13 @@
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">הראה נתונים סטטיסטיים של זיכרון ערימה</string>
     <!-- Extension strings -->
     <!-- Action strings -->
+    <string name="action__yes">כן</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">שגיאה</string>
+    <string name="error__details">פרטים</string>
+    <string name="error__invalid">שגוי</string>
+    <string name="error__snackbar_message">משהו השתבש</string>
+    <string name="error__snackbar_message_template">משהו השתבש: {error_message}</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
@@ -257,29 +267,29 @@
     <string name="enum__swipe_action__no_action" comment="Enum value label">ללא פעולה</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">מחיקת תווים בקפדנות</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">מחיקת מילים בקפדנות</string>
-    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">הסתר מקשים</string>
-    <string name="enum__swipe_action__insert_space" comment="Enum value label">הכנס רווח</string>
-    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">הזז סמן למעלה</string>
-    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">הזז סמן למטה</string>
-    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">הזז סמן שמאלה</string>
-    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">הזז סמן ימינה</string>
-    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">הזז את הסמן לתחילת השורה</string>
-    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">העבר את הסמן לסוף השורה</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">הסתרת מקשים</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">הוספת רווח</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">העלאת סמן למעלה</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">הורדת סמן למטה</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">הזזת סמן שמאלה</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">הזזת סמן ימינה</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">הזזת הסמן לתחילת השורה</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">הזזת הסמן לסוף השורה</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
-    <string name="enum__swipe_action__redo" comment="Enum value label">בצע שוב</string>
-    <string name="enum__swipe_action__undo" comment="Enum value label">ביטול</string>
-    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">הצג בורר שיטות קלט</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">ביצוע חוזר</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">הסגה</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">הצגת בורר שיטות קלט</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">החלפה למקלדת הקודמת</string>
-    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">החלף לתת-סוג הקודם</string>
-    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">החלף לתת-סוג הבא</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">החלפה לתת־הסוג הקודם</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">החלפה לתת־הסוג הבא</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">תמיד בהיר</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">תמיד כהה</string>
-    <string name="enum__theme_mode__follow_system" comment="Enum value label">בהתאם למערכת</string>
-    <string name="enum__theme_mode__follow_time" comment="Enum value label">עקוב אחר הזמן</string>
-    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">עבור לאימוג\'ים</string>
-    <string name="enum__utility_key_action__switch_language" comment="Enum value label">החלף שפה</string>
-    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">החלף אפליקציית מקלדת</string>
-    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">דינמי: עבור לאימוג\'ים / החלף שפה</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">כמו המערכת</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">לפי השעה</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">מעבר לאימוג׳ים</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">החלפת שפה</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">החלפת יישומון מקלדת</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">דינמי: מעבר לאימוג׳ים / החלפת שפה</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

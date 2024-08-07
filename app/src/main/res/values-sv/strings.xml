@@ -42,9 +42,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Solnedgångstid</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dag tema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Natt tema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valt tema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Anpassa färger till appen</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Temafärger anpassas till de i den aktuella appen, om denna stödjer detta.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard app-tillgångar</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Extern leverantör</string>

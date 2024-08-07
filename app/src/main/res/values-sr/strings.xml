@@ -53,7 +53,6 @@
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Састављач</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Мод теме</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Изабрана тема</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Интерна Меморија</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Тастатура</string>
     <!-- Smartbar strings -->

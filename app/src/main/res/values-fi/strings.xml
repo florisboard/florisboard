@@ -75,15 +75,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Aurinko laskee</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Päiväteema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Yöteema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valittu teema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Mukauta sovelluksen väreihin</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Teeman värit mukautetaan avoinna olevan sovelluksen mukaan, mikäli sovellus tukee ominaisuutta.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Hallitse asennettuja teemoja</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard-sovellus</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Sisäinen tallennustila</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ulkoinen lähde</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Valitse päiväteema</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Valitse yöteema</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Hallitse asennettuja teemoja</string>
     <string name="settings__theme_editor__fine_tune__title">Hienosäätö</string>
     <string name="settings__theme_editor__fine_tune__level">Muokkauksen taso</string>
     <string name="settings__theme_editor__add_rule">Lisää sääntö</string>

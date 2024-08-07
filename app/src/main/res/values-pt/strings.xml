@@ -79,15 +79,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora do pôr do sol</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema diurno</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema noturno</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema selecionado</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Ajustar cores às aplicações</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">As cores do tema ajustam-se às da aplicação, se esta assim o permitir.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gerir temas instalados</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Dados da aplicação FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Armazenamento interno</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Fornecedor externo</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecionar tema diurno</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecionar tema noturno</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gerir temas instalados</string>
     <string name="settings__theme_editor__fine_tune__title">Editor preciso</string>
     <string name="settings__theme_editor__fine_tune__level">Nível de edição</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Mostrar cores como</string>

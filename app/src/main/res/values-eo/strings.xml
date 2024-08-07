@@ -39,7 +39,6 @@
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selektado etoso</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>

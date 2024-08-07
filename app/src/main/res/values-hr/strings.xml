@@ -77,15 +77,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Vrijeme zalaska Sunca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Svjetla tema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tamna tema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Odabrana tema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prilagodite boje aplikaciji</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Boja teme prilagođena je onoj trenutnoj aplikaciji, ako ciljana aplikacija podržava ovu funkciju.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Upravljajte instaliranim temama</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Zbirka Aplikacije</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Unutarnja Pohrana</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Vanjski Dobavitelj</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Odaberite svjetlu temu</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Odaberite tamnu temu</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Upravljajte instaliranim temama</string>
     <string name="settings__theme_editor__fine_tune__title">Uređivač</string>
     <string name="settings__theme_editor__fine_tune__level">Razina uređivanja</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Prikaži boje kao</string>

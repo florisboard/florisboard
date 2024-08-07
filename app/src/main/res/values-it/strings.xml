@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bandiere</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Non è stata trovata nessuna emoji usata di recente. Una volta che inizi a digitare le emoji appariranno automaticamente qui.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Per accedere alla cronologia delle emoji, sbloccare prima il dispositivo.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consiglio: premi a lungo le emoji usate di recente per rimuoverle di nuovo da questa vista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} rimosso dagli emoji usati di recente</string>
     <!-- Quick action strings -->
@@ -38,6 +39,7 @@
     <string name="quick_action__arrow_left__tooltip">Eseguire freccia sinistra</string>
     <string name="quick_action__arrow_right" maxLength="12">Destra</string>
     <string name="quick_action__arrow_right__tooltip">Eseguire freccia destra</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Pulire clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Esegui sgombro degli appunti primari</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
     <string name="quick_action__clipboard_copy__tooltip">Esegui copia negli appunti</string>
@@ -90,10 +92,13 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Visualizza i nomi delle lingue in</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Stili di input</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gestisci pacchetti di lingua installati</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Sperimentale: gestisci le estensioni che aggiungono il supporto a lingue specifiche (per ora input cinese basato sulla forma)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lingua principale</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mappatura popup</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposizione caratteri</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">Motore di suggerimento</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale simboli</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria simboli</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositore</string>
@@ -123,15 +128,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ora del tramonto</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema giorno</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema scuro</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema selezionato</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adatta i colori all\'app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">I colori del tema seguono quelli dell\'app, se lo supporta.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestisci temi installati</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Risorse dell\'app FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Memoria interna</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Provider esterno</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Seleziona tema chiaro</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Seleziona tema scuro</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestisci temi installati</string>
     <string name="settings__theme_editor__fine_tune__title">Editor delle regolazioni</string>
     <string name="settings__theme_editor__fine_tune__level">Livello di modifica</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Visualizza colori come</string>
@@ -188,9 +190,11 @@
     <string name="snygg__rule_element__one_handed_panel">Pannello a una mano</string>
     <string name="snygg__rule_element__smartbar">Smartbar</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Riga di azione condivisa della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Toggle per le azioni condivise della Smartbar</string>
     <string name="snygg__rule_element__smartbar_extended_actions_row">Riga estesa d\'azioni della Smartbar</string>
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Attiva azioni estese nella Smartbar</string>
     <string name="snygg__rule_element__smartbar_action_key">Tasto d\'azione della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Editor delle azioni della smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
@@ -548,6 +552,9 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Impostazioni di sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Lingue di sistema</string>
     <!-- Extension strings -->
+    <string name="ext__list__ext_theme">Temi</string>
+    <string name="ext__list__ext_keyboard">Skins tastiera</string>
+    <string name="ext__list__ext_languagepack">Lingue (addons)</string>
     <string name="ext__meta__authors">Autori</string>
     <string name="ext__meta__components">Componenti integrati</string>
     <string name="ext__meta__components_theme">Temi integrati</string>
@@ -600,6 +607,17 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Previsto un file multimediale (immagine, audio, font, ecc.) ma trovato un archivio con estensione.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Previsto un archivio con estensione ma trovato un file multimediale (immagine, audio, font, ecc.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Si è verificato un errore inaspettato durante l\'importazione. Sono stati forniti i seguenti dettagli:</string>
+    <string name="ext__validation__enter_package_name">Assegna un nome all\'addon</string>
+    <string name="ext__validation__error_package_name">Il nome assegnato non è valido</string>
+    <string name="ext__validation__enter_version">Inserisci una versione</string>
+    <string name="ext__validation__enter_title">Inserisci un titolo</string>
+    <string name="ext__validation__enter_maintainer">Inserisci un indirzzo e-mail valido</string>
+    <string name="ext__validation__enter_component_id">Inserisci l\'ID corretto</string>
+    <string name="ext__addon_management_box__addon_manager_info">Tutte le attività relative all\'importazione, all\'esportazione, alla creazione, alla personalizzazione e alla rimozione delle estensioni possono essere gestite tramite il gestore interno</string>
+    <string name="ext__home__info">Puoi scaricare e installare estensioni dallo Store di FlorisBoard o importare qualsiasi addon</string>
+    <string name="ext__home__visit_store">Vai allo Store degli addons</string>
+    <string name="ext__home__manage_extensions">Gestisci temi installati</string>
+    <string name="ext__list__view_details">Visualizza dettagli</string>
     <!-- Action strings -->
     <string name="action__add">Aggiungi</string>
     <string name="action__apply">Applica</string>

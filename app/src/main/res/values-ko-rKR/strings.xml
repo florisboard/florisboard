@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
-    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">일시 정지</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">기다리기</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">3점 아이콘. 보이는 경우 길게 눌러서 더 많은 문자를 사용 할 수 있음을 나타냅니다.</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">일시정지</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">대기</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">삼점 아이콘입니다. 이 아이콘이 보인다면 길게 눌러서 더 많은 글자를 사용할 수 있습니다.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">한 손 조작 모드를 닫습니다.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">한손 모드를 닫습니다.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">키보드를 왼쪽으로 옮깁니다.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">키보드를 오른쪽으로 옮깁니다.</string>
     <!-- Media strings -->
@@ -13,151 +13,564 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">이모지</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">이모티콘</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">카오모지</string>
-    <string name="prefs__media__emoji_recently_used_max_size">최대로 표시할 수 있는 최근 사용한 이모지</string>
-    <string name="prefs__media__emoji_preferred_skin_tone">선호하는 이모지 피부톤</string>
-    <string name="prefs__media__emoji_preferred_hair_style">선호하는 이모지 헤어 스타일</string>
+    <string name="prefs__media__emoji_recently_used_max_size">이모지 사용 기록 최대 크기</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">선호하는 이모지 피부색</string>
+    <string name="prefs__media__emoji_preferred_hair_style">선호하는 이모지 머리 스타일</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">스마일리 &amp; 이모티콘</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">사람 &amp; 몸</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">동물 &amp; 자연</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">음식</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">여행 &amp; 장소</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">스마일리 및 이모티콘</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">사람 및 신체</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">동물 및 자연</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">음식 및 음료</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">여행 및 장소</string>
     <string name="emoji__category__activities" comment="Emoji category name">활동</string>
     <string name="emoji__category__objects" comment="Emoji category name">사물</string>
-    <string name="emoji__category__symbols" comment="Emoji category name">기호</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">상징</string>
     <string name="emoji__category__flags" comment="Emoji category name">깃발</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">최근에 사용한 이모지가 없습니다. 이모지를 입력하기 시작하면 여기에 자동으로 표시됩니다.</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji}가 최근 사용 기록에서 삭제되었습니다</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">최근에 이모지를 사용하지 않았습니다. 이모지를 사용하면 사용한 이모지가 여기에 나타납니다.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">꿀팁: 이모지를 길게 누르면 이 목록에서 이모지를 지울 수 있어요!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">최근에 사용한 이모지에서 {emoji} 이모지를 제거했습니다.</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">화살표 위로</string>
+    <string name="quick_action__arrow_up__tooltip">위쪽 화살표 동작 실행</string>
+    <string name="quick_action__arrow_down" maxLength="12">화살표 아래로</string>
+    <string name="quick_action__arrow_down__tooltip">아래쪽 화살표 동작 실행</string>
+    <string name="quick_action__arrow_left" maxLength="12">화살표 왼쪽으로</string>
+    <string name="quick_action__arrow_left__tooltip">왼쪽 화살표 동작 실행</string>
+    <string name="quick_action__arrow_right" maxLength="12">화살표 오른쪽으로</string>
+    <string name="quick_action__arrow_right__tooltip">오른쪽 화살표 동작 실행</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">주 클립보드 비우기</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">주 클립보드 내용 비우기 실행</string>
     <string name="quick_action__clipboard_copy" maxLength="12">복사</string>
+    <string name="quick_action__clipboard_copy__tooltip">클립보드에서 복사 실행</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">잘라내기</string>
+    <string name="quick_action__clipboard_cut__tooltip">클립보드에서 잘라내기 실행</string>
     <string name="quick_action__clipboard_paste" maxLength="12">붙여넣기</string>
+    <string name="quick_action__clipboard_paste__tooltip">클립보드에서 붙여넣기 실행</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">모두 선택</string>
+    <string name="quick_action__clipboard_select_all__tooltip">클립보드에서 모두 선택 실행</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">클립보드</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">클립보드 기록 열기</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">이모지</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">이모지 패널 열기</string>
     <string name="quick_action__settings" maxLength="12">설정</string>
     <string name="quick_action__settings__tooltip">설정 열기</string>
     <string name="quick_action__undo" maxLength="12">실행 취소</string>
+    <string name="quick_action__undo__tooltip">마지막 입력 실행 취소</string>
     <string name="quick_action__redo" maxLength="12">다시 실행</string>
+    <string name="quick_action__redo__tooltip">마지막 입력 다시 실행</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">추가 동작</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">추가 동작 표시 / 숨기기</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">시크릿</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">시크릿 모드 켜기 / 끄기</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">자동 수정</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">자동 수정 켜기 / 끄기</string>
     <string name="quick_action__voice_input" maxLength="12">음성 입력</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">음성 입력 제공자 열기</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">한손</string>
+    <string name="quick_action__one_handed_mode__tooltip">한손 모드 켜기 / 끄기</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">드래그 마커</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">현재 드래그 마커 위치</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">없음</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">작업 없음</string>
+    <string name="quick_actions_overflow__customize_actions_button">액션 재배치</string>
+    <string name="quick_actions_editor__header">액션 순서 사용자 정의</string>
+    <string name="quick_actions_editor__subheader_sticky_action">고정 액션 ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">동적 액션 ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">숨김 액션 ({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">시크릿 모드를 켭니다.\n\n시크릿 모드를 사용 중일 때는 입력한 내용으로부터 단어를 학습하지 않습니다.</string>
+    <string name="incognito_mode__toast_after_disabled">시크릿 모드를 끕니다.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">설정</string>
-    <string name="settings__preview_keyboard" comment="Hint for try your setup box">설정을 사용해 보세요.</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">설정한 키보드를 사용해 보세요.</string>
     <string name="settings__help" comment="General label for help buttons in Settings">도움말</string>
-    <string name="settings__default" comment="General string which is used when a preference has the default value set">기본</string>
-    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">시스템 기본 설정</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard가 시스템 설정에서 활성화되어 있지 않아 입력 방법으로 설정할 수 없습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard가 기본 키보드로 설정되지 않았습니다. 이 문제를 해결하려면 여기를 클릭하십시오.</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">기본값</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">시스템 기본값</string>
+    <string name="settings__home__title" comment="Title of the Home screen">{app_name}</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">앱이 시스템 설정에서 켜져 있지 않아 입력 방법으로 선택할 수 없습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">앱이 기본 입력 방법으로 선택되어 있지 않습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">언어 및 레이아웃</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">언어 표시 방식</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">하위 유형</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">하위 유형 추가</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">설치한 언어 팩 관리</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">실험 기능: 특정 언어를 지원하기 위한 확장 기능 관리</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">하위 유형 편집</string>
-    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">문자 배열</string>
-    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">통화 설정</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">주 언어</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">팝업 매핑</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">문자 레이아웃</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">문구 추천 엔진</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">주 기호 레이아웃</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">부 기호 레이아웃</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">조합기</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">통화 단위</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">숫자 레이아웃</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">고급 숫자 레이아웃</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">숫자 행 레이아웃</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">주 다이얼 레이아웃</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">부 다이얼 레이아웃</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">언어 선택</string>
-    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">언어 검색하기</string>
-    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">\"{search_term}\"과 일치하는 언어를 찾지 못했습니다.</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">언어 검색</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">\"{search_term}\" 검색어와 일치하는 언어를 찾을 수 없습니다.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; 선택 &#8210;</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">권장하는 하위 유형 프리셋</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">권장하는 프리셋이 없습니다. 아래 버튼을 눌러 사용할 수 있는 모든 하위 유형 프리셋을 볼 수 있습니다.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">하위 유형 프리셋</string>
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">모두 보기</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">하위 유형을 설정하지 않았습니다. 영어/QWERTY를 기본 하위 유형으로 사용합니다!</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">이 하위 유형이 이미 있습니다!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">하나 이상의 필드를 선택하지 않았습니다. 모든 필드의 항목을 선택해 주세요.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (설치되어 있지 않음)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">레이아웃</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">테마</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">테마 모드</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">일출 시간</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">일몰 시간</string>
-    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">밝은 테마</string>
-    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">어두운 테마</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">선택한 테마</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">라이트 테마</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">다크 테마</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">설치한 테마 관리</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">앱 내장</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">내부 저장소</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">밝은 테마 선택</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">어두운 테마 선택</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">설치된 테마 관리</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">외부 제공자</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">라이트 테마 선택</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">다크 테마 선택</string>
     <string name="settings__theme_editor__add_rule">규칙 추가</string>
     <string name="settings__theme_editor__edit_rule">규칙 편집</string>
+    <string name="settings__theme_editor__no_rules_defined">이 스타일시트는 지정되어 있는 규칙이 없습니다. 규칙을 추가하여 스타일시트를 꾸며 보세요.</string>
+    <string name="settings__theme_editor__rule_already_exists">이 스타일시트 규칙은 이미 지정되어 있습니다.</string>
+    <string name="settings__theme_editor__rule_element">대상 요소</string>
+    <string name="settings__theme_editor__rule_codes">대상 키 코드</string>
     <string name="settings__theme_editor__rule_groups">그룹</string>
+    <string name="settings__theme_editor__rule_shift_states">Shift 상태</string>
+    <string name="settings__theme_editor__add_code">키 코드 추가</string>
+    <string name="settings__theme_editor__edit_code">키 코드 편집</string>
+    <string name="settings__theme_editor__no_codes_defined">모든 대상 요소에 규칙을 적용합니다.</string>
+    <string name="settings__theme_editor__codes_defined">다음 키 코드와 일치하는 대상 요소에만 규칙을 적용합니다:</string>
+    <string name="settings__theme_editor__code_already_exists">이 키 코드는 이미 지정되어 있습니다.</string>
+    <string name="settings__theme_editor__code_invalid">키 코드가 잘못되었습니다. 문자는 {c_min}에서 {c_max} 사이, 내부 특수 키는 {i_min}에서 {i_max} 사이의 키 코드를 사용합니다.</string>
+    <string name="settings__theme_editor__code_placeholder">코드</string>
+    <string name="settings__theme_editor__code_recording_help_text">키의 코드를 찾으려면 코드 입력 필드 옆의 버튼을 사용하세요. 버튼을 누르면 다음 키 입력을 추적하여 해당 코드가 필드에 입력됩니다.</string>
+    <string name="settings__theme_editor__code_recording_started">키 코드 추적을 시작했습니다.</string>
+    <string name="settings__theme_editor__code_recording_stopped">키 코드 추적을 중지했습니다.</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">키 코드를 추적하려면 {app_name} 앱을 기본 키보드로 지정해야 합니다.</string>
+    <string name="settings__theme_editor__code_recording_placeholder">추적 중…</string>
+    <string name="settings__theme_editor__add_property">속성 추가</string>
+    <string name="settings__theme_editor__edit_property">속성 편집</string>
+    <string name="settings__theme_editor__property_already_exists">현재 규칙에 같은 이름의 속성이 이미 있습니다.</string>
+    <string name="settings__theme_editor__property_name">속성 이름</string>
+    <string name="settings__theme_editor__property_value">속성 값</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">모든 가장자리에 적용</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">색상 문자열 편집</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">다크 테마</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">테두리 없음</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">스타일시트 경로</string>
+    <string name="snygg__rule_element__defines">변수</string>
+    <string name="snygg__rule_element__keyboard">키보드 창</string>
+    <string name="snygg__rule_element__key">키</string>
+    <string name="snygg__rule_element__key_hint">키 힌트</string>
+    <string name="snygg__rule_element__key_popup">키 팝업</string>
+    <string name="snygg__rule_element__clipboard_header">클립보드 헤더</string>
+    <string name="snygg__rule_element__clipboard_item">클립보드 항목</string>
+    <string name="snygg__rule_element__clipboard_item_popup">클립보드 항목 팝업</string>
+    <string name="snygg__rule_element__emoji_key">이모지 키</string>
+    <string name="snygg__rule_element__emoji_key_popup">이모지 키 팝업</string>
+    <string name="snygg__rule_element__emoji_key_tab">이모지 탭</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">가로 입력 레이아웃</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">가로 입력 필드</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">시크릿 모드 표시기</string>
+    <string name="snygg__rule_element__one_handed_panel">한손 입력 패널</string>
+    <string name="snygg__rule_element__smartbar">스마트 바</string>
+    <string name="snygg__rule_element__smartbar_action_key">스마트 바 액션 키</string>
+    <string name="snygg__rule_element__smartbar_action_tile">스마트 바 액션 타일</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">스마트 바 액션 오버플로우</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">스마트 바 액션 편집 도구</string>
+    <string name="snygg__rule_element__system_nav_bar">시스템 내비게이션 바</string>
     <string name="snygg__property_name__width">너비</string>
     <string name="snygg__property_name__height">높이</string>
-    <string name="snygg__property_name__background">배경</string>
-    <string name="snygg__property_name__border_color">테두리 색</string>
-    <string name="snygg__property_name__border_style">테두리 스타일</string>
-    <string name="snygg__property_name__border_width">테두리 두께</string>
+    <string name="snygg__property_name__background">백그라운드</string>
+    <string name="snygg__property_name__foreground">포그라운드</string>
+    <string name="snygg__property_name__border_color">테두리 색상</string>
+    <string name="snygg__property_name__border_style">테두르 스타일</string>
+    <string name="snygg__property_name__border_width">테두리 너비</string>
+    <string name="snygg__property_name__font_family">글꼴 패밀리</string>
+    <string name="snygg__property_name__font_size">글꼴 크기</string>
     <string name="snygg__property_name__font_style">글꼴 스타일</string>
-    <string name="snygg__property_value__dp_size">크기 (dp)</string>
-    <string name="snygg__property_value__sp_size">크기 (sp)</string>
-    <string name="snygg__property_value__percentage_size">크기 (%)</string>
-    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">진동 지속 시간</string>
+    <string name="snygg__property_name__font_variant">글꼴 배리언트</string>
+    <string name="snygg__property_name__font_weight">글꼴 굵기</string>
+    <string name="snygg__property_name__var_primary">주 색상</string>
+    <string name="snygg__property_name__var_secondary">부 색상</string>
+    <string name="snygg__property_value__material_you_light_color">Material You 색상(라이트)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You 색상(다크)</string>
+    <string name="snygg__property_value__image_ref">이미지 참조</string>
+    <string name="snygg__property_value__dp_size">크기(dp)</string>
+    <string name="snygg__property_value__sp_size">크기(sp)</string>
+    <string name="snygg__property_value__percentage_size">크기(%)</string>
+    <string name="snygg__property_value__defined_var">변수 참조</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">소리 및 진동</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">오디오 피드백 / 소리</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">오디오 피드백 사용</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">햅틱 반응 / 진동</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">햅틱 반응 사용</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">진동 모드</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">진동 길이</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">진동 세기</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">예) 키, 버튼, 이모지 탭</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">예) 팝업 메뉴</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">예) 삭제 키</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">구현되지 않음</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">예) 커서 제어 스와이프</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">키보드</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">숫자 행</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">문자 레이아웃 위에 숫자 행 표시</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">스페이스 바 라벨</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">글꼴 크기 배율</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">레이아웃</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한 손 조작 모드</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한 손 조작 모드 키보드 너비</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한손 모드</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한손 모드 키보드 너비</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">가로 모드 전체 화면 입력</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">키보드 높이</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">키 간격</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">팝업 표시</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">키를 눌렀을 때 팝업 표시</string>
     <!-- Smartbar strings -->
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">스마트 바</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">스마트 바 사용</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">키보드 맨 위에 스마트바를 표시합니다.</string>
     <string name="pref__smartbar__layout__label" comment="Preference title">레이아웃</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">입력</string>
     <string name="pref__suggestion__title" comment="Preference group title">제안</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">제안 표시</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">클립보드 내용 제안</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">자동 대문자화</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">캡스락 상태 기억</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">다른 텍스트 필드로 이동할 때 캡스락 상태 유지</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">스페이스 두 번으로 마침표 입력</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">스페이스 바를 두 번 눌러 마침표를 입력합니다.</string>
+    <string name="pref__spelling__title" comment="Preference group title">맞춤법 검사</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">설정한 맞춤법 검사기 서비스가 없습니다. 여기를 눌러 서비스를 설정하세요.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">언어</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">연락처 이름 사용</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">연락처 목록에서 이름을 찾아 표시합니다.</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">사용자 사전 사용</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">사용자 사전에서 항목을 찾아 표시합니다.</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">사용자 사전</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">사용자 사전 사용</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전에 저장되어 있는 단어를 추천합니다.</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">시스템 사용자 사전 관리</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전의 항목을 확인, 추가 또는 제거합니다.</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">시스템 사용자 사전</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">시스템 관리자 UI 열기</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">사용자 사전을 잘 가져왔습니다!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">사용자 사전을 잘 내보냈습니다!</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">단어 추가</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">단어 편집</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">단어</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Shortcut (선택)</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">언어 코드(선택)</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">제스처 및 글라이드 입력</string>
+    <string name="pref__glide__title" comment="Preference group title">글라이드 입력</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">글라이드 입력 사용</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">일반 제스처</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">스페이스 바 제스처</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">위로 스와이프</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">아래로 스와이프</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">왼쪽으로 스와이프</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">오른쪽으로 스와이프</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">스페이스 바 위로 스와이프</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">스페이스 바 왼쪽으로 스와이프</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">스페이스 바 오른쪽으로 스와이프</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">스페이스 바 길게 누르기</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">지우기 키 왼쪽으로 스와이프</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">지우기 키 길게 누르기</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">고급</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">설정 테마</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">시스템 기본값 (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">밝은 테마</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">어두운 테마</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">검정 테마</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">설정 언어</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">앱 설정 테마</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">시스템 기본값 (블랙)</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">라이트 테마</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">다크 테마</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">블랙 테마</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Material You 사용</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">앱 설정 언어</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">런처에 앱 아이콘 표시</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Android 10 버전 이상에서는 구조적인 제한으로 인해 항상 켜져 있습니다.</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">시크릿 모드</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">정보</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard 앱 아이콘</string>
-    <string name="about__view_licenses" comment="Label of View licenses button in About">오픈 소스 라이선스</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">앱 아이콘</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">오픈 소스 라이선스s</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">개인 정보 보호 정책</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">소스 코드</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">오픈 소스 라이선스</string>
     <string name="about__version__title" comment="Preference title">버전</string>
-    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">앱 버전을 클립보드에 복사했습니다.</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">버전을 클립보드에 복사했습니다.</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">오류가 발생했습니다: {error_message}</string>
     <string name="about__changelog__title" comment="Preference title">변경 내역</string>
     <string name="about__changelog__summary" comment="Preference summary">새로운 기능</string>
-    <string name="about__repository__title" comment="Preference title">저장소 (GitHub)</string>
-    <string name="about__repository__summary" comment="Preference summary">소스 코드, 토론, 문제 신고 및 정보</string>
+    <string name="about__repository__title" comment="Preference title">리포지터리 (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">소스 코드, 토론, 버그 신고 및 정보</string>
     <string name="about__privacy_policy__title" comment="Preference title">개인 정보 보호 정책</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">이 프로젝트의 개인 정보 보호 정책</string>
     <string name="about__project_license__title" comment="Preference title">프로젝트 라이선스</string>
-    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard는 {license_name} 라이선스를 따르고 있습니다.</string>
-    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">오류: 라이선스 텍스트를 불러오지 못했습니다.\n-&gt; 사유: {error_message}</string>
-    <string name="about__third_party_licenses__title" comment="Preference title">서드 파티 라이선스</string>
-    <string name="about__third_party_licenses__summary" comment="Preference summary">이 앱에 사용한 서드 파티 라이브러리의 라이선스</string>
+    <string name="about__project_license__summary" comment="Preference summary">이 앱은 {license_name} 라이선스를 따릅니다.</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">오류: 라이선스 텍스트를 불러올 수 없습니다.\n-&gt; 사유: {error_message}</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">서드파티 라이선스</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">이 앱에서 사용하는 서드파티 라이브러리의 라이선스</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">환영합니다!</string>
-    <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name}를 사용해 주셔서 고맙습니다! 빠른 설정 가이드를 따라 {app_name}를 이 기기에서 사용하기 위해 필요한 절차를 완료해 보세요.</string>
+    <string name="setup__title" comment="Title of Setup">어서오세요!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name} 키보드를 사용해 주셔서 고마워요! {app_name} 키보드를 사용하기 위해서 필요한 단계를 설명해 드릴게요.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">개인 정보 보호 정책</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">저장소</string>
-    <string name="setup__enable_ime__title">{app_name} 활성화</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">리포지터리</string>
+    <string name="setup__enable_ime__title">{app_name} 켜기</string>
+    <string name="setup__enable_ime__description">Android에서 다른 키보드를 사용하려면 먼저 설정에서 키보드를 켜야 해요. 시스템 설정의 <i>언어 및 키보드</i>에 들어가서, \"{app_name}\" 키보드를 켜 주세요.</string>
     <string name="setup__enable_ime__open_settings_btn">시스템 설정 열기</string>
     <string name="setup__select_ime__title">{app_name} 선택</string>
+    <string name="setup__select_ime__description">{app_name} 키보드를 켰어요. 키보드를 제대로 사용하기 위해서는 입력 방법 선택 창에서 {app_name} 키보드를 선택해야 해요!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">입력 방법 전환</string>
+    <string name="setup__finish_up__title">마무리</string>
+    <string name="setup__finish_up__description_p1">이제 {app_name} 키보드를 마음껏 꾸미고 써볼 수 있어요.</string>
+    <string name="setup__finish_up__description_p2">문제가 생기거나, 버그를 발견하거나, 제안할 내용이 있다면 정보 화면에서 프로젝트 리포지터리에 방문해 주세요!</string>
+    <string name="setup__finish_up__finish_btn">꾸미기 시작</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">백업 및 복원</string>
+    <string name="backup_and_restore__back_up__title">데이터 백업</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">로컬 파일 시스템</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">공유 메뉴를 사용한 서드파티 앱</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">설정</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">키보드 확장 기능</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">맞춤법 검사 확장 기능 / 사전</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">테마 확장 기능</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">클립보드 기록</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">글자 항목</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">이미지</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">동영상</string>
+    <string name="backup_and_restore__back_up__success">백업 파일을 잘 내보냈습니다!</string>
+    <string name="backup_and_restore__back_up__failure">백업 파일을 내보낼 수 없습니다: {error_message}</string>
+    <string name="backup_and_restore__restore__title">데이터 복원</string>
+    <string name="backup_and_restore__restore__mode">복원 모드</string>
+    <string name="backup_and_restore__restore__mode_merge">현재 데이터에 합치기</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">현재 데이터를 덮어쓰기</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">앱 오류 보고</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">클립보드에 복사</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">클립보드에 복사했습니다.</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">클립보드에 복사할 수 없습니다. 클립보드 관리자 인스턴스를 찾을 수 없습니다.</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">닫기</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">앱 오류 보고</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">클립보드</string>
+    <string name="clipboard__disabled__title">클립보드 기록이 꺼져 있음</string>
+    <string name="clipboard__disabled__message">클립보드 기록을 사용하면 복사했던 텍스트와 이미지를 쉽게 확인할 수 있습니다. 클립보드 항목을 고정하거나 최대 기록 크기, 자동 정리 기능을 설정할 수도 있습니다.</string>
+    <string name="clipboard__disabled__enable_button">클립보드 기록 사용</string>
+    <string name="clipboard__empty__title">클립보드가 비어 있음</string>
+    <string name="clipboard__empty__message">복사한 텍스트 또는 이미지가 여기에 나타납니다.</string>
+    <string name="clipboard__locked__title">클립보드가 잠김</string>
+    <string name="clipboard__locked__message">클립보드 기록을 보려면 먼저 기기를 잠금 해제해 주세요.</string>
     <string name="clipboard__group_pinned">고정됨</string>
+    <string name="clipboard__group_recent">최근</string>
     <string name="clipboard__group_other">기타</string>
+    <string name="clipboard__item_description_email">이메일</string>
+    <string name="clipboard__item_description_phone">전화번호</string>
+    <string name="clip__clear_history">기록 비우기</string>
+    <string name="clip__unpin_item">항목 고정 해제</string>
+    <string name="clip__pin_item">항목 고정</string>
     <string name="clip__delete_item">삭제</string>
     <string name="clip__paste_item">붙여넣기</string>
+    <string name="clipboard__confirm_clear_history__message">정말 클립보드 기록을 비우시겠습니까?</string>
     <string name="settings__clipboard__title">클립보드</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">앱 자체 클립보드 사용</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">시스템 클립보드 대신 앱 자체에서 제공하는 클립보드를 사용합니다.</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">시스템 클립보드와 동기화</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">시스템 클립보드의 항목이 업데이트되면 앱 자체 클립보드에도 적용합니다.</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">시스템 클립보드로 동기화</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">앱 자체 클립보드의 항목이 업데이트되면 시스템 클립보드에도 적용합니다.</string>
+    <string name="pref__clipboard__group_clipboard_history__label">클립보드 기록</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">클립보드 기록 켜기</string>
+    <string name="pref__clipboard__limit_history_size__label">기록 크기 제한</string>
+    <string name="pref__clipboard__max_history_size__label">최대 기록 크기</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">개발자 도구</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">개발자 도구 사용</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">\"{flag_name}\" 플래그 초기화</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">오류 보고 화면 테스트</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android 시스템 도구</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Android 글로벌 설정</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Android 보안 설정</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Android 시스템 설정</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">시스템 언어</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">애드온 및 확장 기능</string>
+    <string name="ext__list__ext_theme">테마 확장 기능</string>
+    <string name="ext__list__ext_keyboard">키보드 확장 기능</string>
+    <string name="ext__list__ext_languagepack">언어 팩 확장 기능</string>
+    <string name="ext__meta__components_theme">포함된 테마</string>
+    <string name="ext__meta__components_language_pack">포함된 언어 팩</string>
+    <string name="ext__meta__description">설명</string>
     <string name="ext__meta__homepage">홈페이지</string>
     <string name="ext__meta__id">아이디</string>
+    <string name="ext__meta__keywords">키워드</string>
+    <string name="ext__meta__label">라벨</string>
+    <string name="ext__meta__license">라이선스</string>
+    <string name="ext__meta__title">이름</string>
     <string name="ext__meta__version">버전</string>
+    <string name="ext__editor__title_create_any">확장 기능 만들기</string>
+    <string name="ext__editor__title_create_keyboard">키보드 확장 기능 만들기</string>
+    <string name="ext__editor__title_create_theme">테마 확장 기능 만들기</string>
+    <string name="ext__editor__title_edit_any">확장 기능 편집</string>
+    <string name="ext__editor__title_edit_keyboard">키보드 확장 기능 편집</string>
+    <string name="ext__editor__title_edit_theme">테마 확장 기능 편집</string>
+    <string name="ext__editor__metadata__title">메타데이터 관리</string>
+    <string name="ext__editor__metadata__title_invalid">잘못된 메타데이터</string>
+    <string name="ext__editor__metadata__message_invalid">이 확장 기능의 메타데이터가 잘못되었습니다. 메타데이터 편집 도구를 열어 더 자세히 알아보세요!</string>
+    <string name="ext__editor__create_component__title_theme">테마 만들기</string>
+    <string name="ext__editor__create_component__from_empty">비어 있음</string>
+    <string name="ext__export__success">확장 기능을 잘 내보냈습니다!</string>
+    <string name="ext__export__failure">확장 기능을 내보낼 수 없습니다: {error_message}</string>
+    <string name="ext__import__success">확장 기능을 잘 가져왔습니다!</string>
+    <string name="ext__import__failure">확장 기능을 가져올 수 없습니다: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">확장 기능 가져오기</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">키보드 확장 기능 가져오기</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">테마 확장 기능 가져오기</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">언어 팩 확장 기능 가져오기</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">파일을 가져올 수 없습니다. 사유:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">지원하지 않거나 알 수 없는 파일 형식입니다.</string>
+    <string name="ext__home__manage_extensions">설치한 확장 기능 관리</string>
+    <string name="ext__check_updates__title">업데이트 확인</string>
     <!-- Action strings -->
+    <string name="action__add">추가</string>
+    <string name="action__apply">적용</string>
+    <string name="action__back_up">백업</string>
+    <string name="action__cancel">취소</string>
+    <string name="action__create">만들기</string>
+    <string name="action__default">기본값</string>
+    <string name="action__delete">삭제</string>
+    <string name="action__delete_confirm_title">삭제 확인</string>
+    <string name="action__delete_confirm_message">정말 \"{name}\" 항목을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.</string>
+    <string name="action__discard">버리기</string>
+    <string name="action__discard_confirm_title">저장하지 않은 내용</string>
+    <string name="action__discard_confirm_message">정말 저장하지 않은 내용을 버리시겠습니까? 이 작업은 취소할 수 없습니다.</string>
+    <string name="action__edit">편집</string>
+    <string name="action__export">내보내기</string>
+    <string name="action__import">가져오기</string>
+    <string name="action__no">아니오</string>
+    <string name="action__ok">확인</string>
+    <string name="action__restore">복원</string>
+    <string name="action__save">저장</string>
+    <string name="action__select">선택</string>
+    <string name="action__select_dir">디렉터리 선택</string>
+    <string name="action__select_dirs">디렉터리 선택</string>
+    <string name="action__select_file">파일 선택</string>
+    <string name="action__select_files">파일 선택</string>
+    <string name="action__yes">예</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">오류</string>
+    <string name="error__details">세부 정보</string>
+    <string name="error__invalid">유효하지 않음</string>
+    <string name="error__snackbar_message">오류가 발생했습니다.</string>
+    <string name="error__snackbar_message_template">오류가 발생했습니다: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">예) {example}</string>
+    <string name="general__no_browser_app_found_for_url">{url} URL을 열 수 있는 앱을 찾을 수 없습니다.</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; 선택 &#45;</string>
+    <string name="general__unlimited">무제한</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">세로</string>
+    <string name="screen_orientation__landscape">가로</string>
+    <string name="screen_orientation__vertical">세로</string>
+    <string name="screen_orientation__horizontal">가로</string>
     <!-- State strings -->
+    <string name="state__disabled">꺼짐</string>
+    <string name="state__enabled">켜짐</string>
+    <string name="state__no_dir_selected">선택한 디렉터리 없음</string>
+    <string name="state__no_dirs_selected">선택한 디렉터리 없음</string>
+    <string name="state__no_file_selected">선택한 파일 없음</string>
+    <string name="state__no_files_selected">선택한 파일 없음</string>
     <!-- Enum label and description strings -->
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hex 값</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">RGBA</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">항상 표시</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">이전 상태 기억</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">시스템 언어</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">원어</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} 기본 피부색</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} 밝은 피부색</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} 조금 밝은 피부색</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} 중간 피부색</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} 조금 어두운 피부색</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} 어두운 피부색</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} 기본 머리</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} 빨간 머리</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} 펌</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} 흰 머리</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} 대머리</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">하드웨어 진동 직접 사용</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">햅틱 반응 인터페이스 사용</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">항상 끄기</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">항상 켜기</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 따라 소리를 재생합니다.</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 관계없이 항상 소리를 재생합니다.</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 따라 진동합니다.</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 관계없이 항상 진동합니다.</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">캡스락</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">꺼짐</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">왼손 모드</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">오른손 모드</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">기본</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">색상 속성만 보여줍니다. 속성과 규칙은 번역한 명칭을 보여줍니다.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">고급</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">모든 속성을 보여줍니다. 속성과 규칙은 번역한 명칭을 보여줍니다.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">개발자</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">모든 속성을 보여줍니다. 속성과 규칙은 스타일시트에 입력되어 있는 그대로 보여줍니다.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">라벨 없음</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">현재 언어</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">시스템 언어 사용</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">키보드 하위 유형 사용</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">동작 없음</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">이전 키보드 모드로 전환</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">다음 키보드 모드로 전환</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">커서 뒤에 있는 문자 삭제</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">정확하게 문자 삭제</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">커서 뒤에 있는 단어 삭제</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">정확하게 단어 삭제</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">키보드 숨기기</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">공백 삽입</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">커서 위로 이동</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">커서 아래로 이동</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">커서 왼쪽으로 이동</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">커서 오른쪽으로 이동</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">커서 라인 시작으로 이동</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">커서 라인 끝으로 이동</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">커서 페이지 시작으로 이동</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">커서 페이지 끝으로 이동</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">클립보드 관리자 / 기록 열기</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">다시 실행</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">실행 취소</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">정확하게 문자 선택</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">정확하게 단어 선택</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">입력 방법 선택</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">이전 키보드로 전환</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">이전 하위 유형으로 전환</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">다음 하위 유형으로 전환</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">스마트바 표시 / 숨기기</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">라이트 테마</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">다크 테마</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">시스템 설정</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">시간에 따라 자동으로 변경</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">이모지 입력으로 전환</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">언어 전환</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">키보드 앱 전환</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">이모지 입력으로 전환 / 언어 전환</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="other">{v}시간</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="other">{v}분</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="other">{v}초</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="other">{v} 항목</item>
+    </plurals>
 </resources>

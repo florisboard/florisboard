@@ -124,15 +124,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Saulrieta laikā</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dienas izskats</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nakts izskats</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Atlasītais izskats</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Pielāgot krāsas lietotnei</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Izskats tiek pielāgotas pašreizējās lietotnes krāsām, ja tā to atbalsta.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ārējs avots</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Atlasīt dienas izskatu</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Atlasīt nakts izskatu</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
     <string name="settings__theme_editor__fine_tune__title">Smalkas pielāgošanas redaktors</string>
     <string name="settings__theme_editor__fine_tune__level">Labošanas līmenis</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Attēlot krāsas kā</string>
@@ -305,6 +302,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Atstarpes taustiņš pārslēdz uz burtiem</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pārslēdzas no zīmēm vai cipariem atpakaļ uz burtiem</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Slepenības rādītājs</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Viedjosla</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
@@ -407,6 +405,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Gaišs</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumšs</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED tumšs</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Izmantot Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Iestatījumu valoda</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
@@ -466,6 +465,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastatūras paplašinājumi</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Pareizrakstības paplašinājumi / vārdnīcas</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Izskata paplašinājumi</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Starpliktuves vēsture</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Teksta vienumi</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Attēli</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Video</string>
     <string name="backup_and_restore__back_up__success">Rezerves kopiju arhīvs tika veiksmīgi izdots.</string>
     <string name="backup_and_restore__back_up__failure">Neizdevās izdot rezerves kopiju arhīvu: {error_message}</string>
     <string name="backup_and_restore__restore__title">Atjaunot datus</string>
@@ -570,6 +573,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Sistēmas Android iestatījumi</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistēmas darbības vietas</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Papildinājumi un paplašinājumi</string>
+    <string name="ext__list__ext_theme">Izskata paplašinājumi</string>
+    <string name="ext__list__ext_keyboard">Tastatūras paplašinājumi</string>
+    <string name="ext__list__ext_languagepack">Valodu paku paplašinājumi</string>
     <string name="ext__meta__authors">Autori</string>
     <string name="ext__meta__components">Iekļautās sastāvdaļas</string>
     <string name="ext__meta__components_theme">Iekļautie izskati</string>
@@ -622,6 +629,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Vajadzīga nesējdatne (attēls, skaņa, fonts u.c.), bet tika iesniegts paplašinājumu arhīvs.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Nepieciešams paplašinājumu arhīvs, bet tika atrasta nesējdatne (attēls, skaņa, fonts u.c.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Notika neparedzēta kļūda ievietošanas laikā. Tika sniegts sekojošais izklāsts:</string>
+    <string name="ext__validation__enter_package_name">Lūgums ievadīt pakotnes nosaukumu</string>
+    <string name="ext__validation__error_package_name">Pakotnes nosaukums neatbilst regulārajai izteiksmei {id_regex}</string>
+    <string name="ext__validation__enter_version">Lūgums ievadīt versiju</string>
+    <string name="ext__validation__enter_title">Lūgums ievadīt nosaukumu</string>
+    <string name="ext__validation__enter_maintainer">Lūgums ievadīt vismaz vienu derīgu uzturētāju</string>
+    <string name="ext__validation__enter_license">Lūgums ievadīt licences identifikatoru</string>
+    <string name="ext__validation__enter_component_id">Lūgums ievadīt sastāvdaļas Id</string>
+    <string name="ext__validation__error_component_id">Lūgums ievadīt sastāvdaļas Id, kas atbilst {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Lūgums ievadīt sastāvdaļas iezīmi</string>
+    <string name="ext__validation__hint_component_label_to_long">Sastāvdaļas iezīme ir diezgan gara, kas var novest līdz tās apcirpšanai saskarnē</string>
+    <string name="ext__validation__error_author">Lūgums ievadīt vismaz vienu derīgu autoru</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Stila lapas ceļš nedrīkst būt tukšs</string>
+    <string name="ext__validation__error_stylesheet_path">Lūgums ievadīt derīgu stila lapas ceļu, kas atbilst {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Lūgums ievadīt mainīgā nosaukumu</string>
+    <string name="ext__validation__error_property">Lūgums ievadīt derīgu mainīgā nosaukumu, kas atbilst {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Ir pieņemts, ka FlorisCSS mainīgā nosaukums sākas ar divām domuzīmēm (--)</string>
+    <string name="ext__validation__enter_color">Lūgums ievadīt krāsas virkni</string>
+    <string name="ext__validation__error_color">Lūgums ievadīt derīgu krāsas virkni</string>
+    <string name="ext__validation__enter_dp_size">Lūgums ievadīt dp izmēru</string>
+    <string name="ext__validation__enter_valid_number">Lūgums ievadīt derīgu skaitli</string>
+    <string name="ext__validation__enter_positive_number">Lūgums ievadīt pozitīvu skaitli (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Lūgums ievadīt izmēru procentos</string>
+    <string name="ext__validation__enter_number_between_0_100">Lūgumsi evadīt pozitīvu skaitli no 0 līdz 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Jebkura vērtība virs 50% darbosies tā, it kā būtu iestatīti 50%, jāapsver pazemināt procentu izmērs</string>
+    <string name="ext__update_box__internet_permission_hint">Tā kā šai lietotnei nav atļaujas piekļūt internetam, uzstādīto paplašinājumu atjauninājumi jāpārbadua pašrocīgi.</string>
+    <string name="ext__update_box__search_for_updates">Meklēt atjauninājumus</string>
+    <string name="ext__addon_management_box__managing_placeholder">Pārvalda {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Visi uzdevumi, kas saistīti ar paplašinājumu ievietošanu, izgūšanu, izveidošanu, pielāgošanu un noņemšanu, ir paveicami centralizētajā papildinājumu pārvaldniekā.</string>
+    <string name="ext__addon_management_box__go_to_page">Doties uz {ext_home_title}</string>
+    <string name="ext__home__info">Paplašinājumus var lejupielādēt un uzstādīt no FlorisBoard papildinājumu glabātavas vai ievietot jebkuru paplašinājuma datni, kas ir lejupielādēta internetā.</string>
+    <string name="ext__home__visit_store">Apmeklēt papildinājumu glabātavu</string>
+    <string name="ext__home__manage_extensions">Pārvaldīt uzstādītos paplašinājumus</string>
+    <string name="ext__list__view_details">Skatīt izvērsumu</string>
+    <string name="ext__check_updates__title">Pārbaudīt atjauninājumus</string>
     <!-- Action strings -->
     <string name="action__add">Pievienot</string>
     <string name="action__apply">Pielietot</string>
@@ -716,6 +757,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir norādes zīme vai galvenā uzsvara zīme, ja norādes zīme nav pieejama</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Viedā priekšrokas noteikšana</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme (galvenā uzsvara vai norādes zīme) pēc ilga piespiediena tiek noteikta atbilstoši pašreizējai valodai un izkārtojumam</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Aizvietot kopīgo darbību slēdža ikonu ar slepenības rādītāju</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Attēlot slepenības rādītāju aiz tastatūras</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Izslēgt piespiedu kārtā</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Slepenība vienmēr būs atspējota neatkarīgi no mērķa lietotnes padotajām vērtībām. Slepenības ātrā darbība viedjoslā ar šo iespēju nebūs pieejama.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Ieslēgt piespiedu kārtā</string>

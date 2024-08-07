@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">نمادها</string>
     <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">ایموجی استفاده شده ای یافت نشد. زمانی که شروع به نوشتن ایموجی ها بکنید به صورت خودکار اینجا ظاهر خواهند شد.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">برای دست‌رسی به تاریخ صورتک‌ها گوشی‌تان باز کنید.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">توصیه کاربردی: روی ایموجی های استفاده شده نگهدارید تا آن ها را از اینجا حذف کنید!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ایموجی {emoji} از ایموجی های اخیرا استفاده شده حذف شد</string>
     <!-- Quick action strings -->
@@ -58,6 +59,7 @@
     <string name="quick_action__voice_input" maxLength="12">ورودی صدا</string>
     <string name="quick_action__one_handed_mode" maxLength="12">یک دستی</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ کدام</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ عملی</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
@@ -106,15 +108,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">زمان غروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">طرح‌زمینه روز</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">طرح‌زمینه شب</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">طرح زمینه انتخاب شده</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">تطبیق دادن رنگ ها به برنامه</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">رنگ های طرح زمینه بر اساس برنامه های فعلی تطبیق داده شوند، اگر برنامه مورد نظر از این پشتیبانی کند.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">مدیریت تم های نصب شده</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">ابزار های برنامه فلوریس بورد</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">حافظه داخلی</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">ارائه دهنده خارجی</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">انتخاب تم روز</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">انتخاب تم شب</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">مدیریت تم های نصب شده</string>
     <string name="settings__theme_editor__fine_tune__title">ویرایشگر دقیق</string>
     <string name="settings__theme_editor__fine_tune__level">سطح ویرایشگر</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">رنگ را مانند ... نشان بده</string>
@@ -153,6 +152,7 @@
     <string name="snygg__rule_element__key_popup">کلید خود بازشونده</string>
     <string name="snygg__rule_element__clipboard_item">وسیله کلیپ بورد</string>
     <string name="snygg__rule_element__emoji_key">کلید ایموجی</string>
+    <string name="snygg__rule_element__smartbar">اسمارت‌بار</string>
     <string name="snygg__property_name__font_size">اندازه نوشته</string>
     <string name="snygg__property_name__font_style">شکل نوشته</string>
     <string name="snygg__property_name__font_variant">نوع نوشته</string>

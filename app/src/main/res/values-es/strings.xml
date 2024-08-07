@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderas</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No se han encontrado emojis que se hayan usado recientemente. Una vez empieces a usar emojis, aparecerán automáticamente aquí.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Para acceder a tu historial de emojis, por favor, desbloquea primero tu dispositivo.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consejo: ¡Pulse sostenidamente los emojis usados recientemente para poder removerlos de esta vista!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Se ha removido {emoji} de los emojis recientes</string>
     <!-- Quick action strings -->
@@ -120,15 +121,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora de puesta de sol</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema claro</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema oscuro</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema seleccionado</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adaptar colores a la aplicación</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Los colores del teclado se adaptan a los de la aplicación actual, si la aplicación de destino lo admite.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestionar temas instalados</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Recursos de aplicación de FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamiento interno</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Almacenamiento externo</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Elegir tema claro</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Elegir tema oscuro</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestionar temas instalados</string>
     <string name="settings__theme_editor__fine_tune__title">Editor de ajuste fino</string>
     <string name="settings__theme_editor__fine_tune__level">Nivel de edición</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Mostrar colores como</string>
@@ -150,6 +148,8 @@
     <string name="settings__theme_editor__code_help_text">Alternativamente, los siguientes enlaces lo ayudarán a encontrar el código clave correspondiente:</string>
     <string name="settings__theme_editor__code_placeholder">Código</string>
     <string name="settings__theme_editor__code_recording_help_text">Para encontrar el código de una tecla, utilice el botón situado junto al campo de entrada de códigos. Una vez activado, registrará la siguiente pulsación de la tecla e insertará el código en el campo de entrada.</string>
+    <string name="settings__theme_editor__code_recording_started">Grabación de código de tecla iniciada</string>
+    <string name="settings__theme_editor__code_recording_stopped">Grabación de código de tecla detenida</string>
     <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} tiene que ser el teclado por defecto para grabar un código de tecla</string>
     <string name="settings__theme_editor__code_recording_placeholder">Grabando…</string>
     <string name="settings__theme_editor__add_property">Añadir propiedad</string>
@@ -175,6 +175,7 @@
     <string name="snygg__rule_element__emoji_key_popup">Ventana emergente de la tecla Emoji</string>
     <string name="snygg__rule_element__emoji_key_tab">Pestaña de emojis</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposición de la entrada del paisaje</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Campo de entrada en paisaje</string>
     <string name="snygg__rule_element__glide_trail">Rastro del gesto</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Indicador de modo incógnito</string>
     <string name="snygg__rule_element__one_handed_panel">Panel a una mano</string>
@@ -217,6 +218,8 @@
     <string name="snygg__property_name__var_shape_variant">Forma común (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Heredar</string>
     <string name="snygg__property_value__solid_color">Color sólido</string>
+    <string name="snygg__property_value__material_you_light_color">Color Material You (claro)</string>
+    <string name="snygg__property_value__material_you_dark_color">Color Material You (oscuro)</string>
     <string name="snygg__property_value__image_ref">Referencia de imagen</string>
     <string name="snygg__property_value__rectangle_shape">Forma rectangular</string>
     <string name="snygg__property_value__circle_shape">Forma circular</string>
@@ -279,6 +282,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retardo de la pulsación larga</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaciadora cambia a caracteres</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automáticamente regresa a los caracteres al estar en teclado numérico o de símbolos</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indicador de incógnito</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
@@ -434,6 +438,9 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensiones del teclado</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensiones de corrección ortográfica / diccionarios</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensiones de temas</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Ítems de texto</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Imágenes</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Vídeos</string>
     <string name="backup_and_restore__back_up__success">¡Fichero de respaldo exportado exitosamente!</string>
     <string name="backup_and_restore__back_up__failure">Error al exportar fichero de respaldo: {error_message}</string>
     <string name="backup_and_restore__restore__title">Restaurar datos</string>
@@ -505,6 +512,8 @@
     <string name="pref__clipboard__max_history_size__label">Tamaño máximo del historial</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Borrar el clip principal afecta al historial</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Al borrar el clip principal también se borra la última entrada del historial</string>
+    <string name="send_to_clipboard__unknown_error">Ha ocurrido un error desconocido. Por favor, vuelve a intentarlo.</string>
+    <string name="send_to_clipboard__type_not_supported_error">Este tipo de medio no está soportado.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Herramientas de desarrollo</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Habilitar herramientas de desarrollador</string>
@@ -575,6 +584,7 @@
     <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importar extensión</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importar extensión de teclado</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importar extensión de tema</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importar extensión de paquete de idioma</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">El archivo no puede ser importado. Razón:</string>
     <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipo de archivo no soportado o irreconocible.</string>
     <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">No se ha podido reemplazar o actualizar los paquetes de extensión por defecto provistos con los recursos base de la aplicación. Considere actualizar la aplicación si desea usar una nueva versión de un paquete de extensión base.</string>
@@ -636,6 +646,7 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Clásico (3 columnas)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Ancho dinámico</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Ancho dinámico &amp; desplazable</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Permitr Bloq May haciendo doble toque en mayúscula</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rojo Verde Azul Alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostrar siempre</string>
@@ -670,6 +681,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será siempre el símbolo, o el acento principal si no hay símbolo disponible</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorización inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">El carácter inicial elegido al hacer una pulsación larga será decidido dinámicamente entre el símbolo o el acento principal, de acuerdo al idioma y distribución del teclado actual</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Reemplazar el interruptor de acciones de compartir con el indicador de incógnito</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Mostrar el indicador de incógnito tras el teclado</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Forzar apagado</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">El modo incógnito siempre estará desactivado, independientemente de las opciones pasadas de la aplicación de destino. La acción rápida de incógnito en la barra inteligente no estará disponible con esta opción.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Forzar encendido</string>

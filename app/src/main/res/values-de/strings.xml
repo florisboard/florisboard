@@ -28,7 +28,7 @@
     <string name="emoji__category__flags" comment="Emoji category name">Flaggen</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Keine kürzlich verwendeten Emojis gefunden. Sobald Sie Emojis verwendet haben erscheinen diese hier.</string>
     <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Um auf deinen Emoji-verlauf zuzugreifen, entsperre zuerst dein Gerät.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt um diese wieder aus der Ansicht zu entfernen!</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt, um diese wieder aus dieser Ansicht zu entfernen!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} wurde aus \"kürzlich verwendeten Emojis\" entfernt</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pfeil hoch</string>
@@ -46,13 +46,13 @@
     <string name="quick_action__clipboard_cut" maxLength="12">Ausschneiden</string>
     <string name="quick_action__clipboard_cut__tooltip">Zur Zwischenablage ausschneiden</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Einfügen</string>
-    <string name="quick_action__clipboard_paste__tooltip">Einfügen von der Zwischenablage</string>
+    <string name="quick_action__clipboard_paste__tooltip">Einfügen aus der Zwischenablage</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Alles ausw.</string>
     <string name="quick_action__clipboard_select_all__tooltip">Alles auswählen in der Zwischenablage</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Zwischenab.</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Zwischenablage Verlauf öffnen</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
-    <string name="quick_action__ime_ui_mode_media__tooltip">Öffne Emoji-Palette</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Öffne Emoji-Panel</string>
     <string name="quick_action__settings" maxLength="12">Einstellung</string>
     <string name="quick_action__settings__tooltip">Einstellungen öffnen</string>
     <string name="quick_action__undo" maxLength="12">Rückgängig</string>
@@ -71,7 +71,7 @@
     <string name="quick_action__one_handed_mode__tooltip">Einhandmodus umschalten</string>
     <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Zug-Marker</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Aktuelle Marker-Position</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Kein</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine Operation</string>
     <string name="quick_actions_overflow__customize_actions_button">Aktionen neu ordnen</string>
     <string name="quick_actions_editor__header">Passe Reihenfolge der Aktionen an</string>
@@ -104,8 +104,8 @@
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primäre Symbolanordnung</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Symbolanordnung</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Verfasser</string>
-    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Währung setzen</string>
-    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerische Anordnung</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Währungssatz</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Zahlenlayout</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Erweiterte) Numerische Anordnung</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Anordnung Zahlenreihe</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäres Wählfeld</string>
@@ -126,19 +126,16 @@
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Design</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
-    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sonnenaufgangszeit</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Helles Design</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Dunkles Design</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Ausgewähltes Design</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Farbdesign an eine App anpassen</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Farbdesign passt sich an die verwendeten App an. Nur möglich wenn die verwendete App diese Funktionalität unterstützt.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Installierte Designs verwalten</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Ressourcen</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interner Speicher</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Externer Anbieter</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Tages-Design auswählen</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Nacht-Design auswählen</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Installierte Designs verwalten</string>
     <string name="settings__theme_editor__fine_tune__title">Editoreinstellungen</string>
     <string name="settings__theme_editor__fine_tune__level">Bearbeitungsmodus</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Zeige Farben als</string>
@@ -311,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zu Buchstaben zurück</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Inkognito-Indikator</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Schnellzugriffsleiste</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
@@ -413,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hell</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dunkel</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dunkel</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Nutze Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">App-Sprache</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zeige die App in der Übersicht</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
@@ -450,6 +449,8 @@
     <string name="setup__select_ime__title">{app_name} auswählen</string>
     <string name="setup__select_ime__description">{app_name} ist nun auf deinem System aktiviert. Um es zu benutzen, wähle bei der Standard-Eingabemethode {app_name} aus!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Tastatur wechseln</string>
+    <string name="setup__grant_notification_permission__title">Fehlerberichts-Benachrichtigungen zulassen</string>
+    <string name="setup__grant_notification_permission__description">Ab Android 13+ müssen Apps um Erlaubnis bitten, um         Benachrichtigungen zu senden. FlorisBoard verwendet diese nur, um im Falle eines App-Absturzes einen Fehlerbericht zu senden.         Diese Berechtigung kann jederzeit in den Systemeinstellungen widerrufen werden.    </string>
     <string name="setup__grant_notification_permission__btn">Berechtigung erteilen</string>
     <string name="setup__finish_up__title">Fertigstellen</string>
     <string name="setup__finish_up__description_p1">{app_name} ist nun im System aktiviert und bereit von dir angepasst zu werden.</string>
@@ -467,6 +468,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Tastaturerweiterungen</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rechtschreibeerweiterungen / Wörterbücher</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Design-Erweiterungen</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Zwischenablageverlauf</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Text Inhalte</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Bilder</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videos</string>
     <string name="backup_and_restore__back_up__success">Sicherung wurde erfolgreich exportiert!</string>
     <string name="backup_and_restore__back_up__failure">Exportieren des Sicherungsarchivs fehlgeschlagen: {error_message}</string>
     <string name="backup_and_restore__restore__title">Daten wiederherstellen</string>
@@ -540,6 +545,8 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Durch das Löschen des aktiven Elements wird auch das neueste Verlaufselement entfernt</string>
     <string name="send_to_clipboard__unknown_error">Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut!</string>
     <string name="send_to_clipboard__type_not_supported_error">Dieser Media-Typ wird nicht unterstützt.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Die Androidversion ist zu alt für diese Funktion.    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Nachfolgendes Bild wurde in die Zwischenablage kopiert.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Entwicklerwerkzeuge</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Entwickler-Werkzeuge ein/aus</string>
@@ -714,6 +721,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, ist immer das Hinweissymbol, oder der primäre Akzent, wenn kein Hinweissymbol verfügbar ist</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Intelligente Priorisierung</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Das erste Zeichen, das nach langem Drücken ausgewählt wird, wird je nach Sprache und Layout dynamisch, entweder als Hauptakzent oder als Hinweissymbol festgelegt</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Symbol für \"Geteilte Aktionen\"-Schalter mit dem Inkognito-Indikator ersetzen</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Inkognito-Indikator hinter die Tastatur anzeigen</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Zwingend aus</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Inkognito-Modus ist immer deaktiviert, egal, was die aktuelle App sagt. Die Inkognito-Aktion in der Smartbar ist nicht verfügbar.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Zwingend an</string>

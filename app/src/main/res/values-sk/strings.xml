@@ -26,9 +26,6 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pridať podtyp</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá sa, že ste nenakonfigurovali žiadne podtypy. Ako náhradný sa použije podtyp Angličtina/QWERTY!</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočná téma</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Vybraná téma</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prispôsobenie farieb aplikácii</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Farby motívu sa prispôsobia farbám v aktuálnej aplikácii, ak to cieľová aplikácia podporuje.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Aktíva aplikácie FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interné úložisko</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Externý poskytovateľ</string>

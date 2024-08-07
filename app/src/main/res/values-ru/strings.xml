@@ -39,6 +39,7 @@
     <string name="quick_action__arrow_left__tooltip">Переместить курсор влево</string>
     <string name="quick_action__arrow_right" maxLength="12">Вправо</string>
     <string name="quick_action__arrow_right__tooltip">Переместить курсор вправо</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Выполнить очистку основного клипа буфера обмена</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Копировать</string>
     <string name="quick_action__clipboard_copy__tooltip">Выполнить копирование из буфера обмена</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Вырезать</string>
@@ -46,6 +47,7 @@
     <string name="quick_action__clipboard_paste" maxLength="12">Вставить</string>
     <string name="quick_action__clipboard_paste__tooltip">Выполнить вставку из буфера обмена</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Выбрать все</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Выполнить выделение всего буфера обмена</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер обмена</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Включить историю буфера обмена</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Эмодзи</string>
@@ -66,10 +68,13 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Открытый провайдер голосового ввода</string>
     <string name="quick_action__one_handed_mode" maxLength="12">Одной рукой</string>
     <string name="quick_action__one_handed_mode__tooltip">Включить режим управления одной рукой</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Текущее положение маркера перетаскивания</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Отсутствует</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Нет операции</string>
     <string name="quick_actions_overflow__customize_actions_button">Изменить порядок действий</string>
     <string name="quick_actions_editor__header">Настроить порядок действий</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Закреплённое действие ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Динамические действия ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Скрытые действия ({n})</string>
     <!-- Incognito mode strings -->
@@ -124,15 +129,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Время заката</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневная тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Ночная тема</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Выбранная тема</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Адаптировать цвета под приложение</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Цвета темы приспосабливаются к цветам текущего приложения, если выбранное приложение это поддерживает.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Установленные темы</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Наборы приложений FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Внутреннее хранилище</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Внешний источник</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Выбрать светлую тему</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Установленные темы</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки редактора тем</string>
     <string name="settings__theme_editor__fine_tune__level">Уровень редактирования</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Показывать цвета как</string>
@@ -199,10 +201,10 @@
     <string name="snygg__rule_element__smartbar_actions_editor">Редактор действий умной панели</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Заголовок редактора действий умной панели</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Подзаголовок редактора действий умной панели</string>
-    <string name="snygg__rule_element__smartbar_candidates_row">Ряд кандидатов умной панели</string>
-    <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат умной панели</string>
-    <string name="snygg__rule_element__smartbar_candidate_clip">Запись-кандидат умной панели</string>
-    <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-кандидат умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Ряд предложений умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Слово-предложение умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Запись-предложение умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-предложение умной панели</string>
     <string name="snygg__rule_element__system_nav_bar">Панели навигации системы</string>
     <string name="snygg__rule_selector__pressed">При нажатии</string>
     <string name="snygg__rule_selector__focus">При фокусе</string>
@@ -237,6 +239,8 @@
     <string name="snygg__property_name__var_shape_variant">Обычная форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследование</string>
     <string name="snygg__property_value__solid_color">Сплошной цвет</string>
+    <string name="snygg__property_value__material_you_light_color">Динамический цвет (из светлой темы)</string>
+    <string name="snygg__property_value__material_you_dark_color">Динамический цвет (из тёмной темы)</string>
     <string name="snygg__property_value__image_ref">Источник изображения</string>
     <string name="snygg__property_value__rectangle_shape">Прямоугольная форма</string>
     <string name="snygg__property_value__circle_shape">Круглая форма</string>
@@ -285,6 +289,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Показать служебную клавишу</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Показывает настраиваемую служебную клавишу рядом с пробелом</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Действие служебной клавиши</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Надпись на пробеле</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Поведение кнопки изменения регистра</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
@@ -301,6 +307,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Длительность долгого нажатия</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробел переключает на буквы</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Будучи в символьной или цифровой раскладке, автоматически переходить обратно на ввод букв</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Индикатор инкогнито</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Умная панель</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
@@ -403,6 +410,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Использовать Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
@@ -440,6 +448,11 @@
     <string name="setup__select_ime__title">Выберите {app_name}</string>
     <string name="setup__select_ime__description">{app_name} активирована. Чтобы ею пользоваться, переключитесь на {app_name} в окне способа ввода!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Переключить клавиатуру</string>
+    <string name="setup__grant_notification_permission__title">Разрешить уведомления об ошибках</string>
+    <string name="setup__grant_notification_permission__description">Начиная с Android 13, приложения должны
+        запрашивать разрешение для отправки уведомлений. Florisboard будет использовать это только для отправки отчёта о сбое при вылете приложения.
+        Данное разрешение всегда можно отозвать в настройках устройства.
+    </string>
     <string name="setup__grant_notification_permission__btn">Предоставить разрешение</string>
     <string name="setup__finish_up__title">Готово</string>
     <string name="setup__finish_up__description_p1">Клавиатура {app_name} активирована и готова к дальнейшей настройке.</string>
@@ -457,6 +470,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Клавиатурные расширения</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Расширения для правописания / словари</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Расширения оформления</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">История буфера обмена</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Текст</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Изображения</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Видео</string>
     <string name="backup_and_restore__back_up__success">Резервное копирование выполнено!</string>
     <string name="backup_and_restore__back_up__failure">Невозможно создать резервную копию: {error_message}</string>
     <string name="backup_and_restore__restore__title">Восстановление данных</string>
@@ -530,6 +547,10 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">При очистке основного клипа также удаляется последняя запись в истории</string>
     <string name="send_to_clipboard__unknown_error">Неизвестная ошибка. Попробуйте еще раз!</string>
     <string name="send_to_clipboard__type_not_supported_error">Данный формат файла не поддерживается.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Требуется более новая версия Android для этой функции.
+    
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Изображение ниже скопировано в буфер обмена.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Инструменты разработчика</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Включить инструменты разработчика</string>
@@ -544,6 +565,8 @@
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Показывать наложением текущие результаты проверки орфографии для отладки</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Показывать границы нажатия клавиш</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Обводить границы нажатия клавиш красным контуром</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Показывать вспомогательные элементы перетаскивания</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Показывать невидимые вспомогательные элементы на экранах перетаскивания для отладки</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Очистить внутренний словарь пользователя</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Удаление всех слов из базы внутреннего пользовательского словаря</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Сбросить флаг \"{flag_name}\"</string>
@@ -556,6 +579,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системные настройки Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Языки системы</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Расширения и дополнения</string>
+    <string name="ext__list__ext_theme">Расширения темы</string>
+    <string name="ext__list__ext_keyboard">Расширения клавиатуры</string>
+    <string name="ext__list__ext_languagepack">Языковые пакеты</string>
     <string name="ext__meta__authors">Авторы</string>
     <string name="ext__meta__components">Встроенные компоненты</string>
     <string name="ext__meta__components_theme">Встроенные темы</string>
@@ -608,6 +635,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Ожидался медиафайл (изображение, аудио, шрифт и т.д.), но обнаружен архив с расширением.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Ожидался архив с расширением, но найден медиафайл (изображение, аудио, шрифт и т.д.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Во время импорта произошла непредвиденная ошибка. Были предоставлены следующие данные:</string>
+    <string name="ext__validation__enter_package_name">Укажите название пакета</string>
+    <string name="ext__validation__error_package_name">Название пакета не соответствует regex-у {id_regex}</string>
+    <string name="ext__validation__enter_version">Укажите версию</string>
+    <string name="ext__validation__enter_title">Укажите заголовок</string>
+    <string name="ext__validation__enter_maintainer">Укажите хотя бы одного разработчика</string>
+    <string name="ext__validation__enter_license">Укажите лицензию</string>
+    <string name="ext__validation__enter_component_id">Укажите ID компонента</string>
+    <string name="ext__validation__error_component_id">Укажите ID компонента, соответствующее {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Укажите метку компонента</string>
+    <string name="ext__validation__hint_component_label_to_long">Метка компонента длинна, что может привести к наложению в интерфейсе</string>
+    <string name="ext__validation__error_author">Укажите хотя бы одного автора</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Путь к стилю не должен быть пустым</string>
+    <string name="ext__validation__error_stylesheet_path">Укажите правильный путь к стилю, соответствующий {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Укажите название переменной</string>
+    <string name="ext__validation__error_property">Укажите правильное название переменной, соответствующее {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">По правилам, название переменной FlorisCSS начинается двумя дефисами (--)</string>
+    <string name="ext__validation__enter_color">Укажите строку цвета</string>
+    <string name="ext__validation__error_color">Укажите правильную строку цвета</string>
+    <string name="ext__validation__enter_dp_size">Укажите размер в dp</string>
+    <string name="ext__validation__enter_valid_number">Укажите правильное число</string>
+    <string name="ext__validation__enter_positive_number">Укажите положительное число (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Укажите размер в процентах</string>
+    <string name="ext__validation__enter_number_between_0_100">Укажите положительное число от 0 до 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Любое значение выше 50% будет работать так же, как и 50%, попробуйте уменьшить размер в процентах</string>
+    <string name="ext__update_box__internet_permission_hint">Так как это приложение не имеет доступа к Интернету, обновления для установленных расширений придётся проверять вручную.</string>
+    <string name="ext__update_box__search_for_updates">Проверить обновления</string>
+    <string name="ext__addon_management_box__managing_placeholder">Управление {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Все задачи, связанные с импортом, экспортом, созданием, персонализацией и удалением расширений могут быть выполнены через централизованный менеджер расширений.</string>
+    <string name="ext__addon_management_box__go_to_page">Перейти к {ext_home_title}</string>
+    <string name="ext__home__info">Вы можете скачать и установить расширения через магазин расширений FlorisBoard или импортировать любые файлы расширений, скачанные из интернета.</string>
+    <string name="ext__home__visit_store">Посетить магазин расширений</string>
+    <string name="ext__home__manage_extensions">Управление установленными расширениями</string>
+    <string name="ext__list__view_details">Подробности</string>
+    <string name="ext__check_updates__title">Проверить обновления</string>
     <!-- Action strings -->
     <string name="action__add">Добавить</string>
     <string name="action__apply">Применить</string>
@@ -661,6 +722,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Классика (3 колонки)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамическая ширина</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамическая ширина и прокрутка</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Активировать Capslock двойным нажатием</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Переключать режимы регистра с каждым нажатием</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Шестнадцатеричные коды</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Красный Зелёный Синий Прозрачность</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Отображать всегда</string>
@@ -684,6 +747,12 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Вьющиеся волосы</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Светлые волосы</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Без волос</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Вышестоящие предложение</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Размещает строку расширенных действий между пользовательским интерфейсом приложения и строкой предложений</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Нижестоящие предложение</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Размещает строку расширенных действий между строкой предложений и текстовой клавиатурой</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Поверх интерфейса приложения</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Размещает строку расширенных действий в виде накладки над пользовательским интерфейсом приложения, не влияя на высоту пользовательского интерфейса клавиатуры. Обратите внимание, что такое размещение может привести к тому, что поле ввода приложения будет частично перегружено</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Использовать вибромотор напрямую</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} будет напрямую взаимодействовать с аппаратным вибромотором. Это даёт больший контроль над продолжительностью и силой вибрации, но вибрация может быть не такой плавной и оптимизированной, как при использовании интерфейса тактильной обратной связи.</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Использовать интерфейс тактильной обратной связи</string>
@@ -694,6 +763,14 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является символом подсказки или основным акцентом, если символ подсказки недоступен</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Умный приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, динамически определяется как основной акцент или символ подсказки, основываясь на текущем языке и раскладке</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Заменять значок переключения общих действий на индикатор инкогнито</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Отображать индикатор инкогнито за клавиатурой</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Всегда выключен</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Режим инкогнито будет отключен всегда, независимо от переданных опций целевого приложения. Быстрое действие инкогнито в Smartbar будет недоступно при использовании этой опции.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Всегда включен</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Режим инкогнито будет включен всегда, независимо от переданных опций целевого приложения. Быстрое действие инкогнито в Smartbar не будет доступно при использовании этой опции.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Динамическое переключение</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Рекомендуемый вариант. Режим инкогнито будет включён либо в зависимости от предпочтений целевого приложения (автоматически), либо путём нажатия кнопки инкогнито на умной панели (вручную).</string>
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
     <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Воспроизводить звуки при вводе вне зависимости от системных настроек</string>
     <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Использовать вибрацию при вводе в зависимости от системных настроек</string>
@@ -713,16 +790,22 @@
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
     <string name="enum__shape_corner__bottom_start" comment="Enum value label">Низ начало</string>
     <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Только предложения</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Показывает только строку с предложениями, без каких-либо действий со строкой/тумблером или закрепленными действиями</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Только действия</string>
-    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Показывает только строку действий, без строки-кандидата или явно закрепленного действия</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Показывает только строку действий, без строки предложений или явно закрепленного действия</string>
     <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Предложения &amp; Общие действия</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Общий переключаемый ряд предложений и действий, с закрепленными действиями</string>
     <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Предложения &amp; Расширенные действия</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Статическая строка предложений и дополнительная строка действий с возможностью переключения, с закрепленными действиями</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Ещё</string>
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Отображаются все свойства, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Разработчик</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Отображаются все свойства. Свойства и правила отображаются так, как прописано в самом файле таблицы стилей.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Без надписи</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Текущий язык</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Использовать системные языки</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Использовать раскладки клавиатуры</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Не задано</string>

@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Символи</string>
     <string name="emoji__category__flags" comment="Emoji category name">Прапори</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Нещодавно використаних емодзі не знайдено. Як тільки ви почнете вводити емодзі, вони автоматично з\'являться тут.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Розблокуйте пристрій щоб побачити історію емодзі.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Порада: натисніть і утримуйте нещодавно використані емодзі, щоб знову видалити їх із цього списку!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Видалено {emoji} з нещодавно використаних емодзі</string>
     <!-- Quick action strings -->
@@ -129,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Час заходу</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Денна тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нічна тема</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Вибрана тема</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Адаптувати кольори під програму</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Кольори теми адаптуються під поточну програму, якщо вибрана програма підтримує це.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Керування встановленими темами</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ресурси FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Внутрішня пам\'ять</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Зовнішнє джерело</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Виберіть денну тему</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Виберіть нічну тему</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Керування встановленими темами</string>
     <string name="settings__theme_editor__fine_tune__title">Налаштування редактора тем</string>
     <string name="settings__theme_editor__fine_tune__level">Рівень редагування</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Показувати кольори як</string>
@@ -206,6 +204,7 @@
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Підзаголовок редактора дій розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Ряд кандидатів розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат розумної панелі</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Запис-кандидат розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Роздільник-кандидат розумної панелі</string>
     <string name="snygg__rule_element__system_nav_bar">Панель системної навігації</string>
     <string name="snygg__rule_selector__pressed">Натиснуто</string>
@@ -223,18 +222,42 @@
     <string name="snygg__property_name__font_style">Стиль шрифту</string>
     <string name="snygg__property_name__font_variant">Варіант шрифту</string>
     <string name="snygg__property_name__font_weight">Накреслення</string>
+    <string name="snygg__property_name__shadow_elevation">Висота тіні</string>
     <string name="snygg__property_name__shape">Форма</string>
     <string name="snygg__property_name__var_primary">Основний колір</string>
+    <string name="snygg__property_name__var_primary_variant">Основний колір (варіант)</string>
     <string name="snygg__property_name__var_secondary">Додатковий колір</string>
+    <string name="snygg__property_name__var_secondary_variant">Додатковий колір (варіант)</string>
+    <string name="snygg__property_name__var_background">Основний фон</string>
+    <string name="snygg__property_name__var_surface">Звичайна поверхня</string>
+    <string name="snygg__property_name__var_surface_variant">Звичайна поверхня (варіант)</string>
+    <string name="snygg__property_name__var_on_primary">Передній план основного</string>
+    <string name="snygg__property_name__var_on_secondary">Передній план додаткового</string>
+    <string name="snygg__property_name__var_on_background">Передній план фону</string>
+    <string name="snygg__property_name__var_on_surface">Передній план поверхні</string>
+    <string name="snygg__property_name__var_on_surface_variant">Передній план поверхні (варіант)</string>
+    <string name="snygg__property_name__var_shape">Звичайна форма</string>
+    <string name="snygg__property_name__var_shape_variant">Звичайна форма (варіант)</string>
+    <string name="snygg__property_value__explicit_inherit">Успадкувати</string>
     <string name="snygg__property_value__solid_color">Суцільний колір</string>
+    <string name="snygg__property_value__material_you_light_color">Material You колір (світлий)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You колір (темний)</string>
+    <string name="snygg__property_value__image_ref">Джерело зображення</string>
     <string name="snygg__property_value__rectangle_shape">Форма прямокутника</string>
     <string name="snygg__property_value__circle_shape">Форма кола</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Зрізання кутів (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Зрізання кутів (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Закруглення кутів (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Закруглення кутів (%)</string>
     <string name="snygg__property_value__dp_size">Розмір (dp)</string>
     <string name="snygg__property_value__sp_size">Розмір (sp)</string>
     <string name="snygg__property_value__percentage_size">Розмір (%)</string>
+    <string name="snygg__property_value__defined_var">Посилання на змінну</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звуки &amp; Вібрація</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звуковий відгук / Звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Увімкнути звуковий відгук</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Ніколи не відтворювати звуки при наборі, незалежно від системних налаштувань</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Гучність подій введення</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук натискання клавіші</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук довгого натискання клавіші</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Тактильний відгук / Вібрація</string>
@@ -275,15 +298,23 @@
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Використовувати великі літери на основі поточного контексту введення</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматично додавати пробіл після знаків пунктуації</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запам\'ятовувати стан Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock буде залишатись при переході на інше текстове поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Період подвійного пробілу</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двічі натиснувши на пробіл, вставляється крапка, за якою йде пробіл</string>
+    <string name="pref__spelling__title" comment="Preference group title">Правопис</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Вимкнено для всієї системи. У текстових полях для неправильних слів червоні лінії не з’являтимуться. Торкніться, щоб змінити.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Службу перевірки правопису не встановлено. Натисніть, щоб змінити.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Мови</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Використовувати імена контактів</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Знаходити імена з вашого списку контактів</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Використовувати користувацький словник</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Шукати записи в користувацьких словниках</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Користувацькі словники</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Увімкнути системний користувацький словник</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Додати, переглянути, та прибрати записи з системного користувацького словника</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Увімкнути внутрішній користувацький словник</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Для всіх мов</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Жести та безперервний ввід</string>
     <string name="pref__glide__title" comment="Preference group title">Безперервний ввід</string>

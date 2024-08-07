@@ -21,7 +21,6 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системски</string>
     <string name="settings__home__title" comment="Title of the Home screen">Добредојдовте во {app_name}</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Одбери тема</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Тастатура</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->

@@ -35,8 +35,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Vrijeme zalaska sunca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dnevna tema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noćna tema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Odabrana tema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adaptiraj boje prema aplikaciji</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interna memorija</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatura</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Red sa brojevima</string>

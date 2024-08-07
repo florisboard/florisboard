@@ -95,15 +95,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日の入時間</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">日のテーマ</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜間テーマ</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">選択されたテーマ</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">アプリに色を適応</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">ターゲットアプリがこれをサポートしている場合、テーマの色は現在のアプリの色に適合します。</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">インストールされたテーマを管理</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoardアプリアセット</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">内部ストレージ</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">外部プロバイダー</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">日のテーマを選択</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">夜間テーマを選択</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">インストールされたテーマを管理</string>
     <string name="settings__theme_editor__fine_tune__title">微調整エディター</string>
     <string name="settings__theme_editor__fine_tune__level">編集レベル</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">色を次のように表示</string>

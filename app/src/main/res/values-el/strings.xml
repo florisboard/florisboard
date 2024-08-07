@@ -72,15 +72,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ώρα δύσης</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Θέμα ημέρας</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Θέμα νύχτας</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Επιλεγμένο θέμα</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Προσαρμογή χρωμάτων στην εφαρμογή</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Τα χρώματα του θέματος προσαρμόζονται σε αυτά της τρέχουσας εφαρμογής, εάν αυτή η εφαρμογή το υποστηρίζει.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Διαχείριση εγκατεστημένων θεμάτων</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Πηγές της Εφαρμογής FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Εσωτερικός αποθηκευτικός χώρος</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Εξωτερικός Προμηθευτής</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Επιλογή θέματος μέρας</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Επιλογή θέματος νύχτας</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Διαχείριση εγκατεστημένων θεμάτων</string>
     <string name="snygg__rule_element__glide_trail">Διαδρομή ολίσθησης</string>
     <string name="snygg__rule_selector__disabled">Απενεργοποιημένο</string>
     <string name="snygg__property_name__var_primary">Πρωτεύον χρώμα</string>

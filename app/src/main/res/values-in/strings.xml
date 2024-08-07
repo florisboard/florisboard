@@ -130,15 +130,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Waktu matahari terbenam</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema siang</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema malam</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema yang dipilih</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Sesuaikan warna dengan aplikasi</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Warna tema beradaptasi dengan yang ada di aplikasi saat ini, jika aplikasi target mendukung ini.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Kelola tema terpasang</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Aset Aplikasi FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Penyimpanan Internal</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Penyedia Eksternal</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Pilih tema pagi</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Pilih tema malam</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Kelola tema terpasang</string>
     <string name="settings__theme_editor__fine_tune__title">Editor lanjutan</string>
     <string name="settings__theme_editor__fine_tune__level">Tingkat pengeditan</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Tampilkan warna-warna sebagai</string>

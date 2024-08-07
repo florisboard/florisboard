@@ -130,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Czas zachodu słońca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tryb dzienny</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tryb nocny</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Wybrany motyw</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Dopasuj kolory do aplikacji</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Kolory motywu dostosowują się do tych w bieżącej aplikacji, jeśli dana aplikacja to obsługuje.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Wbudowane w aplikację FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Pamięć wewnętrzna</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Zewnętrzny dostawca</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Wybierz motyw dzienny</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Wybierz motyw nocny</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
     <string name="settings__theme_editor__fine_tune__title">Dostosuj edytor</string>
     <string name="settings__theme_editor__fine_tune__level">Edytuj poziom</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Wyświetl kolory jako</string>
@@ -311,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Opóznienie długiego przytrzymania</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spacja przełącza na znaki</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatycznie przełącza się z powrotem na znaki w symbolach lub cyfrach</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Wskaźnik incognito</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Inteligentny pasek</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
@@ -413,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Jasny</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Ciemny</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Ciemny</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Używaj Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Język ustawień</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Pokazuj aplikację w launcherze</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Zawsze włączone na Androidzie 10+ ze względu na ograniczenia systemu</string>
@@ -472,6 +471,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozszerzenia klawiatury</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozszerzenia pisowni / słowniki</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Rozszerzenia motywów</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Historia schowka</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Elementy tekstowe</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Obrazy</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Wideo</string>
     <string name="backup_and_restore__back_up__success">Pomyślnie wyeksportowano archiwum kopii zapasowej!</string>
     <string name="backup_and_restore__back_up__failure">Eksportowanie archiwum kopii zapasowej nie powiodło się: {error_message}</string>
     <string name="backup_and_restore__restore__title">Przywróć dane</string>
@@ -576,6 +579,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Ustawienia systemowe Androida</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Lokale systemowe</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Dodatki i rozszerzenia</string>
+    <string name="ext__list__ext_theme">Rozszerzenia motywów</string>
+    <string name="ext__list__ext_keyboard">Rozszerzenia klawiatury</string>
+    <string name="ext__list__ext_languagepack">Rozszerzenia pakietów językowych</string>
     <string name="ext__meta__authors">Autorzy</string>
     <string name="ext__meta__components">Dołączone komponenty</string>
     <string name="ext__meta__components_theme">Dołączone motywy</string>
@@ -628,6 +635,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Oczekiwano pliku multimedialnego (obrazu, dźwięku, czcionki itp.), ale znaleziono archiwum rozszerzeń.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Oczekiwano archiwum rozszerzeń, ale znaleziono plik multimedialny (obrazek, dźwięk, czcionkę itp.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Podczas importowania wystąpił nieoczekiwany błąd. Podano następujące szczegóły:</string>
+    <string name="ext__validation__enter_package_name">Wprowadź nazwę pakiety</string>
+    <string name="ext__validation__error_package_name">Nazwa pakietu nie pasuje do wyrażenia regularnego {id_regex}</string>
+    <string name="ext__validation__enter_version">Wprowadź wersję</string>
+    <string name="ext__validation__enter_title">Wprowadź tytuł</string>
+    <string name="ext__validation__enter_maintainer">Wprowadź co najmniej jednego opiekuna</string>
+    <string name="ext__validation__enter_license">Wprowadź identyfikator licencji</string>
+    <string name="ext__validation__enter_component_id">Wprowadź identyfikator komponentu</string>
+    <string name="ext__validation__error_component_id">Wprowadź pasujący identyfikator komponentu {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Wprowadź etykietę komponentu</string>
+    <string name="ext__validation__hint_component_label_to_long">Etykieta komponentu jest dość długa, co może prowadzić do jej przycięcia w interfejsie użytkownika</string>
+    <string name="ext__validation__error_author">Wprowadź co najmniej jednego autora</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Ścieżka arkusza stylów nie może być pusta</string>
+    <string name="ext__validation__error_stylesheet_path">Wprowadź prawidłową ścieżkę dopasowania arkusza stylów {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Wprowadź nazwę zmiennej</string>
+    <string name="ext__validation__error_property">Wprowadź prawidłową nazwę zmiennej pasującą do {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Zgodnie z konwencją, nazwa zmiennej FlorisCSS zaczyna się od dwóch myślników (--)</string>
+    <string name="ext__validation__enter_color">Wprowadź ciąg koloru</string>
+    <string name="ext__validation__error_color">Wprowadź prawidłowy ciąg koloru</string>
+    <string name="ext__validation__enter_dp_size">Wprowadź rozmiar dp</string>
+    <string name="ext__validation__enter_valid_number">Wprowadź prawidłowy numer</string>
+    <string name="ext__validation__enter_positive_number">Wprowadź liczbę dodatnią (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Wprowadź rozmiar procentowy</string>
+    <string name="ext__validation__enter_number_between_0_100">Wprowadź liczbę dodatnią z przedziału od 0 do 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Każda wartość powyżej 50% będzie zachowywać się tak, jakby ustawić 50%, rozważ obniżenie rozmiaru procentowego</string>
+    <string name="ext__update_box__internet_permission_hint">Ponieważ ta aplikacja nie ma dostępu do Internetu, aktualizacje zainstalowanych rozszerzeń muszą być sprawdzane ręcznie.</string>
+    <string name="ext__update_box__search_for_updates">Szukaj aktualizacji</string>
+    <string name="ext__addon_management_box__managing_placeholder">Zarządzanie {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Wszystkie zadania związane z importowaniem, eksportowaniem, tworzeniem, dostosowywaniem i usuwaniem rozszerzeń mogą być obsługiwane za pośrednictwem scentralizowanego menedżera dodatków.</string>
+    <string name="ext__addon_management_box__go_to_page">Przejdź do {ext_home_title}</string>
+    <string name="ext__home__info">Możesz pobrać i zainstalować rozszerzenia ze sklepu dodatków FlorisBoard lub zaimportować dowolny plik rozszerzenia pobrany z Internetu.</string>
+    <string name="ext__home__visit_store">Odwiedź sklep z dodatkami</string>
+    <string name="ext__home__manage_extensions">Zarządzaj zainstalowanymi rozszerzeniami</string>
+    <string name="ext__list__view_details">Pokaż szczegóły</string>
+    <string name="ext__check_updates__title">Sprawdź aktualizacje</string>
     <!-- Action strings -->
     <string name="action__add">Dodaj</string>
     <string name="action__apply">Zastosuj</string>
@@ -722,6 +763,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest zawsze symbolem podpowiedzi lub głównym akcentem, jeśli nie jest dostępny symbol podpowiedzi</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Inteligentna priorytetyzacja</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Początkowy znak wybrany po długim naciśnięciu jest dynamicznie określany jako główny akcent lub symbol podpowiedzi, w oparciu o bieżący język i układ</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Zastąpienie ikony przełączania akcji udostępnionych wskaźnikiem incognito</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Wyświetlanie wskaźnika incognito za klawiaturą</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Wymuś wyłączenie</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Tryb incognito będzie zawsze wyłączony, niezależnie od przekazanych opcji aplikacji docelowej. Szybka czynność incognito w Inteligentnym pasku nie będzie dostępna z tą opcją.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Wymuś włączenie</string>

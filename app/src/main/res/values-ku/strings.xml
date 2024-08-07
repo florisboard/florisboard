@@ -77,15 +77,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">dema berava rojê</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Rûkara Rojê</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Rûkara şevê</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Rûkara Hilbijartî</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Rengan li gorî pêvekan adapte bike</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Rengên dirbê kesên di vê pêla vê de adapte dibin, ger sepan hedef piştgiriyê bide vê yekê.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Rûkarên sazkirî bi rê ve bibe</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Hebûnên Sepan</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Depoya Navxweyî</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Pêşkêşkerê Derve</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Rûkarê ronahiyê hilbijêre</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Rûkarê tarî hilbijêre</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Rûkarên sazkirî bi rê ve bibe</string>
     <string name="settings__theme_editor__fine_tune__title">Edîtorê awazê xweşik</string>
     <string name="settings__theme_editor__fine_tune__level">Asta sererastkirinê</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Rengan wekî</string>

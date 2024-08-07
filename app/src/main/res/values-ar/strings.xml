@@ -130,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">وقت الغروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق نهاري</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">نسق ليلي</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">النسق المحدد</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">تكييف الألوان مع التطبيق</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">تتكيف ألوان الثيم مع تلك الموجودة في التطبيق الحالي ، إذا كان التطبيق المستهدف يدعم ذلك.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">أدارة السمات المثبتة</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">أصول تطبيق FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">الذاكرة الداخلية</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">مزود خارجي</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">اختيار النمط الصباحي</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">اختيار النمط الليلي</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">أدارة السمات المثبتة</string>
     <string name="settings__theme_editor__fine_tune__title">تعديل متقدم</string>
     <string name="settings__theme_editor__fine_tune__level">مستوى التعديل</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">عرض اللون كـ</string>
@@ -311,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">مفتاح المسافة يبدل إلى الأحرف</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">يعود تلقائيًا إلى الأحرف عندما تكون في الرموز أو الأرقام</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">علامة وضع التخفي</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">الشريط الذكـي</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
@@ -413,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">فاتح</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">داكن</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">أسود قاتم</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">استخدام تصميم Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">إعدادات اللغة</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">إظهار أيقونة البرنامج في درج التطبيقات</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
@@ -471,6 +470,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">ملحقات لوحة المفاتيح</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">ملحقات التهجئة/ القاموس</string>
     <string name="backup_and_restore__back_up__files_ime_theme">ملحقات السمات</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">سجل الحافظة</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">عناصر النص</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">صور</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">فيديوهات</string>
     <string name="backup_and_restore__back_up__success">تم تصدير أرشيف النسخة الاحتياطية بنجاح!</string>
     <string name="backup_and_restore__back_up__failure">فشل في تصدير أرشيف الاضافات: {error_message}</string>
     <string name="backup_and_restore__restore__title">إستعادة البيانات</string>
@@ -574,6 +577,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">إعدادات نظام أندرويد</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">لغات النظام</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">الإضافات والملحقات</string>
+    <string name="ext__list__ext_theme">ملحقات السمات</string>
+    <string name="ext__list__ext_keyboard">ملحقات لوحة المفاتيح</string>
+    <string name="ext__list__ext_languagepack">ملحقات حزم اللغة</string>
     <string name="ext__meta__authors">المؤلفون</string>
     <string name="ext__meta__components">العناصر المجمعة</string>
     <string name="ext__meta__components_theme">الثيمات المجمعة</string>
@@ -626,6 +633,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">من المتوقع وجود ملف وسائط (صورة ، صوت ، خط ، إلخ) ولكن تم العثور على أرشيف ملحق.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">من المتوقع وجود أرشيف ملحق ولكن تم العثور على ملف وسائط (صورة ، صوت ، خط ، إلخ).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">حدث خطأ غير متوقع أثناء الاستيراد. تم توفير التفاصيل التالية:</string>
+    <string name="ext__validation__enter_package_name">يرجى إدخال اسم الحُزْمَة</string>
+    <string name="ext__validation__error_package_name">اسم الحُزْمَة لا يتطابق مع المدى {id_regex}</string>
+    <string name="ext__validation__enter_version">الرجاء إدخال إصدار</string>
+    <string name="ext__validation__enter_title">الرجاء إدخال عنوان</string>
+    <string name="ext__validation__enter_maintainer">يرجى إدخال مشرف صيانة صالح واحد على الأقل</string>
+    <string name="ext__validation__enter_license">يرجى إدخال معرف الترخيص</string>
+    <string name="ext__validation__enter_component_id">يرجى إدخال معرّف المكون</string>
+    <string name="ext__validation__error_component_id">يرجى إدخال معرف مكون مطابق {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">يرجى إدخال تسمية المكون</string>
+    <string name="ext__validation__hint_component_label_to_long">عنوان المكون الخاص بك طويل جدًا، مما قد يؤدي إلى أقتصاصه في واجهة المستخدم</string>
+    <string name="ext__validation__error_author">يرجى إدخال منشئ صالح واحد على الأقل</string>
+    <string name="ext__validation__error_stylesheet_path_blank">يجب ألا يكون مسار ورقة الأنماط فارغًا</string>
+    <string name="ext__validation__error_stylesheet_path">يرجى إدخال مسار ورقة أنماط صالح يطابق {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">يرجى إدخال اسم المتغير</string>
+    <string name="ext__validation__error_property">يرجى إدخال اسم متغير صالح يطابق {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">حسب الاتفاقية، يبدأ اسم متغير FlorisCSS بشرطتين (--)</string>
+    <string name="ext__validation__enter_color">يرجى إدخال سلسلة ألوان</string>
+    <string name="ext__validation__error_color">يرجى إدخال سلسلة ألوان صالحة</string>
+    <string name="ext__validation__enter_dp_size">يرجى إدخال حجم dp</string>
+    <string name="ext__validation__enter_valid_number">يرجى إدخال رقم صحيح</string>
+    <string name="ext__validation__enter_positive_number">يرجى إدخال رَقْم موجب (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">يرجى إدخال النسبة المئوية للحجم</string>
+    <string name="ext__validation__enter_number_between_0_100">يرجى إدخال رَقْم موجب بين 0 و 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">أي قيمة أعلى من 50 ٪ ستتصرف كما لو أنك قمت بتعيين 50 ٪، فكر في خفض النسبة المئوية لحجمك</string>
+    <string name="ext__update_box__internet_permission_hint">نظرًا لأن هذا التطبيق ليس لديه إذن إنترنت، يجب التحقق من تحديثات الإضافات المثبتة يدويًا.</string>
+    <string name="ext__update_box__search_for_updates">البحث عن التحديثات</string>
+    <string name="ext__addon_management_box__managing_placeholder">إدارة {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">يمكن التعامل مع جميع المهام المتعلقة باستيراد الملحقات وتصديرها وإنشائها وتخصيصها وإزالتها بواسطة مدير الإضافات المركزي.</string>
+    <string name="ext__addon_management_box__go_to_page">انتقل إلى {ext_home_title}</string>
+    <string name="ext__home__info">يمكنك تنزيل الإضافات وتثبيتها من متجر إضافات FlorisBoard أو استيراد أي مِلَفّ ملحق قمت بتنزيله من الإنترنت.</string>
+    <string name="ext__home__visit_store">زيارة متجر الإضافات</string>
+    <string name="ext__home__manage_extensions">إدارة الإضافات المثبتة</string>
+    <string name="ext__list__view_details">عرض التفاصيل</string>
+    <string name="ext__check_updates__title">التحقق من وجود تحديثات</string>
     <!-- Action strings -->
     <string name="action__add">إضافة</string>
     <string name="action__apply">تطبيق</string>
@@ -720,6 +761,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">دائمًا ما يكون الحرف الأولي المحدد بعد الضغط لفترة طويلة هو رمز التلميح ، أو العلامة الأساسية في حالة عدم توفر رمز تلميح</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">تحديد الاولويات الذكي</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">يتم تحديد الحرف الأولي المحدد بعد الضغط لفترة طويلة ديناميكيًا ليكون إما العلامة الأساسية أو رمز التلميح ، بناءً على اللغة والتخطيط الحاليين</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">استبدل أيقونة تبديل الإجراءات المشتركة بمؤشر التصفح المتخفي</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">عرض مؤشر التصفح المتخفي خلف لوحة المفاتيح</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">إيقاف قسري</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">سيتم دائما تعطيل وضع التصفح المتخفي، بغض النظر عن الخيارات التي تم تمريرها في التطبيق المستهدف. لن يتوفر الإجراء السريع للتصفح المتخفي في الشريط الذكي مع هذا الخِيار.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">تفعيل قسري</string>

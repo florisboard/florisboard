@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Szimbólumok</string>
     <string name="emoji__category__flags" comment="Emoji category name">Zászlók</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nem található mostanában használt emoji. Az emojik automatikusan megjelennek itt, amint elkezdi őket beírni.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">A hangulatjel előzmények eléréséhez, kérjük először oldja fel a készülékét.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Profi tipp: nyomjon hosszan a mostanában használt emojikra, hogy eltávolítsa őket ebből a nézetből!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} eltávolítva a mostanában használt emojik közül</string>
     <!-- Quick action strings -->
@@ -120,7 +121,7 @@
     <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Összes megjelenítése</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Úgy tűnik, hogy nem állított be altípusokat. Tartalékként az angol/QWERTY lesz használva!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ez az altípus már létezik!</string>
-    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Legalább egy mezőnek nincs érték kiválasztva. Válasszon értéket az összes mezőnek.</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Legalább egy mezőnek nincs érték kiválasztva. Kérjük válasszon értéket az összes mezőnek.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nincs telepítve)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Kiosztások</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Téma</string>
@@ -129,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Napnyugta ideje</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Nappali téma</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Éjszakai téma</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Kiválasztott téma</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Színek módosítása az alkalmazáshoz</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Színek módosítása az alkalmazáshoz, ha a célalkalmazás támogatja.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Telepített témák kezelése</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard alkalmazásadatok</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Belső tárhely</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Külső szolgáltató</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Nappali téma kiválasztása</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Éjjeli téma kiválasztása</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Telepített témák kezelése</string>
     <string name="settings__theme_editor__fine_tune__title">Finomhangoló szerkesztő</string>
     <string name="settings__theme_editor__fine_tune__level">Szerkesztői szint</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Színek megjelenítése mint</string>
@@ -310,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz karaktert vált</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatikusan visszavált karakter oldalra a szimbólumokról és számokról</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Inkognitó jelző</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
@@ -371,13 +370,13 @@
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Szó hozzáadása</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Szó szerkesztése</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Szó</string>
-    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Adjon meg egy szót</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Adjon meg egy szót a következőhöz: {regex}</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Kérjük adjon meg egy szót</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Kérjük adjon meg egy szót a következőhöz: {regex}</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Gyakoriság ({f_min} és {f_max} között)</string>
-    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Adjon meg egy gyakoriság értéket</string>
-    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Adjon meg egy helyes számot a megadott intervallumon belül</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Kérjük adjon meg egy gyakoriság értéket</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Kérjük adjon meg egy helyes számot a megadott intervallumon belül</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Parancsikon (opcionális)</string>
-    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Adjon meg egy egyező szót: {regex}</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Kérjük adjon meg egy egyező szót: {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Nyelvkód (opcionális)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">A nyelvkód nem illeszkedik az elvárt formátumhoz. A kód vagy csak nyelv (pl. hu), nyelv és ország (pl. hu_HU), vagy nyelv és ország majd szkript (pl. hu_HU-script) formátumú kell legyen.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesztusok és csúsztatott gépelés</string>
@@ -412,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sötét</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sötét</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Material You használata</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Beállítások nyelve</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Mindig bekapcsolt Android 10+ esetében a rendszer korlátozások miatt</string>
@@ -449,6 +449,13 @@
     <string name="setup__select_ime__title">{app_name} kiválasztása</string>
     <string name="setup__select_ime__description">A {app_name} most már engedélyezve van a rendszerben. Hogy aktívan használja, váltson erre: {app_name} a bevitelkiválasztó párbeszédablakban!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Billentyűzet váltása</string>
+    <string name="setup__grant_notification_permission__title">Összeomlási jelentések értesítéseinek engedélyezése</string>
+    <string name="setup__grant_notification_permission__description">Az Android 13+ rendszertől kezdve az alkalmazásoknak engedélyt kell kérniük az
+        értesítések küldéséhez.
+A Florisboard-ban ez csak arra szolgál, hogy összeomlás esetén megnyíljon az összeomlási jelentés képernyője.
+        Ez az engedély bármikor megváltoztatható a rendszerbeállításokban.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Engedély megadása</string>
     <string name="setup__finish_up__title">Befejezés</string>
     <string name="setup__finish_up__description_p1">{app_name} most már engedélyezve van a rendszerben, és csak arra vár, hogy személyre szabja.</string>
     <string name="setup__finish_up__description_p2">Ha bármilyen hibával vagy összeomlással találkozik, vagy csak javaslatot szeretne tenni, nézze meg a projekt kódtárját a névjegy képernyőn!</string>
@@ -465,6 +472,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Billentyűzet kiterjesztések</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Helyesírási kiterjesztések / szótárak</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Téma kiterjesztések</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Vágólapelőzmények</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Szövegelemek</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Képek</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videók</string>
     <string name="backup_and_restore__back_up__success">Biztonsági mentés archívum sikeresen exportálva!</string>
     <string name="backup_and_restore__back_up__failure">Nem sikerült exportálni a biztonsági mentés archívumot: {error_message}</string>
     <string name="backup_and_restore__restore__title">Adatok visszaállítása</string>
@@ -473,8 +484,8 @@
     <string name="backup_and_restore__restore__metadata">Kiválasztott biztonsági mentés archívum</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Ez az archívum egy korábbi verzióból került mentésre, amely általában támogatott. Azonban felmerülhetnek problémák, vagy egyes beállítások nem feltétlenül töltődnek vissza az eltérő funkciók miatt.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Az archívum egy harmadik fél által kibocsátott alkalmazással készült, amely általában támogatott. Felmerülhet adatvesztés, ezért csak saját felelősségre ajánlott!</string>
-    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Ez az archívum nem megfelelő metaadatot tartalmaz. Vagy megsérült, vagy módosításra került. Nem lehetséges a betöltés, kérem válasszon egy másikat.</string>
-    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Ez az archívum nem tartalmaz visszatölthető adatot, kérem válasszon másikat.</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Ez az archívum nem megfelelő metaadatot tartalmaz. Vagy megsérült, vagy módosításra került. Nem lehetséges a betöltés, kérjük válasszon egy másikat.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Ez az archívum nem tartalmaz visszatölthető adatot, kérjük válasszon másikat.</string>
     <string name="backup_and_restore__restore__mode">Visszaállítási mód</string>
     <string name="backup_and_restore__restore__mode_merge">Egyesítés a jelenlegi adatokkal</string>
     <string name="backup_and_restore__restore__mode_erase_and_overwrite">Törlés és a jelenlegi adatok felülírása</string>
@@ -502,7 +513,7 @@
     <string name="clipboard__empty__title">A vágólapja üres</string>
     <string name="clipboard__empty__message">Ha kimásol szövegeket vagy képeket, itt fognak megjelenni.</string>
     <string name="clipboard__locked__title">A vágólapja zárolva van</string>
-    <string name="clipboard__locked__message">Elsőnek oldja fel az eszközét, hogy elérje a vágólapelőzményeit.</string>
+    <string name="clipboard__locked__message">A vágólapelőzmények eléréséhez, kérjük először oldja fel a készülékét.</string>
     <string name="clipboard__group_pinned">Kitűzött</string>
     <string name="clipboard__group_recent">Legutóbbi</string>
     <string name="clipboard__group_other">Egyéb</string>
@@ -536,12 +547,17 @@
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Az elsődleges vágólap ürítése befolyásolja az előzményeket</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Az elsődleges vágólap ürítése emellett törli az utolsó elemet</string>
+    <string name="send_to_clipboard__unknown_error">Ismeretlen hiba történt. Kérjük próbálja újra!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Ez a médiatípus nem támogatott.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Az android verziója túl régi ehhez a funkcióhoz.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Az alábbi kép a vágólapra lett másolva.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Fejlesztői eszközök</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Fejlesztői eszközök engedélyezése</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Eszközök kifejezetten hibakereséshez és hibaelhárításhoz</string>
     <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Heap memória statisztika megjelenítése</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">A jobb felső sarokban megjeleníti a heap memóriahasználatot és a maximális méretet.</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">A jobb felső sarokban megjeleníti a heap memóriahasználatot és a maximális méretet</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Elsődleges vágólap megjelenítése</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">A jelenlegi elsődleges vágólap a billentyűzet fölött jelenik meg</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Mutassa a beviteli állapot átfedést</string>
@@ -564,6 +580,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Rendszer Android beállítások</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Rendszer nyelvek</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Kiegészítők</string>
+    <string name="ext__list__ext_theme">Téma kiterjesztések</string>
+    <string name="ext__list__ext_keyboard">Billentyűzet kiterjesztések</string>
+    <string name="ext__list__ext_languagepack">Nyelvi csomag kiterjesztések</string>
     <string name="ext__meta__authors">Szerzők</string>
     <string name="ext__meta__components">Csomagolt összetevők</string>
     <string name="ext__meta__components_theme">Tartalmazott témák</string>
@@ -590,7 +610,7 @@
     <string name="ext__editor__title_edit_theme">Téma kiterjesztés szerkesztése</string>
     <string name="ext__editor__metadata__title">Metaadatok kezelése</string>
     <string name="ext__editor__metadata__title_invalid">Érvénytelen metaadatok</string>
-    <string name="ext__editor__metadata__message_invalid">A metaadatok ehhez a kiterjesztéshez érvénytelenek, nézze meg a metaadat-szerkesztőt a részletekért!</string>
+    <string name="ext__editor__metadata__message_invalid">A metaadatok ehhez a kiterjesztéshez érvénytelenek, kérjük nézze meg a metaadat-szerkesztőt a részletekért!</string>
     <string name="ext__editor__dependencies__title">Függőségek kezelése</string>
     <string name="ext__editor__files__title">Archívumfájlok kezelése</string>
     <string name="ext__editor__create_component__title">Komponens létrehozása</string>
@@ -616,6 +636,39 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Egy médiafájlt várt (kép, hang, betűtípus, stb.), de egy kiterjesztésarchívumot kapott.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Egy kiterjesztésarchívumot várt, de egy médiafájlt (kép, hang, betűtípus, stb.) kapott.</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Váratlan hiba történt az importálás során. A részletek a következőek:</string>
+    <string name="ext__validation__enter_package_name">Kérjük adjon meg egy csomagnevet</string>
+    <string name="ext__validation__error_package_name">A csomagnév nem egyezik a reguláris kifejezéssel: {id_regex}</string>
+    <string name="ext__validation__enter_version">Kérjük adjon meg egy verziót</string>
+    <string name="ext__validation__enter_title">Kérjük adjon meg egy címet</string>
+    <string name="ext__validation__enter_maintainer">Kérjük adjon meg legalább egy érvényes karbantartót</string>
+    <string name="ext__validation__enter_license">Kérjük adjon meg egy licencazonosítót</string>
+    <string name="ext__validation__enter_component_id">Kérjük adjon meg egy összetevőazonosítót</string>
+    <string name="ext__validation__error_component_id">Kérjük adjon meg egy összetevőazonosítót a következőhöz: {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Kérjük adjon meg egy összetevőcímet</string>
+    <string name="ext__validation__hint_component_label_to_long">Az összetevőcím elég hosszú, ami lehet, hogy le lesz vágva a felületen</string>
+    <string name="ext__validation__error_author">Kérjük adjon meg legalább egy érvényes szerzőt</string>
+    <string name="ext__validation__error_stylesheet_path_blank">A stíluslap útvonala nem lehet üres</string>
+    <string name="ext__validation__error_stylesheet_path">Kérjük adjon meg egy érvényes stíluslap útvonalat a következőhöz: {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Kérjük adjon meg egy változónevet</string>
+    <string name="ext__validation__error_property">Kérjük adjon meg egy változónevet a következőhöz: {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Megállapodás szerint a FlorisCSS változónevek két kötőjellel kezdődnek (--)</string>
+    <string name="ext__validation__enter_color">Kérjük adjon meg egy szín sztringet</string>
+    <string name="ext__validation__error_color">Kérjük adjon meg egy érvényes szín sztringet</string>
+    <string name="ext__validation__enter_dp_size">Kérjük adjon meg egy dp méretet</string>
+    <string name="ext__validation__enter_valid_number">Kérjük adjon meg egy érvényes számot</string>
+    <string name="ext__validation__enter_positive_number">Kérjük adjon meg egy pozitív számot (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Kérjük adjon meg egy százalékot</string>
+    <string name="ext__validation__enter_number_between_0_100">Kérjük adjon meg egy pozitív számot 0 és 100 között</string>
+    <string name="ext__validation__hint_value_above_50_percent">Bármilyen érték 50% felett úgy fog viselkedni, mintha 50%-ra állította volna, fontolja meg hogy csökkenti a százalékot</string>
+    <string name="ext__update_box__internet_permission_hint">Mivel ennek az alkalmazásnak nincs internetelérési útvonala, a telepített kiterjesztések frissítéseit manuálisan kell engedélyezni.</string>
+    <string name="ext__update_box__search_for_updates">Frissítések keresése</string>
+    <string name="ext__addon_management_box__managing_placeholder">{extensions} kezelése</string>
+    <string name="ext__addon_management_box__addon_manager_info">A kiterjesztések importálásával, exportálásával, létrehozásával, testreszabásával és eltávolításával kapcsolatos összes feladat a központi kiterjesztéskezelőn keresztül kezelhető.</string>
+    <string name="ext__addon_management_box__go_to_page">Ugrás erre: {ext_home_title}</string>
+    <string name="ext__home__info">Letöltheti és telepítheti a kiterjesztéseket a FlorisBoard kiegészítőboltból, vagy importálhat bármely, az internetről letöltött kiterjesztés fájlt.</string>
+    <string name="ext__home__visit_store">Kiegészítőbolt meglátogatása</string>
+    <string name="ext__home__manage_extensions">Telepített kiterjesztések kezelése</string>
+    <string name="ext__list__view_details">Részletek megtekintése</string>
     <!-- Action strings -->
     <string name="action__add">Hozzáadás</string>
     <string name="action__apply">Alkalmaz</string>
@@ -701,15 +754,17 @@
     <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">App fölött való megjelenés</string>
     <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">A kiegészítő műveleti sort az app felület fölött lebeg, anélkül hogy befolyásolná a billentyűzet magasságát. Lehetséges, hogy a beviteli rész takarásba kerül emiatt</string>
     <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Rezgőmotor közvetlen kezelése</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">A {app_name} közvetlenül kommunikál az alapértelmezett hardveres rezgőmotorral. Ez nagyobb szabályozást biztosít a rezgés hossza és erőssége felett, de nem biztos hogy annyira sima és optimális, mintha a haptikus visszajelzés felületét használná.</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">A {app_name} közvetlenül kommunikál az alapértelmezett hardveres rezgőmotorral. Ez nagyobb szabályozást biztosít a rezgés hossza és erőssége felett, de nem biztos hogy annyira sima és optimális, mintha a haptikus visszajelzés felületét használná</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Használjon haptic feedback felületet</string>
-    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">A(z) {app_name} haptikus visszajelzés felületet használ, hogy előre konfigurált rezgéseket hívjon elő a gombok megnyomásakor. Ez egyes eszközökön kivételesen jól működhet, de másokon teljesen meghiúsulhat vagy nagyon rossz lehet a teljesítménye.</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">A(z) {app_name} haptikus visszajelzés felületet használ, hogy előre konfigurált rezgéseket hívjon elő a gombok megnyomásakor. Ez egyes eszközökön kivételesen jól működhet, de másokon teljesen meghiúsulhat vagy nagyon rossz lehet a teljesítménye</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Ékezetesek az elsődlegesek</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál mindig az alap ékezetes változatok az elsődlegesek, vagy a tipp szimbólum ha ez nem elérhető</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Tipp az elsődleges</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál mindig a tipp szimbólum az elsődleges, vagy az alap ékezetes változatok ha ez nem elérhető</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Okos prioritizálás</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál dinamikusan eldöntésre kerül hogy az ékezetek vagy szimbólumok az elsődlegesek a nyelvtől függően</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Cserélje ki a megosztott műveletek kapcsoló ikonját az inkognitó jelzővel</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Az inkognitó jelző megjelenítése a billentyűzet mögött</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Kényszerítés kikapcsolása</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Az inkognitó mód mindig kikapcsolt állapotban van, függetlenül a cél applikáció beállításától. Az inkognitó gyors művelet az okossávban ezáltal nem válik elérhetővé.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Kényszerítés bekapcsolása</string>

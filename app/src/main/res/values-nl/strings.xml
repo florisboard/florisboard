@@ -32,14 +32,21 @@
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pijl omhoog</string>
+    <string name="quick_action__arrow_up__tooltip">Pijl naar boven uitvoeren</string>
     <string name="quick_action__arrow_down" maxLength="12">Pijl omlaag</string>
+    <string name="quick_action__arrow_down__tooltip">Pijl naar beneden uitvoeren</string>
     <string name="quick_action__arrow_left" maxLength="12">Pijl links</string>
+    <string name="quick_action__arrow_left__tooltip">Pijl naar links uitvoeren</string>
     <string name="quick_action__arrow_right" maxLength="12">Pijl rechts</string>
+    <string name="quick_action__arrow_right__tooltip">Pijl naar rechts uitvoeren</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Primaire klembordklem wissen</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Kopiëer</string>
     <string name="quick_action__clipboard_copy__tooltip">Klembord kopiëren</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Knippen</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Plakken</string>
+    <string name="quick_action__clipboard_paste__tooltip">Plakken van klembord uitvoeren</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Alles selec.</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Alles selecteren op klembord</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Klembord</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Klembordgeschiedenis openen</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
@@ -47,14 +54,28 @@
     <string name="quick_action__settings" maxLength="12">Instellingen</string>
     <string name="quick_action__settings__tooltip">Open instellingen</string>
     <string name="quick_action__undo" maxLength="12">Annuleren</string>
+    <string name="quick_action__undo__tooltip">De laatste invoer ongedaan maken</string>
     <string name="quick_action__redo" maxLength="12">Opnieuw</string>
+    <string name="quick_action__redo__tooltip">De laatste invoer opnieuw uitvoeren</string>
     <string name="quick_action__toggle_actions_overflow" maxLength="12">Meer acties</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Extra acties tonen of verbergen</string>
     <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Incognitomodus inschakelen</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorrect.</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Autocorrectie inschakelen</string>
     <string name="quick_action__voice_input" maxLength="12">Spraakinvoer</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Open spraakinvoerprovider</string>
     <string name="quick_action__one_handed_mode" maxLength="12">Met één hand</string>
+    <string name="quick_action__one_handed_mode__tooltip">Schakelen naar de modus voor één hand</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Geen</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Geen operatie</string>
+    <string name="quick_actions_overflow__customize_actions_button">Acties opnieuw ordenen</string>
+    <string name="quick_actions_editor__header">Volgorde van acties aanpassen</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Plakactie ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamische acties ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Verborgen acties ({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_disabled">Incognito modus is nu standaard uitgeschakeld</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Probeer je nieuwe instellingen</string>
@@ -68,6 +89,7 @@
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Taalnamen weergeven in</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypen</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Indeling toevoegen</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Geïnstalleerde taalpakketten beheren</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Voorkeurstaal</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Popup-indeling</string>
@@ -101,15 +123,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Zonsondergang</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dagthema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nachtthema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Geselecteerd thema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Pas kleuren aan naar app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Themakleuren aanpassen naar die van de actieve app, als de doelapp dit ondersteunt.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Geïnstalleerde thema\'s beheren</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Florisboard Apponderdelen</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern geheugen</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Gebruik externe provider</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecteer dagthema</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecteer nachtthema</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Geïnstalleerde thema\'s beheren</string>
     <string name="settings__theme_editor__fine_tune__title">Afstemmings editor</string>
     <string name="settings__theme_editor__fine_tune__level">Afstemmings niveau</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Kleuren weergeven als</string>
@@ -162,6 +181,7 @@
     <string name="snygg__rule_element__extracted_landscape_input_field">Invoerveld Liggend</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Landschap invoeractie</string>
     <string name="snygg__rule_element__glide_trail">Glijpad</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Incognito modus-indicator</string>
     <string name="snygg__rule_element__one_handed_panel">Paneel met één hand</string>
     <string name="snygg__rule_element__smartbar">Slimme balk</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar kandidaat woord</string>
@@ -250,6 +270,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Toon functietoets</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Toont een instelbare functietoets naast de spatiebalk</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Functietoets actie</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spatiebalk-label</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Hoofdlettergebruik</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Vermenigvuldigingsfactor tekengrootte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Indeling</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modus met één hand</string>
@@ -266,6 +288,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Lange toetsaanslagvertraging</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spatiebalk schakelt over naar tekens</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Schakelt automatisch terug naar tekens in symbolen of cijfers</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito-indicator</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Slimme Balk</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
@@ -278,12 +301,19 @@
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typen</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Suggesties weergeven</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggesties weergavemodus:</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokkeer mogelijk aanstootgevende woorden</string>
     <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Eerder gekopieerde klembordinhoud voorstellen</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Beperk klembordsuggesties tot</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Items gekopieerd in de laatste {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Inline suggesties weergeven van services voor automatisch aanvullen</string>
     <string name="pref__correction__title" comment="Preference group title">Verbeteringen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-kapitalisatie</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Woorden kapitaliseren op basis van de huidige invoercontext</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatische spatie na interpunctie</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatisch een spatie invoegen na leestekens</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Onthoud CapsLock status</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">CapsLock blijft aan bij het verplaatsen naar een ander tekstveld</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punt na twee spaties</string>
@@ -292,7 +322,10 @@
     <string name="pref__spelling__active_spellchecker__summary_disabled">Systeem-breed uitgeschakeld. Er zullen geen rode lijnen verschijnen in tekstvelden voor incorrecte woorden. Klik om te wijzigen.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">Geen inline spellingscontrole ingesteld. Klik om te wijzigen.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Talen</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Gebruik namen van contacten</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Namen opzoeken in je contactenlijst</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Gebruik gebruikerswoordenboekvermeldingen</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Items uit de gebruikerswoordenboeken opzoeken</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Gebruikerswoordenboeken</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activeer het persoonlijke woordenboek van het systeem</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Stel woorden voor uit het persoonlijke woordenboek van het systeem</string>
@@ -409,6 +442,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Toetsenbordextensies</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Spellingextensies /woordenboeken</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Thema-extensies</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Klembordgeschiedenis</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Tekst-items</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Afbeeldingen</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Video\'s</string>
     <string name="backup_and_restore__back_up__success">Geëxporteerd back-uparchief!</string>
     <string name="backup_and_restore__back_up__failure">Kan back-uparchief niet exporteren: {error_message}</string>
     <string name="backup_and_restore__restore__title">Data herstellen</string>
@@ -481,8 +518,10 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Primaire clip wissen beïnvloedt geschiedenis</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Als u de primaire clip wist, wordt ook het laatste geschiedenisitem verwijderd</string>
     <string name="send_to_clipboard__unknown_error">Een onbekende fout is opgetreden. Probeer het alstublieft opnieuw!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Dit mediatype wordt niet ondersteund.</string>
     <string name="send_to_clipboard__android_version_to_old_error">De versie van Android is te oud voor deze functie.
     </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Onderstaande afbeelding gekopieerd naar klembord.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Devtools</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Activeer ontwikkelaarshulpmiddelen</string>
@@ -509,9 +548,12 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Systeem Android-instellingen</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systeemlandinstellingen</string>
     <!-- Extension strings -->
+    <string name="ext__list__ext_theme">Thema-extensies</string>
+    <string name="ext__list__ext_keyboard">Toetsenbordextensies</string>
     <string name="ext__meta__authors">Auteurs</string>
     <string name="ext__meta__components">Gebundelde componenten</string>
     <string name="ext__meta__components_theme">Gebundelde thema\'s</string>
+    <string name="ext__meta__components_language_pack">Gebundelde taalpakketten</string>
     <string name="ext__meta__components_none_found">Dit extensiearchief bevat geen gebundelde componenten.</string>
     <string name="ext__meta__description">Beschrijving</string>
     <string name="ext__meta__homepage">Startpagina</string>
@@ -559,6 +601,21 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Verwachtte een mediabestand (afbeelding, audio, lettertype, etc.) maar vond een extensiearchief.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Had een extensiearchief verwacht, maar vond een mediabestand (afbeelding, audio, lettertype, enz.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Er is een onverwachte fout opgetreden tijdens het importeren. De volgende gegevens werden verstrekt:</string>
+    <string name="ext__validation__enter_package_name">Voer een pakketnaam in</string>
+    <string name="ext__validation__enter_version">Voer een versie in</string>
+    <string name="ext__validation__enter_title">Voer alsjeblieft een titel in</string>
+    <string name="ext__validation__enter_valid_number">Voer een geldig nummer in</string>
+    <string name="ext__validation__enter_positive_number">Voer een positief getal in (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Voer een procentgrootte in</string>
+    <string name="ext__validation__enter_number_between_0_100">Voer een positief getal tussen de 0 en de 100 in</string>
+    <string name="ext__validation__hint_value_above_50_percent">Elke waarde boven 50% zal zich gedragen alsof je 50% hebt ingesteld, overweeg dus om je percentagegrootte te verlagen</string>
+    <string name="ext__update_box__internet_permission_hint">Aangezien deze app geen internettoegang heeft, moeten updates voor geïnstalleerde extensies handmatig worden gecontroleerd.</string>
+    <string name="ext__update_box__search_for_updates">Zoeken naar updates</string>
+    <string name="ext__addon_management_box__managing_placeholder">{extensions} beheren</string>
+    <string name="ext__addon_management_box__go_to_page">Ga naar {ext_home_title}</string>
+    <string name="ext__home__manage_extensions">Geïnstalleerde extensies beheren</string>
+    <string name="ext__list__view_details">Details weergeven</string>
+    <string name="ext__check_updates__title">Controleren op Updates</string>
     <!-- Action strings -->
     <string name="action__add">Toevoegen</string>
     <string name="action__apply">Van toepassing zijn</string>
@@ -612,6 +669,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klassiek (3 kolommen)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamische breedte</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamische breedte</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Capslock inschakelen door tweemaal op shift te tikken</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Telkens wanneer de shift-toets wordt ingedrukt, overschakelen naar de volgende hoofdletterstap</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimaal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Rood Groen Blauw Alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Altijd laten zien</string>
@@ -635,12 +694,21 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Krullend haar</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Wit haar</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Kaal</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Haptische feedback-interface gebruiken</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent krijgt prioriteit</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Het eerste geselecteerde teken na een lange indruk is altijd het primaire accent, of het hint symbool als er geen primair accent beschikbaar is</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint krijgt prioriteit</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Het eerste geselecteerde teken na een lange indruk is altijd het hint symbool, of het primaire accent als er geen hint symbool beschikbaar is</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Slimme prioriteiten</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Het eerste teken dat is geselecteerd na lang indrukken, wordt dynamisch bepaald als het primaire accent of het hintsymbool, op basis van de huidige taal en lay-out</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Schakelaarpictogram voor gedeelde acties vervangen door incognito-indicator</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">De incognito-indicator achter het toetsenbord weergeven</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">De Incognito modus zal altijd worden uitgeschakeld, ongeacht de doorgegeven opties van de doel-app. De incognito snelle actie in de Smartbar zal niet beschikbaar zijn met deze optie.</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">De Incognito modus zal altijd ingeschakeld zijn, ongeacht de doorgegeven opties van de doel-app. De snelle incognito-actie in de Smartbar is niet beschikbaar met deze optie.</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamisch geluiden afspelen voor invoergebeurtenissen, afhankelijk van de systeeminstellingen</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Altijd geluiden afspelen voor invoergebeurtenissen, ongeacht de systeeminstellingen</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dynamisch trillen bij invoergebeurtenissen, afhankelijk van de systeeminstellingen</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Altijd trillen bij invoergebeurtenissen, ongeacht de systeeminstellingen</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">niet verschoven</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Verschoven (handmatig)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">geschakeld (automatisch)</string>

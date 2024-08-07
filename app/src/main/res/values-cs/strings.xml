@@ -130,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noční motiv</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Vybraný motiv</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Přizpůsobit barvy aplikaci</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Barvy motivu se přizpůsobí barvám používané aplikace, pokud to daná aplikace podporuje.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Podklady aplikace FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Externí poskytovatel</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Vyberte denní motiv</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vyberte noční motiv</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
     <string name="settings__theme_editor__fine_tune__title">Jemné doladění editoru</string>
     <string name="settings__theme_editor__fine_tune__level">Úprava úrovně</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Zobrazit barvy jako</string>
@@ -311,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne na znaky</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automaticky se vrátí z nabídky čísel/symbolů ke klasické klávesnici</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indikátor anonymního režimu</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Chytrá lišta</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
@@ -413,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Temná</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Použít Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
@@ -472,6 +471,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšíření klávesnice</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Rozšíření kontroly pravopisu / slovníky</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Rozšíření témat</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Historie schránky</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Textové položky</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Obrázky</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videa</string>
     <string name="backup_and_restore__back_up__success">Archiv zálohy byl úspěšně exportován!</string>
     <string name="backup_and_restore__back_up__failure">Nepodařilo se exportovat archiv zálohy: {error_message}</string>
     <string name="backup_and_restore__restore__title">Obnovit data</string>
@@ -576,6 +579,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Systémová nastavení Androidu</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systémové jazyky</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Doplňky a rozšíření</string>
+    <string name="ext__list__ext_theme">Rozšíření témat</string>
+    <string name="ext__list__ext_keyboard">Rozšíření klávesnice</string>
+    <string name="ext__list__ext_languagepack">Rozšíření jazykových balíčků</string>
     <string name="ext__meta__authors">Autoři</string>
     <string name="ext__meta__components">Zabalené komponenty</string>
     <string name="ext__meta__components_theme">Zabalená témata</string>
@@ -628,6 +635,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Byl očekáván soubor médií (obrázek, zvuk, písmo atd.), ale byl nalezen archiv rozšíření.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Byl očekáván archiv rozšíření, ale byl nalezen soubor médií (obrázek, zvuk, písmo atd.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Při importování se vyskytla chyba. Byly poskytnuty následující podrobnosti:</string>
+    <string name="ext__validation__enter_package_name">Zadejtze prosím název balíčku</string>
+    <string name="ext__validation__error_package_name">Název balíčku neodpovídá regexu {id_regex}</string>
+    <string name="ext__validation__enter_version">Zadejte prosím verzi</string>
+    <string name="ext__validation__enter_title">Zadejte prosím název</string>
+    <string name="ext__validation__enter_maintainer">Zadejte prosím alespoň jednoho platného správce</string>
+    <string name="ext__validation__enter_license">Zadejte prosím identifikátor licence</string>
+    <string name="ext__validation__enter_component_id">Zadejte prosím ID komponenty</string>
+    <string name="ext__validation__error_component_id">Zadejte prosím ID komponenty odpovídající {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Zadejte prosím štítek komponenty</string>
+    <string name="ext__validation__hint_component_label_to_long">Váš štítek komponenty je poměrně dlouhý, což může vést k problémům v rozhraní</string>
+    <string name="ext__validation__error_author">Zadejte prosím alespoň jednoho platného autora</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Cesta tabulky stylů nemůže být prázdná</string>
+    <string name="ext__validation__error_stylesheet_path">Zadejte prosím platnou cestu tabulky stylů odpovídající {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Zadejte prosím název proměnné</string>
+    <string name="ext__validation__error_property">Zadejte prosím platný název proměnné odpovídající {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Názvy proměnných ve FlorisCSS obvykle začínají dvěma spojovníky (--)</string>
+    <string name="ext__validation__enter_color">Zadejte prosím řetězec barvy</string>
+    <string name="ext__validation__error_color">Zadejte prosím platný řetězec barvy</string>
+    <string name="ext__validation__enter_dp_size">Zadejte prosím velikost dp</string>
+    <string name="ext__validation__enter_valid_number">Zadejte prosím platné číslo</string>
+    <string name="ext__validation__enter_positive_number">Zadejte prosím kladné číslo (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Zadejte prosím velikost v procentech</string>
+    <string name="ext__validation__enter_number_between_0_100">Zadejte prosím kladné číslo mezi 0 a 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Jakákoli hodnota nad 50 % se bude chovat, jako kdybyste nastavili 50 %, zvažte snížení velikosti v procentech</string>
+    <string name="ext__update_box__internet_permission_hint">Jelikož tato aplikace nemá přístup k internetu, musíte aktualizace nainstalovaných rozšíření kontrolovat ručně.</string>
+    <string name="ext__update_box__search_for_updates">Vyhledat aktualizace</string>
+    <string name="ext__addon_management_box__managing_placeholder">Správa {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Všechny úlohy spojené s importováním, exportováním, vytvářením, přizpůsobováním a odstraňováním rozšíření mohou být prováděny skrze centralizovaného správce doplňků.</string>
+    <string name="ext__addon_management_box__go_to_page">Přejít {ext_home_title}</string>
+    <string name="ext__home__info">Rozšíření můžete stahovat a instalovat z Obchodu s doplňky FlorisBoard nebo importovat jakýkoli soubor rozšíření, který jste si stáhli z internetu.</string>
+    <string name="ext__home__visit_store">Navštívit Obchod s doplňky</string>
+    <string name="ext__home__manage_extensions">Správa nainstalovaných doplňků</string>
+    <string name="ext__list__view_details">Zobrazit podrobnosti</string>
+    <string name="ext__check_updates__title">Zkontrolovat aktualizace</string>
     <!-- Action strings -->
     <string name="action__add">Přidat</string>
     <string name="action__apply">Použít</string>
@@ -722,6 +763,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku je vždy znak nápovědy, nebo primární přízvuk, když není dostupný symbol nápovědy</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Chytrá prioritizace</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Počáteční znak vybraný po dlouhém stisku je dynamicky vybrán, zda bude primárním přízvukem, nebo o symbolem nápovědy, a to na základě aktuálního jazyka a rozložení</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Nahradit ikonu přepínače sdílených akcí indikátorem anonymního režimu</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Zobrazit indikátor anonymního režimu v pozadí klávesnice</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Vynutit vypnutí</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Anonymní režim bude vždy zakázán, nehledě na požadavky cílové aplikace. S touto možností nebude v chytré liště zobrazena rychlá akce anonymního režimu.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Vynutit zapnutí</string>

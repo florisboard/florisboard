@@ -27,6 +27,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">符号</string>
     <string name="emoji__category__flags" comment="Emoji category name">旗帜</string>
     <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">没有最近使用的表情符号。开始使用表情符号后，它们会自动在这里出现。</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">要访问您的表情符号历史记录，请先解锁您的设备。</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">提示：长按最近使用的表情符号可以将它从这里移除。</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">已将 {emoji} 从最近使用的表情符号中移除</string>
     <!-- Quick action strings -->
@@ -129,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日落时间</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">日间主题</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜间主题</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">选定的主题</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">使颜色适应应用</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">如果目标应用支持，主题颜色会适应当前应用中的颜色。</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">管理已安装的主题</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard应用资源</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">内部存储空间</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">外部提供者</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">选择日间主题</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">选择夜间主题</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">管理已安装的主题</string>
     <string name="settings__theme_editor__fine_tune__title">微调编辑器</string>
     <string name="settings__theme_editor__fine_tune__level">编辑等级</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">将颜色显示为</string>
@@ -292,6 +290,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">显示功能键</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">在空格键旁边显示一个可配置的功能键</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">功能键操作</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">空格键显示标记</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">大小写行为模式</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">单手模式</string>
@@ -308,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">长按延迟</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">空格键切换到字符</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">在符号或数字界面时自动切换回字符界面</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">无痕模式指示器</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">智能栏</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">启用智能栏</string>
@@ -410,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">浅色</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">深色</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED 纯黑</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">使用 Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">设置语言</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">在启动器中显示应用图标</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">由于系统限制，在安卓 10+ 上始终启用</string>
@@ -447,6 +449,12 @@
     <string name="setup__select_ime__title">选择 {app_name}</string>
     <string name="setup__select_ime__description">{app_name} 现在已在您的系统中启用。要使用它，请在输入法选择对话框中选择{app_name} 来切换到它！</string>
     <string name="setup__select_ime__switch_keyboard_btn">切换键盘</string>
+    <string name="setup__grant_notification_permission__title">允许崩溃报告消息通知</string>
+    <string name="setup__grant_notification_permission__description">自安卓 13 以来，应用在发送通知前
+    必须向用户申请权限。在 Florisboard 中，这一权限仅用于在崩溃时打开一个崩溃报告页面。
+    这一权限可以随时在系统设置中更改。
+    </string>
+    <string name="setup__grant_notification_permission__btn">授予权限</string>
     <string name="setup__finish_up__title">完成</string>
     <string name="setup__finish_up__description_p1">{app_name} 现在已在系统中启用，可供您自定义。</string>
     <string name="setup__finish_up__description_p2">如果您遇到任何问题、错误、崩溃或只是想提出建议，请从“关于”界面中查看项目源码库！</string>
@@ -463,6 +471,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">键盘扩展</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">拼写扩展 / 词典</string>
     <string name="backup_and_restore__back_up__files_ime_theme">主题扩展</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">剪贴板历史</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">文本条目</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">图像</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">视频</string>
     <string name="backup_and_restore__back_up__success">成功导出备份档案！</string>
     <string name="backup_and_restore__back_up__failure">导出备份档案失败：{error_message}</string>
     <string name="backup_and_restore__restore__title">恢复数据</string>
@@ -534,6 +546,10 @@
     <string name="pref__clipboard__max_history_size__label">限制最大历史条目数</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">清除主要剪贴板条目时影响历史</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">清除主要剪贴板条目时还会删除最新的历史记录条目</string>
+    <string name="send_to_clipboard__unknown_error">发生未知错误。请重试！</string>
+    <string name="send_to_clipboard__type_not_supported_error">不支持这一媒体类型。</string>
+    <string name="send_to_clipboard__android_version_to_old_error">安卓版本过低，无法使用此功能。    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">已将以下图像复制到剪贴板。</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">开发者工具</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">启用开发者工具</string>
@@ -562,6 +578,9 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">安卓系统设置</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">系统语言环境</string>
     <!-- Extension strings -->
+    <string name="ext__list__ext_theme">主题扩展</string>
+    <string name="ext__list__ext_keyboard">键盘扩展</string>
+    <string name="ext__list__ext_languagepack">语言包扩展</string>
     <string name="ext__meta__authors">作者</string>
     <string name="ext__meta__components">捆绑组件</string>
     <string name="ext__meta__components_theme">捆绑主题</string>
@@ -614,6 +633,15 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">需要一个媒体文件（图像、音频、字体等），但找到了一个扩展档案。</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">需要扩展档案，但找到了媒体文件（图像、音频、字体等）。</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">导入过程中出现意外错误。提供了以下详细信息：</string>
+    <string name="ext__validation__enter_property">请输入变量名称</string>
+    <string name="ext__validation__error_color">请输入一个有效的颜色字符串</string>
+    <string name="ext__validation__enter_valid_number">请输入有效的数字</string>
+    <string name="ext__validation__enter_number_between_0_100">请输入值为0～100的正数</string>
+    <string name="ext__update_box__search_for_updates">搜索更新</string>
+    <string name="ext__addon_management_box__managing_placeholder">管理 {extensions}</string>
+    <string name="ext__home__manage_extensions">管理已安装的扩展</string>
+    <string name="ext__list__view_details">查看详细信息</string>
+    <string name="ext__check_updates__title">检查更新</string>
     <!-- Action strings -->
     <string name="action__add">添加</string>
     <string name="action__apply">应用</string>
@@ -667,6 +695,8 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">经典（3列）</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">动态宽度</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">动态宽度 &amp; 可滚动</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">点击 Shift 键两次来开启大写锁定</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">每次按下 Shift 键时切换到下一个大小写状态</string>
     <string name="enum__display_colors_as__hex8" comment="Enum value label">十六进制</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">红绿蓝Alpha (RGBA)</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">始终显示</string>
@@ -744,6 +774,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">显示所有属性，属性和规则显示翻译。</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">开发者</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">显示所有属性，属性和规则显示为样式表文件所写。</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">无标记</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">当前语言</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">使用系统语言</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">使用键盘子类型</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">无操作</string>

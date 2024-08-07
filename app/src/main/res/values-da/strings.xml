@@ -9,9 +9,13 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Flyt tastatur til venstre.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Flyt tastatur til højre.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emojis</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Humørikoner</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Tekst-emoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">Maks. størrelse på emoji-historik</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Foretrukken emoji-hudfarve</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Foretrukken emoji-frisure</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Følelser</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personer &amp; Krop</string>
@@ -22,7 +26,33 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekter</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flag</string>
+    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Ingen nyligt brugte emojis fundet. Når du begynder at skrive emojis, vil de automatisk blive vist her.</string>
+    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">For at få adgang til din emoji-historik skal du først låse din enhed op.</string>
+    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Tryk længe på nyligt brugte emojis for at fjerne dem fra denne visning igen!</string>
+    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Fjernet {emoji} fra nyligt brugte emojis</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Pil op</string>
+    <string name="quick_action__arrow_up__tooltip">Udfør pil op</string>
+    <string name="quick_action__arrow_down" maxLength="12">Pil ned</string>
+    <string name="quick_action__arrow_down__tooltip">Udfør pil ned</string>
+    <string name="quick_action__arrow_left" maxLength="12">Pil venstre</string>
+    <string name="quick_action__arrow_left__tooltip">Udfør pil venstre</string>
+    <string name="quick_action__arrow_right" maxLength="12">Pil højre</string>
+    <string name="quick_action__arrow_right__tooltip">Udfør pil højre</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Udfør ryd primær udklipsholder</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopiér</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Klip</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Indsæt</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Vælg alle</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Åbn emoji-panel</string>
+    <string name="quick_action__settings__tooltip">Åbn indstillinger</string>
+    <string name="quick_action__undo" maxLength="12">Fortryd</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Slå inkognito-tilstand til/fra</string>
+    <string name="quick_action__voice_input" maxLength="12">Stemmeinput</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Åbn stemmeinput-udbyder</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Indstillinger</string>
@@ -32,14 +62,18 @@
     <string name="settings__home__title" comment="Title of the Home screen">Velkommen til {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke slået til i systemet og er derfor ikke tilgængelig som inputsmetode i inputvælgeren. Klik her for at løse problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inputmetode. Klik her for at løse problemet.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Sprog &amp; Layouts</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Vis sprognavne i</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Undertyper</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tilføj undertastatur</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Administrér installerede sprogpakker</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Ændre undertastatur</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primært sprog</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Vælg sprog</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det ser ud til, at der ikke er konfigureret nogle undertastaturer. I dette tilfælde faldes der tilbage på Engelsk/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ikke installeret)</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valgte tema</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktivér lydfeedback</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsvarighed</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstyrke</string>

@@ -13,6 +13,9 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Fustaxes</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Fustaxes ASCII</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_recently_used_max_size">الحد الأقصى لحجم سجل الرموز التعبيرية</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">لون البشرة المفضل للرموز التعبيرية</string>
+    <string name="prefs__media__emoji_preferred_hair_style">تصفيفة الشعر الرموز التعبيرية المفضلة</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrises y fustaxes</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persones y cuerpu</string>
@@ -28,6 +31,12 @@
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseyu: ¡ten primíos los fustaxes usaos apocayá pa volver quitalos d\'esta seición!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Quitóse «{emoji}» de los fustaxes usaos apocayá</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">سهم لأعلى</string>
+    <string name="quick_action__arrow_up__tooltip">أداء السهم لأعلى</string>
+    <string name="quick_action__arrow_down" maxLength="12">سهم لأسفل</string>
+    <string name="quick_action__arrow_down__tooltip">تنفيذ السهم لأسفل</string>
+    <string name="quick_action__arrow_left" maxLength="12">Flecha esq.</string>
+    <string name="quick_action__arrow_right" maxLength="12">Flecha der.</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Apegar</string>
@@ -72,10 +81,9 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora del aséu</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Estilu diurnu</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Estilu nocherniegu</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Estilu seleicionáu</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Xestionar los estilos instalaos</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamientu internu</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Fornidor esternu</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Xestionar los estilos instalaos</string>
     <string name="settings__theme_editor__no_rules_defined">Esta fueya d\'estilu nun tien nenguna regla definida. Amiesta una regla pa comenzar a personalizar la fueya d\'estilu.</string>
     <string name="settings__theme_editor__rule_element">Elementu de destín</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
@@ -217,6 +225,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Configuración del sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Locales del sistema</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Complementos y estensiones</string>
     <string name="ext__meta__description">Descripción</string>
     <string name="ext__meta__id">ID</string>
     <string name="ext__meta__keywords">Pallabres clave</string>
@@ -233,6 +242,10 @@
     <string name="ext__import__failure">La importación de la estensión falló: {error_message}</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">El ficheru nun se pue importar. Motivu:</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Prodúxose un error inesperáu demientres la importación. Forniéronse los detalles siguientes:</string>
+    <string name="ext__validation__enter_version">Introduz una versión</string>
+    <string name="ext__validation__enter_title">Introduz un títulu</string>
+    <string name="ext__validation__enter_valid_number">Introduz nun númberu válidu</string>
+    <string name="ext__validation__enter_positive_number">Introduz un númberu positivu (&gt;=0)</string>
     <!-- Action strings -->
     <string name="action__add">Amestar</string>
     <string name="action__apply">Aplicar</string>

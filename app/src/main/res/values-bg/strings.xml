@@ -130,15 +130,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Време на залез</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневна тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нощна тема</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Избрана тема</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Адаптиращи се цветове</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Темата се адаптира спрямо текущото приложение, ако то го поддържа.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи на FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Вътрешно хранилище</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Външен доставчик</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Избор на дневна тема</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Избор на нощна тема</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки на редактора</string>
     <string name="settings__theme_editor__fine_tune__level">Режим</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Формат на цветовете</string>
@@ -311,6 +308,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при задържане на клавиш</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Клавишът интервал превключва към букви</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Автоматично превключва към букви ако се въвеждат символи или цифри</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Индикатор за инкогнито</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Интелигентна лента</string>
@@ -413,6 +411,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тъмна</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тъмна AMOLED</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Използване на Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Език на настройките</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Икона на приложението в стартовия панел</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
@@ -470,6 +469,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Добавки за клавиатури</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Добавки за правопис / речници</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Добавки за теми</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">История на междинната памет</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Текстови елементи</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Изображения</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Видеоклипове</string>
     <string name="backup_and_restore__back_up__success">Резервното копие е изнесено успешно!</string>
     <string name="backup_and_restore__back_up__failure">Грешка при изнасяне на резервно копие: {error_message}</string>
     <string name="backup_and_restore__restore__title">Възстановяване на данни</string>
@@ -573,6 +576,10 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системни настройки на Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Добавки и разширения</string>
+    <string name="ext__list__ext_theme">Добавки за теми</string>
+    <string name="ext__list__ext_keyboard">Добавки за клавиатури</string>
+    <string name="ext__list__ext_languagepack">Езикови пакети</string>
     <string name="ext__meta__authors">Автори</string>
     <string name="ext__meta__components">Придружаващи компоненти</string>
     <string name="ext__meta__components_theme">Придружаващи теми</string>
@@ -625,6 +632,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Очакваше се медиен файл (изображение, аудио, шрифт, т.н.), но бе намерен архив с разширение.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Очакваше се архив с разширение, но бе намерен медиен файл (изображение, аудио, шрифт, т.н.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Неочаквана грешка при внасяне. Предоставени са следните подробности:</string>
+    <string name="ext__validation__enter_package_name">Въведете име на пакета</string>
+    <string name="ext__validation__error_package_name">Името на пакетът не удовлетворява регулярния израз {id_regex}</string>
+    <string name="ext__validation__enter_version">Въведете издание</string>
+    <string name="ext__validation__enter_title">Въведете заглавие</string>
+    <string name="ext__validation__enter_maintainer">Въведете най-малко един отговорник</string>
+    <string name="ext__validation__enter_license">Въведете идентификатор на лиценз</string>
+    <string name="ext__validation__enter_component_id">Въведете идентификатор на компонент</string>
+    <string name="ext__validation__error_component_id">Въведете идентификатор на компонент, удовлетворяващ регулярния израз {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Въведете етикет на компонент</string>
+    <string name="ext__validation__hint_component_label_to_long">Етикетът на компонента е твърде дълъг, което може да доведе до отрязване в интерфейса</string>
+    <string name="ext__validation__error_author">Въведете най-малко един автор</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Пътят към стиловия лист не трябва да е празен</string>
+    <string name="ext__validation__error_stylesheet_path">Въведете път към стилов лист, удовлетворяващ регулярния израз {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Въведете име на променливата</string>
+    <string name="ext__validation__error_property">Въведете име на променлива, удовлетворяващо регулярния израз {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">По правило имената на променливите на FlorisCSS започват с две тирета (--)</string>
+    <string name="ext__validation__enter_color">Въведете низ на цвят</string>
+    <string name="ext__validation__error_color">Въведете низ на съществуващ цвят</string>
+    <string name="ext__validation__enter_dp_size">Въведете размер на dp</string>
+    <string name="ext__validation__enter_valid_number">Въведете число</string>
+    <string name="ext__validation__enter_positive_number">Въведете положително число (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Въведете размер в проценти</string>
+    <string name="ext__validation__enter_number_between_0_100">Въведете положително число между 0 и 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Стойности над 50% ще бъдат приравнени на 50%, така че намалете стойността</string>
+    <string name="ext__update_box__internet_permission_hint">Понеже приложението няма достъп до интернет, проверката за обновяване на инсталираните разширения се извършва ръчно.</string>
+    <string name="ext__update_box__search_for_updates">Проверка за обновявания</string>
+    <string name="ext__addon_management_box__managing_placeholder">Управлявани {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Всички дейности, свързани с внасяне, изнасяне, създаване, промяна и премахване на разширения могат да бъдат извършване през Управление на разширения.</string>
+    <string name="ext__addon_management_box__go_to_page">Към {ext_home_title}</string>
+    <string name="ext__home__info">Можете да изтегляте и инсталирате разширения от магазина за добавки на FlorisBoard или да внесете файл на разширение, който сте изтеглили от интернет.</string>
+    <string name="ext__home__visit_store">Магазин за добавки</string>
+    <string name="ext__home__manage_extensions">Управление на инсталирани разширения</string>
+    <string name="ext__list__view_details">Подробности</string>
+    <string name="ext__check_updates__title">Проверка за обновяване</string>
     <!-- Action strings -->
     <string name="action__add">Добавяне</string>
     <string name="action__apply">Прилагане</string>
@@ -719,6 +760,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е знака от подсказката или основния акцент ако в подсказката няма знак</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Интелигентен приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Първоначално избраният знак при задържане на клавиш се определя между основния акцент или знака от подсказката на базата на текущия език и подредба</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Заменя пиктограмата на клавиша за превкл. на действията с индикатора за инкогнито</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Показва индикатора за инкогнито зад клавиатурата</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Принудително изключено</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Режим „инкогнито“ винаги ще бъде изключен, независимо какво подава целевото приложение. Клавишът за действието няма да бъде достъпен в интелигентната лента.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Принудително включено</string>
