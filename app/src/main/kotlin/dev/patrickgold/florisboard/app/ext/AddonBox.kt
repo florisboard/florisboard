@@ -16,13 +16,13 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import org.florisboard.lib.kotlin.curlyFormat
 
 @Composable
@@ -43,7 +43,7 @@ fun UpdateBox(extensionIndex: List<Extension>) {
         ) {
             FlorisTextButton(
                 onClick = {
-                    context.launchUrl(extensionIndex.generateUpdateUrl(version = "v~draft2", host = "fladdonstest.patrickgold.dev"))
+                    context.launchUrl(extensionIndex.generateUpdateUrl())
                 },
                 icon = Icons.Outlined.FileDownload,
                 text = stringRes(id = R.string.ext__update_box__search_for_updates)

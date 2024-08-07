@@ -129,8 +129,9 @@ internal fun List<Extension>.generateUpdateUrl(
     return Uri.Builder().run {
         scheme("https")
         authority(host)
-        appendPath("updates")
-        appendPath(version)
+        appendPath("check-updates")
+        // TODO: Uncomment when version is supported by the addons store api
+        //appendPath(version)
         encodedFragment(
             buildString {
                 append("data={")
