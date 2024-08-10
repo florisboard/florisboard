@@ -145,7 +145,7 @@ class FlorisAppActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
 
-        if (intent?.action == Intent.ACTION_VIEW && intent.categories.contains(Intent.CATEGORY_BROWSABLE)) {
+        if (intent?.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
             intentToBeHandled = intent
             return
         }
@@ -195,7 +195,7 @@ class FlorisAppActivity : ComponentActivity() {
         LaunchedEffect(intentToBeHandled) {
             val intent = intentToBeHandled
             if (intent != null) {
-                if (intent.action == Intent.ACTION_VIEW && intent.categories.contains(Intent.CATEGORY_BROWSABLE)) {
+                if (intent.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
                     navController.handleDeepLink(intent)
                 } else {
                     val data = if (intent.action == Intent.ACTION_VIEW) {
