@@ -42,7 +42,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
             )
         }
-
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
