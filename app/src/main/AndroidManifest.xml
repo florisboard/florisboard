@@ -42,10 +42,11 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/floris_app_icon"
         android:label="@string/floris_app_name"
+        android:enableOnBackInvokedCallback="true"
         android:roundIcon="@mipmap/floris_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/FlorisAppTheme"
-        tools:targetApi="s">
+        tools:targetApi="tiramisu">
 
         <!-- Allow app to be profiled for benchmarking and baseline profile generation -->
         <profileable android:shell="true"/>

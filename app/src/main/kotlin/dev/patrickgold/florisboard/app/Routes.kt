@@ -17,8 +17,13 @@
 package dev.patrickgold.florisboard.app
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -174,6 +179,18 @@ object Routes {
             modifier = modifier,
             navController = navController,
             startDestination = startDestination,
+            enterTransition = {
+                slideIn { IntOffset(it.width, 0) } + fadeIn()
+            },
+            exitTransition = {
+                slideOut { IntOffset(-it.width, 0) } + fadeOut()
+            },
+            popEnterTransition = {
+                slideIn { IntOffset(-it.width, 0) } + fadeIn()
+            },
+            popExitTransition = {
+                slideOut { IntOffset(it.width, 0) } + fadeOut()
+            }
         ) {
             composable(Setup.Screen) { SetupScreen() }
 
