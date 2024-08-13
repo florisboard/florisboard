@@ -65,7 +65,7 @@ Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 
 > [!IMPORTANT]
 > Word suggestions/spell checking are not included in the current releases
-> and are a major goal for the v0.5.0 milestone.
+> and are a major goal for the v0.5 milestone.
 
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
@@ -74,10 +74,10 @@ Want to contribute to FlorisBoard? That's great to hear! There are lots of
 different ways to help out, please see the [contribution guidelines](CONTRIBUTING.md) for more info.
 
 ## Addons Store
-[The Addons Store](https://beta.addons.florisboard.com) offers the possibility for the community to share and download florisboard extensions.
+The official [Addons Store](https://beta.addons.florisboard.com) offers the possibility for the community to share and download FlorisBoard extensions.
 Instructions on how to publish addons can be found [here](https://github.com/florisboard/florisboard/wiki/How-to-publish-on-FlorisBoard-Addons).
 
-Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store.
+Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store!
 
 > [!NOTE]
 > During the initial beta release phase, the Addons Store _will_ only accept theme extensions.
