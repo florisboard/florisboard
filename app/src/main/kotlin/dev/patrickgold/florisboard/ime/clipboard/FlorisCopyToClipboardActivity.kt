@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard
+package dev.patrickgold.florisboard.ime.clipboard
 
 import android.content.ClipData
 import android.content.Intent
@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
