@@ -57,6 +57,7 @@ fun KeyboardScreen() = FlorisScreen {
             title = stringRes(R.string.pref__keyboard__hinted_number_row_mode__label),
             summarySwitchDisabled = stringRes(R.string.state__disabled),
             entries = enumDisplayEntriesOf(KeyHintMode::class),
+            enabledIf = { prefs.keyboard.numberRow.isFalse() }
         )
         ListPreference(
             listPref = prefs.keyboard.hintedSymbolsMode,
