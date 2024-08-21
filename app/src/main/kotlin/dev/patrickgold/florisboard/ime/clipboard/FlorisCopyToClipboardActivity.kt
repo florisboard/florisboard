@@ -10,9 +10,11 @@ import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -115,12 +117,14 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                             )
                         }
                         bitmap?.let {
-                            Image(
-                                modifier = Modifier
-                                    .padding(start = 64.dp, end = 64.dp, top = 32.dp, bottom = 8.dp),
-                                bitmap = bitmap!!.asImageBitmap(),
-                                contentDescription = null
-                            )
+                            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                Image(
+                                    modifier = Modifier
+                                        .padding(start = 64.dp, end = 64.dp, top = 32.dp, bottom = 8.dp),
+                                    bitmap = bitmap!!.asImageBitmap(),
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 }
