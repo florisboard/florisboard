@@ -132,7 +132,7 @@
 
         <!-- Copy to Clipboard Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.FlorisCopyToClipboardActivity"
+            android:name="dev.patrickgold.florisboard.ime.clipboard.FlorisCopyToClipboardActivity"
             android:theme="@style/FlorisAppTheme.Transparent"
             android:exported="true">
             <intent-filter>
