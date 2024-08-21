@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
+import org.florisboard.lib.android.AndroidVersion
 
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
@@ -122,12 +124,18 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
     fun Render() {
         val context = LocalContext.current
         val previewFieldController = LocalPreviewFieldController.current
+        val colorScheme = MaterialTheme.colorScheme
 
         SideEffect {
             val window = (context as Activity).window
             previewFieldController?.isVisible = previewFieldVisible
             window.statusBarColor = Color.Transparent.toArgb()
-            window.navigationBarColor = Color.Transparent.toArgb()
+            if (AndroidVersion.ATLEAST_API29_Q) {
+                window.navigationBarColor = Color.Transparent.toArgb()
+                window.isNavigationBarContrastEnforced = true
+            } else {
+                window.navigationBarColor = colorScheme.scrim.toArgb()
+            }
         }
 
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
