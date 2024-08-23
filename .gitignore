@@ -1,6 +1,10 @@
 # Built application files
 *.apk
+*.aab
 *.ap_
+
+# dotenv
+.env
 
 # Files for the ART/Dalvik VM
 *.dex
