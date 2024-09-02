@@ -55,6 +55,7 @@ import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
@@ -98,13 +99,9 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxSize()
                 .snyggBackground(context, rowStyle)
-                .then(
-                    if (displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
-                        Modifier.florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
-                    } else {
-                        Modifier
-                    }
-                ),
+                .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
+                    florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
+                },
             horizontalArrangement = if (candidates.size > 1) {
                 Arrangement.Start
             } else {
@@ -119,13 +116,12 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                 } else {
                     Modifier
                         .fillMaxHeight()
-                        .then(
-                            if (displayMode == CandidatesDisplayMode.CLASSIC) {
-                                Modifier.weight(1f)
-                            } else {
-                                Modifier.wrapContentWidth().widthIn(max = 160.dp)
-                            }
-                        )
+                        .conditional(displayMode == CandidatesDisplayMode.CLASSIC) {
+                            weight(1f)
+                        }
+                        .conditional(displayMode != CandidatesDisplayMode.CLASSIC) {
+                            wrapContentWidth().widthIn(max = 160.dp)
+                        }
                 }
                 val list = when (displayMode) {
                     CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))

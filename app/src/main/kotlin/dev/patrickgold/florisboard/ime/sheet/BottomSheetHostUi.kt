@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
+import dev.patrickgold.florisboard.lib.compose.conditional
 
 private val SheetOutOfBoundsBgColorInactive = Color(0x00000000)
 private val SheetOutOfBoundsBgColorActive = Color(0x52000000)
@@ -53,16 +54,13 @@ fun BottomSheetHostUi(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .then(
-                    if (isShowing) {
-                        Modifier.pointerInput(Unit) {
-                            detectTapGestures {
-                                onHide()
-                            }
+                .conditional(isShowing) {
+                    pointerInput(Unit) {
+                        detectTapGestures {
+                            onHide()
                         }
-                    } else {
-                        Modifier
-                    }),
+                    }
+                },
         )
         AnimatedVisibility(
             visible = isShowing,
