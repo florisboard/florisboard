@@ -61,7 +61,28 @@ object ClipboardFileStorage {
         return context.clipboardFilesDir.subFile(id.toString())
     }
 
-    fun instertFileFromBackup(context: Context, file: FsFile) {
-        file.copyTo(context.clipboardFilesDir.subFile(file.name), overwrite = false)
+
+    /**
+     * Insert file from backup if not existing
+     *
+     * @param context the application context
+     * @param file the file to be inserted
+     */
+    fun insertFileFromBackupIfNotExisting(context: Context, file: FsFile) {
+        if (!context.clipboardFilesDir.subFile(file.name).isFile) {
+            file.copyTo(context.clipboardFilesDir.subFile(file.name), overwrite = false)
+        }
     }
+
+    /**
+     * Deletes all files from the clipboard subdirectory
+     *
+     * @param context the application context
+     */
+    fun resetClipboardFileStorage(context: Context) {
+        context.clipboardFilesDir.listFiles()?.forEach {
+            it.delete()
+        }
+    }
+
 }
