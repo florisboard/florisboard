@@ -46,16 +46,16 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
-import org.florisboard.lib.android.isOrientationPortrait
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import org.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.snygg.SnyggLevel
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
@@ -178,6 +178,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val showDragAndDropHelpers = boolean(
             key = "devtools__show_drag_and_drop_helpers",
             default = false,
+        )
+        val enableInternalTextField = boolean(
+            key = "devtools__enable_internal_text_field",
+            default = false
         )
     }
 

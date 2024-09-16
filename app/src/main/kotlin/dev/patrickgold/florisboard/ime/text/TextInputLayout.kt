@@ -26,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -43,6 +46,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.compose.FlorisInternalTextField
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.snygg.ui.solidColor
 
@@ -55,6 +59,8 @@ fun TextInputLayout(
 
     val prefs by florisPreferenceModel()
 
+    var internalText by rememberSaveable { mutableStateOf("") }
+
     val state by keyboardManager.activeState.collectAsState()
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
 
@@ -64,6 +70,12 @@ fun TextInputLayout(
                 .fillMaxWidth()
                 .wrapContentHeight(),
         ) {
+            if (prefs.devtools.enableInternalTextField.observeAsState().value) {
+                FlorisInternalTextField(
+                    value = internalText,
+                    onValueChange = { internalText = it },
+                )
+            }
             Smartbar()
             if (state.isActionsOverflowVisible) {
                 QuickActionsOverflowPanel()
