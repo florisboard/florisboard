@@ -32,7 +32,7 @@ val projectBuildToolsVersion: String by project
 val projectNdkVersion: String by project
 val projectVersionCode: String by project
 val projectVersionName: String by project
-val projectVersionNameSuffix: String by project
+val projectVersionNameSuffix = projectVersionName.substringAfter("-", "")
 
 android {
     namespace = "dev.patrickgold.florisboard"
@@ -59,7 +59,7 @@ android {
         minSdk = projectMinSdk.toInt()
         targetSdk = projectTargetSdk.toInt()
         versionCode = projectVersionCode.toInt()
-        versionName = projectVersionName
+        versionName = projectVersionName.substringBefore("-")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -106,7 +106,7 @@ android {
     buildTypes {
         named("debug") {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug-${getGitCommitHash(short = true)}"
+            versionNameSuffix = "-debug+${getGitCommitHash(short = true)}"
 
             isDebuggable = true
             isJniDebuggable = false
