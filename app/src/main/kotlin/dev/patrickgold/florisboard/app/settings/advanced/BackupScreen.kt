@@ -25,13 +25,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
@@ -86,10 +90,23 @@ object Backup {
         var clipboardTextItems by mutableStateOf(false)
         var clipboardImageItems by mutableStateOf(false)
         var clipboardVideoItems by mutableStateOf(false)
-        var clipboardData by mutableStateOf(false)
 
-        fun validateClipboardCheckbox(): Boolean {
-            return clipboardTextItems && clipboardImageItems && clipboardVideoItems
+        private var _clipboardData: MutableState<ToggleableState> = mutableStateOf(ToggleableState.Off)
+        val clipboardData: State<ToggleableState> = _clipboardData
+
+        fun updateCheckboxState() {
+            val newValue = if (
+                !clipboardVideoItems && !clipboardImageItems && !clipboardTextItems
+            ) {
+                ToggleableState.Off
+            } else if (
+                clipboardVideoItems && clipboardImageItems && clipboardTextItems
+            ) {
+                ToggleableState.On
+            } else {
+                ToggleableState.Indeterminate
+            }
+            _clipboardData.value = newValue
         }
 
         fun provideClipboardItems(): Boolean {
@@ -309,28 +326,31 @@ internal fun BackupFilesSelector(
             text = stringRes(R.string.backup_and_restore__back_up__files_ime_theme),
         )
 
-        CheckboxListItem(
+        TriStateCheckboxListItem(
             onClick = {
-                if (!filesSelector.clipboardData) {
-                    filesSelector.clipboardTextItems = true
+                if (
+                    filesSelector.clipboardData.value == ToggleableState.Off ||
+                    filesSelector.clipboardData.value == ToggleableState.Indeterminate
+                ) {
                     filesSelector.clipboardImageItems = true
                     filesSelector.clipboardVideoItems = true
+                    filesSelector.clipboardTextItems = true
                 } else {
-                    filesSelector.clipboardTextItems = false
                     filesSelector.clipboardImageItems = false
                     filesSelector.clipboardVideoItems = false
+                    filesSelector.clipboardTextItems = false
                 }
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
-            checked = filesSelector.clipboardTextItems && filesSelector.clipboardImageItems && filesSelector.clipboardVideoItems,
-            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history)
+            state = filesSelector.clipboardData.value,
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history),
         )
 
 
         CheckboxListItem(
             onClick = {
                 filesSelector.clipboardTextItems = !filesSelector.clipboardTextItems
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
             checked = filesSelector.clipboardTextItems,
             text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_text_items),
@@ -339,7 +359,7 @@ internal fun BackupFilesSelector(
         CheckboxListItem(
             onClick = {
                 filesSelector.clipboardImageItems = !filesSelector.clipboardImageItems
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
             checked = filesSelector.clipboardImageItems,
             text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_image_items),
@@ -348,7 +368,7 @@ internal fun BackupFilesSelector(
         CheckboxListItem(
             onClick = {
                 filesSelector.clipboardVideoItems = !filesSelector.clipboardVideoItems
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
             checked = filesSelector.clipboardVideoItems,
             text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_video_items),
@@ -375,6 +395,30 @@ internal fun CheckboxListItem(
                 Checkbox(
                     checked = checked,
                     onCheckedChange = null,
+                )
+            }
+        },
+        text = text,
+    )
+}
+
+@Composable
+internal fun TriStateCheckboxListItem(
+    onClick: () -> Unit,
+    state: ToggleableState,
+    text: String,
+    isSecondaryListItem: Boolean = false,
+) {
+    JetPrefListItem(
+        modifier = Modifier.rippleClickable(onClick = onClick),
+        icon = {
+            Row {
+                if (isSecondaryListItem) {
+                    Spacer(modifier = Modifier.width(40.dp))
+                }
+                TriStateCheckbox(
+                    state = state,
+                    onClick = null,
                 )
             }
         },
