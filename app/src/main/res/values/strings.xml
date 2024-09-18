@@ -617,7 +617,7 @@
     <string name="devtools__debuglog__title">Debug log</string>
     <string name="devtools__debuglog__copied_to_clipboard">Copied debug log to clipboard</string>
     <string name="devtools__debuglog__copy_log">Copy log</string>
-    <string name="devtools__debuglog__copy_for_github">Copy for GitHub formatted log</string>
+    <string name="devtools__debuglog__copy_for_github">Copy log (GitHub formatting)</string>
     <string name="devtools__debuglog__loading">Loading…</string>
 
 
