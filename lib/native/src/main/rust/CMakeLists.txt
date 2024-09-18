@@ -2,8 +2,14 @@ cmake_minimum_required(VERSION 3.22)
 
 project(florisboard)
 
-find_program(RUSTUP_EXECUTABLE NAMES rustup)
-find_program(CARGO_EXECUTABLE NAMES cargo)
+if(CMAKE_HOST_WIN32)
+    set(USER_HOME "$ENV{USERPROFILE}")
+else()
+    set(USER_HOME "$ENV{HOME}")
+endif()
+
+find_program(RUSTUP_EXECUTABLE NAMES rustup HINTS "${USER_HOME}/.cargo/bin")
+find_program(CARGO_EXECUTABLE NAMES cargo HINTS "${USER_HOME}/.cargo/bin")
 if(NOT RUSTUP_EXECUTABLE OR NOT CARGO_EXECUTABLE)
     message(FATAL_ERROR "Rust toolchain not found on this system. Please install Rust toolchain, then try again.")
 else()
