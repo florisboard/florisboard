@@ -69,7 +69,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
     bottomBar {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             FlorisButton(
                 onClick = {
