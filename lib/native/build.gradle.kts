@@ -68,7 +68,7 @@ android {
 
 tasks.named("clean") {
     doLast {
-        delete("src/main/rust/target", "src/main/rust/Cargo.lock")
+        delete("src/main/rust/target")
     }
 }
 
