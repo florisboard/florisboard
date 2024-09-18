@@ -45,7 +45,7 @@ add_custom_target(
 )
 add_custom_target(
     fl_native_rust_build ALL
-    COMMAND ${CARGO_EXECUTABLE} rustc --release --target ${RUST_TARGET} --
+    COMMAND ${CARGO_EXECUTABLE} rustc --release --locked --target ${RUST_TARGET} --
         -C linker="${LLVM_TOOLCHAIN}/${ANDROID_TARGET}${CMAKE_ANDROID_API}-clang"
     DEPENDS setup_rust_target
     BYPRODUCTS ${FL_NATIVE_RUST_PATH}
