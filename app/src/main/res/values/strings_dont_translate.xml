@@ -6,7 +6,7 @@
     <string name="florisboard__commit_by_hash_url" translatable="false">https://github.com/florisboard/florisboard/commit/{hash}</string>
     <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/System-spell-checker-service</string>
     <string name="florisboard__theme_editor_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/Using-the-new-Theme-Editor</string>
-    <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/florisboard/florisboard/blob/master/app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
+    <string name="florisboard__internal_key_codes_url" translatable="false">https://github.com/florisboard/florisboard/blob/main/app/src/main/kotlin/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt</string>
     <string name="florisboard__character_key_codes_url" translatable="false">https://unicode-table.com/en</string>
 
     <string name="general__system_string_placeholder" translatable="false">%s</string>
