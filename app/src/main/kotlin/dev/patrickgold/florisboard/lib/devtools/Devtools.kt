@@ -23,10 +23,10 @@ import android.os.Debug
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppPrefs
-import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
+import org.florisboard.lib.android.systemService
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -45,6 +45,36 @@ object Devtools {
             if (includeLogcat) {
                 appendLine()
                 append(generateLogcatDump())
+            }
+        }
+    }
+
+    fun generateDebugLogForGithub(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
+        return buildString {
+            appendLine("<details>")
+            appendLine("<summary>Detailed info (Debug log header)</summary>")
+            appendLine()
+            appendLine("```")
+            append(generateSystemInfoLog(context))
+            appendLine()
+            append(generateAppInfoLog(context))
+            if (prefs != null) {
+                appendLine()
+                append(generateFeatureConfigLog(prefs))
+            }
+            appendLine()
+            appendLine("```")
+            appendLine("</details>")
+            if (includeLogcat) {
+                appendLine()
+                appendLine("<details>")
+                appendLine("<summary>Debug log content</summary>")
+                appendLine()
+                appendLine("```")
+                append(generateLogcatDump())
+                appendLine()
+                appendLine("```")
+                appendLine("</details>")
             }
         }
     }

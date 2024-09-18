@@ -614,6 +614,11 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Secure Android settings</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">System Android settings</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">System locales</string>
+    <string name="devtools__debuglog__title">Debug log</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Copied debug log to clipboard</string>
+    <string name="devtools__debuglog__copy_log">Copy log</string>
+    <string name="devtools__debuglog__copy_for_github">Copy log (GitHub formatting)</string>
+    <string name="devtools__debuglog__loading">Loading…</string>
 
 
     <!-- Extension strings -->
