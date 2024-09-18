@@ -140,7 +140,7 @@ fun RestoreScreen() = FlorisScreen {
             }.onFailure { error ->
                 context.showLongToast(
                     R.string.backup_and_restore__restore__failure,
-                    "error_message" to error.localizedMessage
+                    "error_message" to error.localizedMessage,
                 )
             }
         },
@@ -257,7 +257,7 @@ fun RestoreScreen() = FlorisScreen {
                             e.printStackTrace()
                             context.showLongToast(
                                 R.string.backup_and_restore__restore__failure,
-                                "error_message" to e.localizedMessage
+                                "error_message" to e.localizedMessage,
                             )
                         }
                     }
@@ -295,7 +295,7 @@ fun RestoreScreen() = FlorisScreen {
                 }.onFailure { error ->
                     context.showLongToast(
                         R.string.backup_and_restore__restore__failure,
-                        "error_message" to error.localizedMessage
+                        "error_message" to error.localizedMessage,
                     )
                 }
             },

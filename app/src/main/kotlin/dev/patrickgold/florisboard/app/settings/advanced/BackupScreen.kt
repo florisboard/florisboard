@@ -343,7 +343,7 @@ internal fun BackupFilesSelector(
                 filesSelector.updateCheckboxState()
             },
             state = filesSelector.clipboardData.value,
-            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history)
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history),
         )
 
 
@@ -407,7 +407,7 @@ internal fun TriStateCheckboxListItem(
     onClick: () -> Unit,
     state: ToggleableState,
     text: String,
-    isSecondaryListItem: Boolean = false
+    isSecondaryListItem: Boolean = false,
 ) {
     JetPrefListItem(
         modifier = Modifier.rippleClickable(onClick = onClick),
@@ -418,7 +418,7 @@ internal fun TriStateCheckboxListItem(
                 }
                 TriStateCheckbox(
                     state = state,
-                    onClick = null
+                    onClick = null,
                 )
             }
         },
