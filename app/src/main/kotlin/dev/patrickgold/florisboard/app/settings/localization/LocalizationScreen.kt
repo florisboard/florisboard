@@ -16,6 +16,9 @@
 
 package dev.patrickgold.florisboard.app.settings.localization
 
+import android.app.AlertDialog
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -47,6 +50,7 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LocalizationScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__title)
@@ -118,17 +122,30 @@ fun LocalizationScreen() = FlorisScreen {
                             DisplayLanguageNamesIn.NATIVE_LOCALE -> subtype.primaryLocale.displayName(subtype.primaryLocale)
                         },
                         summary = summary,
-                        onClick = {
-                            navController.navigate(
-                                Routes.Settings.SubtypeEdit(subtype.id)
-                            )
-                        },
+                        modifier = Modifier.combinedClickable(
+                            onClick = {
+                                navController.navigate(Routes.Settings.SubtypeEdit(subtype.id))
+                            },
+                            onLongClick = {
+                                AlertDialog.Builder(context).apply {
+                                    setTitle("Confirm Deletion")
+                                    setMessage("Are you sure you want to delete this subtype?")
+                                    setPositiveButton("Yes") { _, _ ->
+                                        subtypeManager.removeSubtype(subtype)
+                                    }
+                                    setNegativeButton("No", null)
+                                    show()
+                                }
+                            }
+                        )
                     )
                 }
             }
         }
-
         //PreferenceGroup(title = stringRes(R.string.settings__localization__group_layouts__label)) {
         //}
     }
 }
+
+
+
