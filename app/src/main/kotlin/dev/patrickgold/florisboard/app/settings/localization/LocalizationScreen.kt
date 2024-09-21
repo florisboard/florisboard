@@ -26,9 +26,11 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -53,6 +55,17 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
+internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
+    save = {
+        Json.encodeToString<Subtype?>(it.value)
+    },
+    restore = {
+        mutableStateOf(Json.decodeFromString(it))
+    },
+)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -66,8 +79,7 @@ fun LocalizationScreen() = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
     val cacheManager by context.cacheManager()
-    var chosenSubtypeToDelete: Subtype? by rememberSaveable { mutableStateOf(null) }
-
+    var chosenSubtypeToDelete: Subtype? by rememberSaveable(saver = SubtypeSaver) { mutableStateOf(null) }
 
     floatingActionButton {
         ExtendedFloatingActionButton(
@@ -136,10 +148,9 @@ fun LocalizationScreen() = FlorisScreen {
                             },
                             onLongClick = {
                                 chosenSubtypeToDelete = subtype
-                            }
+                            },
                         )
                     )
-
                 }
             }
         }
@@ -155,6 +166,7 @@ fun LocalizationScreen() = FlorisScreen {
             chosenSubtypeToDelete = null
         }
     )
+
 }
 
 @Composable
@@ -163,15 +175,15 @@ fun DeleteSubtypeConfirmationDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
 )   {
-        subtypeToDelete?.let {
-            JetPrefAlertDialog(
-                title = stringRes(R.string.settings__localization__subtype_delete_confirmation_title),
-                confirmLabel = stringRes(R.string.action__yes),
-                dismissLabel = stringRes(R.string.action__no),
-                onDismiss = onDismiss,
-                onConfirm = onConfirm,
+    subtypeToDelete?.let {
+        JetPrefAlertDialog(
+            title = stringRes(R.string.settings__localization__subtype_delete_confirmation_title),
+            confirmLabel = stringRes(R.string.action__yes),
+            dismissLabel = stringRes(R.string.action__no),
+            onDismiss = onDismiss,
+            onConfirm = onConfirm,
             ) {
                 Text(stringRes(R.string.settings__localization__subtype_delete_confirmation_warning))
             }
-        }
     }
+}
