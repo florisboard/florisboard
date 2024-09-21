@@ -16,6 +16,8 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">ⵜⵉⵙⵖⴰⵍ</string>
     <string name="settings__home__title" comment="Title of the Home screen">ⴱⵔⵔⴽ ⴳ {app_name}</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">ⴰⵙⵏⵜⵎ ⵏ ⵓⴽⵓⵙ</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">ⵉⵙ ⵜⵅⵙⴷ ⴰⴷ ⵜⴽⴽⵙⴷ ⴰⵏⴰⵡ ⴰⴷⴷⴰⵢ?</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">ⴰⵏⴰⵙⵉⵡ</string>
     <!-- Smartbar strings -->
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">ⵔⴰⴷ ⵓⵎⴰⵏⵏ ⴳ ⵓⴼⵍⵍⴰ ⵏ ⵓⵏⴰⵙⵉⵡ</string>

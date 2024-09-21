@@ -38,6 +38,8 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Το FlorisBoard δεν έχει επιλεχθεί ως η προεπιλεγμένη μέθοδος εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Γλώσσες &amp; Διατάξεις</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Υποτύποι</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Επιβεβαίωση διαγραφής</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Είστε σίγουροι ότι θέλετε να διαγράψετε αυτόν τον υποτύπο;</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Προσθήκη υποτύπου</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Επεξεργασία υποτύπου</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Κύρια γλώσσα</string>

@@ -18,12 +18,7 @@ package dev.patrickgold.florisboard.app.settings.localization
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -48,7 +43,6 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -72,8 +66,7 @@ fun LocalizationScreen() = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
     val cacheManager by context.cacheManager()
-    var showDeleteSubtypeDialog by rememberSaveable { mutableStateOf(false) }
-    var choosenSubtypeToDelete: Subtype? by rememberSaveable { mutableStateOf(null) }
+    var chosenSubtypeToDelete: Subtype? by rememberSaveable { mutableStateOf(null) }
 
 
     floatingActionButton {
@@ -142,8 +135,7 @@ fun LocalizationScreen() = FlorisScreen {
                                 )
                             },
                             onLongClick = {
-                                showDeleteSubtypeDialog = !showDeleteSubtypeDialog
-                                choosenSubtypeToDelete = subtype
+                                chosenSubtypeToDelete = subtype
                             }
                         )
                     )
@@ -154,50 +146,32 @@ fun LocalizationScreen() = FlorisScreen {
     }
 
     DeleteSubtypeConfirmationDialog(
-        showDeleteDialog = showDeleteSubtypeDialog,
+        subtypeToDelete = chosenSubtypeToDelete,
         onDismiss = {
-            showDeleteSubtypeDialog = false
-            choosenSubtypeToDelete = null
+            chosenSubtypeToDelete = null
         },
         onConfirm = {
-            choosenSubtypeToDelete?.let { subtypeManager.removeSubtype(subtypeToRemove = it) }
-            showDeleteSubtypeDialog = false
-            choosenSubtypeToDelete = null
+            chosenSubtypeToDelete?.let { subtypeManager.removeSubtype(subtypeToRemove = it) }
+            chosenSubtypeToDelete = null
         }
     )
 }
 
 @Composable
 fun DeleteSubtypeConfirmationDialog(
-    showDeleteDialog: Boolean,
+    subtypeToDelete: Subtype?,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit
-) {
-    if (showDeleteDialog) {
-        JetPrefAlertDialog(
-            title = "Delete Confirmation",
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Column {
-                Text("Are you sure you want to delete this subtype?")
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                ) {
-                    FlorisChip(
-                        text = "No",
-                        onClick = onDismiss,
-                        shape = RoundedCornerShape(8.dp),
-                    )
-                    FlorisChip(
-                        text = "Yes",
-                        onClick = onConfirm,
-                        shape = RoundedCornerShape(8.dp),
-                    )
-                }
+    onConfirm: () -> Unit,
+)   {
+        subtypeToDelete?.let {
+            JetPrefAlertDialog(
+                title = stringRes(R.string.settings__localization__subtype_delete_confirmation_title),
+                confirmLabel = stringRes(R.string.action__yes),
+                dismissLabel = stringRes(R.string.action__no),
+                onDismiss = onDismiss,
+                onConfirm = onConfirm,
+            ) {
+                Text(stringRes(R.string.settings__localization__subtype_delete_confirmation_warning))
             }
         }
     }
-}

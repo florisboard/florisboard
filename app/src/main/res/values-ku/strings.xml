@@ -43,6 +43,8 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Ziman û Rêzkirin</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Navên zimanan di nav de nîşan bidin</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Bintîp</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Pejirandina jêbirinê</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Ma tu bi rastî dixwazî vî bintîpê jê bibî?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Zêdekirina Ziman</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Bin-tîp biguherîne</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Zimanê seretayî</string>
