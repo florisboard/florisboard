@@ -16,10 +16,14 @@
 
 package dev.patrickgold.florisboard.app.settings.localization
 
-import android.app.AlertDialog
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -29,6 +33,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -38,8 +45,10 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -49,6 +58,7 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -62,6 +72,9 @@ fun LocalizationScreen() = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
     val cacheManager by context.cacheManager()
+    var showDeleteSubtypeDialog by rememberSaveable { mutableStateOf(false) }
+    var choosenSubtypeToDelete: Subtype? by rememberSaveable { mutableStateOf(null) }
+
 
     floatingActionButton {
         ExtendedFloatingActionButton(
@@ -124,28 +137,67 @@ fun LocalizationScreen() = FlorisScreen {
                         summary = summary,
                         modifier = Modifier.combinedClickable(
                             onClick = {
-                                navController.navigate(Routes.Settings.SubtypeEdit(subtype.id))
+                                navController.navigate(
+                                    Routes.Settings.SubtypeEdit(subtype.id)
+                                )
                             },
                             onLongClick = {
-                                AlertDialog.Builder(context).apply {
-                                    setTitle("Confirm Deletion")
-                                    setMessage("Are you sure you want to delete this subtype?")
-                                    setPositiveButton("Yes") { _, _ ->
-                                        subtypeManager.removeSubtype(subtype)
-                                    }
-                                    setNegativeButton("No", null)
-                                    show()
-                                }
+                                showDeleteSubtypeDialog = !showDeleteSubtypeDialog
+                                choosenSubtypeToDelete = subtype
                             }
                         )
+                    )
+
+                }
+            }
+        }
+    }
+
+    DeleteSubtypeConfirmationDialog(
+        showDeleteDialog = showDeleteSubtypeDialog,
+        onDismiss = {
+            showDeleteSubtypeDialog = false
+            choosenSubtypeToDelete = null
+        },
+        onConfirm = {
+            choosenSubtypeToDelete?.let { subtypeManager.removeSubtype(subtypeToRemove = it) }
+            showDeleteSubtypeDialog = false
+            choosenSubtypeToDelete = null
+        }
+    )
+}
+
+@Composable
+fun DeleteSubtypeConfirmationDialog(
+    showDeleteDialog: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    if (showDeleteDialog) {
+        JetPrefAlertDialog(
+            title = "Delete Confirmation",
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Column {
+                Text("Are you sure you want to delete this subtype?")
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                ) {
+                    FlorisChip(
+                        text = "No",
+                        onClick = onDismiss,
+                        shape = RoundedCornerShape(8.dp),
+                    )
+                    FlorisChip(
+                        text = "Yes",
+                        onClick = onConfirm,
+                        shape = RoundedCornerShape(8.dp),
                     )
                 }
             }
         }
-        //PreferenceGroup(title = stringRes(R.string.settings__localization__group_layouts__label)) {
-        //}
     }
 }
-
-
-
