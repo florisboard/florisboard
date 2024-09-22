@@ -43,8 +43,6 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Језици &amp; Распореди</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Прикажи називе језика у</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подтипови</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Potvrda brisanja</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Da li ste sigurni da želite da obrišete ovaj podtip?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Додајте подтип</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Уредите подтип</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Главни језик</string>

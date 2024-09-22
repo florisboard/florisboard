@@ -29,8 +29,6 @@
     <string name="settings__help" comment="General label for help buttons in Settings">Pomoć</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standardno</string>
     <string name="settings__home__title" comment="Title of the Home screen">Dobrodošli u {app_name}</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Potvrda brisanja</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Jeste li sigurni da želite izbrisati ovaj podtip?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj pod-tip</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Vrijeme izlaska sunca</string>

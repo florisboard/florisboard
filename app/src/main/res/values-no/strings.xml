@@ -93,8 +93,6 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Mål &amp; Oppsett</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Vis målnavn på</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Undertyper</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Bekreftelse på sletting</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Er du sikker på at du vil slette denne undertypen?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Legg til undertype</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Administrere installerte språkpakker</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Eksperimentelt: administrere utvidelser som legger til støtte for spesifikke språk (formbasert kinesisk inndata foreløpig)</string>

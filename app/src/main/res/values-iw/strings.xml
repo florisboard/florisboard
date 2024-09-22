@@ -93,8 +93,6 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">שפות &amp; פריסות</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">הציגו שם שפה ב</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">תת-סוג</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">אישור מחיקה</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">האם אתה בטוח שברצונך למחוק את תת-הסוג הזה?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">הוסף תת-סוג</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">נהל ערכות שפה מותקנות</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">ניסויי: נהל הרחבות שהוסיפו תמיכה לשפות ספציפיות (סינית על בסיס צורה קלט לעת עתה)</string>

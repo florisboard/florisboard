@@ -32,8 +32,6 @@
     <string name="settings__home__title" comment="Title of the Home screen">Välkommen till {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard är inte aktiverad och kommer därför inte vara tillgänglig som inmatningsmetod i inmatningsväljaren. Tryck här för att lösa problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard är inte vald som standard inmatningsmetod. Tryck här för att lösa problemet.</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Bekräftelse av borttagning</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Är du säker på att du vill ta bort denna undertyp?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Lägg till undertyp</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redigera undertyp</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det verkar som du inte har konfigurerat några undertyper. Undertyp Engelska/QWERTY kommer då användas!</string>

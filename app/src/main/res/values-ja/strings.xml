@@ -61,8 +61,6 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">言語 &amp; 入力</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">で言語名を表示する</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">サブタイプ</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">削除の確認</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">このサブタイプを削除してもよろしいですか？</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">サブタイプを追加</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">サブタイプを編集</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要言語</string>

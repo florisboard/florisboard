@@ -60,8 +60,6 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llingües y distribuciones</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Amosar los nomes de les llingües na</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Sotipos</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Confirmación de desaniciu</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">¿Tas seguru de que quies desaniciar esti subtipu?</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Xestionar los paquetes de llingua instalaos</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Opción esperimental: xestiona les estensiones qu\'amiesten compatibilidá pa llingües específiques (pel momentu, entrada china basada en formes)</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Llingua primaria</string>

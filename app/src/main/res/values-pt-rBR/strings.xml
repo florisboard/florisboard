@@ -93,8 +93,6 @@
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Idiomas e Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Exibir nomes de idiomas em</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipos</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Confirmação de exclusão</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Você tem certeza que deseja excluir este subtipo?</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar formato de digitação</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gerenciar pacotes de linguagem instalados</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimental: gerenciar extenções que adicionam suporte para linguagens específicas (por enquanto, entradas em chinês baseadas em formas)</string>
