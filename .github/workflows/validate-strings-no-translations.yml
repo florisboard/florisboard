@@ -22,7 +22,9 @@ jobs:
           else
             echo "No illegal changes detected"
           fi
-          echo "illegal_changes_list=$illegal_changes_list" >> "$GITHUB_OUTPUT"
+          echo "illegal_changes_list<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$illegal_changes_list" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Create comment if illegal files detected
         uses: peter-evans/create-or-update-comment@v4
