@@ -17,18 +17,9 @@ jobs:
         run: |
           pr_files="$(curl -sS https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files?per_page=1000 || exit 11)"
           changed_files="$(echo "$pr_files" | jq -r '.[].filename' || exit 12)"
-          {
-            echo "changed_files=<<EOF"
-            echo "$changed_files"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Check for translated strings.xml files
-        id: check_changed_files
-        run: |
-          echo "${{ steps.fetch_changed_files.outputs.changed_files }}" > files.txt
-          illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' files.txt || exit 11)"
-          echo "illegal_changes_list='${illegal_changes_list}'" >> "$GITHUB_OUTPUT"
+          echo "$changed_filed" > changed_files.txt || exit 13
+          illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' changed_files.txt || exit 14)"
+          echo "illegal_changes_list=$illegal_changes_list" >> "$GITHUB_OUTPUT"
           if [ -n "$illegal_changes_list" ]; then
             echo -e "Illegal changes detected:\n$illegal_changes_list"
             exit 12
@@ -38,7 +29,7 @@ jobs:
 
       - name: Create comment on failure
         uses: peter-evans/create-or-update-comment@v4
-        if: steps.check_changed_files.outcome == 'failure' && steps.check_changed_files.outputs.illegal_changes != ''
+        if: steps.fetch_changed_files.outcome == 'failure' && steps.fetch_changed_files.outputs.illegal_changes != ''
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
@@ -46,5 +37,5 @@ jobs:
 
             Remove changes to the following files:
             ```
-            ${{ steps.check_changed_files.outputs.illegal_changes }}
+            ${{ steps.fetch_changed_files.outputs.illegal_changes }}
             ```
