@@ -21,11 +21,11 @@ jobs:
       - name: Check for translated strings.xml files
         id: check_changed_files
         run: |
-          illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' files.txt)"
+          illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' files.txt || exit 11)"
           echo "illegal_changes_list='${illegal_changes_list}'" >> "$GITHUB_OUTPUT"
           if [ -n "$illegal_changes_list" ]; then
             echo -e "Illegal changes detected:\n$illegal_changes_list"
-            exit 1
+            exit 12
           else
             echo "No illegal changes detected"
           fi
