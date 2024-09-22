@@ -3,7 +3,6 @@ name: Validate no translated strings.xml included
 on:
   pull_request: # TODO: add _target after testing again!!!!!!!!!!1
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
   validate:
@@ -33,8 +32,9 @@ jobs:
           body: |
             ⚠️ Illegal changes detected
 
-            As per [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md#translation) pull
-            requests must not contain translated `strings.xml` files as those are managed from Crowdin.
+            Hey there!
+
+            We detected illegal changes that disobey the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md#translation). This is a kind reminder that pull requests must not contain translated `strings.xml` files, as those are exclusively managed from Crowdin.
 
             Please remove changes to the following files:
             ```
@@ -43,4 +43,4 @@ jobs:
 
       - name: Fail workflow if illegal files detected
         if: steps.fetch_changed_files.outputs.illegal_changes_list != ''
-        run: exit 1
+        run: echo "Illegal changes detected:\n${{ steps.fetch_changed_files.outputs.illegal_changes_list }}" && exit 1
