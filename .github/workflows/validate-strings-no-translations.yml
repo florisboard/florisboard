@@ -1,7 +1,7 @@
 name: Validate no translated strings.xml included
 
 on:
-  pull_request: # TODO: add _target after testing again!!!!!!!!!!1
+  pull_request_target:
     branches: [ main ]
 
 jobs:
