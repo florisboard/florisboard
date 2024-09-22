@@ -132,6 +132,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete Confirmation</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Are you sure you want to delete this subtype?</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
