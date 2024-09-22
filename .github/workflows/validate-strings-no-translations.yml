@@ -19,7 +19,7 @@ jobs:
           | jq -r '.[].filename' > files.txt
 
       - name: Check for translated strings.xml files
-        id: check_changed_filenames
+        id: check_changed_files
         run: |
           illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' files.txt)"
           echo "illegal_changes_list='${illegal_changes_list}'" >> "$GITHUB_OUTPUT"
@@ -32,7 +32,7 @@ jobs:
 
       - name: Create comment on failure
         uses: peter-evans/create-or-update-comment@v4
-        if: steps.check_changed_filenames.outputs.illegal_changes != ''
+        if: steps.check_changed_files.outcome == 'failure' && steps.check_changed_files.outputs.illegal_changes != ''
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
@@ -40,5 +40,5 @@ jobs:
 
             Remove changes to the following files:
             ```
-            ${{ steps.check_changed_filenames.outputs.illegal_changes }}
+            ${{ steps.check_changed_files.outputs.illegal_changes }}
             ```
