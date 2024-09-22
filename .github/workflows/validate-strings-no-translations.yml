@@ -45,4 +45,4 @@ jobs:
 
       - name: Fail workflow if illegal files detected
         if: steps.fetch_changed_files.outputs.illegal_changes_list != ''
-        run: echo "Illegal changes detected:\n${{ steps.fetch_changed_files.outputs.illegal_changes_list }}" && exit 1
+        run: echo -e "Illegal changes detected:\n${{ steps.fetch_changed_files.outputs.illegal_changes_list }}" && exit 1
