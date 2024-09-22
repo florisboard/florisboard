@@ -21,14 +21,13 @@ jobs:
           echo "illegal_changes_list=$illegal_changes_list" >> "$GITHUB_OUTPUT"
           if [ -n "$illegal_changes_list" ]; then
             echo -e "Illegal changes detected:\n$illegal_changes_list"
-            exit 14
           else
             echo "No illegal changes detected"
           fi
 
-      - name: Create comment on failure
+      - name: Create comment if illegal files detected
         uses: peter-evans/create-or-update-comment@v4
-        if: steps.fetch_changed_files.outcome == 'failure' && steps.fetch_changed_files.outputs.illegal_changes != ''
+        if: steps.fetch_changed_files.outputs.illegal_changes != ''
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
@@ -38,3 +37,7 @@ jobs:
             ```
             ${{ steps.fetch_changed_files.outputs.illegal_changes }}
             ```
+
+      - name: Fail workflow if illegal files detected
+        if: steps.fetch_changed_files.outputs.illegal_changes != ''
+        run: exit 1
