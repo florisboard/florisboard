@@ -1,0 +1,43 @@
+name: Validate no translated strings.xml included
+
+on:
+  pull_request_target:
+    branches: [ main ]
+
+jobs:
+  validate-strings-no-translations:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Fetch PR changed files manually
+        id: fetch_changed_files
+        run: |
+          curl -sS https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files?per_page=1000 \
+          | jq -r '.[].filename' > files.txt
+
+      - name: Check for translated strings.xml files
+        id: check_changed_filenames
+        run: |
+          illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' files.txt)"
+          echo "illegal_changes_list='${illegal_changes_list}'" >> "$GITHUB_OUTPUT"
+          if [ -n "$illegal_changes_list" ]; then
+            echo -e "Illegal changes detected:\n$illegal_changes_list"
+            exit 1
+          else
+            echo "No illegal changes detected"
+          fi
+
+      - name: Create comment on failure
+        uses: peter-evans/create-or-update-comment@v4
+        if: steps.check_changed_filenames.outputs.illegal_changes != ''
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ⚠️ Illegal changes detected
+
+            Remove changes to the following files:
+            ```
+            ${{ steps.check_changed_filenames.outputs.illegal_changes }}
+            ```
