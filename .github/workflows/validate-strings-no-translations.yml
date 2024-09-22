@@ -1,0 +1,61 @@
+name: Validate no translated strings.xml included
+
+on:
+  pull_request_target:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Precheck if validation is required
+        id: precheck
+        run: |
+          pr_author="${{ github.event.pull_request.user.login }}"
+          if [[ "$pr_author" == "florisboard-bot" ]]; then
+            echo "PR is by florisboard-bot, skipping validation!"
+            echo "require_validation=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR is not by florisboard-bot, requiring validation!"
+            echo "require_validation=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch PR changed files manually
+        id: fetch_changed_files
+        if: steps.precheck.outputs.require_validation == 'true'
+        run: |
+          pr_files="$(curl -sSf https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files?per_page=1000)" || exit 11
+          changed_files="$(jq -r '.[].filename' <<< "$pr_files")" || exit 12
+          illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' <<< "$changed_files")" || true
+          if [ -n "$illegal_changes_list" ]; then
+            echo -e "Illegal changes detected:\n$illegal_changes_list"
+          else
+            echo "No illegal changes detected"
+          fi
+          echo "illegal_changes_list<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$illegal_changes_list" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create comment if illegal files detected
+        uses: peter-evans/create-or-update-comment@v4
+        if: steps.precheck.outputs.require_validation == 'true' && steps.fetch_changed_files.outputs.illegal_changes_list != ''
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ⚠️ Illegal changes detected
+
+            Hey there!
+
+            We detected illegal changes that disobey the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md#translation). This is a kind reminder that pull requests must not contain translated `strings.xml` files, as those are exclusively managed from Crowdin.
+
+            Please remove changes to the following files:
+            ```
+            ${{ steps.fetch_changed_files.outputs.illegal_changes_list }}
+            ```
+
+      - name: Fail workflow if illegal files detected
+        if: steps.precheck.outputs.require_validation == 'true' && steps.fetch_changed_files.outputs.illegal_changes_list != ''
+        run: echo -e "Illegal changes detected:\n${{ steps.fetch_changed_files.outputs.illegal_changes_list }}" && exit 1
