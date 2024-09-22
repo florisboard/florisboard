@@ -3,6 +3,7 @@ name: Validate no translated strings.xml included
 on:
   pull_request_target:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   validate-strings-no-translations:
