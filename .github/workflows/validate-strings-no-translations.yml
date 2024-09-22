@@ -15,12 +15,14 @@ jobs:
       - name: Fetch PR changed files manually
         id: fetch_changed_files
         run: |
-          curl -sS https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files?per_page=1000 \
-          | jq -r '.[].filename' > files.txt
+          pr_files="$(curl -sS https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files?per_page=1000 || exit 11)"
+          changed_files="$(echo "$pr_files" | jq -r '.[].filename' || exit 12)"
+          echo "changed_files='${changed_files}'" >> "$GITHUB_OUTPUT"
 
       - name: Check for translated strings.xml files
         id: check_changed_files
         run: |
+          echo "${{ steps.fetch_changed_files.outputs.changed_files }}" > files.txt
           illegal_changes_list="$(grep -E '^app/src/main/res/values-.+/strings.xml$' files.txt || exit 11)"
           echo "illegal_changes_list='${illegal_changes_list}'" >> "$GITHUB_OUTPUT"
           if [ -n "$illegal_changes_list" ]; then
