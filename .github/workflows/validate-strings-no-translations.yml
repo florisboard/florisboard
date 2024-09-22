@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate-strings-no-translations:
+  validate:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -33,7 +33,10 @@ jobs:
           body: |
             ⚠️ Illegal changes detected
 
-            Remove changes to the following files:
+            As per [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md#translation) pull
+            requests must not contain translated `strings.xml` files as those are managed from Crowdin.
+
+            Please remove changes to the following files:
             ```
             ${{ steps.fetch_changed_files.outputs.illegal_changes_list }}
             ```
