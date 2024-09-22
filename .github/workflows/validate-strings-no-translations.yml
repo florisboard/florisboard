@@ -23,11 +23,11 @@ jobs:
           else
             echo "No illegal changes detected"
           fi
-          echo "::set-output name=illegal_changes_list::$illegal_changes_list"
+          echo "illegal_changes_list=$illegal_changes_list" >> "$GITHUB_OUTPUT"
 
       - name: Create comment if illegal files detected
         uses: peter-evans/create-or-update-comment@v4
-        if: steps.fetch_changed_files.outputs.illegal_changes != ''
+        if: steps.fetch_changed_files.outputs.illegal_changes_list != ''
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
@@ -35,9 +35,9 @@ jobs:
 
             Remove changes to the following files:
             ```
-            ${{ steps.fetch_changed_files.outputs.illegal_changes }}
+            ${{ steps.fetch_changed_files.outputs.illegal_changes_list }}
             ```
 
       - name: Fail workflow if illegal files detected
-        if: steps.fetch_changed_files.outputs.illegal_changes != ''
+        if: steps.fetch_changed_files.outputs.illegal_changes_list != ''
         run: exit 1
