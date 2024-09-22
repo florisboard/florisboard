@@ -548,7 +548,7 @@
     <string name="send_to_clipboard__unknown_error">Неизвестная ошибка. Попробуйте еще раз!</string>
     <string name="send_to_clipboard__type_not_supported_error">Данный формат файла не поддерживается.</string>
     <string name="send_to_clipboard__android_version_to_old_error">Требуется более новая версия Android для этой функции.
-
+    
     </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Изображение ниже скопировано в буфер обмена.</string>
     <!-- Devtools strings -->
