@@ -105,17 +105,20 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorHeader)
     val subheaderStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorSubheader)
 
-    fun findItemForOffset(offset: IntOffset): LazyGridItemInfo? {
+    fun findItemForOffsetOrClosestInRow(offset: IntOffset): LazyGridItemInfo? {
+        var closestItemInRow: LazyGridItemInfo? = null
         // Using manual for loop with indices instead of firstOrNull() because this method gets
         // called a lot and firstOrNull allocates an iterator for each call
         for (index in gridState.layoutInfo.visibleItemsInfo.indices) {
             val item = gridState.layoutInfo.visibleItemsInfo[index]
-            if (offset.x in item.offset.x..(item.offset.x + item.size.width) &&
-                offset.y in item.offset.y..(item.offset.y + item.size.height)) {
-                return item
+            if (offset.y in item.offset.y..(item.offset.y + item.size.height)) {
+                if (offset.x in item.offset.x..(item.offset.x + item.size.width)) {
+                    return item
+                }
+                closestItemInRow = item
             }
         }
-        return null
+        return closestItemInRow
     }
 
     fun indexOfStickyAction(item: LazyGridItemInfo): Int {
@@ -158,7 +161,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     }
 
     fun beginDragGesture(pos: IntOffset) {
-        val item = findItemForOffset(pos) ?: return
+        val item = findItemForOffsetOrClosestInRow(pos) ?: return
         val stickyActionIndex = indexOfStickyAction(item)
         val dynamicActionIndex = indexOfDynamicAction(item)
         val hiddenActionIndex = indexOfHiddenAction(item)
@@ -182,7 +185,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
         if (activeDragAction == null) return
         val pos = activeDragPosition + posChange
         activeDragPosition = pos
-        val item = findItemForOffset(pos) ?: return
+        val item = findItemForOffsetOrClosestInRow(pos) ?: return
         val stickyActionIndex = indexOfStickyAction(item)
         val dynamicActionIndex = indexOfDynamicAction(item)
         val hiddenActionIndex = indexOfHiddenAction(item)
