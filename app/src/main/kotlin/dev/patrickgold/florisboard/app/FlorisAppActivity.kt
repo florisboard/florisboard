@@ -144,19 +144,19 @@ class FlorisAppActivity : ComponentActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
 
-        if (intent?.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
+        if (intent.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
             intentToBeHandled = intent
             return
         }
-        if (intent?.action == Intent.ACTION_VIEW && intent.data != null) {
+        if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
             intentToBeHandled = intent
             return
         }
-        if (intent?.action == Intent.ACTION_SEND && intent.clipData != null) {
+        if (intent.action == Intent.ACTION_SEND && intent.clipData != null) {
             intentToBeHandled = intent
             return
         }

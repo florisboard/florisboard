@@ -30,9 +30,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.outlined.LibraryBooks
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -322,17 +322,17 @@ private fun EditScreen(
         FlorisOutlinedBox(
             modifier = Modifier.defaultFlorisOutlinedBox(),
         ) {
-            this@content.Preference(
+            Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageMetaData },
                 icon = Icons.Default.Code,
                 title = stringRes(R.string.ext__editor__metadata__title),
             )
-            this@content.Preference(
+            Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageDependencies },
-                icon = Icons.Outlined.LibraryBooks,
+                icon = Icons.AutoMirrored.Outlined.LibraryBooks,
                 title = stringRes(R.string.ext__editor__dependencies__title),
             )
-            this@content.Preference(
+            Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageFiles },
                 icon = vectorResource(R.drawable.ic_file_blank),
                 title = stringRes(R.string.ext__editor__files__title),

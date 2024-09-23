@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -76,7 +75,6 @@ private const val ItemNotFound = -1
 private val NoopAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.NOOP))
 private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.DRAG_MARKER))
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
@@ -266,7 +264,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 onClick = {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
-                icon = Icons.Default.KeyboardArrowLeft,
+                icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                 iconColor = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
             )
             Text(
@@ -302,7 +300,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 }
                 item(key = keyOf(stickyAction)) {
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = stickyAction,
                         evaluator = evaluator,
                         type = QuickActionBarType.STATIC_TILE,
@@ -317,7 +315,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 }
                 itemsIndexed(dynamicActions, key = { i, a -> keyOf(a) ?: i }) { _, action ->
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
                         type = QuickActionBarType.STATIC_TILE,
@@ -332,7 +330,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 }
                 itemsIndexed(hiddenActions, key = { i, a -> keyOf(a) ?: i }) { _, action ->
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
                         type = QuickActionBarType.STATIC_TILE,

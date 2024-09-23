@@ -318,15 +318,15 @@ fun RestoreScreen() = FlorisScreen {
                 modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
             ) {
-                this@content.Preference(
+                Preference(
                     icon = Icons.Default.Code,
                     title = workspace.metadata.packageName,
                 )
-                this@content.Preference(
+                Preference(
                     icon = Icons.Outlined.Info,
                     title = "${workspace.metadata.versionName} (${workspace.metadata.versionCode})",
                 )
-                this@content.Preference(
+                Preference(
                     icon = Icons.Default.Schedule,
                     title = remember(workspace.metadata.timestamp) {
                         val formatter = DateFormat.getDateTimeInstance()

@@ -17,12 +17,12 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Assignment
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material.icons.outlined.Assignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -139,7 +139,7 @@ data class ClipboardSuggestionCandidate(
             NetworkUtils.isEmailAddress(text) -> Icons.Default.Email
             NetworkUtils.isUrl(text) -> Icons.Default.Link
             NetworkUtils.isPhoneNumber(text) -> Icons.Default.Phone
-            else -> Icons.Outlined.Assignment
+            else -> Icons.AutoMirrored.Outlined.Assignment
         }
         ItemType.IMAGE -> Icons.Default.Image
         ItemType.VIDEO -> Icons.Default.Videocam
