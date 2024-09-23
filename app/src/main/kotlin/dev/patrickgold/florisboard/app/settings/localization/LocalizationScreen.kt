@@ -40,7 +40,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
@@ -78,7 +77,6 @@ fun LocalizationScreen() = FlorisScreen {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
-    val cacheManager by context.cacheManager()
     var chosenSubtypeToDelete: Subtype? by rememberSaveable(saver = SubtypeSaver) { mutableStateOf(null) }
 
     floatingActionButton {
@@ -106,7 +104,6 @@ fun LocalizationScreen() = FlorisScreen {
             entries = enumDisplayEntriesOf(DisplayLanguageNamesIn::class),
         )
         Preference(
-//            icon = R.drawable.ic_edit,
             title = stringRes(R.string.settings__localization__language_pack_title),
             summary = stringRes(R.string.settings__localization__language_pack_summary),
             onClick = {

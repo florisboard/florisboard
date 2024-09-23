@@ -87,6 +87,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                     } else {
                         val uri: Uri? =
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                                @Suppress("DEPRECATION")
                                 intent.getParcelableExtra(Intent.EXTRA_STREAM)
                             } else {
                                 intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)

@@ -40,8 +40,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.Pageview
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -225,7 +225,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.snygg__rule_selector__pressed)
                         },
                         selected = pressedSelector,
-                        color = if (pressedSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { focusSelector = !focusSelector },
@@ -235,7 +234,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.snygg__rule_selector__focus)
                         },
                         selected = focusSelector,
-                        color = if (focusSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { disabledSelector = !disabledSelector },
@@ -244,7 +242,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.snygg__rule_selector__disabled)
                         },
                         selected = disabledSelector,
-                        color = if (disabledSelector) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                 }
             }
@@ -291,7 +288,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.enum__input_shift_state__unshifted)
                         },
                         selected = shiftStateUnshifted,
-                        color = if (shiftStateUnshifted) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { shiftStateShiftedManual = !shiftStateShiftedManual },
@@ -302,7 +298,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
                         },
                         selected = shiftStateShiftedManual,
-                        color = if (shiftStateShiftedManual) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { shiftStateShiftedAutomatic = !shiftStateShiftedAutomatic },
@@ -313,7 +308,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
                         },
                         selected = shiftStateShiftedAutomatic,
-                        color = if (shiftStateShiftedAutomatic) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                     FlorisChip(
                         onClick = { shiftStateCapsLock = !shiftStateCapsLock },
@@ -324,7 +318,6 @@ internal fun EditRuleDialog(
                             else -> stringRes(R.string.enum__input_shift_state__caps_lock)
                         },
                         selected = shiftStateCapsLock,
-                        color = if (shiftStateCapsLock) MaterialTheme.colorScheme.secondary else Color.Unspecified,
                     )
                 }
             }
@@ -479,7 +472,7 @@ private fun EditCodeValueDialog(
             FlorisIconButton(
                 onClick = { showKeyCodesHelp = !showKeyCodesHelp },
                 modifier = Modifier.offset(x = 12.dp),
-                icon = Icons.Default.HelpOutline,
+                icon = Icons.AutoMirrored.Filled.HelpOutline,
             )
         },
     ) {
