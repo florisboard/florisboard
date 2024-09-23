@@ -322,17 +322,17 @@ private fun EditScreen(
         FlorisOutlinedBox(
             modifier = Modifier.defaultFlorisOutlinedBox(),
         ) {
-            this@content.Preference(
+            Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageMetaData },
                 icon = Icons.Default.Code,
                 title = stringRes(R.string.ext__editor__metadata__title),
             )
-            this@content.Preference(
+            Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageDependencies },
                 icon = Icons.Outlined.LibraryBooks,
                 title = stringRes(R.string.ext__editor__dependencies__title),
             )
-            this@content.Preference(
+            Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageFiles },
                 icon = vectorResource(R.drawable.ic_file_blank),
                 title = stringRes(R.string.ext__editor__files__title),
