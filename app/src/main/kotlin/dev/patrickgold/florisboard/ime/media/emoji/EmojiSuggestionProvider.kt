@@ -65,6 +65,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         isPrivateSession: Boolean
     ): List<SuggestionCandidate> {
         val preferredSkinTone = prefs.emoji.preferredSkinTone.get()
+        val showName = prefs.emoji.suggestionCandidateShowName.get()
         val query = validateInputQuery(content.composingText) ?: return emptyList()
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         val candidates = withContext(Dispatchers.Default) {
@@ -74,7 +75,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
                         emoji.keywords.any { it.contains(query, ignoreCase = true) }
                 }
                 .limit(maxCandidateCount.toLong())
-                .map { EmojiSuggestionCandidate(it) }
+                .map { EmojiSuggestionCandidate(it, showName) }
                 .collect(Collectors.toList())
         }
         return candidates

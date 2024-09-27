@@ -19,11 +19,13 @@
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
-    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Display emoji suggestions</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>
     <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Trigger type</string>
     <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimum query length</string>
     <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximum candidate count</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Emoji name visibility</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Show emoji name below suggested emoji</string>
 
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>

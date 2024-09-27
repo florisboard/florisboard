@@ -157,6 +157,7 @@ data class ClipboardSuggestionCandidate(
  */
 data class EmojiSuggestionCandidate(
     val emoji: Emoji,
+    val showName: Boolean,
     override val confidence: Double = 1.0,
     override val isEligibleForAutoCommit: Boolean = false,
     override val isEligibleForUserRemoval: Boolean = false,
@@ -164,5 +165,5 @@ data class EmojiSuggestionCandidate(
     override val sourceProvider: SuggestionProvider? = null,
 ) : SuggestionCandidate {
     override val text = emoji.value
-    override val secondaryText = emoji.name
+    override val secondaryText = if (showName) emoji.name else null
 }

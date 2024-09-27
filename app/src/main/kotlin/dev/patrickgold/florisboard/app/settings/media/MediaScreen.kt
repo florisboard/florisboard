@@ -94,6 +94,12 @@ fun MediaScreen() = FlorisScreen {
                 stepIncrement = 1,
                 enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
             )
+            SwitchPreference(
+                prefs.emoji.suggestionCandidateShowName,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
         }
     }
 }

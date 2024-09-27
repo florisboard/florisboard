@@ -229,6 +229,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "emoji__suggestion_candidate_max_count",
             default = 5,
         )
+        val suggestionCandidateShowName = boolean(
+            key = "emoji__suggestion_candidate_show_name",
+            default = true,
+        )
     }
 
     val gestures = Gestures()
