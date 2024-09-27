@@ -18,6 +18,12 @@
     <string name="prefs__media__emoji_recently_used_max_size">Emoji history max size</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Display emoji suggestions</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Trigger type</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimum query length</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximum candidate count</string>
 
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>
@@ -806,6 +812,11 @@
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
 
+    <string name="enum__emoji_suggestion_type__leading_colon">Leading colon</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Suggest emojis using the :emoji_name syntax</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Inline text</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Suggest emojis simply by typing the emoji name as a word</string>
+
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Above candidates</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Places the extended actions row between the app UI and the candidate row</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Below candidates</string>
@@ -945,6 +956,14 @@
     <plurals name="unit__items__written">
         <item quantity="one">{v} item</item>
         <item quantity="other">{v} items</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} character</item>
+        <item quantity="other">{v} characters</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} candidate</item>
+        <item quantity="other">{v} candidates</item>
     </plurals>
 
 </resources>

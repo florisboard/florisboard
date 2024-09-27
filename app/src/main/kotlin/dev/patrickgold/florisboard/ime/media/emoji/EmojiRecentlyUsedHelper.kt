@@ -27,21 +27,21 @@ object EmojiRecentlyUsedHelper {
     private var emojiGuard = Mutex(locked = false)
 
     suspend fun addEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
-        val maxSize = prefs.media.emojiRecentlyUsedMaxSize.get()
-        val list = prefs.media.emojiRecentlyUsed.get().toMutableList()
+        val maxSize = prefs.emoji.recentlyUsedMaxSize.get()
+        val list = prefs.emoji.recentlyUsed.get().toMutableList()
         list.add(0, emoji)
         if (maxSize > 0) {
             while (list.size > maxSize) {
                 list.removeLast()
             }
         }
-        prefs.media.emojiRecentlyUsed.set(list.distinctBy { it.value })
+        prefs.emoji.recentlyUsed.set(list.distinctBy { it.value })
     }
 
     suspend fun removeEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
-        val list = prefs.media.emojiRecentlyUsed.get().toMutableList()
+        val list = prefs.emoji.recentlyUsed.get().toMutableList()
         list.remove(emoji)
-        prefs.media.emojiRecentlyUsed.set(list.distinctBy { it.value })
+        prefs.emoji.recentlyUsed.set(list.distinctBy { it.value })
     }
 
     object Serializer : PreferenceSerializer<List<Emoji>> {

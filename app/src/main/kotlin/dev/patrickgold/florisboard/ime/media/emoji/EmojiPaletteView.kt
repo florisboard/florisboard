@@ -154,7 +154,7 @@ fun EmojiPaletteView(
     val lazyListState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
 
-    val preferredSkinTone by prefs.media.emojiPreferredSkinTone.observeAsState()
+    val preferredSkinTone by prefs.emoji.preferredSkinTone.observeAsState()
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
     val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
     val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
@@ -179,7 +179,7 @@ fun EmojiPaletteView(
                 // Purposely using remember here to prevent recomposition, as this would cause rapid
                 // emoji changes for the user when in recently used category.
                 remember(recentlyUsedVersion) {
-                    prefs.media.emojiRecentlyUsed.get().map { EmojiSet(listOf(it)) }
+                    prefs.emoji.recentlyUsed.get().map { EmojiSet(listOf(it)) }
                 }
             } else {
                 emojiMappings[activeCategory]!!

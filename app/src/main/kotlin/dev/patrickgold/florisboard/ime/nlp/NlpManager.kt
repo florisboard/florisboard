@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.media.emoji.EMOJI_SUGGESTION_MAX_COUNT
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
@@ -110,6 +109,9 @@ class NlpManager(context: Context) {
             assembleCandidates()
         }
         prefs.suggestion.clipboardContentEnabled.observeForever {
+            assembleCandidates()
+        }
+        prefs.emoji.suggestionEnabled.observeForever {
             assembleCandidates()
         }
         subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
@@ -202,21 +204,45 @@ class NlpManager(context: Context) {
     }
 
     fun isSuggestionOn(): Boolean =
-        prefs.suggestion.enabled.get() || providerForcesSuggestionOn(subtypeManager.activeSubtype)
+        prefs.suggestion.enabled.get()
+            || prefs.emoji.suggestionEnabled.get()
+            || providerForcesSuggestionOn(subtypeManager.activeSubtype)
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
         scope.launch {
-            val suggestions = getSuggestionProvider(subtype).suggest(
-                subtype = subtype,
-                content = content,
-                maxCandidateCount = 8,
-                allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-            )
+            val emojiSuggestions = when {
+                prefs.emoji.suggestionEnabled.get() -> {
+                    emojiSuggestionProvider.suggest(
+                        subtype = subtype,
+                        content = content,
+                        maxCandidateCount = prefs.emoji.suggestionCandidateMaxCount.get(),
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                    )
+                }
+                else -> emptyList()
+            }
+            val suggestions = when {
+                emojiSuggestions.isNotEmpty() && prefs.emoji.suggestionType.get().prefix.isNotEmpty() -> {
+                    emptyList()
+                }
+                else -> {
+                    getSuggestionProvider(subtype).suggest(
+                        subtype = subtype,
+                        content = content,
+                        maxCandidateCount = 8,
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                    )
+                }
+            }
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
-                    internalSuggestions = reqTime to suggestions
+                    internalSuggestions = reqTime to buildList {
+                        addAll(emojiSuggestions)
+                        addAll(suggestions)
+                    }
                 }
             }
         }
@@ -267,24 +293,16 @@ class NlpManager(context: Context) {
         runBlocking {
             val candidates = when {
                 isSuggestionOn() -> {
-                    emojiSuggestionProvider.suggest(
-                        subtype = subtypeManager.activeSubtype,
+                    clipboardSuggestionProvider.suggest(
+                        subtype = Subtype.DEFAULT,
                         content = editorInstance.activeContent,
-                        maxCandidateCount = EMOJI_SUGGESTION_MAX_COUNT,
+                        maxCandidateCount = 8,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
                         isPrivateSession = keyboardManager.activeState.isIncognitoMode,
                     ).ifEmpty {
-                        clipboardSuggestionProvider.suggest(
-                            subtype = Subtype.DEFAULT,
-                            content = editorInstance.activeContent,
-                            maxCandidateCount = 8,
-                            allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-                        ).ifEmpty {
-                            buildList {
-                                internalSuggestionsGuard.withLock {
-                                    addAll(internalSuggestions.second)
-                                }
+                        buildList {
+                            internalSuggestionsGuard.withLock {
+                                addAll(internalSuggestions.second)
                             }
                         }
                     }
