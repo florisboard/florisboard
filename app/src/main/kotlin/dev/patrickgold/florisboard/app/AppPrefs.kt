@@ -221,6 +221,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "emoji__suggestion_type",
             default = EmojiSuggestionType.LEADING_COLON,
         )
+        val suggestionUpdateHistory = boolean(
+            key = "emoji__suggestion_update_history",
+            default = true,
+        )
         val suggestionQueryMinLength = int(
             key = "emoji__suggestion_query_min_length",
             default = 3,

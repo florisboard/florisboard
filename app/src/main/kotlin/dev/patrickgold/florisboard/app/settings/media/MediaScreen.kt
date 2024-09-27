@@ -72,6 +72,18 @@ fun MediaScreen() = FlorisScreen {
                 entries = enumDisplayEntriesOf(EmojiSuggestionType::class),
                 enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
             )
+            SwitchPreference(
+                prefs.emoji.suggestionUpdateHistory,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_update_history),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_update_history__summary),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            SwitchPreference(
+                prefs.emoji.suggestionCandidateShowName,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
             DialogSliderPreference(
                 prefs.emoji.suggestionQueryMinLength,
                 title = stringRes(R.string.prefs__media__emoji_suggestion_query_min_length),
@@ -92,12 +104,6 @@ fun MediaScreen() = FlorisScreen {
                 min = 1,
                 max = 10,
                 stepIncrement = 1,
-                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
-            )
-            SwitchPreference(
-                prefs.emoji.suggestionCandidateShowName,
-                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
-                summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
                 enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
             )
         }

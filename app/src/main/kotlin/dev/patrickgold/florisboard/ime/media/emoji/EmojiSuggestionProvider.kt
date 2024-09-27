@@ -75,14 +75,24 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
                         emoji.keywords.any { it.contains(query, ignoreCase = true) }
                 }
                 .limit(maxCandidateCount.toLong())
-                .map { EmojiSuggestionCandidate(it, showName) }
+                .map { emoji ->
+                    EmojiSuggestionCandidate(
+                        emoji = emoji,
+                        showName = showName,
+                        sourceProvider = this@EmojiSuggestionProvider,
+                    )
+                }
                 .collect(Collectors.toList())
         }
         return candidates
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
-        // No-op
+        val updateHistory = prefs.emoji.suggestionUpdateHistory.get()
+        if (!updateHistory || candidate !is EmojiSuggestionCandidate) {
+            return
+        }
+        EmojiRecentlyUsedHelper.addEmoji(prefs, candidate.emoji)
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
