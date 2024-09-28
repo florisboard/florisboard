@@ -27,8 +27,6 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
-import org.florisboard.lib.android.AndroidSettings
-import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -36,6 +34,8 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.android.showLongToast
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
@@ -95,6 +95,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = stringRes(R.string.devtools__show_drag_and_drop_helpers__label),
                 summary = stringRes(R.string.devtools__show_drag_and_drop_helpers__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.devtools.enableInternalTextField,
+                title = "Enable internal text field",
+                summary = "Enable the internal text field for testing purposes until it's correctly implemented in the new emoji layout",
+                enabledIf = { prefs.devtools.enabled isEqualTo true}
             )
             Preference(
                 title = stringRes(R.string.devtools__clear_udm_internal_database__label),
