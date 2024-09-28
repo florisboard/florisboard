@@ -20,6 +20,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Enable emoji history</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Retain recently used emojis for quick access</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (Pinned)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (Recent)</string>
     <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
@@ -46,6 +48,8 @@
     <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
     <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
     <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
+    <string name="emoji__history__pinned">Pinned</string>
+    <string name="emoji__history__recent">Recent</string>
 
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Arrow up</string>
@@ -805,6 +809,15 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Language names across the app and keyboard UI are displayed in the locale which is set for the whole device</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Native locale</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Language names across the app and keyboard UI are displayed in the locale referred by itself</string>
+
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Auto sort (prepend)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Automatically reorder emojis on emoji usage. New emojis are added to the start.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Auto sort (append)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Automatically reorder emojis on emoji usage. New emojis are added to the end.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Manual sort (prepend)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Do not automatically reorder emojis on emoji usage. New emojis are added to the start.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Manual sort (append)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Do not automatically reorder emojis on emoji usage. New emojis are added to the end.</string>
 
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Default skin tone</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Light skin tone</string>

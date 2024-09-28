@@ -11,6 +11,7 @@ import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
@@ -136,6 +137,30 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
                 label = stringRes(R.string.enum__display_language_names_in__native_locale),
                 description = stringRes(R.string.enum__display_language_names_in__native_locale__description),
                 showDescriptionOnlyIfSelected = true,
+            )
+        }
+    },
+    EmojiHistory.UpdateStrategy::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = EmojiHistory.UpdateStrategy.AUTO_SORT_PREPEND,
+                label = stringRes(R.string.enum__emoji_history_update_strategy__auto_sort_prepend),
+                description = stringRes(R.string.enum__emoji_history_update_strategy__auto_sort_prepend__description),
+            )
+            entry(
+                key = EmojiHistory.UpdateStrategy.AUTO_SORT_APPEND,
+                label = stringRes(R.string.enum__emoji_history_update_strategy__auto_sort_append),
+                description = stringRes(R.string.enum__emoji_history_update_strategy__auto_sort_append__description),
+            )
+            entry(
+                key = EmojiHistory.UpdateStrategy.MANUAL_SORT_PREPEND,
+                label = stringRes(R.string.enum__emoji_history_update_strategy__manual_sort_prepend),
+                description = stringRes(R.string.enum__emoji_history_update_strategy__manual_sort_prepend__description),
+            )
+            entry(
+                key = EmojiHistory.UpdateStrategy.MANUAL_SORT_APPEND,
+                label = stringRes(R.string.enum__emoji_history_update_strategy__manual_sort_append),
+                description = stringRes(R.string.enum__emoji_history_update_strategy__manual_sort_append__description),
             )
         }
     },

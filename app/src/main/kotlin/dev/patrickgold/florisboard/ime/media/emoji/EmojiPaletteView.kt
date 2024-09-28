@@ -117,6 +117,12 @@ private val VariantsTriangleShapeRtl = GenericShape { size, _ ->
     lineTo(x = 0f, y = size.height)
 }
 
+data class EmojiMappingForView(
+    val pinned: List<EmojiSet>,
+    val recent: List<EmojiSet>,
+    val simple: List<EmojiSet>,
+)
+
 @Composable
 fun EmojiPaletteView(
     fullEmojiMappings: EmojiData,
@@ -187,11 +193,21 @@ fun EmojiPaletteView(
                 // Purposely using remember here to prevent recomposition, as this would cause rapid
                 // emoji changes for the user when in recently used category.
                 remember(recentlyUsedVersion) {
-                    prefs.emoji.historyData.get().map { EmojiSet(listOf(it)) }
+                    val data = prefs.emoji.historyData.get()
+                    EmojiMappingForView(
+                        pinned = data.pinned.map { EmojiSet(listOf(it)) },
+                        recent = data.recent.map { EmojiSet(listOf(it)) },
+                        simple = emptyList(),
+                    )
                 }
             } else {
-                emojiMappings[activeCategory]!!
+                EmojiMappingForView(
+                    pinned = emptyList(),
+                    recent = emptyList(),
+                    simple = emojiMappings[activeCategory]!!,
+                )
             }
+            val isEmojiHistoryEmpty = emojiMapping.pinned.isEmpty() && emojiMapping.recent.isEmpty()
             if (activeCategory == EmojiCategory.RECENTLY_USED && deviceLocked) {
                 Column(
                     modifier = Modifier
@@ -203,7 +219,7 @@ fun EmojiPaletteView(
                         color = contentColor,
                     )
                 }
-            } else if (activeCategory == EmojiCategory.RECENTLY_USED && emojiMapping.isEmpty()) {
+            } else if (activeCategory == EmojiCategory.RECENTLY_USED && isEmojiHistoryEmpty) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -220,8 +236,7 @@ fun EmojiPaletteView(
                         fontStyle = FontStyle.Italic,
                     )
                 }
-            }
-            else key(emojiMapping) {
+            } else key(emojiMapping) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     LazyVerticalGrid(
                         modifier = Modifier
@@ -230,7 +245,8 @@ fun EmojiPaletteView(
                         columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyListState,
                     ) {
-                        items(emojiMapping) { emojiSet ->
+                        // TODO: that ignores pinned
+                        items(emojiMapping.recent.ifEmpty { emojiMapping.simple }) { emojiSet ->
                             EmojiKey(
                                 emojiSet = emojiSet,
                                 emojiCompatInstance = emojiCompatInstance,
@@ -241,13 +257,13 @@ fun EmojiPaletteView(
                                 onEmojiInput = { emoji ->
                                     keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                                     scope.launch {
-                                        EmojiHistory.addEmoji(prefs, emoji)
+                                        EmojiHistoryHelper.markEmojiUsed(prefs, emoji)
                                     }
                                 },
                                 onLongPress = { emoji ->
                                     if (activeCategory == EmojiCategory.RECENTLY_USED) {
                                         scope.launch {
-                                            EmojiHistory.removeEmoji(prefs, emoji)
+                                            EmojiHistoryHelper.removeEmoji(prefs, emoji)
                                             recentlyUsedVersion++
                                             withContext(Dispatchers.Main) {
                                                 context.showShortToast(

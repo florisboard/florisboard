@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -54,11 +55,26 @@ fun MediaScreen() = FlorisScreen {
                 title = stringRes(R.string.prefs__media__emoji_history_enabled),
                 summary = stringRes(R.string.prefs__media__emoji_history_enabled__summary),
             )
+            ListPreference(
+                prefs.emoji.historyPinnedUpdateStrategy,
+                title = stringRes(R.string.prefs__media__emoji_history_pinned_update_strategy),
+                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            ListPreference(
+                prefs.emoji.historyRecentUpdateStrategy,
+                title = stringRes(R.string.prefs__media__emoji_history_recent_update_strategy),
+                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
             DialogSliderPreference(
-                prefs.emoji.historyMaxSize,
+                primaryPref = prefs.emoji.historyPinnedMaxSize,
+                secondaryPref = prefs.emoji.historyRecentMaxSize,
                 title = stringRes(R.string.prefs__media__emoji_history_max_size),
+                primaryLabel = stringRes(R.string.emoji__history__pinned),
+                secondaryLabel = stringRes(R.string.emoji__history__recent),
                 valueLabel = { maxSize ->
-                    if (maxSize == 0) {
+                    if (maxSize == EmojiHistory.MaxSizeUnlimited) {
                         stringRes(R.string.general__unlimited)
                     } else {
                         pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
