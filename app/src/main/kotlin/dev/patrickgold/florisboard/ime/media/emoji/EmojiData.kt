@@ -99,7 +99,7 @@ data class EmojiData(
                             val emoji = Emoji(
                                 value = data[0].trim(),
                                 name = base?.name ?: data[1].trim(),
-                                keywords = data[2].split("|").map { it.trim() }
+                                keywords = data[2].split("|").map { it.trim() },
                             )
                             if (emojiEditorList != null) {
                                 emojiEditorList!!.add(emoji)
