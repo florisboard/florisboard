@@ -31,7 +31,7 @@ import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiRecentlyUsedHelper
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
@@ -196,15 +196,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     val emoji = Emoji()
     inner class Emoji {
-        val recentlyUsed = custom(
-            key = "emoji__recently_used",
-            default = emptyList(),
-            serializer = EmojiRecentlyUsedHelper.Serializer,
-        )
-        val recentlyUsedMaxSize = int(
-            key = "emoji__recently_used_max_size",
-            default = 90,
-        )
         val preferredSkinTone = enum(
             key = "emoji__preferred_skin_tone",
             default = EmojiSkinTone.DEFAULT,
@@ -212,6 +203,19 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val preferredHairStyle = enum(
             key = "emoji__preferred_hair_style",
             default = EmojiHairStyle.DEFAULT,
+        )
+        val historyEnabled = boolean(
+            key = "emoji__history_enabled",
+            default = true,
+        )
+        val historyData = custom(
+            key = "emoji__history_data",
+            default = emptyList(),
+            serializer = EmojiHistory.Serializer,
+        )
+        val historyMaxSize = int(
+            key = "emoji__history_max_size",
+            default = 90,
         )
         val suggestionEnabled = boolean(
             key = "emoji__suggestion_enabled",
@@ -733,10 +737,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             // Migrate media prefs to emoji prefs
             // Keep migration rule until: 0.6 dev cycle
             "media__emoji_recently_used" -> {
-                entry.transform(key = "emoji__recently_used")
+                entry.transform(key = "emoji__history_data")
             }
             "media__emoji_recently_used_max_size" -> {
-                entry.transform(key = "emoji__recently_used_max_size")
+                entry.transform(key = "emoji__history_max_size")
             }
             "media__emoji_preferred_skin_tone" -> {
                 entry.transform(

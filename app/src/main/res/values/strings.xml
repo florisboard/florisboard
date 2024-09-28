@@ -15,9 +15,12 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Emoji history max size</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Enable emoji history</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Retain recently used emojis for quick access</string>
+    <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>

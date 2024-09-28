@@ -150,15 +150,22 @@ fun EmojiPaletteView(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
 
-    var activeCategory by remember { mutableStateOf(EmojiCategory.RECENTLY_USED) }
-    val lazyListState = rememberLazyGridState()
-    val scope = rememberCoroutineScope()
-
     val preferredSkinTone by prefs.emoji.preferredSkinTone.observeAsState()
+    val emojiHistoryEnabled by prefs.emoji.historyEnabled.observeAsState()
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
     val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
     val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
     val contentColor = emojiKeyStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
+
+    var activeCategory by remember(emojiHistoryEnabled) {
+        if (emojiHistoryEnabled) {
+            mutableStateOf(EmojiCategory.RECENTLY_USED)
+        } else {
+            mutableStateOf(EmojiCategory.SMILEYS_EMOTION)
+        }
+    }
+    val lazyListState = rememberLazyGridState()
+    val scope = rememberCoroutineScope()
 
     Column(modifier = modifier) {
         EmojiCategoriesTabRow(
@@ -167,6 +174,7 @@ fun EmojiPaletteView(
                 scope.launch { lazyListState.scrollToItem(0) }
                 activeCategory = category
             },
+            emojiHistoryEnabled = emojiHistoryEnabled,
         )
 
         Box(
@@ -179,7 +187,7 @@ fun EmojiPaletteView(
                 // Purposely using remember here to prevent recomposition, as this would cause rapid
                 // emoji changes for the user when in recently used category.
                 remember(recentlyUsedVersion) {
-                    prefs.emoji.recentlyUsed.get().map { EmojiSet(listOf(it)) }
+                    prefs.emoji.historyData.get().map { EmojiSet(listOf(it)) }
                 }
             } else {
                 emojiMappings[activeCategory]!!
@@ -233,13 +241,13 @@ fun EmojiPaletteView(
                                 onEmojiInput = { emoji ->
                                     keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                                     scope.launch {
-                                        EmojiRecentlyUsedHelper.addEmoji(prefs, emoji)
+                                        EmojiHistory.addEmoji(prefs, emoji)
                                     }
                                 },
                                 onLongPress = { emoji ->
                                     if (activeCategory == EmojiCategory.RECENTLY_USED) {
                                         scope.launch {
-                                            EmojiRecentlyUsedHelper.removeEmoji(prefs, emoji)
+                                            EmojiHistory.removeEmoji(prefs, emoji)
                                             recentlyUsedVersion++
                                             withContext(Dispatchers.Main) {
                                                 context.showShortToast(
@@ -263,6 +271,7 @@ fun EmojiPaletteView(
 private fun EmojiCategoriesTabRow(
     activeCategory: EmojiCategory,
     onCategoryChange: (EmojiCategory) -> Unit,
+    emojiHistoryEnabled: Boolean,
 ) {
     val context = LocalContext.current
     val inputFeedbackController = LocalInputFeedbackController.current
@@ -271,7 +280,11 @@ private fun EmojiCategoriesTabRow(
     val unselectedContentColor = tabStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
     val selectedContentColor = tabStyleFocused.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
 
-    val selectedTabIndex = EmojiCategoryValues.indexOf(activeCategory)
+    val selectedTabIndex = if (emojiHistoryEnabled) {
+        EmojiCategoryValues.indexOf(activeCategory)
+    } else {
+        EmojiCategoryValues.indexOf(activeCategory) - 1
+    }
     TabRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -288,6 +301,9 @@ private fun EmojiCategoriesTabRow(
         },
     ) {
         for (category in EmojiCategoryValues) {
+            if (category == EmojiCategory.RECENTLY_USED && !emojiHistoryEnabled) {
+                continue
+            }
             Tab(
                 onClick = {
                     inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)

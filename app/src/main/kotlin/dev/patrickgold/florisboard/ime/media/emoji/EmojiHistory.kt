@@ -21,27 +21,33 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-object EmojiRecentlyUsedHelper {
+object EmojiHistory {
     private const val DELIMITER = ";"
 
     private var emojiGuard = Mutex(locked = false)
 
     suspend fun addEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
-        val maxSize = prefs.emoji.recentlyUsedMaxSize.get()
-        val list = prefs.emoji.recentlyUsed.get().toMutableList()
+        if (!prefs.emoji.historyEnabled.get()) {
+            return
+        }
+        val maxSize = prefs.emoji.historyMaxSize.get()
+        val list = prefs.emoji.historyData.get().toMutableList()
         list.add(0, emoji)
         if (maxSize > 0) {
             while (list.size > maxSize) {
                 list.removeLast()
             }
         }
-        prefs.emoji.recentlyUsed.set(list.distinctBy { it.value })
+        prefs.emoji.historyData.set(list.distinctBy { it.value })
     }
 
     suspend fun removeEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
-        val list = prefs.emoji.recentlyUsed.get().toMutableList()
+        if (!prefs.emoji.historyEnabled.get()) {
+            return
+        }
+        val list = prefs.emoji.historyData.get().toMutableList()
         list.remove(emoji)
-        prefs.emoji.recentlyUsed.set(list.distinctBy { it.value })
+        prefs.emoji.historyData.set(list.distinctBy { it.value })
     }
 
     object Serializer : PreferenceSerializer<List<Emoji>> {
