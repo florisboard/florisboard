@@ -95,10 +95,11 @@ data class EmojiData(
                         // Assume it is a data line
                         val data = line.split(";")
                         if (data.size == 3) {
+                            val base = emojiEditorList?.first()
                             val emoji = Emoji(
                                 value = data[0].trim(),
-                                name = data[1].trim(),
-                                keywords = data[2].split("|").map { it.trim() }
+                                name = base?.name ?: data[1].trim(),
+                                keywords = data[2].split("|").map { it.trim() },
                             )
                             if (emojiEditorList != null) {
                                 emojiEditorList!!.add(emoji)
@@ -113,6 +114,14 @@ data class EmojiData(
 
             for (category in byCategory.keys) {
                 for (emojiSet in byCategory[category]!!) {
+                    if (emojiSet.emojis.size == 1) {
+                        // No variations provided, we fallback to using the base for all skin tones
+                        val base = emojiSet.emojis.first()
+                        for (skinTone in EmojiSkinTone.entries) {
+                            bySkinTone[skinTone]!!.add(base)
+                        }
+                        continue
+                    }
                     for (emoji in emojiSet.emojis) {
                         bySkinTone[emoji.skinTone]!!.add(emoji)
                     }

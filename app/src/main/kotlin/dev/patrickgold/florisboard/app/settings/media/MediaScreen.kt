@@ -16,32 +16,37 @@
 
 package dev.patrickgold.florisboard.app.settings.media
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.pluralsRes
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun MediaScreen() = FlorisScreen {
     title = stringRes(R.string.settings__media__title)
     previewFieldVisible = true
-    iconSpaceReserved = false
+    iconSpaceReserved = true
 
     content {
         ListPreference(
-            prefs.media.emojiPreferredSkinTone,
+            prefs.emoji.preferredSkinTone,
             title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
             entries = enumDisplayEntriesOf(EmojiSkinTone::class),
         )
         DialogSliderPreference(
-            prefs.media.emojiRecentlyUsedMaxSize,
+            prefs.emoji.recentlyUsedMaxSize,
             title = stringRes(R.string.prefs__media__emoji_recently_used_max_size),
             valueLabel = { maxSize ->
                 if (maxSize == 0) {
@@ -54,5 +59,53 @@ fun MediaScreen() = FlorisScreen {
             max = 120,
             stepIncrement = 1,
         )
+        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_suggestion__title)) {
+            SwitchPreference(
+                prefs.emoji.suggestionEnabled,
+                icon = Icons.Outlined.EmojiSymbols,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_enabled),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_enabled__summary),
+            )
+            ListPreference(
+                prefs.emoji.suggestionType,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_type),
+                entries = enumDisplayEntriesOf(EmojiSuggestionType::class),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            SwitchPreference(
+                prefs.emoji.suggestionUpdateHistory,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_update_history),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_update_history__summary),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            SwitchPreference(
+                prefs.emoji.suggestionCandidateShowName,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name),
+                summary = stringRes(R.string.prefs__media__emoji_suggestion_candidate_show_name__summary),
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            DialogSliderPreference(
+                prefs.emoji.suggestionQueryMinLength,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_query_min_length),
+                valueLabel = { length ->
+                    pluralsRes(R.plurals.unit__characters__written, length, "v" to length)
+                },
+                min = 1,
+                max = 5,
+                stepIncrement = 1,
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+            DialogSliderPreference(
+                prefs.emoji.suggestionCandidateMaxCount,
+                title = stringRes(R.string.prefs__media__emoji_suggestion_candidate_max_count),
+                valueLabel = { count ->
+                    pluralsRes(R.plurals.unit__candidates__written, count, "v" to count)
+                },
+                min = 1,
+                max = 10,
+                stepIncrement = 1,
+                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+            )
+        }
     }
 }
