@@ -30,15 +30,10 @@ object EmojiHistory {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
-        val maxSize = prefs.emoji.historyMaxSize.get()
+        val maxSize = prefs.emoji.historyMaxSize.get().let { if (it == 0) Int.MAX_VALUE else it }
         val list = prefs.emoji.historyData.get().toMutableList()
         list.add(0, emoji)
-        if (maxSize > 0) {
-            while (list.size > maxSize) {
-                list.removeLast()
-            }
-        }
-        prefs.emoji.historyData.set(list.distinctBy { it.value })
+        prefs.emoji.historyData.set(list.distinctBy { it.value }.take(maxSize))
     }
 
     suspend fun removeEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
