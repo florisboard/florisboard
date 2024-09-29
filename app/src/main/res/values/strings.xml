@@ -44,10 +44,10 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objects</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flags</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Pro tip: Long press emojis in the emoji history to pin or remove them!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Removed {emoji} from emoji history</string>
     <string name="emoji__history__pinned">Pinned</string>
     <string name="emoji__history__recent">Recent</string>
 

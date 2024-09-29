@@ -257,7 +257,7 @@ fun EmojiPaletteView(
                         .padding(all = 8.dp),
                 ) {
                     Text(
-                        text = stringRes(R.string.emoji__recently_used__phone_locked_message),
+                        text = stringRes(R.string.emoji__history__phone_locked_message),
                         color = contentColor,
                     )
                 }
@@ -268,12 +268,12 @@ fun EmojiPaletteView(
                         .padding(all = 8.dp),
                 ) {
                     Text(
-                        text = stringRes(R.string.emoji__recently_used__empty_message),
+                        text = stringRes(R.string.emoji__history__empty_message),
                         color = contentColor,
                     )
                     Text(
                         modifier = Modifier.padding(top = 8.dp),
-                        text = stringRes(R.string.emoji__recently_used__removal_tip),
+                        text = stringRes(R.string.emoji__history__usage_tip),
                         color = contentColor,
                         fontStyle = FontStyle.Italic,
                     )
@@ -528,6 +528,10 @@ private fun EmojiHistoryPopup(
     val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
     val context = LocalContext.current
+    val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.observeAsState()
+    val recentUS by prefs.emoji.historyRecentUpdateStrategy.observeAsState()
+    val showMoveLeft = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
+    val showMoveRight = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
 
     @Composable
     fun Action(icon: ImageVector, action: suspend () -> Unit) {
@@ -586,12 +590,28 @@ private fun EmojiHistoryPopup(
                         },
                     )
                 }
+                if (showMoveLeft) {
+                    Action(
+                        icon = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                        action = {
+                            EmojiHistoryHelper.moveEmoji(prefs, emoji, -1)
+                        },
+                    )
+                }
+                if (showMoveRight) {
+                    Action(
+                        icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
+                        action = {
+                            EmojiHistoryHelper.moveEmoji(prefs, emoji, 1)
+                        },
+                    )
+                }
                 Action(
                     icon = Icons.Outlined.Delete,
                     action = {
                         EmojiHistoryHelper.removeEmoji(prefs, emoji)
                         context.showShortToast(
-                            R.string.emoji__recently_used__removal_success_message,
+                            R.string.emoji__history__removal_success_message,
                             "emoji" to emoji.value,
                         )
                     },

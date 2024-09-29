@@ -164,17 +164,11 @@ object EmojiHistoryHelper {
 
         val pinnedIndex = dataMut.pinned.indexOf(emoji)
         if (pinnedIndex != -1) {
-            val newIndex = (pinnedIndex + offset).coerceIn(0, dataMut.pinned.size)
-            // Add first because removal messes up the index
-            dataMut.pinned.add(newIndex, emoji)
-            dataMut.pinned.removeAt(pinnedIndex)
+            dataMut.pinned.move(pinnedIndex, offset)
         } else {
             val recentIndex = dataMut.recent.indexOf(emoji)
             if (recentIndex != -1) {
-                val newIndex = (recentIndex + offset).coerceIn(0, dataMut.recent.size)
-                // Add first because removal messes up the index
-                dataMut.recent.add(newIndex, emoji)
-                dataMut.recent.removeAt(recentIndex)
+                dataMut.recent.move(recentIndex, offset)
             }
         }
 
@@ -217,6 +211,16 @@ object EmojiHistoryHelper {
             take(n)
         } else {
             takeLast(n)
+        }
+    }
+
+    private fun MutableList<Emoji>.move(itemIndex: Int, offset: Int) {
+        val newIndex = (itemIndex + offset).coerceIn(0..<size)
+        val item = removeAt(itemIndex)
+        if (newIndex == size) {
+            add(item)
+        } else {
+            add(newIndex, item)
         }
     }
 }
