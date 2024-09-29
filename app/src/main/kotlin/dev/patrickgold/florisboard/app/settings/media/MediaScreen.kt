@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,11 @@ package dev.patrickgold.florisboard.app.settings.media
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EmojiSymbols
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -45,20 +47,46 @@ fun MediaScreen() = FlorisScreen {
             title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),
             entries = enumDisplayEntriesOf(EmojiSkinTone::class),
         )
-        DialogSliderPreference(
-            prefs.emoji.recentlyUsedMaxSize,
-            title = stringRes(R.string.prefs__media__emoji_recently_used_max_size),
-            valueLabel = { maxSize ->
-                if (maxSize == 0) {
-                    stringRes(R.string.general__unlimited)
-                } else {
-                    pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
-                }
-            },
-            min = 0,
-            max = 120,
-            stepIncrement = 1,
-        )
+
+        PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_history__title)) {
+            SwitchPreference(
+                prefs.emoji.historyEnabled,
+                icon = Icons.Outlined.Schedule,
+                title = stringRes(R.string.prefs__media__emoji_history_enabled),
+                summary = stringRes(R.string.prefs__media__emoji_history_enabled__summary),
+            )
+            ListPreference(
+                prefs.emoji.historyPinnedUpdateStrategy,
+                title = stringRes(R.string.prefs__media__emoji_history_pinned_update_strategy),
+                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            ListPreference(
+                prefs.emoji.historyRecentUpdateStrategy,
+                title = stringRes(R.string.prefs__media__emoji_history_recent_update_strategy),
+                entries = enumDisplayEntriesOf(EmojiHistory.UpdateStrategy::class),
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            DialogSliderPreference(
+                primaryPref = prefs.emoji.historyPinnedMaxSize,
+                secondaryPref = prefs.emoji.historyRecentMaxSize,
+                title = stringRes(R.string.prefs__media__emoji_history_max_size),
+                primaryLabel = stringRes(R.string.emoji__history__pinned),
+                secondaryLabel = stringRes(R.string.emoji__history__recent),
+                valueLabel = { maxSize ->
+                    if (maxSize == EmojiHistory.MaxSizeUnlimited) {
+                        stringRes(R.string.general__unlimited)
+                    } else {
+                        pluralsRes(R.plurals.unit__items__written, maxSize, "v" to maxSize)
+                    }
+                },
+                min = 0,
+                max = 120,
+                stepIncrement = 1,
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+        }
+
         PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_suggestion__title)) {
             SwitchPreference(
                 prefs.emoji.suggestionEnabled,
@@ -76,7 +104,9 @@ fun MediaScreen() = FlorisScreen {
                 prefs.emoji.suggestionUpdateHistory,
                 title = stringRes(R.string.prefs__media__emoji_suggestion_update_history),
                 summary = stringRes(R.string.prefs__media__emoji_suggestion_update_history__summary),
-                enabledIf = { prefs.emoji.suggestionEnabled.isTrue() },
+                enabledIf = {
+                    prefs.emoji.suggestionEnabled.isTrue() && prefs.emoji.historyEnabled.isTrue()
+                },
             )
             SwitchPreference(
                 prefs.emoji.suggestionCandidateShowName,

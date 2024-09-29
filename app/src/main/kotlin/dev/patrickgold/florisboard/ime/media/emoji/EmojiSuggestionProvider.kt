@@ -92,7 +92,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         if (!updateHistory || candidate !is EmojiSuggestionCandidate) {
             return
         }
-        EmojiRecentlyUsedHelper.addEmoji(prefs, candidate.emoji)
+        EmojiHistoryHelper.markEmojiUsed(prefs, candidate.emoji)
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
