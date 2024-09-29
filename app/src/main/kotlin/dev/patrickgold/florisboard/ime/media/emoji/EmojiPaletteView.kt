@@ -40,8 +40,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -61,6 +67,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -85,12 +92,11 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
+import dev.patrickgold.florisboard.lib.compose.header
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
@@ -170,8 +176,45 @@ fun EmojiPaletteView(
             mutableStateOf(EmojiCategory.SMILEYS_EMOTION)
         }
     }
+    var recentlyUsedVersion by remember { mutableIntStateOf(0) }
     val lazyListState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
+
+    @Composable
+    fun GridHeader(text: String) {
+        Text(
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
+
+    @Composable
+    fun EmojiKeyWrapper(
+        emojiSet: EmojiSet,
+        isPinned: Boolean = false,
+        isRecent: Boolean = false,
+    ) {
+        EmojiKey(
+            emojiSet = emojiSet,
+            emojiCompatInstance = emojiCompatInstance,
+            preferredSkinTone = preferredSkinTone,
+            isPinned = isPinned,
+            isRecent = isRecent,
+            contentColor = contentColor,
+            fontSize = emojiKeyFontSize,
+            fontSizeMultiplier = fontSizeMultiplier,
+            onEmojiInput = { emoji ->
+                keyboardManager.inputEventDispatcher.sendDownUp(emoji)
+                scope.launch {
+                    EmojiHistoryHelper.markEmojiUsed(prefs, emoji)
+                }
+            },
+            onHistoryAction = {
+                recentlyUsedVersion++
+            },
+        )
+    }
 
     Column(modifier = modifier) {
         EmojiCategoriesTabRow(
@@ -188,7 +231,6 @@ fun EmojiPaletteView(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            var recentlyUsedVersion by remember { mutableIntStateOf(0) }
             val emojiMapping = if (activeCategory == EmojiCategory.RECENTLY_USED) {
                 // Purposely using remember here to prevent recomposition, as this would cause rapid
                 // emoji changes for the user when in recently used category.
@@ -245,36 +287,26 @@ fun EmojiPaletteView(
                         columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyListState,
                     ) {
-                        // TODO: that ignores pinned
-                        items(emojiMapping.recent.ifEmpty { emojiMapping.simple }) { emojiSet ->
-                            EmojiKey(
-                                emojiSet = emojiSet,
-                                emojiCompatInstance = emojiCompatInstance,
-                                preferredSkinTone = preferredSkinTone,
-                                contentColor = contentColor,
-                                fontSize = emojiKeyFontSize,
-                                fontSizeMultiplier = fontSizeMultiplier,
-                                onEmojiInput = { emoji ->
-                                    keyboardManager.inputEventDispatcher.sendDownUp(emoji)
-                                    scope.launch {
-                                        EmojiHistoryHelper.markEmojiUsed(prefs, emoji)
-                                    }
-                                },
-                                onLongPress = { emoji ->
-                                    if (activeCategory == EmojiCategory.RECENTLY_USED) {
-                                        scope.launch {
-                                            EmojiHistoryHelper.removeEmoji(prefs, emoji)
-                                            recentlyUsedVersion++
-                                            withContext(Dispatchers.Main) {
-                                                context.showShortToast(
-                                                    R.string.emoji__recently_used__removal_success_message,
-                                                    "emoji" to emoji.value,
-                                                )
-                                            }
-                                        }
-                                    }
-                                },
-                            )
+                        if (emojiMapping.pinned.isNotEmpty()) {
+                            header("header_pinned") {
+                                GridHeader(text = stringRes(R.string.emoji__history__pinned))
+                            }
+                            items(emojiMapping.pinned) { emojiSet ->
+                                EmojiKeyWrapper(emojiSet, isPinned = true)
+                            }
+                        }
+                        if (emojiMapping.recent.isNotEmpty()) {
+                            header("header_recent") {
+                                GridHeader(text = stringRes(R.string.emoji__history__recent))
+                            }
+                            items(emojiMapping.recent) { emojiSet ->
+                                EmojiKeyWrapper(emojiSet, isRecent = true)
+                            }
+                        }
+                        if (emojiMapping.simple.isNotEmpty()) {
+                            items(emojiMapping.simple) { emojiSet ->
+                                EmojiKeyWrapper(emojiSet)
+                            }
                         }
                     }
                 }
@@ -343,11 +375,13 @@ private fun EmojiKey(
     emojiSet: EmojiSet,
     emojiCompatInstance: EmojiCompat?,
     preferredSkinTone: EmojiSkinTone,
+    isPinned: Boolean,
+    isRecent: Boolean,
     contentColor: Color,
     fontSize: TextUnit,
     fontSizeMultiplier: Float,
     onEmojiInput: (Emoji) -> Unit,
-    onLongPress: (Emoji) -> Unit,
+    onHistoryAction: () -> Unit,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
@@ -367,8 +401,7 @@ private fun EmojiKey(
                     },
                     onLongPress = {
                         inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
-                        onLongPress(base)
-                        if (variations.isNotEmpty()) {
+                        if (variations.isNotEmpty() || isPinned || isRecent) {
                             showVariantsBox = true
                         }
                     },
@@ -382,7 +415,7 @@ private fun EmojiKey(
             color = contentColor,
             fontSize = fontSize,
         )
-        if (variations.isNotEmpty()) {
+        if (variations.isNotEmpty() || isPinned || isRecent) {
             val shape = when (LocalLayoutDirection.current) {
                 LayoutDirection.Ltr -> VariantsTriangleShapeLtr
                 LayoutDirection.Rtl -> VariantsTriangleShapeRtl
@@ -396,19 +429,34 @@ private fun EmojiKey(
             )
         }
 
-        EmojiVariationsPopup(
-            variations = variations,
-            visible = showVariantsBox,
-            emojiCompatInstance = emojiCompatInstance,
-            fontSizeMultiplier = fontSizeMultiplier,
-            onEmojiTap = { emoji ->
-                onEmojiInput(emoji)
-                showVariantsBox = false
-            },
-            onDismiss = {
-                showVariantsBox = false
-            },
-        )
+        if (isPinned || isRecent) {
+            EmojiHistoryPopup(
+                emoji = base,
+                visible = showVariantsBox,
+                isCurrentlyPinned = isPinned,
+                onHistoryAction = {
+                    onHistoryAction()
+                    showVariantsBox = false
+                },
+                onDismiss = {
+                    showVariantsBox = false
+                },
+            )
+        } else {
+            EmojiVariationsPopup(
+                variations = variations,
+                visible = showVariantsBox,
+                emojiCompatInstance = emojiCompatInstance,
+                fontSizeMultiplier = fontSizeMultiplier,
+                onEmojiTap = { emoji ->
+                    onEmojiInput(emoji)
+                    showVariantsBox = false
+                },
+                onDismiss = {
+                    showVariantsBox = false
+                },
+            )
+        }
     }
 }
 
@@ -461,6 +509,93 @@ private fun EmojiVariationsPopup(
                         )
                     }
                 }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun EmojiHistoryPopup(
+    emoji: Emoji,
+    visible: Boolean,
+    isCurrentlyPinned: Boolean,
+    onHistoryAction: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val prefs by florisPreferenceModel()
+    val scope = rememberCoroutineScope()
+    val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
+    val emojiKeyHeight = FlorisImeSizing.smartbarHeight
+    val context = LocalContext.current
+
+    @Composable
+    fun Action(icon: ImageVector, action: suspend () -> Unit) {
+        Box(
+            modifier = Modifier
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        scope.launch {
+                            action()
+                            onHistoryAction()
+                        }
+                    }
+                }
+                .width(EmojiBaseWidth)
+                .height(emojiKeyHeight)
+                .padding(all = 4.dp),
+        ) {
+            Icon(
+                modifier = Modifier.align(Alignment.Center),
+                imageVector = icon,
+                contentDescription = null,
+                tint = popupStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
+            )
+        }
+    }
+
+    val numActions = 1
+    if (visible) {
+        Popup(
+            alignment = Alignment.TopCenter,
+            offset = with(LocalDensity.current) {
+                val y = -emojiKeyHeight * ceil(numActions / 6f)
+                IntOffset(x = 0, y = y.toPx().toInt())
+            },
+            onDismissRequest = onDismiss,
+        ) {
+            FlowRow(
+                modifier = Modifier
+                    .widthIn(max = EmojiBaseWidth * 6)
+                    .snyggShadow(popupStyle)
+                    .snyggBorder(context, popupStyle)
+                    .snyggBackground(context, popupStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor()),
+            ) {
+                if (isCurrentlyPinned) {
+                    Action(
+                        icon = Icons.Outlined.PushPin,
+                        action = {
+                            EmojiHistoryHelper.unpinEmoji(prefs, emoji)
+                        },
+                    )
+                } else {
+                    Action(
+                        icon = Icons.Outlined.PushPin,
+                        action = {
+                            EmojiHistoryHelper.pinEmoji(prefs, emoji)
+                        },
+                    )
+                }
+                Action(
+                    icon = Icons.Outlined.Delete,
+                    action = {
+                        EmojiHistoryHelper.removeEmoji(prefs, emoji)
+                        context.showShortToast(
+                            R.string.emoji__recently_used__removal_success_message,
+                            "emoji" to emoji.value,
+                        )
+                    },
+                )
             }
         }
     }
