@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -30,6 +31,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,7 +60,6 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.safeTimes
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -79,21 +80,22 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
-    val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
+    val inlineSuggestionViews by nlpManager.inlineSuggestionViews.collectAsState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
-    if (AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()) {
-        Row(
-            modifier = modifier
-                .fillMaxSize()
-                .florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight),
-        ) {
-            for (inlineSuggestion in inlineSuggestions) {
-                InlineSuggestionView(inlineSuggestion = inlineSuggestion)
-            }
-        }
+    if (AndroidVersion.ATLEAST_API30_R && inlineSuggestionViews.isNotEmpty()) {
+        val scrollState = rememberScrollState()
+        InlineSuggestionsUi(
+            modifier = modifier.fillMaxSize(),
+            inlineContentViews = inlineSuggestionViews,
+            scrollState = scrollState,
+            scrollModifier = Modifier.florisHorizontalScroll(
+                state = scrollState,
+                scrollbarHeight = CandidatesRowScrollbarHeight,
+            ),
+        )
     } else {
         Row(
             modifier = modifier
