@@ -33,7 +33,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -64,17 +63,12 @@ object NlpInlineAutofill {
         scope.launch {
             val size = Size(ViewGroup.LayoutParams.WRAP_CONTENT, FlorisImeSizing.Static.smartbarHeightPx)
             val latch = CountDownLatch(rawSuggestions.size)
-            val suggestions = mutableListOf<NlpInlineAutofillSuggestion>()
+            val suggestionsArray = Array<NlpInlineAutofillSuggestion?>(rawSuggestions.size) { null }
 
             flogInfo { "showInlineSuggestions: [${sequenceId}] start inflating suggestions" }
-            for (rawSuggestion in rawSuggestions) {
+            for ((index, rawSuggestion) in rawSuggestions.withIndex()) {
                 rawSuggestion.inflate(context, size, context.mainExecutor) { view ->
-                    val suggestionToAdd = NlpInlineAutofillSuggestion(rawSuggestion.info, view)
-                    if (rawSuggestion.info.isPinned && suggestions.isNotEmpty()) {
-                        suggestions.add(0, suggestionToAdd)
-                    } else {
-                        suggestions.add(suggestionToAdd)
-                    }
+                    suggestionsArray[index] = NlpInlineAutofillSuggestion(rawSuggestion.info, view)
                     latch.countDown()
                 }
             }
@@ -85,6 +79,7 @@ object NlpInlineAutofill {
                 return@launch
             }
 
+            val suggestions = suggestionsArray.filterNotNull().sortedByDescending { it.info.isPinned }
             setterGuard.lock()
             flogInfo { "showInlineSuggestions: [${sequenceId}] successfully inflated " +
                 "${suggestions.count { it.view != null }} out of ${suggestions.size} suggestions" }
