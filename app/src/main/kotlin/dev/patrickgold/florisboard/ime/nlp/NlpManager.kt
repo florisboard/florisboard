@@ -17,15 +17,8 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
-import android.os.Build
 import android.os.SystemClock
 import android.util.LruCache
-import android.util.Size
-import android.view.ViewGroup
-import android.view.inputmethod.InlineSuggestion
-import android.view.inputmethod.InlineSuggestionInfo
-import android.widget.inline.InlineContentView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
@@ -35,20 +28,16 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -56,18 +45,11 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.guardedByLock
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
 
 private const val BLANK_STR_PATTERN = "^\\s*$"
-
-data class NlpInlineSuggestion(
-    val info: InlineSuggestionInfo,
-    val view: InlineContentView?,
-)
 
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
@@ -102,9 +84,6 @@ class NlpManager(context: Context) {
         private set(v) {
             _activeCandidatesFlow.value = v
         }
-
-    private val _inlineAutofillSuggestions = MutableStateFlow<List<NlpInlineSuggestion>>(emptyList())
-    val inlineAutofillSuggestions: StateFlow<List<NlpInlineSuggestion>> = _inlineAutofillSuggestions
 
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableLiveData(0)
@@ -319,71 +298,23 @@ class NlpManager(context: Context) {
                 else -> emptyList()
             }
             activeCandidates = candidates
-            autoExpandCollapseSmartbarActions(candidates, inlineAutofillSuggestions.value)
+            autoExpandCollapseSmartbarActions(candidates, NlpInlineAutofill.suggestions.value)
         }
     }
 
-    /**
-     * Inflates the given inline suggestions. Once all provided views are ready, the suggestions
-     * strip is updated and the Smartbar update cycle is triggered.
-     *
-     * @param inlineSuggestions A collection of inline suggestions to be inflated and shown.
-     */
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun showInlineSuggestions(context: Context, inlineSuggestions: List<InlineSuggestion>) = scope.launch {
-        val size = Size(ViewGroup.LayoutParams.WRAP_CONTENT, FlorisImeSizing.Static.smartbarHeightPx)
-        val nlpSuggestionsGuard = Mutex()
-        val nlpSuggestions = mutableListOf<NlpInlineSuggestion>()
-        val latch = CountDownLatch(inlineSuggestions.size)
-
-        for (inlineSuggestion in inlineSuggestions) {
-            inlineSuggestion.inflate(context, size, context.mainExecutor) { view ->
-                scope.launch {
-                    nlpSuggestionsGuard.withLock {
-                        val suggestionToAdd = NlpInlineSuggestion(inlineSuggestion.info, view)
-                        if (inlineSuggestion.info.isPinned && nlpSuggestions.isNotEmpty()) {
-                            nlpSuggestions.add(0, suggestionToAdd)
-                        } else {
-                            nlpSuggestions.add(suggestionToAdd)
-                        }
-                    }
-                    latch.countDown()
-                }
-            }
-        }
-
-        if (!latch.await(5_000, TimeUnit.MILLISECONDS)) {
-            flogInfo(LogTopic.IMS_EVENTS) { "Timeout while waiting for inline suggestions to inflate." }
-            _inlineAutofillSuggestions.value = emptyList()
-            autoExpandCollapseSmartbarActions(activeCandidates, null)
-            return@launch
-        }
-        flogInfo(LogTopic.IMS_EVENTS) {
-            val nonNullViewCount = nlpSuggestions.count { it.view != null }
-            "Processed inline suggestions response, inflated $nonNullViewCount suggestion(s)."
-        }
-        _inlineAutofillSuggestions.value = nlpSuggestions
-        autoExpandCollapseSmartbarActions(activeCandidates, nlpSuggestions)
-    }
-
-    /**
-     * Clears the inline suggestions and triggers the Smartbar update cycle.
-     */
-    fun clearInlineSuggestions() {
-        _inlineAutofillSuggestions.value = emptyList()
-        autoExpandCollapseSmartbarActions(activeCandidates, null)
-    }
-
-    private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
+    fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
         if (!prefs.smartbar.enabled.get() || !prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
             return
         }
-        if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()
+        // TODO: this is a mess and needs to be cleaned up in v0.5 with the NLP development
+        /*if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()
+            && !keyboardManager.inputEventDispatcher.isPressed(KeyCode.DELETE)
+            && !keyboardManager.inputEventDispatcher.isPressed(KeyCode.FORWARD_DELETE)
             || keyboardManager.activeState.isActionsOverflowVisible
         ) {
             return // We do not auto switch if a repeatable action key was last pressed or if the actions overflow
                    // menu is visible to prevent annoying UI changes
-        }
+        }*/
         val isSelection = editorInstance.activeContent.selection.isSelectionMode
         val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
         prefs.smartbar.sharedActionsExpandWithAnimation.set(false)

@@ -42,10 +42,12 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.AndroidVersion
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,7 +77,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
             if (showSpellingOverlay) {
                 DevtoolsSpellingOverlay()
             }
-            if (showInlineAutofillOverlay) {
+            if (showInlineAutofillOverlay && AndroidVersion.ATLEAST_API30_R) {
                 DevtoolsInlineAutofillOverlay()
             }
         }
@@ -168,10 +170,7 @@ private fun DevtoolsSpellingOverlay() {
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 private fun DevtoolsInlineAutofillOverlay() {
-    val context = LocalContext.current
-    val nlpManager by context.nlpManager()
-
-    val inlineSuggestions by nlpManager.inlineAutofillSuggestions.collectAsState()
+    val inlineSuggestions by NlpInlineAutofill.suggestions.collectAsState()
 
     DevtoolsOverlayBox(title = "Inline autofill overlay (${inlineSuggestions.size})") {
         for (inlineSuggestion in inlineSuggestions) {

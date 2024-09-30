@@ -87,6 +87,7 @@ import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
 import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
@@ -370,7 +371,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         flogInfo { "(no args)" }
         super.onFinishInput()
         editorInstance.handleFinishInput()
-        nlpManager.clearInlineSuggestions()
+        NlpInlineAutofill.clearInlineSuggestions()
     }
 
     override fun onWindowShown() {
@@ -466,8 +467,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         flogInfo(LogTopic.IMS_EVENTS) {
             "Received inline suggestions response with ${inlineSuggestions.size} suggestion(s) provided."
         }
-        nlpManager.showInlineSuggestions(this, inlineSuggestions)
-        return true
+        return NlpInlineAutofill.showInlineSuggestions(this, inlineSuggestions)
     }
 
     override fun onComputeInsets(outInsets: Insets?) {

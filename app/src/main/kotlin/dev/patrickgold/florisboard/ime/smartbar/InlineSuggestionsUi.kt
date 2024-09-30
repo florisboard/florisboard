@@ -30,14 +30,14 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
-import dev.patrickgold.florisboard.ime.nlp.NlpInlineSuggestion
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
 import dev.patrickgold.florisboard.lib.toIntOffset
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun InlineSuggestionsUi(
     modifier: Modifier,
-    inlineSuggestions: List<NlpInlineSuggestion>,
+    inlineSuggestions: List<NlpInlineAutofillSuggestion>,
     scrollState: ScrollState,
     scrollModifier: Modifier,
 ) {
