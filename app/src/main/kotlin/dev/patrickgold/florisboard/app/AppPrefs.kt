@@ -174,6 +174,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__show_spelling_overlay",
             default = false,
         )
+        val showInlineAutofillOverlay = boolean(
+            key = "devtools__show_inline_autofill_overlay",
+            default = false,
+        )
         val showKeyTouchBoundaries = boolean(
             key = "devtools__show_touch_boundaries",
             default = false,

@@ -23,6 +23,7 @@ import android.util.LruCache
 import android.util.Size
 import android.view.ViewGroup
 import android.view.inputmethod.InlineSuggestion
+import android.view.inputmethod.InlineSuggestionInfo
 import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -56,11 +57,17 @@ import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.guardedByLock
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
 
 private const val BLANK_STR_PATTERN = "^\\s*$"
+
+data class NlpInlineSuggestion(
+    val info: InlineSuggestionInfo,
+    val view: InlineContentView?,
+)
 
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
@@ -96,8 +103,8 @@ class NlpManager(context: Context) {
             _activeCandidatesFlow.value = v
         }
 
-    private val _inlineSuggestionViews = MutableStateFlow<List<InlineContentView>>(emptyList())
-    val inlineSuggestionViews: StateFlow<List<InlineContentView>> = _inlineSuggestionViews
+    private val _inlineAutofillSuggestions = MutableStateFlow<List<NlpInlineSuggestion>>(emptyList())
+    val inlineAutofillSuggestions: StateFlow<List<NlpInlineSuggestion>> = _inlineAutofillSuggestions
 
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableLiveData(0)
@@ -312,7 +319,7 @@ class NlpManager(context: Context) {
                 else -> emptyList()
             }
             activeCandidates = candidates
-            autoExpandCollapseSmartbarActions(candidates, inlineSuggestionViews.value)
+            autoExpandCollapseSmartbarActions(candidates, inlineAutofillSuggestions.value)
         }
     }
 
@@ -325,35 +332,45 @@ class NlpManager(context: Context) {
     @RequiresApi(Build.VERSION_CODES.R)
     fun showInlineSuggestions(context: Context, inlineSuggestions: List<InlineSuggestion>) = scope.launch {
         val size = Size(ViewGroup.LayoutParams.WRAP_CONTENT, FlorisImeSizing.Static.smartbarHeightPx)
-        val views = mutableListOf<InlineContentView>()
+        val nlpSuggestionsGuard = Mutex()
+        val nlpSuggestions = mutableListOf<NlpInlineSuggestion>()
         val latch = CountDownLatch(inlineSuggestions.size)
 
         for (inlineSuggestion in inlineSuggestions) {
             inlineSuggestion.inflate(context, size, context.mainExecutor) { view ->
-                if (view != null) {
-                    if (inlineSuggestion.info.isPinned && views.isNotEmpty()) {
-                        views.add(0, view)
-                    } else {
-                        views.add(view)
+                scope.launch {
+                    nlpSuggestionsGuard.withLock {
+                        val suggestionToAdd = NlpInlineSuggestion(inlineSuggestion.info, view)
+                        if (inlineSuggestion.info.isPinned && nlpSuggestions.isNotEmpty()) {
+                            nlpSuggestions.add(0, suggestionToAdd)
+                        } else {
+                            nlpSuggestions.add(suggestionToAdd)
+                        }
                     }
+                    latch.countDown()
                 }
-                latch.countDown()
             }
         }
 
-        latch.await()
-        flogInfo(LogTopic.IMS_EVENTS) {
-            "Processed inline suggestions response, inflated ${views.size} suggestion(s)."
+        if (!latch.await(5_000, TimeUnit.MILLISECONDS)) {
+            flogInfo(LogTopic.IMS_EVENTS) { "Timeout while waiting for inline suggestions to inflate." }
+            _inlineAutofillSuggestions.value = emptyList()
+            autoExpandCollapseSmartbarActions(activeCandidates, null)
+            return@launch
         }
-        _inlineSuggestionViews.value = views
-        autoExpandCollapseSmartbarActions(activeCandidates, views)
+        flogInfo(LogTopic.IMS_EVENTS) {
+            val nonNullViewCount = nlpSuggestions.count { it.view != null }
+            "Processed inline suggestions response, inflated $nonNullViewCount suggestion(s)."
+        }
+        _inlineAutofillSuggestions.value = nlpSuggestions
+        autoExpandCollapseSmartbarActions(activeCandidates, nlpSuggestions)
     }
 
     /**
      * Clears the inline suggestions and triggers the Smartbar update cycle.
      */
     fun clearInlineSuggestions() {
-        _inlineSuggestionViews.value = emptyList()
+        _inlineAutofillSuggestions.value = emptyList()
         autoExpandCollapseSmartbarActions(activeCandidates, null)
     }
 

@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.smartbar
 
 import android.os.Build
-import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Row
@@ -31,13 +30,14 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineSuggestion
 import dev.patrickgold.florisboard.lib.toIntOffset
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun InlineSuggestionsUi(
     modifier: Modifier,
-    inlineContentViews: List<InlineContentView>,
+    inlineSuggestions: List<NlpInlineSuggestion>,
     scrollState: ScrollState,
     scrollModifier: Modifier,
 ) {
@@ -45,11 +45,14 @@ fun InlineSuggestionsUi(
     Row(modifier.then(scrollModifier)) {
         val xMin = scrollState.value
         val xMax = scrollState.value + scrollState.viewportSize
-        for (inlineContentView in inlineContentViews) {
+        for (inlineSuggestion in inlineSuggestions) {
+            if (inlineSuggestion.view == null) {
+                continue
+            }
             var chipPos by remember { mutableStateOf(IntOffset.Zero) }
             AndroidView(
                 modifier = Modifier.onGloballyPositioned { chipPos = it.positionInParent().toIntOffset() },
-                factory = { inlineContentView },
+                factory = { inlineSuggestion.view },
                 update = { view ->
                     view.clipBounds = android.graphics.Rect(
                         (xMin - chipPos.x).coerceAtLeast(0),

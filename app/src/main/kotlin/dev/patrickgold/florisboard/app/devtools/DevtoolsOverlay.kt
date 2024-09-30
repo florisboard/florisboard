@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -57,6 +59,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
     val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
+    val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White,
@@ -71,6 +74,9 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
             }
             if (showSpellingOverlay) {
                 DevtoolsSpellingOverlay()
+            }
+            if (showInlineAutofillOverlay) {
+                DevtoolsInlineAutofillOverlay()
             }
         }
     }
@@ -117,7 +123,6 @@ private fun DevtoolsInputStateOverlay() {
     }
 }
 
-
 @Composable
 private fun DevtoolsSpellingOverlay() {
     val context = LocalContext.current
@@ -155,6 +160,28 @@ private fun DevtoolsSpellingOverlay() {
                     fontFamily = FontFamily.Monospace,
                     fontSize = 12.sp,
                 )
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.R)
+@Composable
+private fun DevtoolsInlineAutofillOverlay() {
+    val context = LocalContext.current
+    val nlpManager by context.nlpManager()
+
+    val inlineSuggestions by nlpManager.inlineAutofillSuggestions.collectAsState()
+
+    DevtoolsOverlayBox(title = "Inline autofill overlay (${inlineSuggestions.size})") {
+        for (inlineSuggestion in inlineSuggestions) {
+            DevtoolsSubGroup(title = "NlpInlineSuggestion") {
+                val info = inlineSuggestion.info
+                DevtoolsText(text = "info.type:     ${info.type}")
+                DevtoolsText(text = "info.source:   ${info.source}")
+                DevtoolsText(text = "info.isPinned: ${info.isPinned}")
+                val view = inlineSuggestion.view
+                DevtoolsText(text = "view: ${view?.javaClass?.name}")
             }
         }
     }

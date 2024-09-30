@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
-import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -80,16 +79,16 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
-    val inlineSuggestionViews by nlpManager.inlineSuggestionViews.collectAsState()
+    val inlineSuggestions by nlpManager.inlineAutofillSuggestions.collectAsState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
-    if (AndroidVersion.ATLEAST_API30_R && inlineSuggestionViews.isNotEmpty()) {
+    if (AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()) {
         val scrollState = rememberScrollState()
         InlineSuggestionsUi(
             modifier = modifier.fillMaxSize(),
-            inlineContentViews = inlineSuggestionViews,
+            inlineSuggestions = inlineSuggestions,
             scrollState = scrollState,
             scrollModifier = Modifier.florisHorizontalScroll(
                 state = scrollState,
