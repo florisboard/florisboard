@@ -303,7 +303,7 @@ class NlpManager(context: Context) {
     }
 
     fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
-        if (!prefs.smartbar.enabled.get() || !prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
+        if (!prefs.smartbar.enabled.get()) {// || !prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
             return
         }
         // TODO: this is a mess and needs to be cleaned up in v0.5 with the NLP development

@@ -18,8 +18,9 @@ package dev.patrickgold.florisboard.ime.smartbar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,18 +32,26 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
+import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.toIntOffset
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun InlineSuggestionsUi(
-    modifier: Modifier,
     inlineSuggestions: List<NlpInlineAutofillSuggestion>,
-    scrollState: ScrollState,
-    scrollModifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
+    val scrollState = rememberScrollState()
     val almostEmptyRect = remember { android.graphics.Rect(0, 0, 1, 1) }
-    Row(modifier.then(scrollModifier)) {
+
+    Row(
+        modifier
+            .fillMaxSize()
+            .florisHorizontalScroll(
+                state = scrollState,
+                scrollbarHeight = CandidatesRowScrollbarHeight,
+            ),
+    ) {
         val xMin = scrollState.value
         val xMax = scrollState.value + scrollState.viewportSize
         for (inlineSuggestion in inlineSuggestions) {

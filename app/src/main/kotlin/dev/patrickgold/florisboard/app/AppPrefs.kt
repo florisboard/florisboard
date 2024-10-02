@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -621,6 +621,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__shared_actions_expanded",
             default = false,
         )
+        @Deprecated("Always enabled due to UX issues")
         val sharedActionsAutoExpandCollapse = boolean(
             key = "smartbar__shared_actions_auto_expand_collapse",
             default = true,
