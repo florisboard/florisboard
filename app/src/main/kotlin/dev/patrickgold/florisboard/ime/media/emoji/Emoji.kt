@@ -47,7 +47,7 @@ enum class EmojiHairStyle(val id: Int) {
     BALD(0x1F9B3);
 }
 
-data class Emoji(val value: String, val name: String, val keywords: List<String>) : KeyData {
+class Emoji(val value: String, val name: String, val keywords: List<String>) : KeyData {
     override val type = KeyType.CHARACTER
     override val code = KeyCode.UNSPECIFIED
     override val label = value
@@ -77,6 +77,14 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
 
     override fun toString(): String {
         return "Emoji { value=$value, name=$name, keywords=$keywords }"
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Emoji && value == other.value
     }
 
     object ValueOnlySerializer : KSerializer<Emoji> {
