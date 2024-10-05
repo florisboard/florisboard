@@ -186,6 +186,7 @@ fun EmojiPaletteView(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             text = text,
             style = MaterialTheme.typography.titleMedium,
+            color = contentColor,
         )
     }
 
