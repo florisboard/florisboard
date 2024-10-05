@@ -22,7 +22,6 @@ import android.provider.OpenableColumns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.app.ext.EditorAction
 import dev.patrickgold.florisboard.app.settings.advanced.Backup
@@ -188,7 +187,7 @@ class CacheManager(context: Context) {
 
         var currentAction by mutableStateOf<EditorAction?>(null)
         var ext: Extension? = null
-        var editor by mutableStateOf<T?>(null, neverEqualPolicy())
+        var editor by mutableStateOf<T?>(null)
         var version by mutableIntStateOf(0)
 
         val isModified get() = version > 0
@@ -202,7 +201,6 @@ class CacheManager(context: Context) {
         inline fun <R> update(block: T.() -> R): R {
             // Method is designed to only be called when editor has been previously initialized
             val ret = block(editor!!)
-            editor = editor
             version++
             return ret
         }
