@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -172,6 +172,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val showSpellingOverlay = boolean(
             key = "devtools__show_spelling_overlay",
+            default = false,
+        )
+        val showInlineAutofillOverlay = boolean(
+            key = "devtools__show_inline_autofill_overlay",
             default = false,
         )
         val showKeyTouchBoundaries = boolean(
@@ -617,6 +621,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "smartbar__shared_actions_expanded",
             default = false,
         )
+        @Deprecated("Always enabled due to UX issues")
         val sharedActionsAutoExpandCollapse = boolean(
             key = "smartbar__shared_actions_auto_expand_collapse",
             default = true,

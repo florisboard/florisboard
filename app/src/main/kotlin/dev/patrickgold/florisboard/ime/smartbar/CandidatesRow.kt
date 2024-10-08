@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,16 +58,14 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.safeTimes
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.ui.spSize
 
-private val CandidatesRowScrollbarHeight = 2.dp
+val CandidatesRowScrollbarHeight = 2.dp
 
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
@@ -79,84 +77,71 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
-    val inlineSuggestions by nlpManager.inlineSuggestions.observeAsNonNullState()
 
     val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
     val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
 
-    if (AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()) {
-        Row(
-            modifier = modifier
-                .fillMaxSize()
-                .florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight),
-        ) {
-            for (inlineSuggestion in inlineSuggestions) {
-                InlineSuggestionView(inlineSuggestion = inlineSuggestion)
-            }
-        }
-    } else {
-        Row(
-            modifier = modifier
-                .fillMaxSize()
-                .snyggBackground(context, rowStyle)
-                .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
-                    florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
-                },
-            horizontalArrangement = if (candidates.size > 1) {
-                Arrangement.Start
-            } else {
-                Arrangement.Center
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .snyggBackground(context, rowStyle)
+            .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
+                florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
             },
-        ) {
-            if (candidates.isNotEmpty()) {
-                val candidateModifier = if (candidates.size == 1) {
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f, fill = false)
-                } else {
-                    Modifier
-                        .fillMaxHeight()
-                        .conditional(displayMode == CandidatesDisplayMode.CLASSIC) {
-                            weight(1f)
-                        }
-                        .conditional(displayMode != CandidatesDisplayMode.CLASSIC) {
-                            wrapContentWidth().widthIn(max = 160.dp)
-                        }
-                }
-                val list = when (displayMode) {
-                    CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
-                    else -> candidates
-                }
-                for ((n, candidate) in list.withIndex()) {
-                    if (n > 0) {
-                        Spacer(
-                            modifier = Modifier
-                                .width(1.dp)
-                                .fillMaxHeight(0.6f)
-                                .align(Alignment.CenterVertically)
-                                .snyggBackground(context, spacerStyle),
-                        )
+        horizontalArrangement = if (candidates.size > 1) {
+            Arrangement.Start
+        } else {
+            Arrangement.Center
+        },
+    ) {
+        if (candidates.isNotEmpty()) {
+            val candidateModifier = if (candidates.size == 1) {
+                Modifier
+                    .fillMaxHeight()
+                    .weight(1f, fill = false)
+            } else {
+                Modifier
+                    .fillMaxHeight()
+                    .conditional(displayMode == CandidatesDisplayMode.CLASSIC) {
+                        weight(1f)
                     }
-                    CandidateItem(
-                        modifier = candidateModifier,
-                        candidate = candidate,
-                        displayMode = displayMode,
-                        onClick = {
-                            // Can't use candidate directly
-                            keyboardManager.commitCandidate(candidates[n])
-                        },
-                        onLongPress = {
-                            // Can't use candidate directly
-                            val candidateItem = candidates[n]
-                            if (candidateItem.isEligibleForUserRemoval) {
-                                nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
-                            } else {
-                                false
-                            }
-                        },
-                        longPressDelay = prefs.keyboard.longPressDelay.get().toLong(),
+                    .conditional(displayMode != CandidatesDisplayMode.CLASSIC) {
+                        wrapContentWidth().widthIn(max = 160.dp)
+                    }
+            }
+            val list = when (displayMode) {
+                CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
+                else -> candidates
+            }
+            for ((n, candidate) in list.withIndex()) {
+                if (n > 0) {
+                    Spacer(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .fillMaxHeight(0.6f)
+                            .align(Alignment.CenterVertically)
+                            .snyggBackground(context, spacerStyle),
                     )
                 }
+                CandidateItem(
+                    modifier = candidateModifier,
+                    candidate = candidate,
+                    displayMode = displayMode,
+                    onClick = {
+                        // Can't use candidate directly
+                        keyboardManager.commitCandidate(candidates[n])
+                    },
+                    onLongPress = {
+                        // Can't use candidate directly
+                        val candidateItem = candidates[n]
+                        if (candidateItem.isEligibleForUserRemoval) {
+                            nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                        } else {
+                            false
+                        }
+                    },
+                    longPressDelay = prefs.keyboard.longPressDelay.get().toLong(),
+                )
             }
         }
     }

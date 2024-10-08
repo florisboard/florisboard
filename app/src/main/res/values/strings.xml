@@ -618,6 +618,8 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Overlays the current input state for debugging</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Show spelling overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Show inline autofill overlay</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Overlays the current inline autofill results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Outline the key touch boundaries in red</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag&amp;drop helpers</string>
