@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Madhësia makismale e historisë të Emoji\'s</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Ngjyra e preferuar e lëkurës</string>
     <string name="prefs__media__emoji_preferred_hair_style">Modeli i preferuar i flokëve</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekte</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flamuj</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nuk u gjet asnjë emoji i përdorur së fundmi. Mbasi të kesh filluar të shkruash emoji\'s ato do të shfaqen automatikisht këtu.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Këshillë: Mbaj shtypur emoji\'t e përdorur së fundmi që ti heqësh ato nga kjo pamje!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">U hoq {emoji} nga emoji\'s e përdorur së fundmi</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Shigjet lart</string>
     <string name="quick_action__arrow_up__tooltip">Trego shigjetën lart</string>

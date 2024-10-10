@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Εικονίδια Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Εικονίδια emoticon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Μέγιστο μέγεθος ιστορικού εικονιδίων emoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Προτιμώμενος τόνος επιδερμίδας εικονιδίων emoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Φατσούλες &amp; Συναισθήματα</string>

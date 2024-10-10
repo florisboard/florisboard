@@ -13,9 +13,17 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Эмодзи</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Смайлики</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомодзи</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Размер списка недавних эмодзи</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Предпочтительный цвет кожи эмодзи</string>
     <string name="prefs__media__emoji_preferred_hair_style">Предпочтительная прическа эмодзи</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Подсказки смайликов</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Включить подсказки смайликов</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Предлагать смайлики при наборе текста</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Тип триггера</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Обновить историю смайликов</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Показать название смайлика</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Предложения смайликов отображают их название рядом</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Минимальная длина запроса</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Максимальное количество кандидатов</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Смайлы и эмоции</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Люди и тело</string>
@@ -26,10 +34,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Объекты</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Символы</string>
     <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Список недавних эмодзи пуст. Как только вы начнете их использовать, они автоматически появятся здесь.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Для доступа к истории эмодзи необходимо разблокировать устройство.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Подсказка: удержите палец на недавнем эмодзи, чтобы скрыть его!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} скрыт из недавних эмодзи</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">В начало</string>
     <string name="quick_action__arrow_up__tooltip">Переместить курсор в начало</string>
@@ -123,6 +127,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">По крайней мере, для одного поля не выбрано значение. Пожалуйста, выберите значение для этого поля (полей).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не установлен)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Раскладки</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Подтверждение удаления</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Вы уверены что хотите удалить этот подтип?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Темы</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Тема оформления</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Время восхода</string>
@@ -578,6 +584,11 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Настройки безопасности Android</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Системные настройки Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Языки системы</string>
+    <string name="devtools__debuglog__title">Журнал отладки</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Журнал отладки скопирован в буфер обмена</string>
+    <string name="devtools__debuglog__copy_log">Скопировать журнал</string>
+    <string name="devtools__debuglog__copy_for_github">Скопировать журнал (формат GitHub)</string>
+    <string name="devtools__debuglog__loading">Загрузка…</string>
     <!-- Extension strings -->
     <string name="ext__home__title">Расширения и дополнения</string>
     <string name="ext__list__ext_theme">Расширения темы</string>

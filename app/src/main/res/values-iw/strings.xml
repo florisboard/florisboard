@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">אימוג\'ים</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">סמלי הבעה</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">קמוג\'י</string>
-    <string name="prefs__media__emoji_recently_used_max_size">היסטוריית האימוג\'י בגודל מקסימלי</string>
     <string name="prefs__media__emoji_preferred_skin_tone">גוון עור אמוג\'י מועדף</string>
     <string name="prefs__media__emoji_preferred_hair_style">סגנון שיער אמוג\'י מועדף</string>
     <!-- Emoji strings -->
@@ -26,10 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">אובייקטים</string>
     <string name="emoji__category__symbols" comment="Emoji category name">סמלים</string>
     <string name="emoji__category__flags" comment="Emoji category name">דגלים</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">לא נמצאו אימוג\'ים שנעשה בהם שימוש לאחרונה. ברגע שתתחיל להקליד אימוג\'ים הם יופיעו כאן באופן אוטומטי.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">כדי לגשת להיסטוריית האמוג׳י שלך, קודם יש לפתוח את נעילת המכשיר.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">טיפ למקצוענים: לחיצה ארוכה השתמשה לאחרונה באימוג\'ים כדי להסיר אותם מתצוגה זו שוב!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">הוסר {emoji} מאמוג\'ים שהיו בשימוש לאחרונה</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">חץ למעלה</string>
     <string name="quick_action__arrow_up__tooltip">ביצוע חץ למעלה</string>

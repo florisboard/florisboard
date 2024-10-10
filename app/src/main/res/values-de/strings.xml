@@ -13,9 +13,24 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Maximale Größe des Emoji-Verlaufs</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Bevorzugte Emoji-Hautfarbe</string>
     <string name="prefs__media__emoji_preferred_hair_style">Bevorzugte Emoji-Haarfarbe</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji-Historie</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Aktiviere Emoji-Historie</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Behalte kürzlich genutzte Emojis für einen schnellen Zugriff</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update Strategie (gepinnt)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update Strategie (kürzlich)</string>
+    <string name="prefs__media__emoji_history_max_size">Maximale zu behaltende Emojis</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji Vorschläge</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Aktiviere Emoji Vorschläge</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Erhalte Emoji Vorschläge während des Tippens</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Auslösetyp</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Update Emoji-Historie</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Angenommene vorgeschlagene Emojis werden zur Emoji-Historie hinzugefügt</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Zeige Emoji Name</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Emoji Vorschläge zeigen den Namen neben dem Emoji</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimale Suchbegriff-Länge</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximale Anzahl von Vorschlägen</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotionen</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personen &amp; Körper</string>
@@ -26,10 +41,12 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekte</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggen</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Keine kürzlich verwendeten Emojis gefunden. Sobald Sie Emojis verwendet haben erscheinen diese hier.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Um auf deinen Emoji-verlauf zuzugreifen, entsperre zuerst dein Gerät.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro Tipp: Halten Sie kürzlich verwendete Emojis gedrückt, um diese wieder aus dieser Ansicht zu entfernen!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} wurde aus \"kürzlich verwendeten Emojis\" entfernt</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Keine kürzlich benutzen Emojis gefunden. Sobald Emojis benutzt werden, erscheinen diese hier.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Um auf deinen Emoji-Historie zuzugreifen, entsperre das Gerät.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Tipp: Tippe lange auf Emojis in der Historie um sie anzupinnen oder zu entfernen!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">{emoji} aus Historie gelöscht</string>
+    <string name="emoji__history__pinned">Angepinnt</string>
+    <string name="emoji__history__recent">Kürzlich</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pfeil hoch</string>
     <string name="quick_action__arrow_up__tooltip">Pfeil nach oben ausführen</string>
@@ -124,6 +141,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">In mindestens einem Feld ist kein Wert ausgewählt. Bitte wähle einen Wert für das Feld / die Felder.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nicht installiert)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Löschen bestätigen</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Bist du sicher, dass du diesen Untertyp löschen willst?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Design</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sonnenuntergangszeit</string>
@@ -160,7 +179,7 @@
     <string name="settings__theme_editor__code_recording_help_text">Um den Code einer Taste zu ermitteln, verwenden Sie die Schaltfläche neben dem Code-Eingabefeld. Sobald sie aktiviert ist, zeichnet sie den nächsten Tastendruck auf und fügt den Code in das Eingabefeld ein.</string>
     <string name="settings__theme_editor__code_recording_started">Key code aufnahme gestartet</string>
     <string name="settings__theme_editor__code_recording_stopped">Key code aufnahme beendet</string>
-    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} muss die standard Tastatur-App sein, um eine Taste aufzunehmen</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} muss die Standard-Tastatur-App sein, um eine Taste aufzunehmen</string>
     <string name="settings__theme_editor__code_recording_placeholder">Aufnahme läuft …</string>
     <string name="settings__theme_editor__add_property">Eigenschaft hinzufügen</string>
     <string name="settings__theme_editor__edit_property">Eigenschaft bearbeiten</string>
@@ -378,7 +397,7 @@
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Abkürzung (optional)</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Bitte einen Shortcut eingeben, der zu {regex} passt</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Sprachcode (optional)</string>
-    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Dieses Sprachcode entspicht nicht denn enstpächende Syntax. Der Code muss entsprechend von Land (wie en), Land und Region (wie en_US) oder Land, Region und Script (wie en_US-script).</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Dieser Sprachcode entspricht nicht der Syntax. Der Code muss entweder ein Land (wie en), Land und Region (wie en_US) oder Land, Region und Script (wie en_US-script) sein.</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Gesten &amp; Glide Typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide Typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Glide Typing aktivieren</string>
@@ -433,7 +452,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Datenschutzrichtlinie</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Datenschutzrichtlinie für dieses Projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projekt-Lizenz</string>
-    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard ist unter {license_name} lizensiert</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard ist unter {license_name} lizenziert</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Fehler: Lizenztext konnte nicht geladen werden.\n-&gt; Grund: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Assetmanager Referenz ist null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Drittanbieter-Lizenzen</string>
@@ -574,7 +593,16 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Sichere Android-Einstellungen</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Android System-Einstellungen</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systemgebietsschemata</string>
+    <string name="devtools__debuglog__title">Debug Log</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Debug Log wurde in die Zwischenablage kopiert</string>
+    <string name="devtools__debuglog__copy_log">Log kopieren</string>
+    <string name="devtools__debuglog__copy_for_github">Log kopieren (GitHub Formatierung)</string>
+    <string name="devtools__debuglog__loading">Lädt…</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Add-ons &amp; Erweiterungen</string>
+    <string name="ext__list__ext_theme">Design-Erweiterungen</string>
+    <string name="ext__list__ext_keyboard">Tastatur-Erweiterungen</string>
+    <string name="ext__list__ext_languagepack">Sprachpaket-Erweiterungen</string>
     <string name="ext__meta__authors">Ersteller</string>
     <string name="ext__meta__components">Gebündelte Komponenten</string>
     <string name="ext__meta__components_theme">Enthaltene Designs</string>
@@ -627,6 +655,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Eine Mediendatei (Bild, Audio, Text, etc.) wurde erwartet, aber ein Erweiterungsarchiv wurde gefunden.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Ein Erweiterungsarchiv wurde erwartet, aber eine Mediendatei (Bild, Audio, Text, etc.) wurde gefunden.</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Beim Import ist ein unerwarteter Fehler aufgetreten. Folgende Angaben wurden gemacht:</string>
+    <string name="ext__validation__enter_package_name">Bitte gib einen Paketnamen ein</string>
+    <string name="ext__validation__error_package_name">Paketname stimmt nicht mit Regex {id_regex} überein</string>
+    <string name="ext__validation__enter_version">Bitte gib eine Version an</string>
+    <string name="ext__validation__enter_title">Bitte gib einen Titel ein</string>
+    <string name="ext__validation__enter_maintainer">Bitte gib mindestens einen gültigen Maintainer an</string>
+    <string name="ext__validation__enter_license">Bitte gib eine Lizenzbezeichnung an</string>
+    <string name="ext__validation__enter_component_id">Bitte gib eine Komponenten-ID ein</string>
+    <string name="ext__validation__error_component_id">Bitte eine Komponenten-ID eingeben, welche zu {component_id_regex} passt</string>
+    <string name="ext__validation__enter_component_label">Bitte gib eine Komponentenbezeichnung ein</string>
+    <string name="ext__validation__hint_component_label_to_long">Die Komponentenbezeichnung ist recht lang, was zu einem Abschneiden auf der Benutzeroberfläche führen kann</string>
+    <string name="ext__validation__error_author">Bitte gib mindestens einen gültigen Autor an</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Der Stylesheet-Pfad darf nicht leer sein</string>
+    <string name="ext__validation__error_stylesheet_path">Bitte einen Stylesheet-Pfad eingeben, welcher zu {stylesheet_path_regex} passt</string>
+    <string name="ext__validation__enter_property">Bitte gib einen Variablennamen an</string>
+    <string name="ext__validation__error_property">Bitte einen gültigen Variablennamen eingeben, welcher zu {variable_name_regex} passt</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Nach FlorisCSS-Konvention beginnt ein Variablenname mit zwei Bindestrichen (--)</string>
+    <string name="ext__validation__enter_color">Bitte gib einen Farbstring ein</string>
+    <string name="ext__validation__error_color">Bitte gib einen gültigen Farbstring ein</string>
+    <string name="ext__validation__enter_dp_size">Bitte gib eine dp-Größe an</string>
+    <string name="ext__validation__enter_valid_number">Bitte gib eine gültige Nummer ein</string>
+    <string name="ext__validation__enter_positive_number">Bitte gib eine positive Zahl ein (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Bitte gib eine Prozentzahl an</string>
+    <string name="ext__validation__enter_number_between_0_100">Bitte gib eine positive Zahl zwischen 0 und 100 an</string>
+    <string name="ext__validation__hint_value_above_50_percent">Jeder Wert über 50 % verhält sich so, als ob 50 % eingestellt wären. Überlege den Wert zu senken</string>
+    <string name="ext__update_box__internet_permission_hint">Weil diese App keine Internetberechtigungen hat, muss manuell nach Updates für Erweiterungen gesucht werden.</string>
+    <string name="ext__update_box__search_for_updates">Nach Updates suchen</string>
+    <string name="ext__addon_management_box__managing_placeholder">Verwalte {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Alle Aufgaben im Zusammenhang mit dem Importieren, Exportieren, Erstellen, Anpassen und Entfernen von Erweiterungen können über den Add-on-Manager abgewickelt werden.</string>
+    <string name="ext__addon_management_box__go_to_page">Gehe zu {ext_home_title}</string>
+    <string name="ext__home__info">Erweiterungen können über den FlorisBoard Add-on Store heruntergeladen und installiert werden oder importiere beliebige Erweiterungen aus dem Internet.</string>
+    <string name="ext__home__visit_store">Besuche den Add-ons Store</string>
+    <string name="ext__home__manage_extensions">Installierte Erweiterungen verwalten</string>
+    <string name="ext__list__view_details">Details anzeigen</string>
+    <string name="ext__check_updates__title">Auf Updates prüfen</string>
     <!-- Action strings -->
     <string name="action__add">Hinzufügen</string>
     <string name="action__apply">Übernehmen</string>
@@ -694,6 +756,14 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Sprachnamen in der App und in der Tastatur werden in der Systemsprache des Geräts dargestellt</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Systemsprache</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Sprachnamen in der App und in der Tastatur werden in der referenzierten Sprache dargestellt</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Automatisch Sortieren (Voranstellen)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Emojis werden bei Verwendung neu sortiert. Neue Emojis werden am Anfang hinzugefügt.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Automatisch Sortieren (Anhängen)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Emojis werden bei Verwendung neu sortiert. Neue Emojis werden am Ende hinzugefügt.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Manuelles Sortieren (Voranstellen)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Emojis werden bei Verwendung nicht neu sortiert. Neue Emojis werden am Anfang hinzugefügt.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Manuelles Sortieren (Anhängen)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Emojis werden bei Verwendung nicht neu sortiert. Neue Emojis werden am Ende hinzugefügt.</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Standard Hautfarbe</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Helle Hautfarbe</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Mittel helle Hautfarbe</string>
@@ -705,6 +775,10 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Lockige Haare</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Weiße Haare</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Glatze</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">Führender Doppelpunkt</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Emojis mit der Syntax :emoji_name vorschlagen</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Eingebetteter Text</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Schlage Emojis vor, indem einfach der Emoji-Namen als Wort eingeben wird</string>
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Über Kandidaten</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Platziert die erweiterte Aktionsleiste zwischen der App-Oberfläche und der Kandidatenleiste</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Unter Kandidaten</string>
@@ -819,5 +893,13 @@
     <plurals name="unit__items__written">
         <item quantity="one">{v} Element</item>
         <item quantity="other">{v} Elemente</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} Zeichen</item>
+        <item quantity="other">{v} Zeichen</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} Vorschlag</item>
+        <item quantity="other">{v} Vorschläge</item>
     </plurals>
 </resources>

@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">خەندەکان</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">هێمای دەربڕینی هەستەکان</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">کامۆجی</string>
-    <string name="prefs__media__emoji_recently_used_max_size">ڕێژەی پیشاندانی خەندە لە مێژووی خەندەکان</string>
     <string name="prefs__media__emoji_preferred_skin_tone">ڕەنگی بنەڕەتی خەندەکان</string>
     <string name="prefs__media__emoji_preferred_hair_style">ڕەنگی بنەڕەتی قژی خەندەکان</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">ئامانجەکان</string>
     <string name="emoji__category__symbols" comment="Emoji category name">هێماکان</string>
     <string name="emoji__category__flags" comment="Emoji category name">ئاڵاکان</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">هیچ ئیمۆجیەک بەکارنەهاتووە، هەرکاتێ ئیمۆجیەکانت بەکارهێنا بەشێوەیەکی خۆکاری لێرەدا دەردەکەون.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">زانیاری: بۆ سڕینەوەی ئیمۆجیەکان لەم بەشەدا کەمێک دەستی لەسەر ڕابگرە.</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ئیمۆجی {emoji} لابرا لەلیستی دوایین بەکارهاتووەکان</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">چونە سەرەوە</string>
     <string name="quick_action__arrow_up__tooltip">چوونە سەرەتای دێڕ</string>

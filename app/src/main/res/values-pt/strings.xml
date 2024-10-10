@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Tamanho máximo do histórico de emoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Tom de pele preferido para emoji</string>
     <string name="prefs__media__emoji_preferred_hair_style">Estilo de cabelo preferido para emoji</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bandeiras</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Não foram encontrados emoji utilizados recentemente. Quando começar a utilizar emoji, eles irão automaticamente aparecer aqui.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica: Um clique longo num emoji utilizado recentemente remove-lo desta lista!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} removido da lista de emojis recentes</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Seta p/ cima</string>
     <string name="quick_action__arrow_up__tooltip">Aciona a seta para cima</string>

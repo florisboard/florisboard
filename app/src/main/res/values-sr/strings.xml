@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Емоџији</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Емотикони</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомоџи</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Емоџи историја максимална величина</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Преферирани емоџи тен коже</string>
     <string name="prefs__media__emoji_preferred_hair_style">Преферирана емоџи боја косе</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Објекти</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Симболи</string>
     <string name="emoji__category__flags" comment="Emoji category name">Заставе</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Нису пронађени недавно кориштени емоџији. Када почнете куцати емоџије појавиће се овде.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Про тип: Задржи недавно кориштене емоџије да би их уклонили одавде опет!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Уклоњен {emoji} из недавно кориштених емоџија</string>
     <!-- Quick action strings -->
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

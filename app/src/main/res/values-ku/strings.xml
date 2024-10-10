@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojîyan</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Hestnîşan</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Mezinahiya dîrokê emûcîyan</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Tona çermê emojî ya tercîhkirî</string>
     <string name="prefs__media__emoji_preferred_hair_style">Tercîha porê emojî</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Amanc</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Sembol</string>
     <string name="emoji__category__flags" comment="Emoji category name">Alayen</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Emojîyên ku di demên dawî da hatine bikarînan nehatine dîtin. Piştî ku te dest bi tîpkirina emojîyan kir, dê li vir bi awayekî otomatîk xuya bibin.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Çapemeniya dirêj di demên dawî de emojî bikar anîn da ku wan ji vê nêrînê dîsa rakin!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Rakirin {emoji} ji emojiyên ku di demên dawî de hatine bikaranîn</string>
     <!-- Quick action strings -->
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
