@@ -121,9 +121,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_beta_foreground")
+            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_preview")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_preview_round")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_preview_foreground")
             resValue("string", "floris_app_name", "FlorisBoard Beta")
         }
 
