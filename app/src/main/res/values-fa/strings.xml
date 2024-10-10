@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">شکلک‌ها</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">حداکثر حجم تاریخچه ایموجی</string>
     <string name="prefs__media__emoji_preferred_skin_tone">رنگ پوست پیشفرض برای ایموجی</string>
     <string name="prefs__media__emoji_preferred_hair_style">مدل مو پیشفرض برای ایموجی</string>
     <!-- Emoji strings -->
@@ -26,10 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">اشیاء</string>
     <string name="emoji__category__symbols" comment="Emoji category name">نمادها</string>
     <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">ایموجی استفاده شده ای یافت نشد. زمانی که شروع به نوشتن ایموجی ها بکنید به صورت خودکار اینجا ظاهر خواهند شد.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">برای دست‌رسی به تاریخ صورتک‌ها گوشی‌تان باز کنید.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">توصیه کاربردی: روی ایموجی های استفاده شده نگهدارید تا آن ها را از اینجا حذف کنید!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">ایموجی {emoji} از ایموجی های اخیرا استفاده شده حذف شد</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">فلش بالا</string>
     <string name="quick_action__arrow_up__tooltip">فلش به سمت بالا</string>

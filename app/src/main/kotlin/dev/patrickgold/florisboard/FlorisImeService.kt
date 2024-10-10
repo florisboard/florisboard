@@ -87,6 +87,7 @@ import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
 import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
@@ -370,7 +371,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         flogInfo { "(no args)" }
         super.onFinishInput()
         editorInstance.handleFinishInput()
-        nlpManager.clearInlineSuggestions()
+        NlpInlineAutofill.clearInlineSuggestions()
     }
 
     override fun onWindowShown() {
@@ -437,23 +438,26 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (prefs.smartbar.enabled.get() && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
-            flogInfo(LogTopic.IMS_EVENTS) {
-                "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
-            }
-            val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
-            val spec = InlinePresentationSpec.Builder(InlineSuggestionUiSmallestSize, InlineSuggestionUiBiggestSize)
-                .setStyle(stylesBundle)
-                .build()
-            InlineSuggestionsRequest.Builder(listOf(spec)).let { request ->
-                request.setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
-                request.build()
-            }
-        } else {
+        if (!prefs.smartbar.enabled.get() || !prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Ignoring inline suggestions request because Smartbar and/or inline suggestions are disabled."
             }
-            null
+            return null
+        }
+
+        flogInfo(LogTopic.IMS_EVENTS) { "Creating inline suggestions request" }
+        val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
+        val spec = InlinePresentationSpec.Builder(
+            InlineSuggestionUiSmallestSize,
+            InlineSuggestionUiBiggestSize,
+        ).run {
+            setStyle(stylesBundle)
+            build()
+        }
+
+        return InlineSuggestionsRequest.Builder(listOf(spec)).run {
+            setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
+            build()
         }
     }
 
@@ -463,8 +467,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         flogInfo(LogTopic.IMS_EVENTS) {
             "Received inline suggestions response with ${inlineSuggestions.size} suggestion(s) provided."
         }
-        nlpManager.showInlineSuggestions(inlineSuggestions)
-        return true
+        return NlpInlineAutofill.showInlineSuggestions(this, inlineSuggestions)
     }
 
     override fun onComputeInsets(outInsets: Insets?) {

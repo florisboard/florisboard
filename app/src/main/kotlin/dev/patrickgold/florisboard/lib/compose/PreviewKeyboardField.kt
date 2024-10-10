@@ -128,7 +128,7 @@ fun PreviewKeyboardField(
                 keyboardActions = KeyboardActions(
                     onDone = { focusManager.clearFocus() },
                 ),
-                keyboardOptions = KeyboardOptions(autoCorrect = true),
+                keyboardOptions = KeyboardOptions(autoCorrectEnabled = true),
                 singleLine = true,
                 shape = RectangleShape,
                 colors = TextFieldDefaults.colors(

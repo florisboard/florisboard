@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Japāņu sajūtu zīmes (Kaomoji)</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Sajūtu rakstzīmju vēstures lielākais iespējamais lielums</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Vēlamā sajūtu rakstzīmju ādas nokrāsa</string>
     <string name="prefs__media__emoji_preferred_hair_style">Vēlamais sajūtu rakstzīmju matu sakārtojums</string>
     <!-- Emoji strings -->
@@ -26,10 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Priekšmeti</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Zīmes</string>
     <string name="emoji__category__flags" comment="Emoji category name">Karogi</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nav nesen izmantotu sajūtu rakstzīmju. Tās parādīsies šeit pēc izmantošanas.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Lai piekļūtu savai emocijzīmju vēsturei, vispirms ir jāatslēdz iekārta.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Lietderīgs padoms: ilgs piespiediens uz nesen izmantotajām sajūtu rakstzīmēm noņems tās no šī skata.</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} tika noņemta no nesen izmantotajām sajūtu rakstzīmēm</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Uz augšu</string>
     <string name="quick_action__arrow_up__tooltip">Izpildīt bultu uz augšu</string>
@@ -118,6 +113,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Vismaz vienam laukam nav atlasīta vērtība. Lūgums norādīt vērtību laukam(iem).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nav uzstādīts)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Izkārtojumi</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Izdzēšanas apstiprināšana</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Vai tiešām izdzēst šo apakšveidu?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Izskats</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Izskata veids</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Saullēkta laikā</string>
@@ -557,6 +554,8 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Pārklāj pašreizējo ievades stāvokli atkļūdošanai</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Rādīt pareizrakstības pārklājumu</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Pārklāj pašreizējo pareizrakstības iznākumu atkļūdošanai</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Rādīt iekļauto automātiskās aizpildes pārklājumu</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Pārklāj pašreizējo iekļauto automātiskās aizpildes iznākumu atkļūdošanai</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Rādīt taustiņa pieskārienu robežas</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Izcelt taustiņa pieskārienu robežas sarkanā krāsā</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Rādīt vilkšanas un nomešanas palīgus</string>
@@ -572,6 +571,11 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Drošie Android iestatījumi</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Sistēmas Android iestatījumi</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistēmas darbības vietas</string>
+    <string name="devtools__debuglog__title">Atkļūdošanas žurnāls</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Atkļūdošanas žurnāls tika ievietots starpliktuvē</string>
+    <string name="devtools__debuglog__copy_log">Ievietot žurnālu starpliktuvē</string>
+    <string name="devtools__debuglog__copy_for_github">Ievietot žurnālu starpliktuvē (GitHub formatējums)</string>
+    <string name="devtools__debuglog__loading">Ielādē…</string>
     <!-- Extension strings -->
     <string name="ext__home__title">Papildinājumi un paplašinājumi</string>
     <string name="ext__list__ext_theme">Izskata paplašinājumi</string>

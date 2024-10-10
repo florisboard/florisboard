@@ -9,7 +9,6 @@
     <string name="settings__media__title">Čustvenčki</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Čustvenčki</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Čustvenčki</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Največja zgodovina čustvenčkov</string>
     <!-- Emoji strings -->
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Puščica gor</string>

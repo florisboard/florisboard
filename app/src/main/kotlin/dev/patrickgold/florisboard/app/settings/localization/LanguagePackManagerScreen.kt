@@ -112,7 +112,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
             FlorisOutlinedBox(
                 modifier = Modifier.defaultFlorisOutlinedBox(),
             ) {
-                this@content.Preference(
+                Preference(
                     onClick = { navController.navigate(
                         Routes.Ext.Import(ExtensionImportScreenType.EXT_LANGUAGEPACK, null)
                     ) },

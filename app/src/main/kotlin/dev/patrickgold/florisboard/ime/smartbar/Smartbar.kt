@@ -42,6 +42,7 @@ import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
@@ -64,8 +66,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.horizontalTween
 import dev.patrickgold.florisboard.lib.compose.verticalTween
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
@@ -138,6 +142,13 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
+    val nlpManager by context.nlpManager()
+
+    val inlineSuggestions by NlpInlineAutofill.suggestions.collectAsState()
+    LaunchedEffect(inlineSuggestions) {
+        nlpManager.autoExpandCollapseSmartbarActions(null, inlineSuggestions)
+    }
+    val shouldShowInlineSuggestionsUi = AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()
 
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
@@ -223,7 +234,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 enter = enterTransition,
                 exit = exitTransition,
             ) {
-                CandidatesRow()
+                if (shouldShowInlineSuggestionsUi) {
+                    InlineSuggestionsUi(inlineSuggestions)
+                } else {
+                    CandidatesRow()
+                }
             }
             androidx.compose.animation.AnimatedVisibility(
                 visible = expanded,
@@ -331,11 +346,19 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     ) {
         when (smartbarLayout) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
-                CandidatesRow()
+                if (shouldShowInlineSuggestionsUi) {
+                    InlineSuggestionsUi(inlineSuggestions)
+                } else {
+                    CandidatesRow()
+                }
             }
 
             SmartbarLayout.ACTIONS_ONLY -> {
-                QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
+                if (shouldShowInlineSuggestionsUi) {
+                    InlineSuggestionsUi(inlineSuggestions)
+                } else {
+                    QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
+                }
             }
 
             SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED -> {

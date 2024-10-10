@@ -220,31 +220,39 @@ fun TextKeyboardLayout(
                 }
             },
     ) {
-        val keyMarginH by prefs.keyboard.keySpacingHorizontal.observeAsTransformingState { it.dp.toPx() }
-        val keyMarginV by prefs.keyboard.keySpacingVertical.observeAsTransformingState { it.dp.toPx() }
-        val desiredKey = remember { TextKey(data = TextKeyData.UNSPECIFIED) }
         val keyboardWidth = constraints.maxWidth.toFloat()
         val keyboardHeight = constraints.maxHeight.toFloat()
-        desiredKey.touchBounds.apply {
-            if (isSmartbarKeyboard) {
-                width = keyboardWidth / 8f
-                height = FlorisImeSizing.smartbarHeight.toPx()
-            } else {
-                width = keyboardWidth / 10f
-                height = when (keyboard.mode) {
-                    KeyboardMode.CHARACTERS,
-                    KeyboardMode.NUMERIC_ADVANCED,
-                    KeyboardMode.SYMBOLS,
-                    KeyboardMode.SYMBOLS2 -> {
-                        (FlorisImeSizing.keyboardUiHeight() / keyboard.rowCount)
-                            .coerceAtMost(FlorisImeSizing.keyboardRowBaseHeight * 1.12f).toPx()
+        val keyMarginH by prefs.keyboard.keySpacingHorizontal.observeAsTransformingState { it.dp.toPx() }
+        val keyMarginV by prefs.keyboard.keySpacingVertical.observeAsTransformingState { it.dp.toPx() }
+        val keyboardRowBaseHeight = FlorisImeSizing.keyboardRowBaseHeight
+
+        val desiredKey = remember(
+            keyboard, isSmartbarKeyboard, keyboardWidth, keyboardHeight, keyMarginH, keyMarginV,
+            keyboardRowBaseHeight
+        ) {
+            TextKey(data = TextKeyData.UNSPECIFIED).also { desiredKey ->
+                desiredKey.touchBounds.apply {
+                    if (isSmartbarKeyboard) {
+                        width = keyboardWidth / 8f
+                        height = keyboardHeight
+                    } else {
+                        width = keyboardWidth / 10f
+                        height = when (keyboard.mode) {
+                            KeyboardMode.CHARACTERS,
+                            KeyboardMode.NUMERIC_ADVANCED,
+                            KeyboardMode.SYMBOLS,
+                            KeyboardMode.SYMBOLS2 -> {
+                                (keyboardHeight / keyboard.rowCount)
+                                    .coerceAtMost(keyboardRowBaseHeight.toPx() * 1.12f)
+                            }
+                            else -> keyboardRowBaseHeight.toPx()
+                        }
                     }
-                    else -> FlorisImeSizing.keyboardRowBaseHeight.toPx()
                 }
+                desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
+                keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, !isSmartbarKeyboard)
             }
         }
-        desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
-        keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, !isSmartbarKeyboard)
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
         val popupUiController = rememberPopupUiController(
@@ -308,7 +316,7 @@ fun TextKeyboardLayout(
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, evaluator, fontSizeMultiplier, isSmartbarKeyboard,
+                textKey, desiredKey, evaluator, fontSizeMultiplier, isSmartbarKeyboard,
                 debugShowTouchBoundaries,
             )
         }
@@ -328,6 +336,7 @@ fun TextKeyboardLayout(
 @Composable
 private fun TextKeyButton(
     key: TextKey,
+    desiredKey: TextKey,
     evaluator: ComputingEvaluator,
     fontSizeMultiplier: Float,
     isSmartbarKey: Boolean,
@@ -350,7 +359,9 @@ private fun TextKeyButton(
         KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
         else -> 1.0f
     }
-    val size = key.visibleBounds.size.toDpSize()
+    val size = remember(desiredKey) {
+        key.visibleBounds.size.toDpSize()
+    }
     Box(
         modifier = Modifier
             .requiredSize(size)

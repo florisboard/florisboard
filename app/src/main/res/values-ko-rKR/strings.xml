@@ -13,9 +13,14 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">이모지</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">이모티콘</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">카오모지</string>
-    <string name="prefs__media__emoji_recently_used_max_size">이모지 사용 기록 최대 크기</string>
     <string name="prefs__media__emoji_preferred_skin_tone">선호하는 이모지 피부색</string>
     <string name="prefs__media__emoji_preferred_hair_style">선호하는 이모지 머리 스타일</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">이모지 기록</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">이모지 기록 사용</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">이모지 제안</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">이모지 제안 사용</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">이모지 기록 업데이트</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">이모지 이름 표시</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">스마일리 및 이모티콘</string>
     <string name="emoji__category__people_body" comment="Emoji category name">사람 및 신체</string>
@@ -26,9 +31,7 @@
     <string name="emoji__category__objects" comment="Emoji category name">사물</string>
     <string name="emoji__category__symbols" comment="Emoji category name">상징</string>
     <string name="emoji__category__flags" comment="Emoji category name">깃발</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">최근에 이모지를 사용하지 않았습니다. 이모지를 사용하면 사용한 이모지가 여기에 나타납니다.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">꿀팁: 이모지를 길게 누르면 이 목록에서 이모지를 지울 수 있어요!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">최근에 사용한 이모지에서 {emoji} 이모지를 제거했습니다.</string>
+    <string name="emoji__history__recent">최근</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">화살표 위로</string>
     <string name="quick_action__arrow_up__tooltip">위쪽 화살표 동작 실행</string>
@@ -122,6 +125,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">하나 이상의 필드를 선택하지 않았습니다. 모든 필드의 항목을 선택해 주세요.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (설치되어 있지 않음)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">레이아웃</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">삭제 확인</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">정말 이 하위 유형을 삭제하시겠습니까?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">테마</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">테마 모드</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">일출 시간</string>
@@ -246,20 +251,26 @@
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">캡스락 상태 기억</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">다른 텍스트 필드로 이동할 때 캡스락 상태 유지</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">스페이스 두 번으로 마침표 입력</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">스페이스 바를 두 번 눌러 마침표를 입력합니다.</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">스페이스 바를 두 번 눌러 마침표 입력</string>
     <string name="pref__spelling__title" comment="Preference group title">맞춤법 검사</string>
     <string name="pref__spelling__active_spellchecker__summary_none">설정한 맞춤법 검사기 서비스가 없습니다. 여기를 눌러 서비스를 설정하세요.</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">언어</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">연락처 이름 사용</string>
-    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">연락처 목록에서 이름을 찾아 표시합니다.</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">연락처 목록에서 이름을 찾아 표시</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">사용자 사전 사용</string>
-    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">사용자 사전에서 항목을 찾아 표시합니다.</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">사용자 사전에서 항목을 찾아 표시</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">사용자 사전</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">사용자 사전 사용</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전에 저장되어 있는 단어를 추천합니다.</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">시스템 사용자 사전 사용</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전에 저장된 단어 추천</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">시스템 사용자 사전 관리</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전의 항목을 확인, 추가 또는 제거합니다.</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전 항목 확인, 추가 및 제거</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">앱 내장 사용자 사전 사용</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">앱 내장 사용자 사전에 저장된 단어 추천</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">앱 내장 사용자 사전 관리</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">앱 내장 사용자 사전 항목 확인, 추가 및 제거</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">앱 내장 사용자 사전</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">시스템 사용자 사전</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">이 사용자 사전에는 저장된 단어가 없습니다.</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">시스템 관리자 UI 열기</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">사용자 사전을 잘 가져왔습니다!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">사용자 사전을 잘 내보냈습니다!</string>

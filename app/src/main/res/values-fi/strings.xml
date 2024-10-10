@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojit</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Hymiöt</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomojit</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Emojihistorian maksimikoko</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Emojien oletusihonväri</string>
     <string name="prefs__media__emoji_preferred_hair_style">Emojien oletushiustyyli</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Esineet</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbolit</string>
     <string name="emoji__category__flags" comment="Emoji category name">Liput</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Viimeaikaisia emojeja ei löytynyt. Kun käytät emojeja, ne näytetään automaattisesti täällä.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Paina emojia pitkään poistaaksesi sen tästä näkymästä!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Poistettu {emoji} viimeaikaisista emojeista</string>
     <!-- Quick action strings -->
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

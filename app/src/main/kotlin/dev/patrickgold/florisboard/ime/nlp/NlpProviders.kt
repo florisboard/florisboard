@@ -20,7 +20,7 @@ import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.media.emoji.EMOJI_SUGGESTION_INDICATOR
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -221,7 +221,7 @@ interface SuggestionProvider : NlpProvider {
                     // Include Emoji indicator in local composing. This is required so that emoji suggestion indicator'
                     // can be detected in the composing text.
                     (pos - 1).takeIf { updatedPos ->
-                        textBeforeSelection.getOrNull(updatedPos) == EMOJI_SUGGESTION_INDICATOR
+                        textBeforeSelection.getOrNull(updatedPos) == EmojiSuggestionType.LEADING_COLON.prefix.first()
                     } ?: pos
                 }
                 EditorRange(start, end)

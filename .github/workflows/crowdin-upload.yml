@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Upload
-        uses: crowdin/github-action@1.4.0
+        uses: crowdin/github-action@v2
         with:
           config: "crowdin.yml"
           upload_sources: true

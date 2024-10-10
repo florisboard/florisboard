@@ -24,8 +24,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
@@ -193,7 +193,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             icon = if (currentLocale != null) {
                 Icons.Default.Close
             } else {
-                Icons.Default.ArrowBack
+                Icons.AutoMirrored.Filled.ArrowBack
             },
         )
     }

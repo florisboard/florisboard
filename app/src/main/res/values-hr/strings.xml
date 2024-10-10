@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emotikoni</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikoni</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaoemotikoni</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Prikazana povijest korištenih emotikona je maksimalna</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Željeni ton boje emotikona</string>
     <string name="prefs__media__emoji_preferred_hair_style">Željeni stil frizure emotikona</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekti</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
     <string name="emoji__category__flags" comment="Emoji category name">Zastave</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nema nedavno korištenih emotikona. Čim ih počnete koristiti, oni će se pojaviti ovdje.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro savjet: Dugo držite nedavno korištene emotikone kako bi ste ih uklonili sa popisa nedavno korištenih emotikona!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} je ukonjen iz nedavno korištenih emotikona</string>
     <!-- Quick action strings -->
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

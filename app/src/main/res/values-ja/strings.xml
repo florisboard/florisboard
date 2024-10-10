@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">絵文字</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">絵文字</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">顔文字</string>
-    <string name="prefs__media__emoji_recently_used_max_size">絵文字履歴の最大サイズ</string>
     <string name="prefs__media__emoji_preferred_skin_tone">好みの絵文字の肌の色</string>
     <string name="prefs__media__emoji_preferred_hair_style">好みの絵文字ヘアスタイル</string>
     <!-- Emoji strings -->
@@ -26,13 +25,13 @@
     <string name="emoji__category__objects" comment="Emoji category name">オブジェクト</string>
     <string name="emoji__category__symbols" comment="Emoji category name">シンボル</string>
     <string name="emoji__category__flags" comment="Emoji category name">旗</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">最近使用した絵文字は見つかりませんでした。 絵文字を使用すると、絵文字が自動的にここに表示されます</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">ヒント：最近使用した絵文字を長押しして、このビューから再び削除します。</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">最近使用した絵文字から {emoji} を削除しました</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">上矢印</string>
+    <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
     <string name="quick_action__arrow_down" maxLength="12">下矢印</string>
+    <string name="quick_action__arrow_down__tooltip">Perform arrow up</string>
     <string name="quick_action__arrow_left" maxLength="12">左矢印</string>
+    <string name="quick_action__arrow_left__tooltip"></string>
     <string name="quick_action__arrow_right" maxLength="12">右矢印</string>
     <string name="quick_action__clipboard_copy" maxLength="12">コピー</string>
     <string name="quick_action__clipboard_cut" maxLength="12">カット</string>

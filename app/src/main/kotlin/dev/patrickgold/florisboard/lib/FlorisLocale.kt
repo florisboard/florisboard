@@ -361,10 +361,13 @@ class FlorisLocale private constructor(val base: Locale) {
     }
 }
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(locale.base)
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun String.titlecase(locale: FlorisLocale = FlorisLocale.ROOT): String {
     return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale.base) else it.toString() }
 }

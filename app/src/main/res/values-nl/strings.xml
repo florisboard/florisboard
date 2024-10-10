@@ -13,9 +13,9 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Emoji historiek maximale lengte</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Gewenste emoji huidskleur</string>
     <string name="prefs__media__emoji_preferred_hair_style">Gewenste emoji haarstijl</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emojisuggesties</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smiley\'s</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Mannen</string>
@@ -26,10 +26,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Voorwerpen</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbolen</string>
     <string name="emoji__category__flags" comment="Emoji category name">Vlaggen</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Geen recent gebruikte emoji\'s gevonden. Zodra je emoji\'s begint te typen, verschijnen ze automatisch hier.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Ontgrendel eerst uw apparaat om toegang te krijgen tot uw emoji-geschiedenis.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Druk lang op recent gebruikte emoji\'s om ze weer uit deze weergave te verwijderen!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Verwijderd uit recent gebruikte emoji\'s</string>
+    <string name="emoji__history__pinned">Vastgezet</string>
+    <string name="emoji__history__recent">Recent</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pijl omhoog</string>
     <string name="quick_action__arrow_up__tooltip">Pijl naar boven uitvoeren</string>
@@ -117,6 +115,7 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Één of meer velden zijn nog niet ingevuld. Kies a.u.b. een optie voor deze velden.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (niet geïnstalleerd)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Indelingen</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Bevestiging verwijderen</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">thema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">thema modus</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
@@ -547,6 +546,9 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Veilige Android-instellingen</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Systeem Android-instellingen</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Systeemlandinstellingen</string>
+    <string name="devtools__debuglog__title">Foutopsporingslogboek</string>
+    <string name="devtools__debuglog__copy_log">Logboek kopiëren</string>
+    <string name="devtools__debuglog__loading">Laden…</string>
     <!-- Extension strings -->
     <string name="ext__list__ext_theme">Thema-extensies</string>
     <string name="ext__list__ext_keyboard">Toetsenbordextensies</string>

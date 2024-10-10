@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Tamanho máximo do histórico de emojis</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Tom de pele do emoji preferido</string>
     <string name="prefs__media__emoji_preferred_hair_style">Estilo de cabelo do emoji preferido</string>
     <!-- Emoji strings -->
@@ -26,10 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bandeiras</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nenhum emoji usado recentemente encontrado. Assim que você começar a digitar emojis, eles aparecerão automaticamente aqui.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Para acessar seu histórico de emojis, por favor desbloqueie seu dispositivo.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Dica profissional: pressione e segure os emojis usados ​​recentemente para removê-los desta visualização novamente!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} Removido dos emojis usados ​​recentemente</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Cima</string>
     <string name="quick_action__arrow_up__tooltip">Execute a seta para cima</string>
@@ -308,6 +303,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso ao pressionar e segurar uma tecla</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço muda para caracteres</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Volta automaticamente para caracteres quando em símbolos ou numéricos</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indicador anônimo</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra inteligente</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
@@ -469,6 +465,8 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensões do teclado</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensões de ortografia / dicionários</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensões de tema</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Histórico da área de transferência</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Itens de texto</string>
     <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Imagens</string>
     <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Vídeos</string>
     <string name="backup_and_restore__back_up__success">Arquivo de backup exportado com sucesso!</string>
@@ -574,6 +572,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Configurações do sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Localização do sistema</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Complementos &amp; Extensões</string>
     <string name="ext__meta__authors">Autores</string>
     <string name="ext__meta__components">Componentes agrupados</string>
     <string name="ext__meta__components_theme">Temas agrupados</string>
@@ -626,6 +625,13 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Era esperado um arquivo de mídia (imagem, áudio, font, etc...) porém foi encontrado um arquivo de extensão.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Era esperado um arquivo de extensão, porém foi encontrado um arquivo de mídia (image, audio, font, etc...).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Ocorreu um erro inesperado durante a importação. Os seguintes detalhes foram fornecidos:</string>
+    <string name="ext__validation__hint_value_above_50_percent">Qualquer valor acima de 50% se comportará como se você definisse 50%, considere diminuir o tamanho da porcentagem</string>
+    <string name="ext__update_box__internet_permission_hint">Como este aplicativo não tem permissão de Internet, as atualizações das extensões instaladas devem ser verificadas manualmente.</string>
+    <string name="ext__update_box__search_for_updates">Procurar por atualizações</string>
+    <string name="ext__addon_management_box__managing_placeholder">Gerenciando {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Todas as tarefas relacionadas à importação, exportação, criação, personalização e remoção de extensões podem ser realizadas pela central de gerenciamento de complementos.</string>
+    <string name="ext__addon_management_box__go_to_page">Ir para {ext_home_title}</string>
+    <string name="ext__home__manage_extensions">Gerenciar extensões instaladas</string>
     <string name="ext__list__view_details">Ver detalhes</string>
     <string name="ext__check_updates__title">Verifique se há atualizações</string>
     <!-- Action strings -->
@@ -713,6 +719,7 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é sempre a sugestão de símbolo ou o acento principal se nenhuma sugestão de símbolo estiver disponível</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorização inteligente</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">O caractere inicial selecionado após um toque longo é decidido dinamicamente como o acento principal ou a sugestão de símbolo, com base no idioma e layout atuais</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Exibir o indicador de navegação anônima atrás do teclado</string>
     <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Ligar/desligar dinamicamente</string>
     <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Opção recomendada. O modo de navegação anônima será ativado ou desativado dinamicamente por meio das opções passadas pelo aplicativo de destino, ou alternando-o manualmente por meio da ação rápida de navegação anônima na Smartbar.</string>
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Reproduz sons dinamicamente para eventos de entrada, dependendo das configurações do sistema</string>

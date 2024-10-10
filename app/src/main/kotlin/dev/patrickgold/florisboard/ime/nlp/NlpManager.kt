@@ -17,14 +17,8 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
-import android.os.Build
 import android.os.SystemClock
 import android.util.LruCache
-import android.util.Size
-import android.view.inputmethod.InlineSuggestion
-import android.widget.inline.InlineContentView
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
@@ -34,12 +28,10 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.media.emoji.EMOJI_SUGGESTION_MAX_COUNT
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -53,7 +45,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.guardedByLock
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
@@ -94,10 +85,6 @@ class NlpManager(context: Context) {
             _activeCandidatesFlow.value = v
         }
 
-    private val inlineContentViews = Collections.synchronizedMap<InlineSuggestion, InlineContentView>(hashMapOf())
-    private val _inlineSuggestions = MutableLiveData<List<InlineSuggestion>>(emptyList())
-    val inlineSuggestions: LiveData<List<InlineSuggestion>> get() = _inlineSuggestions
-
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableLiveData(0)
     private val debugOverlayVersionSource = AtomicInteger(0)
@@ -110,6 +97,9 @@ class NlpManager(context: Context) {
             assembleCandidates()
         }
         prefs.suggestion.clipboardContentEnabled.observeForever {
+            assembleCandidates()
+        }
+        prefs.emoji.suggestionEnabled.observeForever {
             assembleCandidates()
         }
         subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
@@ -202,21 +192,45 @@ class NlpManager(context: Context) {
     }
 
     fun isSuggestionOn(): Boolean =
-        prefs.suggestion.enabled.get() || providerForcesSuggestionOn(subtypeManager.activeSubtype)
+        prefs.suggestion.enabled.get()
+            || prefs.emoji.suggestionEnabled.get()
+            || providerForcesSuggestionOn(subtypeManager.activeSubtype)
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
         scope.launch {
-            val suggestions = getSuggestionProvider(subtype).suggest(
-                subtype = subtype,
-                content = content,
-                maxCandidateCount = 8,
-                allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-            )
+            val emojiSuggestions = when {
+                prefs.emoji.suggestionEnabled.get() -> {
+                    emojiSuggestionProvider.suggest(
+                        subtype = subtype,
+                        content = content,
+                        maxCandidateCount = prefs.emoji.suggestionCandidateMaxCount.get(),
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                    )
+                }
+                else -> emptyList()
+            }
+            val suggestions = when {
+                emojiSuggestions.isNotEmpty() && prefs.emoji.suggestionType.get().prefix.isNotEmpty() -> {
+                    emptyList()
+                }
+                else -> {
+                    getSuggestionProvider(subtype).suggest(
+                        subtype = subtype,
+                        content = content,
+                        maxCandidateCount = 8,
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
+                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                    )
+                }
+            }
             internalSuggestionsGuard.withLock {
                 if (internalSuggestions.first < reqTime) {
-                    internalSuggestions = reqTime to suggestions
+                    internalSuggestions = reqTime to buildList {
+                        addAll(emojiSuggestions)
+                        addAll(suggestions)
+                    }
                 }
             }
         }
@@ -267,24 +281,16 @@ class NlpManager(context: Context) {
         runBlocking {
             val candidates = when {
                 isSuggestionOn() -> {
-                    emojiSuggestionProvider.suggest(
-                        subtype = subtypeManager.activeSubtype,
+                    clipboardSuggestionProvider.suggest(
+                        subtype = Subtype.DEFAULT,
                         content = editorInstance.activeContent,
-                        maxCandidateCount = EMOJI_SUGGESTION_MAX_COUNT,
+                        maxCandidateCount = 8,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
                         isPrivateSession = keyboardManager.activeState.isIncognitoMode,
                     ).ifEmpty {
-                        clipboardSuggestionProvider.suggest(
-                            subtype = Subtype.DEFAULT,
-                            content = editorInstance.activeContent,
-                            maxCandidateCount = 8,
-                            allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
-                        ).ifEmpty {
-                            buildList {
-                                internalSuggestionsGuard.withLock {
-                                    addAll(internalSuggestions.second)
-                                }
+                        buildList {
+                            internalSuggestionsGuard.withLock {
+                                addAll(internalSuggestions.second)
                             }
                         }
                     }
@@ -292,68 +298,27 @@ class NlpManager(context: Context) {
                 else -> emptyList()
             }
             activeCandidates = candidates
-            autoExpandCollapseSmartbarActions(candidates, inlineSuggestions.value)
+            autoExpandCollapseSmartbarActions(candidates, NlpInlineAutofill.suggestions.value)
         }
     }
 
-    /**
-     * Inflates the given inline suggestions. Once all provided views are ready, the suggestions
-     * strip is updated and the Smartbar update cycle is triggered.
-     *
-     * @param inlineSuggestions A collection of inline suggestions to be inflated and shown.
-     */
-    fun showInlineSuggestions(inlineSuggestions: List<InlineSuggestion>) {
-        inlineContentViews.clear()
-        _inlineSuggestions.postValue(inlineSuggestions)
-        autoExpandCollapseSmartbarActions(activeCandidates, inlineSuggestions)
-    }
-
-    /**
-     * Clears the inline suggestions and triggers the Smartbar update cycle.
-     */
-    fun clearInlineSuggestions() {
-        inlineContentViews.clear()
-        _inlineSuggestions.postValue(emptyList())
-        autoExpandCollapseSmartbarActions(activeCandidates, null)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun inflateOrGet(
-        context: Context,
-        size: Size,
-        inlineSuggestion: InlineSuggestion,
-        callback: (InlineContentView) -> Unit,
-    ) {
-        val view = inlineContentViews[inlineSuggestion]
-        if (view != null) {
-            callback(view)
-        } else {
-            try {
-                inlineSuggestion.inflate(context, size, context.mainExecutor) { inflatedView ->
-                    if (inflatedView != null) {
-                        inlineContentViews[inlineSuggestion] = inflatedView
-                        callback(inflatedView)
-                    }
-                }
-            } catch (e: Exception) {
-                flogError { e.toString() }
-            }
+    fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
+        if (!prefs.smartbar.enabled.get()) {// || !prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
+            return
         }
-    }
-
-    private fun autoExpandCollapseSmartbarActions(list1: List<*>?, list2: List<*>?) {
-        if (prefs.smartbar.enabled.get() && prefs.smartbar.sharedActionsAutoExpandCollapse.get()) {
-            if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()
-                || keyboardManager.activeState.isActionsOverflowVisible
-            ) {
-                return // We do not auto switch if a repeatable action key was last pressed or if the actions overflow
-                       // menu is visible to prevent annoying UI changes
-            }
-            val isSelection = editorInstance.activeContent.selection.isSelectionMode
-            val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
-            prefs.smartbar.sharedActionsExpandWithAnimation.set(false)
-            prefs.smartbar.sharedActionsExpanded.set(isExpanded)
-        }
+        // TODO: this is a mess and needs to be cleaned up in v0.5 with the NLP development
+        /*if (keyboardManager.inputEventDispatcher.isRepeatableCodeLastDown()
+            && !keyboardManager.inputEventDispatcher.isPressed(KeyCode.DELETE)
+            && !keyboardManager.inputEventDispatcher.isPressed(KeyCode.FORWARD_DELETE)
+            || keyboardManager.activeState.isActionsOverflowVisible
+        ) {
+            return // We do not auto switch if a repeatable action key was last pressed or if the actions overflow
+                   // menu is visible to prevent annoying UI changes
+        }*/
+        val isSelection = editorInstance.activeContent.selection.isSelectionMode
+        val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
+        prefs.smartbar.sharedActionsExpandWithAnimation.set(false)
+        prefs.smartbar.sharedActionsExpanded.set(isExpanded)
     }
 
     fun addToDebugOverlay(word: String, info: SpellingResult) {

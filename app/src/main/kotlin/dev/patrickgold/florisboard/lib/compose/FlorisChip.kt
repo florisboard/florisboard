@@ -25,9 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -39,15 +37,10 @@ fun FlorisChip(
     onClick: () -> Unit = { },
     selected: Boolean = false,
     enabled: Boolean = true,
-    color: Color = Color.Unspecified,
     shape: Shape = MaterialTheme.shapes.small,
     leadingIcons: List<ImageVector> = listOf(),
     trailingIcons: List<ImageVector> = listOf(),
 ) {
-    val backgroundColor = color.takeOrElse {
-        MaterialTheme.colorScheme.onSurface.copy()
-    }
-
     InputChip(
         selected = selected,
         onClick = onClick,
@@ -88,42 +81,4 @@ fun FlorisChip(
             }
         }
     )
-
-    /*Surface(
-        modifier = modifier,
-        onClick = onClick,
-        enabled = enabled,
-        color = backgroundColor,
-        shape = shape,
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            for (leadingIcon in leadingIcons) {
-                Icon(
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .size(16.dp),
-                    imageVector = leadingIcon,
-                    contentDescription = null,
-                )
-            }
-            Text(
-                text = text,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            for (trailingIcon in trailingIcons) {
-                Icon(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .size(16.dp),
-                    imageVector = trailingIcon,
-                    contentDescription = null,
-                )
-            }
-        }
-    }*/
 }

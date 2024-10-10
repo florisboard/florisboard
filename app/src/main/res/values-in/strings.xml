@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Ukuran maksimum histori emoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Warna kulit emoji yang disukai</string>
     <string name="prefs__media__emoji_preferred_hair_style">Gaya rambut emoji yang disukai</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objek</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simbol</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bendera</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Tidak ditemukan emoji yang digunakan baru-baru ini. Setelah Anda mulai mengetikkan emoji, mereka akan muncul di sini secara otomatis.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Tekan lama emoji yang terakhir digunakan untuk menghapusnya dari tampilan ini!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Menghapus {emoji} dari emoji terakhir yang digunakan</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Panah atas</string>
     <string name="quick_action__arrow_up__tooltip">Lakukan panah atas</string>
@@ -308,6 +304,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tundaan tekan lama tombol</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Bilah spasi beralih ke karakter</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Beralih kembali ke karakter saat dalam simbol atau numerik secara otomatis</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indikator samaran</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktifkan Smartbar</string>
@@ -410,6 +407,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Cerah</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Gelap</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Gelap</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Gunakan Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Bahasa pengaturan</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Tampilkan ikon aplikasi pada peluncur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Selalu diaktifkan di Android 10+ karena pembatasan sistem</string>
@@ -447,6 +445,12 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__select_ime__title">Pilih {app_name}</string>
     <string name="setup__select_ime__description">{app_name} sekarang sudah diaktifkan di sistem Anda. Untuk menggunakannya secara aktif, beralihlah ke {app_name} dengan memilihnya di dialog pemilih input!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Ubah Papan Ketik</string>
+    <string name="setup__grant_notification_permission__title">Izinkan Notifikasi Pelaporan Crash</string>
+    <string name="setup__grant_notification_permission__description">Per-Android 13+, apl harus meminta izin untuk 
+        mengirim notifikasi. Pada Florisboard, izin tersebut hanya digunakan untuk membuka jendela pelaporan crash pada saat terjadi crash.
+        Izin ini dapat diubah kapanpun pada setelan sistem.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Izinkan</string>
     <string name="setup__finish_up__title">Selesaikan</string>
     <string name="setup__finish_up__description_p1">{app_name} sekarang sudah diaktifkan di sistem ini dan siap untuk disesuaikan oleh Anda.</string>
     <string name="setup__finish_up__description_p2">Jika Anda mengalami masalah, bug, crash, atau hanya ingin membuat saran, lihat repositori proyek di layar tentang!</string>
@@ -463,6 +467,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Ekstensi papan ketik</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Ekstensi / kamus ejaan</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Ekstensi tema</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Histori papan klip</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Item teks</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Gambar</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Video</string>
     <string name="backup_and_restore__back_up__success">Berhasil mengekspor arsip cadangan!</string>
     <string name="backup_and_restore__back_up__failure">Gagal untuk mengekspor arsip cadangan: {error_message}</string>
     <string name="backup_and_restore__restore__title">Pulihkan data</string>
@@ -534,6 +542,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__max_history_size__label">Batas ukuran riwayat</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Membersihkan klip utama memengaruhi riwayat</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Membersihkan klip utama juga menghapus entri riwayat terkini</string>
+    <string name="send_to_clipboard__unknown_error">Terjadi kesalahan yang tidak diketahui. Harap coba lagi!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Jenis media ini tidak didukung.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Versi android terlalu lawas untuk fitur ini.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Salin gambar berikut ke papan klip.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Alat pengembang</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Aktifkan alat pengembang</string>
@@ -562,6 +575,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Pengaturan sistem Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Addon &amp; Ekstensi</string>
+    <string name="ext__list__ext_theme">Ekstensi tema</string>
+    <string name="ext__list__ext_keyboard">Ekstensi keyboard</string>
+    <string name="ext__list__ext_languagepack">Ekstensi paket bahasa</string>
     <string name="ext__meta__authors">Pembuat</string>
     <string name="ext__meta__components">Komponen yang dibundel</string>
     <string name="ext__meta__components_theme">Tema terbundel</string>
@@ -614,6 +631,40 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Diduga sebuah file media (gambar, suara, font, dll.) tetapi menemukan sebuah arsip ekstensi.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Diduga sebuah arsip ekstensi tetapi menemukan sebuah file media (gambar, suara, font, dll.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Sebuah kesalahan yang tidak terduga terjadi saat mengimpor. Detail berikut ini disediakan:</string>
+    <string name="ext__validation__enter_package_name">Harap masukkan nama paket</string>
+    <string name="ext__validation__error_package_name">Nama paket tidak cocok dengan regex {id_regex}</string>
+    <string name="ext__validation__enter_version">Harap masukkan versi</string>
+    <string name="ext__validation__enter_title">Harap masukkan judul</string>
+    <string name="ext__validation__enter_maintainer">Harap masukkan setidaknya seorang maintener yang valid</string>
+    <string name="ext__validation__enter_license">Harap masukkan lisensi pengidentifikasi</string>
+    <string name="ext__validation__enter_component_id">Harap masukkan ID komponen</string>
+    <string name="ext__validation__error_component_id">Harap masukkan ID komponen yang cocok dengan {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Harap masukkan label komponen</string>
+    <string name="ext__validation__hint_component_label_to_long">Label komponen Anda terlalu panjang, yang mungkin akan terlipat pada jendela UI</string>
+    <string name="ext__validation__error_author">Harap masukkan setidaknya seorang pembuat yang valid</string>
+    <string name="ext__validation__error_stylesheet_path_blank">Alur stylesheet tidak boleh kosong</string>
+    <string name="ext__validation__error_stylesheet_path">Harap masukkan alur stylesheet yang valid cocok dengan {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Harap masukkan nama variabel</string>
+    <string name="ext__validation__error_property">Harap masukkan nama variabel yang valid cocok dengan {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Berdasarkan konvensi nama variabel FlorisCSS dimulai dengan dua garis strip (--)</string>
+    <string name="ext__validation__enter_color">Harap masukkan string warna</string>
+    <string name="ext__validation__error_color">Harap masukkan string warna yang valid</string>
+    <string name="ext__validation__enter_dp_size">Harap masukkan ukuran dp</string>
+    <string name="ext__validation__enter_valid_number">Harap masukkan angka yang valid</string>
+    <string name="ext__validation__enter_positive_number">Harap masukkan bilangan positif (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Harap masukkan ukuran persen</string>
+    <string name="ext__validation__enter_number_between_0_100">Harap masukkan bilangan positif antara 0 dan 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Nilai apa pun di atas 50% akan berperilaku seolah-olah Anda menetapkan 50%, pertimbangkan untuk menurunkan ukuran persen Anda</string>
+    <string name="ext__update_box__internet_permission_hint">Karena aplikasi ini tidak memiliki izin Internet, pembaruan untuk ekstensi yang diinstal harus diperiksa secara manual.</string>
+    <string name="ext__update_box__search_for_updates">Cari Pembaruan</string>
+    <string name="ext__addon_management_box__managing_placeholder">Kelola {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Semua tugas yang terkait dengan mengimpor, mengekspor, membuat, menyesuaikan, dan menghapus ekstensi dapat ditangani melalui manajer addon terpusat.</string>
+    <string name="ext__addon_management_box__go_to_page">Ke {ext_home_title}</string>
+    <string name="ext__home__info">Anda dapat mengunduh dan menginstal ekstensi dari FlorisBoard Addons Store atau mengimpor file ekstensi apa pun yang telah Anda unduh dari internet.</string>
+    <string name="ext__home__visit_store">Kunjungi Add-ons Store</string>
+    <string name="ext__home__manage_extensions">Kelola ekstensi terpasang</string>
+    <string name="ext__list__view_details">Lihat rincian</string>
+    <string name="ext__check_updates__title">Periksa Pembaruan</string>
     <!-- Action strings -->
     <string name="action__add">Tambahkan</string>
     <string name="action__apply">Terapkan</string>
@@ -708,6 +759,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama selalu merupakan simbol petunjuk, atau aksen utama jika tidak ada simbol petunjuk yang tersedia</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Prioritas pintar</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Karakter awal yang dipilih setelah ditekan lama secara dinamis akan memutuskan untuk menjadi aksen utama atau simbol petunjuk, berdasarkan bahasa dan tata letak saat ini</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Ganti ikon sakelar tindakan bersama dengan indikator penyamaran</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Tampilkan indikator penyamaran di belakang keyboard</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Matikan secara paksa</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Mode samaran akan selalu dinonaktifkan, tidak tergantung pada opsi dari aplikasi. Tindakan cepat samaran dalam Smartbar tidak akan selalu tersedia dengan opsi ini.</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">Nyalakan secara paksa</string>
@@ -742,23 +795,23 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Baris dan baris tindakan yang dapat dialih tambahan statis, dengan tindakan menempel</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Dasar</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Hanya properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
-    <string name="enum__snygg_level__advanced" comment="Enum value label">Tingkat lanjut</string>
-    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Semua properti warna yang ditampilkan, properti dan aturan diterjemahkan.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Lanjutan</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Semua properti ditampilkan, properti dan aturan diterjemahkan.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Pengembang</string>
-    <string name="enum__snygg_level__developer__description" comment="Enum value description">Semua properti ditampilkan, properti dan aturan ditampilkan seperti yang tertulis di file lembar gayanya.</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Semua properti ditampilkan, properti dan aturan ditampilkan seperti yang tertulis pada file stylesheet tersebut.</string>
     <string name="enum__space_bar_mode__nothing" comment="Enum value label">Tidak ada label</string>
     <string name="enum__space_bar_mode__current_language" comment="Enum value label">Bahasa saat ini</string>
     <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Gunakan bahasa sistem</string>
-    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Gunakan subtipe papan ketik</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Gunakan subtipe keyboard</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Tidak ada aksi</string>
-    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ubah ke mode papan ketik sebelumnya</string>
-    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ubah ke mode papan ketik selanjutnya</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Ubah ke mode keyboard sebelumnya</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Ubah ke mode keyboard selanjutnya</string>
     <string name="enum__swipe_action__delete_character" comment="Enum value label">Hapus karakter sebelum kursor</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Hapus karakter secara tepat</string>
     <string name="enum__swipe_action__delete_word" comment="Enum value label">Hapus kata sebelum kursor</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Hapus kata secara tepat</string>
-    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Sembunyikan papan ketik</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Sembunyikan keyboard</string>
     <string name="enum__swipe_action__insert_space" comment="Enum value label">Masukkan spasi</string>
     <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Pindahkan kursor ke atas</string>
     <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Pindahkan kursor ke bawah</string>
@@ -768,7 +821,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Pindahkan kursor ke akhir baris</string>
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Pindahkan kursor ke awal halaman</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Pindahkan kursor ke akhir halaman</string>
-    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Buka pengelola/riwayat papan klip</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Buka manager/histori papan klip</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Ulangi</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Urungkan</string>
@@ -779,13 +832,13 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Beralih ke subtipe sebelumnya</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Beralih ke subtipe selanjutnya</string>
     <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Alih visibilitas Smartbar</string>
-    <string name="enum__theme_mode__always_day" comment="Enum value label">Selalu pagi</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Selalu siang</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Selalu malam</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Ikuti sistem</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">Ikuti waktu</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Beralih ke emoji</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Beralih bahasa</string>
-    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Beralih aplikasi papan ketik</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Beralih aplikasi keyboard</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dinamis: Beralih ke emoji / Beralih bahasa</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->

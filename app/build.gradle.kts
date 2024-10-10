@@ -19,6 +19,7 @@ import java.io.ByteArrayOutputStream
 plugins {
     alias(libs.plugins.agp.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.mannodermaus.android.junit5)
@@ -48,7 +49,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf(
-            "-Xallow-result-return-type",
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-Xjvm-default=all-compatibility",
         )
@@ -97,10 +97,6 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     buildTypes {
@@ -167,12 +163,6 @@ android {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
 }
 
 dependencies {

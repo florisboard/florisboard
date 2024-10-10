@@ -142,7 +142,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             prefs.keyboard.utilityKeyEnabled.observeForever {
                 updateActiveEvaluators()
             }
+            prefs.keyboard.utilityKeyAction.observeForever {
+                updateActiveEvaluators()
+            }
             activeState.collectLatestIn(scope) {
+                updateActiveEvaluators()
+            }
+            subtypeManager.subtypesFlow.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {

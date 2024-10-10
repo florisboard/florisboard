@@ -13,9 +13,18 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticonos</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Tamaño máximo de historial de emojis</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Tono de piel de emoji preferido</string>
     <string name="prefs__media__emoji_preferred_hair_style">Estilo de cabello de emoji preferido</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Sugerencias de emoticonos</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Habilitar sugerencias de emoticonos</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Proporcionar sugerencias de emoticonos mientras escribes</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Tipo de acción</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Actualizar el historial de emoticonos</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Al aceptar emoticonos sugeridos, se añaden al historial de emoticonos</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Muestra el nombre de emoticono</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Las sugerencias de emoticono muestran su nombre junto al emoticono</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Longitud mínima de consulta</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Número máximo de candidatos</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emociones</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personas &amp; Cuerpo</string>
@@ -26,20 +35,25 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderas</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No se han encontrado emojis que se hayan usado recientemente. Una vez empieces a usar emojis, aparecerán automáticamente aquí.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Para acceder a tu historial de emojis, por favor, desbloquea primero tu dispositivo.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consejo: ¡Pulse sostenidamente los emojis usados recientemente para poder removerlos de esta vista!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Se ha removido {emoji} de los emojis recientes</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Arriba</string>
+    <string name="quick_action__arrow_up__tooltip">Realizar flecha hacia arriba</string>
     <string name="quick_action__arrow_down" maxLength="12">Abajo</string>
+    <string name="quick_action__arrow_down__tooltip">Realizar flecha hacia abajo</string>
     <string name="quick_action__arrow_left" maxLength="12">Izquierda</string>
+    <string name="quick_action__arrow_left__tooltip">Realizar flecha hacia la izquierda</string>
     <string name="quick_action__arrow_right" maxLength="12">Derecha</string>
+    <string name="quick_action__arrow_right__tooltip">Realizar flecha hacia la derecha</string>
     <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Borrar clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Realizar limpiar portapapeles principal</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
+    <string name="quick_action__clipboard_copy__tooltip">Realizar copiar portapapeles</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
+    <string name="quick_action__clipboard_cut__tooltip">Realizar cortar portapapeles</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Pegar</string>
+    <string name="quick_action__clipboard_paste__tooltip">Realizar pegar portapapeles</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Seleccionar</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Realizar seleccionar todo en portapapeles</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Portapapeles</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir historial del portapapeles</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
@@ -115,6 +129,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Al menos un campo no posee un valor seleccionado. Por favor escoja un valor para el(los) campo(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (no instalado)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Distribuciones</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Confirmación de eliminación</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">¿Está seguro de que desea eliminar este subtipo?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Amanecer</string>
@@ -138,6 +154,7 @@
     <string name="settings__theme_editor__rule_element">Elemento destino</string>
     <string name="settings__theme_editor__rule_codes">Códigos de clave destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
+    <string name="settings__theme_editor__rule_shift_states">Cambiar estados</string>
     <string name="settings__theme_editor__rule_selectors">Selectores</string>
     <string name="settings__theme_editor__add_code">Añadir código clave</string>
     <string name="settings__theme_editor__edit_code">Editar código clave</string>
@@ -176,11 +193,23 @@
     <string name="snygg__rule_element__emoji_key_tab">Pestaña de emojis</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposición de la entrada del paisaje</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Campo de entrada en paisaje</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Acción de entrada apaisada</string>
     <string name="snygg__rule_element__glide_trail">Rastro del gesto</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Indicador de modo incógnito</string>
     <string name="snygg__rule_element__one_handed_panel">Panel a una mano</string>
     <string name="snygg__rule_element__smartbar">Barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Fila de acciones compartidas de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Alternar acciones compartidas de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Fila de acciones extendidas de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Alternar acciones extendidas de la barra inteligente</string>
     <string name="snygg__rule_element__smartbar_action_key">Tecla de acción de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Mosaico de acción de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Acciones de overflow de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Botón de personalización de overflow de acciones de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Editor de acciones de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Cabecera del editor de acciones de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Subencabezado del editor de acciones de la barra inteligente</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Fila de candidatos de la barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Palabra candidata de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidato de barra inteligente</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espaciado candidato de barra inteligente</string>
@@ -234,6 +263,7 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sonidos &amp; Vibración</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Respuesta de audio / Sonidos</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilitar respuesta de audio</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">No reproducir nunca sonidos para eventos de entrada, independientemente de la configuración del sistema</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volumen de sonido para eventos de entrada</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sonidos al presionar una tecla</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sonidos al presionar prolongadamente</string>
@@ -242,6 +272,7 @@
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sonidos de gestos deslizantes con movimiento</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Respuesta táctil / Vibración</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Habilitar respuesta táctil</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Nunca vibrar por eventos de entrada, independientemente de la configuración del sistema</string>
     <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Modo de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
@@ -266,6 +297,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar teclas de utilidad</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Muestra una tecla de utilidad configurable junto a la barra espaciadora</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acción de tecla de utilidad</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Etiqueta de la barra espaciadora</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportamiento de las mayúsculas</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamaño de fuente</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo a una mano</string>
@@ -385,6 +418,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Oscuro</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Oscuro</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Usar material tú</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Idioma de ajustes</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar icono de la aplicación en el launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Habilitado siempre en Android 10+ debido a restricciones del sistema</string>
@@ -422,6 +456,12 @@
     <string name="setup__select_ime__title">Seleccionar {app_name}</string>
     <string name="setup__select_ime__description">{app_name} está ahora habilitado en su sistema. ¡Para usarlo activamente cambie a {app_name} seleccionándolo en el diálogo del selector de entrada!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Cambiar teclado</string>
+    <string name="setup__grant_notification_permission__title">Permitir notificaciones de informes de errores</string>
+    <string name="setup__grant_notification_permission__description">A partir de Android 13+, las aplicaciones deben pedir permiso para
+        enviar notificaciones. En Florisboard, esto solo se utiliza para abrir una pantalla de informe de error en caso de error.
+        Este permiso puede cambiarse en cualquier momento en los ajustes del sistema.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Conceder permiso</string>
     <string name="setup__finish_up__title">Finalizar</string>
     <string name="setup__finish_up__description_p1">{app_name} ahora está habilitado en su sistema y listo para ser personalizado.</string>
     <string name="setup__finish_up__description_p2">Si encuentra algún problema, errores, fallos o sólo desea hacer alguna sugerencia, ¡revise el repositorio del proyecto en el menú de \"Acerca de\"!</string>
@@ -438,6 +478,7 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Extensiones del teclado</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Extensiones de corrección ortográfica / diccionarios</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Extensiones de temas</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Historial del portapapeles</string>
     <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Ítems de texto</string>
     <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Imágenes</string>
     <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Vídeos</string>
@@ -514,6 +555,8 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Al borrar el clip principal también se borra la última entrada del historial</string>
     <string name="send_to_clipboard__unknown_error">Ha ocurrido un error desconocido. Por favor, vuelve a intentarlo.</string>
     <string name="send_to_clipboard__type_not_supported_error">Este tipo de medio no está soportado.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">La versión de android es demasiado antigua para esta función.</string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Imagen copiada en el portapapeles.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Herramientas de desarrollo</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Habilitar herramientas de desarrollador</string>
@@ -541,6 +584,11 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Ajustes Secure de Android</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Ajustes System de Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Regiones del sistema</string>
+    <string name="devtools__debuglog__title">Registro de depuración</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Registro de depuración copiado en el portapapeles</string>
+    <string name="devtools__debuglog__copy_log">Copiar registro</string>
+    <string name="devtools__debuglog__copy_for_github">Copiar registro (formato GitHub)</string>
+    <string name="devtools__debuglog__loading">Cargando…</string>
     <!-- Extension strings -->
     <string name="ext__meta__authors">Autores</string>
     <string name="ext__meta__components">Componentes agrupados</string>

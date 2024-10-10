@@ -13,9 +13,18 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Émojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Émoticônes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Taille maximum de l\'historique d\'émojis</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Couleur de peau des émojis par défaut</string>
     <string name="prefs__media__emoji_preferred_hair_style">Cheveux des émojis par défaut</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Suggestions d\'émoji</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Activer les suggestions d\'émoji</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Fournit des suggestions d\'émoji lors de la saisie</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Type de déclencheur</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Mettre à jour l\'historique émoji</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Ajoute les émojis suggérés et acceptés à l\'historique</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Afficher le nom de l\'émoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Affiche le nom des suggestions d\'émoji à côté de l\'émoji</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Longueur minimale de la requête</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Nombre maximal de candidats</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Émotions</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personnes &amp; Corps</string>
@@ -26,10 +35,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objets</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboles</string>
     <string name="emoji__category__flags" comment="Emoji category name">Drapeaux</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Aucun émoji récemment utilisé n\'a été trouvé. Une fois que vous aurez commencé à taper des émojis, ils apparaîtront automatiquement ici.</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">Pour accéder à l\'historique emoji, veuillez d\'abord déverrouiller votre appareil.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Conseil de pro : appuyez longuement sur les émojis récemment utilisés pour les supprimer à nouveau de cette vue !</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Suppression de {emoji} des emojis récemment utilisés</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Flèche haut</string>
     <string name="quick_action__arrow_up__tooltip">Appui sur la flèche haut</string>
@@ -124,6 +129,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Au moins un champ n\'a pas de valeur sélectionnée. Veuillez choisir une valeur pour le(s) champ(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (non installé)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Dispositions</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Confirmer la suppression</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Êtes-vous sûr de vouloir supprimer ce sous-type ?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Thème</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode du thème</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Heure de lever du soleil</string>
@@ -565,6 +572,8 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Superpose l\'état actuel de l\'entrée pour le débogage</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Afficher la superposition d\'orthographe</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Superpose les résultats d\'orthographe actuels pour le débogage</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Superposer l\'autocomplétion sur la ligne</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Superpose les résultats d\'orthographe actuels pour le débogage</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Afficher les limites des touches</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Soulignez en rouge les limites des touches clés</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Afficher les aides de glisser-déposer</string>
@@ -580,6 +589,11 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Paramètres de sécurité Android</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Paramètres système Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Paramètres régionaux du système</string>
+    <string name="devtools__debuglog__title">Journal de débogage</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Journal de débogage copié dans le presse-papiers</string>
+    <string name="devtools__debuglog__copy_log">Copier le journal</string>
+    <string name="devtools__debuglog__copy_for_github">Copier le journal (formatage GitHub)</string>
+    <string name="devtools__debuglog__loading">Chargement…</string>
     <!-- Extension strings -->
     <string name="ext__home__title">Modules &amp; Extensions</string>
     <string name="ext__list__ext_theme">Extensions de thème</string>
@@ -749,6 +763,10 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Cheveux frisés</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Cheveux blanc</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Chauve</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">Deux points</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Suggère des émojis en utilisant la syntaxe :nom</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Intégré au texte</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Suggère des émojis en tapant simplement son nom comme mot</string>
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Suggestions ci-dessus</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Place la rangée des actions étendues entre l\'interface utilisateur de l\'application et la rangée des suggestions</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Les suggestions ci-dessous</string>
@@ -863,5 +881,9 @@
     <plurals name="unit__items__written">
         <item quantity="one">{v} élément</item>
         <item quantity="other">{v} éléments</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} caractère</item>
+        <item quantity="other">{v} caractères</item>
     </plurals>
 </resources>

@@ -138,7 +138,10 @@ fun RestoreScreen() = FlorisScreen {
                 }
                 restoreWorkspace = workspace
             }.onFailure { error ->
-                context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
+                context.showLongToast(
+                    R.string.backup_and_restore__restore__failure,
+                    "error_message" to error.localizedMessage,
+                )
             }
         },
     )
@@ -176,15 +179,20 @@ fun RestoreScreen() = FlorisScreen {
                 srcDir.copyRecursively(dstDir, overwrite = true)
             }
         }
+        val clipboardManager = context.clipboardManager().value
+        if (shouldReset) {
+            clipboardManager.clearFullHistory()
+            ClipboardFileStorage.resetClipboardFileStorage(context)
+        }
+
         if (restoreFilesSelector.provideClipboardItems()) {
             val clipboardFilesDir = workspace.outputDir.subDir("clipboard")
-            val clipboardManager = context.clipboardManager().value
 
             if (restoreFilesSelector.clipboardTextItems) {
                 val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_TEXT_ITEMS_JSON_NAME)
                 if (clipboardItems.exists()) {
                     val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
-                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.TEXT }, itemType = ItemType.TEXT)
+                    clipboardManager.restoreHistory(items = clipboardItemsList.filter { it.type == ItemType.TEXT })
                 }
             }
             if (restoreFilesSelector.clipboardImageItems) {
@@ -192,14 +200,18 @@ fun RestoreScreen() = FlorisScreen {
                 if (clipboardItems.exists()) {
                     val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
                     for (item in clipboardItemsList.filter { it.type == ItemType.IMAGE }) {
-                        ClipboardFileStorage.instertFileFromBackup(
+                        ClipboardFileStorage.insertFileFromBackupIfNotExisting(
                             context,
                             clipboardFilesDir.subFile(
-                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${item.uri!!.path!!.split('/').last()}"
+                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${
+                                    item.uri!!.path!!.split(
+                                        '/'
+                                    ).last()
+                                }"
                             )
                         )
                     }
-                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.IMAGE }, itemType = ItemType.IMAGE)
+                    clipboardManager.restoreHistory(items = clipboardItemsList.filter { it.type == ItemType.IMAGE })
                 }
             }
             if (restoreFilesSelector.clipboardVideoItems) {
@@ -207,14 +219,18 @@ fun RestoreScreen() = FlorisScreen {
                 if (clipboardItems.exists()) {
                     val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
                     for (item in clipboardItemsList.filter { it.type == ItemType.VIDEO }) {
-                        ClipboardFileStorage.instertFileFromBackup(
+                        ClipboardFileStorage.insertFileFromBackupIfNotExisting(
                             context,
                             clipboardFilesDir.subFile(
-                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${item.uri!!.path!!.split('/').last()}"
+                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${
+                                    item.uri!!.path!!.split(
+                                        '/'
+                                    ).last()
+                                }"
                             )
                         )
                     }
-                    clipboardManager.restoreHistory(shouldReset = shouldReset, items = clipboardItemsList.filter { it.type == ItemType.VIDEO }, itemType = ItemType.VIDEO)
+                    clipboardManager.restoreHistory(items = clipboardItemsList.filter { it.type == ItemType.VIDEO })
                 }
             }
         }
@@ -238,7 +254,11 @@ fun RestoreScreen() = FlorisScreen {
                             context.showLongToast(R.string.backup_and_restore__restore__success)
                             navController.navigateUp()
                         } catch (e: Throwable) {
-                            context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to e.localizedMessage)
+                            e.printStackTrace()
+                            context.showLongToast(
+                                R.string.backup_and_restore__restore__failure,
+                                "error_message" to e.localizedMessage,
+                            )
                         }
                     }
                 },
@@ -273,7 +293,10 @@ fun RestoreScreen() = FlorisScreen {
                 runCatching {
                     restoreDataFromFileSystemLauncher.launch("*/*")
                 }.onFailure { error ->
-                    context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
+                    context.showLongToast(
+                        R.string.backup_and_restore__restore__failure,
+                        "error_message" to error.localizedMessage,
+                    )
                 }
             },
             modifier = Modifier
@@ -295,15 +318,15 @@ fun RestoreScreen() = FlorisScreen {
                 modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
             ) {
-                this@content.Preference(
+                Preference(
                     icon = Icons.Default.Code,
                     title = workspace.metadata.packageName,
                 )
-                this@content.Preference(
+                Preference(
                     icon = Icons.Outlined.Info,
                     title = "${workspace.metadata.versionName} (${workspace.metadata.versionCode})",
                 )
-                this@content.Preference(
+                Preference(
                     icon = Icons.Default.Schedule,
                     title = remember(workspace.metadata.timestamp) {
                         val formatter = DateFormat.getDateTimeInstance()

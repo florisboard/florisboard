@@ -31,7 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -224,7 +224,7 @@ private fun ExtensionMetaRowSimpleText(
     content: @Composable RowScope.() -> Unit,
 ) {
     if (showDividerAbove) {
-        Divider()
+        HorizontalDivider()
     }
     Row(
         modifier = modifier
@@ -246,7 +246,7 @@ private fun ExtensionMetaRowScrollableChips(
     content: @Composable RowScope.() -> Unit,
 ) {
     if (showDividerAbove) {
-        Divider()
+        HorizontalDivider()
     }
     Row(
         modifier = modifier.fillMaxWidth(),

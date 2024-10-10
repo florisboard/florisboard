@@ -393,6 +393,12 @@
         "direction": "ltr"
       },
       {
+        "id": "tamil",
+        "label": "Tamil",
+        "authors": [ "Clem0908" ],
+        "direction": "ltr"
+      },
+      {
         "id": "thai_kedmanee",
         "label": "Thai Kedmanee",
         "authors": [ "mrdeck4rd" ],

@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticones</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Mida màxima de l\'historial d\'emojis</string>
     <string name="prefs__media__emoji_preferred_skin_tone">To de pell preferit dels emojis</string>
     <string name="prefs__media__emoji_preferred_hair_style">Pentinat preferit dels emojis</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objectes</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No s\'han trobat emojis recents. En començar a escriure emojis, apareixeran automàticament aquí.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Consell: Manteniu premut els emojis recents per a suprimir-los d\'aquesta llista!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">S\'ha suprimit {emoji} dels emojis recents</string>
     <!-- Quick action strings -->
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

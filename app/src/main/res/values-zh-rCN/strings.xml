@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">表情符号</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">绘文字</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">颜文字</string>
-    <string name="prefs__media__emoji_recently_used_max_size">表情符号最大历史记录数</string>
     <string name="prefs__media__emoji_preferred_skin_tone">首选表情符号肤色</string>
     <string name="prefs__media__emoji_preferred_hair_style">首选表情符号发型</string>
     <!-- Emoji strings -->
@@ -26,10 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">物体</string>
     <string name="emoji__category__symbols" comment="Emoji category name">符号</string>
     <string name="emoji__category__flags" comment="Emoji category name">旗帜</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">没有最近使用的表情符号。开始使用表情符号后，它们会自动在这里出现。</string>
-    <string name="emoji__recently_used__phone_locked_message" comment="Message to show if phone is locked">要访问您的表情符号历史记录，请先解锁您的设备。</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">提示：长按最近使用的表情符号可以将它从这里移除。</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">已将 {emoji} 从最近使用的表情符号中移除</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">向上键</string>
     <string name="quick_action__arrow_up__tooltip">执行向上方向键</string>
