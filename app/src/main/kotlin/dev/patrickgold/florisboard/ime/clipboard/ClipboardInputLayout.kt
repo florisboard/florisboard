@@ -307,7 +307,7 @@ fun ClipboardInputLayout(
                             .fillMaxWidth()
                             .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this }
                             .padding(ItemPadding),
-                        text = text,
+                        text = if (item.isSensitive) { buildString { repeat(text.length) { append("*") } } } else { text },
                         style = TextStyle(textDirection = TextDirection.ContentOrLtr),
                         color = style.foreground.solidColor(context),
                         fontSize = style.fontSize.spSize(),
