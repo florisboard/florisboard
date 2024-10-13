@@ -23,6 +23,8 @@
     <string name="key__view_keshida" translatable="false">"یــــ"</string>
     <string name="key__dotted_circle" translatable="false">&#9676;</string>
 
+    <string name="clipboard__sensitive_clip_content" translatable="false">************</string>
+
     <!-- Media strings -->
     <string name="media__tab__emoticons_label" translatable="false">;-)</string>
     <string name="media__tab__kaomoji_label" translatable="false">(^-^*)/</string>
