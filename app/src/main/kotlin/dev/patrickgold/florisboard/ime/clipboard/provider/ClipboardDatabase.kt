@@ -17,12 +17,12 @@
 package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.ClipData
+import android.content.ClipDescription.EXTRA_IS_REMOTE_DEVICE
 import android.content.ClipDescription.EXTRA_IS_SENSITIVE
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.provider.BaseColumns
 import android.provider.MediaStore.Images.Media
 import android.provider.OpenableColumns
@@ -44,6 +44,7 @@ import androidx.room.Update
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.UriSerializer
 import org.florisboard.lib.android.query
 import org.florisboard.lib.kotlin.tryOrNull
@@ -84,6 +85,8 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     val mimeTypes: Array<String>,
     @EncodeDefault
     val isSensitive: Boolean = false,
+    @EncodeDefault
+    val isRemoteDevice: Boolean = false,
 ) {
     companion object {
         /**
@@ -119,8 +122,14 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
                 else -> ItemType.TEXT
             }
 
-            val isSensitive = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val isSensitive = if (AndroidVersion.ATLEAST_API33_T) {
                 data.description?.extras?.getBoolean(EXTRA_IS_SENSITIVE) ?: false
+            } else {
+                false
+            }
+
+            val isRemoteDevice = if (AndroidVersion.ATLEAST_API34_U) {
+                data.description?.extras?.getBoolean(EXTRA_IS_REMOTE_DEVICE) ?: false
             } else {
                 false
             }
@@ -163,7 +172,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
                 }
             }
 
-            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes, isSensitive)
+            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes, isSensitive, isRemoteDevice)
         }
     }
 
