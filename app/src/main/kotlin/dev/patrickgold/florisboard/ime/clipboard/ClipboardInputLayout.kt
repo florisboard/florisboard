@@ -48,6 +48,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.ClearAll
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ToggleOff
@@ -87,6 +88,8 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -136,7 +139,7 @@ fun ClipboardInputLayout(
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
-    val innerHeight = FlorisImeSizing.imeUiHeight() - FlorisImeSizing.smartbarHeight
+    val innerHeight = FlorisImeSizing.imeUiHeight() - FlorisImeSizing.smartbarHeight - (FlorisImeSizing.keyboardRowBaseHeight * 0.8f)
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
@@ -577,7 +580,7 @@ fun ClipboardInputLayout(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .height(FlorisImeSizing.imeUiHeight()),
     ) {
         HeaderRow()
         if (deviceLocked) {
@@ -591,6 +594,19 @@ fun ClipboardInputLayout(
                 }
             } else {
                 HistoryDisabledView()
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
+            KeyboardLikeButton(
+                inputEventDispatcher = keyboardManager.inputEventDispatcher,
+                keyData = TextKeyData.DELETE,
+            ) {
+                Icon(imageVector = Icons.AutoMirrored.Outlined.Backspace, contentDescription = null)
             }
         }
     }
