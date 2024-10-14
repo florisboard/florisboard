@@ -113,12 +113,13 @@ internal fun KeyboardLikeButton(
     modifier: Modifier = Modifier,
     inputEventDispatcher: InputEventDispatcher,
     keyData: KeyData,
+    element: String = FlorisImeUi.EmojiKey,
     content: @Composable RowScope.() -> Unit,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
     var isPressed by remember { mutableStateOf(false) }
     val keyStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.EmojiKey,
+        element = element,
         code = keyData.code,
         isPressed = isPressed,
     )

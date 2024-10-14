@@ -88,6 +88,7 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -195,12 +196,13 @@ fun ClipboardInputLayout(
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )
-            FlorisIconButtonWithInnerPadding(
-                onClick = { keyboardManager.inputEventDispatcher.sendDownUp(TextKeyData.DELETE) },
-                icon = Icons.AutoMirrored.Outlined.Backspace,
-                iconColor = headerStyle.foreground.solidColor(context),
-                enabled = !isPopupSurfaceActive(),
-            )
+            KeyboardLikeButton(
+                inputEventDispatcher = keyboardManager.inputEventDispatcher,
+                keyData = TextKeyData.DELETE,
+                element = FlorisImeUi.ClipboardHeader,
+            ) {
+                Icon(Icons.AutoMirrored.Outlined.Backspace, null)
+            }
         }
     }
 
