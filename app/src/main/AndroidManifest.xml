@@ -19,6 +19,9 @@
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <!-- Permission needed to create notifications on devices running Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
           ship with an IME or Spell Check service. This is used to guide the user
           in the Settings Ui why FlorisBoard may not be working.
@@ -39,10 +42,11 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/floris_app_icon"
         android:label="@string/floris_app_name"
+        android:enableOnBackInvokedCallback="true"
         android:roundIcon="@mipmap/floris_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/FlorisAppTheme"
-        tools:targetApi="s">
+        tools:targetApi="tiramisu">
 
         <!-- Allow app to be profiled for benchmarking and baseline profile generation -->
         <profileable android:shell="true"/>
@@ -81,9 +85,25 @@
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/FlorisAppTheme.Splash"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
-                <data android:scheme="florisboard" android:host="app-ui"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="ui" android:host="florisboard" android:pathPrefix="/" />
+            </intent-filter>
+            <intent-filter android:label="Import Extension">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="content"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
+            </intent-filter>
+            <intent-filter android:label="Import Extension">
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
         </activity>
 
@@ -103,30 +123,24 @@
             </intent-filter>
         </activity-alias>
 
-        <!-- Import File Bridging Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.app.ext.ImportFileActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/settings__title"
-            android:launchMode="singleTask"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/FlorisAppTheme"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="*" android:host="*" android:pathPattern=".*\\.flex"/>
-                <data android:scheme="*" android:host="*" android:pathPattern=".*\\.xpi"/>
-            </intent-filter>
-        </activity>
-
         <!-- Crash Dialog Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.lib.crashutility.CrashDialogActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>
+
+        <!-- Copy to Clipboard Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.ime.clipboard.FlorisCopyToClipboardActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+        </activity>
 
         <!-- Clipboard Media File Provider -->
         <provider

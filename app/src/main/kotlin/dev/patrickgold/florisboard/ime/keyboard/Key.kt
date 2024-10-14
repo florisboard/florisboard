@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.lib.FlorisRect
 
 /**
@@ -94,8 +95,8 @@ abstract class Key(open val data: AbstractKeyData) {
     open var hintedLabel: String? = null
 
     /**
-     * The computed UI drawable ID of this key. This value is used by the keyboard view to temporarily save the
-     * drawable ID for UI rendering and should not be set manually.
+     * The computed ImageVector of this key. This value is used by the keyboard view to temporarily save the
+     * ImageVector for UI rendering and should not be set manually.
      */
-    open var foregroundDrawableId: Int? = null
+    open var foregroundImageVector: ImageVector? = null
 }

@@ -25,8 +25,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.Unicode
-import dev.patrickgold.florisboard.lib.kotlin.lowercase
-import dev.patrickgold.florisboard.lib.kotlin.uppercase
+import dev.patrickgold.florisboard.lib.lowercase
+import dev.patrickgold.florisboard.lib.uppercase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -62,16 +62,7 @@ class TextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return buildString {
-            if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
-                if (Unicode.isNonSpacingMark(code) && !label.startsWith("◌")) {
-                    append("◌")
-                }
-                append(label)
-            } else {
-                try { appendCodePoint(code) } catch (_: Throwable) { }
-            }
-        }
+        return asString(this, isForDisplay)
     }
 
     override fun toString(): String {
@@ -541,16 +532,7 @@ class AutoTextKeyData(
     }
 
     override fun asString(isForDisplay: Boolean): String {
-        return buildString {
-            if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
-                if (Unicode.isNonSpacingMark(code) && !label.startsWith("◌")) {
-                    append("◌")
-                }
-                append(label)
-            } else {
-                try { appendCodePoint(code) } catch (_: Throwable) { }
-            }
-        }
+        return asString(this, isForDisplay)
     }
 
     override fun toString(): String {
@@ -614,5 +596,18 @@ class MultiTextKeyData(
 
     override fun toString(): String {
         return "${MultiTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
+    }
+}
+
+internal fun asString(data: KeyData, isForDisplay: Boolean) : String {
+    return buildString {
+        if (isForDisplay || data.code == KeyCode.URI_COMPONENT_TLD || data.code < KeyCode.SPACE) {
+            if (Unicode.isNonSpacingMark(data.code) && !data.label.startsWith("◌")) {
+                append("◌")
+            }
+            append(data.label)
+        } else {
+            try { appendCodePoint(data.code) } catch (_: Throwable) { }
+        }
     }
 }

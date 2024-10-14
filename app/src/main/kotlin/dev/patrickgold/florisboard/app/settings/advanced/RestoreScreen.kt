@@ -24,10 +24,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,11 +46,13 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.lib.android.readToFile
-import dev.patrickgold.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.CardDefaults
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.lib.compose.FlorisCardDefaults
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -55,15 +60,17 @@ import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
-import dev.patrickgold.florisboard.lib.io.readJson
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import java.io.FileNotFoundException
 import java.text.DateFormat
 import java.util.*
@@ -131,7 +138,10 @@ fun RestoreScreen() = FlorisScreen {
                 }
                 restoreWorkspace = workspace
             }.onFailure { error ->
-                context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
+                context.showLongToast(
+                    R.string.backup_and_restore__restore__failure,
+                    "error_message" to error.localizedMessage,
+                )
             }
         },
     )
@@ -169,6 +179,61 @@ fun RestoreScreen() = FlorisScreen {
                 srcDir.copyRecursively(dstDir, overwrite = true)
             }
         }
+        val clipboardManager = context.clipboardManager().value
+        if (shouldReset) {
+            clipboardManager.clearFullHistory()
+            ClipboardFileStorage.resetClipboardFileStorage(context)
+        }
+
+        if (restoreFilesSelector.provideClipboardItems()) {
+            val clipboardFilesDir = workspace.outputDir.subDir("clipboard")
+
+            if (restoreFilesSelector.clipboardTextItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_TEXT_ITEMS_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    clipboardManager.restoreHistory(items = clipboardItemsList.filter { it.type == ItemType.TEXT })
+                }
+            }
+            if (restoreFilesSelector.clipboardImageItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_IMAGES_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    for (item in clipboardItemsList.filter { it.type == ItemType.IMAGE }) {
+                        ClipboardFileStorage.insertFileFromBackupIfNotExisting(
+                            context,
+                            clipboardFilesDir.subFile(
+                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${
+                                    item.uri!!.path!!.split(
+                                        '/'
+                                    ).last()
+                                }"
+                            )
+                        )
+                    }
+                    clipboardManager.restoreHistory(items = clipboardItemsList.filter { it.type == ItemType.IMAGE })
+                }
+            }
+            if (restoreFilesSelector.clipboardVideoItems) {
+                val clipboardItems = clipboardFilesDir.subFile(Backup.CLIPBOARD_VIDEO_JSON_NAME)
+                if (clipboardItems.exists()) {
+                    val clipboardItemsList = clipboardItems.readJson<List<ClipboardItem>>()
+                    for (item in clipboardItemsList.filter { it.type == ItemType.VIDEO }) {
+                        ClipboardFileStorage.insertFileFromBackupIfNotExisting(
+                            context,
+                            clipboardFilesDir.subFile(
+                                relPath = "${ClipboardFileStorage.CLIPBOARD_FILES_PATH}/${
+                                    item.uri!!.path!!.split(
+                                        '/'
+                                    ).last()
+                                }"
+                            )
+                        )
+                    }
+                    clipboardManager.restoreHistory(items = clipboardItemsList.filter { it.type == ItemType.VIDEO })
+                }
+            }
+        }
     }
 
     bottomBar {
@@ -177,7 +242,7 @@ fun RestoreScreen() = FlorisScreen {
             ButtonBarTextButton(
                 onClick = {
                     restoreWorkspace?.close()
-                    navController.popBackStack()
+                    navController.navigateUp()
                 },
                 text = stringRes(R.string.action__cancel),
             )
@@ -187,9 +252,13 @@ fun RestoreScreen() = FlorisScreen {
                         try {
                             performRestore()
                             context.showLongToast(R.string.backup_and_restore__restore__success)
-                            navController.popBackStack()
+                            navController.navigateUp()
                         } catch (e: Throwable) {
-                            context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to e.localizedMessage)
+                            e.printStackTrace()
+                            context.showLongToast(
+                                R.string.backup_and_restore__restore__failure,
+                                "error_message" to e.localizedMessage,
+                            )
                         }
                     }
                 },
@@ -224,7 +293,10 @@ fun RestoreScreen() = FlorisScreen {
                 runCatching {
                     restoreDataFromFileSystemLauncher.launch("*/*")
                 }.onFailure { error ->
-                    context.showLongToast(R.string.backup_and_restore__restore__failure, "error_message" to error.localizedMessage)
+                    context.showLongToast(
+                        R.string.backup_and_restore__restore__failure,
+                        "error_message" to error.localizedMessage,
+                    )
                 }
             },
             modifier = Modifier
@@ -246,16 +318,16 @@ fun RestoreScreen() = FlorisScreen {
                 modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
             ) {
-                this@content.Preference(
-                    iconId = R.drawable.ic_code,
+                Preference(
+                    icon = Icons.Default.Code,
                     title = workspace.metadata.packageName,
                 )
-                this@content.Preference(
-                    iconId = R.drawable.ic_info,
+                Preference(
+                    icon = Icons.Outlined.Info,
                     title = "${workspace.metadata.versionName} (${workspace.metadata.versionCode})",
                 )
-                this@content.Preference(
-                    iconId = R.drawable.ic_schedule,
+                Preference(
+                    icon = Icons.Default.Schedule,
                     title = remember(workspace.metadata.timestamp) {
                         val formatter = DateFormat.getDateTimeInstance()
                         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
@@ -264,34 +336,34 @@ fun RestoreScreen() = FlorisScreen {
                     },
                 )
                 if (workspace.restoreErrorId != null) {
-                    Column(modifier = Modifier.padding(CardDefaults.ContentPadding)) {
+                    Column(modifier = Modifier.padding(FlorisCardDefaults.ContentPadding)) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(9.dp)
                                 .padding(bottom = 8.dp)
-                                .background(MaterialTheme.colors.error.copy(alpha = 0.56f))
+                                .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f))
                         )
                         Text(
                             text = stringRes(workspace.restoreErrorId!!),
-                            style = MaterialTheme.typography.body2,
-                            color = MaterialTheme.colors.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.error,
                             fontStyle = FontStyle.Italic,
                         )
                     }
                 } else if (workspace.restoreWarningId != null) {
-                    Column(modifier = Modifier.padding(CardDefaults.ContentPadding)) {
+                    Column(modifier = Modifier.padding(FlorisCardDefaults.ContentPadding)) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(9.dp)
                                 .padding(bottom = 8.dp)
-                                .background(LocalContentColor.current.copy(alpha = LocalContentAlpha.current))
+                                .background(LocalContentColor.current)
                         )
                         Text(
                             text = stringRes(workspace.restoreWarningId!!),
-                            style = MaterialTheme.typography.body2,
-                            color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = LocalContentColor.current,
                             fontStyle = FontStyle.Italic,
                         )
                     }

@@ -24,15 +24,14 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
-import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.lib.android.readText
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.android.readText
+import org.florisboard.lib.kotlin.guardedByLock
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
@@ -106,7 +105,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
-        val word = content.composingText.ifBlank { "next" }
+        return emptyList()
+        /*val word = content.composingText.ifBlank { "next" }
         val suggestions = buildList {
             for (n in 0 until maxCandidateCount) {
                 add(WordSuggestionCandidate(
@@ -119,7 +119,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 ))
             }
         }
-        return suggestions
+        return suggestions*/
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

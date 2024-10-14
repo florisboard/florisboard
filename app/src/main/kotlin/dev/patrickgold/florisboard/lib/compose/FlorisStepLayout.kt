@@ -35,18 +35,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,7 +59,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.apptheme.outline
 
 private val StepHeaderPaddingVertical = 8.dp
 private val StepHeaderNumberBoxSize = 40.dp
@@ -104,7 +102,7 @@ class FlorisStepLayoutScope(
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 16.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = primaryColor,
+                containerColor = primaryColor,
             ),
             onClick = onClick,
         ) {
@@ -116,17 +114,17 @@ class FlorisStepLayoutScope(
 @Suppress("unused")
 class FlorisStepState private constructor(
     private val currentAuto: MutableState<Int>,
-    private val currentManual: MutableState<Int> = mutableStateOf(-1),
+    private val currentManual: MutableState<Int> = mutableIntStateOf(-1),
 ) {
     companion object {
-        fun new(init: Int) = FlorisStepState(mutableStateOf(init))
+        fun new(init: Int) = FlorisStepState(mutableIntStateOf(init))
 
         val Saver = Saver<FlorisStepState, ArrayList<Int>>(
             save = {
                 arrayListOf(it.currentAuto.value, it.currentManual.value)
             },
             restore = {
-                FlorisStepState(mutableStateOf(it[0]), mutableStateOf(it[1]))
+                FlorisStepState(mutableIntStateOf(it[0]), mutableIntStateOf(it[1]))
             },
         )
     }
@@ -161,7 +159,7 @@ fun FlorisStepLayout(
     stepState: FlorisStepState,
     steps: List<FlorisStep>,
     modifier: Modifier = Modifier,
-    primaryColor: Color = MaterialTheme.colors.primary,
+    primaryColor: Color = MaterialTheme.colorScheme.primary,
     header: @Composable FlorisStepLayoutScope.() -> Unit = { },
     footer: @Composable FlorisStepLayoutScope.() -> Unit = { },
 ) {
@@ -199,14 +197,14 @@ private fun ColumnScope.Step(
     val autoStepId by stepState.getCurrentAuto()
     val backgroundColor = when (ownStepId) {
         currentStepId -> primaryColor
-        else -> MaterialTheme.colors.outline
+        else -> primaryColor.copy(alpha = 0.38f)
     }
     val contentVisible = ownStepId == currentStepId
     StepHeader(
         modifier = when {
             ownStepId <= autoStepId -> Modifier
                 .clickable(enabled = !contentVisible) { stepState.setCurrentManual(ownStepId) }
-            else -> Modifier.alpha(ContentAlpha.disabled)
+            else -> Modifier.alpha(0.38f)
         },
         backgroundColor = backgroundColor,
         step = ownStepId,
@@ -225,7 +223,7 @@ private fun ColumnScope.Step(
         enter = fadeIn(animationSpec = animSpec),
         exit = fadeOut(animationSpec = animSpec),
     ) {
-        val onBackground = MaterialTheme.colors.onSurface
+        val onBackground = MaterialTheme.colorScheme.onSurface
         Box(
             modifier = Modifier
                 .padding(start = 56.dp)

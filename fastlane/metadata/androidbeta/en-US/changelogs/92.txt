@@ -1,0 +1,8 @@
+Hotfix release for v0.4.0-alpha05, fixed setup screen not detecting enabled state correctly on Android 14 devices
+
+Added in v0.4.0-alpha05:
+- Add support for Material You in themes
+- Add several new keyboard layouts
+- Remove glide typing -> will be re-implemented with word suggestions/new keyboard layout engine
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.4.0-alpha06

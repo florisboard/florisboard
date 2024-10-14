@@ -21,8 +21,8 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -35,8 +35,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -47,29 +47,30 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.compose.tooltip.tooltip
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.snygg.ui.shape
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.shape
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggClip
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
 
 private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
 private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)
 
-enum class QabType {
+enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
     INTERACTIVE_TILE,
     STATIC_TILE;
@@ -80,15 +81,16 @@ fun QuickActionButton(
     action: QuickAction,
     evaluator: ComputingEvaluator,
     modifier: Modifier = Modifier,
-    type: QabType = QabType.INTERACTIVE_BUTTON,
+    type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
-
+    // Get the inputFeedbackController through the FlorisImeService companion-object.
+    val inputFeedbackController = FlorisImeService.inputFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isEnabled = type == QabType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
+    val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
     val element = when (type) {
-        QabType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
+        QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
         else -> FlorisImeUi.SmartbarActionTile
     }
     // We always need to know both state's styles to animate smoothly
@@ -107,22 +109,23 @@ fun QuickActionButton(
     val actionStyle = if (isPressed) actionStylePressed else actionStyleNotPressed
     val bgColor by animateColorAsState(
         targetValue = if (isPressed) {
-            actionStylePressed.background.solidColor()
+            actionStylePressed.background.solidColor(context)
         } else {
-            if (actionStyleNotPressed.background.solidColor().alpha == 0f) {
-                actionStylePressed.background.solidColor().copy(0f)
+            if (actionStyleNotPressed.background.solidColor(context).alpha == 0f) {
+                actionStylePressed.background.solidColor(context).copy(0f)
             } else {
-                actionStyleNotPressed.background.solidColor()
+                actionStyleNotPressed.background.solidColor(context)
             }
         },
-        animationSpec = BackgroundAnimationSpec,
+        animationSpec = BackgroundAnimationSpec, label = "bgColor",
     )
     val fgColor = when (action.keyData().code) {
         KeyCode.DRAG_MARKER -> {
             DebugHelperColor
         }
+
         else -> {
-            actionStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor())
+            actionStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
         }
     }
     val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f
@@ -137,7 +140,7 @@ fun QuickActionButton(
         }
     }
 
-    val tooltipModifier = if (type == QabType.INTERACTIVE_BUTTON) {
+    val tooltipModifier = if (type == QuickActionBarType.INTERACTIVE_BUTTON) {
         Modifier.tooltip(action.computeTooltip(evaluator))
     } else {
         Modifier
@@ -148,28 +151,27 @@ fun QuickActionButton(
             .aspectRatio(1f)
             .alpha(fgAlpha)
             .snyggShadow(actionStyle)
-            .snyggBorder(actionStyle)
+            .snyggBorder(context, actionStyle)
             .background(bgColor, actionStyle.shape.shape())
             .snyggClip(actionStyle)
             .indication(interactionSource, LocalIndication.current)
             .pointerInput(action, isEnabled) {
-                forEachGesture {
-                    awaitPointerEventScope {
-                        val down = awaitFirstDown()
-                        down.consume()
-                        if (isEnabled && type != QabType.STATIC_TILE) {
-                            val press = PressInteraction.Press(down.position)
-                            interactionSource.tryEmit(press)
-                            action.onPointerDown(context)
-                            val up = waitForUpOrCancellation()
-                            if (up != null) {
-                                up.consume()
-                                interactionSource.tryEmit(PressInteraction.Release(press))
-                                action.onPointerUp(context)
-                            } else {
-                                interactionSource.tryEmit(PressInteraction.Cancel(press))
-                                action.onPointerCancel(context)
-                            }
+                awaitEachGesture {
+                    val down = awaitFirstDown()
+                    down.consume()
+                    if (isEnabled && type != QuickActionBarType.STATIC_TILE) {
+                        val press = PressInteraction.Press(down.position)
+                        inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
+                        interactionSource.tryEmit(press)
+                        action.onPointerDown(context)
+                        val up = waitForUpOrCancellation()
+                        if (up != null) {
+                            up.consume()
+                            interactionSource.tryEmit(PressInteraction.Release(press))
+                            action.onPointerUp(context)
+                        } else {
+                            interactionSource.tryEmit(PressInteraction.Cancel(press))
+                            action.onPointerCancel(context)
                         }
                     }
                 }
@@ -186,12 +188,12 @@ fun QuickActionButton(
             ) {
                 when (action) {
                     is QuickAction.InsertKey -> {
-                        val (iconResId, label) = remember(action, evaluator) {
-                            evaluator.computeIconResId(action.data) to evaluator.computeLabel(action.data)
+                        val (imageVector, label) = remember(action, evaluator) {
+                            evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
                         }
-                        if (iconResId != null) {
+                        if (imageVector != null) {
                             Icon(
-                                painter = painterResource(id = iconResId),
+                                imageVector = imageVector,
                                 contentDescription = null,
                                 tint = fgColor,
                             )
@@ -202,6 +204,7 @@ fun QuickActionButton(
                             )
                         }
                     }
+
                     is QuickAction.InsertText -> {
                         Text(
                             text = action.data.firstOrNull().toString().ifBlank { "?" },
@@ -213,12 +216,12 @@ fun QuickActionButton(
             }
 
             // Render additional info if this is a tile
-            if (type != QabType.INTERACTIVE_BUTTON) {
+            if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = action.computeDisplayName(evaluator = evaluator),
                     color = fgColor,
-                    fontSize = if (type == QabType.STATIC_TILE) 10.sp else 13.sp,
+                    fontSize = if (type == QuickActionBarType.STATIC_TILE) 10.sp else 13.sp,
                     textAlign = TextAlign.Center,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

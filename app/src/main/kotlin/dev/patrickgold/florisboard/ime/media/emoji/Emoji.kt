@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2024 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,17 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.util.stream.IntStream
 import kotlin.streams.toList
 
@@ -38,54 +37,6 @@ enum class EmojiSkinTone(val id: Int) {
     MEDIUM_SKIN_TONE(0x1F3FD),
     MEDIUM_DARK_SKIN_TONE(0x1F3FE),
     DARK_SKIN_TONE(0x1F3FF);
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = DEFAULT,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__default,
-                    "emoji" to "\uD83D\uDC4B" // 👋
-                ),
-            )
-            entry(
-                key = LIGHT_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__light_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFB" // 👋🏻
-                ),
-            )
-            entry(
-                key = MEDIUM_LIGHT_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__medium_light_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFC" // 👋🏼
-                ),
-            )
-            entry(
-                key = MEDIUM_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__medium_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFD" // 👋🏽
-                ),
-            )
-            entry(
-                key = MEDIUM_DARK_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__medium_dark_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFE" // 👋🏾
-                ),
-            )
-            entry(
-                key = DARK_SKIN_TONE,
-                label = stringRes(
-                    R.string.enum__emoji_skin_tone__dark_skin_tone,
-                    "emoji" to "\uD83D\uDC4B\uD83C\uDFFF" // 👋🏿
-                ),
-            )
-        }
-    }
 }
 
 enum class EmojiHairStyle(val id: Int) {
@@ -96,7 +47,7 @@ enum class EmojiHairStyle(val id: Int) {
     BALD(0x1F9B3);
 }
 
-data class Emoji(val value: String, val name: String, val keywords: List<String>) : KeyData {
+class Emoji(val value: String, val name: String, val keywords: List<String>) : KeyData {
     override val type = KeyType.CHARACTER
     override val code = KeyCode.UNSPECIFIED
     override val label = value
@@ -108,13 +59,12 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
     val hairStyle: EmojiHairStyle
 
     val codePoints: IntStream
-        @RequiresApi(Build.VERSION_CODES.N)
         get() = value.codePoints()
 
     init {
         val codePoints = value.codePoints().toList()
-        skinTone = EmojiSkinTone.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
-        hairStyle = EmojiHairStyle.values().firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
+        skinTone = EmojiSkinTone.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
+        hairStyle = EmojiHairStyle.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
     }
 
     override fun compute(evaluator: ComputingEvaluator): KeyData {
@@ -127,5 +77,25 @@ data class Emoji(val value: String, val name: String, val keywords: List<String>
 
     override fun toString(): String {
         return "Emoji { value=$value, name=$name, keywords=$keywords }"
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Emoji && value == other.value
+    }
+
+    object ValueOnlySerializer : KSerializer<Emoji> {
+        override val descriptor = PrimitiveSerialDescriptor("EmojiValueOnly", PrimitiveKind.STRING)
+
+        override fun serialize(encoder: Encoder, value: Emoji) {
+            encoder.encodeString(value.value)
+        }
+
+        override fun deserialize(decoder: Decoder): Emoji {
+            return Emoji(decoder.decodeString(), "", emptyList())
+        }
     }
 }

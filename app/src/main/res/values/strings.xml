@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
 
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
@@ -15,9 +15,24 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Emoji history max size</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Preferred emoji skin tone</string>
     <string name="prefs__media__emoji_preferred_hair_style">Preferred emoji hair style</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Enable emoji history</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Retain recently used emojis for quick access</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (Pinned)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (Recent)</string>
+    <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Trigger type</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Update emoji history</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Accepting suggested emojis adds them to the emoji history</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Show emoji name</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Emoji suggestions display their name alongside the emoji</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimum query length</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximum candidate count</string>
 
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>
@@ -29,9 +44,12 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objects</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flags</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro tip: Long press recently used emojis to remove them from this view again!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">Removed {emoji} from recently used emojis</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Pro tip: Long press emojis in the emoji history to pin or remove them!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Removed {emoji} from emoji history</string>
+    <string name="emoji__history__pinned">Pinned</string>
+    <string name="emoji__history__recent">Recent</string>
 
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Arrow up</string>
@@ -131,6 +149,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete Confirmation</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Are you sure you want to delete this subtype?</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
@@ -138,16 +158,13 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Day theme</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Night theme</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selected theme</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapt colors to app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Theme colors adapt to those in the current app, if the target app supports this.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Assets</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Internal Storage</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">External Provider</string>
 
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Select day theme</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Select night theme</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
 
     <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
     <string name="settings__theme_editor__fine_tune__level">Editing level</string>
@@ -254,6 +271,8 @@
     <string name="snygg__property_name__var_shape_variant">Common shape (variant)</string>
     <string name="snygg__property_value__explicit_inherit">Inherit</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
+    <string name="snygg__property_value__material_you_light_color">Material You color (Light)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You color (Dark)</string>
     <string name="snygg__property_value__image_ref">Image reference</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>
@@ -304,8 +323,8 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Show utility key</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Shows a configurable utility key next to space bar</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__label" comment="Preference title">Display language on space bar</string>
-    <string name="pref__keyboard__space_bar_language_display_enabled__summary" comment="Preference summary">Displays the current active language name on the space bar</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
@@ -322,6 +341,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
@@ -431,6 +451,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Light</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dark</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dark</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Use Material You</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Settings language</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
@@ -475,6 +496,13 @@
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Switch Keyboard</string>
 
+    <string name="setup__grant_notification_permission__title">Permit Crash Report Notifications</string>
+    <string name="setup__grant_notification_permission__description">As of Android 13+, apps must ask for permission to
+        send notifications. In Florisboard, this is only used to open a crash report screen in the event of a crash.
+        This permission can be changed at any time in the system settings.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Grant Permission</string>
+
     <string name="setup__finish_up__title">Finish Up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
@@ -492,6 +520,10 @@
     <string name="backup_and_restore__back_up__files_ime_keyboard">Keyboard extensions</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Spelling extensions / dictionaries</string>
     <string name="backup_and_restore__back_up__files_ime_theme">Theme extensions</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Clipboard history</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Text items</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Images</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videos</string>
     <string name="backup_and_restore__back_up__success">Successfully exported backup archive!</string>
     <string name="backup_and_restore__back_up__failure">Failed to export backup archive: {error_message}</string>
     <string name="backup_and_restore__restore__title">Restore data</string>
@@ -567,6 +599,11 @@
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
+    <string name="send_to_clipboard__unknown_error">An unknown error occurred. Please try again!</string>
+    <string name="send_to_clipboard__type_not_supported_error">This media type is not supported.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">The version of android is to old for this feature.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Copied below image to clipboard.</string>
 
 
     <!-- Devtools strings -->
@@ -581,6 +618,8 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Overlays the current input state for debugging</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Show spelling overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Overlays the current spelling results for debugging</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Show inline autofill overlay</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Overlays the current inline autofill results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Outline the key touch boundaries in red</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag&amp;drop helpers</string>
@@ -596,9 +635,18 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Secure Android settings</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">System Android settings</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">System locales</string>
+    <string name="devtools__debuglog__title">Debug log</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Copied debug log to clipboard</string>
+    <string name="devtools__debuglog__copy_log">Copy log</string>
+    <string name="devtools__debuglog__copy_for_github">Copy log (GitHub formatting)</string>
+    <string name="devtools__debuglog__loading">Loading…</string>
 
 
     <!-- Extension strings -->
+    <string name="ext__home__title">Addons &amp; Extensions</string>
+    <string name="ext__list__ext_theme">Theme extensions</string>
+    <string name="ext__list__ext_keyboard">Keyboard extensions</string>
+    <string name="ext__list__ext_languagepack">Language pack extensions</string>
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
     <string name="ext__meta__components_theme">Bundled themes</string>
@@ -651,7 +699,40 @@
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
     <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
-
+    <string name="ext__validation__enter_package_name">Please enter a package name</string>
+    <string name="ext__validation__error_package_name">Package name does not match regex {id_regex}</string>
+    <string name="ext__validation__enter_version">Please enter a version</string>
+    <string name="ext__validation__enter_title">Please enter a title</string>
+    <string name="ext__validation__enter_maintainer">Please enter at least one valid maintainer</string>
+    <string name="ext__validation__enter_license">Please enter a license identifier</string>
+    <string name="ext__validation__enter_component_id">Please enter a component ID</string>
+    <string name="ext__validation__error_component_id">Please enter a component ID matching {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Please enter a component label</string>
+    <string name="ext__validation__hint_component_label_to_long">Your component label is quite long, which may lead to clipping in the UI</string>
+    <string name="ext__validation__error_author">Please enter at least one valid author</string>
+    <string name="ext__validation__error_stylesheet_path_blank">The stylesheet path must not be blank</string>
+    <string name="ext__validation__error_stylesheet_path">Please enter a valid stylesheet path matching {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Please enter a variable name</string>
+    <string name="ext__validation__error_property">Please enter a valid variable name matching {variable_name_regex}</string>
+    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">By convention a FlorisCSS variable name starts with two dashes (--)</string>
+    <string name="ext__validation__enter_color">Please enter a color string</string>
+    <string name="ext__validation__error_color">Please enter a valid color string</string>
+    <string name="ext__validation__enter_dp_size">Please enter a dp size</string>
+    <string name="ext__validation__enter_valid_number">Please enter a valid number</string>
+    <string name="ext__validation__enter_positive_number">Please enter a positive number (>=0)</string>
+    <string name="ext__validation__enter_percent_size">Please enter a percent size</string>
+    <string name="ext__validation__enter_number_between_0_100">Please enter a positive number between 0 and 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
+    <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
+    <string name="ext__update_box__search_for_updates">Search for Updates</string>
+    <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
+    <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
+    <string name="ext__home__info">You can download and install extensions from the FlorisBoard Addons Store or import any extension file you have downloaded from the internet.</string>
+    <string name="ext__home__visit_store">Visit Addons Store</string>
+    <string name="ext__home__manage_extensions">Manage installed extensions</string>
+    <string name="ext__list__view_details">View details</string>
+    <string name="ext__check_updates__title">Check for Updates</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>
@@ -713,6 +794,9 @@
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
 
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
+
     <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
     <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
 
@@ -728,6 +812,15 @@
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Native locale</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Language names across the app and keyboard UI are displayed in the locale referred by itself</string>
 
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Auto sort (prepend)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Automatically reorder emojis on emoji usage. New emojis are added to the start.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Auto sort (append)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Automatically reorder emojis on emoji usage. New emojis are added to the end.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Manual sort (prepend)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Do not automatically reorder emojis on emoji usage. New emojis are added to the start.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Manual sort (append)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Do not automatically reorder emojis on emoji usage. New emojis are added to the end.</string>
+
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Default skin tone</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Light skin tone</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Medium light skin tone</string>
@@ -740,6 +833,11 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Curly hair</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} White hair</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bald</string>
+
+    <string name="enum__emoji_suggestion_type__leading_colon">Leading colon</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Suggest emojis using the :emoji_name syntax</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Inline text</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Suggest emojis simply by typing the emoji name as a word</string>
 
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Above candidates</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Places the extended actions row between the app UI and the candidate row</string>
@@ -759,6 +857,9 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
+
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Replace shared actions toggle icon with the incognito indicator</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Display the incognito indicator behind the keyboard</string>
 
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Force off</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Incognito mode will always be disabled, regardless of the target app\'s passed options. The incognito quick action in the Smartbar will not be available with this option.</string>
@@ -806,6 +907,10 @@
     <string name="enum__snygg_level__developer" comment="Enum value label">Developer</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">All properties are shown, properties and rules are displayed as written in the stylesheet file itself.</string>
 
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">No label</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Current language</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
+
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Use system languages</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Use keyboard subtypes</string>
 
@@ -848,7 +953,6 @@
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
 
-
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>
     <string name="unit__minutes__symbol" translatable="false">{v} m</string>
@@ -874,6 +978,14 @@
     <plurals name="unit__items__written">
         <item quantity="one">{v} item</item>
         <item quantity="other">{v} items</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} character</item>
+        <item quantity="other">{v} characters</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} candidate</item>
+        <item quantity="other">{v} candidates</item>
     </plurals>
 
 </resources>

@@ -29,14 +29,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +50,7 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
 import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
@@ -61,9 +60,8 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.io.FileRegistry
-import dev.patrickgold.florisboard.lib.kotlin.resultOk
+import org.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
     val id: String,
@@ -101,12 +99,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     val cacheManager by context.cacheManager()
     val extensionManager by context.extensionManager()
 
-    val initWsUuid by rememberSaveable { mutableStateOf(initUuid) }
-    var importResult by remember {
-        val workspace = initWsUuid?.let { cacheManager.importer.getWorkspaceByUuid(it) }?.let { resultOk(it) }
-        mutableStateOf(workspace)
-    }
-
     fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
         return when {
             !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
@@ -120,13 +112,26 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     NATIVE_NULLPTR.toInt()
                 }
             }
-            fileInfo.mediaType == FileRegistry.FlexExtension.mediaType -> {
+            else -> { // ext == null
                 R.string.ext__import__file_skip_ext_corrupted
             }
-            else -> {
-                NATIVE_NULLPTR.toInt()
-            }
         }
+    }
+
+    fun Result<CacheManager.ImporterWorkspace>.mapSkipReasons(): Result<CacheManager.ImporterWorkspace> {
+        return this.map { workspace ->
+            workspace.inputFileInfos.forEach { fileInfo ->
+                fileInfo.skipReason = getSkipReason(fileInfo)
+            }
+            workspace
+        }
+    }
+
+    var importResult by remember(initUuid) {
+        val workspace = initUuid?.let { cacheManager.importer.getWorkspaceByUuid(it) }
+            ?.let { resultOk(it) }
+            ?.mapSkipReasons()
+        mutableStateOf(workspace)
     }
 
     val importLauncher = rememberLauncherForActivityResult(
@@ -135,14 +140,9 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             // If uri is null it indicates that the selection activity
             //  was cancelled (mostly by pressing the back button), so
             //  we don't display an error message here.
-            if (uriList.isNullOrEmpty()) return@rememberLauncherForActivityResult
+            if (uriList.isEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
-            importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.map { workspace ->
-                workspace.inputFileInfos.forEach { fileInfo ->
-                    fileInfo.skipReason = getSkipReason(fileInfo)
-                }
-                workspace
-            }
+            importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.mapSkipReasons()
         },
     )
 
@@ -198,15 +198,17 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     }
 
     content {
-        FlorisOutlinedButton(
-            onClick = {
-                importLauncher.launch("*/*")
-            },
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-                .align(Alignment.CenterHorizontally),
-            text = stringRes(R.string.action__select_files),
-        )
+        if (initUuid == null) {
+            FlorisOutlinedButton(
+                onClick = {
+                    importLauncher.launch("*/*")
+                },
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .align(Alignment.CenterHorizontally),
+                text = stringRes(R.string.action__select_files),
+            )
+        }
 
         val result = importResult
         when {
@@ -229,8 +231,8 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = stringRes(R.string.ext__import__error_unexpected_exception),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                 )
                 SelectionContainer {
                     Text(
@@ -238,8 +240,8 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             .florisHorizontalScroll()
                             .padding(horizontal = 16.dp),
                         text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
-                        style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colors.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error,
                         fontStyle = FontStyle.Italic,
                     )
                 }
@@ -267,20 +269,20 @@ private fun FileInfoView(
             Row {
                 Text(
                     text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = grayColor,
                 )
                 if (ext != null) {
                     FlorisBulletSpacer()
                     Text(
                         text = ext.meta.id,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = grayColor,
                     )
                     FlorisBulletSpacer()
                     Text(
                         text = ext.meta.version,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = grayColor,
                     )
                 }
@@ -289,12 +291,12 @@ private fun FileInfoView(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = ext.meta.title,
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 ext.meta.description?.let { description ->
                     Text(
                         text = description,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                         fontStyle = FontStyle.Italic,
                     )
                 }
@@ -304,13 +306,13 @@ private fun FileInfoView(
                 }
                 Text(
                     text = stringRes(R.string.ext__meta__maintainers_by, "maintainers" to maintainers),
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 for (component in ext.components()) {
                     Text(
                         text = component.id,
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }
@@ -319,16 +321,16 @@ private fun FileInfoView(
                     .fillMaxWidth()
                     .height(19.dp)
                     .padding(top = 10.dp, bottom = 8.dp)
-                    .background(MaterialTheme.colors.error.copy(alpha = 0.56f)))
+                    .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f)))
                 Text(
                     text = stringRes(R.string.ext__import__file_skip),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                 )
                 Text(
                     text = stringRes(fileInfo.skipReason),
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
                     fontStyle = FontStyle.Italic,
                 )
             }

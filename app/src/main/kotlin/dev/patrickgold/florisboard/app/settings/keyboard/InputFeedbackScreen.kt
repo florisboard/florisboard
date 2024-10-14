@@ -19,11 +19,12 @@ package dev.patrickgold.florisboard.app.settings.keyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
-import dev.patrickgold.florisboard.lib.android.vibrate
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.systemVibratorOrNull
+import org.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -49,7 +50,7 @@ fun InputFeedbackScreen() = FlorisScreen {
                 switchPref = prefs.inputFeedback.audioEnabled,
                 title = stringRes(R.string.pref__input_feedback__audio_enabled__label),
                 summarySwitchDisabled = stringRes(R.string.pref__input_feedback__audio_enabled__summary_disabled),
-                entries = InputFeedbackActivationMode.audioListEntries(),
+                entries = enumDisplayEntriesOf(InputFeedbackActivationMode::class, "audio"),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.audioVolume,
@@ -98,13 +99,13 @@ fun InputFeedbackScreen() = FlorisScreen {
                 switchPref = prefs.inputFeedback.hapticEnabled,
                 title = stringRes(R.string.pref__input_feedback__haptic_enabled__label),
                 summarySwitchDisabled = stringRes(R.string.pref__input_feedback__haptic_enabled__summary_disabled),
-                entries = InputFeedbackActivationMode.hapticListEntries(),
+                entries = enumDisplayEntriesOf(InputFeedbackActivationMode::class, "haptic")
             )
             ListPreference(
                 prefs.inputFeedback.hapticVibrationMode,
                 title = stringRes(R.string.pref__input_feedback__haptic_vibration_mode__label),
                 enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
-                entries = HapticVibrationMode.listEntries(),
+                entries = enumDisplayEntriesOf(HapticVibrationMode::class),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.hapticVibrationDuration,

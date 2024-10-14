@@ -54,7 +54,7 @@
     { "code":  3672, "label": "๘", "type": "numeric", "popup": {
       "main": { "code": 8312, "label": "⁸" }
     } },
-    { "code":  3672, "label": "๘", "type": "numeric", "popup": {
+    { "code":  3673, "label": "๙", "type": "numeric", "popup": {
       "main": { "code": 8313, "label": "⁹" }
     } },
     { "code":  3664, "label": "๐", "type": "numeric", "popup": {

@@ -29,16 +29,16 @@ import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.kotlin.guardedByLock
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
-import kotlin.math.max
-import kotlin.math.min
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.florisboard.lib.kotlin.guardedByLock
+import kotlin.math.max
+import kotlin.math.min
 
 @Suppress("BlockingMethodInNonBlockingContext")
 abstract class AbstractEditorInstance(context: Context) {

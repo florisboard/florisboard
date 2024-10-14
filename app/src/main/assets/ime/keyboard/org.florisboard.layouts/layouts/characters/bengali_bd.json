@@ -42,9 +42,9 @@
 	}
   ],
   [
-    { "$": "case_selector",
+  { "$": "case_selector",
 	  "lower": { "code": 2499, "label": "ৃ" },
-	  "upper": { "$": "multi_text_key", "codePoints": [2480, 2509], "label": "র্" }
+    "upper": { "code": 2435, "label": "ঃ" }
 	},
 	{ "$": "case_selector",
 	  "lower": { "code": 2497, "label": "ু" },

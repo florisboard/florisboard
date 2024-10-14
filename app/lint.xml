@@ -1,0 +1,3 @@
+<lint>
+    <issue id="UsingMaterialAndMaterial3Libraries" severity="ignore" />
+</lint>

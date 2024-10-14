@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.lib.ext
 
 import androidx.compose.runtime.saveable.Saver
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -25,6 +24,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import org.florisboard.lib.kotlin.tryOrNull
 
 /**
  * An extension component, typically a layout, theme, file, etc. descriptor.

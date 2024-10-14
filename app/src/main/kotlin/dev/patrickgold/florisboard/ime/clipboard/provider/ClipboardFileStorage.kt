@@ -18,16 +18,18 @@ package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.io.FsFile
-import dev.patrickgold.florisboard.lib.io.subFile
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.subFile
 
 /**
  * Backend helper object which is used by [ClipboardMediaProvider] to serve content.
  */
 object ClipboardFileStorage {
+    const val CLIPBOARD_FILES_PATH = "clipboard_files"
+
     private val Context.clipboardFilesDir: FsFile
         get() = FsFile(this.noBackupFilesDir, "clipboard_files").also { it.mkdirs() }
 
@@ -58,4 +60,29 @@ object ClipboardFileStorage {
     fun getFileForId(context: Context, id: Long): FsFile {
         return context.clipboardFilesDir.subFile(id.toString())
     }
+
+
+    /**
+     * Insert file from backup if not existing
+     *
+     * @param context the application context
+     * @param file the file to be inserted
+     */
+    fun insertFileFromBackupIfNotExisting(context: Context, file: FsFile) {
+        if (!context.clipboardFilesDir.subFile(file.name).isFile) {
+            file.copyTo(context.clipboardFilesDir.subFile(file.name), overwrite = false)
+        }
+    }
+
+    /**
+     * Deletes all files from the clipboard subdirectory
+     *
+     * @param context the application context
+     */
+    fun resetClipboardFileStorage(context: Context) {
+        context.clipboardFilesDir.listFiles()?.forEach {
+            it.delete()
+        }
+    }
+
 }

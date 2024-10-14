@@ -1,0 +1,5 @@
+- Add support for Material You in themes
+- Add several new keyboard layouts
+- Remove glide typing -> will be re-implemented with word suggestions/new keyboard layout engine
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.4.0-alpha05

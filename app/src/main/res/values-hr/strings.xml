@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauziraj</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Pričekajte</string>
@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emotikoni</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikoni</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaoemotikoni</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Prikazana povijest korištenih emotikona je maksimalna</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Željeni ton boje emotikona</string>
     <string name="prefs__media__emoji_preferred_hair_style">Željeni stil frizure emotikona</string>
     <!-- Emoji strings -->
@@ -26,9 +25,6 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekti</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
     <string name="emoji__category__flags" comment="Emoji category name">Zastave</string>
-    <string name="emoji__recently_used__empty_message" comment="Message if no recently used emojis exist">Nema nedavno korištenih emotikona. Čim ih počnete koristiti, oni će se pojaviti ovdje.</string>
-    <string name="emoji__recently_used__removal_tip" comment="Feature discoverability for removal of recently used emojis">Pro savjet: Dugo držite nedavno korištene emotikone kako bi ste ih uklonili sa popisa nedavno korištenih emotikona!</string>
-    <string name="emoji__recently_used__removal_success_message" comment="Toast message if user has long pressed emoji in recently used collection to remove it">{emoji} je ukonjen iz nedavno korištenih emotikona</string>
     <!-- Quick action strings -->
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
@@ -77,15 +73,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Vrijeme zalaska Sunca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Svjetla tema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tamna tema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Odabrana tema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prilagodite boje aplikaciji</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Boja teme prilagođena je onoj trenutnoj aplikaciji, ako ciljana aplikacija podržava ovu funkciju.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Upravljajte instaliranim temama</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Zbirka Aplikacije</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Unutarnja Pohrana</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Vanjski Dobavitelj</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Odaberite svjetlu temu</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Odaberite tamnu temu</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Upravljajte instaliranim temama</string>
     <string name="settings__theme_editor__fine_tune__title">Uređivač</string>
     <string name="settings__theme_editor__fine_tune__level">Razina uređivanja</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Prikaži boje kao</string>

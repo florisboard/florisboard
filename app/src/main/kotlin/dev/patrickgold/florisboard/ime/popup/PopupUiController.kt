@@ -22,18 +22,20 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -76,7 +78,7 @@ class PopupUiController(
     private var baseRenderInfo by mutableStateOf<BaseRenderInfo?>(null)
     private var extRenderInfo by mutableStateOf<ExtRenderInfo?>(null)
 
-    private var activeElementIndex by mutableStateOf(-1)
+    private var activeElementIndex by mutableIntStateOf(-1)
     var evaluator: ComputingEvaluator = DefaultComputingEvaluator
     var fontSizeMultiplier: Float = 1.0f
     var keyHintConfiguration: KeyHintConfiguration = KeyHintConfiguration.HINTS_DISABLED
@@ -265,7 +267,7 @@ class PopupUiController(
             elements[rowIndex].add(Element(
                 data = keyData,
                 label = evaluator.computeLabel(keyData),
-                iconResId = evaluator.computeIconResId(keyData),
+                icon = evaluator.computeImageVector(keyData),
                 orderedIndex = uiIndex,
                 adjustedIndex = adjustedIndex,
             ))
@@ -497,7 +499,7 @@ class PopupUiController(
     data class Element(
         val data: KeyData,
         val label: String?,
-        val iconResId: Int?,
+        val icon: ImageVector?,
         val orderedIndex: Int,
         val adjustedIndex: Int,
     )

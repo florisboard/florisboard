@@ -76,10 +76,10 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
 
     override val providerId = ProviderId
 
-    init {
+//    init {
 //        // FIXME: observeForever only callable on the main thread.
 //        extensionManager.languagePacks.observeForever { refreshLanguagePacks() }
-    }
+//    }
 
     private fun refreshLanguagePacks() {
         scope.launch { create() }

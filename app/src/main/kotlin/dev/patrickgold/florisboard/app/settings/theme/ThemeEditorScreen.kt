@@ -33,13 +33,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Switch
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -57,13 +62,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
@@ -71,7 +76,6 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
@@ -84,24 +88,25 @@ import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
-import dev.patrickgold.florisboard.lib.io.readJson
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.lib.snygg.SnyggLevel
-import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetEditor
-import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySetSpec
-import dev.patrickgold.florisboard.lib.snygg.SnyggRule
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetEditor
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
-import dev.patrickgold.florisboard.lib.snygg.definedVariablesRule
-import dev.patrickgold.florisboard.lib.snygg.isDefinedVariablesRule
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subFile
+import org.florisboard.lib.snygg.SnyggLevel
+import org.florisboard.lib.snygg.SnyggPropertySetEditor
+import org.florisboard.lib.snygg.SnyggPropertySetSpec
+import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggStylesheetEditor
+import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
+import org.florisboard.lib.snygg.definedVariablesRule
+import org.florisboard.lib.snygg.isDefinedVariablesRule
 
 internal val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
     save = { ArrayList(it) },
@@ -164,21 +169,21 @@ fun ThemeEditorScreen(
     navigationIcon {
         FlorisIconButton(
             onClick = { handleBackPress() },
-            icon = painterResource(R.drawable.ic_close),
+            icon = Icons.Default.Close,
         )
     }
 
     actions {
         FlorisIconButton(
             onClick = { showFineTuneDialog = true },
-            icon = painterResource(R.drawable.ic_tune),
+            icon = Icons.Default.Tune,
         )
     }
 
     floatingActionButton {
         ExtendedFloatingActionButton(
             icon = { Icon(
-                painter = painterResource(R.drawable.ic_add),
+                imageVector = Icons.Default.Add,
                 contentDescription = null,
             ) },
             text = { Text(
@@ -295,7 +300,7 @@ fun ThemeEditorScreen(
                             Text(
                                 modifier = Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
                                 text = stringRes(R.string.snygg__rule_element__defines_description),
-                                style = MaterialTheme.typography.body2,
+                                style = MaterialTheme.typography.bodyMedium,
                                 fontStyle = FontStyle.Italic,
                             )
                         }
@@ -544,9 +549,9 @@ private fun SnyggRuleRow(
         Text(
             modifier = Modifier
                 .padding(end = 8.dp)
-                .background(MaterialTheme.colors.primaryVariant),
+                .background(MaterialTheme.colorScheme.primaryContainer, shape = Shapes.small),
             text = text,
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.bodyMedium,
             fontFamily = FontFamily.Monospace,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -557,7 +562,7 @@ private fun SnyggRuleRow(
     fun AttributesList(text: String, list: String) {
         Text(
             text = "$text = $list",
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.bodyMedium,
             color = LocalContentColor.current.copy(alpha = 0.56f),
             fontFamily = FontFamily.Monospace,
             maxLines = 1,
@@ -577,7 +582,7 @@ private fun SnyggRuleRow(
         ) {
             Text(
                 text = translateElementName(rule, level),
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
                 fontFamily = FontFamily.Monospace,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -612,15 +617,15 @@ private fun SnyggRuleRow(
         if (showEditBtn) {
             FlorisIconButton(
                 onClick = onEditRuleBtnClick,
-                icon = painterResource(R.drawable.ic_edit),
-                iconColor = MaterialTheme.colors.primary,
+                icon = Icons.Default.Edit,
+                iconColor = MaterialTheme.colorScheme.primary,
                 iconModifier = Modifier.size(ButtonDefaults.IconSize),
             )
         }
         FlorisIconButton(
             onClick = onAddPropertyBtnClick,
-            icon = painterResource(R.drawable.ic_add),
-            iconColor = MaterialTheme.colors.secondary,
+            icon = Icons.Default.Add,
+            iconColor = MaterialTheme.colorScheme.secondary,
             iconModifier = Modifier.size(ButtonDefaults.IconSize),
         )
     }
@@ -640,7 +645,7 @@ internal fun DialogProperty(
                     .weight(1f)
                     .padding(vertical = 8.dp),
                 text = text,
-                style = MaterialTheme.typography.subtitle2,
+                style = MaterialTheme.typography.titleSmall,
             )
             trailingIconTitle()
         }

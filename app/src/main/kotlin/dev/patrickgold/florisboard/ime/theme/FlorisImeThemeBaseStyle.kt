@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggStylesheet
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
     defines {
@@ -102,6 +102,11 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         background = rgbaColor(117, 117, 117)
         foreground = `var`("onSurface")
         fontSize = size(14.sp)
+        shape = roundedCornerShape(12.dp)
+    }
+    FlorisImeUi.ClipboardEnableHistoryButton {
+        background = `var`("primary")
+        foreground = rgbaColor(0, 0, 0)
         shape = roundedCornerShape(12.dp)
     }
 

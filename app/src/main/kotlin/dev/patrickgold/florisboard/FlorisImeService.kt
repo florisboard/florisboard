@@ -47,7 +47,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
@@ -64,6 +64,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -77,8 +78,6 @@ import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
-import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
-import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
@@ -88,21 +87,17 @@ import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
+import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
+import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.android.AndroidInternalR
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
-import dev.patrickgold.florisboard.lib.android.isOrientationPortrait
-import dev.patrickgold.florisboard.lib.android.launchActivity
-import dev.patrickgold.florisboard.lib.android.setLocale
-import dev.patrickgold.florisboard.lib.android.showShortToast
-import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
 import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
@@ -110,18 +105,25 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
-import dev.patrickgold.florisboard.lib.kotlin.collectLatestIn
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.lib.snygg.ui.shape
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.shape
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
+import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.AndroidInternalR
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemServiceOrNull
+import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
 
 /**
@@ -271,9 +273,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
+        WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
-            config.setLocale(subtype.primaryLocale)
+            config.setLocale(subtype.primaryLocale.base)
             resourcesContext = createConfigurationContext(config)
         }
     }
@@ -368,7 +371,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         flogInfo { "(no args)" }
         super.onFinishInput()
         editorInstance.handleFinishInput()
-        nlpManager.clearInlineSuggestions()
+        NlpInlineAutofill.clearInlineSuggestions()
     }
 
     override fun onWindowShown() {
@@ -400,6 +403,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
+        val config = resources.configuration
+        if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            return false
+        }
         return when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onEvaluateFullscreenMode()
             LandscapeInputUiMode.NEVER_SHOW -> false
@@ -431,23 +438,26 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (prefs.smartbar.enabled.get() && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
-            flogInfo(LogTopic.IMS_EVENTS) {
-                "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
-            }
-            val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
-            val spec = InlinePresentationSpec.Builder(InlineSuggestionUiSmallestSize, InlineSuggestionUiBiggestSize)
-                .setStyle(stylesBundle)
-                .build()
-            InlineSuggestionsRequest.Builder(listOf(spec)).let { request ->
-                request.setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
-                request.build()
-            }
-        } else {
+        if (!prefs.smartbar.enabled.get() || !prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Ignoring inline suggestions request because Smartbar and/or inline suggestions are disabled."
             }
-            null
+            return null
+        }
+
+        flogInfo(LogTopic.IMS_EVENTS) { "Creating inline suggestions request" }
+        val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
+        val spec = InlinePresentationSpec.Builder(
+            InlineSuggestionUiSmallestSize,
+            InlineSuggestionUiBiggestSize,
+        ).run {
+            setStyle(stylesBundle)
+            build()
+        }
+
+        return InlineSuggestionsRequest.Builder(listOf(spec)).run {
+            setMaxSuggestionCount(InlineSuggestionsRequest.SUGGESTION_COUNT_UNLIMITED)
+            build()
         }
     }
 
@@ -457,8 +467,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         flogInfo(LogTopic.IMS_EVENTS) {
             "Received inline suggestions response with ${inlineSuggestions.size} suggestion(s) provided."
         }
-        nlpManager.showInlineSuggestions(inlineSuggestions)
-        return true
+        return NlpInlineAutofill.showInlineSuggestions(this, inlineSuggestions)
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
@@ -670,9 +679,20 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         override fun Content() {
+            val context = LocalContext.current
+            val keyboardManager by context.keyboardManager()
+            val state by keyboardManager.activeState.collectAsState()
+
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
-                    BottomSheetHostUi()
+                    BottomSheetHostUi(
+                        isShowing = state.isBottomSheetShowing(),
+                        onHide = {
+                            keyboardManager.activeState.isActionsEditorVisible = false
+                        },
+                    ) {
+                        QuickActionsEditorPanel()
+                    }
                 }
             }
         }
@@ -705,6 +725,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         fun Content() {
+            val context = LocalContext.current
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
@@ -713,21 +734,21 @@ class FlorisImeService : LifecycleInputMethodService() {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
                     Box(
                         modifier = Modifier
-                            .snyggBackground(layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
+                            .snyggBackground(context, layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
                     ) {
                         Row(
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            val fieldColor = fieldStyle.foreground.solidColor(FlorisImeTheme.fallbackContentColor())
+                            val fieldColor = fieldStyle.foreground.solidColor(context, FlorisImeTheme.fallbackContentColor())
                             AndroidView(
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .fillMaxHeight()
                                     .weight(1f)
                                     .snyggShadow(fieldStyle)
-                                    .snyggBorder(fieldStyle)
-                                    .snyggBackground(fieldStyle),
+                                    .snyggBorder(context, fieldStyle)
+                                    .snyggBackground(context, fieldStyle),
                                 factory = { extractEditText },
                                 update = { view ->
                                     view.background = null
@@ -755,8 +776,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                                     ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = actionStyle.background.solidColor(FlorisImeTheme.fallbackContentColor()),
-                                    contentColor = actionStyle.foreground.solidColor(FlorisImeTheme.fallbackSurfaceColor()),
+                                    containerColor = actionStyle.background.solidColor(context, FlorisImeTheme.fallbackContentColor()),
+                                    contentColor = actionStyle.foreground.solidColor(context, FlorisImeTheme.fallbackSurfaceColor()),
                                 ),
                             )
                         }

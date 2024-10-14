@@ -17,44 +17,49 @@
 package dev.patrickgold.florisboard.app
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
+import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
+import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.hideAppIcon
-import dev.patrickgold.florisboard.lib.android.setLocale
-import dev.patrickgold.florisboard.lib.android.showAppIcon
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.SystemUiApp
+import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.hideAppIcon
+import org.florisboard.lib.android.showAppIcon
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -70,9 +75,11 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
+    private val cacheManager by cacheManager()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
+    private var intentToBeHandled by mutableStateOf<Intent?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash screen should be installed before calling super.onCreate()
@@ -87,7 +94,8 @@ class FlorisAppActivity : ComponentActivity() {
         }
         prefs.advanced.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
-            config.setLocale(if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it))
+            val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
+            config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {
@@ -96,20 +104,29 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
+        //Check if android 13+ is running and the NotificationPermission is not set
+        if (AndroidVersion.ATLEAST_API33_T &&
+            prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
+        ) {
+            // update pref value to show the setup screen again again
+            prefs.internal.isImeSetUp.set(false)
+        }
+
         // We defer the setContent call until the datastore model is loaded, until then the splash screen stays drawn
         prefs.datastoreReadyStatus.observe(this) { isModelLoaded ->
             if (!isModelLoaded) return@observe
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
                 ProvideLocalizedResources(resourcesContext) {
-                    FlorisAppTheme(theme = appTheme) {
-                        Surface(color = MaterialTheme.colors.background) {
-                            SystemUiApp()
+                    val useMaterialYou by prefs.advanced.useMaterialYou.observeAsState()
+                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = useMaterialYou) {
+                        Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()
                         }
                     }
                 }
             }
+            onNewIntent(intent)
         }
     }
 
@@ -125,6 +142,25 @@ class FlorisAppActivity : ComponentActivity() {
                 this.hideAppIcon()
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+
+        if (intent.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
+            intentToBeHandled = intent
+            return
+        }
+        if (intent.action == Intent.ACTION_VIEW && intent.data != null) {
+            intentToBeHandled = intent
+            return
+        }
+        if (intent.action == Intent.ACTION_SEND && intent.clipData != null) {
+            intentToBeHandled = intent
+            return
+        }
+        intentToBeHandled = null
     }
 
     @Composable
@@ -145,8 +181,11 @@ class FlorisAppActivity : ComponentActivity() {
             ) {
                 Column(
                     modifier = Modifier
-                        .statusBarsPadding()
+                        //.statusBarsPadding()
                         .navigationBarsPadding()
+                        .conditional(LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            displayCutoutPadding()
+                        }
                         .imePadding(),
                 ) {
                     Routes.AppNavHost(
@@ -157,6 +196,24 @@ class FlorisAppActivity : ComponentActivity() {
                     PreviewKeyboardField(previewFieldController)
                 }
             }
+        }
+
+        LaunchedEffect(intentToBeHandled) {
+            val intent = intentToBeHandled
+            if (intent != null) {
+                if (intent.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
+                    navController.handleDeepLink(intent)
+                } else {
+                    val data = if (intent.action == Intent.ACTION_VIEW) {
+                        intent.data!!
+                    } else {
+                        intent.clipData!!.getItemAt(0).uri
+                    }
+                    val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
+                    navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
+                }
+            }
+            intentToBeHandled = null
         }
 
         SideEffect {

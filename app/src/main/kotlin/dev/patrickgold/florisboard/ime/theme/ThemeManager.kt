@@ -47,10 +47,6 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheet
-import dev.patrickgold.florisboard.lib.snygg.SnyggStylesheetJsonConfig
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +54,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.decodeFromString
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.value.MaterialYouColor
+import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import kotlin.properties.Delegates
 
 /**
@@ -119,6 +119,7 @@ class ThemeManager(context: Context) {
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
+            MaterialYouColor.resetColorSchemeCache()
             action()
             previewThemeInfo?.let { previewThemeInfo ->
                 _activeThemeInfo.postValue(previewThemeInfo)
@@ -198,70 +199,68 @@ class ThemeManager(context: Context) {
         context: Context,
         style: SnyggStylesheet = activeThemeInfo.value?.stylesheet ?: FlorisImeThemeBaseStyle,
     ): Bundle {
-        val chipStyle = style.getStatic(FlorisImeUi.SmartbarSharedActionsToggle)
-        val bgColor = chipStyle.background.solidColor()
-        val fgColor = chipStyle.foreground.solidColor()
-        val bgDrawableId = R.drawable.autofill_inline_suggestion_chip_background
-        val stylesBuilder = UiVersions.newStylesBuilder()
-        val suggestionStyle = InlineSuggestionUi.newStyleBuilder()
-            .setSingleIconChipStyle(
-                ViewStyle.Builder()
-                    .setBackground(
-                        Icon.createWithResource(context, bgDrawableId).setTint(bgColor.toArgb())
-                    )
-                    .setPadding(0, 0, 0, 0)
-                    .build()
+        val snyggStyle = style.getStatic(FlorisImeUi.SmartbarSharedActionsToggle)
+        val bgColor = snyggStyle.background.solidColor(context)
+        val fgColor = snyggStyle.foreground.solidColor(context)
+
+        val bgDrawableId = androidx.autofill.R.drawable.autofill_inline_suggestion_chip_background
+        val bgDrawable = Icon.createWithResource(context, bgDrawableId).apply {
+            setTint(bgColor.toArgb())
+        }
+        val singleIconChipStyle = ViewStyle.Builder().run {
+            setBackground(bgDrawable)
+            setPadding(0, 0, 0, 0)
+            build()
+        }
+        val chipStyle = ViewStyle.Builder().run {
+            setBackground(bgDrawable)
+            setPadding(
+                context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_start).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_top).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_end).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_bottom).toInt(),
             )
-            .setChipStyle(
-                ViewStyle.Builder()
-                    .setBackground(
-                        Icon.createWithResource(context, bgDrawableId).setTint(bgColor.toArgb())
-                    )
-                    .setPadding(
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_start).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_top).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_end).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_bottom).toInt(),
-                    )
-                    .build()
+            build()
+        }
+        val iconStyle = ImageViewStyle.Builder().run {
+            setLayoutMargin(0, 0, 0, 0)
+            build()
+        }
+        val titleStyle = TextViewStyle.Builder().run {
+            setLayoutMargin(
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_start).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_top).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_end).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_bottom).toInt(),
             )
-            .setStartIconStyle(
-                ImageViewStyle.Builder()
-                    .setLayoutMargin(0, 0, 0, 0)
-                    .build()
+            setTextColor(fgColor.toArgb())
+            setTextSize(16f)
+            build()
+        }
+        val subtitleStyle = TextViewStyle.Builder().run {
+            setLayoutMargin(
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_start).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_top).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_end).toInt(),
+                context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_bottom).toInt(),
             )
-            .setTitleStyle(
-                TextViewStyle.Builder()
-                    .setLayoutMargin(
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_start).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_top).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_end).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_bottom).toInt(),
-                    )
-                    .setTextColor(fgColor.toArgb())
-                    .setTextSize(16f)
-                    .build()
-            )
-            .setSubtitleStyle(
-                TextViewStyle.Builder()
-                    .setLayoutMargin(
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_start).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_top).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_end).toInt(),
-                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_bottom).toInt(),
-                    )
-                    .setTextColor(ColorUtils.setAlphaComponent(fgColor.toArgb(), 150))
-                    .setTextSize(14f)
-                    .build()
-            )
-            .setEndIconStyle(
-                ImageViewStyle.Builder()
-                    .setLayoutMargin(0, 0, 0, 0)
-                    .build()
-            )
-            .build()
-        stylesBuilder.addStyle(suggestionStyle)
-        return stylesBuilder.build()
+            setTextColor(ColorUtils.setAlphaComponent(fgColor.toArgb(), 150))
+            setTextSize(14f)
+            build()
+        }
+        val suggestionStyle = InlineSuggestionUi.newStyleBuilder().run {
+            setSingleIconChipStyle(singleIconChipStyle)
+            setChipStyle(chipStyle)
+            setStartIconStyle(iconStyle)
+            setEndIconStyle(iconStyle)
+            setTitleStyle(titleStyle)
+            setSubtitleStyle(subtitleStyle)
+            build()
+        }
+        return UiVersions.newStylesBuilder().run {
+            addStyle(suggestionStyle)
+            build()
+        }
     }
 
     private fun getColorFromThemeAttribute(

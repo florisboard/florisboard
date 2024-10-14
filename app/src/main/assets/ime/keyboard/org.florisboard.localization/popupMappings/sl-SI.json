@@ -2,7 +2,7 @@
   "all": {
     "c": {
       "relevant": [
-        { "$": "auto_text_key", "code":  269, "label": "č" },
+        { "$": "auto_text_key", "code":  269, "label": "č" }
       ]
     },
     "s": {

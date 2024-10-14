@@ -1,0 +1,71 @@
+{
+  "all": {
+    "о": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1255, "label": "ӧ" }
+      ]
+    },
+    "з": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1247, "label": "ӟ" }
+      ]
+    },
+    "ж": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1245, "label": "ӝ" }
+      ]
+    },
+    "ч": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1269, "label": "ӵ" }
+      ]
+    },
+    "и": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1253, "label": "ӥ" }
+      ]
+    },
+    "е": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1105, "label": "ё" }
+      ]
+    },
+    "ь": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  1098, "label": "ъ" }
+      ]
+    },
+    "~right": {
+      "main": { "code":   44, "label": "," },
+      "relevant": [
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   34, "label": "\"" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   39, "label": "'" },
+        { "code":   64, "label": "@" },
+        { "$": "layout_direction_selector",
+          "ltr": { "code":   40, "label": "(" },
+          "rtl": { "code":   41, "label": "(" }
+        },
+        { "$": "layout_direction_selector",
+          "ltr": { "code":   41, "label": ")" },
+          "rtl": { "code":   40, "label": ")" }
+        },
+        { "code":   35, "label": "#" },
+        { "code":   33, "label": "!" },
+        { "code":   63, "label": "?" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".ru" },
+        { "code": -255, "label": ".udm.ru" }
+      ]
+    }
+  }
+}

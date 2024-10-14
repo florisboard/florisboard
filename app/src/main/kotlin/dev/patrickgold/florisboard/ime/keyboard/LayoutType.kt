@@ -62,6 +62,6 @@ private class LayoutTypeSerializer : KSerializer<LayoutType> {
     }
 
     override fun deserialize(decoder: Decoder): LayoutType {
-        return LayoutType.values().find { it.id == decoder.decodeString() }!!
+        return LayoutType.entries.find { it.id == decoder.decodeString() }!!
     }
 }

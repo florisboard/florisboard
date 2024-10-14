@@ -22,6 +22,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
+import android.provider.MediaStore.Images.Media
 import android.provider.OpenableColumns
 import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
@@ -38,8 +39,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import dev.patrickgold.florisboard.lib.android.query
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
+import org.florisboard.lib.android.UriSerializer
+import org.florisboard.lib.android.query
+import kotlinx.serialization.Serializable
+import org.florisboard.lib.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
 private const val CLIPBOARD_FILES_TABLE = "clipboard_files"
@@ -51,7 +54,7 @@ enum class ItemType(val value: Int) {
 
     companion object {
         fun fromInt(value : Int) : ItemType {
-            return values().first { it.value == value }
+            return entries.first { it.value == value }
         }
     }
 }
@@ -62,6 +65,7 @@ enum class ItemType(val value: Int) {
  * If type == ItemType.IMAGE there must be a uri set
  * if type == ItemType.TEXT there must be a text set
  */
+@Serializable
 @Entity(tableName = CLIPBOARD_HISTORY_TABLE)
 data class ClipboardItem(
     @PrimaryKey(autoGenerate = true)
@@ -69,6 +73,7 @@ data class ClipboardItem(
     var id: Long = 0,
     val type: ItemType,
     val text: String?,
+    @Serializable(with = UriSerializer::class)
     val uri: Uri?,
     val creationTimestampMs: Long,
     val isPinned: Boolean,
@@ -209,7 +214,7 @@ data class ClipboardItem(
 
     fun stringRepresentation(): String {
         return when {
-            text != null -> text
+            text != null -> text.take(500)
             uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }
@@ -281,6 +286,9 @@ interface ClipboardHistoryDao {
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE")
     fun deleteAll()
 
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE type = :type")
+    fun deleteAllFromType(type: ItemType)
+
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE NOT isPinned")
     fun deleteAllUnpinned()
 }
@@ -302,11 +310,13 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
     }
 }
 
+@Serializable
 @Entity(tableName = CLIPBOARD_FILES_TABLE)
 data class ClipboardFileInfo(
     @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
     @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
     @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
+    @ColumnInfo(name=Media.ORIENTATION) val orientation: Int,
     val mimeTypes: Array<String>,
 ) {
     override fun equals(other: Any?): Boolean {
@@ -340,6 +350,9 @@ interface ClipboardFilesDao {
     @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
     fun getCursorById(uid: Long) : Cursor
 
+    @Query("SELECT (:projection) FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
+    fun getCurserByIdWithColums(uid: Long, projection: String) : Cursor
+
     @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
 
@@ -350,7 +363,7 @@ interface ClipboardFilesDao {
     fun getAll(): List<ClipboardFileInfo>
 }
 
-@Database(entities = [ClipboardFileInfo::class], version = 1)
+@Database(entities = [ClipboardFileInfo::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class ClipboardFilesDatabase : RoomDatabase() {
     abstract fun clipboardFilesDao() : ClipboardFilesDao

@@ -27,8 +27,8 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
-import dev.patrickgold.florisboard.lib.android.AndroidSettings
-import dev.patrickgold.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -36,6 +36,7 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidVersion
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
@@ -83,6 +84,13 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = stringRes(R.string.devtools__show_spelling_overlay__label),
                 summary = stringRes(R.string.devtools__show_spelling_overlay__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.devtools.showInlineAutofillOverlay,
+                title = stringRes(R.string.devtools__show_inline_autofill_overlay__label),
+                summary = stringRes(R.string.devtools__show_inline_autofill_overlay__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+                visibleIf = { AndroidVersion.ATLEAST_API30_R },
             )
             SwitchPreference(
                 prefs.devtools.showKeyTouchBoundaries,

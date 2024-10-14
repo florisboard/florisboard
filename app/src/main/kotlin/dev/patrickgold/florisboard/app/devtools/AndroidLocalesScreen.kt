@@ -21,24 +21,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import java.util.*
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
+import java.util.Locale
 
 @Composable
 fun AndroidLocalesScreen() = FlorisScreen {
@@ -73,7 +74,7 @@ fun AndroidLocalesScreen() = FlorisScreen {
                     )
                 }
             },
-            icon = painterResource(R.drawable.ic_save),
+            icon = Icons.Default.Save,
         )
     }
 

@@ -20,7 +20,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
@@ -35,9 +34,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.UnfoldLess
+import androidx.compose.material.icons.filled.UnfoldMore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,25 +53,27 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.horizontalTween
 import dev.patrickgold.florisboard.lib.compose.verticalTween
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
 
 private const val AnimationDuration = 200
 
@@ -100,12 +107,14 @@ fun Smartbar() {
                     SmartbarMainRow()
                 }
             }
+
             ExtendedActionsPlacement.BELOW_CANDIDATES -> {
                 Column {
                     SmartbarMainRow()
                     SmartbarSecondaryRow()
                 }
             }
+
             ExtendedActionsPlacement.OVERLAY_APP_UI -> {
                 Box(
                     modifier = Modifier
@@ -133,6 +142,13 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
+    val nlpManager by context.nlpManager()
+
+    val inlineSuggestions by NlpInlineAutofill.suggestions.collectAsState()
+    LaunchedEffect(inlineSuggestions) {
+        nlpManager.autoExpandCollapseSmartbarActions(null, inlineSuggestions)
+    }
+    val shouldShowInlineSuggestionsUi = AndroidVersion.ATLEAST_API30_R && inlineSuggestions.isNotEmpty()
 
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val flipToggles by prefs.smartbar.flipToggles.observeAsState()
@@ -161,27 +177,43 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .snyggShadow(primaryActionsToggleStyle)
-                    .snyggBorder(primaryActionsToggleStyle)
-                    .snyggBackground(primaryActionsToggleStyle),
+                    .snyggBorder(context, primaryActionsToggleStyle)
+                    .snyggBackground(context, primaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
-                val rotation by animateFloatAsState(
-                    animationSpec = if (shouldAnimate) AnimationTween else NoAnimationTween,
-                    targetValue = if (sharedActionsExpanded) 180f else 0f,
-                )
+                val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
+                val rotation by transition.animateFloat(
+                    transitionSpec = {
+                        if (shouldAnimate) AnimationTween else NoAnimationTween
+                    },
+                    label = "rotation",
+                ) {
+                    if (it) 180f else 0f
+                }
+                val arrowIcon = if (flipToggles) {
+                    Icons.AutoMirrored.Default.KeyboardArrowLeft
+                } else {
+                    Icons.AutoMirrored.Default.KeyboardArrowRight
+                }
+                val incognitoIcon = vectorResource(id = R.drawable.ic_incognito)
+                val incognitoDisplayMode = prefs.keyboard.incognitoDisplayMode.observeAsState()
+                val isIncognitoMode = keyboardManager.activeState.isIncognitoMode
+                val icon = if (isIncognitoMode) {
+                    when (incognitoDisplayMode.value) {
+                        IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE -> incognitoIcon!!
+                        IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD -> arrowIcon
+                    }
+                } else {
+                    arrowIcon
+                }
                 Icon(
-                    modifier = Modifier
-                        .autoMirrorForRtl()
-                        .rotate(rotation),
-                    painter = painterResource(
-                        if (flipToggles) {
-                            R.drawable.ic_keyboard_arrow_left
-                        } else {
-                            R.drawable.ic_keyboard_arrow_right
-                        }
-                    ),
+                    modifier = Modifier.rotate(if (incognitoDisplayMode.value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD) rotation else 0f),
+                    imageVector = icon,
                     contentDescription = null,
-                    tint = primaryActionsToggleStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                    tint = primaryActionsToggleStyle.foreground.solidColor(
+                        context,
+                        default = FlorisImeTheme.fallbackContentColor()
+                    ),
                 )
             }
         }
@@ -202,7 +234,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 enter = enterTransition,
                 exit = exitTransition,
             ) {
-                CandidatesRow()
+                if (shouldShowInlineSuggestionsUi) {
+                    InlineSuggestionsUi(inlineSuggestions)
+                } else {
+                    CandidatesRow()
+                }
             }
             androidx.compose.animation.AnimatedVisibility(
                 visible = expanded,
@@ -235,8 +271,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .snyggShadow(secondaryActionsToggleStyle)
-                    .snyggBorder(secondaryActionsToggleStyle)
-                    .snyggBackground(secondaryActionsToggleStyle),
+                    .snyggBorder(context, secondaryActionsToggleStyle)
+                    .snyggBackground(context, secondaryActionsToggleStyle),
                 contentAlignment = Alignment.Center,
             ) {
                 val transition = updateTransition(extendedActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
@@ -247,18 +283,18 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .alpha(alpha)
                         .rotate(rotation),
-                    painter = painterResource(R.drawable.ic_unfold_less),
+                    imageVector = Icons.Default.UnfoldLess,
                     contentDescription = null,
-                    tint = secondaryActionsToggleStyle.foreground.solidColor(),
+                    tint = secondaryActionsToggleStyle.foreground.solidColor(context),
                 )
                 // Not expanded icon
                 Icon(
                     modifier = Modifier
                         .alpha(1f - alpha)
                         .rotate(rotation - 180f),
-                    painter = painterResource(R.drawable.ic_unfold_more),
+                    imageVector = Icons.Default.UnfoldMore,
                     contentDescription = null,
-                    tint = secondaryActionsToggleStyle.foreground.solidColor(),
+                    tint = secondaryActionsToggleStyle.foreground.solidColor(context),
                 )
             }
         }
@@ -273,9 +309,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             actionArrangement.stickyAction != null -> {
                 actionArrangement.stickyAction
             }
+
             smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED && sharedActionsExpanded -> {
                 ToggleOverflowPanelAction
             }
+
             else -> null
         }
 
@@ -304,15 +342,25 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight)
-            .snyggBackground(smartbarStyle),
+            .snyggBackground(context, smartbarStyle),
     ) {
         when (smartbarLayout) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
-                CandidatesRow()
+                if (shouldShowInlineSuggestionsUi) {
+                    InlineSuggestionsUi(inlineSuggestions)
+                } else {
+                    CandidatesRow()
+                }
             }
+
             SmartbarLayout.ACTIONS_ONLY -> {
-                QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
+                if (shouldShowInlineSuggestionsUi) {
+                    InlineSuggestionsUi(inlineSuggestions)
+                } else {
+                    QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
+                }
             }
+
             SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED -> {
                 if (!flipToggles) {
                     SharedActionsToggle()
@@ -324,6 +372,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     SharedActionsToggle()
                 }
             }
+
             SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED -> {
                 if (!flipToggles) {
                     ExtendedActionsToggle()
@@ -341,15 +390,16 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     val prefs by florisPreferenceModel()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val secondaryRowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarExtendedActionsRow)
     val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
-    val background = secondaryRowStyle.background.solidColor().let { color ->
+    val background = secondaryRowStyle.background.solidColor(context).let { color ->
         if (extendedActionsPlacement == ExtendedActionsPlacement.OVERLAY_APP_UI) {
             if (color.isUnspecified || color.alpha == 0f) {
-                FlorisImeTheme.style.get(FlorisImeUi.Keyboard).background.solidColor(default = Color.Black)
+                FlorisImeTheme.style.get(FlorisImeUi.Keyboard).background.solidColor(context, default = Color.Black)
             } else {
                 color
             }

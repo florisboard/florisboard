@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.computeIconResId
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.lib.kotlin.lowercase
+import dev.patrickgold.florisboard.lib.lowercase
 
 class TextKey(override val data: AbstractKeyData) : Key(data) {
     var computedData: KeyData = TextKeyData.UNSPECIFIED
@@ -228,7 +228,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
     fun computeLabelsAndDrawables(evaluator: ComputingEvaluator) {
         label = evaluator.computeLabel(computedData)
         hintedLabel = null
-        foregroundDrawableId = evaluator.computeIconResId(computedData)
+        foregroundImageVector = evaluator.computeImageVector(computedData)
 
         val data = computedData
         if (data.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE) {

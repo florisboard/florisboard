@@ -16,30 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.input
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 enum class HapticVibrationMode  {
     USE_VIBRATOR_DIRECTLY,
     USE_HAPTIC_FEEDBACK_INTERFACE;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = USE_VIBRATOR_DIRECTLY,
-                label = stringRes(R.string.enum__haptic_vibration_mode__use_vibrator_directly),
-                description = stringRes(R.string.enum__haptic_vibration_mode__use_vibrator_directly__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-            entry(
-                key = USE_HAPTIC_FEEDBACK_INTERFACE,
-                label = stringRes(R.string.enum__haptic_vibration_mode__use_haptic_feedback_interface),
-                description = stringRes(R.string.enum__haptic_vibration_mode__use_haptic_feedback_interface__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-        }
-    }
 }

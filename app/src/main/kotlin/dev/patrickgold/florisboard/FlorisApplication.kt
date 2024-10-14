@@ -33,21 +33,18 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
+import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.lib.NativeStr
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.io.AssetManager
-import dev.patrickgold.florisboard.lib.io.deleteContentsRecursively
-import dev.patrickgold.florisboard.lib.io.subFile
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
-import dev.patrickgold.florisboard.lib.toNativeStr
 import dev.patrickgold.jetpref.datastore.JetPref
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.tryOrNull
+import org.florisboard.libnative.dummyAdd
 import java.lang.ref.WeakReference
 
 /**
@@ -59,22 +56,18 @@ private var FlorisApplicationReference = WeakReference<FlorisApplication?>(null)
 @Suppress("unused")
 class FlorisApplication : Application() {
     companion object {
-        private const val ICU_DATA_ASSET_PATH = "icu4c/icudt.dat"
-
-        private external fun nativeInitICUData(path: NativeStr): Int
-
         init {
             try {
-                System.loadLibrary("florisboard-native")
+                System.loadLibrary("fl_native")
             } catch (_: Exception) {
             }
+            FlorisImeTheme.init()
         }
     }
 
     private val prefs by florisPreferenceModel()
     private val mainHandler by lazy { Handler(mainLooper) }
 
-    val assetManager = lazy { AssetManager(this) }
     val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
     val editorInstance = lazy { EditorInstance(this) }
@@ -99,6 +92,7 @@ class FlorisApplication : Application() {
             )
             CrashUtility.install(this)
             FlorisEmojiCompat.init(this)
+            flogError { "dummy result: ${dummyAdd(3,4)}" }
 
             if (!UserManagerCompat.isUserUnlocked(this)) {
                 cacheDir?.deleteContentsRecursively()
@@ -115,34 +109,11 @@ class FlorisApplication : Application() {
     }
 
     fun init() {
-        initICU(this)
         cacheDir?.deleteContentsRecursively()
         prefs.initializeBlocking(this)
         extensionManager.value.init()
         clipboardManager.value.initializeForContext(this)
         DictionaryManager.init(this)
-    }
-
-    fun initICU(context: Context): Boolean {
-        try {
-            val androidAssetManager = context.assets ?: return false
-            val icuTmpDataFile = context.cacheDir.subFile("icudt.dat")
-            icuTmpDataFile.outputStream().use { os ->
-                androidAssetManager.open(ICU_DATA_ASSET_PATH).use { it.copyTo(os) }
-            }
-            val status = nativeInitICUData(icuTmpDataFile.absolutePath.toNativeStr())
-            icuTmpDataFile.delete()
-            return if (status != 0) {
-                flogError { "Native ICU data initializing failed with error code $status!" }
-                false
-            } else {
-                flogInfo { "Successfully loaded ICU data!" }
-                true
-            }
-        } catch (e: Exception) {
-            flogError { e.toString() }
-            return false
-        }
     }
 
     private inner class BootComplete : BroadcastReceiver() {
@@ -172,8 +143,6 @@ private tailrec fun Context.florisApplication(): FlorisApplication {
 }
 
 fun Context.appContext() = lazyOf(this.florisApplication())
-
-fun Context.assetManager() = this.florisApplication().assetManager
 
 fun Context.cacheManager() = this.florisApplication().cacheManager
 

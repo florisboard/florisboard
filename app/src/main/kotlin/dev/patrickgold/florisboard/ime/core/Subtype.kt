@@ -74,6 +74,15 @@ data class Subtype(
     }
 
     /**
+     * Returns an accumulated list of all locales of this subtype.
+     */
+    fun locales(): List<FlorisLocale> {
+        val locales = mutableListOf(primaryLocale)
+        locales.addAll(secondaryLocales)
+        return locales
+    }
+
+    /**
      * Converts this object into its short string representation, used for debugging. Format:
      *  <id>/<language_tag>/<currency_set_name>
      */

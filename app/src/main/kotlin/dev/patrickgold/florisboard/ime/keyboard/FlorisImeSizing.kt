@@ -36,7 +36,7 @@ import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState

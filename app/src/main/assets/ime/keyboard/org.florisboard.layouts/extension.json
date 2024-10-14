@@ -105,10 +105,23 @@
         "direction": "ltr"
       },
       {
+        "id": "colemak_dhm",
+        "label": "ColemakDHm",
+        "authors": [ "SteveP", "oneilljp" ],
+        "direction": "ltr"
+      },
+      {
         "id": "danish",
         "label": "Danish (QWERTY)",
         "authors": [ "patrickgold" ],
         "direction": "ltr"
+      },
+      {
+        "id": "diktor",
+        "label": "Diktor",
+        "authors": [ "kuroya2mouse" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:diktor"
       },
       {
         "id": "dvorak",
@@ -116,6 +129,13 @@
         "authors": [ "patrickgold" ],
         "direction": "ltr",
         "modifier": "org.florisboard.layouts:dvorak"
+      },
+      {
+        "id": "dvorak_de",
+        "label": "Dvorak (DE)",
+        "authors": [ "msrd0" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:dvorak_de"
       },
       {
         "id": "dvorak_es",
@@ -373,6 +393,12 @@
         "direction": "ltr"
       },
       {
+        "id": "tamil",
+        "label": "Tamil",
+        "authors": [ "Clem0908" ],
+        "direction": "ltr"
+      },
+      {
         "id": "thai_kedmanee",
         "label": "Thai Kedmanee",
         "authors": [ "mrdeck4rd" ],
@@ -397,6 +423,18 @@
         "direction": "ltr"
       },
       {
+        "id": "udmurt_compact",
+        "label": "Udmurt (3 чур)",
+        "authors": [ "vorgoron" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "udmurt_extended",
+        "label": "Udmurt (4 чур)",
+        "authors": [ "vorgoron" ],
+        "direction": "ltr"
+      },
+      {
         "id": "urdu_phonetic",
         "label": "Urdu Phonetic",
         "authors": [ "mubashir-rehman", "mirfatif" ],
@@ -413,6 +451,12 @@
         "id": "workman",
         "label": "Workman",
         "authors": [ "icyphox" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "jcuken_interslavic",
+        "label": "Interslavic (ЈЦУКЕН)",
+        "authors": [ "victorbnl" ],
         "direction": "ltr"
       }
     ],
@@ -436,9 +480,21 @@
         "direction": "rtl"
       },
       {
+        "id": "diktor",
+        "label": "Diktor",
+        "authors": [ "kuroya2mouse" ],
+        "direction": "ltr"
+      },
+      {
         "id": "dvorak",
         "label": "Dvorak",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "dvorak_de",
+        "label": "Dvorak (DE)",
+        "authors": [ "msrd0" ],
         "direction": "ltr"
       },
       {

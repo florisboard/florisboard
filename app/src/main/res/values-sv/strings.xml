@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vänta</string>
     <!-- One-handed strings -->
@@ -21,6 +22,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggor</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Pil upp</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Inställningar</string>
@@ -40,9 +42,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Solnedgångstid</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dag tema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Natt tema</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valt tema</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Anpassa färger till appen</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Temafärger anpassas till de i den aktuella appen, om denna stödjer detta.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard app-tillgångar</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Extern leverantör</string>

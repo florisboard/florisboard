@@ -1,6 +1,10 @@
 # Built application files
 *.apk
+*.aab
 *.ap_
+
+# dotenv
+.env
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -47,3 +51,12 @@ crowdin.properties
 # Nix stuff
 .direnv/
 result
+
+# VSCode
+.vscode/
+
+# Rust
+debug/
+target/
+**/*.rs.bk
+*.pdb

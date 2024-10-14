@@ -25,26 +25,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.safeTimes
-import dev.patrickgold.florisboard.lib.snygg.ui.SnyggSurface
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBorder
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggShadow
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 
 @Composable
 fun PopupBaseBox(
@@ -53,6 +54,8 @@ fun PopupBaseBox(
     fontSizeMultiplier: Float,
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
+    val context = LocalContext.current
+
     val popupStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.KeyPopup,
     )
@@ -72,7 +75,7 @@ fun PopupBaseBox(
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     text = label,
-                    color = popupStyle.foreground.solidColor(),
+                    color = popupStyle.foreground.solidColor(context),
                     fontSize = fontSize,
                     maxLines = 1,
                     softWrap = false,
@@ -84,9 +87,9 @@ fun PopupBaseBox(
                 modifier = Modifier
                     .requiredSize(fontSize.toDp() * 0.65f)
                     .align(Alignment.CenterEnd),
-                painter = painterResource(R.drawable.ic_more_horiz),
+                imageVector = Icons.Default.MoreHoriz,
                 contentDescription = null,
-                tint = popupStyle.foreground.solidColor(),
+                tint = popupStyle.foreground.solidColor(context),
             )
         }
     }
@@ -102,6 +105,8 @@ fun PopupExtBox(
     elemHeight: Dp,
     activeElementIndex: Int,
 ): Unit = with(LocalDensity.current) {
+    val context = LocalContext.current
+
     val popupStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.KeyPopup,
         isFocus = false,
@@ -109,8 +114,8 @@ fun PopupExtBox(
     Column(
         modifier = modifier
             .snyggShadow(popupStyle)
-            .snyggBorder(popupStyle)
-            .snyggBackground(popupStyle),
+            .snyggBorder(context, popupStyle)
+            .snyggBackground(context, popupStyle),
     ) {
         for (row in elements.asReversed()) {
             Row(
@@ -135,7 +140,7 @@ fun PopupExtBox(
                             .size(elemWidth, elemHeight)
                             .run {
                                 if (activeElementIndex == element.orderedIndex) {
-                                    snyggBackground(elemStyle)
+                                    snyggBackground(context, elemStyle)
                                 } else {
                                     this
                                 }
@@ -145,20 +150,20 @@ fun PopupExtBox(
                             Text(
                                 modifier = Modifier.align(Alignment.Center),
                                 text = label,
-                                color = elemStyle.foreground.solidColor(),
+                                color = elemStyle.foreground.solidColor(context),
                                 fontSize = elemFontSize,
                                 maxLines = 1,
                                 softWrap = false,
                             )
                         }
-                        element.iconResId?.let { iconResId ->
+                        element.icon?.let { icon ->
                             Icon(
                                 modifier = Modifier
                                     .requiredSize(elemFontSize.toDp() * 1.1f)
                                     .align(Alignment.Center),
-                                painter = painterResource(iconResId),
+                                imageVector = icon,
                                 contentDescription = null,
-                                tint = elemStyle.foreground.solidColor(),
+                                tint = elemStyle.foreground.solidColor(context),
                             )
                         }
                     }

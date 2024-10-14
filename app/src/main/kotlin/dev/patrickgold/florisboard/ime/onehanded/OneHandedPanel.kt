@@ -19,20 +19,27 @@ package dev.patrickgold.florisboard.ime.onehanded
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ZoomOutMap
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.solidColor
 
 @Composable
 fun RowScope.OneHandedPanel(
@@ -43,35 +50,41 @@ fun RowScope.OneHandedPanel(
     val prefs by florisPreferenceModel()
     val inputFeedbackController = LocalInputFeedbackController.current
     val oneHandedPanelStyle = FlorisImeTheme.style.get(FlorisImeUi.OneHandedPanel)
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .weight(weight)
-            .snyggBackground(oneHandedPanelStyle),
+            .snyggBackground(context, oneHandedPanelStyle),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
-        IconButton(onClick = {
-            inputFeedbackController.keyPress()
-            prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
-        }) {
+        IconButton(
+            onClick = {
+                inputFeedbackController.keyPress()
+                prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Icon(
-                painter = painterResource(R.drawable.ic_zoom_out_map),
+                imageVector = Icons.Default.ZoomOutMap,
                 contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
-                tint = oneHandedPanelStyle.foreground.solidColor(),
+                tint = oneHandedPanelStyle.foreground.solidColor(context),
             )
         }
-        IconButton(onClick = {
-            inputFeedbackController.keyPress()
-            prefs.keyboard.oneHandedMode.set(panelSide)
-        }) {
+        IconButton(
+            onClick = {
+                inputFeedbackController.keyPress()
+                prefs.keyboard.oneHandedMode.set(panelSide)
+            },
+            modifier = Modifier.height(FlorisImeSizing.keyboardUiHeight()).fillMaxWidth()
+        ) {
             Icon(
-                painter = painterResource(
-                    if (panelSide == OneHandedMode.START) {
-                        R.drawable.ic_keyboard_arrow_left
-                    } else {
-                        R.drawable.ic_keyboard_arrow_right
-                    }
-                ),
+                imageVector = if (panelSide == OneHandedMode.START) {
+                    Icons.AutoMirrored.Filled.KeyboardArrowLeft
+                } else {
+                    Icons.AutoMirrored.Filled.KeyboardArrowRight
+                },
                 contentDescription = stringRes(
                     if (panelSide == OneHandedMode.START) {
                         R.string.one_handed__move_start_btn_content_description
@@ -79,7 +92,7 @@ fun RowScope.OneHandedPanel(
                         R.string.one_handed__move_end_btn_content_description
                     }
                 ),
-                tint = oneHandedPanelStyle.foreground.solidColor(),
+                tint = oneHandedPanelStyle.foreground.solidColor(context),
             )
         }
     }

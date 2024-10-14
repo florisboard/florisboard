@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,9 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -46,7 +47,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
@@ -64,18 +64,17 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.toIntOffset
+import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggClip
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 
 private const val ItemNotFound = -1
 private val NoopAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.NOOP))
 private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.DRAG_MARKER))
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
@@ -104,17 +103,20 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorHeader)
     val subheaderStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorSubheader)
 
-    fun findItemForOffset(offset: IntOffset): LazyGridItemInfo? {
+    fun findItemForOffsetOrClosestInRow(offset: IntOffset): LazyGridItemInfo? {
+        var closestItemInRow: LazyGridItemInfo? = null
         // Using manual for loop with indices instead of firstOrNull() because this method gets
         // called a lot and firstOrNull allocates an iterator for each call
         for (index in gridState.layoutInfo.visibleItemsInfo.indices) {
             val item = gridState.layoutInfo.visibleItemsInfo[index]
-            if (offset.x in item.offset.x..(item.offset.x + item.size.width) &&
-                offset.y in item.offset.y..(item.offset.y + item.size.height)) {
-                return item
+            if (offset.y in item.offset.y..(item.offset.y + item.size.height)) {
+                if (offset.x in item.offset.x..(item.offset.x + item.size.width)) {
+                    return item
+                }
+                closestItemInRow = item
             }
         }
-        return null
+        return closestItemInRow
     }
 
     fun indexOfStickyAction(item: LazyGridItemInfo): Int {
@@ -157,7 +159,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     }
 
     fun beginDragGesture(pos: IntOffset) {
-        val item = findItemForOffset(pos) ?: return
+        val item = findItemForOffsetOrClosestInRow(pos) ?: return
         val stickyActionIndex = indexOfStickyAction(item)
         val dynamicActionIndex = indexOfDynamicAction(item)
         val hiddenActionIndex = indexOfHiddenAction(item)
@@ -181,7 +183,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
         if (activeDragAction == null) return
         val pos = activeDragPosition + posChange
         activeDragPosition = pos
-        val item = findItemForOffset(pos) ?: return
+        val item = findItemForOffsetOrClosestInRow(pos) ?: return
         val stickyActionIndex = indexOfStickyAction(item)
         val dynamicActionIndex = indexOfDynamicAction(item)
         val hiddenActionIndex = indexOfHiddenAction(item)
@@ -249,26 +251,26 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .snyggBackground(panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
+            .snyggBackground(context, panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
             .snyggClip(panelStyle),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .snyggBackground(headerStyle),
+                .snyggBackground(context, headerStyle),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButton(
                 onClick = {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
-                icon = painterResource(R.drawable.ic_keyboard_arrow_left),
-                iconColor = headerStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                iconColor = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
             )
             Text(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
-                color = headerStyle.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+                color = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
                 fontSize = headerStyle.fontSize.spSize(),
                 textAlign = TextAlign.Center,
             )
@@ -298,10 +300,10 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 }
                 item(key = keyOf(stickyAction)) {
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = stickyAction,
                         evaluator = evaluator,
-                        type = QabType.STATIC_TILE,
+                        type = QuickActionBarType.STATIC_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -313,10 +315,10 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 }
                 itemsIndexed(dynamicActions, key = { i, a -> keyOf(a) ?: i }) { _, action ->
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
-                        type = QabType.STATIC_TILE,
+                        type = QuickActionBarType.STATIC_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -328,10 +330,10 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 }
                 itemsIndexed(hiddenActions, key = { i, a -> keyOf(a) ?: i }) { _, action ->
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
-                        type = QabType.STATIC_TILE,
+                        type = QuickActionBarType.STATIC_TILE,
                     )
                 }
             }
@@ -346,7 +348,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         .offset(-size.width / 2, -size.height / 2),
                     action = activeDragAction!!,
                     evaluator = evaluator,
-                    type = QabType.STATIC_TILE,
+                    type = QuickActionBarType.STATIC_TILE,
                 )
             }
         }
@@ -359,12 +361,13 @@ private fun Subheader(
     style: SnyggPropertySet,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     Text(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
         text = text,
-        color = style.foreground.solidColor(default = FlorisImeTheme.fallbackContentColor()),
+        color = style.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
         fontWeight = FontWeight.Bold,
         fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )

@@ -36,9 +36,9 @@ import androidx.room.Update
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ValidationRule
-import dev.patrickgold.florisboard.lib.android.readText
-import dev.patrickgold.florisboard.lib.android.writeText
-import dev.patrickgold.florisboard.lib.kotlin.tryOrNull
+import org.florisboard.lib.android.readText
+import org.florisboard.lib.android.writeText
+import org.florisboard.lib.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 
 private const val WORDS_TABLE = "words"

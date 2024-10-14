@@ -16,73 +16,69 @@
 
 package dev.patrickgold.florisboard.lib.compose
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.takeOrElse
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FlorisChip(
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
+    selected: Boolean = false,
     enabled: Boolean = true,
-    color: Color = Color.Unspecified,
-    shape: Shape = CircleShape,
-    @DrawableRes leadingIcons: List<Int> = listOf(),
-    @DrawableRes trailingIcons: List<Int> = listOf(),
+    shape: Shape = MaterialTheme.shapes.small,
+    leadingIcons: List<ImageVector> = listOf(),
+    trailingIcons: List<ImageVector> = listOf(),
 ) {
-    val backgroundColor = color.takeOrElse {
-        MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.BackgroundOpacity)
-    }
-    Surface(
-        modifier = modifier,
+    InputChip(
+        selected = selected,
         onClick = onClick,
         enabled = enabled,
-        color = backgroundColor,
         shape = shape,
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            for (leadingIcon in leadingIcons) {
-                Icon(
-                    modifier = Modifier.padding(end = 8.dp).size(16.dp),
-                    painter = painterResource(leadingIcon),
-                    contentDescription = null,
-                )
-            }
+        label = {
             Text(
                 text = text,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
-            for (trailingIcon in trailingIcons) {
-                Icon(
-                    modifier = Modifier.padding(start = 8.dp).size(16.dp),
-                    painter = painterResource(trailingIcon),
-                    contentDescription = null,
-                )
+        },
+        modifier = modifier,
+        leadingIcon = {
+            Row {
+                for (leadingIcon in leadingIcons) {
+                    Icon(
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(16.dp),
+                        imageVector = leadingIcon,
+                        contentDescription = null,
+                    )
+                }
+            }
+        },
+        trailingIcon = {
+            Row {
+                for (trailingIcon in trailingIcons) {
+                    Icon(
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .size(16.dp),
+                        imageVector = trailingIcon,
+                        contentDescription = null,
+                    )
+                }
             }
         }
-    }
+    )
 }

@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.app.settings.smartbar
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
@@ -41,7 +43,7 @@ fun SmartbarScreen() = FlorisScreen {
         ListPreference(
             listPref = prefs.smartbar.layout,
             title = stringRes(R.string.pref__smartbar__layout__label),
-            entries = SmartbarLayout.listEntries(),
+            entries = enumDisplayEntriesOf(SmartbarLayout::class),
             enabledIf = { prefs.smartbar.enabled isEqualTo true },
         )
 
@@ -49,7 +51,7 @@ fun SmartbarScreen() = FlorisScreen {
             ListPreference(
                 prefs.suggestion.displayMode,
                 title = stringRes(R.string.pref__suggestion__display_mode__label),
-                entries = CandidatesDisplayMode.listEntries(),
+                entries = enumDisplayEntriesOf(CandidatesDisplayMode::class),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
                 visibleIf = { prefs.smartbar.layout isNotEqualTo SmartbarLayout.ACTIONS_ONLY },
             )
@@ -63,17 +65,22 @@ fun SmartbarScreen() = FlorisScreen {
                         prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED
                 },
             )
+            // TODO: schedule to remove this preference in the future, but keep it for now so users
+            //  know why the setting is not available anymore. Also force enable it for UI display.
+            SideEffect {
+                prefs.smartbar.sharedActionsAutoExpandCollapse.set(true)
+            }
             SwitchPreference(
                 prefs.smartbar.sharedActionsAutoExpandCollapse,
                 title = stringRes(R.string.pref__smartbar__shared_actions_auto_expand_collapse__label),
-                summary = stringRes(R.string.pref__smartbar__shared_actions_auto_expand_collapse__summary),
-                enabledIf = { prefs.smartbar.enabled isEqualTo true },
+                summary = "[Since v0.4.1] Always enabled due to UX issues",
+                enabledIf = { false },
                 visibleIf = { prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED },
             )
             ListPreference(
                 listPref = prefs.smartbar.extendedActionsPlacement,
                 title = stringRes(R.string.pref__smartbar__extended_actions_placement__label),
-                entries = ExtendedActionsPlacement.listEntries(),
+                entries = enumDisplayEntriesOf(ExtendedActionsPlacement::class),
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
                 visibleIf = { prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED },
             )

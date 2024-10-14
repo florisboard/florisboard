@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Paŭzigi</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Atendi</string>
@@ -18,6 +18,13 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Simboloj</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagoj</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Sago supren</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopii</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Alglui</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Tondujo</string>
+    <string name="quick_action__settings" maxLength="12">Agordoj</string>
+    <string name="quick_action__undo" maxLength="12">Malfari</string>
+    <string name="quick_action__redo" maxLength="12">Refari</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Agordoj</string>
@@ -32,7 +39,6 @@
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selektado etoso</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>

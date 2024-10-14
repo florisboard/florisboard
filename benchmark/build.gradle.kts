@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-// Suppress needed until https://youtrack.jetbrains.com/issue/KTIJ-19369 is fixed
-@file:Suppress("DSL_SCOPE_VIOLATION")
-
 plugins {
     alias(libs.plugins.agp.test)
     alias(libs.plugins.kotlin.android)
@@ -24,7 +21,7 @@ plugins {
 
 android {
     namespace = "dev.patrickgold.florisboard.benchmark"
-    compileSdk = 32
+    compileSdk = 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,7 +34,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 32
+        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

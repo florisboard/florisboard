@@ -22,32 +22,32 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun FlorisButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
+    icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small,
@@ -67,7 +67,7 @@ fun FlorisButton(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -79,7 +79,7 @@ fun FlorisButton(
 fun FlorisOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
+    icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small,
@@ -99,7 +99,7 @@ fun FlorisOutlinedButton(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -111,10 +111,10 @@ fun FlorisOutlinedButton(
 fun FlorisTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
+    icon: ImageVector? = null,
     text: String,
     enabled: Boolean = true,
-    shape: Shape = MaterialTheme.shapes.small,
+    shape: Shape = ButtonDefaults.shape,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
 ) {
@@ -131,7 +131,7 @@ fun FlorisTextButton(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -143,7 +143,7 @@ fun FlorisTextButton(
 fun FlorisIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter,
+    icon: ImageVector,
     enabled: Boolean = true,
     iconModifier: Modifier = Modifier,
     iconColor: Color = Color.Unspecified,
@@ -153,15 +153,14 @@ fun FlorisIconButton(
         enabled = enabled,
         onClick = onClick,
     ) {
-        val contentAlpha = if (enabled) LocalContentAlpha.current else 0.14f
-        val contentColor = iconColor.takeOrElse { LocalContentColor.current }
+        val contentAlpha = if (enabled) 1f else 0.14f
+        val contentColor = iconColor.takeOrElse { LocalContentColor.current }.copy(alpha = contentAlpha)
         CompositionLocalProvider(
-            LocalContentAlpha provides contentAlpha,
             LocalContentColor provides contentColor,
         ) {
             Icon(
                 modifier = iconModifier,
-                painter = icon,
+                imageVector = icon,
                 contentDescription = null,
             )
         }
@@ -172,7 +171,7 @@ fun FlorisIconButton(
 fun FlorisIconButtonWithInnerPadding(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter,
+    icon: ImageVector,
     enabled: Boolean = true,
     iconModifier: Modifier = Modifier,
     iconColor: Color = Color.Unspecified,
@@ -182,9 +181,8 @@ fun FlorisIconButtonWithInnerPadding(
         enabled = enabled,
         onClick = onClick,
     ) {
-        val contentAlpha = if (enabled) LocalContentAlpha.current else 0.14f
+        val contentAlpha = if (enabled) 1f else 0.14f
         CompositionLocalProvider(
-            LocalContentAlpha provides contentAlpha,
             LocalContentColor provides iconColor,
         ) {
             Box(
@@ -195,7 +193,8 @@ fun FlorisIconButtonWithInnerPadding(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    painter = icon,
+                    modifier = modifier.alpha(contentAlpha),
+                    imageVector = icon,
                     contentDescription = null,
                 )
             }

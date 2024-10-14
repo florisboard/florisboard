@@ -102,7 +102,7 @@ value class InputAttributes private constructor(val raw: Int) {
         TEXT(EditorInfo.TYPE_CLASS_TEXT);
 
         companion object {
-            fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: NULL
+            fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: NULL
         }
 
         fun toInt() = value
@@ -128,7 +128,7 @@ value class InputAttributes private constructor(val raw: Int) {
         WEB_PASSWORD(16);
 
         companion object {
-            fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: NORMAL
+            fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: NORMAL
         }
 
         fun toInt() = value
@@ -150,7 +150,7 @@ value class InputAttributes private constructor(val raw: Int) {
                 }
             }
 
-            fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: NONE
+            fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: NONE
         }
 
         fun toFlags(): Int {
