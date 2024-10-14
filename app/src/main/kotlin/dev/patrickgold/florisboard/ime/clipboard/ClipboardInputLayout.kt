@@ -138,7 +138,7 @@ fun ClipboardInputLayout(
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
     val history by clipboardManager.history.observeAsNonNullState()
 
-    val innerHeight = FlorisImeSizing.imeUiHeight() - FlorisImeSizing.smartbarHeight - (FlorisImeSizing.keyboardRowBaseHeight * 0.8f)
+    val innerHeight = FlorisImeSizing.imeUiHeight() - FlorisImeSizing.smartbarHeight
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
