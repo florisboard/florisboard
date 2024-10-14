@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.ClipData
+import android.content.ClipDescription.EXTRA_IS_REMOTE_DEVICE
+import android.content.ClipDescription.EXTRA_IS_SENSITIVE
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -24,6 +26,8 @@ import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.MediaStore.Images.Media
 import android.provider.OpenableColumns
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
@@ -39,9 +43,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
+import dev.patrickgold.florisboard.R
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.UriSerializer
 import org.florisboard.lib.android.query
-import kotlinx.serialization.Serializable
+import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
@@ -67,7 +76,7 @@ enum class ItemType(val value: Int) {
  */
 @Serializable
 @Entity(tableName = CLIPBOARD_HISTORY_TABLE)
-data class ClipboardItem(
+data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = BaseColumns._ID, index = true)
     var id: Long = 0,
@@ -78,6 +87,10 @@ data class ClipboardItem(
     val creationTimestampMs: Long,
     val isPinned: Boolean,
     val mimeTypes: Array<String>,
+    @EncodeDefault
+    val isSensitive: Boolean = false,
+    @EncodeDefault
+    val isRemoteDevice: Boolean = false,
 ) {
     companion object {
         /**
@@ -111,6 +124,18 @@ data class ClipboardItem(
                 dataItem?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
                 dataItem?.uri != null && data.description.hasMimeType("video/*") -> ItemType.VIDEO
                 else -> ItemType.TEXT
+            }
+
+            val isSensitive = if (AndroidVersion.ATLEAST_API33_T) {
+                data.description?.extras?.getBoolean(EXTRA_IS_SENSITIVE) ?: false
+            } else {
+                false
+            }
+
+            val isRemoteDevice = if (AndroidVersion.ATLEAST_API34_U) {
+                data.description?.extras?.getBoolean(EXTRA_IS_REMOTE_DEVICE) ?: false
+            } else {
+                false
             }
 
             val uri = if (type == ItemType.IMAGE || type == ItemType.VIDEO) {
@@ -151,7 +176,21 @@ data class ClipboardItem(
                 }
             }
 
-            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes)
+            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes, isSensitive, isRemoteDevice)
+        }
+    }
+
+    @Composable
+    inline fun displayText(): String {
+        val context = LocalContext.current
+        return displayText(context)
+    }
+
+    fun displayText(context: Context): String {
+        return if (isSensitive) {
+            context.stringRes(R.string.clipboard__sensitive_clip_content)
+        } else {
+            stringRepresentation()
         }
     }
 
@@ -293,7 +332,7 @@ interface ClipboardHistoryDao {
     fun deleteAllUnpinned()
 }
 
-@Database(entities = [ClipboardItem::class], version = 2)
+@Database(entities = [ClipboardItem::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class ClipboardHistoryDatabase : RoomDatabase() {
     abstract fun clipboardItemDao(): ClipboardHistoryDao

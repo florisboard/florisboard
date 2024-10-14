@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Assignment
 import androidx.compose.material.icons.filled.Email
@@ -123,8 +124,9 @@ data class WordSuggestionCandidate(
 data class ClipboardSuggestionCandidate(
     val clipboardItem: ClipboardItem,
     override val sourceProvider: SuggestionProvider?,
+    val context: Context,
 ) : SuggestionCandidate {
-    override val text: CharSequence = clipboardItem.stringRepresentation()
+    override val text: CharSequence = clipboardItem.displayText(context)
 
     override val secondaryText: CharSequence? = null
 

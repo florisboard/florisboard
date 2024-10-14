@@ -61,7 +61,7 @@ class NlpManager(context: Context) {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val clipboardSuggestionProvider = ClipboardSuggestionProvider()
+    private val clipboardSuggestionProvider = ClipboardSuggestionProvider(context)
     private val emojiSuggestionProvider = EmojiSuggestionProvider(context)
     private val providers = guardedByLock {
         mapOf(
@@ -349,7 +349,7 @@ class NlpManager(context: Context) {
         }
     }
 
-    inner class ClipboardSuggestionProvider internal constructor() : SuggestionProvider {
+    inner class ClipboardSuggestionProvider internal constructor(private val context: Context) : SuggestionProvider {
         private var lastClipboardItemId: Long = -1
 
         override val providerId = "org.florisboard.nlp.providers.clipboard"
@@ -378,7 +378,7 @@ class NlpManager(context: Context) {
             return buildList {
                 val now = System.currentTimeMillis()
                 if ((now - currentItem.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
-                    add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider))
+                    add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
                     if (currentItem.type == ItemType.TEXT) {
                         val text = currentItem.stringRepresentation()
                         val matches = buildList {
@@ -402,6 +402,7 @@ class NlpManager(context: Context) {
                                         }
                                     ),
                                     sourceProvider = this@ClipboardSuggestionProvider,
+                                    context = context,
                                 ))
                             }
                         }
