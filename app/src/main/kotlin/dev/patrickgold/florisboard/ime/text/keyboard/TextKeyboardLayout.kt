@@ -316,7 +316,7 @@ fun TextKeyboardLayout(
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, desiredKey, evaluator, fontSizeMultiplier, isSmartbarKeyboard,
+                textKey, evaluator, fontSizeMultiplier, isSmartbarKeyboard,
                 debugShowTouchBoundaries,
             )
         }
@@ -336,7 +336,6 @@ fun TextKeyboardLayout(
 @Composable
 private fun TextKeyButton(
     key: TextKey,
-    desiredKey: TextKey,
     evaluator: ComputingEvaluator,
     fontSizeMultiplier: Float,
     isSmartbarKey: Boolean,
@@ -359,9 +358,7 @@ private fun TextKeyButton(
         KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
         else -> 1.0f
     }
-    val size = remember(desiredKey) {
-        key.visibleBounds.size.toDpSize()
-    }
+    val size = key.visibleBounds.size.toDpSize()
     Box(
         modifier = Modifier
             .requiredSize(size)
