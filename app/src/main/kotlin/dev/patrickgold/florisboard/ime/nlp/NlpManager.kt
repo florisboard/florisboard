@@ -379,6 +379,9 @@ class NlpManager(context: Context) {
                 val now = System.currentTimeMillis()
                 if ((now - currentItem.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
                     add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
+                    if (currentItem.isSensitive) {
+                        return@buildList
+                    }
                     if (currentItem.type == ItemType.TEXT) {
                         val text = currentItem.stringRepresentation()
                         val matches = buildList {
