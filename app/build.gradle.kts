@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -159,6 +160,12 @@ android {
             it.useJUnitPlatform()
         }
     }
+}
+
+composeCompiler {
+    // DO NOT ENABLE STRONG SKIPPING! This project currently relies on
+    // recomposition on parent state change to update the UI correctly.
+    featureFlags.add(ComposeFeatureFlag.StrongSkipping.disabled())
 }
 
 tasks.withType<Test> {

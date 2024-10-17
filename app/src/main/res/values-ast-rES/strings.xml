@@ -15,6 +15,7 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">لون البشرة المفضل للرموز التعبيرية</string>
     <string name="prefs__media__emoji_preferred_hair_style">تصفيفة الشعر الرموز التعبيرية المفضلة</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Activar l\'historial de fustaxes</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrises y fustaxes</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persones y cuerpu</string>
