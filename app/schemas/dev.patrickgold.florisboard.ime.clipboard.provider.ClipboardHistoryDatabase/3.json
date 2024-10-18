@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "282a1b421e498fd0e21c055b6a4315e0",
+    "identityHash": "145ca5bf4bff8e98f71ebc70ab3b495b",
     "entities": [
       {
         "tableName": "clipboard_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` INTEGER NOT NULL, `text` TEXT, `uri` TEXT, `creationTimestampMs` INTEGER NOT NULL, `isPinned` INTEGER NOT NULL, `mimeTypes` TEXT NOT NULL, `isSensitive` INTEGER NOT NULL, `isRemoteDevice` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` INTEGER NOT NULL, `text` TEXT, `uri` TEXT, `creationTimestampMs` INTEGER NOT NULL, `isPinned` INTEGER NOT NULL, `mimeTypes` TEXT NOT NULL, `isSensitive` INTEGER NOT NULL DEFAULT 0, `isRemoteDevice` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
@@ -54,13 +54,15 @@
             "fieldPath": "isSensitive",
             "columnName": "isSensitive",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "isRemoteDevice",
             "columnName": "isRemoteDevice",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -86,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '282a1b421e498fd0e21c055b6a4315e0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '145ca5bf4bff8e98f71ebc70ab3b495b')"
     ]
   }
 }

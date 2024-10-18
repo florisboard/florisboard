@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
+import androidx.room.AutoMigration
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -88,8 +89,10 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     val isPinned: Boolean,
     val mimeTypes: Array<String>,
     @EncodeDefault
+    @ColumnInfo(defaultValue = "0")
     val isSensitive: Boolean = false,
     @EncodeDefault
+    @ColumnInfo(defaultValue = "0")
     val isRemoteDevice: Boolean = false,
 ) {
     companion object {
@@ -332,7 +335,13 @@ interface ClipboardHistoryDao {
     fun deleteAllUnpinned()
 }
 
-@Database(entities = [ClipboardItem::class], version = 3)
+@Database(
+    entities = [ClipboardItem::class],
+    version = 3,
+    autoMigrations = [
+        AutoMigration(from = 2, to = 3)
+    ],
+)
 @TypeConverters(Converters::class)
 abstract class ClipboardHistoryDatabase : RoomDatabase() {
     abstract fun clipboardItemDao(): ClipboardHistoryDao
