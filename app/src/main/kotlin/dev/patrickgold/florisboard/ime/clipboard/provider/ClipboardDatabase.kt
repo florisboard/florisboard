@@ -337,9 +337,10 @@ interface ClipboardHistoryDao {
 
 @Database(
     entities = [ClipboardItem::class],
-    version = 3,
+    version = 4,
     autoMigrations = [
-        AutoMigration(from = 2, to = 3)
+        AutoMigration(from = 2, to = 4),
+        AutoMigration(from = 3, to = 4)
     ],
 )
 @TypeConverters(Converters::class)
