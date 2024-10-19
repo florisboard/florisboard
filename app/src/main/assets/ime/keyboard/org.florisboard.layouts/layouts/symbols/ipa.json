@@ -64,7 +64,7 @@
         { "code":   11816, "label": "⸨" },
         { "code":   10214, "label": "⟦" },
         { "code":   10216, "label": "⟨" },
-        { "code":   10218, "label": "⟩" },
+        { "code":   10218, "label": "⟪" },
         { "code":  123, "label": "{" }
       ]
     } },
@@ -72,7 +72,7 @@
       "relevant": [
         { "code":   41, "label": ")" },
         { "code":   11817, "label": "⸩" },
-        { "code":   10215, "label": "⟦" },
+        { "code":   10215, "label": "⟧" },
         { "code":   10217, "label": "⟩" },
         { "code":   10219, "label": "⟫" },
         { "code":  125, "label": "}" }
