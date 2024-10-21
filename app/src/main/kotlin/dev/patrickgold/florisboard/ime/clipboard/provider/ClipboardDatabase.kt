@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.database.getStringOrNull
 import androidx.lifecycle.LiveData
+import androidx.room.AutoMigration
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -38,11 +39,13 @@ import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
+import androidx.room.migration.AutoMigrationSpec
 import dev.patrickgold.florisboard.R
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -88,8 +91,10 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     val isPinned: Boolean,
     val mimeTypes: Array<String>,
     @EncodeDefault
+    @ColumnInfo(name = "is_sensitive", defaultValue = "0")
     val isSensitive: Boolean = false,
     @EncodeDefault
+    @ColumnInfo(name= "is_remote_device", defaultValue = "0")
     val isRemoteDevice: Boolean = false,
 ) {
     companion object {
@@ -332,10 +337,29 @@ interface ClipboardHistoryDao {
     fun deleteAllUnpinned()
 }
 
-@Database(entities = [ClipboardItem::class], version = 3)
+@Database(
+    entities = [ClipboardItem::class],
+    version = 4,
+    autoMigrations = [
+        AutoMigration(from = 2, to = 4),
+        AutoMigration(from = 3, to = 4, spec = ClipboardHistoryDatabase.MIGRATE_3_TO_4::class),
+    ],
+)
 @TypeConverters(Converters::class)
 abstract class ClipboardHistoryDatabase : RoomDatabase() {
     abstract fun clipboardItemDao(): ClipboardHistoryDao
+
+    @RenameColumn(
+        tableName = CLIPBOARD_HISTORY_TABLE,
+        fromColumnName = "isSensitive",
+        toColumnName = "is_sensitive",
+    )
+    @RenameColumn(
+        tableName = CLIPBOARD_HISTORY_TABLE,
+        fromColumnName = "isRemoteDevice",
+        toColumnName = "is_remote_device",
+    )
+    class MIGRATE_3_TO_4 : AutoMigrationSpec
 
     companion object {
         fun new(context: Context): ClipboardHistoryDatabase {

@@ -207,11 +207,6 @@ class ThemeManager(context: Context) {
         val bgDrawable = Icon.createWithResource(context, bgDrawableId).apply {
             setTint(bgColor.toArgb())
         }
-        val singleIconChipStyle = ViewStyle.Builder().run {
-            setBackground(bgDrawable)
-            setPadding(0, 0, 0, 0)
-            build()
-        }
         val chipStyle = ViewStyle.Builder().run {
             setBackground(bgDrawable)
             setPadding(
@@ -249,7 +244,7 @@ class ThemeManager(context: Context) {
             build()
         }
         val suggestionStyle = InlineSuggestionUi.newStyleBuilder().run {
-            setSingleIconChipStyle(singleIconChipStyle)
+            setSingleIconChipStyle(chipStyle)
             setChipStyle(chipStyle)
             setStartIconStyle(iconStyle)
             setEndIconStyle(iconStyle)
