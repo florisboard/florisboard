@@ -56,6 +56,12 @@
         "direction": "ltr"
       },
       {
+        "id": "bepo_new",
+        "label": "BÉPO_NEW",
+        "authors": [ "MXC48" ],
+        "direction": "ltr"
+      },
+      {
         "id": "bone",
         "label": "Bone",
         "authors": [ "ostrya" ],
