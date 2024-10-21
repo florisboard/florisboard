@@ -108,7 +108,6 @@ fun TextKeyboardLayout(
     modifier: Modifier = Modifier,
     evaluator: ComputingEvaluator,
     isPreview: Boolean = false,
-    isSmartbarKeyboard: Boolean = false,
 ): Unit = with(LocalDensity.current) {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
@@ -125,7 +124,7 @@ fun TextKeyboardLayout(
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
-        if (glideEnabled && !isSmartbarKeyboard && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
+        if (glideEnabled && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
             val keys = keyboard.keys().asSequence().toList()
             glideTypingManager.setLayout(keys)
         }
@@ -161,13 +160,7 @@ fun TextKeyboardLayout(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(
-                if (isSmartbarKeyboard) {
-                    FlorisImeSizing.smartbarHeight
-                } else {
-                    FlorisImeSizing.keyboardUiHeight()
-                }
-            )
+            .height(FlorisImeSizing.keyboardUiHeight())
             .onGloballyPositioned { coords ->
                 controller.size = coords.size.toSize()
             }
@@ -196,7 +189,7 @@ fun TextKeyboardLayout(
             }
             .drawWithContent {
                 drawContent()
-                if (glideEnabled && glideShowTrail && !isSmartbarKeyboard) {
+                if (glideEnabled && glideShowTrail) {
                     val targetDist = 3.0f
                     val radius = 20.0f
 
@@ -227,57 +220,43 @@ fun TextKeyboardLayout(
         val keyboardRowBaseHeight = FlorisImeSizing.keyboardRowBaseHeight
 
         val desiredKey = remember(
-            keyboard, isSmartbarKeyboard, keyboardWidth, keyboardHeight, keyMarginH, keyMarginV,
-            keyboardRowBaseHeight
+            keyboard, keyboardWidth, keyboardHeight, keyMarginH, keyMarginV,
+            keyboardRowBaseHeight, evaluator
         ) {
             TextKey(data = TextKeyData.UNSPECIFIED).also { desiredKey ->
                 desiredKey.touchBounds.apply {
-                    if (isSmartbarKeyboard) {
-                        width = keyboardWidth / 8f
-                        height = keyboardHeight
-                    } else {
-                        width = keyboardWidth / 10f
-                        height = when (keyboard.mode) {
-                            KeyboardMode.CHARACTERS,
-                            KeyboardMode.NUMERIC_ADVANCED,
-                            KeyboardMode.SYMBOLS,
-                            KeyboardMode.SYMBOLS2 -> {
-                                (keyboardHeight / keyboard.rowCount)
-                                    .coerceAtMost(keyboardRowBaseHeight.toPx() * 1.12f)
-                            }
-                            else -> keyboardRowBaseHeight.toPx()
+                    width = keyboardWidth / 10f
+                    height = when (keyboard.mode) {
+                        KeyboardMode.CHARACTERS,
+                        KeyboardMode.NUMERIC_ADVANCED,
+                        KeyboardMode.SYMBOLS,
+                        KeyboardMode.SYMBOLS2 -> {
+                            (keyboardHeight / keyboard.rowCount)
+                                .coerceAtMost(keyboardRowBaseHeight.toPx() * 1.12f)
                         }
+                        else -> keyboardRowBaseHeight.toPx()
                     }
                 }
                 desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
-                keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, !isSmartbarKeyboard)
+                keyboard.layout(keyboardWidth, keyboardHeight, desiredKey, true)
             }
         }
 
         val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
         val popupUiController = rememberPopupUiController(
             key1 = keyboard,
+            key2 = desiredKey,
             boundsProvider = { key ->
                 val keyPopupWidth: Float
                 val keyPopupHeight: Float
                 when {
                     configuration.isOrientationLandscape() -> {
-                        if (isSmartbarKeyboard) {
-                            keyPopupWidth = key.visibleBounds.width * 1.0f
-                            keyPopupHeight = desiredKey.visibleBounds.height * 3.0f * 1.2f
-                        } else {
-                            keyPopupWidth = desiredKey.visibleBounds.width * 1.0f
-                            keyPopupHeight = desiredKey.visibleBounds.height * 3.0f
-                        }
+                        keyPopupWidth = desiredKey.visibleBounds.width * 1.0f
+                        keyPopupHeight = desiredKey.visibleBounds.height * 3.0f
                     }
                     else -> {
-                        if (isSmartbarKeyboard) {
-                            keyPopupWidth = key.visibleBounds.width * 1.1f
-                            keyPopupHeight = desiredKey.visibleBounds.height * 2.5f * 1.2f
-                        } else {
-                            keyPopupWidth = desiredKey.visibleBounds.width * 1.1f
-                            keyPopupHeight = desiredKey.visibleBounds.height * 2.5f
-                        }
+                        keyPopupWidth = desiredKey.visibleBounds.width * 1.1f
+                        keyPopupHeight = desiredKey.visibleBounds.height * 2.5f
                     }
                 }
                 val keyPopupDiffX = (key.visibleBounds.width - keyPopupWidth) / 2.0f
@@ -295,7 +274,7 @@ fun TextKeyboardLayout(
                     val numeric = keyboard.mode == KeyboardMode.NUMERIC ||
                         keyboard.mode == KeyboardMode.PHONE || keyboard.mode == KeyboardMode.PHONE2 ||
                         keyboard.mode == KeyboardMode.NUMERIC_ADVANCED && keyType == KeyType.NUMERIC
-                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE && !numeric
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.CJK_SPACE && !numeric
                 } else {
                     true
                 }
@@ -303,7 +282,7 @@ fun TextKeyboardLayout(
             isSuitableForExtendedPopup = { key ->
                 if (key is TextKey) {
                     val keyCode = key.computedData.code
-                    keyCode > KeyCode.SPACE && keyCode != KeyCode.MULTIPLE_CODE_POINTS && keyCode != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(keyCode)
+                    keyCode > KeyCode.SPACE && keyCode != KeyCode.CJK_SPACE || ExceptionsForKeyCodes.contains(keyCode)
                 } else {
                     true
                 }
@@ -316,7 +295,7 @@ fun TextKeyboardLayout(
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, evaluator, fontSizeMultiplier, isSmartbarKeyboard,
+                textKey, evaluator, fontSizeMultiplier,
                 debugShowTouchBoundaries,
             )
         }
@@ -338,13 +317,12 @@ private fun TextKeyButton(
     key: TextKey,
     evaluator: ComputingEvaluator,
     fontSizeMultiplier: Float,
-    isSmartbarKey: Boolean,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
     val context = LocalContext.current
 
     val keyStyle = FlorisImeTheme.style.get(
-        element = if (isSmartbarKey) FlorisImeUi.SmartbarActionKey else FlorisImeUi.Key,
+        element = FlorisImeUi.Key,
         code = key.computedData.code,
         mode = evaluator.state.inputShiftState.value,
         isPressed = key.isPressed && key.isEnabled,
