@@ -114,11 +114,13 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de la vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidá de la vibración</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tecláu</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Filera de númberos</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Amuesa la filera de númberos enriba de la distribución de tecles</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Etiqueta de la barra d\'espaciu</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamañu de la fonte</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Altor del tecláu</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pulsación de tecles</string>
-    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidá de los indicadores emerxentes</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidá d\'indicadores emerxentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Amuesa un indicador emerxente cuando primes una tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retrasu de la pulsación de tecles llonga</string>
     <!-- Smartbar strings -->
@@ -262,6 +264,7 @@
     <string name="ext__validation__enter_valid_number">Introduz nun númberu válidu</string>
     <string name="ext__validation__enter_positive_number">Introduz un númberu positivu (&gt;=0)</string>
     <string name="ext__update_box__search_for_updates">Buscar anovamientos</string>
+    <string name="ext__addon_management_box__addon_manager_info">Pues remanar toles xeres rellacionaes cola importación, esportación, creación, personalización y desaniciu d\'estensiones pente\'l xestor de complementos centralizáu.</string>
     <string name="ext__addon_management_box__go_to_page">Dir a «{ext_home_title}»</string>
     <string name="ext__home__visit_store">Visitar la tienda de complementos</string>
     <!-- Action strings -->
@@ -310,6 +313,7 @@
     <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Des/activación automática</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Apaición dinámica</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Configuración avanzada</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Ensin etiqueta</string>
     <string name="enum__space_bar_mode__current_language" comment="Enum value label">Llingua actual</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Refacer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Desfacer</string>

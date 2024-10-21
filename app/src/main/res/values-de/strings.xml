@@ -578,6 +578,8 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Blendet Eingabe-Overlay zur Fehlersuche ein</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Zeige Rechtschreibprüfungs-Overlay</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Blendet die aktuellen Ergebnisse der Rechtschreibprüfung fürs Debugging ein</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Zeige Autofill-Overlay</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Blendet das aktuelle Autofill-Ergebnis für das Debugging ein</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Tastendruck-Umrandungen einschalten</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Umrandet die gedrückte Taste in Rot</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Zeige Verschiebe-Hilfen</string>

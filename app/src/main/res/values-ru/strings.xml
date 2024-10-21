@@ -26,10 +26,11 @@
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Предлагать смайлики при наборе текста</string>
     <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Тип триггера</string>
     <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Обновить историю смайликов</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Принятие предложенных эмодзи добавляет их в историю эмодзи</string>
     <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Показать название смайлика</string>
     <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Предложения смайликов отображают их название рядом</string>
     <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Минимальная длина запроса</string>
-    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Максимальное количество кандидатов</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Максимальное количество предложений</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Смайлы и эмоции</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Люди и тело</string>
@@ -41,6 +42,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Символы</string>
     <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
     <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Недавно использованные эмодзи не найдены. Как только вы начнете использовать эмодзи, они автоматически будут появляться здесь.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Чтобы получить доступ к истории эмодзи, сначала разблокируйте ваше устройство.</string>
     <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Совет: Долго нажимайте на эмодзи в истории эмодзи, чтобы закрепить или удалить их!</string>
     <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Удаление {emoji} из истории эмодзи</string>
     <string name="emoji__history__pinned">Закреплено</string>
@@ -54,6 +56,7 @@
     <string name="quick_action__arrow_left__tooltip">Переместить курсор влево</string>
     <string name="quick_action__arrow_right" maxLength="12">Вправо</string>
     <string name="quick_action__arrow_right__tooltip">Переместить курсор вправо</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Очистить</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Выполнить очистку основного клипа буфера обмена</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Копировать</string>
     <string name="quick_action__clipboard_copy__tooltip">Выполнить копирование из буфера обмена</string>
@@ -580,6 +583,7 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Показывать наложением текущее состояние ввода для отладки</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Показывать орфографию наложением</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Показывать наложением текущие результаты проверки орфографии для отладки</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Показать встроенное окно автозаполнения</string>
     <string name="devtools__show_inline_autofill_overlay__summary">Отображает текущие результаты автозаполнения строки для отладки</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Показывать границы нажатия клавиш</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Обводить границы нажатия клавиш красным контуром</string>
@@ -759,10 +763,14 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры указаны на языке, используемом в системе по умолчанию</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">В исходном виде</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры приводятся на родных языках</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Автоматическая сортировка (добавление в начало)</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Автоматическое изменение порядка расположения эмодзи в зависимости от их использования. Новые эмодзи добавляются в начало.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Автоматическая сортировка (добавление в конец)</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Автоматическое изменение порядка расположения эмодзи в зависимости от их использования. Новые эмодзи добавляются в конец.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Ручная сортировка (добавление в начало)</string>
     <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Не происходит автоматической перестановки эмодзи в зависимости от их использования. 
 Новые эмодзи добавляются в начало.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Ручная сортировка (добавление в конец)</string>
     <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Не происходит автоматической перестановки эмодзи в зависимости от их использования. 
 Новые эмодзи добавляются в конец.</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">Цвет кожи {emoji} по умолчанию</string>
@@ -776,7 +784,9 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Вьющиеся волосы</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Светлые волосы</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Без волос</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">Начальное двоеточие</string>
     <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Предлагайте эмодзи, используя синтаксис :emoji_name</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Встроенный текст</string>
     <string name="enum__emoji_suggestion_type__inline_text__description">Предлагает эмодзи, просто набрав название эмодзи в виде слова</string>
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Вышестоящие предложение</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Размещает строку расширенных действий между пользовательским интерфейсом приложения и строкой предложений</string>
@@ -900,5 +910,17 @@
         <item quantity="few">{v} элемента</item>
         <item quantity="many">{v} элементов</item>
         <item quantity="other">{v} элементов</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} символ</item>
+        <item quantity="few">{v} символа</item>
+        <item quantity="many">{v} символов</item>
+        <item quantity="other">{v} символов</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} предложение</item>
+        <item quantity="few">{v} предложения</item>
+        <item quantity="many">{v} предложений</item>
+        <item quantity="other">{v} предложений</item>
     </plurals>
 </resources>
