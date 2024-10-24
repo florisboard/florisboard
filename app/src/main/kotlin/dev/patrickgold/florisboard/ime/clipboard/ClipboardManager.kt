@@ -264,6 +264,19 @@ class ClipboardManager(
                 }
             }
         }
+        if (prefs.clipboard.autoCleanSensitive.get()) {
+            val sensitiveData = clipHistory.all.filter { it.isSensitive }
+            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.autoCleanSensitiveAfter.get() * 1000)
+            val itemsToRemove = sensitiveData.filter { it.creationTimestampMs < expiryTime
+            }
+            if (itemsToRemove.isNotEmpty()) {
+                ioScope.launch {
+                    clipHistoryDao?.delete(itemsToRemove)
+                }
+            }
+        }
+
+
     }
 
     private fun moveToTheBeginning(oldItem: ClipboardItem, newItem: ClipboardItem) {
