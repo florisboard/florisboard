@@ -595,6 +595,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>
     <string name="pref__clipboard__clean_up_old__label">Clean up old items</string>
     <string name="pref__clipboard__clean_up_after__label">Clean up old items after</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Auto clean sensitive items</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Auto clean sensitive items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
