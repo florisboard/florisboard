@@ -74,17 +74,17 @@ fun ClipboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.clipboard.autoCleanSensitive,
-                title = "Auto clean sensitive items",
+                title = stringRes(R.string.pref__clipboard__auto_clean_sensitive__label),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
                 visibleIf = { AndroidVersion.ATLEAST_API33_T },
             )
             DialogSliderPreference(
                 prefs.clipboard.autoCleanSensitiveAfter,
-                title = "Auto clean sensitive items after",
+                title = stringRes(R.string.pref__clipboard__auto_clean_sensitive_after__label),
                 valueLabel = { pluralsRes(R.plurals.unit__seconds__written, it, "v" to it) },
                 min = 0,
                 max = 300,
-                stepIncrement = 5,
+                stepIncrement = 10,
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.autoCleanSensitive isEqualTo true },
                 visibleIf = { AndroidVersion.ATLEAST_API33_T },
             )

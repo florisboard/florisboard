@@ -120,11 +120,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val autoCleanSensitive = boolean(
             key = "clipboard__auto_clean_sensitive",
-            default = false
+            default = false,
         )
         val autoCleanSensitiveAfter = int(
             key = "clipboard__auto_clean_sensitive_after",
-            default = 20
+            default = 20,
         )
         val limitHistorySize = boolean(
             key = "clipboard__limit_history_size",

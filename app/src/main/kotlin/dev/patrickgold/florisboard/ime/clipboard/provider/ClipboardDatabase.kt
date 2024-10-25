@@ -242,6 +242,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
         if (uri != other.uri) return false
         if (creationTimestampMs != other.creationTimestampMs) return false
         if (!mimeTypes.contentEquals(other.mimeTypes)) return false
+        if (isSensitive != other.isSensitive) return false
 
         return true
     }
@@ -253,6 +254,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
         result = 31 * result + (uri?.hashCode() ?: 0)
         result = 31 * result + creationTimestampMs.hashCode()
         result = 31 * result + mimeTypes.contentHashCode()
+        result = 31 * result + isSensitive.hashCode()
         return result
     }
 
