@@ -55,7 +55,8 @@ fun RowScope.OneHandedPanel(
     Column(
         modifier = modifier
             .weight(weight)
-            .snyggBackground(context, oneHandedPanelStyle),
+            .snyggBackground(context, oneHandedPanelStyle)
+            .height(FlorisImeSizing.imeUiHeight()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
@@ -77,7 +78,7 @@ fun RowScope.OneHandedPanel(
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedMode.set(panelSide)
             },
-            modifier = Modifier.height(FlorisImeSizing.keyboardUiHeight()).fillMaxWidth()
+            modifier = Modifier.weight(1f).fillMaxWidth(),
         ) {
             Icon(
                 imageVector = if (panelSide == OneHandedMode.START) {
