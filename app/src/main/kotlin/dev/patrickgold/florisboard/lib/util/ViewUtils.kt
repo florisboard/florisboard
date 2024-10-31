@@ -18,7 +18,6 @@
 package dev.patrickgold.florisboard.lib.util
 
 import android.content.res.Resources
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
@@ -84,7 +83,7 @@ object ViewUtils {
      * @return A float value to represent px equivalent to dp depending on device density
      */
     fun dp2px(dp: Float): Float {
-        return dp * (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+        return dp * Resources.getSystem().displayMetrics.density
     }
 
     /**
@@ -96,6 +95,6 @@ object ViewUtils {
      * @return A float value to represent dp equivalent to px value
      */
     fun px2dp(px: Float): Float {
-        return px / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+        return (px / Resources.getSystem().displayMetrics.density)
     }
 }

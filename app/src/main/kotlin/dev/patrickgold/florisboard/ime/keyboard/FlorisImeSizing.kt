@@ -36,10 +36,10 @@ import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.keyboardManager
-import org.florisboard.lib.android.isOrientationLandscape
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.isOrientationLandscape
 
 private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
 private val LocalSmartbarHeight = staticCompositionLocalOf { 40.dp }
@@ -133,7 +133,7 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
 
     CompositionLocalProvider(
         LocalKeyboardRowBaseHeight provides ViewUtils.px2dp(baseRowHeight).dp,
-        LocalSmartbarHeight provides ViewUtils.px2dp(smartbarHeight).dp,
+        LocalSmartbarHeight provides ViewUtils.px2dp(smartbarHeight).toInt().dp,
     ) {
         content()
     }
