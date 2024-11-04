@@ -7,6 +7,11 @@ edition = "2021"
 icu = { version = "1.5.0", features = [
     "compiled_data"
 ] }
+icu_segmenter = "1.5.0"
+itertools = "0.13.0"
+lazy_static = "1.5.0"
+linkify = "0.10.0"
 once_cell = "1.20.2"
+regex = "1.11.1"
 unicase = "2.8.0"
 unicode-normalization = "0.1.24"

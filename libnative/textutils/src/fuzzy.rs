@@ -2,7 +2,14 @@ use icu::properties::sets;
 
 const NULLCHAR: char = '\0';
 
-fn str_match_impl(word1: &[char], word2: &[char]) -> f64 {
+#[derive(PartialEq, Eq)]
+pub enum FuzzyMatchStrategy {
+    MaxScore,
+    ScoreLhs,
+    ScoreRhs,
+}
+
+fn str_match_impl(word1: &[char], word2: &[char], strategy: FuzzyMatchStrategy) -> f64 {
     let len1: usize = word1.len();
     let len2: usize = word2.len();
     let mut score1: f64 = 0.0;
@@ -27,20 +34,26 @@ fn str_match_impl(word1: &[char], word2: &[char]) -> f64 {
         return ch;
     }
 
-    while i1 < len1 || i2 < len2 {
+    while i1 < len1 && strategy != FuzzyMatchStrategy::ScoreRhs || i2 < len2 && strategy != FuzzyMatchStrategy::ScoreLhs {
         let ch1 = next(word1, &mut i1);
         let ch2 = next(word2, &mut i2);
 
         if ch1 == NULLCHAR && ch2 == NULLCHAR {
             break;
         }
+        let mut ch_not_null = NULLCHAR;
         if ch1 != NULLCHAR {
             score1 += 1.0;
+            ch_not_null = ch1;
         }
         if ch2 != NULLCHAR {
             score2 += 1.0;
+            ch_not_null = ch2;
         }
         if ch1 == NULLCHAR || ch2 == NULLCHAR {
+            if !sets::diacritic().contains(ch_not_null) {
+                penalty += 1.0;
+            }
             i1 += 1;
             i2 += 1;
             continue;
@@ -68,7 +81,11 @@ fn str_match_impl(word1: &[char], word2: &[char]) -> f64 {
         last_ch2 = ch2;
     }
 
-    let mut score = f64::max(score1, score2);
+    let mut score = match strategy {
+        FuzzyMatchStrategy::ScoreLhs => score1,
+        FuzzyMatchStrategy::ScoreRhs => score2,
+        FuzzyMatchStrategy::MaxScore => f64::max(score1, score2),
+    };
     if score == 0.0 {
         // both strings essentially empty, thus they match
         return 1.0;
@@ -79,8 +96,12 @@ fn str_match_impl(word1: &[char], word2: &[char]) -> f64 {
 
 #[inline]
 pub fn str_match(word1: &[char], word2: &[char]) -> f64 {
-    // TODO: evaluate if impl wrapper is necessary
-    return str_match_impl(word1, word2);
+    return str_match_impl(word1, word2, FuzzyMatchStrategy::MaxScore);
+}
+
+#[inline]
+pub fn str_match_live(base_word: &[char], curr_user_word: &[char]) -> f64 {
+    return str_match_impl(base_word, curr_user_word, FuzzyMatchStrategy::ScoreRhs);
 }
 
 #[allow(non_snake_case)]
@@ -260,7 +281,7 @@ mod tests {
         let words = vec![
             ("hello", "hello", 1.0),
             ("hello", "hallo", 0.8),
-            ("hello", "helo", 0.8),
+            ("hello", "helo", 0.6),
         ];
 
         for (word1, word2, expected_score) in words {
