@@ -17,10 +17,15 @@
 package dev.patrickgold.florisboard.app.ext
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
@@ -33,8 +38,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.patrickgold.florisboard.R
@@ -46,6 +56,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
+import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
@@ -80,49 +91,66 @@ enum class ExtensionListScreenType(
 fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = FlorisScreen {
     title = stringRes(type.titleResId)
     previewFieldVisible = false
+    scrollable = false
 
     val context = LocalContext.current
     val navController = LocalNavController.current
     val extensionManager by context.extensionManager()
     val extensionIndex by type.getExtensionIndex(extensionManager).observeAsNonNullState()
 
+    var fabHeight by remember {
+        mutableStateOf(0)
+    }
+    val fabHeightDp = with(LocalDensity.current) { fabHeight.toDp()+16.dp }
+    val listState = rememberLazyListState()
+
     content {
-        if (showUpdate) {
-            UpdateBox(extensionIndex = extensionIndex)
-        }
-        for (ext in extensionIndex) {
-            FlorisOutlinedBox(
-                modifier = Modifier.defaultFlorisOutlinedBox(),
-                title = ext.meta.title,
-                subtitle = ext.meta.id,
-            ) {
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                    text = ext.meta.description ?: "",
-                    style = MaterialTheme.typography.bodySmall,
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 6.dp),
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .florisScrollbar(state = listState, isVertical = true),
+            state = listState,
+            contentPadding = PaddingValues(bottom = fabHeightDp),
+        ) {
+            if (showUpdate) {
+                item {
+                    UpdateBox(extensionIndex = extensionIndex)
+                }
+            }
+            items(extensionIndex) { ext ->
+                FlorisOutlinedBox(
+                    modifier = Modifier.defaultFlorisOutlinedBox(),
+                    title = ext.meta.title,
+                    subtitle = ext.meta.id,
                 ) {
-                    FlorisTextButton(
-                        onClick = {
-                            navController.navigate(Routes.Ext.View(ext.meta.id))
-                        },
-                        icon = Icons.Outlined.Info,
-                        text = stringRes(id = R.string.ext__list__view_details),//stringRes(R.string.action__add),
-                        colors = ButtonDefaults.textButtonColors(),
+                    Text(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        text = ext.meta.description ?: "",
+                        style = MaterialTheme.typography.bodySmall,
                     )
-                    Spacer(modifier = Modifier.weight(1f))
-                    FlorisTextButton(
-                        onClick = {
-                            navController.navigate(Routes.Ext.Edit(ext.meta.id))
-                        },
-                        icon = Icons.Default.Edit,
-                        text = stringRes(R.string.action__edit),
-                        enabled = extensionManager.canDelete(ext),
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 6.dp),
+                    ) {
+                        FlorisTextButton(
+                            onClick = {
+                                navController.navigate(Routes.Ext.View(ext.meta.id))
+                            },
+                            icon = Icons.Outlined.Info,
+                            text = stringRes(id = R.string.ext__list__view_details),//stringRes(R.string.action__add),
+                            colors = ButtonDefaults.textButtonColors(),
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        FlorisTextButton(
+                            onClick = {
+                                navController.navigate(Routes.Ext.Edit(ext.meta.id))
+                            },
+                            icon = Icons.Default.Edit,
+                            text = stringRes(R.string.action__edit),
+                            enabled = extensionManager.canDelete(ext),
+                        )
+                    }
                 }
             }
         }
@@ -141,6 +169,9 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                     Text(
                         text = stringRes(id = R.string.ext__editor__title_create_any),
                     )
+                },
+                modifier = Modifier.onGloballyPositioned {
+                    fabHeight = it.size.height
                 },
                 shape = FloatingActionButtonDefaults.extendedFabShape,
                 onClick = { type.launchExtensionCreate.invoke(navController) },

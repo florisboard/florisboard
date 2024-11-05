@@ -581,6 +581,8 @@
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Накладає поточний стан входу для налагодження</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Показати правопис накладанням</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Накладає поточні результати правопису для налагодження</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Показати вбудоване накладання автозаповнення</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Накладає поточні результати автозаповнення для налагодження</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Показати межі дотику клавіш</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Обводить червоним кольором межі дотику клавіш</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Показати помічників перетягування</string>

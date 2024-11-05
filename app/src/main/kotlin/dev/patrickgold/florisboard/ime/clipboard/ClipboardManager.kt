@@ -254,14 +254,20 @@ class ClipboardManager(
     }
 
     private fun enforceExpiryDate(clipHistory: ClipboardHistory) {
+        val itemsToRemove = mutableSetOf<ClipboardItem>()
         if (prefs.clipboard.cleanUpOld.get()) {
             val nonPinnedItems = clipHistory.recent + clipHistory.other
             val expiryTime = System.currentTimeMillis() - (prefs.clipboard.cleanUpAfter.get() * 60 * 1000)
-            val itemsToRemove = nonPinnedItems.filter { it.creationTimestampMs < expiryTime }
-            if (itemsToRemove.isNotEmpty()) {
-                ioScope.launch {
-                    clipHistoryDao?.delete(itemsToRemove)
-                }
+            itemsToRemove.addAll(nonPinnedItems.filter { it.creationTimestampMs < expiryTime })
+        }
+        if (prefs.clipboard.autoCleanSensitive.get()) {
+            val sensitiveData = clipHistory.all.filter { it.isSensitive }
+            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.autoCleanSensitiveAfter.get() * 1000)
+            itemsToRemove.addAll(sensitiveData.filter { it.creationTimestampMs < expiryTime })
+        }
+        if (itemsToRemove.isNotEmpty()) {
+            ioScope.launch {
+                clipHistoryDao?.delete(itemsToRemove.toList())
             }
         }
     }
