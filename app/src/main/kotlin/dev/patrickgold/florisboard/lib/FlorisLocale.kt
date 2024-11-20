@@ -217,7 +217,7 @@ class FlorisLocale private constructor(val base: Locale) {
      */
     val supportsCapitalization: Boolean
         get() = when (language) {
-            "zh", "ko", "th" -> false
+            "zh", "ko", "th", "bn" -> false
             else -> true
         }
 
