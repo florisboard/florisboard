@@ -14,6 +14,7 @@ androidx-material-icons = "1.7.3"
 androidx-navigation = "2.8.1"
 androidx-profileinstaller = "1.4.0"
 androidx-room = "2.6.1"
+appcompat = "1.7.0"
 cache4k = "0.7.0"
 kotlin = "2.0.20"
 kotlinx-coroutines = "1.8.1"
@@ -53,6 +54,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidx-profileinstaller" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }

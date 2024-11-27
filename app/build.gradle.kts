@@ -55,6 +55,10 @@ android {
         )
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = projectMinSdk.toInt()
@@ -189,6 +193,7 @@ dependencies {
     implementation(libs.androidx.material.icons)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.profileinstaller)
+    implementation(libs.androidx.appcompat)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.cache4k)

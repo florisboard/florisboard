@@ -20,8 +20,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.imePadding
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
@@ -72,7 +74,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
     error("LocalNavController not initialized")
 }
 
-class FlorisAppActivity : ComponentActivity() {
+class FlorisAppActivity : AppCompatActivity() {
     private val prefs by florisPreferenceModel()
     private val cacheManager by cacheManager()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
@@ -92,10 +94,12 @@ class FlorisAppActivity : ComponentActivity() {
             appTheme = it
         }
         prefs.advanced.settingsLanguage.observe(this) {
-            val config = Configuration(resources.configuration)
-            val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
-            config.setLocale(locale.base)
-            resourcesContext = createConfigurationContext(config)
+            val appLocale: LocaleListCompat = if (it == "auto") {
+                LocaleListCompat.getEmptyLocaleList()
+            } else {
+                LocaleListCompat.forLanguageTags(FlorisLocale.fromTag(it).languageTag())
+            }
+            AppCompatDelegate.setApplicationLocales(appLocale)
         }
         if (AndroidVersion.ATMOST_API28_P) {
             prefs.advanced.showAppIcon.observe(this) {

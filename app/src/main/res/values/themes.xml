@@ -10,7 +10,7 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="FlorisAppTheme" parent="android:style/Theme.Material.NoActionBar">
+    <style name="FlorisAppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/colorAccent</item>
@@ -31,7 +31,7 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="FlorisAppTheme.Transparent" parent="android:style/Theme.Material.NoActionBar">
+    <style name="FlorisAppTheme.Transparent" parent="Theme.AppCompat.NoActionBar">
         <item name="android:colorPrimary">@android:color/transparent</item>
         <item name="android:colorPrimaryDark">@android:color/transparent</item>
         <item name="android:colorAccent">@android:color/transparent</item>

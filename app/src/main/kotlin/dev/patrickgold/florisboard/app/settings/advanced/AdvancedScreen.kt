@@ -16,6 +16,11 @@
 
 package dev.patrickgold.florisboard.app.settings.advanced
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Adb
 import androidx.compose.material.icons.filled.Archive
@@ -26,6 +31,7 @@ import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -34,7 +40,6 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import org.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -44,6 +49,7 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
+import org.florisboard.lib.android.AndroidVersion
 
 @Composable
 fun AdvancedScreen() = FlorisScreen {
@@ -51,6 +57,10 @@ fun AdvancedScreen() = FlorisScreen {
     previewFieldVisible = false
 
     val navController = LocalNavController.current
+    val context = LocalContext.current
+
+    val languageSettingsLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     content {
         ListPreference(
@@ -67,70 +77,86 @@ fun AdvancedScreen() = FlorisScreen {
                 AndroidVersion.ATLEAST_API31_S
             },
         )
-        ListPreference(
-            prefs.advanced.settingsLanguage,
-            icon = Icons.Default.Language,
-            title = stringRes(R.string.pref__advanced__settings_language__label),
-            entries = listPrefEntries {
-                listOf(
-                    "auto",
-                    "ar",
-                    "bg",
-                    "bs",
-                    "ca",
-                    "ckb",
-                    "cs",
-                    "da",
-                    "de",
-                    "el",
-                    "en",
-                    "eo",
-                    "es",
-                    "fa",
-                    "fi",
-                    "fr",
-                    "hr",
-                    "hu",
-                    "in",
-                    "it",
-                    "iw",
-                    "ja",
-                    "ko-KR",
-                    "ku",
-                    "lv-LV",
-                    "mk",
-                    "nds-DE",
-                    "nl",
-                    "no",
-                    "pl",
-                    "pt",
-                    "pt-BR",
-                    "ru",
-                    "sk",
-                    "sl",
-                    "sr",
-                    "sv",
-                    "tr",
-                    "uk",
-                    "zgh",
-                    "zh-CN",
-                ).map { languageTag ->
-                    if (languageTag == "auto") {
-                        entry(
-                            key = "auto",
-                            label = stringRes(R.string.settings__system_default),
+        if (AndroidVersion.ATLEAST_API33_T) {
+            Preference(
+                title = stringRes(R.string.pref__advanced__settings_language__label),
+                icon = Icons.Default.Language,
+                onClick = {
+                    languageSettingsLauncher.launch(
+                        Intent(
+                            Settings.ACTION_APP_LOCALE_SETTINGS,
+                            Uri.parse("package:${context.packageName}")
                         )
-                    } else {
-                        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
-                        val locale = FlorisLocale.fromTag(languageTag)
-                        entry(locale.languageTag(), when (displayLanguageNamesIn) {
-                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
-                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
-                        })
+                    )
+                }
+            )
+        } else {
+            ListPreference(
+                prefs.advanced.settingsLanguage,
+                icon = Icons.Default.Language,
+                title = stringRes(R.string.pref__advanced__settings_language__label),
+                entries = listPrefEntries {
+                    listOf(
+                        "auto",
+                        "ar",
+                        "bg",
+                        "bs",
+                        "ca",
+                        "ckb",
+                        "cs",
+                        "da",
+                        "de",
+                        "el",
+                        "en",
+                        "eo",
+                        "es",
+                        "fa",
+                        "fi",
+                        "fr",
+                        "hr",
+                        "hu",
+                        "in",
+                        "it",
+                        "iw",
+                        "ja",
+                        "ko-KR",
+                        "ku",
+                        "lv-LV",
+                        "mk",
+                        "nds-DE",
+                        "nl",
+                        "no",
+                        "pl",
+                        "pt",
+                        "pt-BR",
+                        "ru",
+                        "sk",
+                        "sl",
+                        "sr",
+                        "sv",
+                        "tr",
+                        "uk",
+                        "zgh",
+                        "zh-CN",
+                    ).map { languageTag ->
+                        if (languageTag == "auto") {
+                            entry(
+                                key = "auto",
+                                label = stringRes(R.string.settings__system_default),
+                            )
+                        } else {
+                            val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+                            val locale = FlorisLocale.fromTag(languageTag)
+                            entry(locale.languageTag(), when (displayLanguageNamesIn) {
+                                DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                                DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                            })
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
+
         SwitchPreference(
             prefs.advanced.showAppIcon,
             icon = Icons.Default.Preview,
