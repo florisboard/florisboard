@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import org.florisboard.lib.android.AndroidVersion
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -48,6 +47,7 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidVersion
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -58,11 +58,11 @@ fun TypingScreen() = FlorisScreen {
     val navController = LocalNavController.current
 
     content {
-        // This card is temporary and is therefore not using a string resource
+        // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
         FlorisErrorCard(
             modifier = Modifier.padding(8.dp),
             text = """
-                Suggestions (except system autofill) and spell checking are not available in this alpha release. All
+                Suggestions (except system autofill) and spell checking are not available in this release. All
                 preferences in the "Corrections" group are properly implemented though.
             """.trimIndent().replace('\n', ' '),
         )
