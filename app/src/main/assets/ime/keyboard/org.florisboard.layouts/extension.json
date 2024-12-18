@@ -50,6 +50,12 @@
         "direction": "ltr"
       },
       {
+        "id": "hindi_in",
+        "label": "हिंदी",
+        "authors": [ "npnpatidar" ],
+        "direction": "ltr"
+      },
+      {
         "id": "bepo",
         "label": "BÉPO",
         "authors": [ "salamandar" ],

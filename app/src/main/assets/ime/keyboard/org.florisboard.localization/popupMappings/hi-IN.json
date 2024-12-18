@@ -1,0 +1,114 @@
+{
+  "all": {
+    "क": {
+      "main": { "$": "auto_text_key", "code": 2325, "label": "ख" }
+    },
+    "ग": {
+      "main": { "$": "auto_text_key", "code": 2327, "label": "घ" }
+    },
+    "च": {
+      "main": { "$": "auto_text_key", "code": 2330, "label": "छ" }
+    },
+    "ज": {
+      "main": { "$": "auto_text_key", "code": 2332, "label": "झ" }
+    },
+    "ट": {
+      "main": { "$": "auto_text_key", "code": 2335, "label": "ठ" }
+    },
+    "ड": {
+      "main": { "$": "auto_text_key", "code": 2337, "label": "ढ" }
+    },
+    "ण": {
+      "main": { "$": "auto_text_key", "code": 2339, "label": "न" }
+    },
+    "प": {
+      "main": { "$": "auto_text_key", "code": 2346, "label": "फ" }
+    },
+    "ब": {
+      "main": { "$": "auto_text_key", "code": 2348, "label": "भ" }
+    },
+    "म": {
+      "main": { "$": "auto_text_key", "code": 2350, "label": "य" }
+    },
+    "व": {
+      "main": { "$": "auto_text_key", "code": 2357, "label": "श" }
+    },
+    "स": {
+      "main": { "$": "auto_text_key", "code": 2360, "label": "ह" }
+    },
+    "ऋ": {
+      "main": { "$": "auto_text_key", "code": 2315, "label": "ॠ" }
+    },
+    "इ": {
+      "main": { "$": "auto_text_key", "code": 2311, "label": "ई" }
+    },
+    "उ": {
+      "main": { "$": "auto_text_key", "code": 2313, "label": "ऊ" }
+    },
+    "ए": {
+      "main": { "$": "auto_text_key", "code": 2319, "label": "ऐ" }
+    },
+    "ओ": {
+      "main": { "$": "auto_text_key", "code": 2323, "label": "औ" }
+    },
+    "ा": {
+      "main": { "$": "auto_text_key", "code": 2366, "label": "आ" },
+      "relevant": [{ "$": "auto_text_key", "code": 2309, "label": "अ" }]
+    },
+    "ि": {
+      "main": { "$": "auto_text_key", "code": 2367, "label": "ई" }
+    },
+    "ु": {
+      "main": { "$": "auto_text_key", "code": 2369, "label": "ऊ" }
+    },
+    "े": {
+      "main": { "$": "auto_text_key", "code": 2375, "label": "ऐ" }
+    },
+    "ो": {
+      "main": { "$": "auto_text_key", "code": 2379, "label": "औ" }
+    },
+    "ं": {
+      "main": { "$": "auto_text_key", "code": 2306, "label": "ः" }
+    },
+    "्": {
+      "main": { "$": "auto_text_key", "code": 2364, "label": "ं" }
+    },
+    "ौ": {
+      "main": { "$": "auto_text_key", "code": 2380, "label": "ओ" }
+    },
+    "ै": {
+      "main": { "$": "auto_text_key", "code": 2376, "label": "ए" }
+    },
+    "~right": {
+      "main": { "code": 2404, "label": "।" },
+      "relevant": [
+        { "code": 37, "label": "%" },
+        { "code": 43, "label": "+" },
+        { "code": 45, "label": "-" },
+        { "code": 58, "label": ":" },
+        { "code": 59, "label": ";" },
+        { "code": 47, "label": "/" },
+        { "$": "layout_direction_selector", "ltr": { "code": 40, "label": "(" }, "rtl": { "code": 41, "label": "(" } },
+        { "$": "layout_direction_selector", "ltr": { "code": 41, "label": ")" }, "rtl": { "code": 40, "label": ")" } },
+        { "code": 64, "label": "@" },
+        { "code": 35, "label": "#" },
+        { "code": 8205, "label": ">⁞<" },
+        { "code": 8204, "label": "<⁞>" },
+        { "code": 33, "label": "!" },
+        { "code": 63, "label": "?" },
+        { "code": 2405, "label": "॥" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" },
+        { "code": -255, "label": ".in" },
+        { "code": -255, "label": ".co.in" }
+      ]
+    }
+  }
+}
