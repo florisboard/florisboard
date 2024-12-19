@@ -87,12 +87,6 @@
       "main": { "$": "multi_text_key", "codePoints": [2358, 2381, 2352], "label": "श्र" },
       "relevant": [{ "$": "auto_text_key", "code": 2359, "label": "ष" }]
     },
-    "क्ष": {
-      "main": { "$": "auto_text_key", "code": 42, "label": "*" }
-    },
-    "ज्ञ": {
-      "main": { "$": "auto_text_key", "code": 34, "label": "\"" }
-    },
     "ा": {
       "main": { "$": "auto_text_key", "code": 2309, "label": "अ" },
       "relevant": [
