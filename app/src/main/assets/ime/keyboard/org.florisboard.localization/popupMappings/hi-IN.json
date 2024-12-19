@@ -1,10 +1,14 @@
 {
   "all": {
     "क": {
-      "main": { "$": "auto_text_key", "code": 2325, "label": "ख" }
+      "relevant": [
+        { "$": "case_selector",
+          "lower": { "code":  2392, "label": "क़" },
+          "upper": { "code":  2393, "label": "ख़" }
+        }]
     },
     "ग": {
-      "main": { "$": "auto_text_key", "code": 2327, "label": "घ" }
+      "main": { "$": "auto_text_key", "code": 2394, "label": "ग़" }
     },
     "च": {
       "main": { "$": "auto_text_key", "code": 2330, "label": "छ" }
