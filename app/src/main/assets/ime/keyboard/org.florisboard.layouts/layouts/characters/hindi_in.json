@@ -12,7 +12,7 @@
     { "$": "case_selector", "lower": { "code": 2346, "label": "प" }, "upper": { "code": 2398, "label": "फ़" } }
   ],
   [
-    { "$": "case_selector", "lower": { "code": 2366, "label": "ा" }, "upper": { "code": 2310, "label": "आ" } },
+    { "$": "case_selector", "lower": { "code": 2366, "label": "ा" }, "upper": { "code": 2309, "label": "अ" } },
     { "$": "case_selector", "lower": { "code": 2360, "label": "स" }, "upper": { "code": 2358, "label": "श" } },
     { "$": "case_selector", "lower": { "code": 2342, "label": "द" }, "upper": { "code": 2343, "label": "ध" } },
     { "$": "case_selector", "lower": { "code": 2347, "label": "फ" }, "upper": { "code": 2364, "label": " ़" } },

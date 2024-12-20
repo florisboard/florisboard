@@ -88,7 +88,7 @@
       "relevant": [{ "$": "auto_text_key", "code": 2359, "label": "ष" }]
     },
     "ा": {
-      "main": { "$": "auto_text_key", "code": 2309, "label": "अ" },
+      "main": { "$": "auto_text_key", "code": 2310, "label": "आ" },
       "relevant": [
         { "$": "auto_text_key", "code": 2373, "label": "ॅ" },
         { "$": "auto_text_key", "code": 2418, "label": "ॲ" },
@@ -105,8 +105,8 @@
         { "$": "auto_text_key", "code": 2422, "label": "ॶ" },
         { "$": "auto_text_key", "code": 2423, "label": "ॷ" },
         { "$": "auto_text_key", "code": 2390, "label": " ॖ" },
-        { "$": "auto_text_key", "code": 2391, "label": " ॗ" },
-        { "$": "auto_text_key", "code": 2314, "label": "ऊ" }
+        { "$": "auto_text_key", "code": 2314, "label": "ऊ" },
+        { "$": "auto_text_key", "code": 2391, "label": " ॗ" }
       ]
     },
     "े": {
@@ -115,8 +115,8 @@
         { "$": "auto_text_key", "code": 2317, "label": "ऍ" },
         { "$": "auto_text_key", "code": 2318, "label": "ऎ" },
         { "$": "auto_text_key", "code": 2374, "label": " ॆ" },
-        { "$": "auto_text_key", "code": 2382, "label": " ॎ" },
         { "$": "auto_text_key", "code": 2320, "label": "ऐ" },
+        { "$": "auto_text_key", "code": 2382, "label": " ॎ" },
         { "$": "auto_text_key", "code": 2389, "label": " ॕ" }
       ]
     },
@@ -133,8 +133,8 @@
         { "$": "auto_text_key", "code": 2420, "label": "ॴ" },
         { "$": "auto_text_key", "code": 2362, "label": " ऺ" },
         { "$": "auto_text_key", "code": 2363, "label": " ऻ" },
-        { "$": "auto_text_key", "code": 2321, "label": "ऑ" },
-        { "$": "auto_text_key", "code": 2324, "label": "औ" }
+        { "$": "auto_text_key", "code": 2324, "label": "औ" },
+        { "$": "auto_text_key", "code": 2321, "label": "ऑ" }
       ]
     },
 
