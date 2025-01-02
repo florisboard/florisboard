@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2021 Patrick Goldinger
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version .0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -125,6 +125,8 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
+
+import dev.patrickgold.florisboard.whisper.WhisperToInput // P4da1
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -649,6 +651,10 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (keyboardManager.onHardwareKeyDown(keyCode, event)) true
         else super.onKeyDown(keyCode, event)
 
+    private fun handleMicButtonPress() { // P5db1
+        val whisperToInput = WhisperToInput(this)
+        whisperToInput.startListening()
+    }
 
     private inner class ComposeInputView : AbstractComposeView(this) {
         init {

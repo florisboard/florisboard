@@ -79,6 +79,8 @@ import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
 
+import dev.patrickgold.florisboard.whisper.WhisperToInput
+
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
@@ -672,6 +674,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         activeState.isCharHalfWidth = true
     }
 
+    private fun handleMicButtonPress() {
+        val whisperToInput = WhisperToInput(appContext)
+        whisperToInput.startListening()
+    }
+
     override fun onInputKeyDown(data: KeyData) {
         when (data.code) {
             KeyCode.ARROW_DOWN,
@@ -731,7 +738,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
             KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
             KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
-            KeyCode.VOICE_INPUT -> FlorisImeService.switchToVoiceInputMethod()
+            KeyCode.VOICE_INPUT -> handleMicButtonPress()
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()

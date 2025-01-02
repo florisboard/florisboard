@@ -29,6 +29,8 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+import dev.patrickgold.florisboard.whisper.WhisperToInput
+
 @Serializable
 sealed class QuickAction {
     open fun onPointerDown(context: Context) = Unit
@@ -52,11 +54,19 @@ sealed class QuickAction {
                 data.code != KeyCode.TOGGLE_ACTIONS_OVERFLOW && data.code != KeyCode.CLIPBOARD_SELECT_ALL) {
                 keyboardManager.activeState.isActionsOverflowVisible = false
             }
+            if (data.code == KeyCode.VOICE_INPUT) {
+                handleMicButtonPress(context)
+            }
         }
 
         override fun onPointerCancel(context: Context) {
             val keyboardManager by context.keyboardManager()
             keyboardManager.inputEventDispatcher.sendCancel(data)
+        }
+
+        private fun handleMicButtonPress(context: Context) {
+            val whisperToInput = WhisperToInput(context)
+            whisperToInput.startListening()
         }
     }
 
