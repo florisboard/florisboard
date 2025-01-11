@@ -37,7 +37,7 @@ import java.io.InputStreamReader
 object Devtools {
     fun generateDebugLog(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
         return buildString {
-            generateDebugLogHeader(context, prefs)
+            append(generateDebugLogHeader(context, prefs))
             if (includeLogcat) {
                 appendLine()
                 append(generateLogcatDump())
@@ -67,7 +67,7 @@ object Devtools {
             appendLine("<summary>Detailed info (Debug log header)</summary>")
             appendLine()
             appendLine("```")
-            generateDebugLogHeader(context, prefs)
+            append(generateDebugLogHeader(context, prefs))
             appendLine()
             appendLine("```")
             appendLine("</details>")
@@ -139,7 +139,7 @@ object Devtools {
             if (withTitle) appendLine("======= ACTIVE SUBTYPE CONFIG =======")
             context.subtypeManager().value.let { subtypeManager ->
                 append("Active Subtype      : ").appendLine(subtypeManager.activeSubtype.toShortString())
-                append("Enabled Subtypes    : ")
+                appendLine("Enabled Subtypes    : ")
                 subtypeManager.subtypes.forEach { subtype ->
                     append("    ").appendLine(subtype.toShortString())
                 }
