@@ -195,6 +195,22 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
+    suspend fun deleteHistory(prefs: AppPrefs) = emojiGuard.withLock {
+        if (!prefs.emoji.historyEnabled.get()) {
+            return
+        }
+        val dataMut = prefs.emoji.historyData.get().edit()
+        prefs.emoji.historyData.set(EmojiHistory(pinned = dataMut.pinned, listOf()))
+    }
+
+    suspend fun deletePinned(prefs: AppPrefs) = emojiGuard.withLock {
+        if (!prefs.emoji.historyEnabled.get()) {
+            return
+        }
+        val dataMut = prefs.emoji.historyData.get().edit()
+        prefs.emoji.historyData.set(EmojiHistory(pinned = listOf(), dataMut.recent))
+    }
+
     private fun MutableList<Emoji>.addWithStrategy(strategy: EmojiHistory.UpdateStrategy, emoji: Emoji) {
         if (strategy.isPrepend) {
             add(0, emoji)

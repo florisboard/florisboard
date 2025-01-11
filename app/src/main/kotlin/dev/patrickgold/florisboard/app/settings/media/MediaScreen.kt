@@ -19,10 +19,16 @@ package dev.patrickgold.florisboard.app.settings.media
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -31,8 +37,11 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -40,6 +49,11 @@ fun MediaScreen() = FlorisScreen {
     title = stringRes(R.string.settings__media__title)
     previewFieldVisible = true
     iconSpaceReserved = true
+
+    val prefs by florisPreferenceModel()
+
+    val shouldDelete = remember { mutableStateOf<ShouldDelete?>(null) }
+    val scope = rememberCoroutineScope()
 
     content {
         ListPreference(
@@ -84,6 +98,18 @@ fun MediaScreen() = FlorisScreen {
                 max = 120,
                 stepIncrement = 1,
                 enabledIf = { prefs.emoji.historyEnabled.isTrue() },
+            )
+            Preference(
+                title = stringRes(R.string.prefs__media__emoji_history_delete),
+                onClick = {
+                    shouldDelete.value = ShouldDelete(false)
+                }
+            )
+            Preference(
+                title = stringRes(R.string.prefs__media__emoji_pinned_delete),
+                onClick = {
+                    shouldDelete.value = ShouldDelete(true)
+                }
             )
         }
 
@@ -138,4 +164,49 @@ fun MediaScreen() = FlorisScreen {
             )
         }
     }
+
+    DeleteEmojiHistoryConfirmDialog(
+        shouldDelete = shouldDelete.value,
+        onDismiss = {
+            shouldDelete.value = null
+        },
+        onConfirm = {
+            shouldDelete.value?.let {
+                scope.launch {
+                    if (it.pinned) {
+                        EmojiHistoryHelper.deletePinned(prefs = prefs)
+                    } else {
+                        EmojiHistoryHelper.deleteHistory(prefs = prefs)
+                    }
+                }
+                shouldDelete.value = null
+            }
+        },
+    )
 }
+
+@Composable
+fun DeleteEmojiHistoryConfirmDialog(
+    shouldDelete: ShouldDelete?,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    shouldDelete?.let {
+        JetPrefAlertDialog(
+            title = stringRes(R.string.prefs__media__emoji_history_delete_title),
+            confirmLabel = stringRes(R.string.action__yes),
+            dismissLabel = stringRes(R.string.action__no),
+            onDismiss = onDismiss,
+            onConfirm = onConfirm,
+        ) {
+            if (it.pinned) {
+                Text(stringRes(R.string.prefs__media__emoji_pinned_delete_text))
+            } else {
+                Text(stringRes(R.string.prefs__media__emoji_history_delete_text))
+            }
+
+        }
+    }
+}
+
+data class ShouldDelete(val pinned: Boolean)

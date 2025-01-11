@@ -23,6 +23,11 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (Pinned)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (Recent)</string>
     <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
+    <string name="prefs__media__emoji_history_delete">Delete emoji history</string>
+    <string name="prefs__media__emoji_pinned_delete">Delete pinned emoji</string>
+    <string name="prefs__media__emoji_history_delete_title">Delete Confirmation</string>
+    <string name="prefs__media__emoji_history_delete_text">Are you sure you want to delete the emoji history?</string>
+    <string name="prefs__media__emoji_pinned_delete_text">Are you sure you want to delete the pinned emojis?</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>
