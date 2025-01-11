@@ -23,6 +23,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (Pinned)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (Recent)</string>
     <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Reset pinned emojis</string>
+    <string name="prefs__media__emoji_history_reset">Reset recent emojis</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>
@@ -746,6 +748,8 @@
     <string name="action__delete">Delete</string>
     <string name="action__delete_confirm_title">Confirm delete</string>
     <string name="action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
+    <string name="action__reset_confirm_title">Confirm reset</string>
+    <string name="action__reset_confirm_message">Are you sure you want to reset \"{name}\"? This action can not be undone once executed.</string>
     <string name="action__discard">Discard</string>
     <string name="action__discard_confirm_title">Unsaved changes</string>
     <string name="action__discard_confirm_message">Are you sure you want to discard your unsaved changes? This action can not be undone once executed.</string>
