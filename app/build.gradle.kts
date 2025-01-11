@@ -30,17 +30,18 @@ plugins {
 val projectMinSdk: String by project
 val projectTargetSdk: String by project
 val projectCompileSdk: String by project
-val projectBuildToolsVersion: String by project
-val projectNdkVersion: String by project
 val projectVersionCode: String by project
 val projectVersionName: String by project
 val projectVersionNameSuffix = projectVersionName.substringAfter("-", "")
 
+val buildToolsVersion: String by project
+val ndkVersion: String by project
+
 android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = projectCompileSdk.toInt()
-    buildToolsVersion = projectBuildToolsVersion
-    ndkVersion = projectNdkVersion
+    buildToolsVersion = buildToolsVersion
+    ndkVersion = ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -150,6 +151,7 @@ android {
 
     aboutLibraries {
         configPath = "app/src/main/config"
+        excludeFields = arrayOf("generated")
     }
 
     testOptions {

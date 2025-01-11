@@ -5,12 +5,14 @@ plugins {
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
-val projectNdkVersion: String by project
+
+val cmakeVersion: String by project
+val ndkVersion: String by project
 
 android {
     namespace = "org.florisboard.libnative"
     compileSdk = projectCompileSdk.toInt()
-    ndkVersion = projectNdkVersion
+    ndkVersion = ndkVersion
 
     defaultConfig {
         minSdk = projectMinSdk.toInt()
@@ -61,6 +63,7 @@ android {
 
     externalNativeBuild {
         cmake {
+            version = cmakeVersion
             path("src/main/rust/CMakeLists.txt")
         }
     }
