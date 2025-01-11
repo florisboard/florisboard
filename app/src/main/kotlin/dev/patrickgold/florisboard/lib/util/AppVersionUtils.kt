@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.app.AppPrefs
 object AppVersionUtils {
     private fun getRawVersionName(context: Context): String {
         return try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName!!
         } catch (e: Exception) {
             "undefined"
         }

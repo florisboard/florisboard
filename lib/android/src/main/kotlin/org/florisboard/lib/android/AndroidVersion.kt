@@ -90,4 +90,11 @@ object AndroidVersion {
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
     inline val ATMOST_API34_U
         get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+
+    /** Android 15 **/
+    inline val ATLEAST_API35_V
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
+    inline val ATMOST_API35_V
+        get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM
 }
