@@ -21,9 +21,11 @@ import androidx.compose.material.icons.outlined.EmojiSymbols
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -52,7 +54,7 @@ fun MediaScreen() = FlorisScreen {
 
     val prefs by florisPreferenceModel()
 
-    val shouldDelete = remember { mutableStateOf<ShouldDelete?>(null) }
+    var shouldDelete by remember { mutableStateOf<ShouldDelete?>(null) }
     val scope = rememberCoroutineScope()
 
     content {
@@ -100,17 +102,20 @@ fun MediaScreen() = FlorisScreen {
                 enabledIf = { prefs.emoji.historyEnabled.isTrue() },
             )
             Preference(
-                title = stringRes(R.string.prefs__media__emoji_history_delete),
+                title = stringRes(R.string.prefs__media__emoji_history_pinned_reset),
                 onClick = {
-                    shouldDelete.value = ShouldDelete(false)
-                }
+                    shouldDelete = ShouldDelete(true)
+                },
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
             )
             Preference(
-                title = stringRes(R.string.prefs__media__emoji_pinned_delete),
+                title = stringRes(R.string.prefs__media__emoji_history_reset),
                 onClick = {
-                    shouldDelete.value = ShouldDelete(true)
-                }
+                    shouldDelete = ShouldDelete(false)
+                },
+                enabledIf = { prefs.emoji.historyEnabled.isTrue() },
             )
+
         }
 
         PreferenceGroup(title = stringRes(R.string.prefs__media__emoji_suggestion__title)) {
@@ -166,12 +171,12 @@ fun MediaScreen() = FlorisScreen {
     }
 
     DeleteEmojiHistoryConfirmDialog(
-        shouldDelete = shouldDelete.value,
+        shouldDelete = shouldDelete,
         onDismiss = {
-            shouldDelete.value = null
+            shouldDelete = null
         },
         onConfirm = {
-            shouldDelete.value?.let {
+            shouldDelete?.let {
                 scope.launch {
                     if (it.pinned) {
                         EmojiHistoryHelper.deletePinned(prefs = prefs)
@@ -179,7 +184,7 @@ fun MediaScreen() = FlorisScreen {
                         EmojiHistoryHelper.deleteHistory(prefs = prefs)
                     }
                 }
-                shouldDelete.value = null
+                shouldDelete = null
             }
         },
     )
@@ -193,16 +198,16 @@ fun DeleteEmojiHistoryConfirmDialog(
 ) {
     shouldDelete?.let {
         JetPrefAlertDialog(
-            title = stringRes(R.string.prefs__media__emoji_history_delete_title),
+            title = stringRes(R.string.action__reset_confirm_title),
             confirmLabel = stringRes(R.string.action__yes),
             dismissLabel = stringRes(R.string.action__no),
             onDismiss = onDismiss,
             onConfirm = onConfirm,
         ) {
             if (it.pinned) {
-                Text(stringRes(R.string.prefs__media__emoji_pinned_delete_text))
+                Text(stringRes(R.string.action__reset_confirm_message, "name" to "pinned emojis"))
             } else {
-                Text(stringRes(R.string.prefs__media__emoji_history_delete_text))
+                Text(stringRes(R.string.action__reset_confirm_message, "name" to "emoji history"))
             }
 
         }
