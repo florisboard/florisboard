@@ -138,8 +138,10 @@ object Devtools {
         return buildString {
             if (withTitle) appendLine("======= ACTIVE SUBTYPE CONFIG =======")
             context.subtypeManager().value.let { subtypeManager ->
-                append("Active Subtype      : ").appendLine(subtypeManager.activeSubtype.toShortString())
-                appendLine("Enabled Subtypes    : ")
+                appendLine("Active Subtype      : ")
+                append("    ")
+                appendLine(subtypeManager.activeSubtype.toShortString())
+                appendLine("Installed Subtypes    : ")
                 subtypeManager.subtypes.forEach { subtype ->
                     append("    ").appendLine(subtype.toShortString())
                 }
