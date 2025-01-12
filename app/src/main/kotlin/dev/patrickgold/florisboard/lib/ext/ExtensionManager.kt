@@ -102,7 +102,13 @@ class ExtensionManager(context: Context) {
         it.value
     }.flatten()
 
+    // TODO : only debug, do not release!!!!!!!!!!!!
+    var fail = true
     fun init() {
+        if (fail) {
+            fail = false
+            return
+        }
         keyboardExtensions.init()
         themes.init()
         languagePacks.init()

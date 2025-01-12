@@ -81,8 +81,14 @@ fun TextInputLayout(
                             ),
                         )
                     }
+                    val debugLayoutResult by keyboardManager.layoutManager
+                        .debugLayoutComputationResultFlow.collectAsState()
                     if (state.keyboardMode != KeyboardMode.EDITING) {
-                        TextKeyboardLayout(evaluator = evaluator)
+                        if (debugLayoutResult?.allLayoutsSuccess() == true) {
+                            TextKeyboardLayout(evaluator = evaluator)
+                        } else {
+                            HowDidWeGetHere()
+                        }
                     } else {
                         HowDidWeGetHere()
                     }

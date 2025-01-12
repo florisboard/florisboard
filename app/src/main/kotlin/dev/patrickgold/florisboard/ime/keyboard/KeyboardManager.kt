@@ -91,7 +91,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val layoutManager = LayoutManager(context)
+    val layoutManager = LayoutManager(context)
     private val keyboardCache = TextKeyboardCache()
 
     val resources = KeyboardManagerResources()

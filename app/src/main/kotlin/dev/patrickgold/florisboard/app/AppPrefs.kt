@@ -166,8 +166,8 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__enabled",
             default = false,
         )
-        val showHeapMemoryStats = boolean(
-            key = "devtools__show_heap_memory_stats",
+        val showLastLayoutComputation = boolean(
+            key = "devtools__show_last_layout_computation",
             default = false,
         )
         val showPrimaryClip = boolean(

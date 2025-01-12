@@ -552,7 +552,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                         .fillMaxWidth()
                                         .weight(1f),
                                 ) {
-                                    DevtoolsUi()
+                                    DevtoolsOverlay(modifier = Modifier.fillMaxSize())
                                 }
                             }
                             ImeUi()
@@ -636,14 +636,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    private fun DevtoolsUi() {
-        val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
-        if (devtoolsEnabled) {
-            DevtoolsOverlay(modifier = Modifier.fillMaxSize())
         }
     }
 

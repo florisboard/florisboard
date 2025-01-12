@@ -62,12 +62,6 @@ fun DevtoolsScreen() = FlorisScreen {
 
         PreferenceGroup(title = stringRes(R.string.devtools__title)) {
             SwitchPreference(
-                prefs.devtools.showHeapMemoryStats,
-                title = stringRes(R.string.devtools__show_heap_memory_stats__label),
-                summary = stringRes(R.string.devtools__show_heap_memory_stats__summary),
-                enabledIf = { prefs.devtools.enabled isEqualTo true },
-            )
-            SwitchPreference(
                 prefs.devtools.showPrimaryClip,
                 title = stringRes(R.string.devtools__show_primary_clip__label),
                 summary = stringRes(R.string.devtools__show_primary_clip__summary),
@@ -77,6 +71,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 prefs.devtools.showInputStateOverlay,
                 title = stringRes(R.string.devtools__show_input_state_overlay__label),
                 summary = stringRes(R.string.devtools__show_input_state_overlay__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.devtools.showLastLayoutComputation,
+                title = "Show last layout computation",
+                summary = "Show the last layout computation in a dialog",
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             SwitchPreference(
