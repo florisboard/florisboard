@@ -1,0 +1,15 @@
+<component name="CopyrightManager">
+  <settings default="copyright">
+    <module2copyright>
+      <element module="Project Files" copyright="copyright" />
+    </module2copyright>
+    <LanguageOptions name="Shell Script">
+      <option name="fileTypeOverride" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="XML">
+      <option name="fileTypeOverride" value="1" />
+      <option name="prefixLines" value="false" />
+    </LanguageOptions>
+    <LanguageOptions name="__TEMPLATE__" />
+  </settings>
+</component>
