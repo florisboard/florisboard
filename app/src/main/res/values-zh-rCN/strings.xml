@@ -549,8 +549,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">开发者工具</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">启用开发者工具</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">专为调试和故障排除而设计的工具</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">显示堆内存统计信息</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">右上角叠加显示堆内存使用情况和最大大小</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">显示主要剪贴板条目</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">叠加显示剪贴板当前的主要剪贴板条目</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">显示输入状态叠加层</string>

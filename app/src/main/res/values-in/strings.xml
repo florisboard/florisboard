@@ -15,6 +15,22 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Warna kulit emoji yang disukai</string>
     <string name="prefs__media__emoji_preferred_hair_style">Gaya rambut emoji yang disukai</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Histori emoji</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Aktifkan riwayat emoji</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Pertahankan emoji yang baru-san digunakan untuk akses cepat</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Perbarui strategi (disematkan)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Perbarui strategi (terbaru)</string>
+    <string name="prefs__media__emoji_history_max_size">Maksimal item untuk disimpan</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Saran emoji</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Aktifkan saran emoji</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Ngasih saran emoji pas ngetik</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Jenis pemicu</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Perbarui histori emoji</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Menerima emoji yang disarankan akan menambahkannya ke riwayat emoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Tampilkan nama emoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Saran emoji menampilkan nama emoji</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Panjang kueri minimum</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Jumlah kandidat maksimum</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smiley &amp; Emotikon</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Orang &amp; Badan</string>
@@ -25,6 +41,12 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objek</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simbol</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bendera</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Tidak ditemukan emoji yang baru saja digunakan. Setelah Anda mulai mengetik emoji, emoji akan secara otomatis muncul di sini.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Untuk mengakses riwayat emoji, buka kunci perangkat terlebih dahulu.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Pro tip: Tekan lama emoji dalam riwayat emoji untuk menyematkan atau menghapusnya!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Menghapus {emoji} dari riwayat emoji</string>
+    <string name="emoji__history__pinned">Disematkan</string>
+    <string name="emoji__history__recent">Terkini</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Panah atas</string>
     <string name="quick_action__arrow_up__tooltip">Lakukan panah atas</string>
@@ -86,7 +108,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard tidak diaktifkan di sistem dan tidak akan tersedia sebagai metode input di pilihan input.
 Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard tidak dipilih sebagai metode masukan bawaan. Klik di sini untuk menyelesaikan masalah ini.</string>
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">Bahasa &amp; Tata Letak</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Tata letak Bahasa &amp;</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Tampilkan nama-nama bahasa di</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipe</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
@@ -100,7 +122,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Tata letak utama simbol</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Tata letak sekunder simbol</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Penyusun</string>
-    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Set mata uang</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Atur mata uang</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Tata letak numerik</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Tata letak numerik (lanjutan)</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Tata letak baris nomor</string>
@@ -120,6 +142,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Setidaknya satu bidang tidak memiliki nilai yang dipilih. Harap pilih sebuah nilai untuk bidangnya.</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (tidak terpasang)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Tata Letak</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Konfirmasi Hapus</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Yakin, mau hapus tipe ketikan ini?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Waktu matahari terbit</string>
@@ -132,8 +156,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Penyedia Eksternal</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Pilih tema pagi</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Pilih tema malam</string>
-    <string name="settings__theme_editor__fine_tune__title">Editor lanjutan</string>
-    <string name="settings__theme_editor__fine_tune__level">Tingkat pengeditan</string>
+    <string name="settings__theme_editor__fine_tune__title">Penyunting lanjutan</string>
+    <string name="settings__theme_editor__fine_tune__level">Tingkat penyuntingan</string>
     <string name="settings__theme_editor__fine_tune__display_colors_as">Tampilkan warna-warna sebagai</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Tampilkan papan ketik setelah dialog</string>
     <string name="settings__theme_editor__add_rule">Tambahkan aturan</string>
@@ -538,6 +562,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Tetapkan item papan klip untuk akses cepat</string>
     <string name="pref__clipboard__clean_up_old__label">Bersihkan item lama</string>
     <string name="pref__clipboard__clean_up_after__label">Bersihkan item lama setelah</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Otomatis hapus item sensitif</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Otomatis hapus item setelah</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
     <string name="pref__clipboard__max_history_size__label">Batas ukuran riwayat</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Membersihkan klip utama memengaruhi riwayat</string>
@@ -551,14 +577,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Alat pengembang</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Aktifkan alat pengembang</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Alat yang dirancang khusus untuk debugging dan pemecahan masalah</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Tampilkan statistik tumpukan memori</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Menghamparkan penggunaan tumpukan memori dan ukuran maksimal di sudut kanan atas</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Tampilkan klip utama</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Menghamparkan klip utama papan klip</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Tampilkan hamparan keadaan masukan</string>
     <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Menghamparkan keadaan masukan saat ini untuk pengawakutuan</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Tampilkan hamparan pengejaan</string>
     <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Menghamparkan hasil pengejaan saat ini untuk pengawakutuan</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Tampilkan overlay IsiOtomatis sebaris</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Menumpangkan hasil isi otomatis sebaris saat ini untuk debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Tampilkan perbatasan sentuhan tombol</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Gariskan perbatasan sentuhan tombol dalam warna merah</string>
     <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Tampilkan pembantu tarik&amp;lepas</string>
@@ -574,6 +600,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Pengaturan Android aman</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Pengaturan sistem Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
+    <string name="devtools__debuglog__title">Log debug</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Debug log tersalin ke papan klip</string>
+    <string name="devtools__debuglog__copy_log">Salin log</string>
+    <string name="devtools__debuglog__copy_for_github">Salin log (GitHub formatting)</string>
+    <string name="devtools__debuglog__loading">Memuat…</string>
     <!-- Extension strings -->
     <string name="ext__home__title">Addon &amp; Ekstensi</string>
     <string name="ext__list__ext_theme">Ekstensi tema</string>
@@ -732,6 +763,14 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Nama bahasa pada seluruh aplikasi dan antarmuka papan ketik ditampilkan dalam lokal yang diatur untuk seluruh perangkat</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Locale natif</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Nama bahasa pada seluruh aplikasi dan antarmuka papan ketik ditampilkan dalam lokal yang dirujuk sendiri</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Urutkan otomatis (tambahkan awalan)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Menyusun ulang emoji secara otomatis pada penggunaan emoji. Emoji baru ditambahkan ke awal.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Urutkan otomatis (tambahkan awalan)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Menyusun ulang emoji secara otomatis pada penggunaan emoji. Emoji baru ditambahkan di akhir.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Urutkan manual (tambahkan awalan)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Jangan susun ulang emoji secara otomatis pada penggunaan emoji. Emoji baru ditambahkan di awal.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Urutkan manual (tambahkan akhiran)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Jangan susun ulang emoji secara otomatis pada penggunaan emoji. Emoji baru ditambahkan di akhir.</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Warna kulit bawaan</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Warna kulit terang</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Warna kulit agak terang</string>
@@ -743,6 +782,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Rambut keriting</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Rambut putih</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Botak</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">Titik dua terdepan</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Saran emoji pakai: emoji_name syntax</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Teks sebaris</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Sarankan emoji hanya dengan mengetikkan nama emoji sebagai kata</string>
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Di atas kandidat</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Menempatkan baris tindakan yang diperpanjang antara antarmuka aplikasi dan baris kandidat</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Di bawah kandidat</string>
@@ -853,5 +896,11 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     </plurals>
     <plurals name="unit__items__written">
         <item quantity="other">{v} item</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="other">Karakter {v}</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="other">Kandidat {v}</item>
     </plurals>
 </resources>

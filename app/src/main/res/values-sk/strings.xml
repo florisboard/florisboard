@@ -5,30 +5,184 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počkajte</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona s tromi bodkami. Ak je viditeľná, znamená, že po dlhšom stlačení je možné použiť viac písmen.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Režim zatvárania jednou rukou.</string>
-    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Presuňte klávesnicu doľava.</string>
-    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Presuňte klávesnicu doprava.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Zatvorí režim písania jednou rukou.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Presunie klávesnicu doľava.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Presunie klávesnicu doprava.</string>
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
-    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotívny</string>
-    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="settings__media__title">Emodži</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emodži</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomodži</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Preferovaný tón pleti emodži</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferované vlasy emodži</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">História emodži</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Povoliť históriu emodži</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Bude uchovávať nedávno použité emodži, aby k nim bol rýchly prístup</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Stratégia aktualizovania (Pripnuté)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Stratégia aktualizovania (Nedávne)</string>
+    <string name="prefs__media__emoji_history_max_size">Maximálny počet uložených položiek</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Návrhy emodži</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Povoliť návrhy emodži</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Počas písania sa budú navrhovať emodži</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Typ spúšťača</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Aktualizovať históriu emodži</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Prijaté návrhy emodži sa pridajú do histórie emodži</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Zobrazovať názov emodži</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Pri emodži sa budú zobrazovať názvy navrhovaných emodži</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimálna dĺžka vyhľadávacieho dopytu</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximálny počet kandidátov</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky &amp; Emócie</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Ľudia &amp; Telo</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky a emócie</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Ľudia a telo</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Zvieratá &amp; Príroda</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Potraviny a nápoje</string>
     <string name="emoji__category__travel_places" comment="Emoji category name">Cestovanie &amp; Miesta</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Aktivity</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Predmety</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Symboly</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Vlajky</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Nenašli sa žiadne nedávno použité emodži. Keď začneš písať, emodži sa automaticky zobrazia tu.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Ak si chceš pozrieť históriu emodži, najprv si odomkni zariadenie.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Profi tip: Ak chceš v histórii emodži nejaké emodži pripnúť alebo odstrániť, podrž na ňom prst.</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Emodži {emoji} bolo odstránené z histórie emodži</string>
+    <string name="emoji__history__pinned">Pripnuté</string>
+    <string name="emoji__history__recent">Nedávne</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Šípka nahor</string>
+    <string name="quick_action__arrow_up__tooltip">Vykonať akciu šípky nahor</string>
+    <string name="quick_action__arrow_down" maxLength="12">Šípka nadol</string>
+    <string name="quick_action__arrow_down__tooltip">Vykonať akciu šípky nadol</string>
+    <string name="quick_action__arrow_left" maxLength="12">Šípka vľavo</string>
+    <string name="quick_action__arrow_left__tooltip">Vykonať akciu šípky vľavo</string>
+    <string name="quick_action__arrow_right" maxLength="12">Šípka vpravo</string>
+    <string name="quick_action__arrow_right__tooltip">Vykonať akciu šípky vpravo</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vymazať prvý výstrižok v schránke</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Kopírovať</string>
+    <string name="quick_action__clipboard_copy__tooltip">Kopírovať zo schránky</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Vystrihnúť</string>
+    <string name="quick_action__clipboard_cut__tooltip">Vystrihnúť zo schránky</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Prilepiť</string>
+    <string name="quick_action__clipboard_paste__tooltip">Prilepiť zo schránky</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Vybr. všetko</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Vybrať všetko do schránky</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schránka</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otvoriť históriu schránky</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emodži</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Otvoriť panel s emodži</string>
+    <string name="quick_action__settings" maxLength="12">Nastavenia</string>
+    <string name="quick_action__settings__tooltip">Otvoriť nastavenia</string>
+    <string name="quick_action__undo" maxLength="12">Späť</string>
+    <string name="quick_action__redo" maxLength="12">Znovu</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Ďalšie akcie</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Zobraziť alebo skryť ďalšie akcie</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognito</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Zapnúť inkognito režim</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Aut. opravy</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Zapnúť automatické opravy</string>
+    <string name="quick_action__voice_input" maxLength="12">Hlas. vstup</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Otvoriť poskytovateľa hlasového vstupu</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Jednou rukou</string>
+    <string name="quick_action__one_handed_mode__tooltip">Zapnúť režim písania jednou rukou</string>
+    <string name="quick_actions_overflow__customize_actions_button">Zmeniť poradie akcií</string>
+    <string name="quick_actions_editor__header">Upraviť poradie akcií</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Pripnutá akcia ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamické akcie ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Skryté akcie ({n})</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie je v systéme povolený, a preto nebude k dispozícii, ako metóda zadávania v ponuke na výber vstupov. Kliknutím sem tento problém vyriešite.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie je vybraný, ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešite.</string>
+    <string name="settings__title" comment="Title of Settings">Nastavenia</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Vyskúšaj svoje nastavenie</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Pomoc</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Predvolené</string>
+    <string name="settings__home__title" comment="Title of the Home screen">Víta ťa {app_name}</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Klávesnica FlorisBoard nie je v systéme povolená, a preto sa pri výbere vstupu nebude dať nastaviť ako metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Klávesnica FlorisBoard nie je nastavená ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozloženia</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zdroj zobrazovania názvov jazykov</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pridať podtyp</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá sa, že ste nenakonfigurovali žiadne podtypy. Ako náhradný sa použije podtyp Angličtina/QWERTY!</string>
-    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočná téma</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Aktíva aplikácie FlorisBoard</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Spravovať nainštalované jazykové balíčky</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Experimentálna funkcia: Spravuj rozšírenia, ktoré pridávajú podporu konkrétnych jazykov (zatiaľ čínštinu založenú na tvaroch)</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Upraviť podtyp</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primárny jazyk</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Mapovanie vyskakovacích ponúk</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rozloženie znakov</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primárne rozloženie symbolov</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundárne rozloženie symbolov</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Rozloženie čísel</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Rozloženie čísel (pokročilé)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Rozloženie číselného riadka</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primárne rozloženie na telefonovanie</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundárne rozloženie na telefonovanie</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Vybrať jazyk</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Hľadať jazyk</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; vybrať &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Navrhované prednastavenia podtypu</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">K dispozícii nie sú žiadne prednastavenia. Pomocou tlačidla nižšie si zobrazíš všetky prednastavenia podtypu.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Prednastavenia podtypu</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Zobraziť všetko</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Zdá sa, že nemáš nakonfigurované žiadne podtypy. Ako záložný podtyp sa použije Angličtina/QWERTY.</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp už existuje.</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Minimálne jedno pole nemá vybratú hodnotu. Vyberte ju pre každé takéto pole.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (nie je nainštalované)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Rozloženia</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Potvrdenie zmazania</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Naozaj chceš zmazať tento podtyp?</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Motív</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Režim motívu</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Čas východu slnka</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slnka</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denný motív</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočný motív</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovať nainštalované motívy</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Zdroje aplikácie FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interné úložisko</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Externý poskytovateľ</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Vybrať denný motív</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vybrať nočný motív</string>
+    <string name="settings__theme_editor__fine_tune__title">Editor na doladenie</string>
+    <string name="settings__theme_editor__fine_tune__level">Úroveň úprav</string>
+    <string name="settings__theme_editor__add_rule">Pridať pravidlo</string>
+    <string name="settings__theme_editor__edit_rule">Upraviť pravidlo</string>
+    <string name="settings__theme_editor__rule_element">Cieľový prvok</string>
+    <string name="settings__theme_editor__rule_groups">Skupiny</string>
+    <string name="settings__theme_editor__add_property">Pridať vlastnosť</string>
+    <string name="settings__theme_editor__edit_property">Upraviť vlastnosť</string>
+    <string name="settings__theme_editor__property_already_exists">Vlastnosť s týmto názvom už v rámci aktuálneho pravidla existuje.</string>
+    <string name="settings__theme_editor__property_name">Názov vlastnosti</string>
+    <string name="settings__theme_editor__property_value">Hodnota vlastnosti</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Použiť na všetky rohy</string>
+    <string name="snygg__rule_element__defines">Premenné</string>
+    <string name="snygg__rule_element__keyboard">Okno klávesnice</string>
+    <string name="snygg__rule_element__key">Kláves</string>
+    <string name="snygg__rule_element__emoji_key">Kláves emodži</string>
+    <string name="snygg__rule_element__emoji_key_tab">Záložka s emodži</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Indikátor inkognito režimu</string>
+    <string name="snygg__rule_element__smartbar">Inteligentná lišta</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Editor akcií inteligentnej lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Hlavička editora akcií inteligentnej lišty</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Riadok navrhnutých slov inteligentnej lišty</string>
+    <string name="snygg__property_name__width">Šírka</string>
+    <string name="snygg__property_name__height">Výška</string>
+    <string name="snygg__property_name__font_family">Rodina písiem</string>
+    <string name="snygg__property_name__font_size">Veľkosť písma</string>
+    <string name="snygg__property_name__font_style">Štýl písma</string>
+    <string name="snygg__property_name__font_weight">Hrúbka písma</string>
+    <string name="snygg__property_name__shape">Tvar</string>
+    <string name="snygg__property_name__var_primary">Primárna farba</string>
+    <string name="snygg__property_name__var_primary_variant">Primárna farba (variant)</string>
+    <string name="snygg__property_name__var_secondary">Sekundárna farba</string>
+    <string name="snygg__property_name__var_secondary_variant">Sekundárna farba (variant)</string>
+    <string name="snygg__property_value__explicit_inherit">Prevziať</string>
+    <string name="snygg__property_value__rectangle_shape">Obdĺžnik</string>
+    <string name="snygg__property_value__circle_shape">Kruh</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Zaoblené rohy (%)</string>
+    <string name="snygg__property_value__percentage_size">Veľkosť (%)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky a vibrácie</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Nikdy neprehrávať zvuky pri zadávaní vstupu (bez ohľadu na systémové nastavenia)</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvuky stláčania klávesov</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Režim vibrácií</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Táto funkcia vyžaduje hardvérovú podporu riadenia amplitúdy, ktorá vo vašom zariadení chýba.</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Táto funkcia vyžaduje podporu ovládania amplitúdy, ktorá je k dispozícii len v systéme Android 8.0 alebo novšom.</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrácie pri stlačení tlačidla</string>
@@ -48,23 +202,153 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazenie pomocného kľúča</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí konfigurovateľný pomocný kláves vedľa medzerníka</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Akcia užitočného kľúča</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Označenie medzerníka</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Písanie veľkých písmen</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Úprava veľkosti písma</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozloženie</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim ovládania jednou rukou</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Šírka klávesnice v režime ovládania jednou rukou</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Výška klávesnice</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Rozstupy medzi klávesmi</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Odsadenie odspodu</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stlačenie klávesu</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditeľnosť vyskakovacieho okna</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Keď stlačíte kláves, zobrazí sa vyskakovacie okno</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Dlhé stlačenie klávesu</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Prepnutie na znaky medzerníkom</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indikátor inkognito režimu</string>
     <!-- Smartbar strings -->
-    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Inteligentná lišta</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Povoliť inteligentnú lištu</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí sa v hornej časti klávesnice</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Rozloženie</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Možnosti pre konkrétne rozloženie</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Prehodiť prepínacie tlačidlá</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Prehodí prepínače v riadku akcií</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Automatické rozbalenie/zbalenie</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Automaticky rozbalí/zbalí riadok zdieľaných akcií na základe aktuálneho stavu</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Písanie</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Zobrazovať návrhy</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Režim zobrazovania návrhov</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokovať potenciálne urážlivé slová</string>
+    <string name="pref__correction__title" comment="Preference group title">Opravy</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatické veľké písmená</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Automatická medzera za interpunkciou</string>
+    <string name="pref__spelling__title" comment="Preference group title">Pravopis</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Jazyky</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvencia: {freq}</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Pridať slovo</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Upraviť slovo</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Slovo</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Zadajte slovo</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestá a písanie ťahom</string>
+    <string name="pref__glide__title" comment="Preference group title">Písanie ťahom</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Povoliť písanie ťahom</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Píš slová tak, že prstom potiahneš po ich písmenách</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Ukazovať stopu ťahania</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizne po každom slove</string>
+    <string name="pref__glide_trail_fade_duration">Čas zmiznutia stopy ťahania</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Vždy zmazať slovo</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Všeobecné gestá</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Potiahnutie nahor</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Potiahnutie nadol</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Potiahnutie vľavo</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Potiahnutie vpravo</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Pokročilé nastavenia</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognito režim</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">O aplikácii</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikácie FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Open-source licencie</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Zásady ochrany osobných údajov</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licencie</string>
+    <string name="about__version__title" comment="Preference title">Verzia</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verzia bola skopírovaná do schránky</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Vyskytla sa chyba: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Denník zmien</string>
+    <string name="about__changelog__summary" comment="Preference summary">Čo je nové?</string>
+    <string name="about__repository__title" comment="Preference title">Repozitár (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskusie, problémy a informácie</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Zásady ochrany osobných údajov</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany osobných údajov tohto projektu</string>
+    <string name="about__project_license__title" comment="Preference title">Licencia na projekt</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard má udelenú licenciu {license_name}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodarilo sa načítať text licencie.\n-&gt; Dôvod: {error_message}.</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Licencie tretích strán</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Licencie knižníc tretích strán zahrnutých v tejto aplikácii</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Vitajte!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Ďakujeme, že ste sa rozhodli pre {app_name}! Toto rýchle nastavenie vás prevedie krokmi potrebnými na to, aby ste {app_name} mohli používať na svojom zariadení.</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Zásady ochrany osobných údajov</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Repozitár</string>
+    <string name="setup__enable_ime__title">Povoliť {app_name}</string>
+    <string name="setup__enable_ime__description">Android vyžaduje, aby bola každá vlastná klávesnica samostatne povolená, kým ju bude možné používať. Prejdite na Systém <i> Jazyk a vstup </i> Nastavenia a povoľte tam aplikáciu {app_name}.</string>
+    <string name="setup__enable_ime__open_settings_btn">Otvoriť systémové nastavenia</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Zálohovanie a obnovenie</string>
+    <string name="backup_and_restore__back_up__title">Zálohovať dáta</string>
+    <string name="backup_and_restore__back_up__destination">Vyberte miesto uloženia zálohy</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Lokálny súborový systém</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Aplikácia tretej strany (cez ponuku zdieľania)</string>
+    <string name="backup_and_restore__back_up__files">Vyberte, čo sa má zálohovať</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Predvoľby</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšírenia klávesnice</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Pravopisné rozšírenia/slovníky</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Rozšírenia motívov</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">História schránky</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Textové položky</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Obrázky</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videá</string>
+    <string name="backup_and_restore__back_up__success">Archív zálohy bol úspešne exportovaný!</string>
+    <string name="backup_and_restore__back_up__failure">Archív zálohy sa nepodarilo exportovať: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Obnoviť dáta</string>
+    <string name="backup_and_restore__restore__files">Vyberte, čo sa má obnoviť</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavrieť</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Aplikácia FlorisBoard prestala pracovať…</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Schránka</string>
+    <string name="clipboard__disabled__title">História schránky je momentálne zakázaná</string>
+    <string name="clipboard__disabled__message">História schránky v aplikácii {app_name} ti umožňuje rýchlo ukladať a následne používať text a obrázky, ktoré skopíruješ. Položky v nej si môžeš pripnúť, nastaviť ich maximálny počet alebo konfigurovať, ako sa budú automaticky vymazávať.</string>
+    <string name="clipboard__disabled__enable_button">Povoliť históriu schránky</string>
+    <string name="clipboard__empty__title">Schránka je prázdna</string>
+    <string name="clipboard__empty__message">Keď skopíruješ textové výstrižky alebo obrázky, zobrazia sa tu.</string>
+    <string name="clipboard__locked__title">Vaša schránka je uzamknutá</string>
+    <string name="clip__delete_item">Zmazať</string>
+    <string name="clipboard__cleared_primary_clip">Prvý výstrižok bol vymazaný</string>
+    <string name="settings__clipboard__title">Schránka</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Povoliť históriu schránku</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Vymazanie prvého výstrižku ovplyvní históriu</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Pri vymazaní prvého výstrižku sa odstráni aj najnovší záznam v histórii</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Vývojárske nástroje</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Zobraziť prvý výstrižok</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Dá do popredia aktuálny prvý výstrižok v schránke</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Systémové nástroje Androidu</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globálne nastavenia Androidu</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Systémové nastavenia Androidu</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Doplnky a rozšírenia</string>
+    <string name="ext__error__not_found_title">Rozšírenie sa nenašlo.</string>
+    <string name="ext__editor__metadata__title_invalid">Neplatné metadáta</string>
     <!-- Action strings -->
+    <string name="action__delete">Zmazať</string>
+    <string name="action__discard_confirm_title">Neuložené zmeny</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Chyba</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <string name="state__disabled">Bezbariérový</string>
     <!-- Enum label and description strings -->
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Žiadna akcia</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Zmazať znak pred kurzorom</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Zmazať znaky presne</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Zmazať slovo pred kurzorom</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Zmazať slová presne</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Prechod na emotikony</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->

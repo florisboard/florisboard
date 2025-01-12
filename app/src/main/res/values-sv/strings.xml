@@ -21,6 +21,7 @@
     <string name="emoji__category__objects" comment="Emoji category name">Föremål</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggor</string>
+    <string name="emoji__history__recent"></string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pil upp</string>
     <!-- Incognito mode strings -->
@@ -34,6 +35,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard är inte vald som standard inmatningsmetod. Tryck här för att lösa problemet.</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Lägg till undertyp</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redigera undertyp</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Sök efter ett språk</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det verkar som du inte har konfigurerat några undertyper. Undertyp Engelska/QWERTY kommer då användas!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Denna undertyp finns redan!</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
@@ -45,6 +47,7 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard app-tillgångar</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Extern leverantör</string>
+    <string name="snygg__rule_element__key">Tangent</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tangentbord</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Sifferrad</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>

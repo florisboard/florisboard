@@ -403,8 +403,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Utviklerverktøy</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Skru på utviklerverktøy</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Verktøy som er spesifikt utviklet for feilsøking</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Vis haugminnestatistikk</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlegger haugminnebruk og maks størrelse i hjørnet øverst til høyre</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Tøm intern brukerordlistedatabase</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Fjerner alle ord fra ordlistedatabasetabellen</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Tilbakestill \"{flag_name}\" flagg</string>

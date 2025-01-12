@@ -548,8 +548,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Ferramentas de desenvolvedor</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ativar ferramentas de desenvolvedor</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Ferramentas projetadas especificamente para depuração e solução de problemas</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Mostrar estatísticas de memória heap</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Sobrepõe o uso da memória heap e o tamanho máximo no canto superior direito</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostrar clipe primário</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Sobrepõe o clipe primário atual da área de transferência</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Mostrar sobreposição de estado de entrada</string>

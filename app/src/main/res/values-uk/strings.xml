@@ -561,6 +561,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Збереження елементів буфера обміну для швидкого доступу</string>
     <string name="pref__clipboard__clean_up_old__label">Очистити старі елементи</string>
     <string name="pref__clipboard__clean_up_after__label">Очистити старі елементи через</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Автоматичне очищення чутливих елементів</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Автоматичне очищення чутливих елементів після</string>
     <string name="pref__clipboard__limit_history_size__label">Обмежити розмір історії</string>
     <string name="pref__clipboard__max_history_size__label">Максимальний розмір історії</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Очищення основного запису впливає на історію</string>
@@ -573,8 +575,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Інструменти розробника</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Увімкнути параметри розробника</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Інструменти, спеціально розроблені для налагодження та усунення несправностей</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Показати статистику пам\'яті</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Накладає використання пам\'яті та максимальний розмір у верхньому правому куті</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Показати основний запис</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Накладає поточний основний запис з буфера обміну</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Показати стан входу накладанням</string>

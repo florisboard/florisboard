@@ -558,6 +558,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Speichere Elemente der Zwischenablage für schnellen Zugriff</string>
     <string name="pref__clipboard__clean_up_old__label">Alte Elemente bereinigen</string>
     <string name="pref__clipboard__clean_up_after__label">Alte Elemente bereinigen nach</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Lösche Zwischenablageinhalte automatisch</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Lösche Zwischenablageinhalte automatisch nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Das Löschen des aktiven Elements betrifft den Verlauf</string>
@@ -570,8 +572,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Entwicklerwerkzeuge</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Entwickler-Werkzeuge ein/aus</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Speziell für Debugging und Fehlersuche entwickelte Werkzeuge</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Zeige Heap-Speicher Statistik</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Blende den Heap-Speicherverbrauch und die maximale Größe in der oberen rechten Ecke ein</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Zeige aktives Element</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Zeigt das aktuell aktive Element der Zwischenablage</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Zeige Eingabe-Overlay an</string>
@@ -756,7 +756,7 @@
     <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Nur die Tastatur nach Schließen eines Editordialogs anzeigen, wenn sie vorher sichtbar war</string>
     <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Systemsprache</string>
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Sprachnamen in der App und in der Tastatur werden in der Systemsprache des Geräts dargestellt</string>
-    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Systemsprache</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Referenzierte Sprache</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Sprachnamen in der App und in der Tastatur werden in der referenzierten Sprache dargestellt</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Automatisch Sortieren (Voranstellen)</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Emojis werden bei Verwendung neu sortiert. Neue Emojis werden am Anfang hinzugefügt.</string>
