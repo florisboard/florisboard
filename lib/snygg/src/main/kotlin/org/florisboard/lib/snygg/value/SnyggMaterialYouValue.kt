@@ -17,6 +17,7 @@
 package org.florisboard.lib.snygg.value
 
 import android.content.Context
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -30,6 +31,7 @@ sealed interface SnyggMaterialYouValue : SnyggValue {
     val colorName: String
     val dark: Boolean
 
+    @RequiresApi(31)
     fun loadColor(context: Context) = MaterialYouColor.loadColor(context, colorName, dark)
 }
 
@@ -75,6 +77,7 @@ object MaterialYouColor {
     private var lightColorScheme: ColorScheme? = null
     private var darkColorScheme: ColorScheme? = null
 
+    @RequiresApi(31)
     private fun getAndCacheColorScheme(context: Context, dark: Boolean): ColorScheme {
         return if (dark) {
             if (darkColorScheme == null) {
@@ -135,6 +138,7 @@ object MaterialYouColor {
 
     val colorNames = ColorPalette.entries.map { it.id }
 
+    @RequiresApi(31)
     fun loadColor(context: Context, colorName: String, dark: Boolean): Color {
         val colorScheme = getAndCacheColorScheme(context, dark)
 
