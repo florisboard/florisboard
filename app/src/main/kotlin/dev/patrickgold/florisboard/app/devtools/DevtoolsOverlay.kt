@@ -42,7 +42,9 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
@@ -56,28 +58,37 @@ private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.
 
 @Composable
 fun DevtoolsOverlay(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     val prefs by florisPreferenceModel()
+    val keyboardManager by context.keyboardManager()
 
+    val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
     val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
     val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
+    val showLastLayoutComputation by prefs.devtools.showLastLayoutComputation.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
     val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
+
+    val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White,
         LocalLayoutDirection provides LayoutDirection.Ltr,
     ) {
         Column(modifier = modifier) {
-            if (showPrimaryClip) {
+            if (devtoolsEnabled && showPrimaryClip) {
                 DevtoolsClipboardOverlay()
             }
-            if (showInputStateOverlay) {
+            if (devtoolsEnabled && showInputStateOverlay) {
                 DevtoolsInputStateOverlay()
             }
-            if (showSpellingOverlay) {
+            if (devtoolsEnabled && showLastLayoutComputation || debugLayoutResult?.allLayoutsSuccess() == false) {
+                DevtoolsLastLayoutComputationOverlay()
+            }
+            if (devtoolsEnabled && showSpellingOverlay) {
                 DevtoolsSpellingOverlay()
             }
-            if (showInlineAutofillOverlay && AndroidVersion.ATLEAST_API30_R) {
+            if (devtoolsEnabled && showInlineAutofillOverlay && AndroidVersion.ATLEAST_API30_R) {
                 DevtoolsInlineAutofillOverlay()
             }
         }
@@ -121,6 +132,38 @@ private fun DevtoolsInputStateOverlay() {
             DevtoolsText(text = "Composing: ${content.composing}")
             DevtoolsText(text = "CurrentWord: ${content.currentWord}")
             DevtoolsText(text = "LastCommit: ${editorInstance.lastCommitPosition}")
+        }
+    }
+}
+
+@Composable
+private fun DevtoolsLastLayoutComputationOverlay() {
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+    val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
+
+    @Composable
+    fun PrintResult(result: Result<CachedLayout>) {
+        if (result.isSuccess) {
+            DevtoolsText(text = "loaded: ${result.getOrNull()?.name}")
+        } else {
+            DevtoolsText(text = "error: ${result.exceptionOrNull()}")
+        }
+    }
+
+    DevtoolsOverlayBox(title = "Last layout computation") {
+        if (debugLayoutResult == null) {
+            DevtoolsText(text = "No layout computation result available.")
+            return@DevtoolsOverlayBox
+        }
+        DevtoolsSubGroup(title = "main") {
+            PrintResult(debugLayoutResult!!.main)
+        }
+        DevtoolsSubGroup(title = "mod") {
+            PrintResult(debugLayoutResult!!.mod)
+        }
+        DevtoolsSubGroup(title = "ext") {
+            PrintResult(debugLayoutResult!!.ext)
         }
     }
 }
