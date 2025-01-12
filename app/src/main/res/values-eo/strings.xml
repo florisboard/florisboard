@@ -3,10 +3,34 @@
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Paŭzigi</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Atendi</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Tripunkta piktogramo. Se videbla, indikas ke vi povas uzi pliajn literojn se vi longe premetas ĝin.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fermi unu-manan moduson.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Movi klavaron maldekstren.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Movi klavaron dekstren.</string>
     <!-- Media strings -->
+    <string name="settings__media__title">Emoĝioj</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoĝioj</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Miensimboloj</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoĝioj</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Perferata emoĝiojn haŭtkoloro</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Preferata emoĝiojn hararanĝo</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoĝia historio</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Aktivigi emoĝian historion</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Memorigi antaŭ ne longe uzitaj emoĝioj por rapida alireblo</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Ĝisdatigon strategio (Alpinglitaj)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Ĝisdatigon strategio (Ĵusaj)</string>
+    <string name="prefs__media__emoji_history_max_size">Maksimumo da konservendaj eroj</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoĝija sugestoj</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Aktivigi emoĝiajn sugestojn</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Havigi emoĝiajn sugestojn dum ke vi tajpi</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Ekigon tipo</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Ĝisdatigi emoĝian historion</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Akcepti sugestitajn emoĝiojn aldonas ilin al la emoĝia historio</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Montri la nomojn de la emoĝioj</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Emoĝiaj sugestoj vidigi ĝiajn nomojn apude de la emoĝioj</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimuma mendon longo</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maksimuma nombro da sugestoj</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Mienetoj &amp; Emocioj</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Homoj &amp; Korpo</string>
@@ -17,43 +41,260 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objektoj</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Simboloj</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagoj</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Neniu antaŭ ne longe uzita emoĝio trovita. Kiam vi komencos tajpi emoĝiojn, ili aperos aŭtomate ĉi tie.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Por iri al via emoĝia historio, bonvolu unue malŝlosi vian aparaton.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Informo: Vi povas longe tuŝi emoĝiojn en la historio por alpingli aŭ forigi ilin!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Forigis {emoji} el emoĝiojn historio</string>
+    <string name="emoji__history__pinned">Alpinglitaj</string>
+    <string name="emoji__history__recent">Ĵusaj</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Sago supren</string>
+    <string name="quick_action__arrow_up__tooltip">Movi la kursoron al la supra linio</string>
+    <string name="quick_action__arrow_down" maxLength="12">Suben</string>
+    <string name="quick_action__arrow_down__tooltip">Movi la kursoron al la malsupra linio</string>
+    <string name="quick_action__arrow_left" maxLength="12">Maldekstren</string>
+    <string name="quick_action__arrow_left__tooltip">Movi la kursoron maldekstren</string>
+    <string name="quick_action__arrow_right" maxLength="12">Dekstren</string>
+    <string name="quick_action__arrow_right__tooltip">Movi la kursoron dekstren</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Viŝi lastan</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Viŝi lastan tondujan eron</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Kopii</string>
+    <string name="quick_action__clipboard_copy__tooltip">Kopii al la tondujo</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Eltondi</string>
+    <string name="quick_action__clipboard_cut__tooltip">Eltondi al la tondujo</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Alglui</string>
+    <string name="quick_action__clipboard_paste__tooltip">Alglui el la tondujo</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Elekti ĉion</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Elekti ĉion por kopii aŭ eltondi</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Tondujo</string>
-    <string name="quick_action__settings" maxLength="12">Agordoj</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Malfermi tondujan historion</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoĝioj</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Malfermi emoĝian panelon</string>
+    <string name="quick_action__settings" maxLength="12">Agordo</string>
+    <string name="quick_action__settings__tooltip">Malfermi agordon</string>
     <string name="quick_action__undo" maxLength="12">Malfari</string>
+    <string name="quick_action__undo__tooltip">Malfari la lastan enigon</string>
     <string name="quick_action__redo" maxLength="12">Refari</string>
+    <string name="quick_action__redo__tooltip">Refari la lastan enigon</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Pliaj agoj</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Montri aŭ kaŝi pliajn agojn</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognita</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Aktivigi/Malaktivigi Inkognitan moduson</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Aŭtokorekt.</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">(Mal)aktivigi aŭtokorektadon</string>
+    <string name="quick_action__voice_input" maxLength="12">Voĉa enigo</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Malfermi provizanton de voĉa enigo</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Unu-mana</string>
+    <string name="quick_action__one_handed_mode__tooltip">Aktivigi/Malaktivigi unu-manan moduson</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Kursoro</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Nuna kursora pozicio</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Neniu</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nenia operacio</string>
+    <string name="quick_actions_overflow__customize_actions_button">Reordigi agojn</string>
+    <string name="quick_actions_editor__header">Agordi agojn ordon</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Fiksita ago ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dinamikaj agoj ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Kaŝitaj agoj ({n})</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Inkognita moduso estas nun aktiva \n\n{app_name} ne lernos vortojn el via enigo dum ke tiu moduso estas aktiva</string>
+    <string name="incognito_mode__toast_after_disabled">Inkognita moduso estas nun implicite malaktiva</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Agordoj</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Provu vian agordaĵon</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Helpo</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Defaŭlta</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistema defaŭlta</string>
     <string name="settings__home__title" comment="Title of the Home screen">Bonvenon al {app_name}</string>
-    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aldoni subspeco</string>
-    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redakti subspeco</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard estas ne ebligita en la sistemo kaj sekve estos ne disponebla kiel enigmetodo en la elektilo. Klaku ĉi tie por solvi la problemon.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard ne estas elektita kiel la implicita enigmetodo. Klaku ĉi tie por solvi la problemon.</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingvoj &amp; Aranĝoj</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Montri lingvajn nomojn en</string>
+    <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subspecoj</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aldoni subspecon</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Mastrumi instalitajn lingvajn pakojn</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Eksperimente: mastrumi etendaĵojn kio aldonas subtenon por specifaj lingvoj (ĉina formobazita enigo dume)</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redakti subspecon</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ĉefa lingvo</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">Ŝprucsignojn aranĝo</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Signojn aranĝo</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">Sugestilo</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Simbolojn ĉefa aranĝo</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Simbolojn flanka aranĝo</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Kompostilo</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Ĉefa monosigno</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Nombra aranĝo</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Nombra (kroma) aranĝo</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Nombran vicon aranĝo</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Telefona ĉefa aranĝo</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefona flanka aranĝo</string>
+    <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Elekti lingvon</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Serĉi lingvon</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">Ne trovis lingvon kongruan kun \"{search_term}\".</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; elektu &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">Sugestitaj subspecoj jam agorditaj</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">Neniu subspeco jam agordita disponebla. Uzu suban butonon por vidi ĉiujn jam agorditajn subspecojn.</string>
+    <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">Subspecoj jam agorditaj</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Montri ĉiujn</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ĉi tiu subtipo jam ekzistas!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almenaŭ unu kampo ne havas valoron elektitan. Bonvolu elekti valoro(j)n por tiu(j) kampo(j).</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ne instalita)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Aranĝoj</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Forigada Konfirmo</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Ĉu vi estas certa ke vi volas forigi tiun subspecon?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Etoso</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sunleviĝa horo</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunsubira horo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Administri instalitajn etosojn</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Interna memoro</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Ekstera provizanto</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Elekti tagan etoson</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Elekti noktan etoson</string>
+    <string name="settings__theme_editor__fine_tune__display_colors_as">Montri kolorojn kiel</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Montri klavaron post dialogoj</string>
+    <string name="settings__theme_editor__add_rule">Aldoni regulon</string>
+    <string name="settings__theme_editor__edit_rule">Redakti la regulon</string>
+    <string name="settings__theme_editor__code_placeholder">Kodo</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Registrante…</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Estas nokta etoso</string>
+    <string name="snygg__rule_element__clipboard_header">Tondujon  ĉapo</string>
+    <string name="snygg__rule_element__clipboard_item">Tondujon ero</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Tonduja eron ŝpruco</string>
+    <string name="snygg__rule_element__one_handed_panel">Unu-mana panelo</string>
+    <string name="snygg__property_value__material_you_light_color">Material You koloro (Hela)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You koloro (Malhela)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sonoj &amp; Vibradoj</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sona retrokuplo / Sonoj</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ŝalti sonan retrokuplon</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Tuŝa retrokuplo / Vibrado</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ŝalti tuŝan retrokuplon</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibradon reĝimo</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibradon daŭro</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibradon intenseco</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Tiu funkcio bezonas aparatan vibrilon, kiu ŝajnas malesti en tiu aparato</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">ekz. klavojn, butonojn, emoĝiajn langetojn</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">ekz. ŝprucmenuo</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">ekz. forigklavon</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ne efektivigita</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavaro</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Nombra vico</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Vidigi nombran vicon supre la signa aranĝo</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Indikata nombra vico</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Indikataj simboloj</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Montri utilaĵan klavon</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Montri agordeblan utilaĵan klavon apud la spacetklavo</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utilaĵan klavon ago</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacetklavon etikedo</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Majuskliga kondukto</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multobligo grandon de la tiparo</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaro alteco</string>
-    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavaĵo ekdepremi</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Unu-mana moduso</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Unu-manan modusan klavaron larĝo</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Pejzaĝa plenekrana enigo</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavaron alteco</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Klavojn interspaco</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Suba senenhava spaco</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavojn tuŝo</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Ŝprucojn videblo</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vidigi ŝprucon kiam vi tuŝas klavon</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Inkognita modusa indikilo</string>
     <!-- Smartbar strings -->
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">LertaStrio</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Ŝalti la LertaStrion</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vidota sur la klavaro</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Aranĝo</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Aranĝo-specifaj opcioj</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inversigi baskulajn butonojn</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inversigi baskulojn de la agojn vico</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Pozicio de la agojn-vico</string>
     <!-- Typing strings -->
-    <string name="pref__gestures__swipe_up__label" comment="Preference title">Ŝovumi supre</string>
-    <string name="pref__gestures__swipe_down__label" comment="Preference title">Ŝovumi sube</string>
-    <string name="pref__gestures__swipe_left__label" comment="Preference title">Ŝovumi maldekstre</string>
-    <string name="pref__gestures__swipe_right__label" comment="Preference title">Ŝovumi dekstre</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Progresinta</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Agordoj etosa</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">Tajpado</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Sugestoj</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Vidigi sugestojn</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Havigi sugestojn dum ke vi tajpi</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Reĝimo de vidigo de la sugestoj</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloki eble ofendajn vortojn</string>
+    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Tondujan enhavon sugestoj</string>
+    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Sugesti antaŭe kopiitan tondujan enhavon</string>
+    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limigi tondujajn sugestojn je</string>
+    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Eroj kopiitaj dum la lastaj {v} s</string>
+    <string name="pref__correction__title" comment="Preference group title">Korektadoj</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Aŭto-majuskligo</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Majuskligi vortojn laŭ la ĉirkaŭteksto de la nuna enigo</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Aŭto-spaceti post interpunkcio</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Aŭtomate enigi spaceton post interpunkcio</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Duoblan spaceton punkto</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dufoje tuŝi la spacetklavo enigas punkton kaj spaceto sekve</string>
+    <string name="pref__spelling__title" comment="Preference group title">Literumado</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Malŝaltita en la tuta sistemo. Neniu ruĝa linio aperos sub malĝustaj vortoj en tekstaj kampoj. Tuŝu ĉi tie por ŝanĝi tion.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Lingvoj</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Uzi nomojn el kontaktoj</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Uzi enigaĵojn de la uzula vortaro</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Uzanton vortaroj</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ŝalti sisteman uzulan vortaron</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugesti vortojn konservitajn en la sistema uzula vortaro</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Mastrumi sisteman uzulan vortaron</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Aldoni, vidi kaj forigi enigaĵoj el la sistema uzula vortaro</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ŝalti internan uzulan vortaron</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Sugesti vortojn konservitajn en la interna uzula vortaro</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Mastrumi internan uzulan vortaron</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Aldoni, vidi kaj forigi enigaĵoj el la interna uzula vortaro</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Interna uzula vortaro</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Sistema uzula vortaro</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Tiu uzula vortaro enhavas neniun vorton.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Ofteco: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Ofto: {freq} | Ligilo: {shortcut}</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Por ĉiuj lingvoj</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Uzula vortaro sukcese enportita!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Uzula vortaro sukcese elportita!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Aldoni vorton</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Redakti vorton</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Vorto</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Bonvolu enigi vorton</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Bonvolu enigi vorton kongruantan kun {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Ofto (inter {f_min} kaj {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Bonvolu enigi valoron de ofto</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Bonvolu enigi validan nombron inter la specifitaj limoj</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Ligilo (fakultativa)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Bonvolu enigi ligilon kongruantan kun {regex}</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Lingva kodo (fakultativa)</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestoj &amp; Ŝovtajpado</string>
+    <string name="pref__glide__title" comment="Preference group title">Ŝovtajpado</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Ŝalti ŝovtajpadon</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Tajpu vorton per ŝovi vian fingron sur ĝiaj literoj</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Montri ŝovan spuron</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Malaperonta post ĉiu vorto</string>
+    <string name="pref__glide_trail_fade_duration">Daŭro fadon de la ŝova spuro</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Ĉiam forigi vorton</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Tuŝi la forigklavon tuj ŝovo forigas la tutan vorton</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Ĝeneralaj gestoj</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Spacetklavaj gestoj</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Aliaj gestoj / Gestaj sojloj</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Ŝovumi supren</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Ŝovumi suben</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Ŝovumi maldekstren</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Ŝovumi dekstren</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Ŝovumado el spacetklavo supren</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Ŝovumado el spacetklavo maldekstren</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Ŝovumado el spacetklavo dekstren</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Longa spacetklavon tuŝo</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Ŝovumado el forigklavo maldekstren</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Longa forigklavon tuŝo</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Ŝovumadon rapidosojlo</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Ŝovumadon distancosojlo</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Kromaj agordoj</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Agordojn etoso</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Sistema defaŭlta (AMOLED)</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hela</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Malhela</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED malhela</string>
+    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Uzi Material you</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Agordojn lingvo</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Montri aplikaĵo bildeto en aplikaĵolanĉilo</string>
+    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognita moduso</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Pri</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Aplikaĵo bildeto de FlorisBoard</string>
@@ -61,35 +302,360 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privateca politiko</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Fontkodo</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Malfermitkodaj permesiloj</string>
+    <string name="about__version__title" comment="Preference title">Versio</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versio kopiita al tondujo</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Io misis: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Ŝanĝojn registro</string>
+    <string name="about__changelog__summary" comment="Preference summary">Kio estas nova</string>
+    <string name="about__repository__title" comment="Preference title">Deponejo (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Fontkodo, diskutoj, problemoj kaj informoj</string>
     <string name="about__privacy_policy__title" comment="Preference title">Privateca politiko</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">La privateca politiko de tiu projekto</string>
+    <string name="about__project_license__title" comment="Preference title">Projekton permesilo</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Eraro: Fiaskis elŝuti la permesilan tekston.\n-&gt; Kaŭzo: {error_message}</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Bonvenon!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privateca politiko</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Deponejo</string>
+    <string name="setup__enable_ime__open_settings_btn">Malfermi sistemajn agordojn</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Ŝanĝi klavaron</string>
+    <string name="setup__grant_notification_permission__btn">Permesi</string>
+    <string name="setup__finish_up__title">Plenumi</string>
+    <string name="setup__finish_up__finish_btn">Komenci agordi</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Savkopiado &amp; Restaŭrigo</string>
+    <string name="backup_and_restore__back_up__title">Savi datumojn</string>
+    <string name="backup_and_restore__back_up__summary">Krei savkopion de la agordoj kaj personecigoj</string>
+    <string name="backup_and_restore__back_up__destination">Elektu kie elporti la savkopion</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Loka dosiersistemo</string>
+    <string name="backup_and_restore__back_up__files">Elektu kion estos savatan</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Agordoj</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Klavaraj etendaĵoj</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Literumaj etendaĵoj / vortaroj</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Etosaj etendaĵoj</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Tonduja historio</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Tekstaj eroj</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Bildoj</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Videoj</string>
+    <string name="backup_and_restore__back_up__success">Savkopio sukcese eksportita!</string>
+    <string name="backup_and_restore__back_up__failure">Fiaskis eksporti savkopion: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Restaŭri datumojn</string>
+    <string name="backup_and_restore__restore__summary">Restarigi agordojn kaj personecigojn el savkopio</string>
+    <string name="backup_and_restore__restore__files">Elektu kion estos restaŭratan</string>
+    <string name="backup_and_restore__restore__metadata">Savkopio elektita</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Tiu savkopio enhavas malvalidajn metadatumojn. Ĝi estas aŭ aĉigita aŭ fuŝe redaktita. Restaŭri el ĉi tiu arkivo maleblas, bonvolu elekti alion.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Tiu savkopio enhavas neniun restaŭrendan dosieron, bonvolu elekti alion.</string>
+    <string name="backup_and_restore__restore__mode">Restaŭra reĝimo</string>
+    <string name="backup_and_restore__restore__mode_merge">Kunfandi kun nunaj datumoj</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Forviŝi kaj surskribi nunajn datumojn</string>
+    <string name="backup_and_restore__restore__success">Datumoj sukcese restaŭritaj!</string>
+    <string name="backup_and_restore__restore__failure">Fiaskis restaŭri datumojn: {error_message}</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">Erarojn raporto de FlorisBoard</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopii al sistema tondujo</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Kopiita al sistema tondujo</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Erarojn raportoj de FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard ĉesis funkcii…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tuŝu tie por vidi detalojn de la eraro</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard ŝajnas ĉesi funkcii ripete…</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Tondujo</string>
+    <string name="clipboard__disabled__title">Tonduja historio estas nun malŝaltita</string>
+    <string name="clipboard__disabled__message">{app_name}on tondujan historio ebligas vin rapide konservi kaj aliri la tekstojn kaj la bildojn ke vi kopias, kun la eblo de alpingli erojn, agordi aŭtomatan elviŝadon kaj difini maksimumon da konservitaj eroj.</string>
+    <string name="clipboard__disabled__enable_button">Ŝalti tondujan historion</string>
+    <string name="clipboard__empty__title">Via tondujo estas malplena</string>
+    <string name="clipboard__empty__message">Kiam vi kopios tekstojn aŭ bildojn, ilin aperos ĉi tie.</string>
+    <string name="clipboard__locked__title">Via tondujo estas ŝlosita</string>
+    <string name="clipboard__locked__message">Por iri al via tonduja historio, bonvolu unue malŝlosi vian aparaton.</string>
+    <string name="clipboard__group_pinned">Alpinglitaj</string>
+    <string name="clipboard__group_recent">Ĵusaj</string>
     <string name="clipboard__group_other">Alia</string>
+    <string name="clipboard__item_description_email">Retpoŝtadreso</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">Telefono</string>
+    <string name="clip__clear_history">Forviŝi historion</string>
+    <string name="clip__unpin_item">Depingliti eron</string>
+    <string name="clip__pin_item">Alpingli eron</string>
     <string name="clip__delete_item">Forigi</string>
+    <string name="clip__paste_item">Alglui</string>
+    <string name="clip__back_to_text_input">Reen al teksta enigo</string>
+    <string name="clip__cant_paste">Tiu apo ne ebligas alglui tiun enhavon.</string>
+    <string name="clipboard__cleared_primary_clip">Viŝis lastan tondujan eron</string>
+    <string name="clipboard__cleared_history">Historio forviŝita</string>
+    <string name="clipboard__cleared_full_history">Historio plene forviŝita</string>
+    <string name="clipboard__confirm_clear_history__message">Ĉu vi estas certa ke vi volas forviŝi vian tondujan historion?</string>
+    <string name="settings__clipboard__title">Tondujo</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Uzi internan tondujon</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Uzi internan tondujon anstataŭ la sistema tondujo</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sinkronigi el sistema tondujo</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sisteman tondujon ĝisdatigoj ankaŭ ĝisdatigos Floris tondujon</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronigi al sistema tondujo</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris tondujon ĝisdatigoj ankaŭ ĝisdatigos sisteman tondujon</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Tonduja historio</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Ŝalti tondujan historion</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Memori tondujajn erojn por rapida alireblo</string>
+    <string name="pref__clipboard__clean_up_old__label">Elviŝi malnovajn erojn</string>
+    <string name="pref__clipboard__clean_up_after__label">Elviŝi malnovajn erojn post:</string>
+    <string name="pref__clipboard__limit_history_size__label">Limitigi la grandon de la historio</string>
+    <string name="pref__clipboard__max_history_size__label">Maksimuma grando historion</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Viŝi lastan eron efikas sur historion</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Viŝi lastan tondujan eron ankaŭ forigas la lastan historian enigaĵon</string>
+    <string name="send_to_clipboard__unknown_error">Nekonata eraro okazis. Bonvolu ree provi!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Tiu aŭdvidaĵon tipo estas ne subtenata.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">La Androidon versio estas tro malnova por tiu funkcio.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">Malsupra bildo kopiita al tondujo.</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Programistiloj</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ŝalti programistilojn</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Iloj specife fasonitaj por sencimigo kaj problemsolvo</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Ĝeneralaj Androidon agordoj</string>
+    <string name="devtools__debuglog__loading">Ŝargiĝante…</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Aldonaĵoj &amp; Etendaĵoj</string>
+    <string name="ext__list__ext_theme">Etosaj etendaĵoj</string>
+    <string name="ext__list__ext_keyboard">Klavaraj etendaĵoj</string>
+    <string name="ext__list__ext_languagepack">Lingvaj pakaj etendaĵoj</string>
+    <string name="ext__meta__authors">Aŭtoroj</string>
+    <string name="ext__meta__description">Priskribo</string>
+    <string name="ext__meta__homepage">Ĉefpaĝo</string>
+    <string name="ext__meta__id">Identigilo</string>
+    <string name="ext__meta__label">Etikedo</string>
+    <string name="ext__meta__license">Permesilo</string>
+    <string name="ext__meta__maintainers_by">De: {maintainers}</string>
+    <string name="ext__meta__title">Titolo</string>
+    <string name="ext__meta__version">Versio</string>
+    <string name="ext__error__not_found_title">Netrovita etendaĵo</string>
+    <string name="ext__error__not_found_description">Neniu etendaĵo kun identigilo \"{id}\" trovita.</string>
+    <string name="ext__editor__title_create_any">Krei etendaĵon</string>
+    <string name="ext__editor__title_create_keyboard">Krei klavaran etendaĵon</string>
+    <string name="ext__editor__title_create_theme">Krei etosan etendaĵon</string>
+    <string name="ext__editor__title_edit_any">Redakti etendaĵon</string>
+    <string name="ext__editor__title_edit_keyboard">Redakti klavaran etendaĵon</string>
+    <string name="ext__editor__title_edit_theme">Redakti etosan etendaĵon</string>
+    <string name="ext__editor__metadata__title">Administri metadatumojn</string>
+    <string name="ext__editor__metadata__title_invalid">Malvalidaj metadatumoj</string>
+    <string name="ext__editor__metadata__message_invalid">La metadatumoj de tiu etendaĵo estas malvalida, bonvolu kontroli la metadatumredaktilo por detaloj!</string>
+    <string name="ext__editor__files__title">Mastrumi arkivajn dosierojn</string>
+    <string name="ext__editor__create_component__title">Krei komponanton</string>
+    <string name="ext__editor__create_component__title_theme">Krei etoson</string>
+    <string name="ext__editor__create_component__from_empty">Malplena</string>
+    <string name="ext__editor__create_component__from_existing">El iu jam ekzistanta</string>
+    <string name="ext__export__success">Sukcesa etendaĵon eksportado!</string>
+    <string name="ext__export__failure">Fiaskis eksporti etendaĵon: {error_message}</string>
+    <string name="ext__import__success">Sukcesa etendaĵon enportado!</string>
+    <string name="ext__import__failure">Fiaskis enporti etendaĵon: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importi etendaĵon</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importi klavaran etendaĵon</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importi etosan etendaĵon</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importi lingvajn pakajn etendaĵojn</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Atendis aŭdiovidaĵan dosieron (bildon, sonaĵon, tiparon, ktp) sed trovis etendaĵan arkivon.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Atendis etendaĵan arkivon sed trovis aŭdiovidaĵan dosieron (bildon, sonaĵon, tiparon, ktp).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">Neatendita eraro okazis dum enportado. Tiuj detaloj estis provizataj:</string>
+    <string name="ext__validation__enter_package_name">Bonvolu enigi pakaĵan nomon</string>
+    <string name="ext__validation__error_package_name">Pakaĵon nomo ne kongruas kun regulesprimo {id_regex}</string>
+    <string name="ext__validation__enter_version">Bonvolu enigi version</string>
+    <string name="ext__validation__enter_title">Bonvolu enigi titolon</string>
+    <string name="ext__validation__enter_license">Bonvolu enigi permesilan identigilon</string>
+    <string name="ext__validation__enter_component_id">Bonvolu enigi komponantan identigilon</string>
+    <string name="ext__validation__error_component_id">Bonvolu enigi komponanton konigilo kongruantan kun {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Bonvolu enigi komponantan etikedon</string>
+    <string name="ext__validation__error_author">Bonvolu enigi almenaŭ unu validan aŭtoron</string>
+    <string name="ext__validation__enter_property">Bonvolu enigi variablan nomon</string>
+    <string name="ext__validation__error_property">Bonvolu enigi validan nomon de variablo kongruantan kun {variable_name_regex}</string>
+    <string name="ext__update_box__internet_permission_hint">Tiu apo ne havas retpermeson, do instalitajn etendaĵojn ĝisdatigoj endas esti serĉataj mane.</string>
+    <string name="ext__update_box__search_for_updates">Serĉi ĝisdatigojn</string>
+    <string name="ext__addon_management_box__managing_placeholder">Administri la {extensions}</string>
+    <string name="ext__addon_management_box__go_to_page">Iri al {ext_home_title}</string>
+    <string name="ext__home__info">Vi povas elŝuti kaj instali etendaĵojn el la FlorisBoard Aldonaĵejo aŭ enporti iun ajn etendaĵan dosieron ke vi elŝutis el la interreto.</string>
+    <string name="ext__home__visit_store">Viziti Aldonaĵejon</string>
+    <string name="ext__home__manage_extensions">Administri instalitajn etendaĵojn</string>
+    <string name="ext__list__view_details">Vidi detalojn</string>
+    <string name="ext__check_updates__title">Serĉi ĝisdatigojn</string>
     <!-- Action strings -->
+    <string name="action__add">Aldoni</string>
+    <string name="action__apply">Apliki</string>
+    <string name="action__back_up">Savkopii</string>
+    <string name="action__cancel">Nuligi</string>
+    <string name="action__create">Krei</string>
+    <string name="action__default">Norma</string>
+    <string name="action__delete">Forigi</string>
+    <string name="action__delete_confirm_title">Konfirmi forigon</string>
+    <string name="action__delete_confirm_message">Ĉu vi certe volas forigi \"{name}\"? Tiu ago ne povos esti malfarata post sia efektivigo.</string>
+    <string name="action__discard">Forĵeti</string>
+    <string name="action__discard_confirm_title">Ŝanĝoj nekonservitaj</string>
+    <string name="action__discard_confirm_message">Ĉu vi certe volas forĵeti vian nekonservitajn ŝanĝojn? Tiu ago ne povos esti malfarata post sia efektivigo.</string>
+    <string name="action__edit">Redakti</string>
+    <string name="action__export">Elporti</string>
+    <string name="action__import">Enporti</string>
+    <string name="action__no">Ne</string>
+    <string name="action__ok">Bone</string>
+    <string name="action__restore">Restaŭri</string>
+    <string name="action__save">Konservi</string>
+    <string name="action__select">Elekti</string>
+    <string name="action__select_dir">Elekti dosierujon</string>
+    <string name="action__select_dirs">Elekti dosierujojn</string>
+    <string name="action__select_file">Elekti dosieron</string>
+    <string name="action__select_files">Elekti dosierojn</string>
+    <string name="action__yes">Jes</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Eraro</string>
+    <string name="error__details">Detaloj</string>
+    <string name="error__invalid">Nevalida</string>
+    <string name="error__snackbar_message">Io misis</string>
+    <string name="error__snackbar_message_template">Io misis: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">ekz. {example}</string>
+    <string name="general__no_browser_app_found_for_url">Neniu retumila apo trovita por trakti URL {url}</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; elektu &#45;</string>
+    <string name="general__unlimited">Senlima</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Portreta</string>
+    <string name="screen_orientation__landscape">Pejzaĝa</string>
+    <string name="screen_orientation__vertical">Vertikala</string>
+    <string name="screen_orientation__horizontal">Horizontala</string>
     <!-- State strings -->
     <string name="state__disabled">Malŝaltita</string>
+    <string name="state__enabled">Aktivigita</string>
+    <string name="state__no_dir_selected">Neniu dosierujo elektita</string>
+    <string name="state__no_dirs_selected">Neniu dosierujoj elektitaj</string>
+    <string name="state__no_file_selected">Neniu dosiero elektita</string>
+    <string name="state__no_files_selected">Neniu dosieroj elektitaj</string>
     <!-- Enum label and description strings -->
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasika (3 kolumnoj)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dinamika larĝo</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamika larĝo &amp; rulumebla</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enŝalti fiksan majuskligon per duobla frapetado sur la uskla klavo</string>
+    <string name="enum__display_colors_as__hex8" comment="Enum value label">Deksesuma</string>
+    <string name="enum__display_colors_as__rgba" comment="Enum value label">Ruĝa Verda Blua Alfo</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Ĉiam montri</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Ĉiam montri la klavaron ferminte iun ajn redaktilan dialogujon</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Neniam montri</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Neniam montri la klavaron ferminte iun ajn redaktilan dialogujon</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Memori lastan staton</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Ferminte redaktilan dialogujon, montri la klavaron nur se ĝi estis antaŭe videbla</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Sistemon lingvo</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Nomata lingvo</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Aŭtomate ordigi (komenco)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Aŭtomate ordigi emoĝiojn laŭ uzo. Ĵusaj emoĝioj estos aldonitaj al komenco.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Aŭtomate ordigi (fino)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Aŭtomate ordigi emoĝiojn laŭ uzo. Ĵusaj emoĝioj estos aldonitaj al fino.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Mane ordigi (komenco)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Ne aŭtomate ordigi emoĝiojn laŭ uzo. Ĵusaj emoĝioj estos aldonitaj al komenco.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Mane ordigi (fino)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Ne aŭtomate ordigi emoĝiojn laŭ uzo. Ĵusaj emoĝioj estos aldonitaj al fino.</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Defaŭlta haŭtkoloro</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Hela haŭtkoloro</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Heleta haŭtkoloro</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Meza haŭtkoloro</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} Malheleta haŭtkoloro</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} Malhela haŭtkoloro</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Defaŭltaj haroj</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Rufaj haroj</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Buklaj haroj</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Blankaj haroj</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Senhara</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Sugesti emoĝiojn per la sintakso :emoĝion_nomo</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Enlinie teksto</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Sugesti emoĝion simple per la tajpado de ĝia nomo</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Sur la sugestojn</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Sub la sugestojn</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Tegante la fasadon de la apo</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Uzi senpere la vibrilon</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Uzi tuŝretrokuplan interfacon</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Kromsigno estas antaŭigata</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">La signo unue elektata post longa tuŝo estas ĉiam la ĉefa kromsigno, aŭ la indikata signo se estas neniu ĉefa kromsigno</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Indikata signo estas antaŭigata</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">La signo unue elektata post longa tuŝo estas ĉiam la indikata signo, aŭ la ĉefa kromsigno se estas neniu indikata signo</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Inteligenta antaŭigo</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Anstataŭigi la ŝaltilon de la kunaj agoj per la inkognita indikilo</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Vidigi la inkognitan modusan indikilon malantaŭ la klavaro</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Ĉiam malŝaltata</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Ĉiam ŝaltata</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dinamika ŝalta stato</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Neniam montri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Ĉiam montri</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamike montri</string>
     <string name="enum__one_handed_mode__off" comment="Enum value label">Malvalidigita</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Maldekstramana moduso</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Dekstramana moduso</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Nur sugestoj</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Montri nur la sugestojn-vicon, sen ia ajn agojn-vico/ŝaltilo aŭ fiksita ago</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Nur agoj</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Montri nur la agojn-vicon, sen la sugestojn-vico aŭ eksplicite fiksita ago</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Sugestoj &amp; Agoj kune</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Komuna ŝaltebla sugestojn kaj agojn vico, kun fiksita ago</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Sugestoj &amp; Agoj plie</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Statika sugestojn-vico kaj aldona ŝaltebla agojn-vico, kun fiksita ago</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Baza</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Spertula</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Programisto</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Nenio</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Aktuala lingvo</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Uzi sistemajn lingvojn</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Uzi klavarajn subspecojn</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Neniu ago</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Baskuli al antaŭa klavara reĝimo</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Baskuli al sekva klavara reĝimo</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Forigi la signon antaŭ la kursoron</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Forigi signojn precize</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Forigi la vorton antaŭ la kursoron</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Forigi vortojn precize</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Kaŝi klavaron</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Enigi spaceton</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Movi la kursoron supren</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Movi la kursoron suben</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Movi la kursoron maldekstren</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Movi la kursoron dekstren</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Movi la kursoron al la komenco de la linio</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Movi la kursoron al la fino de la linio</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Movi la kursoron al la komenco de la paĝo</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Movi la kursoron al la fino de la paĝo</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Malfermi tondujan mastrumilon/historion</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Ŝanĝi la usklon</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Refari</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Malfari</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Elekti signojn precize</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Elekti vortojn precize</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Montri la enigmetodan elektilon</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Ŝanĝi al antaŭa klavaro</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Ŝanĝi al antaŭa subspeco</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Ŝanĝi al sekva subspeco</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">(Mal)vidigi LertaStrion</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Ĉiama tago</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Ĉiama nokto</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Laŭ operaciumo</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">Laŭ tempo</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Iri al emoĝiojn</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Baskuli lingvon</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Ŝalti klavara aplikaĵo</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dinamika: iri al emoĝiojn / ŝanĝi lingvon</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} horo</item>
+        <item quantity="other">{v} horoj</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minuto</item>
+        <item quantity="other">{v} minutoj</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} sekundo</item>
+        <item quantity="other">{v} sekundoj</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} ero</item>
+        <item quantity="other">{v} eroj</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} signo</item>
+        <item quantity="other">{v} signoj</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} sugesto</item>
+        <item quantity="other">{v} sugestoj</item>
+    </plurals>
 </resources>

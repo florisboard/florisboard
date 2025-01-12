@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Patrick Goldinger
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -193,6 +193,22 @@ object EmojiHistoryHelper {
         }
 
         prefs.emoji.historyData.set(dataMut.build())
+    }
+
+    suspend fun deleteHistory(prefs: AppPrefs) = emojiGuard.withLock {
+        if (!prefs.emoji.historyEnabled.get()) {
+            return
+        }
+        val dataMut = prefs.emoji.historyData.get().edit()
+        prefs.emoji.historyData.set(EmojiHistory(pinned = dataMut.pinned, listOf()))
+    }
+
+    suspend fun deletePinned(prefs: AppPrefs) = emojiGuard.withLock {
+        if (!prefs.emoji.historyEnabled.get()) {
+            return
+        }
+        val dataMut = prefs.emoji.historyData.get().edit()
+        prefs.emoji.historyData.set(EmojiHistory(pinned = listOf(), dataMut.recent))
     }
 
     private fun MutableList<Emoji>.addWithStrategy(strategy: EmojiHistory.UpdateStrategy, emoji: Emoji) {

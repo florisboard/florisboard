@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -254,14 +254,20 @@ class ClipboardManager(
     }
 
     private fun enforceExpiryDate(clipHistory: ClipboardHistory) {
+        val itemsToRemove = mutableSetOf<ClipboardItem>()
         if (prefs.clipboard.cleanUpOld.get()) {
             val nonPinnedItems = clipHistory.recent + clipHistory.other
             val expiryTime = System.currentTimeMillis() - (prefs.clipboard.cleanUpAfter.get() * 60 * 1000)
-            val itemsToRemove = nonPinnedItems.filter { it.creationTimestampMs < expiryTime }
-            if (itemsToRemove.isNotEmpty()) {
-                ioScope.launch {
-                    clipHistoryDao?.delete(itemsToRemove)
-                }
+            itemsToRemove.addAll(nonPinnedItems.filter { it.creationTimestampMs < expiryTime })
+        }
+        if (prefs.clipboard.autoCleanSensitive.get()) {
+            val sensitiveData = clipHistory.all.filter { it.isSensitive }
+            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.autoCleanSensitiveAfter.get() * 1000)
+            itemsToRemove.addAll(sensitiveData.filter { it.creationTimestampMs < expiryTime })
+        }
+        if (itemsToRemove.isNotEmpty()) {
+            ioScope.launch {
+                clipHistoryDao?.delete(itemsToRemove.toList())
             }
         }
     }

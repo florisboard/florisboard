@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
@@ -106,13 +107,6 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.shape
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
@@ -124,6 +118,13 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.shape
+import org.florisboard.lib.snygg.ui.snyggBackground
+import org.florisboard.lib.snygg.ui.snyggBorder
+import org.florisboard.lib.snygg.ui.snyggShadow
+import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.spSize
 import java.lang.ref.WeakReference
 
 /**
@@ -551,7 +552,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                         .fillMaxWidth()
                                         .weight(1f),
                                 ) {
-                                    DevtoolsUi()
+                                    DevtoolsOverlay(modifier = Modifier.fillMaxSize())
                                 }
                             }
                             ImeUi()
@@ -597,6 +598,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        .safeDrawingPadding()
                         // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
                         //.height(IntrinsicSize.Min)
                         .padding(bottom = bottomOffset),
@@ -634,14 +636,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    private fun DevtoolsUi() {
-        val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
-        if (devtoolsEnabled) {
-            DevtoolsOverlay(modifier = Modifier.fillMaxSize())
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,10 +47,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
-import org.florisboard.lib.android.isOrientationPortrait
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import org.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
@@ -59,6 +57,8 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.snygg.SnyggLevel
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
@@ -118,6 +118,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__clean_up_after",
             default = 20,
         )
+        val autoCleanSensitive = boolean(
+            key = "clipboard__auto_clean_sensitive",
+            default = false,
+        )
+        val autoCleanSensitiveAfter = int(
+            key = "clipboard__auto_clean_sensitive_after",
+            default = 20,
+        )
         val limitHistorySize = boolean(
             key = "clipboard__limit_history_size",
             default = true,
@@ -158,8 +166,8 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__enabled",
             default = false,
         )
-        val showHeapMemoryStats = boolean(
-            key = "devtools__show_heap_memory_stats",
+        val showLastLayoutComputation = boolean(
+            key = "devtools__show_last_layout_computation",
             default = false,
         )
         val showPrimaryClip = boolean(

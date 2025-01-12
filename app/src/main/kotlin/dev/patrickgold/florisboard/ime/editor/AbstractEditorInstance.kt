@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -634,7 +634,7 @@ abstract class AbstractEditorInstance(context: Context) {
         suspend fun popUntilOrNull(predicate: (EditorContent) -> Boolean): EditorContent? {
             return list.withLock { list ->
                 while (list.isNotEmpty()) {
-                    val item = list.removeFirst()
+                    val item = list.removeAt(0)
                     if (predicate(item)) return@withLock item
                 }
                 return@withLock null

@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Обновление истории (Закрепленного)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Обновление истории (Недавнего)</string>
     <string name="prefs__media__emoji_history_max_size">Максимум элементов, которые можно сохранить</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Сбросить закрепленные смайлики</string>
+    <string name="prefs__media__emoji_history_reset">Сбросить последние смайлики</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Подсказки смайликов</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Включить подсказки смайликов</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Предлагать смайлики при наборе текста</string>
@@ -561,6 +563,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Сохранение записей буфера обмена для быстрого доступа</string>
     <string name="pref__clipboard__clean_up_old__label">Очистить старые элементы</string>
     <string name="pref__clipboard__clean_up_after__label">Очистить старые элементы через</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Автоматическая очистка чувствительных элементов</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Автоматическая очистка чувствительных элементов спустя</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничить размер истории</string>
     <string name="pref__clipboard__max_history_size__label">Максимальный размер истории</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Очистка основного клипа влияет на историю</string>
@@ -575,8 +579,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Инструменты разработчика</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Включить инструменты разработчика</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Инструменты, специально разработанные для отладки и устранения проблем</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Статистика выделения памяти</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Показывать значения выделенной памяти и максимальный размер в правом верхнем углу</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Показать основную запись</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Наложение текущей основной записи буфера обмена</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Показывать состояние ввода наложением</string>
@@ -706,6 +708,8 @@
     <string name="action__delete">Удалить</string>
     <string name="action__delete_confirm_title">Подтвердить удаление</string>
     <string name="action__delete_confirm_message">Вы уверены, что хотите удалить \"{name}\"? Это действие не может быть отменено после выполнения.</string>
+    <string name="action__reset_confirm_title">Подтвердить сброс</string>
+    <string name="action__reset_confirm_message">Вы уверены, что хотите сбросить \"{name}\"? Это действие не может быть отменено после выполнения.</string>
     <string name="action__discard">Отменить</string>
     <string name="action__discard_confirm_title">Несохранённые изменения</string>
     <string name="action__discard_confirm_message">Вы уверены, что хотите отменить несохранённые изменения? Это действие нельзя отменить после выполнения.</string>

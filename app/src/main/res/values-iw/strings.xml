@@ -238,7 +238,6 @@
     <!-- Devtools strings -->
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">אפשר כלי מפתח</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">כלים שתוכננו במיוחד לצורך איתור באגים ופתרון בעיות</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">הראה נתונים סטטיסטיים של זיכרון ערימה</string>
     <!-- Extension strings -->
     <!-- Action strings -->
     <string name="action__yes">כן</string>

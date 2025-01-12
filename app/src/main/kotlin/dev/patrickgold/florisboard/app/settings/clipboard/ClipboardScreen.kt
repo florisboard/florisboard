@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidVersion
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -70,6 +71,22 @@ fun ClipboardScreen() = FlorisScreen {
                 max = 120,
                 stepIncrement = 5,
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.cleanUpOld isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.clipboard.autoCleanSensitive,
+                title = stringRes(R.string.pref__clipboard__auto_clean_sensitive__label),
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
+                visibleIf = { AndroidVersion.ATLEAST_API33_T },
+            )
+            DialogSliderPreference(
+                prefs.clipboard.autoCleanSensitiveAfter,
+                title = stringRes(R.string.pref__clipboard__auto_clean_sensitive_after__label),
+                valueLabel = { pluralsRes(R.plurals.unit__seconds__written, it, "v" to it) },
+                min = 0,
+                max = 300,
+                stepIncrement = 10,
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.autoCleanSensitive isEqualTo true },
+                visibleIf = { AndroidVersion.ATLEAST_API33_T },
             )
             SwitchPreference(
                 prefs.clipboard.limitHistorySize,

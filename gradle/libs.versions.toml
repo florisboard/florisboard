@@ -1,6 +1,6 @@
 [versions]
 # Main
-android-gradle-plugin = "8.5.2"
+android-gradle-plugin = "8.7.3"
 androidx-activity = "1.9.2"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.4.4"

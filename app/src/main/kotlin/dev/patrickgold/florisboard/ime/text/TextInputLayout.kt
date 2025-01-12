@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,8 +81,14 @@ fun TextInputLayout(
                             ),
                         )
                     }
+                    val debugLayoutResult by keyboardManager.layoutManager
+                        .debugLayoutComputationResultFlow.collectAsState()
                     if (state.keyboardMode != KeyboardMode.EDITING) {
-                        TextKeyboardLayout(evaluator = evaluator)
+                        if (debugLayoutResult?.allLayoutsSuccess() == true) {
+                            TextKeyboardLayout(evaluator = evaluator)
+                        } else {
+                            HowDidWeGetHere()
+                        }
                     } else {
                         HowDidWeGetHere()
                     }

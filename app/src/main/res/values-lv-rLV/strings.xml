@@ -15,6 +15,22 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Japāņu sajūtu zīmes (Kaomoji)</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Vēlamā sajūtu rakstzīmju ādas nokrāsa</string>
     <string name="prefs__media__emoji_preferred_hair_style">Vēlamais sajūtu rakstzīmju matu sakārtojums</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emocijzīmju vēsture</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Iespējot emocijzīmju vēsturi</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Paturēt nesen izmantotās emocijzīmes ātrai piekļuvei</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Atjaunināšanas stratēģija (Piesprausta)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Atjaunināšanas stratēģija (Nesena)</string>
+    <string name="prefs__media__emoji_history_max_size">Lielākais paturamo vienumu skaits</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emocijzīmju ieteikumi</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Iespējot emocijzīmju ieteikumus</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Rakstīšanas laikā sniegt emocijzīmju ieteikumus</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Izraisītāja veidi</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Atjaunināt emocijzīmju vēsturi</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Ieteikto emocijzīmju pieņemšana pievieno tās emocijzīmju vēsturei</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Rādīt emocijzīmes nosaukumu</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Emocijzīmju ieteikumos līdz ar emocijzīmēm tiek attēlots to nosaukums</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Mazākais pieļaujamais vaicājuma garums</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Lielākais pieļaujamais izvēles iespēju skaits</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smaidiņi un sajūtu rakstzīmes</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Cilvēki un ķermenis</string>
@@ -25,6 +41,12 @@
     <string name="emoji__category__objects" comment="Emoji category name">Priekšmeti</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Zīmes</string>
     <string name="emoji__category__flags" comment="Emoji category name">Karogi</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Nav nesen izmantotu sajūtu rakstzīmju. Tās parādīsies šeit pēc izmantošanas.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Lai piekļūtu savai emocijzīmju vēsturei, vispirms ir jāatslēdz iekārta.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Vērtīgs padoms: ilga emocijzīmes piespiešana emocijzīmju vēsturē piesprauž vai noņem tās.</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">{emoji} noņemta no emocijzīmju vēstures</string>
+    <string name="emoji__history__pinned">Piesprausta</string>
+    <string name="emoji__history__recent">Nesena</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Uz augšu</string>
     <string name="quick_action__arrow_up__tooltip">Izpildīt bultu uz augšu</string>
@@ -38,9 +60,11 @@
     <string name="quick_action__clipboard_copy" maxLength="12">Kopēt</string>
     <string name="quick_action__clipboard_copy__tooltip">Izpildīt starpliktuves kopēšanu</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Izgriezt</string>
+    <string name="quick_action__clipboard_cut__tooltip">Izpildīt starpliktuves izgriešanu</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Ielīmēt</string>
     <string name="quick_action__clipboard_paste__tooltip">Izpildīt starpliktuves ielīmēšanu</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Iezīmēt visu</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Veikt visu starpliktuves vienumu atlasīšanu</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Starpliktuve</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Atvērt starpliktuves vēsturi</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emocijzīmes</string>
@@ -533,6 +557,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus ātrai piekļuvei</string>
     <string name="pref__clipboard__clean_up_old__label">Noņemt vecos vienumus</string>
     <string name="pref__clipboard__clean_up_after__label">Noņemt vecos vienumus pēc</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Automātiski notīrīt jutīgus vienumus</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Autmātiski notīrīt jutīgus vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
@@ -546,8 +572,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Izstrādātāju rīki</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Iespējot izstrādātāju rīkus</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Rīki, kas ir paredzēti atkļūdošanai un traucējummeklēšanai</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Rādīt grēdas atmiņas statistiku</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Rādīt galveno vienumu</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Pārklāj pašreizējo galveno starpliktuves vienumu</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Rādīt ievades stāvokļa pārklājumu</string>
@@ -734,6 +758,14 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Valodu nosaukums lietotnē un tastatūras lietotāja saskarnē tiek attēlots atbilstoši ierīcē norādītajai darbības vietai</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Vietējā darbības vieta</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Valodu nosaukums lietotnē un tastatūras lietotāja saskarnē tiek attēlots atbilstoši darbības vietai</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Kārtot automātiski (pievienot sākumā)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Automātiski pārkārtot emocijzīmes vadoties pēc to izmantošanas. Jaunas emocijzīmes tiek pievienotas sākumā.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Kārtot automātiski (pievienot beigās)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Automātiski pārkārtot emocijzīmes vadoties pēc to izmantošanas. Jaunas emocijzīmes tiek pievienotas beigās.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Kārtot pašrocīgi (pievienot sākumā)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">Nepārkārtot emocijzīmes automātiski vadoties pēc to izmantošanas. Jaunas emocijzīmes tiek pievienotas sākumā.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Kārtot pašrocīgi (pievienot beigās)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">Nepārkārtot emocijzīmes automātiski vadoties pēc to izmantošanas. Jaunas emocijzīmes tiek pievienotas beigās.</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Noklusējuma ādas nokrāsa</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Gaiša ādas nokrāsa</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Vidēji gaiša ādas nokrāsa</string>
@@ -745,6 +777,10 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Sprogaini mati</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Balti mati</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Bez matiem</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">Vadošais kols</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Ieteikt emocijzīmes ar :emocijzīmes_nosaukums pierakstu</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Iekļauts teksts</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Ieteikt emocijzīmes vienkārši rakstot emocijzīmes nosaukumu kā vārdu</string>
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Virs ieteikumiem</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Ievieto paplašināto darbību rindu starp lietotnes saskarni un ieteikumu rindu</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Zem ieteikumiem</string>
@@ -863,5 +899,15 @@
         <item quantity="zero">{v} vienumu</item>
         <item quantity="one">{v} vienums</item>
         <item quantity="other">{v} vienumi</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="zero">{v} rakstzīmju</item>
+        <item quantity="one">{v} rakstzīme</item>
+        <item quantity="other">{v} rakstzīmes</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="zero">{v} izvēles iespēju</item>
+        <item quantity="one">{v} izvēles iespēja</item>
+        <item quantity="other">{v} izvēles iespējas</item>
     </plurals>
 </resources>

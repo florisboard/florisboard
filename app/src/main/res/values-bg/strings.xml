@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Стратегия за обновяване (закачени)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Стратегия за обновяване (последни)</string>
     <string name="prefs__media__emoji_history_max_size">Максимален брой елементи</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Нулиране на закачените емоции</string>
+    <string name="prefs__media__emoji_history_reset">Нулиране на последните емоции</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Предложения за емоции</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Включване на предложенията за емоции</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Показва предложения за емоции докато въвеждате</string>
@@ -559,6 +561,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Запазване на копираното за по-бърз достъп до него</string>
     <string name="pref__clipboard__clean_up_old__label">Премахване на стари елементи</string>
     <string name="pref__clipboard__clean_up_after__label">Премахване на старите елементи след</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Почистване на чувствителни елементи</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Почистване на чувствителни елементи след</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя елементи</string>
     <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Изчистване на текущата межд. памет влияе на историята</string>
@@ -571,8 +575,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Развойни инструменти</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Развойни инструменти</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Използват се за отстраняване на дефекти</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Статистика за динамичната памет</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Показва се информация за динамичната памет в горния десен ъгъл</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Съдържание на междинната памет</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Слой с текущото съдържание на междинната памет</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Слой за състояние на полето за въвеждане</string>
@@ -702,6 +704,8 @@
     <string name="action__delete">Премахване</string>
     <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>
     <string name="action__delete_confirm_message">Наистина ли искате да изтриете „{name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="action__reset_confirm_title">Потвърждаване на нулирането</string>
+    <string name="action__reset_confirm_message">Желаете ли „{name}“ да бъде нулирано? Действието е необратимо.</string>
     <string name="action__discard">Отхвърляне</string>
     <string name="action__discard_confirm_title">Незапазени промени</string>
     <string name="action__discard_confirm_message">Наистина ли искате да отхвърлите незапазените промени? Веднъж изпълнено действието не може да бъде отменено.</string>

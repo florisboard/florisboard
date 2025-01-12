@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,7 +91,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val layoutManager = LayoutManager(context)
+    val layoutManager = LayoutManager(context)
     private val keyboardCache = TextKeyboardCache()
 
     val resources = KeyboardManagerResources()

@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Strategia aktualizacji (przypięta)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Strategia aktualizacji (ostatnia)</string>
     <string name="prefs__media__emoji_history_max_size">Maksymalna liczba elementów do zachowania</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Zresetuj przypięte emotikony</string>
+    <string name="prefs__media__emoji_history_reset">Zresetuj ostatnio używane emotikony</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Propozycje emotikonów</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Włącz propozycje emotikonów</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Wyświetlanie propozycji emotikonów podczas pisania</string>
@@ -561,6 +563,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Zachowaj elementy schowka, aby mieć do nich szybki dostęp</string>
     <string name="pref__clipboard__clean_up_old__label">Posprzątaj stare elementy</string>
     <string name="pref__clipboard__clean_up_after__label">Posprzątaj stare elementy po</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Automatyczne czyszczenie wrażliwych elementów</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Automatyczne czyszczenie wrażliwych elementów po</string>
     <string name="pref__clipboard__limit_history_size__label">Ograniczenie rozmiaru historii</string>
     <string name="pref__clipboard__max_history_size__label">Maksymalny rozmiar historii</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Wyczyszczenie głównego schowka wpływa na historię</string>
@@ -574,8 +578,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Narzędzia Programistyczne</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Aktywuj narzędzia programistyczne</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Narzędzia zaprojektowane specjalnie do debugowania i rozwiązywania problemów</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Pokaż statystyki pamięci sterty</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Pokaż użycie pamięci stosu pamięci i maksymalnego rozmiaru w prawym górnym rogu</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Pokaż aktualny stan głównego schowka</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Nakładka zawierająca aktualny stan głównego schowka</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Pokaż nakładkę stanu wejścia</string>
@@ -705,6 +707,8 @@
     <string name="action__delete">Usuń</string>
     <string name="action__delete_confirm_title">Potwierdź usunięcie</string>
     <string name="action__delete_confirm_message">Czy na pewno chcesz usunąć \"{name}\"? Tej akcji nie można cofnąć po jej wykonaniu.</string>
+    <string name="action__reset_confirm_title">Potwierdzenie resetowania</string>
+    <string name="action__reset_confirm_message">Czy na pewno chcesz zresetować \"{name}”? Tej akcji nie można cofnąć po jej wykonaniu.</string>
     <string name="action__discard">Odrzuć</string>
     <string name="action__discard_confirm_title">Niezapisane zmiany</string>
     <string name="action__discard_confirm_message">Czy na pewno chcesz odrzucić twoje niezapisane zmiany? Tej akcji nie można cofnąć po jej wykonaniu.</string>

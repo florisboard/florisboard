@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.app.AppPrefs
 object AppVersionUtils {
     private fun getRawVersionName(context: Context): String {
         return try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName!!
         } catch (e: Exception) {
             "undefined"
         }

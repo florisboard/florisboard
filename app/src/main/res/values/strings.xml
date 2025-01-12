@@ -23,6 +23,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (Pinned)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (Recent)</string>
     <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Reset pinned emojis</string>
+    <string name="prefs__media__emoji_history_reset">Reset recent emojis</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Enable emoji suggestions</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Provide emoji suggestions while you type</string>
@@ -595,6 +597,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>
     <string name="pref__clipboard__clean_up_old__label">Clean up old items</string>
     <string name="pref__clipboard__clean_up_after__label">Clean up old items after</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Auto clean sensitive items</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Auto clean sensitive items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
@@ -610,8 +614,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Devtools</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Enable developer tools</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Tools specifically designed for debugging and troubleshooting</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Show heap memory stats</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlays the heap memory usage and max size in the top-right corner</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Show primary clip</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Overlays the current primary clip of the clipboard</string>
     <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Show input state overlay</string>
@@ -744,6 +746,8 @@
     <string name="action__delete">Delete</string>
     <string name="action__delete_confirm_title">Confirm delete</string>
     <string name="action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
+    <string name="action__reset_confirm_title">Confirm reset</string>
+    <string name="action__reset_confirm_message">Are you sure you want to reset \"{name}\"? This action can not be undone once executed.</string>
     <string name="action__discard">Discard</string>
     <string name="action__discard_confirm_title">Unsaved changes</string>
     <string name="action__discard_confirm_message">Are you sure you want to discard your unsaved changes? This action can not be undone once executed.</string>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,8 @@ fun RowScope.OneHandedPanel(
     Column(
         modifier = modifier
             .weight(weight)
-            .snyggBackground(context, oneHandedPanelStyle),
+            .snyggBackground(context, oneHandedPanelStyle)
+            .height(FlorisImeSizing.imeUiHeight()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
@@ -77,7 +78,7 @@ fun RowScope.OneHandedPanel(
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedMode.set(panelSide)
             },
-            modifier = Modifier.height(FlorisImeSizing.keyboardUiHeight()).fillMaxWidth()
+            modifier = Modifier.weight(1f).fillMaxWidth(),
         ) {
             Icon(
                 imageVector = if (panelSide == OneHandedMode.START) {
