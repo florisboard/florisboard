@@ -65,9 +65,9 @@ private data class CachedPopupMapping(
 )
 
 data class DebugLayoutComputationResult(
-    val main: Result<CachedLayout>,
-    val mod: Result<CachedLayout>,
-    val ext: Result<CachedLayout>,
+    val main: Result<CachedLayout?>,
+    val mod: Result<CachedLayout?>,
+    val ext: Result<CachedLayout?>,
 ) {
     fun allLayoutsSuccess(): Boolean {
         return main.isSuccess && mod.isSuccess && ext.isSuccess
@@ -96,8 +96,13 @@ class LayoutManager(context: Context) {
      *
      * @return A deferred result for a layout.
      */
-    private fun loadLayoutAsync(ltn: LTN?) = ioScope.runCatchingAsync {
-        require(ltn != null) { "Invalid argument value for 'ltn': null" }
+    private fun loadLayoutAsync(ltn: LTN?, allowNullLTN: Boolean) = ioScope.runCatchingAsync {
+        if (!allowNullLTN) {
+            requireNotNull(ltn) { "Invalid argument value for 'ltn': null" }
+        }
+        if (ltn == null) {
+            return@runCatchingAsync null
+        }
         layoutCacheGuard.withLock {
             val cached = layoutCache[ltn]
             if (cached != null) {
@@ -176,7 +181,7 @@ class LayoutManager(context: Context) {
         val extendedPopupsDefault = loadPopupMappingAsync()
         val extendedPopups = loadPopupMappingAsync(subtype)
 
-        val mainLayoutResult = loadLayoutAsync(main).await()
+        val mainLayoutResult = loadLayoutAsync(main, allowNullLTN = false).await()
         val mainLayout = mainLayoutResult.onFailure {
             flogWarning { "$keyboardMode - main - $it" }
         }.getOrNull()
@@ -196,11 +201,11 @@ class LayoutManager(context: Context) {
         } else {
             modifier
         }
-        val modifierLayoutResult = loadLayoutAsync(modifierToLoad).await()
+        val modifierLayoutResult = loadLayoutAsync(modifierToLoad, allowNullLTN = true).await()
         val modifierLayout = modifierLayoutResult.onFailure {
             flogWarning { "$keyboardMode - mod - $it" }
         }.getOrNull()
-        val extensionLayoutResult = loadLayoutAsync(extension).await()
+        val extensionLayoutResult = loadLayoutAsync(extension, allowNullLTN = true).await()
         val extensionLayout = extensionLayoutResult.onFailure {
             flogWarning { "$keyboardMode - ext - $it" }
         }.getOrNull()

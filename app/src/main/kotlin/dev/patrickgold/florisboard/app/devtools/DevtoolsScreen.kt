@@ -74,12 +74,6 @@ fun DevtoolsScreen() = FlorisScreen {
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             SwitchPreference(
-                prefs.devtools.showLastLayoutComputation,
-                title = "Show last layout computation",
-                summary = "Show the last layout computation in a dialog",
-                enabledIf = { prefs.devtools.enabled isEqualTo true },
-            )
-            SwitchPreference(
                 prefs.devtools.showSpellingOverlay,
                 title = stringRes(R.string.devtools__show_spelling_overlay__label),
                 summary = stringRes(R.string.devtools__show_spelling_overlay__summary),

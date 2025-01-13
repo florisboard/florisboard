@@ -166,10 +166,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "devtools__enabled",
             default = false,
         )
-        val showLastLayoutComputation = boolean(
-            key = "devtools__show_last_layout_computation",
-            default = false,
-        )
         val showPrimaryClip = boolean(
             key = "devtools__show_primary_clip",
             default = false,
