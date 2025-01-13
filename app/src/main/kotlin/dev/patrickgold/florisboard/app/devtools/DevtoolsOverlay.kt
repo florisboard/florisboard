@@ -43,6 +43,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
+import dev.patrickgold.florisboard.ime.keyboard.DebugLayoutComputationResult
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -65,7 +66,6 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
     val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
     val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
-    val showLastLayoutComputation by prefs.devtools.showLastLayoutComputation.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
     val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
 
@@ -82,8 +82,8 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
             if (devtoolsEnabled && showInputStateOverlay) {
                 DevtoolsInputStateOverlay()
             }
-            if (devtoolsEnabled && showLastLayoutComputation || debugLayoutResult?.allLayoutsSuccess() == false) {
-                DevtoolsLastLayoutComputationOverlay()
+            if (debugLayoutResult?.allLayoutsSuccess() == false) {
+                DevtoolsLastLayoutComputationOverlay(debugLayoutResult)
             }
             if (devtoolsEnabled && showSpellingOverlay) {
                 DevtoolsSpellingOverlay()
@@ -137,13 +137,9 @@ private fun DevtoolsInputStateOverlay() {
 }
 
 @Composable
-private fun DevtoolsLastLayoutComputationOverlay() {
-    val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
-    val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
-
+private fun DevtoolsLastLayoutComputationOverlay(debugLayoutResult: DebugLayoutComputationResult?) {
     @Composable
-    fun PrintResult(result: Result<CachedLayout>) {
+    fun PrintResult(result: Result<CachedLayout?>) {
         if (result.isSuccess) {
             DevtoolsText(text = "loaded: ${result.getOrNull()?.name}")
         } else {
