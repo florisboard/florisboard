@@ -192,7 +192,7 @@ private fun footer(context: Context) {
 private fun PreferenceUiScope<AppPrefs>.steps(
     context: Context,
     navController: NavController,
-    requestNotification: ManagedActivityResultLauncher<String, Boolean>
+    requestNotification: ManagedActivityResultLauncher<String, Boolean>,
 ): List<FlorisStep> {
 
     return listOfNotNull(
@@ -217,13 +217,11 @@ private fun PreferenceUiScope<AppPrefs>.steps(
         if (AndroidVersion.ATLEAST_API33_T) {
             FlorisStep(
                 id = Steps.SelectNotification.id,
-                title = stringRes(R.string.setup__grant_notification_permission__title)
+                title = stringRes(R.string.setup__grant_notification_permission__title),
             ) {
                 StepText(stringRes(R.string.setup__grant_notification_permission__description))
                 StepButton(stringRes(R.string.setup__grant_notification_permission__btn)) {
-                    if (AndroidVersion.ATLEAST_API33_T) {
-                        requestNotification.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                    }
+                    requestNotification.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         } else null,
@@ -246,8 +244,8 @@ private fun PreferenceUiScope<AppPrefs>.steps(
 }
 
 private sealed class Steps(val id: Int) {
-        data object EnableIme : Steps(id = 1)
-        data object SelectIme : Steps(id = 2)
-        data object SelectNotification : Steps(id = 3)
-        data object FinishUp : Steps(id = 4)
+    data object EnableIme : Steps(id = 1)
+    data object SelectIme : Steps(id = 2)
+    data object SelectNotification : Steps(id = 3)
+    data object FinishUp : Steps(id = 4)
 }
