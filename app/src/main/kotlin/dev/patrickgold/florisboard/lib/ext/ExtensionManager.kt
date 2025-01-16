@@ -170,11 +170,6 @@ class ExtensionManager(context: Context) {
 
         init {
             value = emptyList()
-            ioScope.launch {
-                refreshGuard.withLock {
-                    staticExtensions = indexAssetsModule()
-                }
-            }
         }
 
         fun init() {
@@ -185,7 +180,10 @@ class ExtensionManager(context: Context) {
                     internalModuleDir.mkdirs()
 
                     // Refresh index to new state
-                    refresh()
+                    refreshGuard.withLock {
+                        staticExtensions = indexAssetsModule()
+                        refresh()
+                    }
 
                     // Stop watching on old file observer if one exists and start new observer on new path
                     fileObserver?.stopWatching()
@@ -193,18 +191,18 @@ class ExtensionManager(context: Context) {
                         flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
                         if (path == null) return@FileObserver
                         ioScope.launch {
-                            refresh()
+                            refreshGuard.withLock {
+                                refresh()
+                            }
                         }
                     }.also { it.startWatching() }
                 }
             }
         }
 
-        private suspend fun refresh() {
-            refreshGuard.withLock {
-                val dynamicExtensions = staticExtensions + indexInternalModule()
-                postValue(dynamicExtensions)
-            }
+        private fun refresh() {
+            val dynamicExtensions = staticExtensions + indexInternalModule()
+            postValue(dynamicExtensions)
         }
 
         private fun indexAssetsModule(): List<T> {
