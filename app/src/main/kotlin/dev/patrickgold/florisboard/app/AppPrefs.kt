@@ -712,6 +712,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             default = extCoreTheme("floris_night"),
             serializer = ExtensionComponentName.Serializer,
         )
+        val accentColor = custom(
+            key = "theme__accent_color",
+            default = when (AndroidVersion.ATLEAST_API31_S) {
+                true -> Color.Unspecified
+                false -> DEFAULT_GREEN
+            },
+            serializer = ColorPreferenceSerializer,
+        )
         //val sunriseTime = localTime(
         //    key = "theme__sunrise_time",
         //    default = LocalTime.of(6, 0),

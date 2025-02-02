@@ -19,12 +19,14 @@ package dev.patrickgold.florisboard.app.settings.theme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrightnessAuto
+import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -41,8 +43,11 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
+import org.florisboard.lib.color.ColorMappings
 
 @Composable
 fun ThemeScreen() = FlorisScreen {
@@ -107,6 +112,22 @@ fun ThemeScreen() = FlorisScreen {
             onClick = {
                 navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_NIGHT))
             },
+        )
+        ColorPickerPreference(
+            pref = prefs.theme.accentColor,
+            title = stringRes(R.string.pref__theme__theme_accent_color__label),
+            defaultValueLabel = stringRes(R.string.action__default),
+            icon = Icons.Default.ColorLens,
+            defaultColors = ColorMappings.colors,
+            showAlphaSlider = false,
+            enableAdvancedLayout = false,
+            colorOverride = {
+                if (it.isMaterialYou(context)) {
+                    Color.Unspecified
+                } else {
+                    it
+                }
+            }
         )
 
         AddonManagementReferenceBox(type = ExtensionListScreenType.EXT_THEME)

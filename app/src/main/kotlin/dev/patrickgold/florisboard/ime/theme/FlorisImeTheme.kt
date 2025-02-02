@@ -29,13 +29,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.ui.ProvideSnyggUiDefaults
@@ -112,20 +116,23 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val themeManager by context.themeManager()
 
+    val prefs by florisPreferenceModel()
+    val accentColor by prefs.theme.accentColor.observeAsState()
+
     val activeThemeInfo by themeManager.activeThemeInfo.observeAsNonNullState()
     val activeConfig = remember(activeThemeInfo) { activeThemeInfo.config }
     val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
     val materialColors = if (activeConfig.isNightTheme) {
-        if (AndroidVersion.ATLEAST_API31_S) {
+        if (AndroidVersion.ATLEAST_API31_S && accentColor.isUnspecified) {
             dynamicDarkColorScheme(context)
         } else {
-            MaterialDarkFallbackPalette
+            ColorMappings.getColorSchemeOrDefault(accentColor, activeConfig.isNightTheme)
         }
     } else {
-        if (AndroidVersion.ATLEAST_API31_S) {
+        if (AndroidVersion.ATLEAST_API31_S && accentColor.isUnspecified) {
             dynamicLightColorScheme(context)
         } else {
-            MaterialLightFallbackPalette
+            ColorMappings.getColorSchemeOrDefault(accentColor, activeConfig.isNightTheme)
         }
     }
     MaterialTheme(materialColors) {
