@@ -17,19 +17,24 @@
 package dev.patrickgold.florisboard.app.apptheme
 
 import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.color.ColorMappings
 
 /*private val AmoledDarkColorPalette = darkColorScheme(
     primary = Green500,
@@ -70,170 +75,93 @@ private val LightColorPalette = lightColorScheme(
     */
 )*/
 
-private val lightScheme = lightColorScheme(
-    primary = primaryLight,
-    onPrimary = onPrimaryLight,
-    primaryContainer = primaryContainerLight,
-    onPrimaryContainer = onPrimaryContainerLight,
-    secondary = secondaryLight,
-    onSecondary = onSecondaryLight,
-    secondaryContainer = secondaryContainerLight,
-    onSecondaryContainer = onSecondaryContainerLight,
-    tertiary = tertiaryLight,
-    onTertiary = onTertiaryLight,
-    tertiaryContainer = tertiaryContainerLight,
-    onTertiaryContainer = onTertiaryContainerLight,
-    error = errorLight,
-    onError = onErrorLight,
-    errorContainer = errorContainerLight,
-    onErrorContainer = onErrorContainerLight,
-    background = backgroundLight,
-    onBackground = onBackgroundLight,
-    surface = surfaceLight,
-    onSurface = onSurfaceLight,
-    surfaceVariant = surfaceVariantLight,
-    onSurfaceVariant = onSurfaceVariantLight,
-    outline = outlineLight,
-    outlineVariant = outlineVariantLight,
-    scrim = scrimLight,
-    inverseSurface = inverseSurfaceLight,
-    inverseOnSurface = inverseOnSurfaceLight,
-    inversePrimary = inversePrimaryLight,
-    surfaceDim = surfaceDimLight,
-    surfaceBright = surfaceBrightLight,
-    surfaceContainerLowest = surfaceContainerLowestLight,
-    surfaceContainerLow = surfaceContainerLowLight,
-    surfaceContainer = surfaceContainerLight,
-    surfaceContainerHigh = surfaceContainerHighLight,
-    surfaceContainerHighest = surfaceContainerHighestLight,
-)
 
-private val darkScheme = darkColorScheme(
-    primary = primaryDark,
-    onPrimary = onPrimaryDark,
-    primaryContainer = primaryContainerDark,
-    onPrimaryContainer = onPrimaryContainerDark,
-    secondary = secondaryDark,
-    onSecondary = onSecondaryDark,
-    secondaryContainer = secondaryContainerDark,
-    onSecondaryContainer = onSecondaryContainerDark,
-    tertiary = tertiaryDark,
-    onTertiary = onTertiaryDark,
-    tertiaryContainer = tertiaryContainerDark,
-    onTertiaryContainer = onTertiaryContainerDark,
-    error = errorDark,
-    onError = onErrorDark,
-    errorContainer = errorContainerDark,
-    onErrorContainer = onErrorContainerDark,
-    background = backgroundDark,
-    onBackground = onBackgroundDark,
-    surface = surfaceDark,
-    onSurface = onSurfaceDark,
-    surfaceVariant = surfaceVariantDark,
-    onSurfaceVariant = onSurfaceVariantDark,
-    outline = outlineDark,
-    outlineVariant = outlineVariantDark,
-    scrim = scrimDark,
-    inverseSurface = inverseSurfaceDark,
-    inverseOnSurface = inverseOnSurfaceDark,
-    inversePrimary = inversePrimaryDark,
-    surfaceDim = surfaceDimDark,
-    surfaceBright = surfaceBrightDark,
-    surfaceContainerLowest = surfaceContainerLowestDark,
-    surfaceContainerLow = surfaceContainerLowDark,
-    surfaceContainer = surfaceContainerDark,
-    surfaceContainerHigh = surfaceContainerHighDark,
-    surfaceContainerHighest = surfaceContainerHighestDark,
-)
+@Composable
+fun getColorScheme(
+    context: Context,
+    isMaterialYouAware: Boolean,
+    themeColor: Color,
+    theme: AppTheme,
+): ColorScheme {
+    val isDark = isSystemInDarkTheme()
 
-private val amoledScheme = darkScheme.copy(
-    background = amoledDark,
-    surface = amoledDark
-)
+    return when (theme) {
+
+        AppTheme.AUTO -> {
+            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
+                when {
+                    isDark -> dynamicDarkColorScheme(context)
+                    else -> dynamicLightColorScheme(context)
+                }
+            } else {
+                ColorMappings.getColorSchemeOrDefault(themeColor, isDark, true)
+            }
+        }
+
+        AppTheme.DARK -> {
+            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
+                dynamicDarkColorScheme(context)
+            } else {
+                ColorMappings.getColorSchemeOrDefault(themeColor, isDark = true, settings = true)
+            }
+        }
+
+        AppTheme.LIGHT -> {
+            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
+                dynamicLightColorScheme(context)
+            } else {
+                ColorMappings.getColorSchemeOrDefault(themeColor, isDark = false, settings = true)
+            }
+        }
+
+        AppTheme.AMOLED_DARK -> {
+            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
+                dynamicDarkColorScheme(context).amoled()
+            } else {
+                ColorMappings.getColorSchemeOrDefault(themeColor, isDark = true, settings = true).amoled()
+            }
+        }
+
+        AppTheme.AUTO_AMOLED -> {
+            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
+                when {
+                    isDark -> dynamicDarkColorScheme(context).amoled()
+                    else -> dynamicLightColorScheme(context)
+                }
+            } else {
+                with(ColorMappings.getColorSchemeOrDefault(themeColor, isDark, true)) {
+                    if (isDark) amoled() else this
+                }
+            }
+        }
+    }
+}
+
+fun ColorScheme.amoled(): ColorScheme {
+    return this.copy(background = Color.Black, surface = Color.Black)
+}
 
 @Composable
 fun FlorisAppTheme(
     theme: AppTheme,
     isMaterialYouAware: Boolean,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
+    val prefs by florisPreferenceModel()
+    val accent by prefs.advanced.accentColor.observeAsState()
 
-    val colors = if (AndroidVersion.ATLEAST_API31_S) {
-        when (theme) {
-            AppTheme.AUTO -> when {
-                isMaterialYouAware -> when {
-                    isSystemInDarkTheme() -> dynamicDarkColorScheme(LocalContext.current)
-                    else -> dynamicLightColorScheme(LocalContext.current)
-                }
-
-                else -> {
-                    when {
-                        isSystemInDarkTheme() -> darkScheme
-                        else -> lightScheme
-                    }
-                }
-            }
-
-            AppTheme.AUTO_AMOLED -> when {
-                isMaterialYouAware -> when {
-                    isSystemInDarkTheme() -> dynamicDarkColorScheme(LocalContext.current).copy(
-                        background = amoledDark,
-                        surface = amoledDark,
-                    )
-
-                    else -> dynamicLightColorScheme(LocalContext.current)
-                }
-
-                else -> {
-                    when {
-                        isSystemInDarkTheme() -> amoledScheme
-                        else -> lightScheme
-                    }
-                }
-            }
-
-            AppTheme.LIGHT -> when {
-                isMaterialYouAware -> dynamicLightColorScheme(LocalContext.current)
-                else -> lightScheme
-            }
-
-            AppTheme.DARK -> when {
-                isMaterialYouAware -> dynamicDarkColorScheme(LocalContext.current)
-                else -> darkScheme
-            }
-
-            AppTheme.AMOLED_DARK -> when {
-                isMaterialYouAware -> dynamicDarkColorScheme(LocalContext.current).copy(
-                    background = amoledDark,
-                    surface = amoledDark,
-                )
-
-                else -> amoledScheme
-            }
-        }
-    } else {
-        when (theme) {
-            AppTheme.AUTO -> when {
-                isSystemInDarkTheme() -> darkScheme
-                else -> lightScheme
-            }
-
-            AppTheme.AUTO_AMOLED -> when {
-                isSystemInDarkTheme() -> darkScheme
-                else -> lightScheme
-            }
-
-            AppTheme.LIGHT -> lightScheme
-            AppTheme.DARK -> darkScheme
-            AppTheme.AMOLED_DARK -> amoledScheme
-        }
-    }
+    val colors = getColorScheme(
+        context = LocalContext.current,
+        theme = theme,
+        isMaterialYouAware = isMaterialYouAware,
+        themeColor = accent,
+    )
 
     val darkTheme =
         theme == AppTheme.DARK
-        || theme == AppTheme.AMOLED_DARK
-        || (theme == AppTheme.AUTO && isSystemInDarkTheme())
-        || (theme == AppTheme.AUTO_AMOLED && isSystemInDarkTheme())
+            || theme == AppTheme.AMOLED_DARK
+            || (theme == AppTheme.AUTO && isSystemInDarkTheme())
+            || (theme == AppTheme.AUTO_AMOLED && isSystemInDarkTheme())
 
     val view = LocalView.current
     if (!view.isInEditMode) {
