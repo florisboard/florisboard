@@ -60,7 +60,7 @@ private fun Bundle.debugSummarize(): String {
             }
             append(key)
             append("=")
-            append(bundle.get(key))
+            append(bundle.getString(key))
         }
         append("]")
     }

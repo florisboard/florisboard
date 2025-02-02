@@ -58,7 +58,7 @@ fun Context.launchUrl(@StringRes url: Int, vararg args: CurlyArg) {
 
 inline fun <T : Any> Context.launchActivity(kClass: KClass<T>, intentModifier: (Intent) -> Unit = { }) {
     contract {
-        callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(intentModifier, InvocationKind.AT_MOST_ONCE)
     }
     try {
         val intent = Intent(this, kClass.java)
@@ -72,7 +72,7 @@ inline fun <T : Any> Context.launchActivity(kClass: KClass<T>, intentModifier: (
 
 inline fun Context.launchActivity(intentModifier: (Intent) -> Unit) {
     contract {
-        callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(intentModifier, InvocationKind.AT_MOST_ONCE)
     }
     try {
         val intent = Intent()

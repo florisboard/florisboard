@@ -21,8 +21,6 @@ import dev.patrickgold.florisboard.lib.FlorisLocale
 import io.github.reactivecircus.cache4k.Cache
 import org.florisboard.lib.kotlin.GuardedByLock
 import org.florisboard.lib.kotlin.guardedByLock
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 open class BreakIteratorGroup {
     private val charInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
@@ -32,19 +30,13 @@ open class BreakIteratorGroup {
     private val sentenceInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
 
     suspend fun <R> character(locale: FlorisLocale, action: (BreakIterator) -> R): R {
-        contract {
-            callsInPlace(action, InvocationKind.EXACTLY_ONCE)
-        }
         val instance = charInstances.get(locale) {
             guardedByLock { BreakIterator.getCharacterInstance(locale.base) }
         }
-        return instance.withLock { action(it) }
+        return instance.withLock(null, action)
     }
 
     suspend fun <R> word(locale: FlorisLocale, action: (BreakIterator) -> R): R {
-        contract {
-            callsInPlace(action, InvocationKind.EXACTLY_ONCE)
-        }
         val instance = wordInstances.get(locale) {
             guardedByLock { BreakIterator.getWordInstance(locale.base) }
         }
@@ -52,9 +44,6 @@ open class BreakIteratorGroup {
     }
 
     suspend fun <R> sentence(locale: FlorisLocale, action: (BreakIterator) -> R): R {
-        contract {
-            callsInPlace(action, InvocationKind.EXACTLY_ONCE)
-        }
         val instance = sentenceInstances.get(locale) {
             guardedByLock { BreakIterator.getSentenceInstance(locale.base) }
         }
