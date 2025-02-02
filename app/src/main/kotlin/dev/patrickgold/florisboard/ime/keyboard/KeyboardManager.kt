@@ -189,7 +189,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     keyboardMode = mode,
                     subtype = subtype,
                 ).await()
-            }.await()
+            }
             val computingEvaluator = ComputingEvaluatorImpl(
                 version = activeEvaluatorVersion++,
                 keyboard = computedKeyboard,
@@ -867,17 +867,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         val punctuationRules = MutableLiveData<Map<ExtensionComponentName, PunctuationRule>>(emptyMap())
         val subtypePresets = MutableLiveData<List<SubtypePreset>>(emptyList())
 
+        private val anyChangedGuard = Mutex(locked = false)
         val anyChanged = MutableLiveData(Unit)
 
         init {
             scope.launch(Dispatchers.Main.immediate) {
                 extensionManager.keyboardExtensions.observeForever { keyboardExtensions ->
-                    parseKeyboardExtensions(keyboardExtensions)
+                    scope.launch {
+                        anyChangedGuard.withLock {
+                            parseKeyboardExtensions(keyboardExtensions)
+                        }
+                    }
                 }
             }
         }
 
-        private fun parseKeyboardExtensions(keyboardExtensions: List<KeyboardExtension>) = scope.launch {
+        private fun parseKeyboardExtensions(keyboardExtensions: List<KeyboardExtension>) {
             val localComposers = mutableMapOf<ExtensionComponentName, Composer>()
             val localCurrencySets = mutableMapOf<ExtensionComponentName, CurrencySet>()
             val localLayouts = mutableMapOf<LayoutType, MutableMap<ExtensionComponentName, LayoutArrangementComponent>>()
