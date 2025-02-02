@@ -105,6 +105,9 @@ class ThemeManager(context: Context) {
         prefs.theme.mode.observeForever {
             updateActiveTheme()
         }
+        prefs.theme.accentColor.observeForever {
+            updateActiveTheme { MaterialYouColor.updateAccentColor(it) }
+        }
         prefs.theme.dayThemeId.observeForever {
             updateActiveTheme()
         }

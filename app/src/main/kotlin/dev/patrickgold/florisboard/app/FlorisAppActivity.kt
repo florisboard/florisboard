@@ -36,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -117,8 +118,8 @@ class FlorisAppActivity : ComponentActivity() {
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
                 ProvideLocalizedResources(resourcesContext) {
-                    val useMaterialYou by prefs.advanced.useMaterialYou.observeAsState()
-                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = useMaterialYou) {
+                    val accentColor by prefs.advanced.accentColor.observeAsState()
+                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = accentColor.isUnspecified) {
                         Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()
                         }

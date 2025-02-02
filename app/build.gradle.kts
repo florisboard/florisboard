@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import java.io.ByteArrayOutputStream
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -202,6 +202,7 @@ dependencies {
     implementation(libs.patrickgold.jetpref.material.ui)
 
     implementation(project(":lib:android"))
+    implementation(project(":lib:color"))
     implementation(project(":lib:kotlin"))
     implementation(project(":lib:native"))
     implementation(project(":lib:snygg"))
