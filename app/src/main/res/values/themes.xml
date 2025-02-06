@@ -24,7 +24,7 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="CrashDialogTheme" parent="android:Theme.Material"/>
+    <style name="CrashDialogTheme" parent="android:style/Theme.Material.NoActionBar"/>
 
     <style name="FlorisImeTheme" parent="android:Theme.Material.InputMethod">
         <!-- Need this to prevent Xiaomi devices from messing with our beautiful UI -->
