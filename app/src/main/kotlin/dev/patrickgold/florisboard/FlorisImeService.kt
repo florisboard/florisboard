@@ -235,7 +235,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                 for (i in 0 until el.subtypeCount){
                     if (el.getSubtypeAt(i).mode != "voice") continue
                     if (AndroidVersion.ATLEAST_API28_P) {
-                        ims.switchInputMethod(el.id)
+                        ims.switchInputMethod(el.id, el.getSubtypeAt(i))
                         return true
                     } else {
                         ims.window.window?.let { window ->
