@@ -696,6 +696,17 @@
       }
     },
     {
+      "languageTag": "bn-IN",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "popupMapping": "org.florisboard.localization:bn-unijoy",
+      "preferred": {
+        "characters": "org.florisboard.layouts:bengali_unijoy",
+        "numericRow": "org.florisboard.layouts:bengali",
+        "numericAdvanced": "org.florisboard.layouts:bengali"
+      }
+    },
+    {
       "languageTag": "ast",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
