@@ -72,7 +72,7 @@
     "র": {
       "main": { "$": "auto_text_key", "code":  2482, "label": "ল" },
       "relevant": [
-        { "code": -255, "label": "র‍্য" }
+        { "$": "multi_text_key", "codePoints": [2480, 8205, 2509, 2479], "label": "র‍্য" }
       ]
     },
     "ন": {
@@ -93,17 +93,17 @@
     "ঁ": {
       "main": { "$": "auto_text_key", "code":  2492, "label": "়" },
       "relevant": [
-        { "$": "auto_text_key", "code":  2500, "label": "ৄ" },
-        { "$": "auto_text_key", "code":  2530, "label": "ৢ" },
-        { "$": "auto_text_key", "code":  2531, "label": "ৣ" },
+        { "$": "auto_text_key", "code":  2544, "label": "ৰ" },
+        { "$": "auto_text_key", "code":  2554, "label": "৺" },
+        { "$": "auto_text_key", "code":  2519, "label": "ৗ" },
         { "$": "auto_text_key", "code":  2528, "label": "ৠ" },
         { "$": "auto_text_key", "code":  2444, "label": "ঌ" },
         { "$": "auto_text_key", "code":  2529, "label": "ৡ" },
-        { "$": "auto_text_key", "code":  2544, "label": "ৰ" },
         { "$": "auto_text_key", "code":  2545, "label": "ৱ" },
         { "$": "auto_text_key", "code":  2493, "label": "ঽ" },
-        { "$": "auto_text_key", "code":  2554, "label": "৺" },
-        { "$": "auto_text_key", "code":  2519, "label": "ৗ" }
+        { "$": "auto_text_key", "code":  2500, "label": "ৄ" },
+        { "$": "auto_text_key", "code":  2530, "label": "ৢ" },
+        { "$": "auto_text_key", "code":  2531, "label": "ৣ" }
       ]
     },
     "ৌ": {
@@ -113,14 +113,14 @@
       "main": { "$": "auto_text_key", "code":  2448, "label": "ঐ" }
     },
     "~right": {
-      "main": { "code":   2404, "label": "।" },
+      "main": { "code":   44, "label": "," },
       "relevant": [
-      	{ "code":   37, "label": "%" },
-      	{ "code":   43, "label": "+" },
-      	{ "code":   45, "label": "-" },
-      	{ "code":   58, "label": ":" },
-      	{ "code":   59, "label": ";" },
-      	{ "code":   47, "label": "/" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   59, "label": ";" },
+        { "code":   47, "label": "/" },
         { "$": "layout_direction_selector",
           "ltr": { "code":   40, "label": "(" },
           "rtl": { "code":   41, "label": "(" }

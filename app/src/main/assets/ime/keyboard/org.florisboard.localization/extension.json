@@ -29,7 +29,7 @@
     { "id": "ar", "authors": [ "HeiWiper" ] },
     { "id": "ast", "authors": [ "Softastur" ] },
     { "id": "bg", "authors": [ "iorvethe" ] },
-    { "id": "bn-BD", "authors": [ "iamrasel" ] },
+    { "id": "bn-unijoy", "authors": [ "RHJihan" ] },
     { "id": "ca", "authors": [ "mikelloc" ] },
     { "id": "cjk", "authors": [ "moonbeamcelery" ] },
     { "id": "ckb", "authors": [ "GoRaN" ] },
@@ -688,9 +688,9 @@
       "languageTag": "bn-BD",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:bangladeshi_taka",
-      "popupMapping": "org.florisboard.localization:bn-BD",
+      "popupMapping": "org.florisboard.localization:bn-unijoy",
       "preferred": {
-        "characters": "org.florisboard.layouts:bengali_bd",
+        "characters": "org.florisboard.layouts:bengali_unijoy",
         "numericRow": "org.florisboard.layouts:bengali",
         "numericAdvanced": "org.florisboard.layouts:bengali"
       }
