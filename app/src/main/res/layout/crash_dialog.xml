@@ -2,8 +2,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:fitsSystemWindows="true"
     android:theme="@style/CrashDialogTheme">
+
+    <Toolbar
+        android:id="@+id/crash_dialog_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"/>
 
     <TextView
         android:id="@+id/description"
