@@ -214,6 +214,7 @@ fun ClipboardInputLayout(
         contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
+        val fontSize = style.fontSize.spSize() safeTimes 1f
         SnyggSurface(
             modifier = modifier
                 .fillMaxWidth()
@@ -258,7 +259,7 @@ fun ClipboardInputLayout(
                         text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
                         style = TextStyle(textDirection = TextDirection.Ltr),
                         color = Color.Red,
-                        fontSize = style.fontSize.spSize(),
+                        fontSize = fontSize,
                     )
                 }
             } else if (item.type == ItemType.VIDEO) {
@@ -305,7 +306,7 @@ fun ClipboardInputLayout(
                         text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
                         style = TextStyle(textDirection = TextDirection.Ltr),
                         color = Color.Red,
-                        fontSize = style.fontSize.spSize(),
+                        fontSize = fontSize,
                     )
                 }
             } else {
@@ -510,7 +511,7 @@ fun ClipboardInputLayout(
             Text(
                 text = stringRes(R.string.clipboard__empty__message),
                 color = itemStyle.foreground.solidColor(context),
-                fontSize = itemStyle.fontSize.spSize(),
+                fontSize = itemStyle.fontSize.spSize() safeTimes 1f,
                 textAlign = TextAlign.Center,
             )
         }
@@ -544,7 +545,7 @@ fun ClipboardInputLayout(
                     Text(
                         text = stringRes(R.string.clipboard__disabled__message),
                         color = itemStyle.foreground.solidColor(context),
-                        fontSize = itemStyle.fontSize.spSize(),
+                        fontSize = itemStyle.fontSize.spSize() safeTimes 1f,
                     )
                     SnyggButton(
                         modifier = Modifier
@@ -578,7 +579,7 @@ fun ClipboardInputLayout(
             Text(
                 text = stringRes(R.string.clipboard__locked__message),
                 color = itemStyle.foreground.solidColor(context),
-                fontSize = itemStyle.fontSize.spSize(),
+                fontSize = itemStyle.fontSize.spSize() safeTimes 1f,
                 textAlign = TextAlign.Center,
             )
         }
