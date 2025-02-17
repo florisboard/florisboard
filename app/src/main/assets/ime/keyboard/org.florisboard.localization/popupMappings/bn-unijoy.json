@@ -1,98 +1,33 @@
 {
   "all": {
-    "ঙ": {
-      "main": { "code": 2434, "label": "ং" }
-    },
-    "য": {
-      "main": { "code": 2527, "label": "য়" }
-    },
-    "ড": {
-      "main": { "code": 2466, "label": "ঢ" }
-    },
-    "প": {
-      "main": { "code": 2475, "label": "ফ" }
-    },
-    "ট": {
-      "main": { "code": 2464, "label": "ঠ" }
-    },
-    "চ": {
-      "main": { "code": 2459, "label": "ছ" }
-    },
-    "জ": {
-      "main": { "code": 2461, "label": "ঝ" }
-    },
-    "হ": {
-      "main": { "code": 2462, "label": "ঞ" }
-    },
-    "গ": {
-      "main": { "code": 2456, "label": "ঘ" }
-    },
-    "ড়": {
-      "main": { "code": 2525, "label": "ঢ়" }
-    },
-    "ৃ": {
-      "main": { "code": 2443, "label": "ঋ" }
-    },
-    "ু": {
-      "main": { "code": 2441, "label": "উ" }
-    },
-    "ি": {
-      "main": { "code": 2439, "label": "ই" }
-    },
-    "া": {
-      "main": { "code": 2438, "label": "আ" },
-      "relevant": [
-        { "code": 2437, "label": "অ" }
-      ]
-    },
-    "্": {
-      "main": { "code": 2433, "label": "ঁ" }
-    },
-    "ব": {
-      "main": { "code": 2477, "label": "ভ" }
-    },
-    "ক": {
-      "main": { "code": 2454, "label": "খ" }
-    },
-    "ত": {
-      "main": { "code": 2469, "label": "থ" },
-      "relevant": [
-        { "code": 2510, "label": "ৎ" }
-      ]
-    },
-    "দ": {
-      "main": { "code": 2471, "label": "ধ" }
-    },
-    "ো": {
-      "main": { "code": 2451, "label": "ও" }
-    },
-    "ে": {
-      "main": { "code": 2447, "label": "এ" }
-    },
-    "র": {
-      "main": { "code": 2482, "label": "ল" },
-      "relevant": [
-        { "$": "multi_text_key", "codePoints": [2480, 8205, 2509, 2479], "label": "র‍্য" }
-      ]
-    },
-    "ন": {
-      "main": { "code": 2467, "label": "ণ" }
-    },
-    "স": {
-      "main": { "code": 2487, "label": "ষ" }
-    },
-    "ম": {
-      "main": { "code": 2486, "label": "শ" }
-    },
-    "ূ": {
-      "main": { "code": 2442, "label": "ঊ" }
-    },
-    "ী": {
-      "main": { "code": 2440, "label": "ঈ" }
-    },
-    "ঁ": {
-      "main": { "code": 2492, "label": "়" },
-      "relevant": [
+    "ঙ": { "main": { "code": 2434, "label": "ং" }},
+    "য": { "main": { "code": 2527, "label": "য়" }},
+    "ড": { "main": { "code": 2466, "label": "ঢ" }},
+    "প": { "main": { "code": 2475, "label": "ফ" }},
+    "ট": { "main": { "code": 2464, "label": "ঠ" }},
+    "চ": { "main": { "code": 2459, "label": "ছ" }},
+    "জ": { "main": { "code": 2461, "label": "ঝ" }},
+    "হ": { "main": { "code": 2462, "label": "ঞ" }},
+    "গ": { "main": { "code": 2456, "label": "ঘ" }},
+    "ড়": { "main": { "code": 2525, "label": "ঢ়" }},
+    "ৃ": { "main": { "code": 2443, "label": "ঋ" }},
+    "ু": { "main": { "code": 2441, "label": "উ" }},
+    "ি": { "main": { "code": 2439, "label": "ই" }},
+    "া": { "main": { "code": 2438, "label": "আ" }, "relevant": [{ "code": 2437, "label": "অ" }]},
+    "্": { "main": { "code": 2433, "label": "ঁ" }},
+    "ব": { "main": { "code": 2477, "label": "ভ" }},
+    "ক": { "main": { "code": 2454, "label": "খ" }},
+    "ত": { "main": { "code": 2469, "label": "থ" }, "relevant": [{ "code": 2510, "label": "ৎ" }]},
+    "দ": { "main": { "code": 2471, "label": "ধ" }},
+    "ো": { "main": { "code": 2451, "label": "ও" }},
+    "ে": { "main": { "code": 2447, "label": "এ" }},
+    "র": { "main": { "code": 2482, "label": "ল" }, "relevant": [{ "$": "multi_text_key", "codePoints": [2480, 8205, 2509, 2479], "label": "র‍্য" }]},
+    "ন": { "main": { "code": 2467, "label": "ণ" }},
+    "স": { "main": { "code": 2487, "label": "ষ" }},
+    "ম": { "main": { "code": 2486, "label": "শ" }},
+    "ূ": { "main": { "code": 2442, "label": "ঊ" }},
+    "ী": { "main": { "code": 2440, "label": "ঈ" }},
+    "ঁ": { "main": { "code": 2492, "label": "়" }, "relevant": [
         { "code": 2544, "label": "ৰ" },
         { "code": 2554, "label": "৺" },
         { "code": 2519, "label": "ৗ" },
@@ -104,50 +39,34 @@
         { "code": 2500, "label": "ৄ" },
         { "code": 2530, "label": "ৢ" },
         { "code": 2531, "label": "ৣ" }
-      ]
-    },
-    "ৌ": {
-      "main": { "code": 2452, "label": "ঔ" }
-    },
-    "ৈ": {
-      "main": { "code": 2448, "label": "ঐ" }
-    },
-    "~right": {
-      "main": { "code": 44, "label": "," },
-      "relevant": [
+      ]},
+    "ৌ": { "main": { "code": 2452, "label": "ঔ" }},
+    "ৈ": { "main": { "code": 2448, "label": "ঐ" }},
+    "~right": { "main": { "code": 44, "label": "," }, "relevant": [
         { "code": 37, "label": "%" },
         { "code": 43, "label": "+" },
         { "code": 45, "label": "-" },
         { "code": 58, "label": ":" },
         { "code": 59, "label": ";" },
         { "code": 47, "label": "/" },
-        { "$": "layout_direction_selector",
-          "ltr": { "code": 40, "label": "(" },
-          "rtl": { "code": 41, "label": "(" }
-        },
-        { "$": "layout_direction_selector",
-          "ltr": { "code": 41, "label": ")" },
-          "rtl": { "code": 40, "label": ")" }
-        },
+        { "$": "layout_direction_selector", "ltr": { "code": 40, "label": "(" }, "rtl": { "code": 41,  "label": "(" }},
+        { "$": "layout_direction_selector", "ltr": { "code": 41,  "label": ")" }, "rtl": { "code": 40, "label": ")" } },
         { "code": 64, "label": "@" },
         { "code": 35, "label": "#" },
         { "code": 8205, "label": "▸|◂" },
         { "code": 8204, "label": "◂|▸" },
         { "code": 33, "label": "!" },
         { "code": 63, "label": "?" },
-        { "code": 2405, "label": "॥" }
-      ]
-    }
+        { "code": 2405, "label": "॥"
+        }
+      ]}
   },
   "uri": {
-    "~right": {
-      "main": { "code": -255, "label": ".com" },
-      "relevant": [
+    "~right": { "main": { "code": -255, "label": ".com" }, "relevant": [
         { "code": -255, "label": ".org" },
         { "code": -255, "label": ".com.bd" },
         { "code": -255, "label": ".bd" },
-        { "code": -255, "label": ".net" }
-      ]
-    }
-  }
+        { "code": -255, "label": ".net"
+        }
+      ]}}
 }
