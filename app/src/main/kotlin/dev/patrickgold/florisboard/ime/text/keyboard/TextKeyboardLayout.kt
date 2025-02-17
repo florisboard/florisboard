@@ -173,7 +173,7 @@ fun TextKeyboardLayout(
                     MotionEvent.ACTION_POINTER_UP,
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_CANCEL
-                    -> {
+                        -> {
                         val clonedEvent = MotionEvent.obtainNoHistory(event)
                         touchEventChannel
                             .trySend(clonedEvent)
@@ -361,7 +361,7 @@ private fun TextKeyButton(
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             var customLabel = label
-            if (key.computedData.code == KeyCode.SPACE) {
+            if (key.computedData.isSpaceKey()) {
                 val prefs by florisPreferenceModel()
                 val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
                 when (spaceBarMode) {
