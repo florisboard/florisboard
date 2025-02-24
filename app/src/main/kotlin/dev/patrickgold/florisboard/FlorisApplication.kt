@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
@@ -106,6 +107,7 @@ class FlorisApplication : Application() {
             CrashUtility.stageException(e)
             return
         }
+        registerReceiver(WallpaperChangeReceiver(), IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
 
     fun init() {
