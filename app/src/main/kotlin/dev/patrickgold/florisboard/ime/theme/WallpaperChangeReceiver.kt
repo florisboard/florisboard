@@ -26,6 +26,7 @@ class WallpaperChangeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent == null) return
         if (context == null) return
+        @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
         if (intent.action == Intent.ACTION_WALLPAPER_CHANGED) {
             flogDebug { "Wallpaper changed" }
             context.themeManager().value.updateActiveTheme()
