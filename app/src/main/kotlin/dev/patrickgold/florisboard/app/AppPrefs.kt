@@ -744,34 +744,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     override fun migrate(entry: PreferenceMigrationEntry): PreferenceMigrationEntry {
         return when (entry.key) {
-            // Migrate enums from their lowercase to uppercase representation
-            // Keep migration rule until: 0.5 dev cycle
-            "advanced__settings_theme", "gestures__swipe_up", "gestures__swipe_down", "gestures__swipe_left",
-            "gestures__swipe_right", "gestures__space_bar_swipe_up", "gestures__space_bar_swipe_left",
-            "gestures__space_bar_swipe_right", "gestures__space_bar_long_press", "gestures__delete_key_swipe_left",
-            "gestures__delete_key_long_press", "keyboard__hinted_number_row_mode", "keyboard__hinted_symbols_mode",
-            "keyboard__utility_key_action", "keyboard__one_handed_mode", "keyboard__landscape_input_ui_mode",
-            "localization__display_language_names_in", "smartbar__primary_actions_row_type",
-            "smartbar__secondary_actions_placement", "smartbar__secondary_actions_row_type", "spelling__language_mode",
-            "suggestion__display_mode", "theme__mode", "theme__editor_display_colors_as",
-            "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
-            -> {
-                entry.transform(rawValue = entry.rawValue.uppercase())
-            }
-
-            // Migrate old private mode force flag as this is a sensitive preference
-            // Keep migration rule until: 0.5 dev cycle
-            "advanced__force_private_mode" -> {
-                if (entry.rawValue.toBoolean()) {
-                    entry.transform(
-                        type = PreferenceType.string(),
-                        key = "advanced__incognito_mode",
-                        rawValue = IncognitoMode.FORCE_ON.toString(),
-                    )
-                } else {
-                    entry.reset()
-                }
-            }
 
             // Migrate media prefs to emoji prefs
             // Keep migration rule until: 0.6 dev cycle
@@ -785,18 +757,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             }
             "media__emoji_recently_used_max_size" -> {
                 entry.transform(key = "emoji__history_recent_max_size")
-            }
-            "media__emoji_preferred_skin_tone" -> {
-                entry.transform(
-                    key = "emoji__preferred_skin_tone",
-                    rawValue = entry.rawValue.uppercase(), // keep until: 0.5 dev cycle
-                )
-            }
-            "media__emoji_preferred_hair_style" -> {
-                entry.transform(
-                    key = "emoji__preferred_hair_style",
-                    rawValue = entry.rawValue.uppercase(), // keep until: 0.5 dev cycle
-                )
             }
 
             // Default: keep entry
