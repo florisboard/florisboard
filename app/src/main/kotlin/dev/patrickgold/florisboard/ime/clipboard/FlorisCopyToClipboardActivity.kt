@@ -121,8 +121,8 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
 
         setContent {
             ProvideLocalizedResources(this, forceLayoutDirection = LayoutDirection.Ltr) {
-                val theme by prefs.advanced.settingsTheme.observeAsState()
-                val accentColor by prefs.advanced.accentColor.observeAsState()
+                val theme by prefs.other.settingsTheme.observeAsState()
+                val accentColor by prefs.other.accentColor.observeAsState()
                 FlorisAppTheme(theme, accentColor.isUnspecified) {
                     BottomSheet {
                         Row {

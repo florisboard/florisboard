@@ -55,7 +55,6 @@ import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
-import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -67,14 +66,14 @@ import org.florisboard.lib.snygg.SnyggLevel
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
-    val advanced = Advanced()
-    inner class Advanced {
+    val other = Other()
+    inner class Other {
         val settingsTheme = enum(
-            key = "advanced__settings_theme",
+            key = "other__settings_theme",
             default = AppTheme.AUTO,
         )
         val accentColor = custom(
-            key = "advanced__accent_color",
+            key = "other__accent_color",
             default = when (AndroidVersion.ATLEAST_API31_S) {
                 true -> Color.Unspecified
                 false -> DEFAULT_GREEN
@@ -82,21 +81,12 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             serializer = ColorPreferenceSerializer,
         )
         val settingsLanguage = string(
-            key = "advanced__settings_language",
+            key = "other__settings_language",
             default = "auto",
         )
         val showAppIcon = boolean(
-            key = "advanced__show_app_icon",
+            key = "other__show_app_icon",
             default = true,
-        )
-        val incognitoMode = enum(
-            key = "advanced__incognito_mode",
-            default = IncognitoMode.DYNAMIC_ON_OFF,
-        )
-        // Internal pref
-        val forceIncognitoModeFromDynamic = boolean(
-            key = "advanced__force_incognito_mode_from_dynamic",
-            default = false,
         )
     }
 
@@ -694,6 +684,15 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "suggestion__clipboard_content_timeout",
             default = 60,
         )
+        val incognitoMode = enum(
+            key = "suggestion__incognito_mode",
+            default = IncognitoMode.DYNAMIC_ON_OFF,
+        )
+        // Internal pref
+        val forceIncognitoModeFromDynamic = boolean(
+            key = "suggestion__force_incognito_mode_from_dynamic",
+            default = false,
+        )
     }
 
     val theme = Theme()
@@ -759,6 +758,26 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 entry.transform(key = "emoji__history_recent_max_size")
             }
 
+            // Migrate advanced prefs to appsettings prefs
+            // Keep migration rules until: 0.7 dev cycle
+            "advanced__settings_theme" -> {
+                entry.transform(key = "other__settings_theme")
+            }
+            "advanced__accent_color" -> {
+                entry.transform(key = "other__accent_color")
+            }
+            "advanced__settings_language" -> {
+                entry.transform(key = "other__settings_language")
+            }
+            "advanced__show_app_icon" -> {
+                entry.transform(key = "other__show_app_icon")
+            }
+            "advanced__incognito_mode" -> {
+                entry.transform(key = "suggestion__incognito_mode")
+            }
+            "advanced__force_incognito_mode_from_dynamic" -> {
+                entry.transform(key = "suggestion__force_incognito_mode_from_dynamic")
+            }
             // Default: keep entry
             else -> entry.keepAsIs()
         }

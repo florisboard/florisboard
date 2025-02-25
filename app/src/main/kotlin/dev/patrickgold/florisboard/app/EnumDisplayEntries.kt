@@ -58,19 +58,19 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
             entry(
                 key = AppTheme.AUTO_AMOLED,
-                label = stringRes(R.string.pref__advanced__settings_theme__auto_amoled),
+                label = stringRes(R.string.pref__other__settings_theme__auto_amoled),
             )
             entry(
                 key = AppTheme.LIGHT,
-                label = stringRes(R.string.pref__advanced__settings_theme__light),
+                label = stringRes(R.string.pref__other__settings_theme__light),
             )
             entry(
                 key = AppTheme.DARK,
-                label = stringRes(R.string.pref__advanced__settings_theme__dark),
+                label = stringRes(R.string.pref__other__settings_theme__dark),
             )
             entry(
                 key = AppTheme.AMOLED_DARK,
-                label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
+                label = stringRes(R.string.pref__other__settings_theme__amoled_dark),
             )
         }
     },

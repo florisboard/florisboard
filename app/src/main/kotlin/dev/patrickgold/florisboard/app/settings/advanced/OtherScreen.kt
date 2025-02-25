@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -46,14 +45,13 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
 
 
 @Composable
-fun AdvancedScreen() = FlorisScreen {
-    title = stringRes(R.string.settings__advanced__title)
+fun OtherScreen() = FlorisScreen {
+    title = stringRes(R.string.settings__other__title)
     previewFieldVisible = false
 
     val navController = LocalNavController.current
@@ -61,14 +59,14 @@ fun AdvancedScreen() = FlorisScreen {
 
     content {
         ListPreference(
-            prefs.advanced.settingsTheme,
+            prefs.other.settingsTheme,
             icon = Icons.Default.Palette,
-            title = stringRes(R.string.pref__advanced__settings_theme__label),
+            title = stringRes(R.string.pref__other__settings_theme__label),
             entries = enumDisplayEntriesOf(AppTheme::class),
         )
         ColorPickerPreference(
-            pref = prefs.advanced.accentColor,
-            title = stringRes(R.string.pref__advanced__settings_accent_color__label),
+            pref = prefs.other.accentColor,
+            title = stringRes(R.string.pref__other__settings_accent_color__label),
             defaultValueLabel = stringRes(R.string.action__default),
             icon = Icons.Default.FormatColorFill,
             defaultColors = ColorMappings.colors,
@@ -83,9 +81,9 @@ fun AdvancedScreen() = FlorisScreen {
             }
         )
         ListPreference(
-            prefs.advanced.settingsLanguage,
+            prefs.other.settingsLanguage,
             icon = Icons.Default.Language,
-            title = stringRes(R.string.pref__advanced__settings_language__label),
+            title = stringRes(R.string.pref__other__settings_language__label),
             entries = listPrefEntries {
                 listOf(
                     "auto",
@@ -147,20 +145,14 @@ fun AdvancedScreen() = FlorisScreen {
             }
         )
         SwitchPreference(
-            prefs.advanced.showAppIcon,
+            prefs.other.showAppIcon,
             icon = Icons.Default.Preview,
-            title = stringRes(R.string.pref__advanced__show_app_icon__label),
+            title = stringRes(R.string.pref__other__show_app_icon__label),
             summary = when {
-                AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__advanced__show_app_icon__summary_atleast_q)
+                AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__other__show_app_icon__summary_atleast_q)
                 else -> null
             },
             enabledIf = { AndroidVersion.ATMOST_API28_P },
-        )
-        ListPreference(
-            prefs.advanced.incognitoMode,
-            icon = vectorResource(id = R.drawable.ic_incognito),
-            title = stringRes(R.string.pref__advanced__incognito_mode__label),
-            entries = enumDisplayEntriesOf(IncognitoMode::class),
         )
         Preference(
             icon = Icons.Default.Adb,

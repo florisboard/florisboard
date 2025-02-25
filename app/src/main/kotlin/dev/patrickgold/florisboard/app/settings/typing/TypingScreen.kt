@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
@@ -47,6 +48,7 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
@@ -100,6 +102,12 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
                 summary = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__summary),
                 visibleIf = { AndroidVersion.ATLEAST_API30_R },
+            )
+            ListPreference(
+                prefs.suggestion.incognitoMode,
+                icon = vectorResource(id = R.drawable.ic_incognito),
+                title = stringRes(R.string.pref__suggestion__incognito_mode__label),
+                entries = enumDisplayEntriesOf(IncognitoMode::class),
             )
         }
 

@@ -119,11 +119,11 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
         }
-        activeState.isIncognitoMode = when (prefs.advanced.incognitoMode.get()) {
+        activeState.isIncognitoMode = when (prefs.suggestion.incognitoMode.get()) {
             IncognitoMode.FORCE_OFF -> false
             IncognitoMode.FORCE_ON -> true
             IncognitoMode.DYNAMIC_ON_OFF -> {
-                editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.advanced.forceIncognitoModeFromDynamic.get()
+                editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.suggestion.forceIncognitoModeFromDynamic.get()
             }
         }
     }
