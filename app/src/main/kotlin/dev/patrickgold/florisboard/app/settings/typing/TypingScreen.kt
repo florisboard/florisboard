@@ -82,22 +82,6 @@ fun TypingScreen() = FlorisScreen {
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
             )
             SwitchPreference(
-                prefs.suggestion.clipboardContentEnabled,
-                title = stringRes(R.string.pref__suggestion__clipboard_content_enabled__label),
-                summary = stringRes(R.string.pref__suggestion__clipboard_content_enabled__summary),
-                enabledIf = { prefs.suggestion.enabled isEqualTo true },
-            )
-            DialogSliderPreference(
-                prefs.suggestion.clipboardContentTimeout,
-                title = stringRes(R.string.pref__suggestion__clipboard_content_timeout__label),
-                valueLabel = { stringRes(R.string.pref__suggestion__clipboard_content_timeout__summary, "v" to it) },
-                min = 30,
-                max = 300,
-                stepIncrement = 5,
-                enabledIf = { prefs.suggestion.enabled isEqualTo true },
-                visibleIf = { prefs.suggestion.clipboardContentEnabled isEqualTo true },
-            )
-            SwitchPreference(
                 prefs.suggestion.api30InlineSuggestionsEnabled,
                 title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
                 summary = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__summary),

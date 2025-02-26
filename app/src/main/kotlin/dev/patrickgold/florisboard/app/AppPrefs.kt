@@ -136,6 +136,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__clear_primary_clip_deletes_last_item",
             default = true,
         )
+        val suggestionEnabled = boolean(
+            key = "clipboard__suggestion_enabled",
+            default = true,
+        )
+        val suggestionTimeout = int(
+            key = "clipboard__suggestion_timeout",
+            default = 60,
+        )
     }
 
     val correction = Correction()
@@ -676,14 +684,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "suggestion__block_possibly_offensive",
             default = true,
         )
-        val clipboardContentEnabled = boolean(
-            key = "suggestion__clipboard_content_enabled",
-            default = true,
-        )
-        val clipboardContentTimeout = int(
-            key = "suggestion__clipboard_content_timeout",
-            default = 60,
-        )
         val incognitoMode = enum(
             key = "suggestion__incognito_mode",
             default = IncognitoMode.DYNAMIC_ON_OFF,
@@ -758,7 +758,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 entry.transform(key = "emoji__history_recent_max_size")
             }
 
-            // Migrate advanced prefs to appsettings prefs
+            // Migrate advanced prefs to other prefs
             // Keep migration rules until: 0.7 dev cycle
             "advanced__settings_theme" -> {
                 entry.transform(key = "other__settings_theme")
@@ -777,6 +777,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             }
             "advanced__force_incognito_mode_from_dynamic" -> {
                 entry.transform(key = "suggestion__force_incognito_mode_from_dynamic")
+            }
+            // Migrate clipboard suggestion prefs to clipboard
+            // Keep migration rules until: 0.7 dev cycle
+            "suggestion__clipboard_content_enabled" -> {
+                entry.transform(key = "clipboard__suggestion_enabled")
+            }
+            "suggestion__clipboard_content_timeout" -> {
+                entry.transform(key = "clipboard__suggestion_timeout")
             }
             // Default: keep entry
             else -> entry.keepAsIs()

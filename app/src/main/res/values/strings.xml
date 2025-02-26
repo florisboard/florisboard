@@ -368,10 +368,6 @@
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
     <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Incognito mode</string>
@@ -597,6 +593,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>
