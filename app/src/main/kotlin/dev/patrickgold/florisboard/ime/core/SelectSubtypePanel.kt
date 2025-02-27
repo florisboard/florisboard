@@ -77,7 +77,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
         val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorHeader)
         val subheaderStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorSubheader)
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .snyggBackground(context, panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
                 .snyggClip(panelStyle),
         ) {
@@ -96,13 +96,21 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                     iconColor = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
                 )
                 Text(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        //Fucky workaround for disabling keypresses behind the text
+                        .clickable(enabled = false) {/* no-op */},
                     text = "Select subtype",
                     color = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
                     fontSize = headerStyle.fontSize.spSize(),
                     textAlign = TextAlign.Center,
                 )
-                Spacer(Modifier.size(48.dp).clickable{})
+                Spacer(
+                    Modifier
+                        .size(48.dp)
+                        //Fucky workaround for disabling keypresses behind the spacer
+                        .clickable(enabled = false) {/* no-op */},
+                )
             }
 
             Box {
