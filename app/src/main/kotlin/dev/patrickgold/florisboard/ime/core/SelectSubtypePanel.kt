@@ -17,14 +17,18 @@
 package dev.patrickgold.florisboard.ime.core
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.RadioButtonChecked
@@ -33,6 +37,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -40,15 +45,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
+import dev.patrickgold.florisboard.lib.toIntOffset
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import org.florisboard.lib.snygg.ui.snyggBackground
@@ -62,87 +69,115 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
-    val state by keyboardManager.activeState.collectAsState()
+    val listState = rememberLazyListState()
+    val subtypes by subtypeManager.subtypesFlow.collectAsState()
 
     var currentlySelected by remember { mutableLongStateOf(subtypeManager.activeSubtype.id) }
 
-    BottomSheetHostUi(
-        isShowing = state.isSubtypeSelectionShowing(),
-        onHide = {
-            subtypeManager.switchToSubtypeById(currentlySelected)
-            keyboardManager.activeState.isSubtypeSelectionVisible = false
-        },
-    ) {
-        val panelStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditor)
-        val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorHeader)
-        val subheaderStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorSubheader)
-        Column(
-            modifier = modifier
-                .snyggBackground(context, panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
-                .snyggClip(panelStyle),
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .snyggBackground(context, headerStyle),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                FlorisIconButton(
-                    onClick = {
-                        subtypeManager.switchToSubtypeById(currentlySelected)
-                        keyboardManager.activeState.isSubtypeSelectionVisible = false
-                    },
-                    icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    iconColor = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
-                )
-                Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        //Fucky workaround for disabling keypresses behind the text
-                        .clickable(enabled = false) {/* no-op */},
-                    text = "Select subtype",
-                    color = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
-                    fontSize = headerStyle.fontSize.spSize(),
-                    textAlign = TextAlign.Center,
-                )
-                Spacer(
-                    Modifier
-                        .size(48.dp)
-                        //Fucky workaround for disabling keypresses behind the spacer
-                        .clickable(enabled = false) {/* no-op */},
-                )
+    fun findItemForOffsetOrClosestInList(offset: IntOffset): LazyListItemInfo? {
+        var closestListItemInfo: LazyListItemInfo? = null
+        for (index in listState.layoutInfo.visibleItemsInfo.indices) {
+            val item = listState.layoutInfo.visibleItemsInfo[index]
+            if (offset.y in item.offset..(item.offset + item.size)) {
+                return item
             }
+            closestListItemInfo = item
+        }
+        return closestListItemInfo
+    }
 
-            Box {
-                LazyColumn {
-                    items(
-                        subtypeManager.subtypes,
-                        key = {
-                            it.id
-                        }
-                    ) {
-                        JetPrefListItem(
-                            modifier = Modifier.clickable {
-                                currentlySelected = it.id
-                            },
-                            icon = {
-                                if (currentlySelected == it.id) {
-                                    Icon(Icons.Default.RadioButtonChecked, null)
-                                } else {
-                                    Icon(Icons.Default.RadioButtonUnchecked, null)
-                                }
-                            },
-                            text = it.primaryLocale.displayName(),
-                            colors = ListItemDefaults.colors(
-                                leadingIconColor = subheaderStyle.foreground.solidColor(context),
-                                headlineColor = subheaderStyle.foreground.solidColor(context),
-                                containerColor = subheaderStyle.background.solidColor(context),
-                            )
-                        )
+    DisposableEffect(Unit) {
+        onDispose {
+            subtypeManager.switchToSubtypeById(currentlySelected)
+        }
+    }
+
+
+    val panelStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditor)
+    val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorHeader)
+    val subheaderStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorSubheader)
+    Column(
+        modifier = modifier
+            .snyggBackground(context, panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
+            .snyggClip(panelStyle),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .snyggBackground(context, headerStyle),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FlorisIconButton(
+                onClick = {
+                    keyboardManager.activeState.isSubtypeSelectionVisible = false
+                },
+                icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                iconColor = headerStyle.foreground.solidColor(
+                    context,
+                    default = FlorisImeTheme.fallbackContentColor()
+                ),
+            )
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    //Fucky workaround for disabling keypresses behind the text
+                    .clickable(enabled = false) {/* no-op */ },
+                text = "Select subtype",
+                color = headerStyle.foreground.solidColor(
+                    context,
+                    default = FlorisImeTheme.fallbackContentColor()
+                ),
+                fontSize = headerStyle.fontSize.spSize(),
+                textAlign = TextAlign.Center,
+            )
+            Spacer(
+                Modifier
+                    .size(48.dp)
+                    //Fucky workaround for disabling keypresses behind the spacer
+                    .clickable(enabled = false) {/* no-op */ },
+            )
+        }
+
+        Box {
+            LazyColumn(
+                modifier = Modifier.pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { offset ->
+                            val item = findItemForOffsetOrClosestInList(offset.toIntOffset())
+                            item?.let {
+                                currentlySelected = it.key as Long
+                            }
+                        },
+                    )
+                },
+                state = listState,
+            ) {
+                items(
+                    subtypes,
+                    key = {
+                        it.id
                     }
+                ) {
+                    JetPrefListItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = {
+                            if (currentlySelected == it.id) {
+                                Icon(Icons.Default.RadioButtonChecked, null)
+                            } else {
+                                Icon(Icons.Default.RadioButtonUnchecked, null)
+                            }
+                        },
+                        text = it.primaryLocale.displayName(),
+                        colors = ListItemDefaults.colors(
+                            leadingIconColor = subheaderStyle.foreground.solidColor(context),
+                            headlineColor = subheaderStyle.foreground.solidColor(context),
+                            containerColor = subheaderStyle.background.solidColor(context),
+                        )
+                    )
                 }
             }
         }
+        Spacer(Modifier.systemBarsPadding().snyggBackground(context, panelStyle))
     }
 }
 
