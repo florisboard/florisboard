@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.core
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,11 +49,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
+import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.toIntOffset
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
@@ -119,10 +120,8 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             )
             Text(
                 modifier = Modifier
-                    .weight(1f)
-                    //Fucky workaround for disabling keypresses behind the text
-                    .clickable(enabled = false) {/* no-op */ },
-                text = "Select subtype",
+                    .weight(1f),
+                text = stringRes(R.string.select_subtype_panel__header),
                 color = headerStyle.foreground.solidColor(
                     context,
                     default = FlorisImeTheme.fallbackContentColor()
@@ -130,12 +129,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                 fontSize = headerStyle.fontSize.spSize(),
                 textAlign = TextAlign.Center,
             )
-            Spacer(
-                Modifier
-                    .size(48.dp)
-                    //Fucky workaround for disabling keypresses behind the spacer
-                    .clickable(enabled = false) {/* no-op */ },
-            )
+            Spacer(Modifier.size(48.dp))
         }
 
         Box {
@@ -177,7 +171,9 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                 }
             }
         }
-        Spacer(Modifier.systemBarsPadding().snyggBackground(context, panelStyle))
+        Spacer(Modifier
+            .systemBarsPadding()
+            .snyggBackground(context, panelStyle))
     }
 }
 

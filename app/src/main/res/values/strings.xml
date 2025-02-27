@@ -970,6 +970,7 @@
     <string name="unit__percent__symbol" translatable="false">{v}%</string>
     <string name="unit__display_pixel__symbol" translatable="false">{v} dp</string>
     <string name="unit__display_pixel_per_seconds__symbol" translatable="false">{v} dp/s</string>
+    <string name="select_subtype_panel__header">Select subtype</string>
 
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">
