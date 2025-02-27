@@ -72,9 +72,9 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CUT),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_PASTE),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT_ALL),
+                QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT),
             ),
-            hiddenActions = listOf(
-            ),
+            hiddenActions = listOf(),
         )
     }
 

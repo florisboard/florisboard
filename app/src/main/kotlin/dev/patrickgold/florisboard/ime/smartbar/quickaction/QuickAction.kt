@@ -86,6 +86,7 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             KeyCode.CLIPBOARD_COPY -> R.string.quick_action__clipboard_copy
             KeyCode.CLIPBOARD_CUT -> R.string.quick_action__clipboard_cut
             KeyCode.CLIPBOARD_PASTE -> R.string.quick_action__clipboard_paste
+            KeyCode.CLIPBOARD_SELECT -> R.string.action__select //TODO: Better String ressource
             KeyCode.CLIPBOARD_SELECT_ALL -> R.string.quick_action__clipboard_select_all
             KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard
             KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media

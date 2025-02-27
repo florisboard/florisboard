@@ -30,20 +30,20 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.runBlocking
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.showShortToast
 import java.util.concurrent.atomic.AtomicInteger
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
@@ -398,6 +398,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCut(): Boolean {
+        activeState.isManualSelectionMode = false
         autoSpace.setInactive()
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
@@ -416,6 +417,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCopy(): Boolean {
+        activeState.isManualSelectionMode = false
         autoSpace.setInactive()
         phantomSpace.setInactive()
         val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
@@ -435,6 +437,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardPaste(): Boolean {
+        activeState.isManualSelectionMode = false
         autoSpace.setInactive()
         phantomSpace.setInactive()
         return commitClipboardItem(clipboardManager.primaryClip).also { result ->
@@ -451,6 +454,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardSelectAll(): Boolean {
+        activeState.isManualSelectionMode = false
         autoSpace.setInactive()
         phantomSpace.setInactive()
         val ic = currentInputConnection() ?: return false

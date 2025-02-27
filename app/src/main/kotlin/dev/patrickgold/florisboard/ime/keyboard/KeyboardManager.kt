@@ -55,10 +55,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
-import org.florisboard.lib.android.AndroidKeyguardManager
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -75,6 +71,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.android.AndroidKeyguardManager
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
@@ -599,6 +599,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 )
             }
         )
+    }
+
+
+    private fun handleManualSelection() {
+        activeState.isManualSelectionMode = !activeState.isManualSelectionMode
     }
 
     /**

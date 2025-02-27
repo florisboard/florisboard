@@ -61,6 +61,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
 import org.florisboard.lib.snygg.ui.shape
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggClip
@@ -84,10 +85,13 @@ fun QuickActionButton(
     type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
     // Get the inputFeedbackController through the FlorisImeService companion-object.
     val inputFeedbackController = FlorisImeService.inputFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
+    val isPressed2 = isPressed ||
+        action.keyData().code == KeyCode.CLIPBOARD_SELECT && keyboardManager.activeState.isManualSelectionMode
     val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
     val element = when (type) {
         QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
@@ -106,9 +110,9 @@ fun QuickActionButton(
         isPressed = true,
         isDisabled = !isEnabled,
     )
-    val actionStyle = if (isPressed) actionStylePressed else actionStyleNotPressed
+    val actionStyle = if (isPressed2) actionStylePressed else actionStyleNotPressed
     val bgColor by animateColorAsState(
-        targetValue = if (isPressed) {
+        targetValue = if (isPressed2) {
             actionStylePressed.background.solidColor(context)
         } else {
             if (actionStyleNotPressed.background.solidColor(context).alpha == 0f) {
@@ -123,7 +127,6 @@ fun QuickActionButton(
         KeyCode.DRAG_MARKER -> {
             DebugHelperColor
         }
-
         else -> {
             actionStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
         }
