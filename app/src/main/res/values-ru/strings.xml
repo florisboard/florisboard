@@ -432,7 +432,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Использовать Material You</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Настройки цвета акцента
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>

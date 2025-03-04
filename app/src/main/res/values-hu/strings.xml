@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Frissítési stratégia (kitűzött)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Frissítési stratégia (legutóbbi)</string>
     <string name="prefs__media__emoji_history_max_size">Maximálisan megtartandó elem</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Kitűzött emodzsik visszaállítása</string>
+    <string name="prefs__media__emoji_history_reset">Legutóbbi emodzsik visszaállítása</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emodzsijavaslatok</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Emodzsijavaslatok engedélyezése</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Emodzsijavaslatokat biztosít gépelés közben</string>
@@ -149,6 +151,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Napnyugta ideje</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Nappali téma</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Éjszakai téma</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Kiemelőszín (Material you témák)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Telepített témák kezelése</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard alkalmazásadatok</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Belső tárhely</string>
@@ -430,7 +434,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sötét</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sötét</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Material You használata</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Kiemelőszín-beállítások
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Beállítások nyelve</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Mindig bekapcsolt Android 10+ esetében a rendszer korlátozások miatt</string>
@@ -706,6 +711,8 @@
     <string name="action__delete">Törlés</string>
     <string name="action__delete_confirm_title">Törlés megerősítése</string>
     <string name="action__delete_confirm_message">Biztosan törölni szeretné ezt \"{name}\"? Ezt a műveletet nem lehet visszavonni.</string>
+    <string name="action__reset_confirm_title">Visszaállítás megerősítése</string>
+    <string name="action__reset_confirm_message">Biztosan vissza akarja állítani a következőt: „{name}”? Ez a művelet nem vonható vissza, ha egyszer már végrehajtotta.</string>
     <string name="action__discard">Elvetés</string>
     <string name="action__discard_confirm_title">Nem mentett változtatások</string>
     <string name="action__discard_confirm_message">Biztosan el szeretné vetni a mentetlen változtatásokat? Ezt a műveletet nem lehet visszavonni.</string>

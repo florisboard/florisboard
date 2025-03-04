@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Atjaunināšanas stratēģija (Piesprausta)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Atjaunināšanas stratēģija (Nesena)</string>
     <string name="prefs__media__emoji_history_max_size">Lielākais paturamo vienumu skaits</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Atiestatīt piespraustās emocijzīmes</string>
+    <string name="prefs__media__emoji_history_reset">Atiestatīt nesenās emocijzīmes</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emocijzīmju ieteikumi</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Iespējot emocijzīmju ieteikumus</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Rakstīšanas laikā sniegt emocijzīmju ieteikumus</string>
@@ -145,6 +147,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Saulrieta laikā</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dienas izskats</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nakts izskats</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Uzsvara krāsa (Material You izskati)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
@@ -426,7 +430,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Gaišs</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumšs</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED tumšs</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Izmantot Material You</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Iestatījumu uzsvara krāsa
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Iestatījumu valoda</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
@@ -701,6 +706,8 @@
     <string name="action__delete">Izdzēst</string>
     <string name="action__delete_confirm_title">Apstiprināt izdzēšanu</string>
     <string name="action__delete_confirm_message">Vai tiešām izdzēst \"{name}\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="action__reset_confirm_title">Apstiprināt atiestati</string>
+    <string name="action__reset_confirm_message">Vai tiešām atiestatīt \"{name}\"? Šo darbību pēc izpildīšanas nevar atsaukt.</string>
     <string name="action__discard">Atmest</string>
     <string name="action__discard_confirm_title">Nesaglabātas izmaiņas</string>
     <string name="action__discard_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
