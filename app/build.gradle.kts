@@ -150,6 +150,7 @@ android {
 
     aboutLibraries {
         configPath = "app/src/main/config"
+        excludeFields = arrayOf("generated")
     }
 
     testOptions {
