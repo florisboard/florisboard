@@ -230,6 +230,7 @@ class SubtypeManager(context: Context) {
     fun switchToSubtypeById(id: Long) {
         if (subtypes.any { it.id == id }) {
             activeSubtype = getSubtypeById(id)!!
+            prefs.localization.activeSubtypeId.set(id)
         }
     }
 }
