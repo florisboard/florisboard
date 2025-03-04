@@ -48,6 +48,7 @@
     { "id": "fi", "authors": [ "patrickgold" ] },
     { "id": "fo", "authors": [ "BinFlush" ] },
     { "id": "fr", "authors": [ "patrickgold" ] },
+    { "id": "hi-IN", "authors": [ "npnpatidar" ] },
     { "id": "hr", "authors": [ "hedidnothingwrong" ] },
     { "id": "hu", "authors": [ "zoli111, gabik65" ] },
     { "id": "hy", "authors": [ "PJTSearch" ] },
@@ -693,6 +694,16 @@
         "characters": "org.florisboard.layouts:bengali_bd",
         "numericRow": "org.florisboard.layouts:bengali",
         "numericAdvanced": "org.florisboard.layouts:bengali"
+      }
+    },
+    {
+      "languageTag": "hi-IN",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "popupMapping": "org.florisboard.localization:hi-IN",
+      "preferred": {
+        "characters": "org.florisboard.layouts:hindi_in",
+        "numericRow": "org.florisboard.layouts:devanagari"
       }
     },
     {
