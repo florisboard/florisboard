@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.inputmethodservice.ExtractEditText
 import android.os.Build
@@ -99,6 +100,7 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPa
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
@@ -267,6 +269,8 @@ class FlorisImeService : LifecycleInputMethodService() {
     private var isExtractUiShown by mutableStateOf(false)
     private var resourcesContext by mutableStateOf(this as Context)
 
+    private val wallpaperChangeReceiver = WallpaperChangeReceiver()
+
     init {
         setTheme(R.style.FlorisImeTheme)
     }
@@ -280,6 +284,8 @@ class FlorisImeService : LifecycleInputMethodService() {
             config.setLocale(subtype.primaryLocale.base)
             resourcesContext = createConfigurationContext(config)
         }
+        @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
+        registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
 
     override fun onCreateInputView(): View {
@@ -318,6 +324,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
         inputWindowView = null
     }
