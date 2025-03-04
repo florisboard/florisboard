@@ -585,7 +585,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     }
 
     val other = Other()
-
     inner class Other {
         val settingsTheme = enum(
             key = "other__settings_theme",
