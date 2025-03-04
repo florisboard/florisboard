@@ -66,30 +66,6 @@ import org.florisboard.lib.snygg.SnyggLevel
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
-    val other = Other()
-    inner class Other {
-        val settingsTheme = enum(
-            key = "other__settings_theme",
-            default = AppTheme.AUTO,
-        )
-        val accentColor = custom(
-            key = "other__accent_color",
-            default = when (AndroidVersion.ATLEAST_API31_S) {
-                true -> Color.Unspecified
-                false -> DEFAULT_GREEN
-            },
-            serializer = ColorPreferenceSerializer,
-        )
-        val settingsLanguage = string(
-            key = "other__settings_language",
-            default = "auto",
-        )
-        val showAppIcon = boolean(
-            key = "other__show_app_icon",
-            default = true,
-        )
-    }
-
     val clipboard = Clipboard()
     inner class Clipboard {
         val useInternalClipboard = boolean(
@@ -605,6 +581,31 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val subtypes = string(
             key = "localization__subtypes",
             default = "[]",
+        )
+    }
+
+    val other = Other()
+
+    inner class Other {
+        val settingsTheme = enum(
+            key = "other__settings_theme",
+            default = AppTheme.AUTO,
+        )
+        val accentColor = custom(
+            key = "other__accent_color",
+            default = when (AndroidVersion.ATLEAST_API31_S) {
+                true -> Color.Unspecified
+                false -> DEFAULT_GREEN
+            },
+            serializer = ColorPreferenceSerializer,
+        )
+        val settingsLanguage = string(
+            key = "other__settings_language",
+            default = "auto",
+        )
+        val showAppIcon = boolean(
+            key = "other__show_app_icon",
+            default = true,
         )
     }
 
