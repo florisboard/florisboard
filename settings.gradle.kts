@@ -34,8 +34,9 @@ dependencyResolutionManagement {
 }
 
 include(":app")
-include(":benchmark")
+//include(":benchmark")
 include(":lib:android")
+include(":lib:color")
 include(":lib:kotlin")
 include(":lib:native")
 include(":lib:snygg")

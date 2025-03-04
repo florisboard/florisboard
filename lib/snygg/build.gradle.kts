@@ -65,6 +65,7 @@ android {
 
 dependencies {
     implementation(project(":lib:android"))
+    implementation(project(":lib:color"))
     implementation(project(":lib:kotlin"))
 
     implementation(libs.androidx.core.ktx)

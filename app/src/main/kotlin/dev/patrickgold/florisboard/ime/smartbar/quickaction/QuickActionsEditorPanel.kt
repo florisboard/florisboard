@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -352,6 +353,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 )
             }
         }
+        Spacer(Modifier.systemBarsPadding().snyggBackground(context, panelStyle))
     }
 }
 

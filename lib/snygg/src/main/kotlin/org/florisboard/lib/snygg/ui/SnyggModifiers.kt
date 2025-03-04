@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
-import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggMaterialYouValue
@@ -52,11 +51,7 @@ fun Modifier.snyggBackground(
         )
 
         is SnyggMaterialYouValue -> this.background(
-            color = if (AndroidVersion.ATLEAST_API31_S) {
-                bg.loadColor(context)
-            } else {
-                fallbackColor
-            },
+            color = bg.loadColor(context),
             shape = shape,
         )
 
@@ -104,13 +99,7 @@ fun Modifier.snyggShadow(
 fun SnyggValue.solidColor(context: Context, default: Color = Color.Transparent): Color {
     return when (this) {
         is SnyggSolidColorValue -> this.color
-        is SnyggMaterialYouValue -> {
-            if (AndroidVersion.ATLEAST_API31_S) {
-                this.loadColor(context)
-            } else {
-                default
-            }
-        }
+        is SnyggMaterialYouValue -> this.loadColor(context)
         else -> default
     }
 }

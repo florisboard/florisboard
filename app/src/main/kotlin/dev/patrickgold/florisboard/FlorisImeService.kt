@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.inputmethodservice.ExtractEditText
 import android.os.Build
@@ -79,6 +80,8 @@ import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
+import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
+import dev.patrickgold.florisboard.ime.core.isSubtypeSelectionShowing
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
@@ -99,6 +102,7 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPa
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
@@ -232,10 +236,10 @@ class FlorisImeService : LifecycleInputMethodService() {
             val imm = ims.systemServiceOrNull(InputMethodManager::class) ?: return false
             val list: List<InputMethodInfo> = imm.enabledInputMethodList
             for (el in list) {
-                for (i in 0 until el.subtypeCount){
+                for (i in 0 until el.subtypeCount) {
                     if (el.getSubtypeAt(i).mode != "voice") continue
                     if (AndroidVersion.ATLEAST_API28_P) {
-                        ims.switchInputMethod(el.id)
+                        ims.switchInputMethod(el.id, el.getSubtypeAt(i))
                         return true
                     } else {
                         ims.window.window?.let { window ->
@@ -267,6 +271,8 @@ class FlorisImeService : LifecycleInputMethodService() {
     private var isExtractUiShown by mutableStateOf(false)
     private var resourcesContext by mutableStateOf(this as Context)
 
+    private val wallpaperChangeReceiver = WallpaperChangeReceiver()
+
     init {
         setTheme(R.style.FlorisImeTheme)
     }
@@ -280,6 +286,8 @@ class FlorisImeService : LifecycleInputMethodService() {
             config.setLocale(subtype.primaryLocale.base)
             resourcesContext = createConfigurationContext(config)
         }
+        @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
+        registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
 
     override fun onCreateInputView(): View {
@@ -318,6 +326,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
         inputWindowView = null
     }
@@ -495,7 +504,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         outInsets.visibleTopInsets = visibleTopY
         outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
         val left = 0
-        val top = if (keyboardManager.activeState.isBottomSheetShowing()) { 0 } else {
+        val top = if (keyboardManager.activeState.isBottomSheetShowing() || keyboardManager.activeState.isSubtypeSelectionShowing()) {
+            0
+        } else {
             visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
         }
         val right = inputViewSize.width
@@ -680,12 +691,22 @@ class FlorisImeService : LifecycleInputMethodService() {
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     BottomSheetHostUi(
-                        isShowing = state.isBottomSheetShowing(),
+                        isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
                         onHide = {
-                            keyboardManager.activeState.isActionsEditorVisible = false
+                            if (state.isBottomSheetShowing()) {
+                                keyboardManager.activeState.isActionsEditorVisible = false
+                            }
+                            if (state.isSubtypeSelectionShowing()) {
+                                keyboardManager.activeState.isSubtypeSelectionVisible = false
+                            }
                         },
                     ) {
-                        QuickActionsEditorPanel()
+                        if (state.isBottomSheetShowing()) {
+                            QuickActionsEditorPanel()
+                        }
+                        if (state.isSubtypeSelectionShowing()) {
+                            SelectSubtypePanel()
+                        }
                     }
                 }
             }
@@ -734,7 +755,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            val fieldColor = fieldStyle.foreground.solidColor(context, FlorisImeTheme.fallbackContentColor())
+                            val fieldColor =
+                                fieldStyle.foreground.solidColor(context, FlorisImeTheme.fallbackContentColor())
                             AndroidView(
                                 modifier = Modifier
                                     .padding(8.dp)
@@ -770,8 +792,14 @@ class FlorisImeService : LifecycleInputMethodService() {
                                     ?: "ACTION",
                                 shape = actionStyle.shape.shape(),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = actionStyle.background.solidColor(context, FlorisImeTheme.fallbackContentColor()),
-                                    contentColor = actionStyle.foreground.solidColor(context, FlorisImeTheme.fallbackSurfaceColor()),
+                                    containerColor = actionStyle.background.solidColor(
+                                        context,
+                                        FlorisImeTheme.fallbackContentColor()
+                                    ),
+                                    contentColor = actionStyle.foreground.solidColor(
+                                        context,
+                                        FlorisImeTheme.fallbackSurfaceColor()
+                                    ),
                                 ),
                             )
                         }

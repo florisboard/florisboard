@@ -94,6 +94,7 @@
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Vyskúšaj svoje nastavenie</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Pomoc</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Predvolené</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Podľa systému</string>
     <string name="settings__home__title" comment="Title of the Home screen">Víta ťa {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Klávesnica FlorisBoard nie je v systéme povolená, a preto sa pri výbere vstupu nebude dať nastaviť ako metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Klávesnica FlorisBoard nie je nastavená ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
@@ -257,6 +258,13 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Potiahnutie vľavo</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Potiahnutie vpravo</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Pokročilé nastavenia</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motív nastavení</string>
+    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Podľa systému (AMOLED)</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Svetlý</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobraziť ikonu aplikácie v spúšťači aplikácií</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">V Androide 10 alebo novšom je toto nastavenie vždy zapnuté z dôvodu obmedzení systému</string>
     <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognito režim</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikácii</string>
@@ -268,17 +276,17 @@
     <string name="about__version__title" comment="Preference title">Verzia</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verzia bola skopírovaná do schránky</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Vyskytla sa chyba: {error_message}</string>
-    <string name="about__changelog__title" comment="Preference title">Denník zmien</string>
+    <string name="about__changelog__title" comment="Preference title">Prehľad zmien</string>
     <string name="about__changelog__summary" comment="Preference summary">Čo je nové?</string>
     <string name="about__repository__title" comment="Preference title">Repozitár (GitHub)</string>
     <string name="about__repository__summary" comment="Preference summary">Zdrojový kód, diskusie, problémy a informácie</string>
     <string name="about__privacy_policy__title" comment="Preference title">Zásady ochrany osobných údajov</string>
-    <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany osobných údajov tohto projektu</string>
-    <string name="about__project_license__title" comment="Preference title">Licencia na projekt</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany osobných údajov v rámci tohto projektu</string>
+    <string name="about__project_license__title" comment="Preference title">Licencia projektu</string>
     <string name="about__project_license__summary" comment="Preference summary">FlorisBoard má udelenú licenciu {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodarilo sa načítať text licencie.\n-&gt; Dôvod: {error_message}.</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Licencie tretích strán</string>
-    <string name="about__third_party_licenses__summary" comment="Preference summary">Licencie knižníc tretích strán zahrnutých v tejto aplikácii</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Licencie knižníc tretích strán, ktoré sú zahrnuté v tejto aplikácii</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Vitajte!</string>
     <string name="setup__intro_message" comment="Short intro message welcoming new users">Ďakujeme, že ste sa rozhodli pre {app_name}! Toto rýchle nastavenie vás prevedie krokmi potrebnými na to, aby ste {app_name} mohli používať na svojom zariadení.</string>
@@ -290,10 +298,11 @@
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Zálohovanie a obnovenie</string>
     <string name="backup_and_restore__back_up__title">Zálohovať dáta</string>
-    <string name="backup_and_restore__back_up__destination">Vyberte miesto uloženia zálohy</string>
+    <string name="backup_and_restore__back_up__summary">Vygeneruje záložný archív s predvoľbami a prispôsobením</string>
+    <string name="backup_and_restore__back_up__destination">Vyber, kam sa má uložiť záloha</string>
     <string name="backup_and_restore__back_up__destination_file_sys">Lokálny súborový systém</string>
     <string name="backup_and_restore__back_up__destination_share_intent">Aplikácia tretej strany (cez ponuku zdieľania)</string>
-    <string name="backup_and_restore__back_up__files">Vyberte, čo sa má zálohovať</string>
+    <string name="backup_and_restore__back_up__files">Vyber, čo sa má zálohovať</string>
     <string name="backup_and_restore__back_up__files_jetpref_datastore">Predvoľby</string>
     <string name="backup_and_restore__back_up__files_ime_keyboard">Rozšírenia klávesnice</string>
     <string name="backup_and_restore__back_up__files_ime_spelling">Pravopisné rozšírenia/slovníky</string>
@@ -305,7 +314,18 @@
     <string name="backup_and_restore__back_up__success">Archív zálohy bol úspešne exportovaný!</string>
     <string name="backup_and_restore__back_up__failure">Archív zálohy sa nepodarilo exportovať: {error_message}</string>
     <string name="backup_and_restore__restore__title">Obnoviť dáta</string>
-    <string name="backup_and_restore__restore__files">Vyberte, čo sa má obnoviť</string>
+    <string name="backup_and_restore__restore__summary">Obnoví predvoľby a prispôsobenie zo záložného archívu</string>
+    <string name="backup_and_restore__restore__files">Vyber, čo sa má obnoviť</string>
+    <string name="backup_and_restore__restore__metadata">Vybratý záložný archív</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Tento záložný archív bol vygenerovaný v inej verzii aplikácie, než je tá aktuálna. Aj keď je spomínaná verzia vo všeobecnosti podporovaná, upozorňujeme, že z dôvodu rozdielov vo funkciách sa môžu vyskytnúť drobné problémy alebo sa niektoré predvoľby nemusia preniesť správne.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Tento záložný archív bol vygenerovaný v aplikácii tretej strany, ktorá vo všeobecnosti nie je podporovaná. Hrozí, že dôjde k strate dát, preto jeho obnovenie dobre zváž!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Tento záložný archív obsahuje neplatné metadáta. Buď bol porušený, alebo nesprávne upravený. Obnovenie z tohto archívu nie je možné, preto vyber iný.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Tento záložný archív neobsahuje žiadne súbory, ktoré by sa dali obnoviť. Vyber iný.</string>
+    <string name="backup_and_restore__restore__mode">Režim obnovenia</string>
+    <string name="backup_and_restore__restore__mode_merge">Zlúčiť s aktuálnymi dátami</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Vymazať a prepísať aktuálne dáta</string>
+    <string name="backup_and_restore__restore__success">Dáta boli úspešne obnovené</string>
+    <string name="backup_and_restore__restore__failure">Dáta sa nepodarilo obnoviť: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavrieť</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Aplikácia FlorisBoard prestala pracovať…</string>
@@ -325,25 +345,63 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Pri vymazaní prvého výstrižku sa odstráni aj najnovší záznam v histórii</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Vývojárske nástroje</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Povoliť vývojárske nástroje</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Nástroje navrhnuté špeciálne na ladenie a odstraňovanie problémov</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Zobraziť prvý výstrižok</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Dá do popredia aktuálny prvý výstrižok v schránke</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Zobrazovať vrstvu so stavom zadávania</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Na účely ladenia dá do popredia aktuálny stav zadávania</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Zobrazovať vrstvu s kontrolou pravopisu</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Na účely ladenia dá do popredia aktuálne výsledky kontroly pravopisu</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Zobrazovať vrstvu s automatickým vypĺňaním v riadku</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Na účely ladenia dá do popredia aktuálne výsledky vypĺňania v riadku</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Zobrazovať hranice stláčania klávesov</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Červenou farbou zvýrazní hranice stláčania klávesov</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Zobrazovať tipy pri presúvaní ťahaním</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Na účely ladenia bude zobrazovať v obrazovkách presúvania ťahaním tipy, ktoré sú inak skryté</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Vymazať interné databázy slovníka používateľa</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Vymaže všetky slová v tabuľke databázy slovníka</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Resetovať označenie „{flag_name}“</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Akcia ladenia na opätovné zobrazenie obrazovky nastavenia</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Otestovať obrazovku hlásenia o zlyhaní</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Akcia ladenia na zámerné spôsobenie zlyhania aplikácie</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Systémové nástroje Androidu</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globálne nastavenia Androidu</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Nastavenia zabezpečenia Androidu</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Systémové nastavenia Androidu</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Jazykové verzie systému</string>
+    <string name="devtools__debuglog__title">Denník ladenia</string>
+    <string name="devtools__debuglog__copied_to_clipboard">Denník ladenia bol skopírovaný do schránky</string>
+    <string name="devtools__debuglog__copy_log">Kopírovať denník</string>
+    <string name="devtools__debuglog__copy_for_github">Kopírovať denník (formát na GitHub)</string>
+    <string name="devtools__debuglog__loading">Načítava sa…</string>
     <!-- Extension strings -->
     <string name="ext__home__title">Doplnky a rozšírenia</string>
     <string name="ext__error__not_found_title">Rozšírenie sa nenašlo.</string>
     <string name="ext__editor__metadata__title_invalid">Neplatné metadáta</string>
     <!-- Action strings -->
+    <string name="action__back_up">Zálohovať</string>
+    <string name="action__cancel">Zrušiť</string>
+    <string name="action__default">Predvolené</string>
     <string name="action__delete">Zmazať</string>
     <string name="action__discard_confirm_title">Neuložené zmeny</string>
+    <string name="action__ok">OK</string>
+    <string name="action__restore">Obnoviť</string>
+    <string name="action__select_file">Vybrať súbor</string>
     <!-- Error strings (generic) -->
     <string name="error__title">Chyba</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <string name="state__disabled">Bezbariérový</string>
+    <string name="state__no_file_selected">Nie je vybratý žiadny súbor</string>
     <!-- Enum label and description strings -->
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Vynútené vypnutie</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">Inkognito režimu bude vždy vypnutý bez ohľadu na prevzaté možnosti cieľovej aplikácie. Ak je vybratá táto možnosť, rýchla akcia „Inkognito“ v lište nebude k dispozícii.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Vynútené zapnutie</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">Inkognito režimu bude vždy zapnutý bez ohľadu na prevzaté možnosti cieľovej aplikácie. Ak je vybratá táto možnosť, rýchla akcia „Inkognito“ v lište nebude k dispozícii.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamické zapínanie/vypínanie</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Odporúčaná možnosť. Inkognito režim sa bude dynamicky zapínať a vypínať buď podľa prevzatých možností cieľovej aplikácie, alebo manuálne pomocou prepínača rýchlej akcie „Inkognito“ na inteligentnej lište.</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Žiadna akcia</string>
     <string name="enum__swipe_action__delete_character" comment="Enum value label">Zmazať znak pred kurzorom</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Zmazať znaky presne</string>

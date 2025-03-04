@@ -48,7 +48,6 @@ fun BottomSheetHostUi(
     val bgColorOutOfBounds by animateColorAsState(
         if (isShowing) SheetOutOfBoundsBgColorActive else SheetOutOfBoundsBgColorInactive
     )
-
     Column(Modifier.background(bgColorOutOfBounds)) {
         Box(
             modifier = Modifier

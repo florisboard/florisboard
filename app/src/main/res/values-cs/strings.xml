@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Strategie aktualizace (připnuté)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Strategie aktualizace (nedávné)</string>
     <string name="prefs__media__emoji_history_max_size">Maximální počet položek k uchování</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Resetovat připnuté emotikony</string>
+    <string name="prefs__media__emoji_history_reset">Resetovat nedávné emotikony</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Návrhy emotikonů</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Povolit návrhy emotikonů</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Poskytovat návrhy emotikonů, zatímco píšete</string>
@@ -149,6 +151,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noční motiv</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Barva (motivy Material You)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Podklady aplikace FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
@@ -430,7 +434,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Temná</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Použít Material You</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Nastavení barvy
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
@@ -705,6 +710,8 @@
     <string name="action__delete">Odstranit</string>
     <string name="action__delete_confirm_title">Potvrdit odstranění</string>
     <string name="action__delete_confirm_message">Opravdu chcete odstranit \"{name}\"? Tuto operaci nelze po provedení vrátit zpět.</string>
+    <string name="action__reset_confirm_title">Potvrdit reset</string>
+    <string name="action__reset_confirm_message">Opravdu chcete resetovat „{name}“? Tuto operaci nelze po provedení vrátit zpět.</string>
     <string name="action__discard">Zrušit</string>
     <string name="action__discard_confirm_title">Neuložené změny</string>
     <string name="action__discard_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>

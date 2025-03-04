@@ -28,6 +28,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -42,7 +43,7 @@ import kotlin.contracts.contract
  */
 @Suppress("MemberVisibilityCanBePrivate")
 class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
-    private val cache: EnumMap<KeyboardMode, SparseArrayCompat<Deferred<TextKeyboard>>> = EnumMap(KeyboardMode::class.java)
+    private val cache: EnumMap<KeyboardMode, SparseArrayCompat<TextKeyboard>> = EnumMap(KeyboardMode::class.java)
     private val scope: CoroutineScope = CoroutineScope(ioDispatcher + SupervisorJob())
 
     init {
@@ -105,7 +106,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      * @return The deferred computed keyboard or null if the cache does not have an entry associated with the given
      *  params.
      */
-    fun getAsync(mode: KeyboardMode, subtype: Subtype): Deferred<TextKeyboard>? {
+    fun getAsync(mode: KeyboardMode, subtype: Subtype): TextKeyboard? {
         return cache[mode]!![subtype.hashCode()].also {
             flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Get keyboard '$mode ${subtype.toShortString()}'" }
         }
@@ -122,7 +123,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      *
      * @return The deferred computed keyboard either from the cache or from [block].
      */
-    fun getOrElseAsync(mode: KeyboardMode, subtype: Subtype, block: suspend () -> TextKeyboard): Deferred<TextKeyboard> {
+    fun getOrElseAsync(mode: KeyboardMode, subtype: Subtype, block: suspend () -> TextKeyboard): TextKeyboard {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
         }
@@ -130,7 +131,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
         return if (cachedKeyboard != null) {
             cachedKeyboard
         } else {
-            val keyboard = scope.async { block() }
+            val keyboard = runBlocking { block() }
             set(mode, subtype, keyboard)
             keyboard
         }
@@ -143,7 +144,7 @@ class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
      * @param subtype The subtype of the computed keyboard to set.
      * @param keyboard The deferred computed keyboard to set for the given params.
      */
-    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: Deferred<TextKeyboard>) {
+    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: TextKeyboard) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Set keyboard '$mode ${subtype.toShortString()}'" }
         cache[mode]!![subtype.hashCode()] = keyboard
     }

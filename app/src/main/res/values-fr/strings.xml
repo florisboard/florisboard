@@ -21,8 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Stratégie de mise à jour (épinglé)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Stratégie de mise à jour (récent)</string>
     <string name="prefs__media__emoji_history_max_size">Nombre d\'éléments maximum à garder</string>
-    <string name="prefs__media__emoji_history_pinned_reset">Réinit. les emojis épinglés</string>
-    <string name="prefs__media__emoji_history_reset">Reinit. les émojis récents</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Réinitialiser les émojis épinglés</string>
+    <string name="prefs__media__emoji_history_reset">Réinitialiser les émojis récents</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Suggestions d\'émoji</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Activer les suggestions d\'émoji</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Fournit des suggestions d\'émoji lors de la saisie</string>
@@ -151,6 +151,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Heure de coucher du soleil</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Thème clair</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Thème sombre</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Couleur accentuée (Thèmes Material you)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gérer les thèmes installés</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ressources de l’application FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Stockage interne</string>
@@ -434,7 +436,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Clair</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sombre</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sombre</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Utiliser Material You</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Paramètrage de couleur accentuée
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Paramètre de langue</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>

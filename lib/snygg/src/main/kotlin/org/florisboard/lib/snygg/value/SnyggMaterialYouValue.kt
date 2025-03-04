@@ -17,11 +17,13 @@
 package org.florisboard.lib.snygg.value
 
 import android.content.Context
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.isUnspecified
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.value.MaterialYouColor.ColorName
 import org.florisboard.lib.snygg.value.MaterialYouColor.ColorNameId
 import org.florisboard.lib.snygg.value.MaterialYouColor.darkColorName
@@ -31,7 +33,6 @@ sealed interface SnyggMaterialYouValue : SnyggValue {
     val colorName: String
     val dark: Boolean
 
-    @RequiresApi(31)
     fun loadColor(context: Context) = MaterialYouColor.loadColor(context, colorName, dark)
 }
 
@@ -77,16 +78,29 @@ object MaterialYouColor {
     private var lightColorScheme: ColorScheme? = null
     private var darkColorScheme: ColorScheme? = null
 
-    @RequiresApi(31)
+    private var accentColor: Color = Color.Unspecified
+
+    fun updateAccentColor(newColor: Color) {
+        accentColor = newColor
+    }
+
     private fun getAndCacheColorScheme(context: Context, dark: Boolean): ColorScheme {
         return if (dark) {
             if (darkColorScheme == null) {
-                darkColorScheme = dynamicDarkColorScheme(context)
+                darkColorScheme = if (AndroidVersion.ATLEAST_API31_S && accentColor.isUnspecified) {
+                    dynamicDarkColorScheme(context)
+                } else {
+                    ColorMappings.getColorSchemeOrDefault(color = accentColor, true)
+                }
             }
             darkColorScheme!!
         } else {
             if (lightColorScheme == null) {
-                lightColorScheme = dynamicLightColorScheme(context)
+                lightColorScheme = if (AndroidVersion.ATLEAST_API31_S && accentColor.isUnspecified) {
+                    dynamicLightColorScheme(context)
+                } else {
+                    ColorMappings.getColorSchemeOrDefault(color = accentColor, false)
+                }
             }
             lightColorScheme!!
         }
@@ -138,7 +152,6 @@ object MaterialYouColor {
 
     val colorNames = ColorPalette.entries.map { it.id }
 
-    @RequiresApi(31)
     fun loadColor(context: Context, colorName: String, dark: Boolean): Color {
         val colorScheme = getAndCacheColorScheme(context, dark)
 

@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
@@ -47,6 +48,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
+import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
@@ -57,7 +59,9 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.color.DEFAULT_GREEN
 import org.florisboard.lib.snygg.SnyggLevel
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
@@ -69,9 +73,13 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "advanced__settings_theme",
             default = AppTheme.AUTO,
         )
-        val useMaterialYou = boolean(
-            key = "advanced__use_material_you",
-            default = true,
+        val accentColor = custom(
+            key = "advanced__accent_color",
+            default = when (AndroidVersion.ATLEAST_API31_S) {
+                true -> Color.Unspecified
+                false -> DEFAULT_GREEN
+            },
+            serializer = ColorPreferenceSerializer,
         )
         val settingsLanguage = string(
             key = "advanced__settings_language",
@@ -703,6 +711,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "theme__night_theme_id",
             default = extCoreTheme("floris_night"),
             serializer = ExtensionComponentName.Serializer,
+        )
+        val accentColor = custom(
+            key = "theme__accent_color",
+            default = when (AndroidVersion.ATLEAST_API31_S) {
+                true -> Color.Unspecified
+                false -> DEFAULT_GREEN
+            },
+            serializer = ColorPreferenceSerializer,
         )
         //val sunriseTime = localTime(
         //    key = "theme__sunrise_time",

@@ -21,6 +21,8 @@
     <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Оновлення стратегії (Закріплено)</string>
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Оновлення стратегії (Нещодавно)</string>
     <string name="prefs__media__emoji_history_max_size">Максимум речей, які можна зберігати</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Скинути закріплені емоджі</string>
+    <string name="prefs__media__emoji_history_reset">Скинути поточні емоджі</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Пропозиції емоджі</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Увімкнути пропозиції емоджі</string>
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Підказує емоджі під час введення тексту</string>
@@ -149,6 +151,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Час заходу</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Денна тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нічна тема</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Акцентний колір (теми Material you)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Керування встановленими темами</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ресурси FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Внутрішня пам\'ять</string>
@@ -430,7 +434,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Світла</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темна</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Темний AMOLED</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Використовувати Material You</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Налаштування акцентного кольору
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Налаштування мови</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показувати значок програми на робочому столі</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Завжди ввімкнено на Android 10+ через обмеження системи</string>
@@ -704,6 +709,8 @@
     <string name="action__delete">Видалити</string>
     <string name="action__delete_confirm_title">Підтвердити видалення</string>
     <string name="action__delete_confirm_message">Ви впевнені, що хочете видалити «{name}»? Ця дія не може бути скасована після виконання.</string>
+    <string name="action__reset_confirm_title">Підтвердити скидання</string>
+    <string name="action__reset_confirm_message">Ви впевнені, що хочете скинути «{name}»? Цю дію неможливо скасувати.</string>
     <string name="action__discard">Скасувати</string>
     <string name="action__discard_confirm_title">Незбережені зміни</string>
     <string name="action__discard_confirm_message">Ви впевнені, що хочете скасувати незбережені зміни? Ця дія не може бути скасована після виконання.</string>

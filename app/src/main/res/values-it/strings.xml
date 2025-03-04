@@ -22,6 +22,17 @@
     <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Pianifica aggiornamento (recente)</string>
     <string name="prefs__media__emoji_history_max_size">Numero massimo di elementi da tenere</string>
     <string name="prefs__media__emoji_history_pinned_reset">Reset storico delle emoji appuntate</string>
+    <string name="prefs__media__emoji_history_reset">Resetta emoji recenti</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Suggerimenti emoji</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Abilita suggerimenti emoji</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Fornisci suggerimenti emoji mentre digiti</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Tipo di attivazione</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Aggiorna cronologia emoji</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Accettando le emoji suggerite, queste vengono aggiunte alla cronologia emoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Mostra il nome dell\'emoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">I suggerimenti di emoji mostrano il loro nome accanto all\'emoji</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Lunghezza minima della query</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Numero massimo di candidati</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Faccine &amp; Emoticons</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persone &amp; Corpo</string>
@@ -77,6 +88,7 @@
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Apri fornitore d\'immissione di voce</string>
     <string name="quick_action__one_handed_mode" maxLength="12">A una mano</string>
     <string name="quick_action__one_handed_mode__tooltip">Attiva o disattiva modalità a una mano</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Trascina</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posizione dell\'attuale marcatore di trascinamento</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna operazione</string>
@@ -130,6 +142,8 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almeno un campo non ha un valore selezionato. Scegli un valore per il campo(i campi).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (non installato)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layout</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Conferma eliminazione</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Sei sicuro di voler eliminare questo sottotipo?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modalità tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Ora dell\'alba</string>
@@ -557,6 +571,7 @@
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Impostazioni di sicurezza Android</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Impostazioni di sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Lingue di sistema</string>
+    <string name="devtools__debuglog__loading">………Caricamento…</string>
     <!-- Extension strings -->
     <string name="ext__list__ext_theme">Temi</string>
     <string name="ext__list__ext_keyboard">Skins tastiera</string>
@@ -620,6 +635,7 @@
     <string name="ext__validation__enter_maintainer">Inserisci un indirzzo e-mail valido</string>
     <string name="ext__validation__enter_license">Inserisci un ID per la licenza</string>
     <string name="ext__validation__enter_component_id">Inserisci l\'ID corretto</string>
+    <string name="ext__validation__hint_value_above_50_percent">Qualsiasi valore superiore al 50% si comporterà come se impostassi il 50%, prendi in considerazione di ridurre la dimensione percentuale</string>
     <string name="ext__addon_management_box__addon_manager_info">Tutte le attività relative all\'importazione, all\'esportazione, alla creazione, alla personalizzazione e alla rimozione delle estensioni possono essere gestite tramite il gestore interno</string>
     <string name="ext__home__info">Puoi scaricare e installare estensioni dallo Store di FlorisBoard o importare qualsiasi addon</string>
     <string name="ext__home__visit_store">Vai allo Store degli addons</string>

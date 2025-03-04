@@ -24,7 +24,6 @@ import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -226,5 +225,12 @@ class SubtypeManager(context: Context) {
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
         activeSubtype = newActiveSubtype
+    }
+
+    fun switchToSubtypeById(id: Long) {
+        if (subtypes.any { it.id == id }) {
+            activeSubtype = getSubtypeById(id)!!
+            prefs.localization.activeSubtypeId.set(id)
+        }
     }
 }

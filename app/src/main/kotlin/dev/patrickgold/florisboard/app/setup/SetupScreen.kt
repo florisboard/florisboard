@@ -45,9 +45,6 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import org.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.util.launchActivity
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
@@ -56,9 +53,12 @@ import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisStepState
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import dev.patrickgold.florisboard.lib.util.launchActivity
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 import kotlinx.coroutines.delay
+import org.florisboard.lib.android.AndroidVersion
 
 
 @Composable
@@ -105,128 +105,65 @@ private fun FlorisScreenScope.content(
     hasNotificationPermission: NotificationPermissionState,
 ) {
 
-    // Show screen without notification permission if the android version is below android 13.
-    if (AndroidVersion.ATMOST_API32_S_V2) {
+    val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
+        val initStep = when {
+            !isFlorisBoardEnabled -> Steps.EnableIme.id
+            !isFlorisBoardSelected -> Steps.SelectIme.id
+            hasNotificationPermission == NotificationPermissionState.NOT_SET && AndroidVersion.ATLEAST_API33_T -> Steps.SelectNotification.id
+            else -> Steps.FinishUp.id
+        }
+        FlorisStepState.new(init = initStep)
+    }
 
-        val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
-            val initStep = when {
-                !isFlorisBoardEnabled -> Steps.WithoutNotifications.EnableIme.id
-                !isFlorisBoardSelected -> Steps.WithoutNotifications.SelectIme.id
-                else -> Steps.WithoutNotifications.FinishUp.id
-            }
-            FlorisStepState.new(init = initStep)
+    content {
+        LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
+            stepState.setCurrentAuto(
+                when {
+                    !isFlorisBoardEnabled -> Steps.EnableIme.id
+                    !isFlorisBoardSelected -> Steps.SelectIme.id
+                    hasNotificationPermission == NotificationPermissionState.NOT_SET && AndroidVersion.ATLEAST_API33_T -> Steps.SelectNotification.id
+                    else -> Steps.FinishUp.id
+                }
+            )
         }
 
-        content {
-            LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected) {
-                stepState.setCurrentAuto(
-                    when {
-                        !isFlorisBoardEnabled -> Steps.WithoutNotifications.EnableIme.id
-                        !isFlorisBoardSelected -> Steps.WithoutNotifications.SelectIme.id
-                        else -> Steps.WithoutNotifications.FinishUp.id
-                    }
-                )
-            }
-
-            // Below block allows to return from the system IME enabler activity
-            // as soon as it gets selected.
-            LaunchedEffect(Unit) {
-                while (true) {
-                    delay(200L)
-                    val isEnabled = InputMethodUtils.isFlorisboardEnabled(context)
-                    if (stepState.getCurrentAuto().value == Steps.WithoutNotifications.EnableIme.id &&
-                        stepState.getCurrentManual().value == -1 &&
-                        !isFlorisBoardEnabled &&
-                        !isFlorisBoardSelected &&
-                        isEnabled
-                    ) {
-                        context.launchActivity(FlorisAppActivity::class) {
-                            it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        }
+        // Below block allows to return from the system IME enabler activity
+        // as soon as it gets selected.
+        LaunchedEffect(Unit) {
+            while (true) {
+                delay(200L)
+                val isEnabled = InputMethodUtils.isFlorisboardEnabled(context)
+                if (stepState.getCurrentAuto().value == Steps.EnableIme.id &&
+                    stepState.getCurrentManual().value == -1 &&
+                    !isFlorisBoardEnabled &&
+                    !isFlorisBoardSelected &&
+                    hasNotificationPermission == NotificationPermissionState.NOT_SET &&
+                    isEnabled
+                ) {
+                    context.launchActivity(FlorisAppActivity::class) {
+                        it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                            or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                            or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     }
                 }
             }
-            FlorisStepLayout(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                stepState = stepState,
-                header = {
-                    StepText(stringRes(R.string.setup__intro_message))
-                    Spacer(modifier = Modifier.height(16.dp))
-                },
-                steps = steps(
-                    context, navController, requestNotification
-                ),
-                footer = {
-                    footer(context)
-                },
-            )
         }
-        // Show the screen with notification permission on android 13+
-    } else {
-        val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
-            val initStep = when {
-                !isFlorisBoardEnabled -> Steps.WithNotifications.EnableIme.id
-                !isFlorisBoardSelected -> Steps.WithNotifications.SelectIme.id
-                hasNotificationPermission == NotificationPermissionState.NOT_SET -> Steps.WithNotifications.SelectNotification.id
-                else -> Steps.WithNotifications.FinishUp.id
-            }
-            FlorisStepState.new(init = initStep)
-        }
-
-        content {
-            LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
-                stepState.setCurrentAuto(
-                    when {
-                        !isFlorisBoardEnabled -> Steps.WithNotifications.EnableIme.id
-                        !isFlorisBoardSelected -> Steps.WithNotifications.SelectIme.id
-                        hasNotificationPermission == NotificationPermissionState.NOT_SET -> Steps.WithNotifications.SelectNotification.id
-                        else -> Steps.WithNotifications.FinishUp.id
-                    }
-                )
-            }
-
-            // Below block allows to return from the system IME enabler activity
-            // as soon as it gets selected.
-            LaunchedEffect(Unit) {
-                while (true) {
-                    delay(200L)
-                    val isEnabled = InputMethodUtils.isFlorisboardEnabled(context)
-                    if (stepState.getCurrentAuto().value == Steps.WithNotifications.EnableIme.id &&
-                        stepState.getCurrentManual().value == -1 &&
-                        !isFlorisBoardEnabled &&
-                        !isFlorisBoardSelected &&
-                        hasNotificationPermission == NotificationPermissionState.NOT_SET &&
-                        isEnabled
-                    ) {
-                        context.launchActivity(FlorisAppActivity::class) {
-                            it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        }
-                    }
-                }
-            }
-            FlorisStepLayout(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                stepState = stepState,
-                header = {
-                    StepText(stringRes(R.string.setup__intro_message))
-                    Spacer(modifier = Modifier.height(16.dp))
-                },
-                steps = steps(
-                    context, navController, requestNotification
-                ),
-                footer = {
-                    footer(context)
-                },
-            )
-        }
+        FlorisStepLayout(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            stepState = stepState,
+            header = {
+                StepText(stringRes(R.string.setup__intro_message))
+                Spacer(modifier = Modifier.height(16.dp))
+            },
+            steps = steps(
+                context, navController, requestNotification
+            ),
+            footer = {
+                footer(context)
+            },
+        )
     }
 }
 
@@ -255,105 +192,60 @@ private fun footer(context: Context) {
 private fun PreferenceUiScope<AppPrefs>.steps(
     context: Context,
     navController: NavController,
-    requestNotification: ManagedActivityResultLauncher<String, Boolean>
+    requestNotification: ManagedActivityResultLauncher<String, Boolean>,
 ): List<FlorisStep> {
-    return if (AndroidVersion.ATMOST_API32_S_V2) {
-        listOf(
+
+    return listOfNotNull(
+        FlorisStep(
+            id = Steps.EnableIme.id,
+            title = stringRes(R.string.setup__enable_ime__title),
+        ) {
+            StepText(stringRes(R.string.setup__enable_ime__description))
+            StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
+                InputMethodUtils.showImeEnablerActivity(context)
+            }
+        },
+        FlorisStep(
+            id = Steps.SelectIme.id,
+            title = stringRes(R.string.setup__select_ime__title),
+        ) {
+            StepText(stringRes(R.string.setup__select_ime__description))
+            StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
+                InputMethodUtils.showImePicker(context)
+            }
+        },
+        if (AndroidVersion.ATLEAST_API33_T) {
             FlorisStep(
-                id = Steps.WithoutNotifications.EnableIme.id,
-                title = stringRes(R.string.setup__enable_ime__title),
-            ) {
-                StepText(stringRes(R.string.setup__enable_ime__description))
-                StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
-                    InputMethodUtils.showImeEnablerActivity(context)
-                }
-            },
-            FlorisStep(
-                id = Steps.WithoutNotifications.SelectIme.id,
-                title = stringRes(R.string.setup__select_ime__title),
-            ) {
-                StepText(stringRes(R.string.setup__select_ime__description))
-                StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
-                    InputMethodUtils.showImePicker(context)
-                }
-            },
-            FlorisStep(
-                id = Steps.WithoutNotifications.FinishUp.id,
-                title = stringRes(R.string.setup__finish_up__title),
-            ) {
-                StepText(stringRes(R.string.setup__finish_up__description_p1))
-                StepText(stringRes(R.string.setup__finish_up__description_p2))
-                StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
-                    this@steps.prefs.internal.isImeSetUp.set(true)
-                    navController.navigate(Routes.Settings.Home) {
-                        popUpTo(Routes.Setup.Screen) {
-                            inclusive = true
-                        }
-                    }
-                }
-            },
-        )
-    } else {
-        listOf(
-            FlorisStep(
-                id = Steps.WithNotifications.EnableIme.id,
-                title = stringRes(R.string.setup__enable_ime__title),
-            ) {
-                StepText(stringRes(R.string.setup__enable_ime__description))
-                StepButton(label = stringRes(R.string.setup__enable_ime__open_settings_btn)) {
-                    InputMethodUtils.showImeEnablerActivity(context)
-                }
-            },
-            FlorisStep(
-                id = Steps.WithNotifications.SelectIme.id,
-                title = stringRes(R.string.setup__select_ime__title),
-            ) {
-                StepText(stringRes(R.string.setup__select_ime__description))
-                StepButton(label = stringRes(R.string.setup__select_ime__switch_keyboard_btn)) {
-                    InputMethodUtils.showImePicker(context)
-                }
-            },
-            FlorisStep(
-                id = Steps.WithNotifications.SelectNotification.id,
-                title = stringRes(R.string.setup__grant_notification_permission__title)
+                id = Steps.SelectNotification.id,
+                title = stringRes(R.string.setup__grant_notification_permission__title),
             ) {
                 StepText(stringRes(R.string.setup__grant_notification_permission__description))
                 StepButton(stringRes(R.string.setup__grant_notification_permission__btn)) {
-                    if (AndroidVersion.ATLEAST_API33_T) {
-                        requestNotification.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    requestNotification.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        } else null,
+        FlorisStep(
+            id = Steps.FinishUp.id,
+            title = stringRes(R.string.setup__finish_up__title),
+        ) {
+            StepText(stringRes(R.string.setup__finish_up__description_p1))
+            StepText(stringRes(R.string.setup__finish_up__description_p2))
+            StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
+                this@steps.prefs.internal.isImeSetUp.set(true)
+                navController.navigate(Routes.Settings.Home) {
+                    popUpTo(Routes.Setup.Screen) {
+                        inclusive = true
                     }
                 }
-            },
-            FlorisStep(
-                id = Steps.WithNotifications.FinishUp.id,
-                title = stringRes(R.string.setup__finish_up__title),
-            ) {
-                StepText(stringRes(R.string.setup__finish_up__description_p1))
-                StepText(stringRes(R.string.setup__finish_up__description_p2))
-                StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
-                    this@steps.prefs.internal.isImeSetUp.set(true)
-                    navController.navigate(Routes.Settings.Home) {
-                        popUpTo(Routes.Setup.Screen) {
-                            inclusive = true
-                        }
-                    }
-                }
-            },
-        )
-    }
+            }
+        }
+    )
 }
 
 private sealed class Steps(val id: Int) {
-    sealed class WithoutNotifications(id: Int) : Steps(id) {
-        data object EnableIme : WithoutNotifications(id = 1)
-        data object SelectIme : WithoutNotifications(id = 2)
-        data object FinishUp : WithoutNotifications(id = 3)
-    }
-
-    sealed class WithNotifications(id: Int) : Steps(id) {
-        data object EnableIme : WithNotifications(id = 1)
-        data object SelectIme : WithNotifications(id = 2)
-        data object SelectNotification : WithNotifications(id = 3)
-        data object FinishUp : WithNotifications(id = 4)
-    }
+    data object EnableIme : Steps(id = 1)
+    data object SelectIme : Steps(id = 2)
+    data object SelectNotification : Steps(id = 3)
+    data object FinishUp : Steps(id = 4)
 }

@@ -145,6 +145,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">일몰 시간</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">라이트 테마</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">다크 테마</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        강조 색상 (Material You 테마)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">설치한 테마 관리</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">앱 내장</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">내부 저장소</string>
@@ -313,7 +315,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">라이트 테마</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">다크 테마</string>
     <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">블랙 테마</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Material You 사용</string>
+    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        설정 강조 색상
+    </string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">앱 설정 언어</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">런처에 앱 아이콘 표시</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Android 10 버전 이상에서는 구조적인 제한으로 인해 항상 켜져 있습니다.</string>

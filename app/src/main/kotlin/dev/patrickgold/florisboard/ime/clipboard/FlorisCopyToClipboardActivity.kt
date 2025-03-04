@@ -43,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -121,8 +122,8 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         setContent {
             ProvideLocalizedResources(this, forceLayoutDirection = LayoutDirection.Ltr) {
                 val theme by prefs.advanced.settingsTheme.observeAsState()
-                val isMaterialYouAware by prefs.advanced.useMaterialYou.observeAsState()
-                FlorisAppTheme(theme, isMaterialYouAware) {
+                val accentColor by prefs.advanced.accentColor.observeAsState()
+                FlorisAppTheme(theme, accentColor.isUnspecified) {
                     BottomSheet {
                         Row {
                             Text(
@@ -162,7 +163,9 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             Column {
                 content()
                 Button(
-                    modifier = Modifier.align(Alignment.End).padding(16.dp),
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(16.dp),
                     onClick = { finish() },
                     colors = ButtonDefaults.textButtonColors(
                         //containerColor = buttonContainer.background.solidColor(context = context),

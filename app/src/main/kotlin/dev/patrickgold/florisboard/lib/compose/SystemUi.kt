@@ -22,7 +22,7 @@ import android.content.ContextWrapper
 import android.inputmethodservice.InputMethodService
 import android.view.Window
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -42,7 +42,7 @@ fun SystemUiIme() {
     val window = view.context.findWindow()!!
     val windowInsetsController = WindowInsetsControllerCompat(window, view)
 
-    SideEffect {
+    LaunchedEffect(backgroundColor) {
         if (AndroidVersion.ATLEAST_API26_O) {
             window.navigationBarColor = backgroundColor.toArgb()
             windowInsetsController.isAppearanceLightNavigationBars = useDarkIcons
