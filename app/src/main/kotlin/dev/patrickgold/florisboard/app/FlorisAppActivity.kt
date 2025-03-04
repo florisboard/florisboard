@@ -89,17 +89,17 @@ class FlorisAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        prefs.advanced.settingsTheme.observe(this) {
+        prefs.other.settingsTheme.observe(this) {
             appTheme = it
         }
-        prefs.advanced.settingsLanguage.observe(this) {
+        prefs.other.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
             val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
             config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {
-            prefs.advanced.showAppIcon.observe(this) {
+            prefs.other.showAppIcon.observe(this) {
                 showAppIcon = it
             }
         }
@@ -118,7 +118,7 @@ class FlorisAppActivity : ComponentActivity() {
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
                 ProvideLocalizedResources(resourcesContext) {
-                    val accentColor by prefs.advanced.accentColor.observeAsState()
+                    val accentColor by prefs.other.accentColor.observeAsState()
                     FlorisAppTheme(theme = appTheme, isMaterialYouAware = accentColor.isUnspecified) {
                         Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()

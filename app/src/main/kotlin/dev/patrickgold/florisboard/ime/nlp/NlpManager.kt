@@ -96,7 +96,7 @@ class NlpManager(context: Context) {
         prefs.suggestion.enabled.observeForever {
             assembleCandidates()
         }
-        prefs.suggestion.clipboardContentEnabled.observeForever {
+        prefs.clipboard.suggestionEnabled.observeForever {
             assembleCandidates()
         }
         prefs.emoji.suggestionEnabled.observeForever {
@@ -370,14 +370,14 @@ class NlpManager(context: Context) {
             isPrivateSession: Boolean,
         ): List<SuggestionCandidate> {
             // Check if enabled
-            if (!prefs.suggestion.clipboardContentEnabled.get()) return emptyList()
+            if (!prefs.clipboard.suggestionEnabled.get()) return emptyList()
 
             val currentItem = validateClipboardItem(clipboardManager.primaryClip, lastClipboardItemId, content.text)
                 ?: return emptyList()
 
             return buildList {
                 val now = System.currentTimeMillis()
-                if ((now - currentItem.creationTimestampMs) < prefs.suggestion.clipboardContentTimeout.get() * 1000) {
+                if ((now - currentItem.creationTimestampMs) < prefs.clipboard.suggestionTimeout.get() * 1000) {
                     add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
                     if (currentItem.isSensitive) {
                         return@buildList

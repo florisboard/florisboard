@@ -115,6 +115,7 @@ import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import java.lang.ref.WeakReference
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
@@ -129,7 +130,6 @@ import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
 import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.ui.spSize
-import java.lang.ref.WeakReference
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to

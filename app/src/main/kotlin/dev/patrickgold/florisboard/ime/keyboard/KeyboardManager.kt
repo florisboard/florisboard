@@ -583,7 +583,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      * Handles a [KeyCode.TOGGLE_INCOGNITO_MODE] event.
      */
     private fun handleToggleIncognitoMode() {
-        prefs.advanced.forceIncognitoModeFromDynamic.set(!prefs.advanced.forceIncognitoModeFromDynamic.get())
+        prefs.suggestion.forceIncognitoModeFromDynamic.set(!prefs.suggestion.forceIncognitoModeFromDynamic.get())
         val newState = !activeState.isIncognitoMode
         activeState.isIncognitoMode = newState
         lastToastReference.get()?.cancel()
@@ -965,7 +965,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     editorInfo.isRichInputEditor
                 }
-                KeyCode.TOGGLE_INCOGNITO_MODE -> when (prefs.advanced.incognitoMode.get()) {
+                KeyCode.TOGGLE_INCOGNITO_MODE -> when (prefs.suggestion.incognitoMode.get()) {
                     IncognitoMode.FORCE_OFF, IncognitoMode.FORCE_ON -> false
                     IncognitoMode.DYNAMIC_ON_OFF -> !editorInfo.imeOptions.flagNoPersonalizedLearning
                 }

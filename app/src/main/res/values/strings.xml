@@ -369,12 +369,9 @@
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Incognito mode</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -451,19 +448,18 @@
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Advanced</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Settings theme</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">System default (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Light</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dark</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dark</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">
+    <string name="settings__other__title" comment="Title of Other settings">Other</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Light</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Dark</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED Dark</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">
         Settings accent color
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Settings language</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Incognito mode</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Settings language</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Show app icon in launcher</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>
@@ -598,6 +594,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>

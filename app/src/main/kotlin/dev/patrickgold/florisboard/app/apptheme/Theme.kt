@@ -148,7 +148,7 @@ fun FlorisAppTheme(
     content: @Composable () -> Unit,
 ) {
     val prefs by florisPreferenceModel()
-    val accent by prefs.advanced.accentColor.observeAsState()
+    val accent by prefs.other.accentColor.observeAsState()
 
     val colors = getColorScheme(
         context = LocalContext.current,

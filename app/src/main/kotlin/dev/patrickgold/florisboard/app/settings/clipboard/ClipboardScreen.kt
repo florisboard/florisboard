@@ -52,6 +52,23 @@ fun ClipboardScreen() = FlorisScreen {
             enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },
         )
 
+        PreferenceGroup(title = stringRes(R.string.pref__clipboard__group_clipboard_suggestion__label)) {
+            SwitchPreference(
+                prefs.clipboard.suggestionEnabled,
+                title = stringRes(R.string.pref__clipboard__suggestion_enabled__label),
+                summary = stringRes(R.string.pref__clipboard__suggestion_enabled__summary),
+            )
+            DialogSliderPreference(
+                prefs.clipboard.suggestionTimeout,
+                title = stringRes(R.string.pref__clipboard__suggestion_timeout__label),
+                valueLabel = { stringRes(R.string.pref__clipboard__suggestion_timeout__summary, "v" to it) },
+                min = 30,
+                max = 300,
+                stepIncrement = 5,
+                enabledIf = { prefs.clipboard.suggestionEnabled isEqualTo true },
+            )
+        }
+
         PreferenceGroup(title = stringRes(R.string.pref__clipboard__group_clipboard_history__label)) {
             SwitchPreference(
                 prefs.clipboard.historyEnabled,
