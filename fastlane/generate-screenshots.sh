@@ -193,6 +193,23 @@ mv icon-preview.png $SCREENSHOT_PATH_PREVIEW/1.png
 mv icon-stable.png $SCREENSHOT_PATH_STABLE/1.png
 echo "Done ..."
 
+magick -size 1024x500 xc:white `# Create background`\
+  \( \
+    \( \
+      \( \
+        keyboard-fp-out.png `# Src image`\
+          \( +clone +level-colors black -fill white -draw "roundrectangle 0,0,%[fx:w],%[fx:h],${BORDER_RADIUS},${BORDER_RADIUS}" \) `# Create an alpha mask for rounded corners`\
+            -alpha off -compose copy-opacity -composite `# Apply alpha mask`\
+          \) `# Create src image with rounded corners`\
+          \( +clone -background black -shadow ${SHADOW_OPACITY}x${SHADOW_RADIUS} \) `# Create drop shadow`\
+          +swap -background none -compose src-over -layers merge +repage `# Combine shadow with image`\
+        \) \
+    -resize 50% `# Scale down`\
+    \) \
+    -gravity Center -composite `# Place the screenshot with shadow over the background`\
+    keyboard-fp-out.png
+  echo "Done ..."
+
 echo "Moving featureGraphics to fastlane folder"
 cp keyboard-fp-out.png $PREVIEW_PATH/featureGraphic.png
 cp keyboard-fp-out.png $STABLE_PATH/featureGraphic.png
