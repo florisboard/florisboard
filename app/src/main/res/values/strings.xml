@@ -101,6 +101,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Sticky action ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Dynamic actions ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Hidden actions ({n})</string>
+    <string name="select_subtype_panel__header">Select subtype</string>
 
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Incognito mode is now enabled\n\n{app_name} will not learn words from your input while this mode is active</string>

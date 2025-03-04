@@ -412,6 +412,12 @@ class TextKeyData(
             code = KeyCode.SYSTEM_INPUT_METHOD_PICKER,
             label = "system_input_method_picker",
         )
+        /** Predefined key data for [KeyCode.SHOW_SUBTYPE_PICKER] */
+        val SHOW_SUBTYPE_PICKER = TextKeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.SHOW_SUBTYPE_PICKER,
+            label = "subtype_picker",
+        )
         /** Predefined key data for [KeyCode.SYSTEM_PREV_INPUT_METHOD] */
         val SYSTEM_PREV_INPUT_METHOD = TextKeyData(
             type = KeyType.FUNCTION,

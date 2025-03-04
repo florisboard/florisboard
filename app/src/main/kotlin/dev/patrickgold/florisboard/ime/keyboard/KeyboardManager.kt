@@ -55,10 +55,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
-import org.florisboard.lib.android.AndroidKeyguardManager
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.systemService
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -75,6 +71,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.android.AndroidKeyguardManager
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.lang.ref.WeakReference
@@ -272,6 +272,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             SwipeAction.REDO -> TextKeyData.REDO
             SwipeAction.UNDO -> TextKeyData.UNDO
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> TextKeyData.SYSTEM_INPUT_METHOD_PICKER
+            SwipeAction.SHOW_SUBTYPE_PICKER -> TextKeyData.SHOW_SUBTYPE_PICKER
             SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> TextKeyData.IME_UI_MODE_CLIPBOARD
             SwipeAction.SWITCH_TO_PREV_SUBTYPE -> TextKeyData.IME_PREV_SUBTYPE
             SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> TextKeyData.IME_NEXT_SUBTYPE
@@ -742,6 +743,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.SHIFT -> handleShiftUp(data)
             KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
+            KeyCode.SHOW_SUBTYPE_PICKER -> {
+                appContext.keyboardManager.value.activeState.isSubtypeSelectionVisible = true
+            }
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
             KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
