@@ -377,10 +377,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
     OneHandedMode::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = OneHandedMode.OFF,
-                label = stringRes(R.string.enum__one_handed_mode__off),
-            )
-            entry(
                 key = OneHandedMode.START,
                 label = stringRes(R.string.enum__one_handed_mode__start),
             )

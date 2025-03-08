@@ -615,12 +615,13 @@ class FlorisImeService : LifecycleInputMethodService() {
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                    val oneHandedModeEnabled by prefs.keyboard.oneHandedModeEnabled.observeAsState()
                     val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
                     val keyboardWeight = when {
-                        oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
+                        !oneHandedModeEnabled || configuration.isOrientationLandscape() -> 1f
                         else -> oneHandedModeScaleFactor / 100f
                     }
-                    if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
+                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
                         OneHandedPanel(
                             panelSide = OneHandedMode.START,
                             weight = 1f - keyboardWeight,
@@ -639,7 +640,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                             }
                         }
                     }
-                    if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
+                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
                         OneHandedPanel(
                             panelSide = OneHandedMode.END,
                             weight = 1f - keyboardWeight,

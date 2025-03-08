@@ -63,7 +63,7 @@ fun RowScope.OneHandedPanel(
         IconButton(
             onClick = {
                 inputFeedbackController.keyPress()
-                prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
+                prefs.keyboard.oneHandedModeEnabled.set(false)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
