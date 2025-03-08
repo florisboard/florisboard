@@ -69,7 +69,7 @@ object KeyCode {
     const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -38
 
     const val COMPACT_LAYOUT_TO_LEFT =      -111
-    const val COMPACT_LAYOUT_TO_RIGHT =     -112
+    const val TOGGLE_COMPACT_LAYOUT =       -112
     const val SPLIT_LAYOUT =                -113
     const val MERGE_LAYOUT =                -114
 

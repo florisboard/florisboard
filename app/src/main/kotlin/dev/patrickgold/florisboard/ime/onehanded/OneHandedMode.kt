@@ -20,7 +20,6 @@ package dev.patrickgold.florisboard.ime.onehanded
  * Static object which contains all possible one-handed mode strings.
  */
 enum class OneHandedMode {
-    OFF,
     START,
     END;
 }

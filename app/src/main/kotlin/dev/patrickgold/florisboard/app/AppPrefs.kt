@@ -49,6 +49,7 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
+import dev.patrickgold.florisboard.lib.compose.pluralsRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
@@ -480,7 +481,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val oneHandedMode = enum(
             key = "keyboard__one_handed_mode",
-            default = OneHandedMode.OFF,
+            default = OneHandedMode.END,
+        )
+        val oneHandedModeEnabled = boolean(
+            key = "keyboard__one_handed_mode_enabled",
+            default = false
         )
         val oneHandedModeScaleFactor = int(
             key = "keyboard__one_handed_mode_scale_factor",
@@ -552,14 +557,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         @Composable
         fun fontSizeMultiplier(): Float {
             val configuration = LocalConfiguration.current
-            val oneHandedMode by oneHandedMode.observeAsState()
+            val oneHandedModeEnabled by oneHandedModeEnabled.observeAsState()
             val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
             val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
                 fontSizeMultiplierPortrait
             } else {
                 fontSizeMultiplierLandscape
             }.observeAsTransformingState { it / 100.0f }
-            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedMode != OneHandedMode.OFF && configuration.isOrientationPortrait()) {
+            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedModeEnabled && configuration.isOrientationPortrait()) {
                 oneHandedModeFactor
             } else {
                 1.0f
@@ -786,6 +791,19 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "suggestion__clipboard_content_timeout" -> {
                 entry.transform(key = "clipboard__suggestion_timeout")
             }
+
+            //Migrate one hand mode prefs
+            "keyboard__one_handed_mode" -> {
+                if (entry.rawValue != "OFF") {
+                    val prefs by florisPreferenceModel()
+                    prefs.keyboard.oneHandedModeEnabled.set(true)
+                    entry.keepAsIs()
+                } else {
+                    entry.reset()
+                }
+
+            }
+
             // Default: keep entry
             else -> entry.keepAsIs()
         }
