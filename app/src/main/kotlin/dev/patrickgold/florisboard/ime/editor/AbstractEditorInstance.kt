@@ -281,7 +281,7 @@ abstract class AbstractEditorInstance(context: Context) {
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
 
     protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
-        return editorInfo.isRichInputEditor
+        return editorInfo.isRichInputEditor && !editorInfo.inputAttributes.flagTextNoSuggestions
     }
 
     private suspend fun determineLocalComposing(
