@@ -582,6 +582,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "localization__display_language_names_in",
             default = DisplayLanguageNamesIn.SYSTEM_LOCALE,
         )
+        val displayKeyboardLabelsInSubtypeLanguage = boolean(
+            key = "localization__display_keyboard_labels_in_subtype_language",
+            default = false,
+        )
         val activeSubtypeId = long(
             key = "localization__active_subtype_id",
             default = Subtype.DEFAULT.id,

@@ -283,7 +283,16 @@ class FlorisImeService : LifecycleInputMethodService() {
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
-            config.setLocale(subtype.primaryLocale.base)
+            if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
+                config.setLocale(subtype.primaryLocale.base)
+            }
+            resourcesContext = createConfigurationContext(config)
+        }
+        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.observeForever { shouldSync ->
+            val config = Configuration(resources.configuration)
+            if (shouldSync) {
+                config.setLocale(subtypeManager.activeSubtype.primaryLocale.base)
+            }
             resourcesContext = createConfigurationContext(config)
         }
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
