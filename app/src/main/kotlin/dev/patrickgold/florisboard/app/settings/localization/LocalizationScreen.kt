@@ -53,6 +53,7 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -102,6 +103,10 @@ fun LocalizationScreen() = FlorisScreen {
             prefs.localization.displayLanguageNamesIn,
             title = stringRes(R.string.settings__localization__display_language_names_in__label),
             entries = enumDisplayEntriesOf(DisplayLanguageNamesIn::class),
+        )
+        SwitchPreference(
+            prefs.localization.displayKeyboardLabelsInSubtypeLanguage,
+            title = stringRes(R.string.settings__localization__display_keyboard_labels_in_subtype_language),
         )
         Preference(
             title = stringRes(R.string.settings__localization__language_pack_title),
