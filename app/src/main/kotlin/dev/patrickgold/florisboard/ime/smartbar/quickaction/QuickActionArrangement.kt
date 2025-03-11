@@ -26,7 +26,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.plus
 import kotlinx.serialization.modules.polymorphic
 
-private val QuickActionJsonConfig = Json(DefaultJsonConfig) {
+val QuickActionJsonConfig = Json(DefaultJsonConfig) {
     classDiscriminator = "$"
     encodeDefaults = false
     ignoreUnknownKeys = true
@@ -61,7 +61,7 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.TOGGLE_INCOGNITO_MODE),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_CLIPBOARD),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_MEDIA),
-                QuickAction.InsertKey(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
+                QuickAction.InsertKey(TextKeyData.TOGGLE_COMPACT_LAYOUT),
                 QuickAction.InsertKey(TextKeyData.TOGGLE_AUTOCORRECT),
                 QuickAction.InsertKey(TextKeyData.ARROW_UP),
                 QuickAction.InsertKey(TextKeyData.ARROW_DOWN),

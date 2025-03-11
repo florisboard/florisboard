@@ -206,7 +206,8 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             Icons.Default.DeleteSweep
         }
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
-        KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
+        KeyCode.COMPACT_LAYOUT_TO_RIGHT,
+        KeyCode.TOGGLE_COMPACT_LAYOUT -> {
             context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
         }
         KeyCode.VOICE_INPUT -> {

@@ -893,7 +893,6 @@
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
 
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
 

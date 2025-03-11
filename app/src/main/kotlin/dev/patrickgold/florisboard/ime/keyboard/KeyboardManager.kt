@@ -236,11 +236,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         return subtypeManager.subtypes.size > 1
     }
 
-    fun toggleOneHandedMode(isRight: Boolean) {
-        prefs.keyboard.oneHandedMode.set(when (prefs.keyboard.oneHandedMode.get()) {
-            OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
-            else -> OneHandedMode.OFF
-        })
+    fun toggleOneHandedMode() {
+        prefs.keyboard.oneHandedModeEnabled.set(!prefs.keyboard.oneHandedModeEnabled.get())
     }
 
     fun executeSwipeAction(swipeAction: SwipeAction) {
@@ -720,8 +717,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToast(R.string.clipboard__cleared_primary_clip)
             }
-            KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode(isRight = false)
-            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> toggleOneHandedMode(isRight = true)
+            KeyCode.TOGGLE_COMPACT_LAYOUT -> toggleOneHandedMode()
+            KeyCode.COMPACT_LAYOUT_TO_LEFT -> {
+                prefs.keyboard.oneHandedMode.set(OneHandedMode.START)
+                toggleOneHandedMode()
+            }
+            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
+                prefs.keyboard.oneHandedMode.set(OneHandedMode.END)
+                toggleOneHandedMode()
+            }
             KeyCode.DELETE -> handleDelete()
             KeyCode.DELETE_WORD -> handleDeleteWord()
             KeyCode.ENTER -> handleEnter()

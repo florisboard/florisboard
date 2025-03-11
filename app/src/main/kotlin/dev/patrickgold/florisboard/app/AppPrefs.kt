@@ -41,11 +41,15 @@ import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
@@ -480,7 +484,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val oneHandedMode = enum(
             key = "keyboard__one_handed_mode",
-            default = OneHandedMode.OFF,
+            default = OneHandedMode.END,
+        )
+        val oneHandedModeEnabled = boolean(
+            key = "keyboard__one_handed_mode_enabled",
+            default = false,
         )
         val oneHandedModeScaleFactor = int(
             key = "keyboard__one_handed_mode_scale_factor",
@@ -552,14 +560,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         @Composable
         fun fontSizeMultiplier(): Float {
             val configuration = LocalConfiguration.current
-            val oneHandedMode by oneHandedMode.observeAsState()
+            val oneHandedModeEnabled by oneHandedModeEnabled.observeAsState()
             val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
             val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
                 fontSizeMultiplierPortrait
             } else {
                 fontSizeMultiplierLandscape
             }.observeAsTransformingState { it / 100.0f }
-            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedMode != OneHandedMode.OFF && configuration.isOrientationPortrait()) {
+            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedModeEnabled && configuration.isOrientationPortrait()) {
                 oneHandedModeFactor
             } else {
                 1.0f
@@ -786,6 +794,33 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "suggestion__clipboard_content_timeout" -> {
                 entry.transform(key = "clipboard__suggestion_timeout")
             }
+
+            //Migrate one hand mode prefs keep until: 0.7 dev cycle
+            "keyboard__one_handed_mode" -> {
+                if (entry.rawValue != "OFF") {
+                    val prefs by florisPreferenceModel()
+                    prefs.keyboard.oneHandedModeEnabled.set(true)
+                    entry.keepAsIs()
+                } else {
+                    entry.reset()
+                }
+            }
+            "smartbar__action_arrangement" -> {
+                val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
+                val newArrangement = arrangement.copy(
+                    dynamicActions = arrangement.dynamicActions.map { action ->
+                        if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
+                            action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                        } else {
+                            action
+                        }
+                    }
+                )
+                val json = QuickActionJsonConfig.encodeToString(newArrangement)
+                entry.transform(rawValue = json)
+            }
+
+
             // Default: keep entry
             else -> entry.keepAsIs()
         }
