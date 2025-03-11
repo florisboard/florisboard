@@ -110,7 +110,7 @@ fun KeyboardScreen() = FlorisScreen {
                 prefs.keyboard.oneHandedModeEnabled,
                 title = stringRes(R.string.pref__keyboard__one_handed_mode__label),
                 entries = enumDisplayEntriesOf(OneHandedMode::class),
-                summarySwitchDisabled = stringRes(R.string.state__disabled)
+                summarySwitchDisabled = stringRes(R.string.state__disabled),
             )
             DialogSliderPreference(
                 prefs.keyboard.oneHandedModeScaleFactor,
