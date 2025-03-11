@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -716,8 +717,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToast(R.string.clipboard__cleared_primary_clip)
             }
-            KeyCode.COMPACT_LAYOUT_TO_LEFT -> toggleOneHandedMode()
             KeyCode.TOGGLE_COMPACT_LAYOUT -> toggleOneHandedMode()
+            KeyCode.COMPACT_LAYOUT_TO_LEFT -> {
+                prefs.keyboard.oneHandedMode.set(OneHandedMode.START)
+                toggleOneHandedMode()
+            }
+            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
+                prefs.keyboard.oneHandedMode.set(OneHandedMode.END)
+                toggleOneHandedMode()
+            }
             KeyCode.DELETE -> handleDelete()
             KeyCode.DELETE_WORD -> handleDeleteWord()
             KeyCode.ENTER -> handleEnter()

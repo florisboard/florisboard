@@ -41,15 +41,18 @@ import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
-import dev.patrickgold.florisboard.lib.compose.pluralsRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
@@ -792,7 +795,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 entry.transform(key = "clipboard__suggestion_timeout")
             }
 
-            //Migrate one hand mode prefs
+            //Migrate one hand mode prefs keep until: 0.7 dev cycle
             "keyboard__one_handed_mode" -> {
                 if (entry.rawValue != "OFF") {
                     val prefs by florisPreferenceModel()
@@ -801,8 +804,22 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 } else {
                     entry.reset()
                 }
-
             }
+            "smartbar__action_arrangement" -> {
+                val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
+                val newArrangement = arrangement.copy(
+                    dynamicActions = arrangement.dynamicActions.map { action ->
+                        if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
+                            action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                        } else {
+                            action
+                        }
+                    }
+                )
+                val json = QuickActionJsonConfig.encodeToString(newArrangement)
+                entry.transform(rawValue = json)
+            }
+
 
             // Default: keep entry
             else -> entry.keepAsIs()

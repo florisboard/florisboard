@@ -26,7 +26,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.plus
 import kotlinx.serialization.modules.polymorphic
 
-private val QuickActionJsonConfig = Json(DefaultJsonConfig) {
+val QuickActionJsonConfig = Json(DefaultJsonConfig) {
     classDiscriminator = "$"
     encodeDefaults = false
     ignoreUnknownKeys = true
