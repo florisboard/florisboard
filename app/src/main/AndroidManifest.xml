@@ -114,6 +114,7 @@
             android:name="dev.patrickgold.florisboard.lib.crashutility.CrashDialogActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/crash_dialog__title"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/CrashDialogTheme"/>
 
         <!-- Copy to Clipboard Activity -->
