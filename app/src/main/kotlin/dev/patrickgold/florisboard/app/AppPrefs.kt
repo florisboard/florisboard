@@ -488,7 +488,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val oneHandedModeEnabled = boolean(
             key = "keyboard__one_handed_mode_enabled",
-            default = false
+            default = false,
         )
         val oneHandedModeScaleFactor = int(
             key = "keyboard__one_handed_mode_scale_factor",
