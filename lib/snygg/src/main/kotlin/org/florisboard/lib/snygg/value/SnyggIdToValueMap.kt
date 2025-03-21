@@ -16,38 +16,14 @@
 
 package org.florisboard.lib.snygg.value
 
-// TODO: patrick can't remember why he didn't choose a map. Rework?
-//  Possible fix:
-//  typealias SnyggIdToValueMap = MutableMap<String, Any>
-//  fun snyggIdToValueMapOf() = mutableMapOf<String, Any>()
-//  fun snyggIdToValueMapOf(vararg pairs: Pair<String, Any>) = mutableMapOf(*pairs)
-//  fun snyggIdToValueMapOf(list: List<Pair<String, Any>>) = mutableMapOf(*list.toTypedArray()))
+typealias SnyggIdToValueMap = MutableMap<String, Any>
+fun snyggIdToValueMapOf(vararg pairs: Pair<String, Any>): SnyggIdToValueMap = mutableMapOf(*pairs)
 
 @Suppress("UNCHECKED_CAST")
-@JvmInline
-value class SnyggIdToValueMap private constructor(private val list: MutableList<Pair<String, Any>>) {
-    companion object {
-        fun new() = SnyggIdToValueMap(mutableListOf())
+@Throws(ClassCastException::class, NoSuchElementException::class)
+fun <V: Any> SnyggIdToValueMap.getOrThrow(key: String): V = getValue(key) as V
 
-        fun new(vararg pairs: Pair<String, Any>) = SnyggIdToValueMap(pairs.toMutableList())
+@Suppress("UNCHECKED_CAST")
+fun <V: Any> SnyggIdToValueMap.getOrNull(key: String): V? = getOrDefault(key, null) as? V
 
-        fun new(list: List<Pair<String, Any>>) = SnyggIdToValueMap(list.toMutableList())
-    }
-
-    fun <T : Any> getOrNull(id: String): T? {
-        return try {
-            list.find { it.first == id }?.second as? T
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    @Throws(ClassCastException::class, NullPointerException::class)
-    fun <T : Any> getOrThrow(id: String): T {
-        return list.find { it.first == id }!!.second as T
-    }
-
-    fun <T : Any> add(pair: Pair<String, T>) {
-        list.add(pair)
-    }
-}
+fun SnyggIdToValueMap.add(vararg pairs: Pair<String, Any>) = putAll(pairs)

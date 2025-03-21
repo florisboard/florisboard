@@ -37,12 +37,12 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggDpSizeValue)
-            val map = SnyggIdToValueMap.new(Size to v.dp.value)
+            val map = snyggIdToValueMapOf(Size to v.dp.value)
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val size = map.getOrThrow<Float>(Size)
             return@runCatching SnyggDpSizeValue(size.dp)
@@ -62,12 +62,12 @@ data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSpSizeValue)
-            val map = SnyggIdToValueMap.new(Size to v.sp.value)
+            val map = snyggIdToValueMapOf(Size to v.sp.value)
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val size = map.getOrThrow<Float>(Size)
             return@runCatching SnyggSpSizeValue(size.sp)
@@ -87,12 +87,12 @@ data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggPercentageSizeValue)
-            val map = SnyggIdToValueMap.new(Size to v.percentage * 100.0f)
+            val map = snyggIdToValueMapOf(Size to v.percentage * 100.0f)
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val size = map.getOrThrow<Float>(Size) / 100.0f
             return@runCatching SnyggPercentageSizeValue(size)

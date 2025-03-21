@@ -35,12 +35,12 @@ data class SnyggImageRefValue(val relPath: String) : SnyggRefValue {
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggImageRefValue)
-            val map = SnyggIdToValueMap.new(RelPath to v.relPath)
+            val map = snyggIdToValueMapOf(RelPath to v.relPath)
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val relPath = map.getOrThrow<String>(RelPath)
             return@runCatching SnyggImageRefValue(relPath)

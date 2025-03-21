@@ -46,7 +46,7 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
         var valStr = str.trim()
         val namedValue = namedNumbers.find { it.first == valStr }
         if (namedValue != null) {
-            return SnyggIdToValueMap.new(id to namedValue.second)
+            return snyggIdToValueMapOf(id to namedValue.second)
         }
         if (prefix != null) {
             check(valStr.startsWith(prefix))

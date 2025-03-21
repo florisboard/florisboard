@@ -88,7 +88,7 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSolidColorValue)
-            val map = SnyggIdToValueMap.new(
+            val map = snyggIdToValueMapOf(
                 RgbaColor.RedId to (v.color.red * RgbaColor.RedMax).roundToInt(),
                 RgbaColor.GreenId to (v.color.green * RgbaColor.GreenMax).roundToInt(),
                 RgbaColor.BlueId to (v.color.blue * RgbaColor.BlueMax).roundToInt(),
@@ -98,7 +98,7 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             try {
                 spec.parse(v, map)
                 val r = map.getOrThrow<Int>(RgbaColor.RedId).coerceIn(RgbaColor.Red).toFloat() / RgbaColor.RedMax

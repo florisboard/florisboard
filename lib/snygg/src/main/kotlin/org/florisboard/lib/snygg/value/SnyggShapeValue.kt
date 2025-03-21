@@ -66,12 +66,12 @@ data class SnyggRectangleShapeValue(override val shape: Shape = RectangleShape) 
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRectangleShapeValue)
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             return@runCatching SnyggRectangleShapeValue()
         }
@@ -90,12 +90,12 @@ data class SnyggCircleShapeValue(override val shape: Shape = CircleShape) : Snyg
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCircleShapeValue)
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             return@runCatching SnyggCircleShapeValue()
         }
@@ -127,7 +127,7 @@ data class SnyggCutCornerDpShapeValue(
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCutCornerDpShapeValue)
-            val map = SnyggIdToValueMap.new(
+            val map = snyggIdToValueMapOf(
                 CornerSizeTopStart to v.topStart.value,
                 CornerSizeTopEnd to v.topEnd.value,
                 CornerSizeBottomEnd to v.bottomEnd.value,
@@ -137,7 +137,7 @@ data class SnyggCutCornerDpShapeValue(
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val topStart = map.getOrThrow<Int>(CornerSizeTopStart).dp
             val topEnd = map.getOrThrow<Int>(CornerSizeTopEnd).dp
@@ -173,7 +173,7 @@ data class SnyggCutCornerPercentShapeValue(
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCutCornerPercentShapeValue)
-            val map = SnyggIdToValueMap.new(
+            val map = snyggIdToValueMapOf(
                 CornerSizeTopStart to v.topStart,
                 CornerSizeTopEnd to v.topEnd,
                 CornerSizeBottomEnd to v.bottomEnd,
@@ -183,7 +183,7 @@ data class SnyggCutCornerPercentShapeValue(
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val topStart = map.getOrThrow<Int>(CornerSizeTopStart)
             val topEnd = map.getOrThrow<Int>(CornerSizeTopEnd)
@@ -219,7 +219,7 @@ data class SnyggRoundedCornerDpShapeValue(
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRoundedCornerDpShapeValue)
-            val map = SnyggIdToValueMap.new(
+            val map = snyggIdToValueMapOf(
                 CornerSizeTopStart to v.topStart.value,
                 CornerSizeTopEnd to v.topEnd.value,
                 CornerSizeBottomEnd to v.bottomEnd.value,
@@ -229,7 +229,7 @@ data class SnyggRoundedCornerDpShapeValue(
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val topStart = map.getOrThrow<Float>(CornerSizeTopStart).dp
             val topEnd = map.getOrThrow<Float>(CornerSizeTopEnd).dp
@@ -265,7 +265,7 @@ data class SnyggRoundedCornerPercentShapeValue(
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggRoundedCornerPercentShapeValue)
-            val map = SnyggIdToValueMap.new(
+            val map = snyggIdToValueMapOf(
                 CornerSizeTopStart to v.topStart,
                 CornerSizeTopEnd to v.topEnd,
                 CornerSizeBottomEnd to v.bottomEnd,
@@ -275,7 +275,7 @@ data class SnyggRoundedCornerPercentShapeValue(
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
+            val map = snyggIdToValueMapOf()
             spec.parse(v, map)
             val topStart = map.getOrThrow<Int>(CornerSizeTopStart)
             val topEnd = map.getOrThrow<Int>(CornerSizeTopEnd)

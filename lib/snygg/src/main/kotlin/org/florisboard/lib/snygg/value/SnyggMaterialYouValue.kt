@@ -55,12 +55,12 @@ sealed interface SnyggMaterialYouValueEncoder<T : SnyggMaterialYouValue> : Snygg
     override fun serialize(v: SnyggValue) = runCatching<String> {
         require(v::class.java == clazz)
 
-        val map = SnyggIdToValueMap.new(ColorNameId to (v as SnyggMaterialYouValue).colorName)
+        val map = snyggIdToValueMapOf(ColorNameId to (v as SnyggMaterialYouValue).colorName)
         return@runCatching spec.pack(map)
     }
 
     override fun deserialize(v: String) = runCatching<SnyggValue> {
-        val map = SnyggIdToValueMap.new()
+        val map = snyggIdToValueMapOf()
         spec.parse(v, map)
 
         return@runCatching newInstance(map.getOrThrow<String>(ColorNameId))
