@@ -56,6 +56,7 @@ class SnyggStylesheet(
             }.sortedDescending().map { rules[it]!! }
         }
 
+        //TODO: Do not hardcode and adapt to new syntax
         fun getPropertySet(
             rules: Map<SnyggRule, SnyggPropertySet>,
             element: String,
@@ -250,6 +251,7 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
 
     override val descriptor = ruleMapSerializer.descriptor
 
+    // TODO: Remove
     companion object {
         var GlobalStylesheetSpec: SnyggSpec? = null
     }
@@ -263,6 +265,7 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
         ruleMapSerializer.serialize(encoder, rawRuleMap)
     }
 
+    // TODO: rewrite without GlobalStylesheetSpec
     override fun deserialize(decoder: Decoder): SnyggStylesheet {
         val rawRuleMap = ruleMapSerializer.deserialize(decoder)
         val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()

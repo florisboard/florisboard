@@ -21,18 +21,22 @@ package org.florisboard.lib.snygg
  *
  * snygg = Swedish for stylish
  */
+// TODO: How can we make this compose state conform
 @Suppress("ConstPropertyName")
 object Snygg {
     const val Width = "width"
     const val Height = "height"
 
+    // TODO: add onImagePathResolve API for library consumer
     const val Background = "background" // TODO: add image() function
+    // TODO: object-fit support
     const val Foreground = "foreground"
 
     const val BorderColor = "border-color"
     const val BorderStyle = "border-style"
     const val BorderWidth = "border-width"
 
+    // TODO: font-family also needs a ref-like system, like image too
     const val FontFamily = "font-family" // TODO: no impact yet???
     const val FontSize = "font-size" // TODO: no impact yet???
     const val FontStyle = "font-style"
@@ -47,6 +51,7 @@ object Snygg {
 
     const val Shape = "shape"
 
+    // TODO: get rid of global variables and init() function
     fun init(
         stylesheetSpec: SnyggSpec,
         rulePreferredElementSorting: List<String>,
@@ -57,3 +62,19 @@ object Snygg {
         SnyggRule.Placeholders = rulePlaceholders
     }
 }
+
+/*
+    SnyggRow(id = "smartbar", params = mapOf("lol" to "wow")) {
+      SnyggButton(params = mapOf("key" to KeyCode.WHATEVER), onClick, text, icon)
+
+    param regex = ^(?:a-zA-Z0-9-)+$
+    smartbar-button[code=301,305,308-312][group=3]
+    smartbar-button[code=301,305,308-312][group=3]:pressed
+
+    smartbar
+      smartbar-quickactions
+        smartbar-button
+    SnyggButton(elementName = "smartbar-button", params = mapOf("code" to 301, "group" to 3))
+
+
+ */

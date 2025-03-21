@@ -22,6 +22,9 @@ private val RefMatcher = """^[a-z0-9]([a-z0-9-]*[a-z0-9])?(/[a-z0-9]([a-z0-9-]*[
 
 sealed interface SnyggRefValue : SnyggValue
 
+// TODO: add font-family class
+
+// TODO: https://developer.android.com/develop/ui/compose/graphics/images/loading
 data class SnyggImageRefValue(val relPath: String) : SnyggRefValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {

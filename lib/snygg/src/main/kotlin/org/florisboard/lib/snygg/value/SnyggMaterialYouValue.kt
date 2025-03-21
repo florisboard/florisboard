@@ -29,6 +29,7 @@ import org.florisboard.lib.snygg.value.MaterialYouColor.ColorNameId
 import org.florisboard.lib.snygg.value.MaterialYouColor.darkColorName
 import org.florisboard.lib.snygg.value.MaterialYouColor.lightColorName
 
+// TODO: Rework and inherit SnyggAppearanceValue
 sealed interface SnyggMaterialYouValue : SnyggValue {
     val colorName: String
     val dark: Boolean

@@ -16,6 +16,13 @@
 
 package org.florisboard.lib.snygg.value
 
+// TODO: patrick can't remember why he didn't choose a map. Rework?
+//  Possible fix:
+//  typealias SnyggIdToValueMap = MutableMap<String, Any>
+//  fun snyggIdToValueMapOf() = mutableMapOf<String, Any>()
+//  fun snyggIdToValueMapOf(vararg pairs: Pair<String, Any>) = mutableMapOf(*pairs)
+//  fun snyggIdToValueMapOf(list: List<Pair<String, Any>>) = mutableMapOf(*list.toTypedArray()))
+
 @Suppress("UNCHECKED_CAST")
 @JvmInline
 value class SnyggIdToValueMap private constructor(private val list: MutableList<Pair<String, Any>>) {
