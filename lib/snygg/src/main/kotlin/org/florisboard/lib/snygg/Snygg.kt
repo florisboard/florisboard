@@ -21,23 +21,28 @@ package org.florisboard.lib.snygg
  *
  * snygg = Swedish for stylish
  */
+@Suppress("ConstPropertyName")
 object Snygg {
     const val Width = "width"
     const val Height = "height"
 
-    const val Background = "background"
+    const val Background = "background" // TODO: add image() function
     const val Foreground = "foreground"
 
     const val BorderColor = "border-color"
     const val BorderStyle = "border-style"
     const val BorderWidth = "border-width"
 
-    const val FontFamily = "font-family"
-    const val FontSize = "font-size"
+    const val FontFamily = "font-family" // TODO: no impact yet???
+    const val FontSize = "font-size" // TODO: no impact yet???
     const val FontStyle = "font-style"
     const val FontVariant = "font-variant"
-    const val FontWeight = "font-weight"
+    const val FontWeight = "font-weight" // TODO: no impact yet???
 
+    const val Margin = "margin"
+    const val Padding = "padding"
+
+    const val ShadowColor = "shadow-color"
     const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"

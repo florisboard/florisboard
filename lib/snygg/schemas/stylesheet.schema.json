@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://schemas.florisboard.org/snygg/v2/stylesheet",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "patternProperties": {
+    "^@defines$": {
+      "$ref": "#/definitions/snygg-defines-property-set"
+    },
+    "^[a-zA-Z0-9-]+(\\[[a-zA-Z0-9-]+=([+-]?(0|[1-9][0-9]*)([.]{2}([+-]?(0|[1-9][0-9]*)))?)(,([+-]?(0|[1-9][0-9]*)([.]{2}([+-]?(0|[1-9][0-9]*)))?))*\\])*(:(pressed|focus|disabled))?$": {
+      "$ref": "#/definitions/snygg-property-set"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "hex6-color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$"
+    },
+    "hex8-color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{8}$"
+    },
+    "named-color": {
+      "type": "string",
+      "enum": [
+        "transparent"
+      ]
+    },
+    "rgb-color": {
+      "type": "string",
+      "pattern": "^rgb\\((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\)$"
+    },
+    "rgba-color": {
+      "type": "string",
+      "pattern": "^rgba\\((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s,\\s(1(?:\\.0)?|0(?:\\.[0-9]+)?|\\.[0-9]+)\\)$"
+    },
+    "snygg-color-value": {
+      "oneOf": [
+        { "$ref": "#/definitions/hex6-color" },
+        { "$ref": "#/definitions/hex8-color" },
+        { "$ref": "#/definitions/named-color" },
+        { "$ref": "#/definitions/rgb-color" }
+      ]
+    },
+    "snygg-dynamic-color-value": {
+      "type": "string",
+      "pattern": "^dynamic-(light|dark)-color\\([a-zA-Z0-9-]+\\)$"
+    },
+    "snygg-appearance-value": {
+      "oneOf": [
+        { "$ref": "#/definitions/snygg-color-value" },
+        { "$ref": "#/definitions/snygg-dynamic-color-value" }
+      ]
+    },
+
+    "snygg-rectangle-shape-value": {
+      "type": "string",
+      "const": "rectangle()"
+    },
+    "snygg-circle-shape-value": {
+      "type": "string",
+      "const": "circle()"
+    },
+    "snygg-corner-shape-value": {
+      "type": "string",
+      "pattern": "^(cut|rounded)-corner\\(\\s*((0|[1-9][0-9]*)([.][0-9]+)?dp|(100|[1-9]?[0-9])%\\s*,\\s*){3}((0|[1-9][0-9]*)([.][0-9]+)?dp|(100|[1-9]?[0-9])%)\\s*\\)$"
+    },
+    "snygg-shape-value": {
+      "oneOf": [
+        { "$ref": "#/definitions/snygg-rectangle-shape-value" },
+        { "$ref": "#/definitions/snygg-circle-shape-value" },
+        { "$ref": "#/definitions/snygg-corner-shape-value" }
+      ]
+    },
+
+    "snygg-size-value": {
+      "type": "string",
+      "pattern": "^((0|[1-9][0-9]*)([.][0-9]+)?dp|[1-9][0-9]*([.][0-9]+)?sp|(100|[1-9]?[0-9])([.][0-9]+)?)$"
+    },
+
+    "snygg-value": {
+      "oneOf": [
+        {
+          "type": "string",
+          "const": "inherit"
+        },
+        {
+          "type": "string",
+          "pattern": "^var\\([a-zA-Z0-9-]+\\)$"
+        }
+      ]
+    },
+
+    "snygg-defines-property-set": {
+      "type": "object",
+      "patternProperties": {
+        "^--[a-zA-Z0-9-]+$": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-appearance-value" },
+            { "$ref": "#/definitions/snygg-shape-value" },
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "snygg-property-set": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "background": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-appearance-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "foreground": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-appearance-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "border-color": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-appearance-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "border-style": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "border-width": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "font-family": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "font-size": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "font-style": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "font-variant": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "font-weight": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "margin": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "padding": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "shadow-color": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-appearance-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        },
+        "shadow-elevation": {
+          "oneOf": [
+            { "$ref": "#/definitions/snygg-size-value" },
+            { "$ref": "#/definitions/snygg-value" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
