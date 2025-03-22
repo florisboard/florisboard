@@ -52,54 +52,42 @@ class SnyggSizeValueTest {
 
     @Test
     fun `test deserialize and serialize with valid input`() {
-        assertAll(validPairs.map { (raw, obj) ->
-            {
-                val deserialized = obj.encoder().deserialize(raw)
-                assertTrue { deserialized.isSuccess }
-                assertEquals(obj, deserialized.getOrNull())
-                val serialized = obj.encoder().serialize(obj)
-                assertTrue { serialized.isSuccess }
-            }
-        })
+        assertAll(validPairs.map { (raw, obj) -> {
+            val deserialized = obj.encoder().deserialize(raw)
+            assertTrue { deserialized.isSuccess }
+            assertEquals(obj, deserialized.getOrNull())
+            val serialized = obj.encoder().serialize(obj)
+            assertTrue { serialized.isSuccess }
+        } })
     }
 
     @Test
     fun `test deserialize and serialize with invalid input`() {
-        assertAll(invalidPairs.map { (raw, obj) ->
-            {
-                val deserialized = obj.encoder().deserialize(raw)
-                assertFalse { deserialized.isSuccess }
-                val serialized = obj.encoder().serialize(obj)
-                assertFalse { serialized.isSuccess }
-            }
-        })
+        assertAll(invalidPairs.map { (raw, obj) -> {
+            val deserialized = obj.encoder().deserialize(raw)
+            assertFalse { deserialized.isSuccess }
+            val serialized = obj.encoder().serialize(obj)
+            assertFalse { serialized.isSuccess }
+        } })
     }
 
     @Test
     fun `test deserialize with valid, ill-formatted input`() {
-        assertAll(validIllFormattedInput.map { (obj, list) ->
-            {
-                assertAll(list.map { raw ->
-                    {
-                        val deserialized = obj.encoder().deserialize(raw)
-                        assertEquals(obj, deserialized.getOrNull())
-                    }
-                })
-            }
-        })
+        assertAll(validIllFormattedInput.map { (obj, list) -> {
+            assertAll(list.map { raw -> {
+                val deserialized = obj.encoder().deserialize(raw)
+                assertEquals(obj, deserialized.getOrNull())
+            } })
+        } })
     }
 
     @Test
     fun `test deserialize with invalid input`() {
-        assertAll(invalidInput.map { (encoder, list) ->
-            {
-                assertAll(list.map { raw ->
-                    {
-                        val deserialized = encoder.deserialize(raw)
-                        assertFalse { deserialized.isSuccess }
-                    }
-                })
-            }
-        })
+        assertAll(invalidInput.map { (encoder, list) -> {
+            assertAll(list.map { raw -> {
+                val deserialized = encoder.deserialize(raw)
+                assertFalse { deserialized.isSuccess }
+            } })
+        } })
     }
 }

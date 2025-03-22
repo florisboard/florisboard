@@ -128,7 +128,7 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
                                 val b = hexStr.substring(5..6).toInt(16).toFloat() / RgbaColor.BlueMax
                                 return@runCatching SnyggSolidColorValue(Color(r, g, b, 1.0f))
                             }
-                            3 -> {
+                            else -> {
                                 val hexStr = map.getOrThrow<String>(RgbaColor.HexId)
                                 val r = hexStr.substring(1..2).toInt(16).toFloat() / RgbaColor.RedMax
                                 val g = hexStr.substring(3..4).toInt(16).toFloat() / RgbaColor.GreenMax
