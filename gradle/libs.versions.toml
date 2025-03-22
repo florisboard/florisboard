@@ -17,6 +17,7 @@ androidx-room = "2.6.1"
 cache4k = "0.7.0"
 kotlin = "2.0.20"
 kotlinx-coroutines = "1.8.1"
+kotlinx-kover = "0.9.1"
 kotlinx-serialization-json = "1.6.3"
 ksp = "2.0.20-1.0.25"
 mannodermaus-android-junit5 = "1.10.0.0"
@@ -83,6 +84,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlinx-kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 mannodermaus-android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermaus-android-junit5" }
 mikepenz-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "mikepenz-aboutlibraries" }
