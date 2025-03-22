@@ -16,12 +16,17 @@
 
 package org.florisboard.lib.snygg
 
-class SnyggStylesheetEditor(initRules: Map<SnyggRule, SnyggPropertySetEditor>? = null){
-    val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
+class SnyggStylesheetEditor(
+    private val schema: String,
+    initRules: Map<SnyggRule, SnyggPropertySet>? = null,
+) {
+    private val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
 
     init {
         if (initRules != null) {
-            rules.putAll(initRules)
+            rules.putAll(
+                initRules.mapValues { (_, propertySet) -> propertySet.edit() }
+            )
         }
     }
 
@@ -55,7 +60,7 @@ class SnyggStylesheetEditor(initRules: Map<SnyggRule, SnyggPropertySetEditor>? =
         rules[rule] = propertySetEditor
     }
 
-    fun build(schema: String): SnyggStylesheet {
+    fun build(): SnyggStylesheet {
         val rulesMap = rules.mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
         return SnyggStylesheet(schema, rulesMap)
     }

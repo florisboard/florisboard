@@ -45,7 +45,9 @@ import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
 @Serializable(with = SnyggPropertySet.Serializer::class)
-class SnyggPropertySet(val properties: Map<String, SnyggValue> = emptyMap()) {
+data class SnyggPropertySet internal constructor(
+    val properties: Map<String, SnyggValue> = emptyMap(),
+) {
     val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue
     val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
 
@@ -114,6 +116,14 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
 
     infix fun String.to(v: SnyggValue) {
         properties[this] = v
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Only snygg values are allowed",
+    )
+    infix fun String.to(v: Any): Nothing {
+        throw IllegalArgumentException("Only snygg values are allowed (given value: $v)")
     }
 
     var width: SnyggValue?

@@ -32,18 +32,15 @@ data class SnyggStylesheet internal constructor(
     val schema: String,
     val rules: Map<SnyggRule, SnyggPropertySet>,
 ) {
-    fun edit(): SnyggStylesheetEditor {
-        val ruleMap = rules.mapValues { (_, propertySet) -> propertySet.edit() }
-        return SnyggStylesheetEditor(ruleMap)
-    }
+    fun edit() = SnyggStylesheetEditor(this.schema, this.rules)
 
     companion object {
-        private const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
+        internal const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
 
         fun v2(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
-            val builder = SnyggStylesheetEditor()
+            val builder = SnyggStylesheetEditor(SCHEMA_V2)
             stylesheetBlock(builder)
-            return builder.build(SCHEMA_V2)
+            return builder.build()
         }
     }
 
