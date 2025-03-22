@@ -21,6 +21,13 @@ import androidx.annotation.IntRange
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import org.florisboard.lib.snygg.value.RgbaColor
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -37,6 +44,7 @@ import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
+@Serializable(with = SnyggPropertySet.Serializer::class)
 class SnyggPropertySet(val properties: Map<String, SnyggValue> = emptyMap()) {
     val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue
     val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
@@ -62,6 +70,21 @@ class SnyggPropertySet(val properties: Map<String, SnyggValue> = emptyMap()) {
 
     override fun toString(): String {
         return properties.toString()
+    }
+
+    object Serializer : KSerializer<SnyggPropertySet> {
+        private val serializer = MapSerializer(String.serializer(), SnyggValue.Serializer)
+        override val descriptor: SerialDescriptor
+            get() = serializer.descriptor
+
+        override fun serialize(encoder: Encoder, value: SnyggPropertySet) {
+            encoder.encodeSerializableValue(serializer, value.properties)
+        }
+
+        override fun deserialize(decoder: Decoder): SnyggPropertySet {
+            val properties = decoder.decodeSerializableValue(serializer)
+            return SnyggPropertySet(properties)
+        }
     }
 }
 

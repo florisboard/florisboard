@@ -16,42 +16,22 @@
 
 package org.florisboard.lib.snygg
 
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.encodeToString
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggVarValueEncoders
 
-val SnyggStylesheetJsonConfig = Json
-
-//@Serializable(with = SnyggStylesheet.Serializer::class)
+@Serializable(with = SnyggStylesheet.Serializer::class)
 data class SnyggStylesheet(
     val schema: String,
     val rules: Map<SnyggRule, SnyggPropertySet>,
 ) {
-    fun toJsonString(): String {
-        val rawRuleMap = rules.mapValues { (_, propertySet) ->
-            propertySet.properties.mapValues { (_, snyggValue) ->
-                snyggValue.encoder().serialize(snyggValue).getOrThrow()
-            }
-        }
-        val schemaElem = SnyggStylesheetJsonConfig.encodeToJsonElement(schema)
-        val ruleElems = rawRuleMap.map { (rule, propertySet) ->
-            rule.toString() to Json.encodeToJsonElement(propertyMapSerializer, propertySet)
-        }.toMap()
-        val jsonObject = JsonObject(
-            mapOf(
-                "\$schema" to schemaElem
-            ) + ruleElems
-        )
-        return SnyggStylesheetJsonConfig.encodeToString(jsonObject)
-
-    }
-
     fun edit(): SnyggStylesheetEditor {
         val ruleMap = rules.mapValues { (_, propertySet) -> propertySet.edit() }
         return SnyggStylesheetEditor(ruleMap)
@@ -59,38 +39,6 @@ data class SnyggStylesheet(
 
     companion object {
         private const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
-        private val propertyMapSerializer = MapSerializer(String.serializer(), String.serializer())
-
-        fun fromJsonString(jsonRaw: String): SnyggStylesheet {
-            val obj = SnyggStylesheetJsonConfig.decodeFromString<JsonObject>(jsonRaw)
-            var schema: String? = null
-            val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
-            for ((key, elem) in obj.entries) {
-                if (key == "\$schema") {
-                    schema = Json.decodeFromJsonElement(String.serializer(), elem)
-                } else {
-                    val rawProperties = Json.decodeFromJsonElement(propertyMapSerializer, elem)
-                    val rule = SnyggRule.fromOrNull(key) ?: throw SerializationException("fuck u")
-                    if (rule.isDefinedVariablesRule()) {
-                        val parsedProperties = rawProperties.mapValues { (_, rawValue) ->
-                            SnyggVarValueEncoders.firstNotNullOfOrNull { it.deserialize(rawValue).getOrNull() }
-                                ?: SnyggImplicitInheritValue
-                        }
-                        ruleMap[rule] = SnyggPropertySet(parsedProperties)
-                        continue
-                    }
-                    val properties = rawProperties.mapValues { (_, rawValue) ->
-                        SnyggVarValueEncoders.firstNotNullOfOrNull { it.deserialize(rawValue).getOrNull() }
-                            ?: SnyggImplicitInheritValue
-                    }
-                    ruleMap[rule] = SnyggPropertySet(properties)
-                }
-            }
-            if (schema == null) {
-                throw SerializationException("no schema :(")
-            }
-            return SnyggStylesheet(schema, ruleMap)
-        }
 
         fun v2(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
             val builder = SnyggStylesheetEditor()
@@ -99,18 +47,42 @@ data class SnyggStylesheet(
         }
     }
 
-//    object Serializer : KSerializer<SnyggStylesheet> {
-//        override val descriptor: SerialDescriptor
-//            get() = PrimitiveSerialDescriptor("SnyggStylesheet", PrimitiveKind.STRING)
-//
-//        override fun serialize(encoder: Encoder, value: SnyggStylesheet) {
-//            encoder.encodeString(value.toJsonString())
-//        }
-//
-//        override fun deserialize(decoder: Decoder): SnyggStylesheet {
-//            return fromJsonString(decoder.decodeString())
-//        }
-//    }
+    object Serializer : KSerializer<SnyggStylesheet> {
+        override val descriptor: SerialDescriptor
+            get() = JsonObject.serializer().descriptor
+
+        override fun serialize(encoder: Encoder, value: SnyggStylesheet) {
+            val schemaElem = Json.encodeToJsonElement(value.schema)
+            val ruleElems = value.rules.map { (rule, propertySet) ->
+                rule.toString() to Json.encodeToJsonElement(propertySet)
+            }.toMap()
+            val jsonObject = JsonObject(
+                mapOf(
+                    "\$schema" to schemaElem
+                ) + ruleElems
+            )
+            encoder.encodeSerializableValue(JsonObject.serializer(), jsonObject)
+        }
+
+        override fun deserialize(decoder: Decoder): SnyggStylesheet {
+            val jsonObject = decoder.decodeSerializableValue(JsonObject.serializer())
+            var schema: String? = null
+            val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
+            for ((key, elem) in jsonObject.entries) {
+                if (key == "\$schema") {
+                    schema = Json.decodeFromJsonElement<String>(elem)
+                } else {
+                    val rule = SnyggRule.fromOrNull(key) ?: throw SerializationException("Invalid rule")
+                    val propertySet = Json.decodeFromJsonElement<SnyggPropertySet>(elem)
+                    ruleMap[rule] = propertySet
+                }
+            }
+            if (schema == null) {
+                throw SerializationException("no schema :(")
+            }
+            return SnyggStylesheet(schema, ruleMap)
+        }
+    }
 }
 
 /*

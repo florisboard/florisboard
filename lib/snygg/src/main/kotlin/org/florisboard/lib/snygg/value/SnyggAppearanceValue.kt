@@ -26,7 +26,7 @@ object RgbaColor {
     val Hex6Matcher = """^#[a-fA-F0-9]{6}$""".toRegex()
     val Hex8Matcher = """^#[a-fA-F0-9]{8}$""".toRegex()
 
-    const val TransparentId = "hex"
+    const val TransparentId = "transparent"
     val TransparentMatcher = """^transparent$""".toRegex()
 
     const val RedId = "r"
