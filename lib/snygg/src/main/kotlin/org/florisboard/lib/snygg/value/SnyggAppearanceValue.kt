@@ -21,6 +21,7 @@ import kotlin.math.roundToInt
 
 sealed interface SnyggAppearanceValue : SnyggValue
 
+@Suppress("ConstPropertyName")
 object RgbaColor {
     const val HexId = "hex"
     val Hex6Matcher = """^#[a-fA-F0-9]{6}$""".toRegex()

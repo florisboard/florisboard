@@ -1,6 +1,6 @@
 package org.florisboard.lib.snygg
 
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
