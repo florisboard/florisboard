@@ -60,6 +60,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf(
+            "-Xconsistent-data-class-copy-visibility",
+        )
     }
 }
 

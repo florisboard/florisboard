@@ -50,33 +50,4 @@ object Snygg {
     const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"
-
-    // TODO: get rid of global variables and init() function
-    fun init(
-        stylesheetSpec: SnyggSpec,
-        rulePreferredElementSorting: List<String>,
-        rulePlaceholders: Map<String, Int>,
-    ) {
-        /*
-        SnyggStylesheetSerializer.GlobalStylesheetSpec = stylesheetSpec
-        SnyggRule.PreferredElementSorting = rulePreferredElementSorting
-        SnyggRule.Placeholders = rulePlaceholders
-        */
-    }
 }
-
-/*
-    SnyggRow(id = "smartbar", params = mapOf("lol" to "wow")) {
-      SnyggButton(params = mapOf("key" to KeyCode.WHATEVER), onClick, text, icon)
-
-    param regex = ^(?:a-zA-Z0-9-)+$
-    smartbar-button[code=301,305,308-312][group=3]
-    smartbar-button[code=301,305,308-312][group=3]:pressed
-
-    smartbar
-      smartbar-quickactions
-        smartbar-button
-    SnyggButton(elementName = "smartbar-button", params = mapOf("code" to 301, "group" to 3))
-
-
- */

@@ -28,7 +28,7 @@ import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
 
 @Serializable(with = SnyggStylesheet.Serializer::class)
-data class SnyggStylesheet(
+data class SnyggStylesheet internal constructor(
     val schema: String,
     val rules: Map<SnyggRule, SnyggPropertySet>,
 ) {

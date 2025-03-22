@@ -18,7 +18,6 @@ package org.florisboard.lib.snygg
 
 import androidx.compose.runtime.saveable.Saver
 
-@ConsistentCopyVisibility
 data class SnyggRule internal constructor(
     val elementName: String,
     val attributes: Attributes = Attributes(),
@@ -98,7 +97,6 @@ data class SnyggRule internal constructor(
         }
     }
 
-    @ConsistentCopyVisibility
     data class Attributes internal constructor(
         private val attributes: Map<String, List<Int>> = emptyMap(),
     ) : Map<String, List<Int>> by attributes {
@@ -166,7 +164,6 @@ data class SnyggRule internal constructor(
         }
     }
 
-    @ConsistentCopyVisibility
     data class Selectors internal constructor(
         val pressed: Boolean = false,
         val focus: Boolean = false,
