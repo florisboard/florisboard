@@ -21,8 +21,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggTheme
 
-internal val LocalSnyggStylesheet: ProvidableCompositionLocal<SnyggStylesheet> =
+internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
     staticCompositionLocalOf {
         error("SnyggStylesheet not initialized.")
     }
@@ -30,12 +31,12 @@ internal val LocalSnyggStylesheet: ProvidableCompositionLocal<SnyggStylesheet> =
 // TODO: rememberSnyggStylesheet or similar API
 
 @Composable
-fun ProvideSnyggStylesheet(
-    stylesheet: SnyggStylesheet,
+fun ProvideSnyggTheme(
+    snyggTheme: SnyggTheme,
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalSnyggStylesheet provides stylesheet,
+        LocalSnyggTheme provides snyggTheme,
         content = content,
     )
 }

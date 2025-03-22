@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,232 +17,213 @@
 package org.florisboard.lib.snygg
 
 import androidx.compose.runtime.saveable.Saver
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import org.florisboard.lib.kotlin.curlyFormat
 
-@Serializable(with = SnyggRule.Serializer::class)
-data class SnyggRule(
-    val isAnnotation: Boolean = false,
-    val element: String,
-    val codes: List<Int> = emptyList(),
-    val groups: List<Int> = emptyList(),
-    val shiftStates: List<Int> = emptyList(),
-    val pressedSelector: Boolean = false,
-    val focusSelector: Boolean = false,
-    val disabledSelector: Boolean = false,
-) : Comparable<SnyggRule> {
+data class SnyggRule internal constructor(
+    val elementName: String,
+    val attributes: Attributes = Attributes(),
+    val selectors: Selectors = Selectors(),
+): Comparable<SnyggRule> {
+    val isAnnotation
+        get() = elementName.startsWith("@")
 
-    companion object {
-        const val ANNOTATION_MARKER = '@'
-
-        const val ATTRIBUTE_OPEN = '['
-        const val ATTRIBUTE_CLOSE = ']'
-        const val ATTRIBUTE_ASSIGN = '='
-        const val ATTRIBUTE_OR = '|'
-        const val CODES_KEY = "code"
-        const val GROUPS_KEY = "group"
-        const val SHIFT_STATES_KEY = "shiftstate"
-
-        const val SELECTOR_COLON = ':'
-        const val PRESSED_SELECTOR = "pressed"
-        const val FOCUS_SELECTOR = "focus"
-        const val DISABLED_SELECTOR = "disabled"
-
-        @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
-        private val RuleValidator =
-            """^(@?)[a-zA-Z0-9-]+(\[(code|group|shiftstate)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(pressed|focus|disabled))*${'$'}""".toRegex()
-
-        var Placeholders = mapOf<String, Int>()
-
-        internal var PreferredElementSorting = listOf<String>()
-
-        val Saver = Saver<SnyggRule?, String>(
-            save = { it?.toString() ?: "" },
-            restore = { from(it) },
-        )
-
-        fun from(raw: String): SnyggRule? {
-            val str = raw.trim().curlyFormat { Placeholders[it]?.toString() }
-            if (!RuleValidator.matches(str) || str.isBlank()) {
-                return null
-            }
-            try {
-                val selectors = str.split(SELECTOR_COLON)
-                val elementAndAttributes = selectors[0]
-                var pressedSelector = false
-                var focusSelector = false
-                var disabledSelector = false
-                if (selectors.size > 1) {
-                    for (selector in selectors.listIterator(1)) {
-                        when (selector) {
-                            PRESSED_SELECTOR -> pressedSelector = true
-                            FOCUS_SELECTOR -> focusSelector = true
-                            DISABLED_SELECTOR -> disabledSelector = true
-                        }
-                    }
-                }
-                val codes = mutableListOf<Int>()
-                val groups = mutableListOf<Int>()
-                val shiftStates = mutableListOf<Int>()
-                val attributes = elementAndAttributes.split(ATTRIBUTE_OPEN, ATTRIBUTE_CLOSE)
-                val isAnnotation = attributes[0].startsWith(ANNOTATION_MARKER)
-                val element = if (isAnnotation) attributes[0].substring(1) else attributes[0]
-                if (attributes.size > 1) {
-                    for (attribute in attributes.listIterator(1)) {
-                        if (attribute.isBlank()) continue
-                        val (key, valueArray) = attribute.split(ATTRIBUTE_ASSIGN)
-                        val values = valueArray.split(ATTRIBUTE_OR)
-                        when (key) {
-                            CODES_KEY -> codes
-                            GROUPS_KEY -> groups
-                            SHIFT_STATES_KEY -> shiftStates
-                            else -> null
-                        }?.addAll(values.map { it.toInt(10) })
-                    }
-                }
-                return SnyggRule(
-                    isAnnotation, element, codes.toList(), groups.toList(), shiftStates.toList(),
-                    pressedSelector, focusSelector, disabledSelector,
-                )
-            } catch (e: Exception) {
-                return null
-            }
-        }
-    }
-
-    override fun toString() = buildString {
-        if (isAnnotation) {
-            append(ANNOTATION_MARKER)
-        }
-        append(element)
-        appendAttribute(CODES_KEY, codes)
-        appendAttribute(GROUPS_KEY, groups)
-        appendAttribute(SHIFT_STATES_KEY, shiftStates)
-        appendSelector(PRESSED_SELECTOR, pressedSelector)
-        appendSelector(FOCUS_SELECTOR, focusSelector)
-        appendSelector(DISABLED_SELECTOR, disabledSelector)
-    }
-
-    private fun StringBuilder.appendAttribute(key: String, entries: List<Int>) {
-        if (entries.isNotEmpty()) {
-            append(ATTRIBUTE_OPEN)
-            append(key)
-            append(ATTRIBUTE_ASSIGN)
-            for ((n, entry) in entries.withIndex()) {
-                if (n != 0) {
-                    append(ATTRIBUTE_OR)
-                }
-                append(entry)
-            }
-            append(ATTRIBUTE_CLOSE)
-        }
-    }
-
-    private fun StringBuilder.appendSelector(key: String, selector: Boolean) {
-        if (selector) {
-            append(SELECTOR_COLON)
-            append(key)
-        }
+    init {
+        requireNotNull(
+            ANNOTATION_NAME_REGEX.matchEntire(elementName) ?:
+                ELEMENT_NAME_REGEX.matchEntire(elementName)
+        ) { "annotation/element name is invalid" }
     }
 
     override fun compareTo(other: SnyggRule): Int {
-        return when {
-            this.isAnnotation && !other.isAnnotation -> -1
-            !this.isAnnotation && other.isAnnotation -> 1
-            else -> when (val elem = this.element.compareTo(other.element)) {
-                0 -> when (val diff = this.comparatorWeight() - other.comparatorWeight()) {
-                    0 -> when {
-                        this.codes.size != other.codes.size -> this.codes.size.compareTo(other.codes.size)
-                        this.groups.size != other.groups.size -> this.groups.size.compareTo(other.groups.size)
-                        this.shiftStates.size != other.shiftStates.size -> this.shiftStates.size.compareTo(other.shiftStates.size)
-                        else -> {
-                            this.codes.indices.firstNotNullOfOrNull { n ->
-                                (this.codes[n].compareTo(other.codes[n])).takeIf { it != 0 }
-                            } ?: this.groups.indices.firstNotNullOfOrNull { n ->
-                                (this.groups[n].compareTo(other.groups[n])).takeIf { it != 0 }
-                            } ?: this.shiftStates.indices.firstNotNullOfOrNull { n ->
-                                (this.shiftStates[n].compareTo(other.shiftStates[n])).takeIf { it != 0 }
-                            } ?: 0
+        if (isAnnotation && !other.isAnnotation) {
+            return -1
+        }
+        if (!isAnnotation && other.isAnnotation) {
+            return 1
+        }
+        val elemDiff = elementName.compareTo(other.elementName)
+        if (elemDiff != 0) {
+            return elemDiff
+        }
+        val attrDiff = attributes.size.compareTo(other.attributes.size)
+        if (attrDiff != 0) {
+            return attrDiff
+        }
+        return selectors.compareTo(other.selectors)
+    }
+
+    override fun toString(): String {
+        return buildString {
+            append(elementName)
+            append(attributes.toString())
+            append(selectors.toString())
+        }
+    }
+
+    companion object {
+        private const val ATTRIBUTE_OPEN = "["
+        private const val ATTRIBUTE_CLOSE = "]"
+        private const val ATTRIBUTE_ASSIGN = "="
+        private const val ATTRIBUTE_VALUES_SEPARATOR = ","
+
+        private val ANNOTATION_NAME_REGEX = """(?<annotationName>@[a-zA-Z0-9-]+)""".toRegex()
+        private val ELEMENT_NAME_REGEX = """(?<elementName>[a-zA-Z0-9-]+)""".toRegex()
+        private val ATTRIBUTE_VALUE_REGEX = """[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?""".toRegex()
+        private val ATTRIBUTE_REGEX = """\[[a-zA-Z0-9-]+=$ATTRIBUTE_VALUE_REGEX(?:,$ATTRIBUTE_VALUE_REGEX)*]""".toRegex()
+        private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:$ATTRIBUTE_REGEX)+)?""".toRegex()
+        private val SELECTOR_REGEX = """:pressed|:focus|:disabled""".toRegex()
+        private val SELECTORS_REGEX = """(?<selectorsRaw>(?:$SELECTOR_REGEX)+)?""".toRegex()
+        private val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTORS_REGEX${'$'}""".toRegex()
+
+        val Saver = Saver<SnyggRule?, String>(
+            save = { it?.toString() ?: "" },
+            restore = { fromOrNull(it) },
+        )
+
+        fun fromOrNull(str: String): SnyggRule? {
+            val result = REGEX.matchEntire(str) ?: return null
+            val annotationName = result.groups["annotationName"]?.value
+            if (annotationName != null) {
+                return SnyggRule(elementName = annotationName)
+            }
+            val elementName = result.groups["elementName"]?.value ?: return null
+            val attributesRaw = result.groups["attributesRaw"]?.value
+            val selectorsRaw = result.groups["selectorsRaw"]?.value
+
+            return SnyggRule(
+                elementName = elementName,
+                attributes = Attributes.from(attributesRaw ?: ""),
+                selectors = Selectors.from(selectorsRaw ?: ""),
+            )
+        }
+    }
+
+    data class Attributes internal constructor(
+        private val attributes: Map<String, List<Int>> = emptyMap(),
+    ) : Map<String, List<Int>> by attributes {
+        override fun toString(): String {
+            return buildString {
+                for ((key, values) in attributes) {
+                    append(ATTRIBUTE_OPEN)
+                    append(key)
+                    append(ATTRIBUTE_ASSIGN)
+                    val valueStrings = mutableListOf<String>()
+                    values.fold(mutableListOf<IntRange>()) { acc, value ->
+                        if (acc.isEmpty()) {
+                            acc.add(value..value)
+                        } else {
+                            val lastRange = acc.last()
+                            if (lastRange.last + 1 == value) {
+                                acc[acc.size - 1] = lastRange.first..value
+                            } else {
+                                acc.add(value..value)
+                            }
+                        }
+                        acc
+                    }.forEach { range ->
+                        when (range.first) {
+                            range.last -> {
+                                valueStrings.add(range.first.toString())
+                            }
+                            range.last - 1 -> {
+                                valueStrings.add(range.first.toString())
+                                valueStrings.add((range.first + 1).toString())
+                            }
+                            else -> {
+                                valueStrings.add(range.toString())
+                            }
                         }
                     }
-                    else -> diff
-                }
-                else -> {
-                    val a = PreferredElementSorting.indexOf(this.element).let { if (it < 0) Int.MAX_VALUE else it }
-                    val b = PreferredElementSorting.indexOf(other.element).let { if (it < 0) Int.MAX_VALUE else it }
-                    a.compareTo(b).let { if (it == 0) elem else it }
+                    append(valueStrings.joinToString(ATTRIBUTE_VALUES_SEPARATOR))
+                    append(ATTRIBUTE_CLOSE)
                 }
             }
         }
-    }
 
-    private fun comparatorWeight(): Int {
-        return (if (codes.isNotEmpty()) 0x01 else 0) +
-            (if (groups.isNotEmpty()) 0x02 else 0) +
-            (if (shiftStates.isNotEmpty()) 0x04 else 0) +
-            (if (pressedSelector) 0x08 else 0) +
-            (if (focusSelector) 0x10 else 0) +
-            (if (disabledSelector) 0x20 else 0)
-    }
+        companion object {
+            internal fun from(str: String): Attributes {
+                val attributes = mutableMapOf<String, List<Int>>()
+                ATTRIBUTE_REGEX.findAll(str).forEach { attrRawMatch ->
+                    val attrRaw = attrRawMatch.value.substring(1, attrRawMatch.value.length - 1)
+                    val (key, valuesRaw) = attrRaw.split(ATTRIBUTE_ASSIGN)
+                    val values = mutableSetOf<Int>()
+                    ATTRIBUTE_VALUE_REGEX.findAll(valuesRaw).forEach { valueRawMatch ->
+                        val valueRaw = valueRawMatch.value
+                        if (valueRaw.contains("..")) {
+                            val (start, end) = valueRaw.split("..")
+                            values.addAll(start.toInt()..end.toInt())
+                        } else {
+                            values.add(valueRaw.toInt())
+                        }
+                    }
+                    attributes[key] = values.toList().sorted()
+                }
+                return Attributes(attributes.toMap())
+            }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as SnyggRule
-
-        if (isAnnotation != other.isAnnotation) return false
-        if (element != other.element) return false
-        if (!codes.containsAll(other.codes) || !other.codes.containsAll(codes)) return false
-        if (!groups.containsAll(other.groups) || !other.groups.containsAll(groups)) return false
-        if (!shiftStates.containsAll(other.shiftStates) || !other.shiftStates.containsAll(shiftStates)) return false
-        if (pressedSelector != other.pressedSelector) return false
-        if (focusSelector != other.focusSelector) return false
-        if (disabledSelector != other.disabledSelector) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = isAnnotation.hashCode()
-        result = 31 * result + element.hashCode()
-        for (code in codes.sorted()) {
-            result = 31 * result + code.hashCode()
-        }
-        for (group in groups.sorted()) {
-            result = 31 * result + group.hashCode()
-        }
-        for (mode in shiftStates.sorted()) {
-            result = 31 * result + mode.hashCode()
-        }
-        result = 31 * result + pressedSelector.hashCode()
-        result = 31 * result + focusSelector.hashCode()
-        result = 31 * result + disabledSelector.hashCode()
-        return result
-    }
-
-    object Serializer : KSerializer<SnyggRule> {
-        override val descriptor = PrimitiveSerialDescriptor("SnyggRule", PrimitiveKind.STRING)
-
-        override fun serialize(encoder: Encoder, value: SnyggRule) {
-            encoder.encodeString(value.toString())
-        }
-
-        override fun deserialize(decoder: Decoder): SnyggRule {
-            return from(decoder.decodeString()) ?: SnyggRule(element = "invalid")
+            internal fun of(vararg pairs: Pair<String, List<Int>>) = Attributes(mapOf(*pairs))
         }
     }
-}
 
-fun SnyggRule.Companion.definedVariablesRule(): SnyggRule {
-    return SnyggRule(isAnnotation = true, element = "defines")
+    data class Selectors internal constructor(
+        val pressed: Boolean = false,
+        val focus: Boolean = false,
+        val disabled: Boolean = false,
+    ): Comparable<Selectors> {
+        override fun compareTo(other: Selectors): Int {
+            return comparatorWeight().compareTo(other.comparatorWeight())
+        }
+
+        private fun comparatorWeight(): Int {
+            return (if (pressed) 0x1 else 0) +
+                (if (focus) 0x2 else 0) +
+                (if (disabled) 0x4 else 0)
+        }
+
+        override fun toString(): String {
+            return buildString {
+                if (pressed) {
+                    append(SELECTOR_COLON)
+                    append(PRESSED)
+                }
+                if (focus) {
+                    append(SELECTOR_COLON)
+                    append(FOCUS)
+                }
+                if (disabled) {
+                    append(SELECTOR_COLON)
+                    append(DISABLED)
+                }
+            }
+        }
+
+        companion object {
+            private const val SELECTOR_COLON = ":"
+            private const val PRESSED = "pressed"
+            private const val FOCUS = "focus"
+            private const val DISABLED = "disabled"
+
+            internal fun from(str: String): Selectors {
+                var pressed = false
+                var focus = false
+                var disabled = false
+                SELECTOR_REGEX.findAll(str).forEach { match ->
+                    val selector = match.value.substring(1)
+                    when (selector) {
+                        PRESSED -> pressed = true
+                        FOCUS -> focus = true
+                        DISABLED -> disabled = true
+                    }
+                }
+                return Selectors(pressed, focus, disabled)
+            }
+        }
+    }
 }
 
 fun SnyggRule.isDefinedVariablesRule(): Boolean {
-    return this.isAnnotation && this.element == "defines"
+    return this.elementName == "@defines"
+}
+
+fun SnyggRule.Companion.definedVariablesRule(): SnyggRule {
+    return SnyggRule("@defines")
 }

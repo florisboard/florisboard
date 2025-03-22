@@ -57,9 +57,11 @@ object Snygg {
         rulePreferredElementSorting: List<String>,
         rulePlaceholders: Map<String, Int>,
     ) {
+        /*
         SnyggStylesheetSerializer.GlobalStylesheetSpec = stylesheetSpec
         SnyggRule.PreferredElementSorting = rulePreferredElementSorting
         SnyggRule.Placeholders = rulePlaceholders
+        */
     }
 }
 

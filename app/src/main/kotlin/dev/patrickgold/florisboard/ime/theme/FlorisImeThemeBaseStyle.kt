@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import org.florisboard.lib.snygg.SnyggStylesheet
 
-val FlorisImeThemeBaseStyle = SnyggStylesheet {
+val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     defines {
         "primary" to rgbaColor(76, 175, 80)
         "primaryVariant" to rgbaColor(56, 142, 60)
@@ -46,25 +46,25 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         shadowElevation = size(2.dp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.Key(pressedSelector = true) {
+    FlorisImeUi.Key(pressed = true) {
         background = `var`("surfaceVariant")
         foreground = `var`("onSurface")
     }
-    FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
+    FlorisImeUi.Key("code" to listOf(KeyCode.ENTER)) {
         background = `var`("primary")
         foreground = `var`("onSurface")
     }
-    FlorisImeUi.Key(codes = listOf(KeyCode.ENTER), pressedSelector = true) {
+    FlorisImeUi.Key("code" to listOf(KeyCode.ENTER), pressed = true) {
         background = `var`("primaryVariant")
         foreground = `var`("onSurface")
     }
     FlorisImeUi.Key(
-        codes = listOf(KeyCode.SHIFT),
-        modes = listOf(InputShiftState.CAPS_LOCK.value),
+        "code" to listOf(KeyCode.SHIFT),
+        "mode" to listOf(InputShiftState.CAPS_LOCK.value),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }
-    FlorisImeUi.Key(codes = listOf(KeyCode.SPACE)) {
+    FlorisImeUi.Key("code" to listOf(KeyCode.SPACE)) {
         background = `var`("surface")
         foreground = rgbaColor(144, 144, 144)
         fontSize = size(12.sp)
@@ -80,7 +80,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.KeyPopup(focusSelector = true) {
+    FlorisImeUi.KeyPopup(focus = true) {
         background = rgbaColor(189, 189, 189)
         foreground = `var`("onSurface")
         fontSize = size(22.sp)
@@ -116,7 +116,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.EmojiKey(pressedSelector = true) {
+    FlorisImeUi.EmojiKey(pressed = true) {
         background = `var`("surface")
         foreground = `var`("onSurface")
     }
@@ -159,11 +159,11 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(18.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.SmartbarActionKey(pressedSelector = true) {
+    FlorisImeUi.SmartbarActionKey(pressed = true) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
-    FlorisImeUi.SmartbarActionKey(disabledSelector = true) {
+    FlorisImeUi.SmartbarActionKey(pressed = true) {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("surface")
     }
@@ -173,7 +173,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(14.sp)
         shape = rectangleShape()
     }
-    FlorisImeUi.SmartbarCandidateWord(pressedSelector = true) {
+    FlorisImeUi.SmartbarCandidateWord(pressed = true) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
@@ -183,7 +183,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(14.sp)
         shape = roundedCornerShape(8)
     }
-    FlorisImeUi.SmartbarCandidateClip(pressedSelector = true) {
+    FlorisImeUi.SmartbarCandidateClip(pressed = true) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }

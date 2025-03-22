@@ -28,7 +28,7 @@ fun SnyggButton(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val stylesheet = LocalSnyggStylesheet.current
+    val snyggTheme = LocalSnyggTheme.current
     Row(
         modifier = modifier,
         content = content,

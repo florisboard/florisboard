@@ -37,7 +37,7 @@ import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
-class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
+class SnyggPropertySet(val properties: Map<String, SnyggValue> = emptyMap()) {
     val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue
     val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
 
