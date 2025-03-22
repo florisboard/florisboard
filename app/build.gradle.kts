@@ -23,7 +23,6 @@ plugins {
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.mannodermaus.android.junit5)
     alias(libs.plugins.mikepenz.aboutlibraries)
 }
 
@@ -206,12 +205,6 @@ dependencies {
     implementation(project(":lib:kotlin"))
     implementation(project(":lib:native"))
     implementation(project(":lib:snygg"))
-
-    testImplementation(libs.equalsverifier)
-    testImplementation(libs.kotest.assertions.core)
-    testImplementation(libs.kotest.extensions.roboelectric)
-    testImplementation(libs.kotest.property)
-    testImplementation(libs.kotest.runner.junit5)
 
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
