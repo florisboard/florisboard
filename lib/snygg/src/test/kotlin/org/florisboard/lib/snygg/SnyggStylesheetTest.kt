@@ -6,8 +6,10 @@ import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggValue
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 val BasicStylesheetJson = """
@@ -39,29 +41,28 @@ class SnyggStylesheetTest {
         val defines = stylesheet.rules[SnyggRule.definedVariablesRule()]
         assertNotNull(defines)
         assertEquals(1, defines.properties.size)
-        val definesTestValue = defines.properties["--test"]
-        assertNotNull(definesTestValue)
-        assertEquals(SnyggSolidColorValue::class, definesTestValue::class)
-        assertEquals(Color.Transparent, (definesTestValue as SnyggSolidColorValue).color)
+        val definesTestValue: SnyggValue? = defines.properties["--test"]
+        assertIs<SnyggSolidColorValue>(definesTestValue)
+        assertEquals(Color.Transparent, definesTestValue.color)
 
         val smartbar = stylesheet.rules[SnyggRule("smartbar")]
         assertNotNull(smartbar)
         assertEquals(3, smartbar.properties.size)
-        assertEquals(SnyggSolidColorValue::class, smartbar.background::class)
-        assertEquals(Color.Transparent, (smartbar.background as SnyggSolidColorValue).color)
-        assertEquals(SnyggDefinedVarValue::class, smartbar.borderColor::class)
-        assertEquals("--test", (smartbar.borderColor as SnyggDefinedVarValue).key)
-        assertEquals(SnyggDpSizeValue::class, smartbar.shadowElevation::class)
-        assertEquals(3.dp, (smartbar.shadowElevation as SnyggDpSizeValue).dp)
+        val smartbarBackground = assertIs<SnyggSolidColorValue>(smartbar.background)
+        assertEquals(Color.Transparent, smartbarBackground.color)
+        val smartbarBorderColor = assertIs<SnyggDefinedVarValue>(smartbar.borderColor)
+        assertEquals("--test", smartbarBorderColor.key)
+        val smartbarShadowElevation = assertIs<SnyggDpSizeValue>(smartbar.shadowElevation)
+        assertEquals(3.dp, smartbarShadowElevation.dp)
 
         val keyboard = stylesheet.rules[SnyggRule("keyboard")]
         assertNotNull(keyboard)
         assertEquals(3, keyboard.properties.size)
-        assertEquals(SnyggSolidColorValue::class, keyboard.background::class)
-        assertEquals(Color(255, 255, 255), (keyboard.background as SnyggSolidColorValue).color)
-        assertEquals(SnyggDpSizeValue::class, keyboard.width::class)
-        assertEquals(20.dp, (keyboard.width as SnyggDpSizeValue).dp)
-        assertEquals(SnyggDpSizeValue::class, keyboard.height::class)
-        assertEquals(30.dp, (keyboard.height as SnyggDpSizeValue).dp)
+        val keyboardBackground = assertIs<SnyggSolidColorValue>(keyboard.background)
+        assertEquals(Color(255, 255, 255), keyboardBackground.color)
+        val keyboardWidth = assertIs<SnyggDpSizeValue>(keyboard.width)
+        assertEquals(20.dp, keyboardWidth.dp)
+        val keyboardHeight = assertIs<SnyggDpSizeValue>(keyboard.height)
+        assertEquals(30.dp, keyboardHeight.dp)
     }
 }
