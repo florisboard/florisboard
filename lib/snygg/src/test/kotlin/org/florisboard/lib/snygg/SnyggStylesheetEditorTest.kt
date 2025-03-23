@@ -12,6 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class SnyggStylesheetEditorTest {
     @Test
@@ -30,6 +31,7 @@ class SnyggStylesheetEditorTest {
         assertEquals(SnyggStylesheet.SCHEMA_V2, stylesheet.schema)
         assertEquals(2, stylesheet.rules.size)
 
+        assertTrue { SnyggRule.definedVariablesRule().isDefinedVariablesRule() }
         val defines = stylesheet.rules[SnyggRule.definedVariablesRule()]
         assertNotNull(defines)
         val definesSmallSize = assertIs<SnyggDpSizeValue>(defines.properties["--small-size"])

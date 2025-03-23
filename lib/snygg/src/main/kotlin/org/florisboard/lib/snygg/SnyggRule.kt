@@ -16,7 +16,7 @@
 
 package org.florisboard.lib.snygg
 
-import androidx.compose.runtime.saveable.Saver
+import kotlin.math.min
 
 data class SnyggRule internal constructor(
     val elementName: String,
@@ -44,9 +44,40 @@ data class SnyggRule internal constructor(
         if (elemDiff != 0) {
             return elemDiff
         }
-        val attrDiff = attributes.size.compareTo(other.attributes.size)
-        if (attrDiff != 0) {
-            return attrDiff
+        if (attributes.isNotEmpty() || other.attributes.isNotEmpty()) {
+            if (attributes.isEmpty()) {
+                return -1
+            }
+            if (other.attributes.isEmpty()) {
+                return 1
+            }
+            // both have attributes at this point
+            val attrs = attributes.entries.toList().sortedBy { it.key }
+            val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
+            for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
+                val attr = attrs[attrIndex]
+                val otherAttr = otherAttrs[attrIndex]
+                val keyDiff = attr.key.compareTo(otherAttr.key)
+                if (keyDiff != 0) {
+                    return keyDiff
+                }
+                for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
+                    val value = attr.value[valueIndex]
+                    val otherValue = otherAttr.value[valueIndex]
+                    val valueDiff = value.compareTo(otherValue)
+                    if (valueDiff != 0) {
+                        return valueDiff
+                    }
+                }
+                val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
+                if (valueSizeDiff != 0) {
+                    return valueSizeDiff
+                }
+            }
+            val attrSizeDiff = attrs.size.compareTo(otherAttrs.size)
+            if (attrSizeDiff != 0) {
+                return attrSizeDiff
+            }
         }
         return selectors.compareTo(other.selectors)
     }
@@ -74,18 +105,13 @@ data class SnyggRule internal constructor(
         private val SELECTORS_REGEX = """(?<selectorsRaw>(?:$SELECTOR_REGEX)+)?""".toRegex()
         private val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTORS_REGEX${'$'}""".toRegex()
 
-        val Saver = Saver<SnyggRule?, String>(
-            save = { it?.toString() ?: "" },
-            restore = { fromOrNull(it) },
-        )
-
         fun fromOrNull(str: String): SnyggRule? {
             val result = REGEX.matchEntire(str) ?: return null
             val annotationName = result.groups["annotationName"]?.value
             if (annotationName != null) {
                 return SnyggRule(elementName = annotationName)
             }
-            val elementName = result.groups["elementName"]?.value ?: return null
+            val elementName = result.groups["elementName"]!!.value // can not be null logically
             val attributesRaw = result.groups["attributesRaw"]?.value
             val selectorsRaw = result.groups["selectorsRaw"]?.value
 

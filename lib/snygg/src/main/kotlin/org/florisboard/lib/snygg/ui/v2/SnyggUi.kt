@@ -19,8 +19,9 @@ package org.florisboard.lib.snygg.ui.v2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.staticCompositionLocalOf
-import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggTheme
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
@@ -40,3 +41,8 @@ fun ProvideSnyggTheme(
         content = content,
     )
 }
+
+fun SnyggRule.Companion.saver() = Saver<SnyggRule?, String>(
+    save = { it?.toString() ?: "" },
+    restore = { fromOrNull(it) },
+)
