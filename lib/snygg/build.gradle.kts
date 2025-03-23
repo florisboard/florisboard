@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 /*
  * Copyright (C) 2025 The FlorisBoard Contributors
  *
@@ -67,6 +69,9 @@ android {
 }
 
 tasks.withType<Test> {
+    testLogging {
+        events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+    }
     useJUnitPlatform()
 }
 

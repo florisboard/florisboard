@@ -4,6 +4,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -105,6 +106,18 @@ class SnyggRuleTest {
             assertTrue { leftRule == rightRule }
             assertTrue { leftRule.compareTo(rightRule) == 0 }
         } })
+    }
+
+    @Test
+    fun `test isDefinedVariableRule`() {
+        assertTrue(SnyggRule.definedVariablesRule().isDefinedVariablesRule())
+    }
+
+
+    @Test
+    fun `test direct invalid input`(){
+        assertFails { SnyggRule("@") }
+        assertFails { SnyggRule("button_name") }
     }
 
     @Test

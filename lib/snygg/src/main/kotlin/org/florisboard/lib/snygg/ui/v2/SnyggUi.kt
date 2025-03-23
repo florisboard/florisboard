@@ -42,7 +42,8 @@ fun ProvideSnyggTheme(
     )
 }
 
-fun SnyggRule.Companion.saver() = Saver<SnyggRule?, String>(
-    save = { it?.toString() ?: "" },
-    restore = { fromOrNull(it) },
-)
+val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
+    get() = Saver(
+        save = { it?.toString() ?: "" },
+        restore = { fromOrNull(it) },
+    )
