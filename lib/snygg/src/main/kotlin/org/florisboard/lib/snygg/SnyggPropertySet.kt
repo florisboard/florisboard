@@ -112,6 +112,15 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         }
     }
 
+    fun applyAllNonImplicit(other: SnyggPropertySet) {
+        for ((property, value) in other.properties) {
+            if (value is SnyggImplicitInheritValue) {
+                continue
+            }
+            setProperty(property, value)
+        }
+    }
+
     fun build() = SnyggPropertySet(properties.toMap())
 
     infix fun String.to(v: SnyggValue) {

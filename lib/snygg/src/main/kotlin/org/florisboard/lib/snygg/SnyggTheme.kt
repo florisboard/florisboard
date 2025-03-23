@@ -16,43 +16,122 @@
 
 package org.florisboard.lib.snygg
 
-import org.florisboard.lib.snygg.value.SnyggValue
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
 
+/**
+ * Pre-compiled style data for a SnyggTheme.
+ *
+ * The map must fulfill the following contract:
+ * 1. The map key represents the element name.
+ * 2. All rules mapped to a key are guaranteed to have the same element
+ *    name. This is not checked again during style querying.
+ * 3. All rules per key are sorted in ascending order based on the comparison
+ *    logic defined by SnyggRule.
+ * 4. All SnyggPropertySet values are pre-computed and must not contain
+ *    variable references. Ruleset merging has been done already and a
+ *    selector set contains all inherited properties from its base element.
+ * 5. All annotation elements have been pre-processed and stripped from the data.
+ */
 private typealias CompiledStyleData =
     Map<String, List<Pair<SnyggRule, SnyggPropertySet>>>
 
-// TODO: WIP, add proper compilation and get/fetch/composable state integration
+typealias SnyggQueryAttributes = Map<String, Int>
+
+typealias SnyggQuerySelectors = SnyggRule.Selectors
+
+/**
+ * Represents the runtime style data, which is used for styling UI elements.
+ */
 @JvmInline
 value class SnyggTheme internal constructor(
     private val style: CompiledStyleData,
 ) {
-    internal fun get(
+    @Composable
+    internal fun query(
         elementName: String,
-        attributes: Map<String, Int>,
-        selectors: SnyggRule.Selectors,
+        attributes: SnyggQueryAttributes,
+        selectors: SnyggQuerySelectors,
+    ) = remember(elementName, attributes, selectors) {
+        queryStatic(elementName, attributes, selectors)
+    }
+
+    internal fun queryStatic(
+        elementName: String,
+        attributes: SnyggQueryAttributes,
+        selectors: SnyggQuerySelectors,
     ): SnyggPropertySet {
         val styleSets = style[elementName] ?: return SnyggPropertySet()
-        val properties = mutableMapOf<String, SnyggValue>()
-        TODO()
+        val editor = SnyggPropertySetEditor()
+        for ((rule, propertySet) in styleSets) {
+            if (rule.isMatchForQuery(attributes, selectors)) {
+                editor.applyAllNonImplicit(propertySet)
+            }
+        }
+        return editor.build()
     }
 
     companion object {
-        internal fun from(stylesheet: SnyggStylesheet): SnyggTheme {
-            val style = mutableMapOf<String, MutableList<Pair<SnyggRule, SnyggPropertySet>>>()
-            val definedVariables = stylesheet.rules.firstNotNullOfOrNull { (rule, _) ->
-                rule.isDefinedVariablesRule()
-            } ?: SnyggPropertySet()
+        internal fun compileFrom(stylesheet: SnyggStylesheet): SnyggTheme {
+            val elements = mutableMapOf<String, MutableList<Pair<SnyggRule, SnyggPropertySet>>>()
+            var variablesSet: SnyggPropertySet? = null
             stylesheet.rules.forEach { (rule, propertySet) ->
-                val list = style.getOrDefault(rule.elementName, mutableListOf())
-                list.add(rule to propertySet)
-                style[rule.elementName] = list
-            }
-            // TODO: we need to compile the vars here!!!!!!!!!!!!!!!!!!
-            return SnyggTheme(
-                style = style.mapValues { (_, list) ->
-                    list.sortedBy { it.first }
+                if (rule.isDefinedVariablesRule()) {
+                    variablesSet = propertySet
+                } else {
+                    val list = elements.getOrDefault(rule.elementName, mutableListOf())
+                    list.add(rule to propertySet)
+                    elements[rule.elementName] = list
                 }
-            )
+            }
+            val variables = variablesSet?.properties ?: emptyMap()
+            val style = elements.mapValues { (_, rulesets) ->
+                rulesets.sortBy { it.first }
+                return@mapValues rulesets.map { (rule, propertySet) ->
+                    val editor = propertySet.edit()
+                    for ((property, value) in editor.properties) {
+                        if (value is SnyggDefinedVarValue) {
+                            editor.properties[property] =
+                                variables[value.key] ?: SnyggImplicitInheritValue
+                        }
+                    }
+                    return@map rule to editor.build()
+                }
+            }
+            return SnyggTheme(style)
         }
     }
+}
+
+private fun SnyggRule.isMatchForQuery(
+    queryAttributes: SnyggQueryAttributes,
+    querySelectors: SnyggQuerySelectors,
+): Boolean {
+    return selectors.isMatchForQuery(querySelectors) &&
+        attributes.isMatchForQuery(queryAttributes)
+}
+
+private fun SnyggRule.Attributes.isMatchForQuery(query: SnyggQueryAttributes): Boolean {
+    for ((attrKey, attrValues) in this) {
+        val queryValue = query[attrKey] ?: return false
+        if (!attrValues.contains(queryValue)) {
+            return false
+        }
+    }
+    return true
+}
+
+private fun SnyggRule.Selectors.isMatchForQuery(query: SnyggQuerySelectors): Boolean {
+    if (pressed && !query.pressed) {
+        return false
+    }
+    if (focus && !query.focus) {
+        return false
+    }
+    if (disabled && !query.disabled) {
+        return false
+    }
+    return true
 }

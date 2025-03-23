@@ -44,40 +44,9 @@ data class SnyggRule internal constructor(
         if (elemDiff != 0) {
             return elemDiff
         }
-        if (attributes.isNotEmpty() || other.attributes.isNotEmpty()) {
-            if (attributes.isEmpty()) {
-                return -1
-            }
-            if (other.attributes.isEmpty()) {
-                return 1
-            }
-            // both have attributes at this point
-            val attrs = attributes.entries.toList().sortedBy { it.key }
-            val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
-            for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
-                val attr = attrs[attrIndex]
-                val otherAttr = otherAttrs[attrIndex]
-                val keyDiff = attr.key.compareTo(otherAttr.key)
-                if (keyDiff != 0) {
-                    return keyDiff
-                }
-                for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
-                    val value = attr.value[valueIndex]
-                    val otherValue = otherAttr.value[valueIndex]
-                    val valueDiff = value.compareTo(otherValue)
-                    if (valueDiff != 0) {
-                        return valueDiff
-                    }
-                }
-                val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
-                if (valueSizeDiff != 0) {
-                    return valueSizeDiff
-                }
-            }
-            val attrSizeDiff = attrs.size.compareTo(otherAttrs.size)
-            if (attrSizeDiff != 0) {
-                return attrSizeDiff
-            }
+        val attrDiff = attributes.compareTo(other.attributes)
+        if (attrDiff != 0) {
+            return attrDiff
         }
         return selectors.compareTo(other.selectors)
     }
@@ -125,7 +94,46 @@ data class SnyggRule internal constructor(
 
     data class Attributes internal constructor(
         private val attributes: Map<String, List<Int>> = emptyMap(),
-    ) : Map<String, List<Int>> by attributes {
+    ) : Map<String, List<Int>> by attributes, Comparable<Attributes> {
+        override fun compareTo(other: Attributes): Int {
+            if (attributes.isNotEmpty() || other.attributes.isNotEmpty()) {
+                if (attributes.isEmpty()) {
+                    return -1
+                }
+                if (other.attributes.isEmpty()) {
+                    return 1
+                }
+                // both have attributes at this point
+                val attrs = attributes.entries.toList().sortedBy { it.key }
+                val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
+                for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
+                    val attr = attrs[attrIndex]
+                    val otherAttr = otherAttrs[attrIndex]
+                    val keyDiff = attr.key.compareTo(otherAttr.key)
+                    if (keyDiff != 0) {
+                        return keyDiff
+                    }
+                    for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
+                        val value = attr.value[valueIndex]
+                        val otherValue = otherAttr.value[valueIndex]
+                        val valueDiff = value.compareTo(otherValue)
+                        if (valueDiff != 0) {
+                            return valueDiff
+                        }
+                    }
+                    val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
+                    if (valueSizeDiff != 0) {
+                        return valueSizeDiff
+                    }
+                }
+                val attrSizeDiff = attrs.size.compareTo(otherAttrs.size)
+                if (attrSizeDiff != 0) {
+                    return attrSizeDiff
+                }
+            }
+            return 0
+        }
+
         override fun toString(): String {
             return buildString {
                 for ((key, values) in attributes) {
