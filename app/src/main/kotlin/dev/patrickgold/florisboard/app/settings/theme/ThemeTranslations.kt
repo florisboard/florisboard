@@ -34,8 +34,8 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggExplicitInheritValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -209,8 +209,8 @@ internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): Stri
         SnyggImplicitInheritValue -> R.string.general__select_dropdown_value_placeholder
         SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggSolidColorValue -> R.string.snygg__property_value__solid_color
-        SnyggMaterialYouLightColorValue -> R.string.snygg__property_value__material_you_light_color
-        SnyggMaterialYouDarkColorValue -> R.string.snygg__property_value__material_you_dark_color
+        SnyggDynamicColorLightColorValue -> R.string.snygg__property_value__material_you_light_color
+        SnyggDynamicColorDarkColorValue -> R.string.snygg__property_value__material_you_dark_color
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
         SnyggCircleShapeValue -> R.string.snygg__property_value__circle_shape
         SnyggCutCornerDpShapeValue -> R.string.snygg__property_value__cut_corner_shape_dp

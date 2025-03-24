@@ -17,11 +17,11 @@
 package org.florisboard.lib.snygg.value
 
 import androidx.compose.ui.graphics.Color
+import org.florisboard.lib.color.ColorPalette
 import kotlin.math.roundToInt
 
 sealed interface SnyggAppearanceValue : SnyggValue
 
-@Suppress("ConstPropertyName")
 object RgbaColor {
     const val HexId = "hex"
     val Hex6Matcher = """^#[a-fA-F0-9]{6}$""".toRegex()
@@ -143,6 +143,73 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
                 }
             }
             error("No matching spec found for \"$v\"")
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
+/// Dynamic Color Value
+
+private const val ColorNameId = "name"
+private val ColorName = """^\w*$""".toRegex()
+
+data class SnyggDynamicLightColorValue(val colorName: String) : SnyggAppearanceValue {
+    companion object : SnyggValueEncoder {
+        private const val FunctionName = "dynamic-light-color"
+
+        override val spec = SnyggValueSpec {
+            function(name = FunctionName) {
+                commaList {
+                    +string(id = ColorNameId, regex = ColorName)
+                }
+            }
+        }
+
+        override fun defaultValue() = SnyggDynamicLightColorValue(ColorPalette.Primary.id)
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggDynamicLightColorValue)
+            val map = snyggIdToValueMapOf(ColorNameId to v.colorName)
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = snyggIdToValueMapOf()
+            spec.parse(v, map)
+            val colorName = map.getOrThrow<String>(ColorNameId)
+            return@runCatching SnyggDynamicLightColorValue(colorName)
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
+data class SnyggDynamicDarkColorValue(val colorName: String) : SnyggAppearanceValue {
+    companion object : SnyggValueEncoder {
+        private const val FunctionName = "dynamic-dark-color"
+
+        override val spec = SnyggValueSpec {
+            function(name = FunctionName) {
+                commaList {
+                    +string(id = ColorNameId, regex = ColorName)
+                }
+            }
+        }
+
+        override fun defaultValue() = SnyggDynamicDarkColorValue(ColorPalette.Primary.id)
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggDynamicDarkColorValue)
+            val map = snyggIdToValueMapOf(ColorNameId to v)
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = snyggIdToValueMapOf()
+            spec.parse(v, map)
+            val colorName = map.getOrThrow<String>(ColorNameId)
+            return@runCatching SnyggDynamicDarkColorValue(colorName)
         }
     }
 

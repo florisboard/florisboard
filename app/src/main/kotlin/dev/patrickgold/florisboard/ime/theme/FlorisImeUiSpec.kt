@@ -24,8 +24,8 @@ import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
@@ -36,21 +36,21 @@ fun SnyggPropertySetSpecBuilder.background() {
     property(
         name = Snygg.Background,
         level = SnyggLevel.BASIC,
-        supportedValues(SnyggSolidColorValue, SnyggMaterialYouLightColorValue, SnyggMaterialYouDarkColorValue),
+        supportedValues(SnyggSolidColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
 }
 fun SnyggPropertySetSpecBuilder.foreground() {
     property(
         name = Snygg.Foreground,
         level = SnyggLevel.BASIC,
-        supportedValues(SnyggSolidColorValue, SnyggMaterialYouLightColorValue, SnyggMaterialYouDarkColorValue),
+        supportedValues(SnyggSolidColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
 }
 fun SnyggPropertySetSpecBuilder.border() {
     property(
         name = Snygg.BorderColor,
         level = SnyggLevel.ADVANCED,
-        supportedValues(SnyggSolidColorValue, SnyggMaterialYouLightColorValue, SnyggMaterialYouDarkColorValue),
+        supportedValues(SnyggSolidColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
     property(
         name = Snygg.BorderWidth,

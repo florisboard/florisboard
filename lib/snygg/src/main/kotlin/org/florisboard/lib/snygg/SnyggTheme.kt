@@ -16,10 +16,14 @@
 
 package org.florisboard.lib.snygg
 
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.remember
+import org.florisboard.lib.color.getColor
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 
 /**
  * Pre-compiled style data for a SnyggTheme.
@@ -49,25 +53,29 @@ typealias SnyggQuerySelectors = SnyggRule.Selectors
 value class SnyggTheme internal constructor(
     private val style: CompiledStyleData,
 ) {
-    @Composable
-    internal fun query(
-        elementName: String,
-        attributes: SnyggQueryAttributes,
-        selectors: SnyggQuerySelectors,
-    ) = remember(elementName, attributes, selectors) {
-        queryStatic(elementName, attributes, selectors)
-    }
-
     internal fun queryStatic(
         elementName: String,
         attributes: SnyggQueryAttributes,
         selectors: SnyggQuerySelectors,
+        dynamicLightColorScheme: ColorScheme,
+        dynamicDarkColorScheme: ColorScheme,
     ): SnyggPropertySet {
         val styleSets = style[elementName] ?: return SnyggPropertySet()
         val editor = SnyggPropertySetEditor()
         for ((rule, propertySet) in styleSets) {
             if (rule.isMatchForQuery(attributes, selectors)) {
                 editor.applyAllNonImplicit(propertySet)
+            }
+        }
+        for ((key, value) in editor.properties) {
+            if (value is SnyggDynamicLightColorValue) {
+                editor.properties[key] = SnyggSolidColorValue(
+                    color = dynamicLightColorScheme.getColor(value.colorName)
+                )
+            } else if (value is SnyggDynamicDarkColorValue) {
+                editor.properties[key] = SnyggSolidColorValue(
+                    color = dynamicDarkColorScheme.getColor(value.colorName)
+                )
             }
         }
         return editor.build()

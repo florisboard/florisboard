@@ -112,7 +112,7 @@ object SnyggExplicitInheritValue : SnyggValue, SnyggValueEncoder {
  *
  * The inherit intent was defined implicitly by the serialization process (when a required property was missing for a
  * rule). This value is thus **not** meant to be serialized, the serialization of this value is indeed prohibited and
- * an attempt to serialize this value will result in a serialization failure. Additionally this value should be shown
+ * an attempt to serialize this value will result in a serialization failure. Additionally, this value should be shown
  * as "Missing" in a stylesheet editor UI.
  */
 object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
@@ -138,8 +138,8 @@ object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
 private val SnyggValueEncoders = listOfNotNull(
     SnyggDefinedVarValue,
     SnyggSolidColorValue,
-    SnyggMaterialYouLightColorValue,
-    SnyggMaterialYouDarkColorValue,
+    SnyggDynamicLightColorValue,
+    SnyggDynamicDarkColorValue,
     //SnyggImageRefValue,
     SnyggRectangleShapeValue,
     SnyggCircleShapeValue,

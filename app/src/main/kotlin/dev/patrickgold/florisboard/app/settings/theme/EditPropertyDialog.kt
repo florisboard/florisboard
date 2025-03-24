@@ -79,9 +79,9 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
 import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
@@ -518,14 +518,14 @@ private fun PropertyValueEditor(
             }
         }
 
-        is SnyggMaterialYouValue -> {
+        is SnyggDynamicColorValue -> {
             val onSelectItem: (Int) -> Unit = when (value) {
-                is SnyggMaterialYouDarkColorValue -> { index ->
-                    onValueChange(SnyggMaterialYouDarkColorValue(MaterialYouColor.colorNames[index]))
+                is SnyggDynamicColorDarkColorValue -> { index ->
+                    onValueChange(SnyggDynamicColorDarkColorValue(MaterialYouColor.colorNames[index]))
                 }
 
-                is SnyggMaterialYouLightColorValue -> { index ->
-                    onValueChange(SnyggMaterialYouLightColorValue(MaterialYouColor.colorNames[index]))
+                is SnyggDynamicColorLightColorValue -> { index ->
+                    onValueChange(SnyggDynamicColorLightColorValue(MaterialYouColor.colorNames[index]))
                 }
             }
 

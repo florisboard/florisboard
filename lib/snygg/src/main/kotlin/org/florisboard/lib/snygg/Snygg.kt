@@ -22,7 +22,6 @@ package org.florisboard.lib.snygg
  * snygg = Swedish for stylish
  */
 // TODO: How can we make this compose state conform
-@Suppress("ConstPropertyName")
 object Snygg {
     const val Width = "width"
     const val Height = "height"
