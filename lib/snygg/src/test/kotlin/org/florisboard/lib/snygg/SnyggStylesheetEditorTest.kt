@@ -7,7 +7,7 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -43,7 +43,7 @@ class SnyggStylesheetEditorTest {
 
         val smartbar = stylesheet.rules[SnyggRule("smartbar")]
         assertNotNull(smartbar)
-        val smartbarBackground = assertIs<SnyggSolidColorValue>(smartbar.background)
+        val smartbarBackground = assertIs<SnyggStaticColorValue>(smartbar.background)
         assertNotNull(smartbar.background)
         assertEquals(Color(255, 0, 0), smartbarBackground.color)
         val smartbarShape = assertIs<SnyggDefinedVarValue>(smartbar.shape)
@@ -57,7 +57,7 @@ class SnyggStylesheetEditorTest {
             schema = "/schema/path",
             rules = mapOf(
                 SnyggRule("smartbar") to SnyggPropertySet(mapOf(
-                    "background" to SnyggSolidColorValue(Color(255, 0, 0)),
+                    "background" to SnyggStaticColorValue(Color(255, 0, 0)),
                     "shape" to SnyggRectangleShapeValue(),
                 )),
             ),

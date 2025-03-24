@@ -38,7 +38,7 @@ import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggSurface
 import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 
 @Composable
 fun HowDidWeGetHere() {
@@ -47,8 +47,8 @@ fun HowDidWeGetHere() {
     val keyboardManager by context.keyboardManager()
 
     val style = SnyggPropertySet(mapOf(
-        "background" to SnyggSolidColorValue(Color.Yellow),
-        "foreground" to SnyggSolidColorValue(Color.Black),
+        "background" to SnyggStaticColorValue(Color.Yellow),
+        "foreground" to SnyggStaticColorValue(Color.Black),
         "shape" to SnyggRoundedCornerDpShapeValue(16.dp, 16.dp, 16.dp, 16.dp, RoundedCornerShape(16.dp)),
     ))
 

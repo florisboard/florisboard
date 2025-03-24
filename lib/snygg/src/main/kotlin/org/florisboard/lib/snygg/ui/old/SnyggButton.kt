@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.SnyggPropertySet
 
+/*
 @Composable
 fun SnyggButton(
     onClick: () -> Unit,
@@ -82,3 +83,4 @@ fun SnyggButton(
         )
     }
 }
+*/

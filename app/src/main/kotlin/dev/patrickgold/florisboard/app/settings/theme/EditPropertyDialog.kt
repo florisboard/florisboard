@@ -86,7 +86,7 @@ import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
@@ -396,7 +396,7 @@ private fun PropertyValueEditor(
             }
         }
 
-        is SnyggSolidColorValue -> {
+        is SnyggStaticColorValue -> {
             val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
             val colorPickerStr = translatePropertyValue(value, level, displayColorsAs)
             var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
@@ -424,7 +424,7 @@ private fun PropertyValueEditor(
                         )
                     }
                     JetPrefColorPicker(
-                        onColorChange = { onValueChange(SnyggSolidColorValue(it)) },
+                        onColorChange = { onValueChange(SnyggStaticColorValue(it)) },
                         state = colorPickerState,
                     )
                 }
@@ -433,7 +433,7 @@ private fun PropertyValueEditor(
                 var showValidationErrors by rememberSaveable { mutableStateOf(false) }
                 var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
                 var colorStr by rememberSaveable { mutableStateOf(colorPickerStr.stripUnicodeCtrlChars()) }
-                val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggSolidColorValue, colorStr)
+                val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggStaticColorValue, colorStr)
                 JetPrefAlertDialog(
                     title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),
                     confirmLabel = stringRes(R.string.action__apply),
@@ -441,9 +441,9 @@ private fun PropertyValueEditor(
                         if (colorStrValidation.isInvalid()) {
                             showValidationErrors = true
                         } else {
-                            val newValue = SnyggSolidColorValue.deserialize(colorStr.trim()).getOrThrow()
+                            val newValue = SnyggStaticColorValue.deserialize(colorStr.trim()).getOrThrow()
                             onValueChange(newValue)
-                            colorPickerState.setColor((newValue as SnyggSolidColorValue).color)
+                            colorPickerState.setColor((newValue as SnyggStaticColorValue).color)
                             showEditColorStrDialog = false
                         }
                     },

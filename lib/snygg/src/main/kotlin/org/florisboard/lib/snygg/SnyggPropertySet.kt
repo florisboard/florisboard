@@ -34,13 +34,15 @@ import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggImageRefValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
@@ -192,7 +194,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         b: Int,
         @FloatRange(from = RgbaColor.AlphaMin.toDouble(), to = RgbaColor.AlphaMax.toDouble())
         a: Float = RgbaColor.AlphaMax,
-    ): SnyggSolidColorValue {
+    ): SnyggStaticColorValue {
         require(r in RgbaColor.Red)
         require(g in RgbaColor.Green)
         require(b in RgbaColor.Blue)
@@ -200,7 +202,15 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         val red = r.toFloat() / RgbaColor.RedMax
         val green = g.toFloat() / RgbaColor.GreenMax
         val blue = b.toFloat() / RgbaColor.BlueMax
-        return SnyggSolidColorValue(Color(red, green, blue, a))
+        return SnyggStaticColorValue(Color(red, green, blue, a))
+    }
+
+    fun dynamicLightColor(name: String): SnyggDynamicLightColorValue {
+        return SnyggDynamicLightColorValue(name)
+    }
+
+    fun dynamicDarkColor(name: String): SnyggDynamicDarkColorValue {
+        return SnyggDynamicDarkColorValue(name)
     }
 
     fun rectangleShape(): SnyggRectangleShapeValue {

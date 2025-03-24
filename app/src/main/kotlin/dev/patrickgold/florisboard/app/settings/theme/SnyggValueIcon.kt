@@ -45,7 +45,7 @@ import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.checkeredBackground
@@ -87,7 +87,7 @@ internal fun SnyggValueIcon(
     spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
 ) {
     when (value) {
-        is SnyggSolidColorValue -> {
+        is SnyggStaticColorValue -> {
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
 

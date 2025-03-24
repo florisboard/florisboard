@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
 import org.florisboard.lib.snygg.SnyggPropertySet
 
+/*
 val NoContentPadding = PaddingValues(all = 0.dp)
 
 @Composable
@@ -63,3 +64,4 @@ fun SnyggSurface(
         )
     }
 }
+*/

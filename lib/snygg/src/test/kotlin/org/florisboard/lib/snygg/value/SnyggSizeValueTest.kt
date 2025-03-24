@@ -6,6 +6,7 @@ import org.junit.jupiter.api.assertAll
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class SnyggSizeValueTest {
@@ -49,6 +50,33 @@ class SnyggSizeValueTest {
             "", " ", "sp", "-sp", "5,0sp", "5Sp", "5SP", "5sP", "5s p", "5dp", "5px", "5%", "5",
         ),
     )
+
+    @Test
+    fun `check class of default value`() {
+        assertIs<SnyggPercentageSizeValue>(SnyggPercentageSizeValue.defaultValue())
+        assertIs<SnyggSpSizeValue>(SnyggSpSizeValue.defaultValue())
+        assertIs<SnyggDpSizeValue>(SnyggDpSizeValue.defaultValue())
+    }
+
+    @Test
+    fun `check if value is type when deserializing`() {
+        val sp = "-4.0sp"
+        val dp = "-4.0dp"
+        val percent = "-4.0%"
+        assertEquals(null, SnyggSpSizeValue.deserialize(sp).getOrNull())
+        assertEquals(null, SnyggDpSizeValue.deserialize(dp).getOrNull())
+        assertEquals(null, SnyggPercentageSizeValue.deserialize(percent).getOrNull())
+    }
+
+    @Test
+    fun `check if value is type when serializing`() {
+        val sp = SnyggDefinedVarValue("shenanigans")
+        val dp = SnyggDefinedVarValue("shenanigans")
+        val percent = SnyggDefinedVarValue("shenanigans")
+        assertEquals(null, SnyggSpSizeValue.serialize(sp).getOrNull())
+        assertEquals(null, SnyggDpSizeValue.serialize(dp).getOrNull())
+        assertEquals(null, SnyggPercentageSizeValue.serialize(percent).getOrNull())
+    }
 
     @Test
     fun `test deserialize and serialize with valid input`() {

@@ -153,14 +153,14 @@ object ExtensionValidation {
         }
     }
 
-    val SnyggSolidColorValue = ValidationRule<String> {
-        forKlass = org.florisboard.lib.snygg.value.SnyggSolidColorValue::class
+    val SnyggStaticColorValue = ValidationRule<String> {
+        forKlass = org.florisboard.lib.snygg.value.SnyggStaticColorValue::class
         forProperty = "color"
         validator { input ->
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_color)
-                org.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                org.florisboard.lib.snygg.value.SnyggStaticColorValue.deserialize(str).isFailure -> {
                     resultInvalid(error = R.string.ext__validation__error_color)
                 }
                 else -> resultValid()

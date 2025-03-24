@@ -3,31 +3,29 @@ package org.florisboard.lib.snygg.value
 import androidx.compose.ui.graphics.Color
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertIs
 
 class SnyggAppearanceValueTest {
     @Nested
     inner class SolidColor {
-        private val encoder = SnyggSolidColorValue
+        private val encoder = SnyggStaticColorValue
 
-        private fun helperMakeColor(r: Int, g: Int, b: Int): SnyggSolidColorValue {
-            return SnyggSolidColorValue(
+        private fun helperMakeColor(r: Int, g: Int, b: Int): SnyggStaticColorValue {
+            return SnyggStaticColorValue(
                 Color(r, g, b)
             )
         }
 
-        private fun helperMakeColor(r: Int, g: Int, b: Int, a: Int): SnyggSolidColorValue {
-            return SnyggSolidColorValue(
+        private fun helperMakeColor(r: Int, g: Int, b: Int, a: Int): SnyggStaticColorValue {
+            return SnyggStaticColorValue(
                 Color(r, g, b).copy(alpha = a.toFloat() / 0xFF.toFloat())
             )
         }
 
-        private fun helperMakeColor(r: Int, g: Int, b: Int, a: Float): SnyggSolidColorValue {
-            return SnyggSolidColorValue(
+        private fun helperMakeColor(r: Int, g: Int, b: Int, a: Float): SnyggStaticColorValue {
+            return SnyggStaticColorValue(
                 Color(r, g, b).copy(alpha = a)
             )
         }
@@ -169,7 +167,114 @@ class SnyggAppearanceValueTest {
 
         @Test
         fun `check class of default value`() {
-            assertIs<SnyggSolidColorValue>(encoder.defaultValue())
+            assertIs<SnyggStaticColorValue>(encoder.defaultValue())
         }
+    }
+
+    @Nested
+    inner class DynamicColor {
+        private val lightColorEncoder = SnyggDynamicLightColorValue
+        private val darkColorEncoder = SnyggDynamicDarkColorValue
+
+        private fun helperLightColor(id: String): SnyggDynamicLightColorValue {
+            return SnyggDynamicLightColorValue(colorName = id)
+        }
+
+        private fun helperDarkColor(id: String): SnyggDynamicDarkColorValue {
+            return SnyggDynamicDarkColorValue(colorName = id)
+        }
+
+        private fun helperLightColorString(id: String): String {
+            return "dynamic-light-color($id)"
+        }
+
+        private fun helperDarkColorString(id: String): String {
+            return "dynamic-dark-color($id)"
+        }
+
+        @Test
+        fun `check class of default value`() {
+            assertIs<SnyggDynamicLightColorValue>(lightColorEncoder.defaultValue())
+            assertIs<SnyggDynamicDarkColorValue>(darkColorEncoder.defaultValue())
+        }
+
+        @Test
+        fun `test default values`() {
+            val pairs = listOf(
+                SnyggDynamicLightColorValue("primary").encoder() to lightColorEncoder,
+                SnyggDynamicDarkColorValue("primary").encoder() to darkColorEncoder,
+            )
+            assertAll(pairs.map { (expected, actual) -> {
+                    assertEquals(expected, actual)
+            } })
+        }
+
+        @Test
+        fun `deserialize dynamic dark colors`() {
+            val colors = listOf(
+                // valid
+                helperDarkColorString("primary") to helperDarkColor("primary"),
+                helperDarkColorString("onPrimary") to helperDarkColor("onPrimary"),
+                helperDarkColorString("onTertiaryContainer") to helperDarkColor("onTertiaryContainer"),
+
+                // invalid
+                helperDarkColorString("") to null,
+                helperDarkColorString("invalid") to null,
+                helperDarkColorString("invalid is invalid") to null,
+            )
+            assertAll(colors.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, darkColorEncoder.deserialize(dynamicColorValue).getOrNull())
+            } })
+        }
+
+        @Test
+        fun `deserialize dynamic light colors`() {
+            val colors = listOf(
+                // valid
+                helperLightColorString("primary") to helperLightColor("primary"),
+                helperLightColorString("onPrimary") to helperLightColor("onPrimary"),
+                helperLightColorString("onTertiaryContainer") to helperLightColor("onTertiaryContainer"),
+
+                // invalid
+                helperLightColorString("") to null,
+                helperLightColorString("invalid") to null,
+                helperLightColorString("invalid is invalid") to null,
+            )
+            assertAll(colors.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, lightColorEncoder.deserialize(dynamicColorValue).getOrNull())
+            } })
+        }
+
+        @Test
+        fun `serialize dynamic dark colors`() {
+            val pairs = listOf(
+                // valid
+                helperDarkColor("primary") to helperDarkColorString("primary"),
+                helperDarkColor("onPrimary") to helperDarkColorString("onPrimary"),
+                helperDarkColor("onTertiaryContainer") to helperDarkColorString("onTertiaryContainer"),
+                // invalid
+                SnyggDefinedVarValue("shenanigans") to null,
+            )
+            assertAll(pairs.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, darkColorEncoder.serialize(dynamicColorValue).getOrNull())
+            } })
+        }
+
+        @Test
+        fun `serialize dynamic light colors`() {
+            val pairs = listOf(
+                // valid
+                helperLightColor("primary") to helperLightColorString("primary"),
+                helperLightColor("onPrimary") to helperLightColorString("onPrimary"),
+                helperLightColor("onTertiaryContainer") to helperLightColorString("onTertiaryContainer"),
+
+                // invalid
+                SnyggDefinedVarValue("shenanigans") to null,
+            )
+            assertAll(pairs.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, lightColorEncoder.serialize(dynamicColorValue).getOrNull())
+            } })
+        }
+
     }
 }

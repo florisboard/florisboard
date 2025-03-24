@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
@@ -46,13 +46,13 @@ class SnyggStylesheetTest {
         assertNotNull(defines)
         assertEquals(1, defines.properties.size)
         val definesTestValue: SnyggValue? = defines.properties["--test"]
-        assertIs<SnyggSolidColorValue>(definesTestValue)
+        assertIs<SnyggStaticColorValue>(definesTestValue)
         assertEquals(Color.Transparent, definesTestValue.color)
 
         val smartbar = stylesheet.rules[SnyggRule("smartbar")]
         assertNotNull(smartbar)
         assertEquals(3, smartbar.properties.size)
-        val smartbarBackground = assertIs<SnyggSolidColorValue>(smartbar.background)
+        val smartbarBackground = assertIs<SnyggStaticColorValue>(smartbar.background)
         assertEquals(Color.Transparent, smartbarBackground.color)
         val smartbarBorderColor = assertIs<SnyggDefinedVarValue>(smartbar.borderColor)
         assertEquals("--test", smartbarBorderColor.key)
@@ -62,7 +62,7 @@ class SnyggStylesheetTest {
         val keyboard = stylesheet.rules[SnyggRule("keyboard")]
         assertNotNull(keyboard)
         assertEquals(3, keyboard.properties.size)
-        val keyboardBackground = assertIs<SnyggSolidColorValue>(keyboard.background)
+        val keyboardBackground = assertIs<SnyggStaticColorValue>(keyboard.background)
         assertEquals(Color(255, 255, 255), keyboardBackground.color)
         val keyboardWidth = assertIs<SnyggDpSizeValue>(keyboard.width)
         assertEquals(20.dp, keyboardWidth.dp)
@@ -115,7 +115,7 @@ class SnyggStylesheetTest {
             schema = "https://schemas.florisboard.org/snygg/v2/stylesheet",
             rules = mapOf(
                 SnyggRule("smartbar") to SnyggPropertySet(mapOf(
-                    "background" to SnyggSolidColorValue(Color(255, 0, 0)),
+                    "background" to SnyggStaticColorValue(Color(255, 0, 0)),
                     "shape" to SnyggRectangleShapeValue(),
                 )),
             ),

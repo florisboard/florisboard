@@ -22,7 +22,7 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 
 /**
  * Pre-compiled style data for a SnyggTheme.
@@ -68,11 +68,11 @@ value class SnyggTheme internal constructor(
         }
         for ((key, value) in editor.properties) {
             if (value is SnyggDynamicLightColorValue) {
-                editor.properties[key] = SnyggSolidColorValue(
+                editor.properties[key] = SnyggStaticColorValue(
                     color = dynamicLightColorScheme.getColor(value.colorName)
                 )
             } else if (value is SnyggDynamicDarkColorValue) {
-                editor.properties[key] = SnyggSolidColorValue(
+                editor.properties[key] = SnyggStaticColorValue(
                     color = dynamicDarkColorScheme.getColor(value.colorName)
                 )
             }

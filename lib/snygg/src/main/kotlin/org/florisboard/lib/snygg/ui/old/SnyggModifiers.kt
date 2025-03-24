@@ -16,26 +16,7 @@
 
 package org.florisboard.lib.snygg.ui.old
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.isSpecified
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.takeOrElse
-import org.florisboard.lib.snygg.SnyggPropertySet
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggValue
-
+/*
 fun Modifier.snyggBackground(
     style: SnyggPropertySet,
     fallbackColor: Color = Color.Unspecified,
@@ -114,3 +95,4 @@ fun SnyggValue.spSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
         else -> default
     }
 }
+*/

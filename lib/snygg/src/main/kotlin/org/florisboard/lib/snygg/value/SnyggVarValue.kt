@@ -20,7 +20,7 @@ private const val VarKey = "varKey"
 
 sealed interface SnyggVarValue : SnyggValue {
     companion object {
-        val VariableNameRegex = """^[a-zA-Z0-9-_]+${'$'}""".toRegex()
+        val VariableNameRegex = """^[a-zA-Z0-9-]+${'$'}""".toRegex()
     }
 }
 

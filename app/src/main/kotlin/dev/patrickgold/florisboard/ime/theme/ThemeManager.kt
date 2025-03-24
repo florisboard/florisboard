@@ -58,7 +58,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.value.MaterialYouColor
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
 
 /**
@@ -291,9 +291,9 @@ class ThemeManager(context: Context) {
 
     data class RemoteColors(
         val packageName: String,
-        val colorPrimary: SnyggSolidColorValue?,
-        val colorPrimaryVariant: SnyggSolidColorValue?,
-        val colorSecondary: SnyggSolidColorValue?,
+        val colorPrimary: SnyggStaticColorValue?,
+        val colorPrimaryVariant: SnyggStaticColorValue?,
+        val colorSecondary: SnyggStaticColorValue?,
     ) {
         companion object {
             val DEFAULT = RemoteColors("undefined", null, null, null)
