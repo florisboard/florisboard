@@ -96,39 +96,34 @@ data class SnyggRule internal constructor(
         private val attributes: Map<String, List<Int>> = emptyMap(),
     ) : Map<String, List<Int>> by attributes, Comparable<Attributes> {
         override fun compareTo(other: Attributes): Int {
-            if (attributes.isNotEmpty() || other.attributes.isNotEmpty()) {
-                if (attributes.isEmpty()) {
-                    return -1
+            if (attributes.isEmpty() && other.attributes.isEmpty()) {
+                return 0
+            }
+            val sizeDiff = attributes.size.compareTo(other.attributes.size)
+            if (sizeDiff != 0) {
+                return sizeDiff
+            }
+            // both have attributes at this point and size matches
+            val attrs = attributes.entries.toList().sortedBy { it.key }
+            val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
+            for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
+                val attr = attrs[attrIndex]
+                val otherAttr = otherAttrs[attrIndex]
+                val keyDiff = attr.key.compareTo(otherAttr.key)
+                if (keyDiff != 0) {
+                    return keyDiff
                 }
-                if (other.attributes.isEmpty()) {
-                    return 1
-                }
-                // both have attributes at this point
-                val attrs = attributes.entries.toList().sortedBy { it.key }
-                val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
-                for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
-                    val attr = attrs[attrIndex]
-                    val otherAttr = otherAttrs[attrIndex]
-                    val keyDiff = attr.key.compareTo(otherAttr.key)
-                    if (keyDiff != 0) {
-                        return keyDiff
-                    }
-                    for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
-                        val value = attr.value[valueIndex]
-                        val otherValue = otherAttr.value[valueIndex]
-                        val valueDiff = value.compareTo(otherValue)
-                        if (valueDiff != 0) {
-                            return valueDiff
-                        }
-                    }
-                    val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
-                    if (valueSizeDiff != 0) {
-                        return valueSizeDiff
+                for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
+                    val value = attr.value[valueIndex]
+                    val otherValue = otherAttr.value[valueIndex]
+                    val valueDiff = value.compareTo(otherValue)
+                    if (valueDiff != 0) {
+                        return valueDiff
                     }
                 }
-                val attrSizeDiff = attrs.size.compareTo(otherAttrs.size)
-                if (attrSizeDiff != 0) {
-                    return attrSizeDiff
+                val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
+                if (valueSizeDiff != 0) {
+                    return valueSizeDiff
                 }
             }
             return 0

@@ -34,8 +34,7 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
  * 3. All rules per key are sorted in ascending order based on the comparison
  *    logic defined by SnyggRule.
  * 4. All SnyggPropertySet values are pre-computed and must not contain
- *    variable references. Ruleset merging has been done already and a
- *    selector set contains all inherited properties from its base element.
+ *    variable references.
  * 5. All annotation elements have been pre-processed and stripped from the data.
  */
 private typealias CompiledStyleData =
@@ -44,6 +43,12 @@ private typealias CompiledStyleData =
 typealias SnyggQueryAttributes = Map<String, Int>
 
 typealias SnyggQuerySelectors = SnyggRule.Selectors
+
+fun selectorsOf(
+    pressed: Boolean = false,
+    focus: Boolean = false,
+    disabled: Boolean = false,
+) = SnyggQuerySelectors(pressed, focus, disabled)
 
 /**
  * Represents the runtime style data, which is used for styling UI elements.
