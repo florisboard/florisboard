@@ -24,13 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.color.ColorPalette
+import org.florisboard.lib.color.getColor
 import org.florisboard.lib.snygg.value.MaterialYouColor.ColorName
 import org.florisboard.lib.snygg.value.MaterialYouColor.ColorNameId
 import org.florisboard.lib.snygg.value.MaterialYouColor.darkColorName
 import org.florisboard.lib.snygg.value.MaterialYouColor.lightColorName
 
-// TODO: Rework and inherit SnyggAppearanceValue
-sealed interface SnyggMaterialYouValue : SnyggValue {
+sealed interface SnyggMaterialYouValue : SnyggAppearanceValue {
     val colorName: String
     val dark: Boolean
 
@@ -50,7 +51,7 @@ sealed interface SnyggMaterialYouValueEncoder<T : SnyggMaterialYouValue> : Snygg
             }
         }
 
-    override fun defaultValue() = newInstance(MaterialYouColor.ColorPalette.Primary.id)
+    override fun defaultValue() = newInstance(ColorPalette.Primary.id)
 
     override fun serialize(v: SnyggValue) = runCatching<String> {
         require(v::class.java == clazz)
@@ -69,6 +70,33 @@ sealed interface SnyggMaterialYouValueEncoder<T : SnyggMaterialYouValue> : Snygg
     fun newInstance(colorName: String): T
 }
 
+data class SnyggMaterialYouLightColorValue(override val colorName: String, override val dark: Boolean = false) :
+    SnyggMaterialYouValue {
+
+    companion object : SnyggMaterialYouValueEncoder<SnyggMaterialYouLightColorValue> {
+        override val clazz = SnyggMaterialYouLightColorValue::class.java
+        override val valueName = lightColorName
+
+        override fun newInstance(colorName: String) = SnyggMaterialYouLightColorValue(colorName)
+    }
+
+    override fun encoder() = Companion
+}
+
+data class SnyggMaterialYouDarkColorValue(override val colorName: String, override val dark: Boolean = true) :
+    SnyggMaterialYouValue {
+
+    companion object : SnyggMaterialYouValueEncoder<SnyggMaterialYouDarkColorValue> {
+        override val clazz = SnyggMaterialYouDarkColorValue::class.java
+        override val valueName = darkColorName
+
+        override fun newInstance(colorName: String) = SnyggMaterialYouDarkColorValue(colorName)
+    }
+
+    override fun encoder() = Companion
+}
+
+@Suppress("ConstPropertyName")
 object MaterialYouColor {
     const val ColorNameId = "name"
     val ColorName = """^\w*$""".toRegex()
@@ -83,6 +111,7 @@ object MaterialYouColor {
 
     fun updateAccentColor(newColor: Color) {
         accentColor = newColor
+        resetColorSchemeCache()
     }
 
     private fun getAndCacheColorScheme(context: Context, dark: Boolean): ColorScheme {
@@ -112,112 +141,7 @@ object MaterialYouColor {
         darkColorScheme = null
     }
 
-    enum class ColorPalette(val id: String) {
-        Primary("primary"),
-        OnPrimary("onPrimary"),
-        PrimaryContainer("primaryContainer"),
-        OnPrimaryContainer("onPrimaryContainer"),
-        InversePrimary("inversePrimary"),
-        Secondary("secondary"),
-        OnSecondary("onSecondary"),
-        SecondaryContainer("secondaryContainer"),
-        OnSecondaryContainer("onSecondaryContainer"),
-        Tertiary("tertiary"),
-        OnTertiary("onTertiary"),
-        TertiaryContainer("tertiaryContainer"),
-        OnTertiaryContainer("onTertiaryContainer"),
-        Background("background"),
-        OnBackground("onBackground"),
-        // Surface("surface"), // removed and replaced by the specific Surface* variants
-        OnSurface("onSurface"),
-        SurfaceVariant("surfaceVariant"),
-        OnSurfaceVariant("onSurfaceVariant"),
-        SurfaceTint("surfaceTint"),
-        InverseSurface("inverseSurface"),
-        InverseOnSurface("inverseOnSurface"),
-        Error("error"),
-        OnError("onError"),
-        ErrorContainer("errorContainer"),
-        OnErrorContainer("onErrorContainer"),
-        Outline("outline"),
-        OutlineVariant("outlineVariant"),
-        Scrim("scrim"),
-        SurfaceBright("surfaceBright"),
-        SurfaceDim("surfaceDim"),
-        SurfaceContainer("surfaceContainer"),
-        SurfaceContainerHigh("surfaceContainerHigh"),
-        SurfaceContainerHighest("surfaceContainerHighest"),
-        SurfaceContainerLow("surfaceContainerLow"),
-        SurfaceContainerLowest("surfaceContainerLowest")
-    }
-
-    val colorNames = ColorPalette.entries.map { it.id }
-
     fun loadColor(context: Context, colorName: String, dark: Boolean): Color {
-        val colorScheme = getAndCacheColorScheme(context, dark)
-
-        return when (colorName) {
-            ColorPalette.Primary.id -> colorScheme.primary
-            ColorPalette.OnPrimary.id -> colorScheme.onPrimary
-            ColorPalette.PrimaryContainer.id -> colorScheme.primaryContainer
-            ColorPalette.OnPrimaryContainer.id -> colorScheme.onPrimaryContainer
-            ColorPalette.InversePrimary.id -> colorScheme.inversePrimary
-            ColorPalette.Secondary.id -> colorScheme.secondary
-            ColorPalette.OnSecondary.id -> colorScheme.onSecondary
-            ColorPalette.SecondaryContainer.id -> colorScheme.secondaryContainer
-            ColorPalette.OnSecondaryContainer.id -> colorScheme.onSecondaryContainer
-            ColorPalette.Tertiary.id -> colorScheme.tertiary
-            ColorPalette.OnTertiary.id -> colorScheme.onTertiary
-            ColorPalette.TertiaryContainer.id -> colorScheme.tertiaryContainer
-            ColorPalette.OnTertiaryContainer.id -> colorScheme.onTertiaryContainer
-            ColorPalette.Background.id -> colorScheme.background
-            ColorPalette.OnBackground.id -> colorScheme.onBackground
-            // ColorPalette.Surface.id -> colorScheme.surface
-            ColorPalette.OnSurface.id -> colorScheme.onSurface
-            ColorPalette.SurfaceVariant.id -> colorScheme.surfaceVariant
-            ColorPalette.OnSurfaceVariant.id -> colorScheme.onSurfaceVariant
-            ColorPalette.SurfaceTint.id -> colorScheme.surfaceTint
-            ColorPalette.InverseSurface.id -> colorScheme.inverseSurface
-            ColorPalette.InverseOnSurface.id -> colorScheme.inverseOnSurface
-            ColorPalette.Error.id -> colorScheme.error
-            ColorPalette.OnError.id -> colorScheme.onError
-            ColorPalette.ErrorContainer.id -> colorScheme.errorContainer
-            ColorPalette.OnErrorContainer.id -> colorScheme.onErrorContainer
-            ColorPalette.Outline.id -> colorScheme.outline
-            ColorPalette.OutlineVariant.id -> colorScheme.outlineVariant
-            ColorPalette.Scrim.id -> colorScheme.scrim
-            ColorPalette.SurfaceBright.id -> colorScheme.surfaceBright
-            ColorPalette.SurfaceDim.id -> colorScheme.surfaceDim
-            ColorPalette.SurfaceContainer.id -> colorScheme.surfaceContainer
-            ColorPalette.SurfaceContainerHigh.id -> colorScheme.surfaceContainerHigh
-            ColorPalette.SurfaceContainerHighest.id -> colorScheme.surfaceContainerHighest
-            ColorPalette.SurfaceContainerLow.id -> colorScheme.surfaceContainerLow
-            ColorPalette.SurfaceContainerLowest.id -> colorScheme.surfaceContainerLowest
-            else -> colorScheme.primary
-        }
+        return getAndCacheColorScheme(context, dark).getColor(colorName)
     }
-}
-
-data class SnyggMaterialYouLightColorValue(override val colorName: String, override val dark: Boolean = false) : SnyggMaterialYouValue {
-
-    companion object : SnyggMaterialYouValueEncoder<SnyggMaterialYouLightColorValue> {
-        override val clazz = SnyggMaterialYouLightColorValue::class.java
-        override val valueName = lightColorName
-
-        override fun newInstance(colorName: String) = SnyggMaterialYouLightColorValue(colorName)
-    }
-
-    override fun encoder() = Companion
-}
-
-data class SnyggMaterialYouDarkColorValue(override val colorName: String, override val dark: Boolean = true) : SnyggMaterialYouValue {
-
-    companion object : SnyggMaterialYouValueEncoder<SnyggMaterialYouDarkColorValue> {
-        override val clazz = SnyggMaterialYouDarkColorValue::class.java
-        override val valueName = darkColorName
-
-        override fun newInstance(colorName: String) = SnyggMaterialYouDarkColorValue(colorName)
-    }
-
-    override fun encoder() = Companion
 }
