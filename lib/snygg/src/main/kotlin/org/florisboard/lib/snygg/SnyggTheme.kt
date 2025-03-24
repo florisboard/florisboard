@@ -17,7 +17,6 @@
 package org.florisboard.lib.snygg
 
 import androidx.compose.material3.ColorScheme
-import androidx.compose.runtime.remember
 import org.florisboard.lib.color.getColor
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.ui.v2
+package org.florisboard.lib.snygg.ui
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
@@ -30,6 +30,7 @@ import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggQuerySelectors
 import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
@@ -47,7 +48,10 @@ internal val LocalSnyggDynamicDarkColorScheme: ProvidableCompositionLocal<ColorS
         error("ProvideSnyggTheme not called.")
     }
 
-// TODO: rememberSnyggStylesheet or similar API
+@Composable
+fun rememberSnyggTheme(stylesheet: SnyggStylesheet) = remember(stylesheet) {
+    SnyggTheme.compileFrom(stylesheet)
+}
 
 @Composable
 fun ProvideSnyggTheme(

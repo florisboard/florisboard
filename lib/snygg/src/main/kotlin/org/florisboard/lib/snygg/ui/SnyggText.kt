@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.ui.v2
+package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.ui
+package org.florisboard.lib.snygg.ui.old
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
