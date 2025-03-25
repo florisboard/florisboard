@@ -17,6 +17,7 @@
 package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,8 +38,9 @@ fun SnyggText(
     val style = theme.query(elementName, mapOf(*attributes), emptySelectors())
     Text(
         modifier = modifier
-            .snyggBackground(style)
-            .snyggBorder(style),
+            .snyggShadow(style)
+            .snyggBorder(style)
+            .snyggBackground(style),
         text = text,
         color = style.foreground.colorOrDefault(LocalContentColor.current),
     )
@@ -53,6 +55,8 @@ fun SimpleSnyggText() {
             foreground = rgbaColor(0, 0, 0)
             borderColor = rgbaColor(0, 0, 255)
             borderWidth = size(1.dp)
+            shadowElevation = size(6.dp)
+            shadowColor = rgbaColor(0, 255, 0)
         }
         "preview-text"("attr" to listOf(1)) {
             foreground = rgbaColor(255, 0, 0)
@@ -61,7 +65,7 @@ fun SimpleSnyggText() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        Column {
+        Column(Modifier.padding(16.dp)) {
             SnyggText("preview-text", text = "black text")
             SnyggText("preview-text", "attr" to 1, text = "red text")
         }

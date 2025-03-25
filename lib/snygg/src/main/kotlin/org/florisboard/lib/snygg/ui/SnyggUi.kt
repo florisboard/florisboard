@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.DefaultShadowColor
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
@@ -156,9 +157,9 @@ internal fun Modifier.snyggShadow(
     style: SnyggPropertySet,
     elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     shape: Shape = style.shape.shape(),
+    color: Color = style.shadowColor.colorOrDefault(default = DefaultShadowColor),
 ): Modifier {
-    // TODO: find a performant way to implement shadow color
-    return this.shadow(elevation, shape, clip = false)
+    return this.shadow(elevation, shape, clip = false, ambientColor = color, spotColor = color)
 }
 
 /// SnyggValue helpers

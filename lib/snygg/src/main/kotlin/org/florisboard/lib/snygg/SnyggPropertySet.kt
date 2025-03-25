@@ -66,6 +66,7 @@ data class SnyggPropertySet internal constructor(
     val fontVariant = properties[Snygg.FontVariant] ?: SnyggImplicitInheritValue
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggImplicitInheritValue
 
+    val shadowColor = properties[Snygg.ShadowColor] ?: SnyggImplicitInheritValue
     val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggImplicitInheritValue
 
     val shape = properties[Snygg.Shape] ?: SnyggImplicitInheritValue
@@ -177,6 +178,9 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         get() =  getProperty(Snygg.FontWeight)
         set(v) = setProperty(Snygg.FontWeight, v)
 
+    var shadowColor: SnyggValue?
+        get() =  getProperty(Snygg.ShadowColor)
+        set(v) = setProperty(Snygg.ShadowColor, v)
     var shadowElevation: SnyggValue?
         get() =  getProperty(Snygg.ShadowElevation)
         set(v) = setProperty(Snygg.ShadowElevation, v)
