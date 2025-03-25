@@ -18,6 +18,7 @@ package org.florisboard.lib.snygg
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -38,6 +39,7 @@ import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggImageRefValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -65,6 +67,9 @@ data class SnyggPropertySet internal constructor(
     val fontStyle = properties[Snygg.FontStyle] ?: SnyggImplicitInheritValue
     val fontVariant = properties[Snygg.FontVariant] ?: SnyggImplicitInheritValue
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggImplicitInheritValue
+
+    val margin = properties[Snygg.Margin] ?: SnyggImplicitInheritValue
+    val padding = properties[Snygg.Padding] ?: SnyggImplicitInheritValue
 
     val shadowColor = properties[Snygg.ShadowColor] ?: SnyggImplicitInheritValue
     val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggImplicitInheritValue
@@ -178,6 +183,13 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         get() =  getProperty(Snygg.FontWeight)
         set(v) = setProperty(Snygg.FontWeight, v)
 
+    var margin: SnyggValue?
+        get() =  getProperty(Snygg.Margin)
+        set(v) = setProperty(Snygg.Margin, v)
+    var padding: SnyggValue?
+        get() =  getProperty(Snygg.Padding)
+        set(v) = setProperty(Snygg.Padding, v)
+
     var shadowColor: SnyggValue?
         get() =  getProperty(Snygg.ShadowColor)
         set(v) = setProperty(Snygg.ShadowColor, v)
@@ -275,6 +287,26 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         bottomStart: Int,
     ): SnyggRoundedCornerPercentShapeValue {
         return SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+    }
+
+    fun padding(
+        start: Dp,
+        top: Dp,
+        end: Dp,
+        bottom: Dp,
+    ): SnyggPaddingValue {
+        return SnyggPaddingValue(PaddingValues(start, top, end, bottom))
+    }
+
+    fun padding(
+        horizontal: Dp,
+        vertical: Dp,
+    ): SnyggPaddingValue {
+        return SnyggPaddingValue(PaddingValues(horizontal, vertical))
+    }
+
+    fun padding(all: Dp): SnyggPaddingValue {
+        return SnyggPaddingValue(PaddingValues(all))
     }
 
     fun size(dp: Dp): SnyggDpSizeValue {

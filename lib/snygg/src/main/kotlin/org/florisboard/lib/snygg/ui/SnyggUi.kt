@@ -18,6 +18,7 @@ package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -46,6 +47,7 @@ import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
@@ -151,6 +153,24 @@ internal fun Modifier.snyggClip(
     shape: Shape = style.shape.shape(),
 ): Modifier {
     return this.clip(shape)
+}
+
+internal fun Modifier.snyggMargin(
+    style: SnyggPropertySet,
+): Modifier {
+    return when (style.margin) {
+        is SnyggPaddingValue -> this.padding(style.margin.values)
+        else -> return this
+    }
+}
+
+internal fun Modifier.snyggPadding(
+    style: SnyggPropertySet,
+): Modifier {
+    return when (style.padding) {
+        is SnyggPaddingValue -> this.padding(style.padding.values)
+        else -> return this
+    }
 }
 
 internal fun Modifier.snyggShadow(
