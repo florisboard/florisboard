@@ -20,6 +20,8 @@ import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.KSerializer
@@ -40,6 +42,8 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggImageRefValue
 import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
@@ -65,7 +69,6 @@ data class SnyggPropertySet internal constructor(
     val fontFamily = properties[Snygg.FontFamily] ?: SnyggImplicitInheritValue
     val fontSize = properties[Snygg.FontSize] ?: SnyggImplicitInheritValue
     val fontStyle = properties[Snygg.FontStyle] ?: SnyggImplicitInheritValue
-    val fontVariant = properties[Snygg.FontVariant] ?: SnyggImplicitInheritValue
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggImplicitInheritValue
 
     val margin = properties[Snygg.Margin] ?: SnyggImplicitInheritValue
@@ -75,9 +78,6 @@ data class SnyggPropertySet internal constructor(
     val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggImplicitInheritValue
 
     val shape = properties[Snygg.Shape] ?: SnyggImplicitInheritValue
-
-    val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue
-    val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
 
     fun edit() = SnyggPropertySetEditor(properties)
 
@@ -189,9 +189,6 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var fontStyle: SnyggValue?
         get() =  getProperty(Snygg.FontStyle)
         set(v) = setProperty(Snygg.FontStyle, v)
-    var fontVariant: SnyggValue?
-        get() =  getProperty(Snygg.FontVariant)
-        set(v) = setProperty(Snygg.FontVariant, v)
     var fontWeight: SnyggValue?
         get() =  getProperty(Snygg.FontWeight)
         set(v) = setProperty(Snygg.FontWeight, v)
@@ -213,13 +210,6 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var shape: SnyggValue?
         get() =  getProperty(Snygg.Shape)
         set(v) = setProperty(Snygg.Shape, v)
-
-    var width: SnyggValue?
-        get() =  getProperty(Snygg.Width)
-        set(v) = setProperty(Snygg.Width, v)
-    var height: SnyggValue?
-        get() =  getProperty(Snygg.Height)
-        set(v) = setProperty(Snygg.Height, v)
 
     fun rgbaColor(
         @IntRange(from = RgbaColor.RedMin.toLong(), to = RgbaColor.RedMax.toLong())
@@ -247,6 +237,14 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
 
     fun dynamicDarkColor(name: String): SnyggDynamicDarkColorValue {
         return SnyggDynamicDarkColorValue(name)
+    }
+
+    fun fontStyle(fontStyle: FontStyle): SnyggFontStyleValue {
+        return SnyggFontStyleValue(fontStyle)
+    }
+
+    fun fontWeight(fontWeight: FontWeight): SnyggFontWeightValue {
+        return SnyggFontWeightValue(fontWeight)
     }
 
     fun rectangleShape(): SnyggRectangleShapeValue {

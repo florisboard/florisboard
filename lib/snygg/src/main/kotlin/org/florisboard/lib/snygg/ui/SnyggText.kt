@@ -21,8 +21,11 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.emptySelectors
 
@@ -44,6 +47,9 @@ fun SnyggText(
             .snyggPadding(style),
         text = text,
         color = style.foreground.colorOrDefault(LocalContentColor.current),
+        fontSize = style.fontSize.spSize(),
+        fontStyle = style.fontStyle.fontStyle(),
+        fontWeight = style.fontWeight.fontWeight(),
     )
 }
 
@@ -64,6 +70,9 @@ fun SimpleSnyggText() {
         "preview-text"("attr" to listOf(1)) {
             foreground = rgbaColor(255, 0, 0)
             borderWidth = size(0.dp)
+            fontSize = size(10.sp)
+            fontStyle = fontStyle(FontStyle.Italic)
+            fontWeight = fontWeight(FontWeight.Bold)
         }
     }
     val theme = rememberSnyggTheme(stylesheet)

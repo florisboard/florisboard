@@ -2,12 +2,14 @@ package org.florisboard.lib.snygg
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.junit.jupiter.api.assertThrows
@@ -30,8 +32,8 @@ class SnyggStylesheetTest {
           },
           "keyboard": {
             "background": "rgb(255,255,255)",
-            "width": "20dp",
-            "height": "30dp"
+            "border-width": "20dp",
+            "font-size": "30sp"
           }
         }
         """.trimIndent()
@@ -64,10 +66,10 @@ class SnyggStylesheetTest {
         assertEquals(3, keyboard.properties.size)
         val keyboardBackground = assertIs<SnyggStaticColorValue>(keyboard.background)
         assertEquals(Color(255, 255, 255), keyboardBackground.color)
-        val keyboardWidth = assertIs<SnyggDpSizeValue>(keyboard.width)
-        assertEquals(20.dp, keyboardWidth.dp)
-        val keyboardHeight = assertIs<SnyggDpSizeValue>(keyboard.height)
-        assertEquals(30.dp, keyboardHeight.dp)
+        val keyboardBorderWidth = assertIs<SnyggDpSizeValue>(keyboard.borderWidth)
+        assertEquals(20.dp, keyboardBorderWidth.dp)
+        val keyboardFontSize = assertIs<SnyggSpSizeValue>(keyboard.fontSize)
+        assertEquals(30.sp, keyboardFontSize.sp)
     }
 
     @Test

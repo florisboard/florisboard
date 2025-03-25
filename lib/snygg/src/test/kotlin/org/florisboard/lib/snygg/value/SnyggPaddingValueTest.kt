@@ -36,8 +36,8 @@ class SnyggPaddingValueTest {
             // invalid
             SnyggDefinedVarValue("shenanigans") to null
         )
-        assertAll(pairs.map { (solidColorValue, expected) -> {
-            assertEquals(expected, encoder.serialize(solidColorValue).getOrNull())
+        assertAll(pairs.map { (snyggValue, expected) -> {
+            assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
         } })
     }
 

@@ -115,18 +115,6 @@
     "snygg-property-set": {
       "type": "object",
       "properties": {
-        "width": {
-          "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
-          ]
-        },
-        "height": {
-          "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
-          ]
-        },
         "background": {
           "oneOf": [
             { "$ref": "#/definitions/snygg-appearance-value" },

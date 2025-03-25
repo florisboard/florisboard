@@ -35,6 +35,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -47,6 +49,8 @@ import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
@@ -187,6 +191,20 @@ internal fun Modifier.snyggShadow(
 fun SnyggValue.colorOrDefault(default: Color): Color {
     return when (this) {
         is SnyggStaticColorValue -> this.color
+        else -> default
+    }
+}
+
+fun SnyggValue.fontStyle(default: FontStyle = FontStyle.Normal): FontStyle {
+    return when (this) {
+        is SnyggFontStyleValue -> fontStyle
+        else -> default
+    }
+}
+
+fun SnyggValue.fontWeight(default: FontWeight = FontWeight.Normal): FontWeight {
+    return when (this) {
+        is SnyggFontWeightValue -> fontWeight
         else -> default
     }
 }

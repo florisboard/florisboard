@@ -24,6 +24,8 @@ import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggExplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -48,9 +50,8 @@ object Snygg {
 
     // TODO: font-family also needs a ref-like system, like image too
     const val FontFamily = "font-family" // TODO: no impact yet???
-    const val FontSize = "font-size" // TODO: no impact yet???
+    const val FontSize = "font-size"
     const val FontStyle = "font-style"
-    const val FontVariant = "font-variant"
     const val FontWeight = "font-weight" // TODO: no impact yet???
 
     const val Margin = "margin"
@@ -60,10 +61,6 @@ object Snygg {
     const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"
-
-    // TODO: Evaluate the usefulness of width and height
-    const val Width = "width"
-    const val Height = "height"
 }
 
 // Keep in sync with schemas/stylesheet.schema.json
@@ -104,13 +101,10 @@ object SnyggSpec {
             add(SnyggSpSizeValue)
         }
         Snygg.FontStyle {
-            // unsupported
-        }
-        Snygg.FontVariant {
-            // unsupported
+            add(SnyggFontStyleValue)
         }
         Snygg.FontWeight {
-            // unsupported
+            add(SnyggFontWeightValue)
         }
 
         Snygg.Margin {
@@ -136,13 +130,6 @@ object SnyggSpec {
             add(SnyggRoundedCornerPercentShapeValue)
             add(SnyggCutCornerDpShapeValue)
             add(SnyggCutCornerPercentShapeValue)
-        }
-
-        Snygg.Width {
-            add(SnyggDpSizeValue)
-        }
-        Snygg.Height {
-            add(SnyggDpSizeValue)
         }
     })
 }
