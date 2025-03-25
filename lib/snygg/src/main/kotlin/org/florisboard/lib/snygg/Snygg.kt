@@ -23,7 +23,7 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggExplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
@@ -67,7 +67,7 @@ object Snygg {
 object SnyggSpec {
     object V2 : SnyggSpecDecl({
         allProperties {
-            add(SnyggExplicitInheritValue)
+            add(SnyggInheritValue)
             add(SnyggDefinedVarValue)
         }
 
@@ -77,6 +77,7 @@ object SnyggSpec {
             add(SnyggDynamicDarkColorValue)
         }
         Snygg.Foreground {
+            inheritsImplicitly()
             add(SnyggStaticColorValue)
             add(SnyggDynamicLightColorValue)
             add(SnyggDynamicDarkColorValue)
@@ -95,15 +96,19 @@ object SnyggSpec {
         }
 
         Snygg.FontFamily {
-            // unsupported
+            inheritsImplicitly()
+            // TODO: implement
         }
         Snygg.FontSize {
+            inheritsImplicitly()
             add(SnyggSpSizeValue)
         }
         Snygg.FontStyle {
+            inheritsImplicitly()
             add(SnyggFontStyleValue)
         }
         Snygg.FontWeight {
+            inheritsImplicitly()
             add(SnyggFontWeightValue)
         }
 

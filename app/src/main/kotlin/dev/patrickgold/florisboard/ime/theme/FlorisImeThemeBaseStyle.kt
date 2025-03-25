@@ -42,7 +42,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.Key {
         background = `var`("surface")
         foreground = `var`("onSurface")
-        fontSize = size(22.sp)
+        fontSize = fontSize(22.sp)
         shadowElevation = size(2.dp)
         shape = roundedCornerShape(20)
     }
@@ -67,41 +67,41 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.Key("code" to listOf(KeyCode.SPACE)) {
         background = `var`("surface")
         foreground = rgbaColor(144, 144, 144)
-        fontSize = size(12.sp)
+        fontSize = fontSize(12.sp)
     }
     FlorisImeUi.KeyHint {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(184, 184, 184)
-        fontSize = size(12.sp)
+        fontSize = fontSize(12.sp)
     }
     FlorisImeUi.KeyPopup {
         background = rgbaColor(117, 117, 117)
         foreground = `var`("onSurface")
-        fontSize = size(22.sp)
+        fontSize = fontSize(22.sp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.KeyPopup(focus = true) {
         background = rgbaColor(189, 189, 189)
         foreground = `var`("onSurface")
-        fontSize = size(22.sp)
+        fontSize = fontSize(22.sp)
         shape = roundedCornerShape(20)
     }
 
     FlorisImeUi.ClipboardHeader {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("onSurface")
-        fontSize = size(16.sp)
+        fontSize = fontSize(16.sp)
     }
     FlorisImeUi.ClipboardItem {
         background = `var`("surface")
         foreground = `var`("onSurface")
-        fontSize = size(14.sp)
+        fontSize = fontSize(14.sp)
         shape = roundedCornerShape(12.dp)
     }
     FlorisImeUi.ClipboardItemPopup {
         background = rgbaColor(117, 117, 117)
         foreground = `var`("onSurface")
-        fontSize = size(14.sp)
+        fontSize = fontSize(14.sp)
         shape = roundedCornerShape(12.dp)
     }
     FlorisImeUi.ClipboardEnableHistoryButton {
@@ -113,7 +113,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.EmojiKey {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("onBackground")
-        fontSize = size(22.sp)
+        fontSize = fontSize(22.sp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.EmojiKey(pressed = true) {
@@ -156,7 +156,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarActionKey {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        fontSize = size(18.sp)
+        fontSize = fontSize(18.sp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.SmartbarActionKey(pressed = true) {
@@ -170,7 +170,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarCandidateWord {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        fontSize = size(14.sp)
+        fontSize = fontSize(14.sp)
         shape = rectangleShape()
     }
     FlorisImeUi.SmartbarCandidateWord(pressed = true) {
@@ -180,7 +180,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarCandidateClip {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        fontSize = size(14.sp)
+        fontSize = fontSize(14.sp)
         shape = roundedCornerShape(8)
     }
     FlorisImeUi.SmartbarCandidateClip(pressed = true) {

@@ -78,7 +78,7 @@ import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
@@ -101,7 +101,7 @@ import org.florisboard.lib.kotlin.toStringWithoutDotZero
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     name = "- select -",
-    value = SnyggImplicitInheritValue,
+    value = SnyggUndefinedValue,
 )
 
 data class PropertyInfo(
@@ -156,7 +156,7 @@ internal fun EditPropertyDialog(
     var propertyValueEncoder by remember {
         mutableStateOf(
             if (isAddPropertyDialog && propertySetSpec == null) {
-                SnyggImplicitInheritValue
+                SnyggUndefinedValue
             } else {
                 initProperty.value.encoder()
             }
@@ -165,7 +165,7 @@ internal fun EditPropertyDialog(
     var propertyValue by remember {
         mutableStateOf(
             if (isAddPropertyDialog && propertySetSpec == null) {
-                SnyggImplicitInheritValue
+                SnyggUndefinedValue
             } else {
                 initProperty.value
             }
@@ -178,7 +178,7 @@ internal fun EditPropertyDialog(
 
     fun isPropertyValueValid(): Boolean {
         return when (val value = propertyValue) {
-            is SnyggImplicitInheritValue -> false
+            is SnyggUndefinedValue -> false
             is SnyggDefinedVarValue -> value.key.isNotBlank()
             is SnyggSpSizeValue -> value.sp.isSpecified && value.sp.value >= 1f
             else -> true
@@ -237,7 +237,7 @@ internal fun EditPropertyDialog(
                     nameValidation = propertyNameValidation,
                     onNameChange = { name ->
                         if (propertySetSpec != null) {
-                            propertyValueEncoder = SnyggImplicitInheritValue
+                            propertyValueEncoder = SnyggUndefinedValue
                         }
                         propertyName = name
                     },
@@ -258,7 +258,7 @@ internal fun EditPropertyDialog(
                         propertyValue = encoder.defaultValue()
                     },
                     enabled = isPropertyNameValid(),
-                    isError = showSelectAsError && propertyValueEncoder == SnyggImplicitInheritValue,
+                    isError = showSelectAsError && propertyValueEncoder == SnyggUndefinedValue,
                 )
 
                 PropertyValueEditor(
@@ -330,7 +330,7 @@ private fun PropertyValueEncoderDropdown(
     isError: Boolean = false,
 ) {
     val encoders = remember(supportedEncoders) {
-        listOf(SnyggImplicitInheritValue) + supportedEncoders
+        listOf(SnyggUndefinedValue) + supportedEncoders
     }
     var expanded by remember { mutableStateOf(false) }
     val selectedIndex = remember(encoder) {

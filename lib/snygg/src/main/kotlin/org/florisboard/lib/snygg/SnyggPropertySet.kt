@@ -30,7 +30,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
@@ -45,7 +44,8 @@ import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggImageRefValue
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggInheritValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
@@ -54,30 +54,32 @@ import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.snygg.value.isInherit
+import org.florisboard.lib.snygg.value.isUndefined
 
 @Serializable(with = SnyggPropertySet.Serializer::class)
 data class SnyggPropertySet internal constructor(
     val properties: Map<String, SnyggValue> = emptyMap(),
 ) {
-    val background = properties[Snygg.Background] ?: SnyggImplicitInheritValue
-    val foreground = properties[Snygg.Foreground] ?: SnyggImplicitInheritValue
+    val background = properties[Snygg.Background] ?: SnyggUndefinedValue
+    val foreground = properties[Snygg.Foreground] ?: SnyggUndefinedValue
 
-    val borderColor = properties[Snygg.BorderColor] ?: SnyggImplicitInheritValue
-    val borderStyle = properties[Snygg.BorderStyle] ?: SnyggImplicitInheritValue
-    val borderWidth = properties[Snygg.BorderWidth] ?: SnyggImplicitInheritValue
+    val borderColor = properties[Snygg.BorderColor] ?: SnyggUndefinedValue
+    val borderStyle = properties[Snygg.BorderStyle] ?: SnyggUndefinedValue
+    val borderWidth = properties[Snygg.BorderWidth] ?: SnyggUndefinedValue
 
-    val fontFamily = properties[Snygg.FontFamily] ?: SnyggImplicitInheritValue
-    val fontSize = properties[Snygg.FontSize] ?: SnyggImplicitInheritValue
-    val fontStyle = properties[Snygg.FontStyle] ?: SnyggImplicitInheritValue
-    val fontWeight = properties[Snygg.FontWeight] ?: SnyggImplicitInheritValue
+    val fontFamily = properties[Snygg.FontFamily] ?: SnyggUndefinedValue
+    val fontSize = properties[Snygg.FontSize] ?: SnyggUndefinedValue
+    val fontStyle = properties[Snygg.FontStyle] ?: SnyggUndefinedValue
+    val fontWeight = properties[Snygg.FontWeight] ?: SnyggUndefinedValue
 
-    val margin = properties[Snygg.Margin] ?: SnyggImplicitInheritValue
-    val padding = properties[Snygg.Padding] ?: SnyggImplicitInheritValue
+    val margin = properties[Snygg.Margin] ?: SnyggUndefinedValue
+    val padding = properties[Snygg.Padding] ?: SnyggUndefinedValue
 
-    val shadowColor = properties[Snygg.ShadowColor] ?: SnyggImplicitInheritValue
-    val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggImplicitInheritValue
+    val shadowColor = properties[Snygg.ShadowColor] ?: SnyggUndefinedValue
+    val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggUndefinedValue
 
-    val shape = properties[Snygg.Shape] ?: SnyggImplicitInheritValue
+    val shape = properties[Snygg.Shape] ?: SnyggUndefinedValue
 
     fun edit() = SnyggPropertySetEditor(properties)
 
@@ -140,12 +142,23 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         }
     }
 
-    fun applyAllNonImplicit(other: SnyggPropertySet) {
-        for ((property, value) in other.properties) {
-            if (value is SnyggImplicitInheritValue) {
+    fun applyAll(thisStyle: SnyggPropertySet, parentStyle: SnyggPropertySet) {
+        for ((property, value) in thisStyle.properties) {
+            when {
+                value.isUndefined() -> { setProperty(property, null) }
+                value.isInherit() -> setProperty(property, parentStyle.properties[property])
+                else -> setProperty(property, value)
+            }
+        }
+        for ((property, propertySpec) in SnyggSpec.V2.properties) {
+            if (thisStyle.properties[property] != null) {
+                // explicitly defined, no implicit behavior
                 continue
             }
-            setProperty(property, value)
+            if (propertySpec.inheritsImplicitly() && !properties.contains(property)) {
+                // inherit implicitly
+                setProperty(property, parentStyle.properties[property])
+            }
         }
     }
 
@@ -331,7 +344,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         return SnyggDpSizeValue(dp)
     }
 
-    fun size(sp: TextUnit): SnyggSpSizeValue {
+    fun fontSize(sp: TextUnit): SnyggSpSizeValue {
         return SnyggSpSizeValue(sp)
     }
 
@@ -344,6 +357,10 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     }
 
     fun `var`(key: String): SnyggDefinedVarValue {
-        return SnyggDefinedVarValue((key))
+        return SnyggDefinedVarValue(key)
+    }
+
+    fun inherit(): SnyggInheritValue {
+        return SnyggInheritValue
     }
 }

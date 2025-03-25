@@ -21,7 +21,7 @@ import org.florisboard.lib.color.getColor
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 
 /**
@@ -61,10 +61,11 @@ fun emptySelectors(): SnyggQuerySelectors = EmptyQuerySelector
 value class SnyggTheme internal constructor(
     private val style: CompiledStyleData,
 ) {
-    internal fun queryStatic(
+    internal fun query(
         elementName: String,
         attributes: SnyggQueryAttributes,
         selectors: SnyggQuerySelectors,
+        parentStyle: SnyggPropertySet,
         dynamicLightColorScheme: ColorScheme,
         dynamicDarkColorScheme: ColorScheme,
     ): SnyggPropertySet {
@@ -72,7 +73,7 @@ value class SnyggTheme internal constructor(
         val editor = SnyggPropertySetEditor()
         for ((rule, propertySet) in styleSets) {
             if (rule.isMatchForQuery(attributes, selectors)) {
-                editor.applyAllNonImplicit(propertySet)
+                editor.applyAll(propertySet, parentStyle)
             }
         }
         for ((key, value) in editor.properties) {
@@ -110,7 +111,7 @@ value class SnyggTheme internal constructor(
                     for ((property, value) in editor.properties) {
                         if (value is SnyggDefinedVarValue) {
                             editor.properties[property] =
-                                variables[value.key] ?: SnyggImplicitInheritValue
+                                variables[value.key] ?: SnyggUndefinedValue
                         }
                     }
                     return@map rule to editor.build()

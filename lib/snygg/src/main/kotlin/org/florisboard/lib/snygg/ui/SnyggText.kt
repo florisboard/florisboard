@@ -16,7 +16,6 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,12 +31,12 @@ import org.florisboard.lib.snygg.emptySelectors
 @Composable
 fun SnyggText(
     elementName: String,
-    vararg attributes: Pair<String, Int>,
+    attributes: Map<String, Int> = emptyMap(),
     modifier: Modifier = Modifier,
     text: String,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.query(elementName, mapOf(*attributes), emptySelectors())
+    val style = theme.rememberQuery(elementName, attributes, emptySelectors())
     Text(
         modifier = modifier
             .snyggMargin(style)
@@ -57,9 +56,13 @@ fun SnyggText(
 @Composable
 fun SimpleSnyggText() {
     val stylesheet = SnyggStylesheet.v2 {
+        "preview-column" {
+            fontSize = fontSize(20.sp)
+            foreground = rgbaColor(0, 0, 255)
+        }
         "preview-text" {
             background = rgbaColor(255, 255, 255)
-            foreground = rgbaColor(0, 0, 0)
+            foreground = inherit()
             borderColor = rgbaColor(0, 0, 255)
             borderWidth = size(1.dp)
             shadowElevation = size(6.dp)
@@ -70,7 +73,7 @@ fun SimpleSnyggText() {
         "preview-text"("attr" to listOf(1)) {
             foreground = rgbaColor(255, 0, 0)
             borderWidth = size(0.dp)
-            fontSize = size(10.sp)
+            fontSize = fontSize(10.sp)
             fontStyle = fontStyle(FontStyle.Italic)
             fontWeight = fontWeight(FontWeight.Bold)
         }
@@ -78,9 +81,9 @@ fun SimpleSnyggText() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        Column {
+        SnyggColumn("preview-column") {
             SnyggText("preview-text", text = "black text")
-            SnyggText("preview-text", "attr" to 1, text = "red text")
+            SnyggText("preview-text", mapOf("attr" to 1), text = "red text")
         }
     }
 }

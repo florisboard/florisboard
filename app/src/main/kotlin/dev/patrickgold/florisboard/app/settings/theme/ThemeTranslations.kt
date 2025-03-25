@@ -32,8 +32,8 @@ import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggExplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggInheritValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
@@ -206,8 +206,8 @@ internal fun buildColorString(color: Color, displayColorsAs: DisplayColorsAs): S
 @Composable
 internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): String {
     return when (encoder) {
-        SnyggImplicitInheritValue -> R.string.general__select_dropdown_value_placeholder
-        SnyggExplicitInheritValue -> R.string.snygg__property_value__explicit_inherit
+        SnyggUndefinedValue -> R.string.general__select_dropdown_value_placeholder
+        SnyggInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggStaticColorValue -> R.string.snygg__property_value__solid_color
         SnyggDynamicColorLightColorValue -> R.string.snygg__property_value__material_you_light_color
         SnyggDynamicColorDarkColorValue -> R.string.snygg__property_value__material_you_dark_color

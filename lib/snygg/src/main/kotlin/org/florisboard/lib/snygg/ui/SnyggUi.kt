@@ -72,6 +72,11 @@ internal val LocalSnyggDynamicDarkColorScheme: ProvidableCompositionLocal<ColorS
         error("ProvideSnyggTheme not called.")
     }
 
+internal val LocalSnyggParentStyle: ProvidableCompositionLocal<SnyggPropertySet> =
+    staticCompositionLocalOf {
+        SnyggPropertySet()
+    }
+
 @Composable
 fun rememberSnyggTheme(stylesheet: SnyggStylesheet) = remember(stylesheet) {
     SnyggTheme.compileFrom(stylesheet)
@@ -94,6 +99,17 @@ fun ProvideSnyggTheme(
     )
 }
 
+@Composable
+internal fun ProvideSnyggParentStyle(
+    parentStyle: SnyggPropertySet,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(
+        LocalSnyggParentStyle provides parentStyle,
+        content = content,
+    )
+}
+
 val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
     get() = Saver(
         save = { it?.toString() ?: "" },
@@ -101,18 +117,20 @@ val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
     )
 
 @Composable
-internal fun SnyggTheme.query(
+internal fun SnyggTheme.rememberQuery(
     elementName: String,
     attributes: SnyggQueryAttributes,
     selectors: SnyggQuerySelectors,
 ): SnyggPropertySet {
+    val parentStyle = LocalSnyggParentStyle.current
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
-    return remember(elementName, attributes, selectors, dynamicLightColorScheme, dynamicDarkColorScheme) {
-        queryStatic(
+    return remember(elementName, attributes, selectors, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
+        query(
             elementName,
             attributes,
             selectors,
+            parentStyle,
             dynamicLightColorScheme,
             dynamicDarkColorScheme,
         )
