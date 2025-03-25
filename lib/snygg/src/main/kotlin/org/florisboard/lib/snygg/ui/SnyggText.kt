@@ -16,21 +16,54 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.emptySelectors
 
 @Composable
 fun SnyggText(
     elementName: String,
-    attributes: Map<String, Int> = emptyMap(),
+    vararg attributes: Pair<String, Int>,
     modifier: Modifier = Modifier,
-    content: @Composable RowScope.() -> Unit,
+    text: String,
 ) {
-    val snyggTheme = LocalSnyggTheme.current
-    Row(
-        modifier = modifier,
-        content = content,
+    val theme = LocalSnyggTheme.current
+    val style = theme.query(elementName, mapOf(*attributes), emptySelectors())
+    Text(
+        modifier = modifier
+            .snyggBackground(style)
+            .snyggBorder(style),
+        text = text,
+        color = style.foreground.colorOrDefault(LocalContentColor.current),
     )
+}
+
+@Preview
+@Composable
+fun SimpleSnyggText() {
+    val stylesheet = SnyggStylesheet.v2 {
+        "preview-text" {
+            background = rgbaColor(255, 255, 255)
+            foreground = rgbaColor(0, 0, 0)
+            borderColor = rgbaColor(0, 0, 255)
+            borderWidth = size(1.dp)
+        }
+        "preview-text"("attr" to listOf(1)) {
+            foreground = rgbaColor(255, 0, 0)
+        }
+    }
+    val theme = rememberSnyggTheme(stylesheet)
+
+    ProvideSnyggTheme(theme) {
+        Column {
+            SnyggText("preview-text", text = "black text")
+            SnyggText("preview-text", "attr" to 1, text = "red text")
+        }
+    }
 }

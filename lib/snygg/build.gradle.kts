@@ -64,6 +64,7 @@ android {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf(
             "-Xconsistent-data-class-copy-visibility",
+            "-Xwhen-guards",
         )
     }
 }
@@ -87,6 +88,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.kotlin.test.junit5)

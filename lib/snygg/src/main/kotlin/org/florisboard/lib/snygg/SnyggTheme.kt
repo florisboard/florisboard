@@ -50,6 +50,10 @@ fun selectorsOf(
     disabled: Boolean = false,
 ) = SnyggQuerySelectors(pressed, focus, disabled)
 
+private val EmptyQuerySelector = selectorsOf()
+
+fun emptySelectors(): SnyggQuerySelectors = EmptyQuerySelector
+
 /**
  * Represents the runtime style data, which is used for styling UI elements.
  */

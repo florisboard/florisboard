@@ -16,6 +16,8 @@
 
 package org.florisboard.lib.snygg.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -23,8 +25,18 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.takeOrElse
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.SnyggQueryAttributes
@@ -32,6 +44,11 @@ import org.florisboard.lib.snygg.SnyggQuerySelectors
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggShapeValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
     staticCompositionLocalOf {
@@ -56,7 +73,7 @@ fun rememberSnyggTheme(stylesheet: SnyggStylesheet) = remember(stylesheet) {
 @Composable
 fun ProvideSnyggTheme(
     snyggTheme: SnyggTheme,
-    dynamicAccentColor: Color,
+    dynamicAccentColor: Color = Color.Unspecified,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -92,5 +109,84 @@ internal fun SnyggTheme.query(
             dynamicLightColorScheme,
             dynamicDarkColorScheme,
         )
+    }
+}
+
+internal fun Modifier.snyggBackground(
+    style: SnyggPropertySet,
+    fallbackColor: Color = Color.Unspecified,
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    return when (val bg = style.background) {
+        is SnyggStaticColorValue -> this.background(
+            color = bg.color,
+            shape = shape,
+        )
+        else if (fallbackColor.isSpecified) -> {
+            this.background(
+                color = fallbackColor,
+                shape = shape,
+            )
+        }
+        else -> this
+    }
+}
+
+internal fun Modifier.snyggBorder(
+    style: SnyggPropertySet,
+    width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
+    color: Color = style.borderColor.colorOrDefault(default = Color.Unspecified),
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    return if (color.isSpecified) {
+        this.border(width, color, shape)
+    } else {
+        this
+    }
+}
+
+internal fun Modifier.snyggClip(
+    style: SnyggPropertySet,
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    return this.clip(shape)
+}
+
+internal fun Modifier.snyggShadow(
+    style: SnyggPropertySet,
+    elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
+    shape: Shape = style.shape.shape(),
+): Modifier {
+    // TODO: find a performant way to implement shadow color
+    return this.shadow(elevation, shape, clip = false)
+}
+
+/// SnyggValue helpers
+
+fun SnyggValue.colorOrDefault(default: Color): Color {
+    return when (this) {
+        is SnyggStaticColorValue -> this.color
+        else -> default
+    }
+}
+
+fun SnyggValue.shape(): Shape {
+    return when (this) {
+        is SnyggShapeValue -> this.shape
+        else -> RectangleShape
+    }
+}
+
+fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
+    return when (this) {
+        is SnyggDpSizeValue -> this.dp
+        else -> default
+    }
+}
+
+fun SnyggValue.spSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
+    return when (this) {
+        is SnyggSpSizeValue -> this.sp
+        else -> default
     }
 }
