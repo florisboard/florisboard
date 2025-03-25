@@ -18,8 +18,8 @@ package dev.patrickgold.florisboard.ime.theme
 
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggPropertySetSpecBuilder
-import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.SnyggPropertySetSpecDeclBuilder
+import org.florisboard.lib.snygg.SnyggSpecDecl
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
@@ -32,21 +32,21 @@ import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 
-fun SnyggPropertySetSpecBuilder.background() {
+fun SnyggPropertySetSpecDeclBuilder.background() {
     property(
         name = Snygg.Background,
         level = SnyggLevel.BASIC,
         supportedValues(SnyggStaticColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.foreground() {
+fun SnyggPropertySetSpecDeclBuilder.foreground() {
     property(
         name = Snygg.Foreground,
         level = SnyggLevel.BASIC,
         supportedValues(SnyggStaticColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.border() {
+fun SnyggPropertySetSpecDeclBuilder.border() {
     property(
         name = Snygg.BorderColor,
         level = SnyggLevel.ADVANCED,
@@ -58,21 +58,21 @@ fun SnyggPropertySetSpecBuilder.border() {
         supportedValues(SnyggDpSizeValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.font() {
+fun SnyggPropertySetSpecDeclBuilder.font() {
     property(
         name = Snygg.FontSize,
         level = SnyggLevel.ADVANCED,
         supportedValues(SnyggSpSizeValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.shadow() {
+fun SnyggPropertySetSpecDeclBuilder.shadow() {
     property(
         name = Snygg.ShadowElevation,
         level = SnyggLevel.ADVANCED,
         supportedValues(SnyggDpSizeValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.shape() {
+fun SnyggPropertySetSpecDeclBuilder.shape() {
     property(
         name = Snygg.Shape,
         level = SnyggLevel.ADVANCED,
@@ -87,7 +87,7 @@ fun SnyggPropertySetSpecBuilder.shape() {
     )
 }
 
-object FlorisImeUiSpec : SnyggSpec({
+object FlorisImeUiSpec : SnyggSpecDecl({
     element(FlorisImeUi.Keyboard) {
         background()
     }

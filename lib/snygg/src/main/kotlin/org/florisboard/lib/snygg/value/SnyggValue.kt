@@ -16,15 +16,6 @@
 
 package org.florisboard.lib.snygg.value
 
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import org.florisboard.lib.snygg.SnyggStylesheet
-
 /**
  * SnyggValue is the base interface for all possible property values a Snygg stylesheet can hold. In general, a Snygg
  * value can be one specific type of value (e.g. a color, a keyword describing a behavior, shape, etc.).
@@ -34,32 +25,11 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  * there be the need to have two different representations, two different values must be defined and declared in the
  * `supportedValues` field of a property spec.
  */
-@Serializable(with = SnyggValue.Serializer::class)
 interface SnyggValue {
     /**
      * Returns the associated encoder for this Snygg value, typically the Companion of the implementing value class.
      */
     fun encoder(): SnyggValueEncoder
-
-    object Serializer : KSerializer<SnyggValue> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor(SnyggStylesheet::class.simpleName!!, PrimitiveKind.STRING)
-
-        override fun serialize(encoder: Encoder, value: SnyggValue) {
-            encoder.encodeString(value.encoder().serialize(value).getOrThrow())
-        }
-
-        override fun deserialize(decoder: Decoder): SnyggValue {
-            val rawValue = decoder.decodeString()
-            for (encoder in SnyggValueEncoders) {
-                val value = encoder.deserialize(rawValue).getOrNull()
-                if (value != null) {
-                    return value
-                }
-            }
-            return SnyggImplicitInheritValue
-        }
-    }
 }
 
 /**
@@ -134,21 +104,3 @@ object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
 
     override fun encoder() = this
 }
-
-private val SnyggValueEncoders = listOfNotNull(
-    SnyggDefinedVarValue,
-    SnyggStaticColorValue,
-    SnyggDynamicLightColorValue,
-    SnyggDynamicDarkColorValue,
-    //SnyggImageRefValue,
-    SnyggRectangleShapeValue,
-    SnyggCircleShapeValue,
-    SnyggRoundedCornerDpShapeValue,
-    SnyggRoundedCornerPercentShapeValue,
-    SnyggCutCornerDpShapeValue,
-    SnyggCutCornerPercentShapeValue,
-    SnyggDpSizeValue,
-    SnyggSpSizeValue,
-    SnyggPercentageSizeValue,
-    SnyggExplicitInheritValue,
-)

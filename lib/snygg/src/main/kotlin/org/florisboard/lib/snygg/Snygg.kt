@@ -16,23 +16,34 @@
 
 package org.florisboard.lib.snygg
 
+import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
+import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggExplicitInheritValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
+import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+
 /**
  * Main object for defining all known Snygg property names.
  *
  * snygg = Swedish for stylish
  */
-// TODO: How can we make this compose state conform
 object Snygg {
-    const val Width = "width"
-    const val Height = "height"
-
     // TODO: add onImagePathResolve API for library consumer
     const val Background = "background" // TODO: add image() function
     // TODO: object-fit support
     const val Foreground = "foreground"
 
     const val BorderColor = "border-color"
-    const val BorderStyle = "border-style"
+    const val BorderStyle = "border-style" // unsupported as of now
     const val BorderWidth = "border-width"
 
     // TODO: font-family also needs a ref-like system, like image too
@@ -49,4 +60,89 @@ object Snygg {
     const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"
+
+    // TODO: Evaluate the usefulness of width and height
+    const val Width = "width"
+    const val Height = "height"
+}
+
+// Keep in sync with schemas/stylesheet.schema.json
+object SnyggSpec {
+    object V2 : SnyggSpecDecl({
+        allProperties {
+            add(SnyggExplicitInheritValue)
+            add(SnyggDefinedVarValue)
+        }
+
+        Snygg.Background {
+            add(SnyggStaticColorValue)
+            add(SnyggDynamicLightColorValue)
+            add(SnyggDynamicDarkColorValue)
+        }
+        Snygg.Foreground {
+            add(SnyggStaticColorValue)
+            add(SnyggDynamicLightColorValue)
+            add(SnyggDynamicDarkColorValue)
+        }
+
+        Snygg.BorderColor {
+            add(SnyggStaticColorValue)
+            add(SnyggDynamicLightColorValue)
+            add(SnyggDynamicDarkColorValue)
+        }
+        Snygg.BorderStyle {
+            // unsupported
+        }
+        Snygg.BorderWidth {
+            add(SnyggDpSizeValue)
+        }
+
+        Snygg.FontFamily {
+            // unsupported
+        }
+        Snygg.FontSize {
+            add(SnyggSpSizeValue)
+        }
+        Snygg.FontStyle {
+            // unsupported
+        }
+        Snygg.FontVariant {
+            // unsupported
+        }
+        Snygg.FontWeight {
+            // unsupported
+        }
+
+        Snygg.Margin {
+            add(SnyggPaddingValue)
+        }
+        Snygg.Padding {
+            add(SnyggPaddingValue)
+        }
+
+        Snygg.ShadowColor {
+            add(SnyggStaticColorValue)
+            add(SnyggDynamicLightColorValue)
+            add(SnyggDynamicDarkColorValue)
+        }
+        Snygg.ShadowElevation {
+            add(SnyggDpSizeValue)
+        }
+
+        Snygg.Shape {
+            add(SnyggRectangleShapeValue)
+            add(SnyggCircleShapeValue)
+            add(SnyggRoundedCornerDpShapeValue)
+            add(SnyggRoundedCornerPercentShapeValue)
+            add(SnyggCutCornerDpShapeValue)
+            add(SnyggCutCornerPercentShapeValue)
+        }
+
+        Snygg.Width {
+            add(SnyggDpSizeValue)
+        }
+        Snygg.Height {
+            add(SnyggDpSizeValue)
+        }
+    })
 }

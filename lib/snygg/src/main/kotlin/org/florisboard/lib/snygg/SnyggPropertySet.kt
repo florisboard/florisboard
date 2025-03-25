@@ -24,11 +24,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.encodeToJsonElement
 import org.florisboard.lib.snygg.value.RgbaColor
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -52,9 +55,6 @@ import org.florisboard.lib.snygg.value.SnyggValue
 data class SnyggPropertySet internal constructor(
     val properties: Map<String, SnyggValue> = emptyMap(),
 ) {
-    val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue
-    val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
-
     val background = properties[Snygg.Background] ?: SnyggImplicitInheritValue
     val foreground = properties[Snygg.Foreground] ?: SnyggImplicitInheritValue
 
@@ -76,6 +76,9 @@ data class SnyggPropertySet internal constructor(
 
     val shape = properties[Snygg.Shape] ?: SnyggImplicitInheritValue
 
+    val width = properties[Snygg.Width] ?: SnyggImplicitInheritValue
+    val height = properties[Snygg.Height] ?: SnyggImplicitInheritValue
+
     fun edit() = SnyggPropertySetEditor(properties)
 
     override fun toString(): String {
@@ -83,17 +86,34 @@ data class SnyggPropertySet internal constructor(
     }
 
     object Serializer : KSerializer<SnyggPropertySet> {
-        private val serializer = MapSerializer(String.serializer(), SnyggValue.Serializer)
         override val descriptor: SerialDescriptor
-            get() = serializer.descriptor
+            get() = JsonObject.serializer().descriptor
 
         override fun serialize(encoder: Encoder, value: SnyggPropertySet) {
-            encoder.encodeSerializableValue(serializer, value.properties)
+            val rawProperties = value.properties.mapValues { (_, value) ->
+                val valueStr = value.encoder().serialize(value).getOrThrow()
+                Json.encodeToJsonElement(valueStr)
+            }
+            encoder.encodeSerializableValue(JsonObject.serializer(), JsonObject(rawProperties))
         }
 
         override fun deserialize(decoder: Decoder): SnyggPropertySet {
-            val properties = decoder.decodeSerializableValue(serializer)
-            return SnyggPropertySet(properties)
+            val rawProperties = decoder.decodeSerializableValue(JsonObject.serializer())
+            val editor = SnyggPropertySetEditor()
+            propLoop@ for ((property, valueElem) in rawProperties) {
+                val encoders = SnyggSpec.V2.encodersOf(property)
+                requireNotNull(encoders) { "Unknown property: $property" }
+                val valueStr = Json.decodeFromJsonElement<String>(valueElem)
+                for (encoder in encoders) {
+                    val value = encoder.deserialize(valueStr).getOrNull()
+                    if (value != null) {
+                        editor.properties[property] = value
+                        continue@propLoop
+                    }
+                }
+                error("No value encoder found for property: $property")
+            }
+            return editor.build()
         }
     }
 }
@@ -142,13 +162,6 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     infix fun String.to(v: Any): Nothing {
         throw IllegalArgumentException("Only snygg values are allowed (given value: $v)")
     }
-
-    var width: SnyggValue?
-        get() =  getProperty(Snygg.Width)
-        set(v) = setProperty(Snygg.Width, v)
-    var height: SnyggValue?
-        get() =  getProperty(Snygg.Height)
-        set(v) = setProperty(Snygg.Height, v)
 
     var background: SnyggValue?
         get() =  getProperty(Snygg.Background)
@@ -200,6 +213,13 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var shape: SnyggValue?
         get() =  getProperty(Snygg.Shape)
         set(v) = setProperty(Snygg.Shape, v)
+
+    var width: SnyggValue?
+        get() =  getProperty(Snygg.Width)
+        set(v) = setProperty(Snygg.Width, v)
+    var height: SnyggValue?
+        get() =  getProperty(Snygg.Height)
+        set(v) = setProperty(Snygg.Height, v)
 
     fun rgbaColor(
         @IntRange(from = RgbaColor.RedMin.toLong(), to = RgbaColor.RedMax.toLong())
