@@ -19,50 +19,26 @@ package org.florisboard.lib.snygg.value
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 
-private const val FontStyleId = "fontStyle"
-private const val FontWeightNamedId = "fontWeightNamed"
-private const val FontWeightNumericId = "fontWeightNumeric"
-
 sealed interface SnyggFontValue : SnyggValue
 
 data class SnyggFontStyleValue(val fontStyle: FontStyle) : SnyggFontValue {
-    companion object : SnyggValueEncoder {
-        override val spec = SnyggValueSpec {
-            keywords(FontStyleId, listOf("normal", "italic"))
-        }
-
-        override fun defaultValue() = SnyggFontStyleValue(FontStyle.Normal)
-
-        override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggFontStyleValue)
-            val map = snyggIdToValueMapOf(
-                FontStyleId to when (v.fontStyle) {
-                    FontStyle.Normal -> "normal"
-                    FontStyle.Italic -> "italic"
-                    else -> error("unreachable")
-                }
-            )
-            return@runCatching spec.pack(map)
-        }
-
-        override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = snyggIdToValueMapOf()
-            spec.parse(v, map)
-            val fontStyle = when (map.getString(FontStyleId)) {
-                "normal" -> FontStyle.Normal
-                "italic" -> FontStyle.Italic
-                else -> error("Invalid font style supplied")
-            }
-            return@runCatching SnyggFontStyleValue(fontStyle)
-        }
-    }
-
+    companion object : SnyggEnumLikeValueEncoder<FontStyle>(
+        serializationId = "textAlign",
+        serializationMapping = mapOf(
+            "normal" to FontStyle.Normal,
+            "italic" to FontStyle.Italic,
+        ),
+        default = FontStyle.Normal,
+        construct = { SnyggFontStyleValue(it) },
+        destruct = { (it as SnyggFontStyleValue).fontStyle },
+    )
     override fun encoder() = Companion
 }
 
 data class SnyggFontWeightValue(val fontWeight: FontWeight) : SnyggFontValue {
-    companion object : SnyggValueEncoder {
-        internal val Weights = mapOf(
+    companion object : SnyggEnumLikeValueEncoder<FontWeight>(
+        serializationId = "textAlign",
+        serializationMapping = mapOf(
             "thin" to FontWeight(100),
             "extra-light" to FontWeight(200),
             "light" to FontWeight(300),
@@ -72,43 +48,19 @@ data class SnyggFontWeightValue(val fontWeight: FontWeight) : SnyggFontValue {
             "bold" to FontWeight(700),
             "extra-bold" to FontWeight(800),
             "black" to FontWeight(900),
-        )
-        override val spec = SnyggValueSpec {
-            keywords(FontWeightNamedId, Weights.keys.toList())
-        }
-
-        override val alternativeSpecs = listOf(
-            SnyggValueSpec {
-                keywords(FontWeightNumericId, Weights.values.map { it.weight.toString() }.toList())
-            }
-        )
-
-        override fun defaultValue() = SnyggFontWeightValue(FontWeight.Normal)
-
-        override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggFontWeightValue)
-            val map = snyggIdToValueMapOf(
-                FontWeightNamedId to Weights.firstNotNullOf { (name, fontWeight) ->
-                    if (fontWeight == v.fontWeight) name else null
-                }
-            )
-            return@runCatching spec.pack(map)
-        }
-
-        override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = snyggIdToValueMapOf()
-            runCatching { spec.parse(v, map) }.onSuccess {
-                val name = map.getString(FontWeightNamedId)
-                return@runCatching SnyggFontWeightValue(Weights[name]!!)
-            }
-            runCatching { alternativeSpecs[0].parse(v, map) }.onSuccess {
-                val weightStr = map.getString(FontWeightNumericId)
-                val fontWeight = FontWeight(weightStr.toInt())
-                return@runCatching SnyggFontWeightValue(fontWeight)
-            }
-            error("No matching spec found for \"$v\"")
-        }
-    }
-
+            "100" to FontWeight(100),
+            "200" to FontWeight(200),
+            "300" to FontWeight(300),
+            "400" to FontWeight(400),
+            "500" to FontWeight(500),
+            "600" to FontWeight(600),
+            "700" to FontWeight(700),
+            "800" to FontWeight(800),
+            "900" to FontWeight(900),
+        ),
+        default = FontWeight.Normal,
+        construct = { SnyggFontWeightValue(it) },
+        destruct = { (it as SnyggFontWeightValue).fontWeight },
+    )
     override fun encoder() = Companion
 }

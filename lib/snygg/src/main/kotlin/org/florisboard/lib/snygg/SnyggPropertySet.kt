@@ -22,6 +22,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.KSerializer
@@ -53,6 +56,9 @@ import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggTextAlignValue
+import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
@@ -72,6 +78,12 @@ data class SnyggPropertySet internal constructor(
     val fontSize = properties[Snygg.FontSize] ?: SnyggUndefinedValue
     val fontStyle = properties[Snygg.FontStyle] ?: SnyggUndefinedValue
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggUndefinedValue
+    val letterSpacing = properties[Snygg.LetterSpacing] ?: SnyggUndefinedValue
+    val lineHeight = properties[Snygg.LineHeight] ?: SnyggUndefinedValue
+
+    val textAlign = properties[Snygg.TextAlign] ?: SnyggUndefinedValue
+    val textDecorationLine = properties[Snygg.TextDecorationLine] ?: SnyggUndefinedValue
+    val textOverflow = properties[Snygg.TextOverflow] ?: SnyggUndefinedValue
 
     val margin = properties[Snygg.Margin] ?: SnyggUndefinedValue
     val padding = properties[Snygg.Padding] ?: SnyggUndefinedValue
@@ -205,6 +217,22 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var fontWeight: SnyggValue?
         get() =  getProperty(Snygg.FontWeight)
         set(v) = setProperty(Snygg.FontWeight, v)
+    var letterSpacing: SnyggValue?
+        get() =  getProperty(Snygg.LetterSpacing)
+        set(v) = setProperty(Snygg.LetterSpacing, v)
+    var lineHeight: SnyggValue?
+        get() =  getProperty(Snygg.LineHeight)
+        set(v) = setProperty(Snygg.LineHeight, v)
+
+    var textAlign: SnyggValue?
+        get() =  getProperty(Snygg.TextAlign)
+        set(v) = setProperty(Snygg.TextAlign, v)
+    var textDecorationLine: SnyggValue?
+        get() =  getProperty(Snygg.TextDecorationLine)
+        set(v) = setProperty(Snygg.TextDecorationLine, v)
+    var textOverflow: SnyggValue?
+        get() =  getProperty(Snygg.TextOverflow)
+        set(v) = setProperty(Snygg.TextOverflow, v)
 
     var margin: SnyggValue?
         get() =  getProperty(Snygg.Margin)
@@ -258,6 +286,18 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
 
     fun fontWeight(fontWeight: FontWeight): SnyggFontWeightValue {
         return SnyggFontWeightValue(fontWeight)
+    }
+
+    fun textAlign(textAlign: TextAlign): SnyggTextAlignValue {
+        return SnyggTextAlignValue(textAlign)
+    }
+
+    fun textDecorationLine(textDecoration: TextDecoration): SnyggTextDecorationLineValue {
+        return SnyggTextDecorationLineValue(textDecoration)
+    }
+
+    fun textOverflow(textOverflow: TextOverflow): SnyggTextOverflowValue {
+        return SnyggTextOverflowValue(textOverflow)
     }
 
     fun rectangleShape(): SnyggRectangleShapeValue {

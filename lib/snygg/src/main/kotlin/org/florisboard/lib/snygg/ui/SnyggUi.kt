@@ -37,6 +37,9 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -55,6 +58,9 @@ import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggTextAlignValue
+import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
@@ -251,6 +257,41 @@ internal fun SnyggPropertySet.fontStyle(default: FontStyle? = null): FontStyle? 
 internal fun SnyggPropertySet.fontWeight(default: FontWeight? = null): FontWeight? {
     return when (fontWeight) {
         is SnyggFontWeightValue -> fontWeight.fontWeight
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.letterSpacing(default: TextUnit = TextUnit.Unspecified): TextUnit {
+    return when (letterSpacing) {
+        is SnyggSpSizeValue -> letterSpacing.sp
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.lineHeight(default: TextUnit = TextUnit.Unspecified): TextUnit {
+    return when (lineHeight) {
+        is SnyggSpSizeValue -> lineHeight.sp
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.textAlign(default: TextAlign? = null): TextAlign? {
+    return when (textAlign) {
+        is SnyggTextAlignValue -> textAlign.textAlign
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.textDecorationLine(default: TextDecoration? = null): TextDecoration? {
+    return when (textDecorationLine) {
+        is SnyggTextDecorationLineValue -> textDecorationLine.textDecoration
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.textOverflow(default: TextOverflow = TextOverflow.Clip): TextOverflow {
+    return when (textOverflow) {
+        is SnyggTextOverflowValue -> textOverflow.textOverflow
         else -> default
     }
 }

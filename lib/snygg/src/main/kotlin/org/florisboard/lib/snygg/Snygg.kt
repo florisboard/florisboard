@@ -32,6 +32,9 @@ import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggTextAlignValue
+import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 
 /**
  * Main object for defining all known Snygg property names.
@@ -52,7 +55,13 @@ object Snygg {
     const val FontFamily = "font-family" // TODO: no impact yet???
     const val FontSize = "font-size"
     const val FontStyle = "font-style"
-    const val FontWeight = "font-weight" // TODO: no impact yet???
+    const val FontWeight = "font-weight"
+    const val LetterSpacing = "letter-spacing"
+    const val LineHeight = "line-height"
+
+    const val TextAlign = "text-align"
+    const val TextDecorationLine = "text-decoration-line"
+    const val TextOverflow = "text-overflow"
 
     const val Margin = "margin"
     const val Padding = "padding"
@@ -110,6 +119,27 @@ object SnyggSpec {
         Snygg.FontWeight {
             inheritsImplicitly()
             add(SnyggFontWeightValue)
+        }
+        Snygg.LetterSpacing {
+            inheritsImplicitly()
+            add(SnyggSpSizeValue)
+        }
+        Snygg.LineHeight {
+            inheritsImplicitly()
+            add(SnyggSpSizeValue)
+        }
+
+        Snygg.TextAlign {
+            inheritsImplicitly()
+            add(SnyggTextAlignValue)
+        }
+        Snygg.TextDecorationLine {
+            inheritsImplicitly()
+            add(SnyggTextDecorationLineValue)
+        }
+        Snygg.TextOverflow {
+            inheritsImplicitly()
+            add(SnyggTextOverflowValue)
         }
 
         Snygg.Margin {

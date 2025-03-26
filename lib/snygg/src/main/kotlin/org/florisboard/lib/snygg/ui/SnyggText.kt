@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +48,11 @@ fun SnyggText(
         fontSize = style.fontSize(),
         fontStyle = style.fontStyle(),
         fontWeight = style.fontWeight(),
+        letterSpacing = style.letterSpacing(),
+        lineHeight = style.lineHeight(),
+        textAlign = style.textAlign(),
+        textDecoration = style.textDecorationLine(),
+        overflow = style.textOverflow(),
     )
 }
 
@@ -74,6 +80,8 @@ private fun SimpleSnyggText() {
             fontSize = fontSize(10.sp)
             fontStyle = fontStyle(FontStyle.Italic)
             fontWeight = fontWeight(FontWeight.Bold)
+            letterSpacing = fontSize(4.sp)
+            textDecorationLine = textDecorationLine(TextDecoration.LineThrough)
         }
     }
     val theme = rememberSnyggTheme(stylesheet)
