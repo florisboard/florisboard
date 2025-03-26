@@ -27,13 +27,13 @@ class SnyggThemeTest {
     private fun SnyggTheme.helperQuery(
         elementName: String,
         attributes: SnyggQueryAttributes = emptyMap(),
-        selectors: SnyggQuerySelectors = SnyggQuerySelectors(),
+        selector: SnyggSelector? = null,
         parentStyle: SnyggPropertySet = SnyggPropertySet(),
     ): SnyggPropertySet {
         return this.query(
             elementName,
             attributes,
-            selectors,
+            selector,
             parentStyle,
             dynamicLightColorScheme = yellowLightScheme,
             dynamicDarkColorScheme = yellowDarkScheme,
@@ -58,13 +58,13 @@ class SnyggThemeTest {
                 foreground = `var`("--primary")
                 borderColor = `var`("--secondary")
             }
-            "key"(pressed = true) {
+            "key"(selector = SnyggSelector.PRESSED) {
                 foreground = rgbaColor(255, 255, 255)
             }
-            "key"(focus = true) {
+            "key"(selector = SnyggSelector.FOCUS) {
                 borderColor = `var`("--primary")
             }
-            "key"(disabled = true) {
+            "key"(selector = SnyggSelector.DISABLED) {
                 shadowElevation = size(2.dp)
             }
         }
@@ -78,21 +78,21 @@ class SnyggThemeTest {
         val keyBorderColor = assertIs<SnyggStaticColorValue>(key.borderColor)
         assertEquals(yellowLightScheme.secondary, keyBorderColor.color)
 
-        val keyPressed = theme.helperQuery("key", selectors = selectorsOf(pressed = true))
+        val keyPressed = theme.helperQuery("key", selector = SnyggSelector.PRESSED)
         assertEquals(keyBackground, keyPressed.background)
         assertNotEquals(keyForeground, keyPressed.foreground)
         assertEquals(keyBorderColor, keyPressed.borderColor)
         val keyPressedForeground = assertIs<SnyggStaticColorValue>(keyPressed.foreground)
         assertEquals(Color(255, 255, 255), keyPressedForeground.color)
 
-        val keyFocus = theme.helperQuery("key", selectors = selectorsOf(focus = true))
+        val keyFocus = theme.helperQuery("key", selector = SnyggSelector.FOCUS)
         assertEquals(keyBackground, keyFocus.background)
         assertEquals(keyForeground, keyFocus.foreground)
         assertNotEquals(keyBorderColor, keyFocus.borderColor)
         val keyFocusBorderColor = assertIs<SnyggStaticColorValue>(keyFocus.borderColor)
         assertEquals(yellowDarkScheme.primary, keyFocusBorderColor.color)
 
-        val keyDisabled = theme.helperQuery("key", selectors = selectorsOf(disabled = true))
+        val keyDisabled = theme.helperQuery("key", selector = SnyggSelector.DISABLED)
         assertEquals(keyBackground, keyDisabled.background)
         assertEquals(keyForeground, keyDisabled.foreground)
         assertEquals(keyBorderColor, keyDisabled.borderColor)

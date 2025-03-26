@@ -23,26 +23,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.emptySelectors
 
 @Composable
 fun SnyggSurface(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
     modifier: Modifier = Modifier,
+    clip: Boolean = false,
+    clickAndSemanticsModifier: Modifier = Modifier,
     // TODO: implement image loader
     imageLoader: ((relPath: String) -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, emptySelectors())
+    val style = theme.rememberQuery(elementName, attributes)
     ProvideSnyggParentStyle(style) {
         Surface(
             modifier = modifier
                 .snyggMargin(style)
                 .snyggShadow(style)
                 .snyggBorder(style)
+                .then(if (clip) Modifier.snyggClip(style) else Modifier)
                 .snyggBackground(style)
+                .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
             content = content,
         )

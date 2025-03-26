@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.emptySelectors
 
 @Composable
 fun SnyggColumn(
@@ -34,7 +33,7 @@ fun SnyggColumn(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, emptySelectors())
+    val style = theme.rememberQuery(elementName, attributes)
     ProvideSnyggParentStyle(style) {
         Column(
             modifier = modifier

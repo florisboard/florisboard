@@ -43,19 +43,6 @@ private typealias CompiledStyleData =
 
 typealias SnyggQueryAttributes = Map<String, Int>
 
-typealias SnyggQuerySelectors = SnyggRule.Selectors
-
-fun selectorsOf(
-    pressed: Boolean = false,
-    focus: Boolean = false,
-    hover: Boolean = false,
-    disabled: Boolean = false,
-) = SnyggQuerySelectors(pressed, focus, hover, disabled)
-
-private val EmptyQuerySelector = selectorsOf()
-
-fun emptySelectors(): SnyggQuerySelectors = EmptyQuerySelector
-
 /**
  * Represents the runtime style data, which is used for styling UI elements.
  */
@@ -66,7 +53,7 @@ value class SnyggTheme internal constructor(
     internal fun query(
         elementName: String,
         attributes: SnyggQueryAttributes,
-        selectors: SnyggQuerySelectors,
+        selector: SnyggSelector?,
         parentStyle: SnyggPropertySet,
         dynamicLightColorScheme: ColorScheme,
         dynamicDarkColorScheme: ColorScheme,
@@ -78,7 +65,7 @@ value class SnyggTheme internal constructor(
             return editor.build()
         }
         for ((rule, propertySet) in styleSets) {
-            if (rule.isMatchForQuery(attributes, selectors)) {
+            if (rule.isMatchForQuery(attributes, selector)) {
                 editor.applyAll(propertySet, parentStyle)
             }
         }
@@ -130,9 +117,9 @@ value class SnyggTheme internal constructor(
 
 private fun SnyggRule.isMatchForQuery(
     queryAttributes: SnyggQueryAttributes,
-    querySelectors: SnyggQuerySelectors,
+    querySelector: SnyggSelector?,
 ): Boolean {
-    return selectors.isMatchForQuery(querySelectors) &&
+    return selector.isMatchForQuery(querySelector) &&
         attributes.isMatchForQuery(queryAttributes)
 }
 
@@ -146,18 +133,6 @@ private fun SnyggRule.Attributes.isMatchForQuery(query: SnyggQueryAttributes): B
     return true
 }
 
-private fun SnyggRule.Selectors.isMatchForQuery(query: SnyggQuerySelectors): Boolean {
-    if (pressed && !query.pressed) {
-        return false
-    }
-    if (focus && !query.focus) {
-        return false
-    }
-    if (hover && !query.hover) {
-        return false
-    }
-    if (disabled && !query.disabled) {
-        return false
-    }
-    return true
+private fun SnyggSelector?.isMatchForQuery(query: SnyggSelector?): Boolean {
+    return this == null || this == query
 }

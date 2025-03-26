@@ -12,7 +12,7 @@
     "^@defines$": {
       "$ref": "#/definitions/snygg-defines-property-set"
     },
-    "^(?<annotationName>@[a-zA-Z0-9-]+)|(?<elementName>[a-zA-Z0-9-]+)(?<attributesRaw>(?:\\[[a-zA-Z0-9-]+=[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?(?:,[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?)*])+)?(?<selectorsRaw>(?::pressed|:focus|:disabled)+)?$": {
+    "^(?<annotationName>@[a-zA-Z0-9-]+)|(?<elementName>[a-zA-Z0-9-]+)(?<attributesRaw>(?:\\[[a-zA-Z0-9-]+=[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?(?:,[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?)*])+)?(?<selectorRaw>:pressed|:focus|:hover|:disabled)?$": {
       "$ref": "#/definitions/snygg-property-set"
     }
   },

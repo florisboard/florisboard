@@ -21,7 +21,7 @@ import kotlin.math.min
 data class SnyggRule internal constructor(
     val elementName: String,
     val attributes: Attributes = Attributes(),
-    val selectors: Selectors = Selectors(),
+    val selector: SnyggSelector? = null,
 ): Comparable<SnyggRule> {
     val isAnnotation
         get() = elementName.startsWith("@")
@@ -48,14 +48,23 @@ data class SnyggRule internal constructor(
         if (attrDiff != 0) {
             return attrDiff
         }
-        return selectors.compareTo(other.selectors)
+        if (selector == null && other.selector == null) {
+            return 0
+        }
+        if (selector == null) {
+            return -1
+        }
+        if (other.selector == null) {
+            return 1
+        }
+        return selector.compareTo(other.selector)
     }
 
     override fun toString(): String {
         return buildString {
             append(elementName)
             append(attributes.toString())
-            append(selectors.toString())
+            append(selector?.toString() ?: "")
         }
     }
 
@@ -70,9 +79,8 @@ data class SnyggRule internal constructor(
         private val ATTRIBUTE_VALUE_REGEX = """[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?""".toRegex()
         private val ATTRIBUTE_REGEX = """\[[a-zA-Z0-9-]+=$ATTRIBUTE_VALUE_REGEX(?:,$ATTRIBUTE_VALUE_REGEX)*]""".toRegex()
         private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:$ATTRIBUTE_REGEX)+)?""".toRegex()
-        private val SELECTOR_REGEX = """:pressed|:focus|:disabled""".toRegex()
-        private val SELECTORS_REGEX = """(?<selectorsRaw>(?:$SELECTOR_REGEX)+)?""".toRegex()
-        private val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTORS_REGEX${'$'}""".toRegex()
+        private val SELECTOR_REGEX = """(?<selectorRaw>:pressed|:focus|:hover|:disabled)?""".toRegex()
+        private val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX${'$'}""".toRegex()
 
         fun fromOrNull(str: String): SnyggRule? {
             val result = REGEX.matchEntire(str) ?: return null
@@ -82,12 +90,12 @@ data class SnyggRule internal constructor(
             }
             val elementName = result.groups["elementName"]!!.value // can not be null logically
             val attributesRaw = result.groups["attributesRaw"]?.value
-            val selectorsRaw = result.groups["selectorsRaw"]?.value
+            val selectorRaw = result.groups["selectorRaw"]?.value
 
             return SnyggRule(
                 elementName = elementName,
                 attributes = Attributes.from(attributesRaw ?: ""),
-                selectors = Selectors.from(selectorsRaw ?: ""),
+                selector = SnyggSelector.fromOrNull(selectorRaw ?: ""),
             )
         }
     }
@@ -192,68 +200,30 @@ data class SnyggRule internal constructor(
             internal fun of(vararg pairs: Pair<String, List<Int>>) = Attributes(mapOf(*pairs))
         }
     }
+}
 
-    data class Selectors internal constructor(
-        val pressed: Boolean = false,
-        val focus: Boolean = false,
-        val hover: Boolean = false,
-        val disabled: Boolean = false,
-    ): Comparable<Selectors> {
-        override fun compareTo(other: Selectors): Int {
-            return comparatorWeight().compareTo(other.comparatorWeight())
+enum class SnyggSelector(val id: String) {
+    PRESSED("pressed"),
+    FOCUS("focus"),
+    HOVER("hover"),
+    DISABLED("disabled");
+
+    override fun toString(): String {
+        return buildString {
+            append(SELECTOR_COLON)
+            append(id)
         }
+    }
 
-        private fun comparatorWeight(): Int {
-            return (if (pressed) 0x1 else 0) +
-                (if (focus) 0x2 else 0) +
-                (if (hover) 0x4 else 0) +
-                (if (disabled) 0x8 else 0)
-        }
+    companion object {
+        private const val SELECTOR_COLON = ":"
 
-        override fun toString(): String {
-            return buildString {
-                if (pressed) {
-                    append(SELECTOR_COLON)
-                    append(PRESSED)
-                }
-                if (focus) {
-                    append(SELECTOR_COLON)
-                    append(FOCUS)
-                }
-                if (hover) {
-                    append(SELECTOR_COLON)
-                    append(HOVER)
-                }
-                if (disabled) {
-                    append(SELECTOR_COLON)
-                    append(DISABLED)
-                }
+        internal fun fromOrNull(str: String): SnyggSelector? {
+            if (str.isNotEmpty()) {
+                val selector = str.substring(1)
+                return entries.first { it.id == selector }
             }
-        }
-
-        companion object {
-            private const val SELECTOR_COLON = ":"
-            private const val PRESSED = "pressed"
-            private const val FOCUS = "focus"
-            private const val HOVER = "hover"
-            private const val DISABLED = "disabled"
-
-            internal fun from(str: String): Selectors {
-                var pressed = false
-                var focus = false
-                var hover = false
-                var disabled = false
-                SELECTOR_REGEX.findAll(str).forEach { match ->
-                    val selector = match.value.substring(1)
-                    when (selector) {
-                        PRESSED -> pressed = true
-                        FOCUS -> focus = true
-                        HOVER -> hover = true
-                        DISABLED -> disabled = true
-                    }
-                }
-                return Selectors(pressed, focus, hover, disabled)
-            }
+            return null
         }
     }
 }

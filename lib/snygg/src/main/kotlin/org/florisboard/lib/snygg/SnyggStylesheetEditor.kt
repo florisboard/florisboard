@@ -45,10 +45,7 @@ class SnyggStylesheetEditor(
 
     operator fun String.invoke(
         vararg attributes: Pair<String, List<Int>>,
-        pressed: Boolean = false,
-        focus: Boolean = false,
-        hover: Boolean = false,
-        disabled: Boolean = false,
+        selector: SnyggSelector? = null,
         propertySetBlock: SnyggPropertySetEditor.() -> Unit,
     ) {
         val propertySetEditor = SnyggPropertySetEditor()
@@ -56,7 +53,7 @@ class SnyggStylesheetEditor(
         val rule = SnyggRule(
             elementName = this,
             attributes = SnyggRule.Attributes.of(*attributes),
-            selectors = SnyggRule.Selectors(pressed, focus, hover, disabled),
+            selector = selector,
         )
         rules[rule] = propertySetEditor
     }

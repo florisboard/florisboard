@@ -25,8 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import org.florisboard.lib.snygg.emptySelectors
-import org.florisboard.lib.snygg.selectorsOf
+import org.florisboard.lib.snygg.SnyggSelector
 
 @Composable
 fun SnyggButton(
@@ -39,11 +38,11 @@ fun SnyggButton(
     enabled: Boolean = true,
 ) {
     val theme = LocalSnyggTheme.current
-    val styleDefault = theme.rememberQuery(elementName, attributes, emptySelectors())
-    val stylePressed = theme.rememberQuery(elementName, attributes, selectorsOf(pressed = true))
-    val styleFocus = theme.rememberQuery(elementName, attributes, selectorsOf(focus = true))
-    val styleHover = theme.rememberQuery(elementName, attributes, selectorsOf(hover = true))
-    val styleDisabled = theme.rememberQuery(elementName, attributes, selectorsOf(disabled = true))
+    val styleDefault = theme.rememberQuery(elementName, attributes)
+    val stylePressed = theme.rememberQuery(elementName, attributes, SnyggSelector.PRESSED)
+    val styleFocus = theme.rememberQuery(elementName, attributes, SnyggSelector.FOCUS)
+    val styleHover = theme.rememberQuery(elementName, attributes, SnyggSelector.HOVER)
+    val styleDisabled = theme.rememberQuery(elementName, attributes, SnyggSelector.DISABLED)
 
     Button(
         modifier = modifier,

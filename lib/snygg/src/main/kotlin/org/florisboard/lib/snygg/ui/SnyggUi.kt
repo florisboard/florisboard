@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.takeOrElse
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.SnyggQueryAttributes
-import org.florisboard.lib.snygg.SnyggQuerySelectors
 import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
@@ -120,16 +120,16 @@ val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
 internal fun SnyggTheme.rememberQuery(
     elementName: String,
     attributes: SnyggQueryAttributes,
-    selectors: SnyggQuerySelectors,
+    selector: SnyggSelector? = null,
 ): SnyggPropertySet {
     val parentStyle = LocalSnyggParentStyle.current
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
-    return remember(elementName, attributes, selectors, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
+    return remember(elementName, attributes, selector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
         query(
             elementName,
             attributes,
-            selectors,
+            selector,
             parentStyle,
             dynamicLightColorScheme,
             dynamicDarkColorScheme,

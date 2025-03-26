@@ -18,17 +18,17 @@ class SnyggRuleTest {
             "shift" to listOf(0, 2, 4),
             "test" to listOf(0, 1),
         )),
-        selectors = SnyggRule.Selectors(pressed = true, focus = true, disabled = true),
+        selector = SnyggSelector.PRESSED,
     )
 
     @Test
     fun `test toString`() {
-        assertEquals("smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed:focus:disabled", testRule.toString())
+        assertEquals("smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed", testRule.toString())
     }
 
     @Test
     fun `test fromOrNull`() {
-        assertEquals(testRule, SnyggRule.fromOrNull("smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed:focus:disabled"))
+        assertEquals(testRule, SnyggRule.fromOrNull("smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed"))
     }
 
     @Test
@@ -53,20 +53,20 @@ class SnyggRuleTest {
                 SnyggRule("test"),
             SnyggRule(elementName = "a-test") to
                 SnyggRule(elementName = "b-test"),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors()) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(pressed = true)),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors()) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(focus = true)),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors()) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(disabled = true)),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(pressed = true)) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(focus = true)),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(focus = true)) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(disabled = true)),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(pressed = true)) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(focus = true, disabled = true)),
-            SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(pressed = true, focus = true)) to
-                SnyggRule(elementName = "test", selectors = SnyggRule.Selectors(disabled = true)),
+            SnyggRule(elementName = "test", selector = null) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.PRESSED),
+            SnyggRule(elementName = "test", selector = null) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.FOCUS),
+            SnyggRule(elementName = "test", selector = null) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.HOVER),
+            SnyggRule(elementName = "test", selector = null) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.DISABLED),
+            SnyggRule(elementName = "test", selector = SnyggSelector.PRESSED) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.FOCUS),
+            SnyggRule(elementName = "test", selector = SnyggSelector.FOCUS) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.HOVER),
+            SnyggRule(elementName = "test", selector = SnyggSelector.HOVER) to
+                SnyggRule(elementName = "test", selector = SnyggSelector.DISABLED),
             SnyggRule(elementName = "test") to
                 SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10))),
             SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10))) to
@@ -84,7 +84,7 @@ class SnyggRuleTest {
             SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10))) to
                 SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10), "group" to listOf(10)),),
             SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10))) to
-                SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10)), SnyggRule.Selectors(pressed = true)),
+                SnyggRule(elementName = "test", SnyggRule.Attributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
         )
         assertAll(ruleList.map { (lowerRule, upperRule) -> {
             assertTrue("$lowerRule should be less than $upperRule") { lowerRule < upperRule }
@@ -100,7 +100,7 @@ class SnyggRuleTest {
             SnyggRule("smartbar") to
                 SnyggRule("smartbar"),
             SnyggRule("smartbar") to
-                SnyggRule("smartbar", SnyggRule.Attributes(), SnyggRule.Selectors())
+                SnyggRule("smartbar", SnyggRule.Attributes(), null)
         )
         assertAll(ruleList.map { (leftRule, rightRule) -> {
             assertTrue { leftRule == rightRule }
