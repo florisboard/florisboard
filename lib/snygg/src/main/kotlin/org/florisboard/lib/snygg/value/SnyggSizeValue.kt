@@ -30,7 +30,7 @@ sealed interface SnyggSizeValue : SnyggValue
 data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = DpUnit, min = 0.0f)
+            float(id = Size, unit = DpUnit, numberPattern = """(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+""".toRegex())
         }
 
         override fun defaultValue() = SnyggDpSizeValue(0.dp)
@@ -44,7 +44,7 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             spec.parse(v, map)
-            val size = map.getOrThrow<Float>(Size)
+            val size = map.getFloat(Size)
             return@runCatching SnyggDpSizeValue(size.dp)
         }
     }
@@ -55,7 +55,7 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
 data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = SpUnit, min = 1.0f)
+            float(id = Size, unit = SpUnit, numberPattern = """[1-9][0-9]*(?:[.][0-9]*)?""".toRegex())
         }
 
         override fun defaultValue() = SnyggSpSizeValue(24.sp)
@@ -69,7 +69,7 @@ data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             spec.parse(v, map)
-            val size = map.getOrThrow<Float>(Size)
+            val size = map.getFloat(Size)
             return@runCatching SnyggSpSizeValue(size.sp)
         }
     }
@@ -94,7 +94,7 @@ data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             spec.parse(v, map)
-            val size = map.getOrThrow<Float>(Size) / 100.0f
+            val size = map.getFloat(Size) / 100.0f
             return@runCatching SnyggPercentageSizeValue(size)
         }
     }

@@ -20,7 +20,7 @@ private const val VarKey = "varKey"
 
 sealed interface SnyggVarValue : SnyggValue {
     companion object {
-        val VariableNameRegex = """^[a-zA-Z0-9-]+${'$'}""".toRegex()
+        val VariableNameRegex = """--[a-zA-Z0-9-]+""".toRegex()
     }
 }
 
@@ -41,7 +41,7 @@ data class SnyggDefinedVarValue(val key: String) : SnyggVarValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             spec.parse(v, map)
-            val key = map.getOrThrow<String>(VarKey)
+            val key = map.getString(VarKey)
             return@runCatching SnyggDefinedVarValue(key)
         }
     }

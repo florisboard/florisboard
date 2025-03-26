@@ -16,14 +16,34 @@
 
 package org.florisboard.lib.snygg.value
 
-typealias SnyggIdToValueMap = MutableMap<String, Any>
-fun snyggIdToValueMapOf(vararg pairs: Pair<String, Any>): SnyggIdToValueMap = mutableMapOf(*pairs)
+import org.florisboard.lib.kotlin.toStringWithoutDotZero
 
-@Suppress("UNCHECKED_CAST")
-@Throws(ClassCastException::class, NoSuchElementException::class)
-fun <V: Any> SnyggIdToValueMap.getOrThrow(key: String): V = getValue(key) as V
+typealias SnyggIdToValueMap = MutableMap<String, String>
 
-@Suppress("UNCHECKED_CAST")
-fun <V: Any> SnyggIdToValueMap.getOrNull(key: String): V? = getOrDefault(key, null) as? V
+fun snyggIdToValueMapOf(vararg pairs: Pair<String, Any>): SnyggIdToValueMap {
+    val map = mutableMapOf<String, String>()
+    map.add(*pairs)
+    return map
+}
 
-fun SnyggIdToValueMap.add(vararg pairs: Pair<String, Any>) = putAll(pairs)
+fun SnyggIdToValueMap.getInt(id: String): Int {
+    return getValue(id).toInt()
+}
+
+fun SnyggIdToValueMap.getFloat(id: String): Float {
+    return getValue(id).toFloat()
+}
+
+fun SnyggIdToValueMap.getString(id: String): String {
+    return getValue(id)
+}
+
+fun SnyggIdToValueMap.add(vararg pairs: Pair<String, Any>) {
+    pairs.forEach { (id, value) ->
+        if (value is Number) {
+            put(id, value.toStringWithoutDotZero())
+        } else {
+            put(id, value.toString())
+        }
+    }
+}

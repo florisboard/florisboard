@@ -42,7 +42,7 @@ data class SnyggImageRefValue(val relPath: String) : SnyggRefValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             spec.parse(v, map)
-            val relPath = map.getOrThrow<String>(RelPath)
+            val relPath = map.getString(RelPath)
             return@runCatching SnyggImageRefValue(relPath)
         }
     }

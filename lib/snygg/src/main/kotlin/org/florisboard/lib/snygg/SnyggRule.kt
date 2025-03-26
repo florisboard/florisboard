@@ -80,7 +80,7 @@ data class SnyggRule internal constructor(
         private val ATTRIBUTE_REGEX = """\[[a-zA-Z0-9-]+=$ATTRIBUTE_VALUE_REGEX(?:,$ATTRIBUTE_VALUE_REGEX)*]""".toRegex()
         private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:$ATTRIBUTE_REGEX)+)?""".toRegex()
         private val SELECTOR_REGEX = """(?<selectorRaw>:pressed|:focus|:hover|:disabled)?""".toRegex()
-        private val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX${'$'}""".toRegex()
+        internal val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX${'$'}""".toRegex()
 
         fun fromOrNull(str: String): SnyggRule? {
             val result = REGEX.matchEntire(str) ?: return null

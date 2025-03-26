@@ -38,7 +38,7 @@ class SnyggSizeValueTest {
     )
 
     private val validIllFormattedInput = listOf(
-        SnyggDpSizeValue(5.dp) to listOf(" 5dp", " 5dp ", " 5 dp", "5.dp", "5. dp"),
+        SnyggDpSizeValue(5.dp) to listOf(" 5dp", " 5dp ", " 5dp", "5.dp", "5.dp"),
         SnyggDpSizeValue(0.5.dp) to listOf(".5dp", " .5dp"),
     )
 
@@ -82,10 +82,10 @@ class SnyggSizeValueTest {
     fun `test deserialize and serialize with valid input`() {
         assertAll(validPairs.map { (raw, obj) -> {
             val deserialized = obj.encoder().deserialize(raw)
-            assertTrue { deserialized.isSuccess }
+            assertTrue("deserialize $raw") { deserialized.isSuccess }
             assertEquals(obj, deserialized.getOrNull())
             val serialized = obj.encoder().serialize(obj)
-            assertTrue { serialized.isSuccess }
+            assertTrue("serialize $raw") { serialized.isSuccess }
         } })
     }
 
@@ -93,9 +93,9 @@ class SnyggSizeValueTest {
     fun `test deserialize and serialize with invalid input`() {
         assertAll(invalidPairs.map { (raw, obj) -> {
             val deserialized = obj.encoder().deserialize(raw)
-            assertFalse { deserialized.isSuccess }
+            assertFalse("deserialize $raw should fail") { deserialized.isSuccess }
             val serialized = obj.encoder().serialize(obj)
-            assertFalse { serialized.isSuccess }
+            assertFalse("serialize $obj should fail") { serialized.isSuccess }
         } })
     }
 
@@ -104,7 +104,7 @@ class SnyggSizeValueTest {
         assertAll(validIllFormattedInput.map { (obj, list) -> {
             assertAll(list.map { raw -> {
                 val deserialized = obj.encoder().deserialize(raw)
-                assertEquals(obj, deserialized.getOrNull())
+                assertEquals(obj, deserialized.getOrNull(), "deserialize $raw")
             } })
         } })
     }

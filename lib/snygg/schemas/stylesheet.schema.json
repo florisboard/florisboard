@@ -18,180 +18,407 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "hex6-color": {
+    "snygg-inherit-value": {
       "type": "string",
-      "pattern": "^#[0-9a-fA-F]{6}$"
+      "const": "inherit"
     },
-    "hex8-color": {
+    "snygg-defined-var-value": {
       "type": "string",
-      "pattern": "^#[0-9a-fA-F]{8}$"
+      "pattern": "\\s*var[(]\\s*(?<varKey>--[a-zA-Z0-9-]+)\\s*[)]\\s*"
     },
-    "named-color": {
-      "type": "string",
-      "enum": [
-        "transparent"
-      ]
-    },
-    "rgb-color": {
-      "type": "string",
-      "pattern": "^rgb\\((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\)$"
-    },
-    "rgba-color": {
-      "type": "string",
-      "pattern": "^rgba\\((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s,\\s(1(?:\\.0)?|0(?:\\.[0-9]+)?|\\.[0-9]+)\\)$"
-    },
-    "snygg-color-value": {
-      "oneOf": [
-        { "$ref": "#/definitions/hex6-color" },
-        { "$ref": "#/definitions/hex8-color" },
-        { "$ref": "#/definitions/named-color" },
-        { "$ref": "#/definitions/rgb-color" }
-      ]
-    },
-    "snygg-dynamic-color-value": {
-      "type": "string",
-      "pattern": "^dynamic-(light|dark)-color\\([a-zA-Z0-9-]+\\)$"
-    },
-    "snygg-appearance-value": {
-      "oneOf": [
-        { "$ref": "#/definitions/snygg-color-value" },
-        { "$ref": "#/definitions/snygg-dynamic-color-value" }
-      ]
-    },
-
-    "snygg-rectangle-shape-value": {
-      "type": "string",
-      "const": "rectangle()"
-    },
-    "snygg-circle-shape-value": {
-      "type": "string",
-      "const": "circle()"
-    },
-    "snygg-corner-shape-value": {
-      "type": "string",
-      "pattern": "^(cut|rounded)-corner\\(\\s*((0|[1-9][0-9]*)([.][0-9]+)?dp|(100|[1-9]?[0-9])%\\s*,\\s*){3}((0|[1-9][0-9]*)([.][0-9]+)?dp|(100|[1-9]?[0-9])%)\\s*\\)$"
-    },
-    "snygg-shape-value": {
-      "oneOf": [
-        { "$ref": "#/definitions/snygg-rectangle-shape-value" },
-        { "$ref": "#/definitions/snygg-circle-shape-value" },
-        { "$ref": "#/definitions/snygg-corner-shape-value" }
-      ]
-    },
-
-    "snygg-size-value": {
-      "type": "string",
-      "pattern": "^((0|[1-9][0-9]*)([.][0-9]+)?dp|[1-9][0-9]*([.][0-9]+)?sp|(100|[1-9]?[0-9])([.][0-9]+)?)$"
-    },
-
-    "snygg-value": {
+    "snygg-static-color-value": {
       "oneOf": [
         {
           "type": "string",
-          "const": "inherit"
+          "pattern": "\\s*rgba[(]\\s*(?<r>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<g>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<b>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<a>1(?:[.]0)?|0(?:[.][0-9]*)?|[.][0-9]+)\\s*[)]\\s*"
         },
         {
           "type": "string",
-          "pattern": "^var\\([a-zA-Z0-9-]+\\)$"
+          "pattern": "\\s*rgb[(]\\s*(?<r>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<g>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<b>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*[)]\\s*"
+        },
+        {
+          "type": "string",
+          "pattern": "\\s*(?<transparent>transparent)\\s*"
+        },
+        {
+          "type": "string",
+          "pattern": "\\s*(?<hex>#[a-fA-F0-9]{6})\\s*"
+        },
+        {
+          "type": "string",
+          "pattern": "\\s*(?<hex>#[a-fA-F0-9]{8})\\s*"
         }
       ]
     },
-
+    "snygg-dynamic-light-color-value": {
+      "type": "string",
+      "pattern": "\\s*dynamic-light-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*"
+    },
+    "snygg-dynamic-dark-color-value": {
+      "type": "string",
+      "pattern": "\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*"
+    },
+    "snygg-dp-size-value": {
+      "type": "string",
+      "pattern": "\\s*(?<size>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+)dp\\s*"
+    },
+    "snygg-sp-size-value": {
+      "type": "string",
+      "pattern": "\\s*(?<size>[1-9][0-9]*(?:[.][0-9]*)?)sp\\s*"
+    },
+    "snygg-font-style-value": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "italic"
+      ]
+    },
+    "snygg-font-weight-value": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "thin",
+            "extra-light",
+            "light",
+            "normal",
+            "medium",
+            "semi-bold",
+            "bold",
+            "extra-bold",
+            "black"
+          ]
+        },
+        {
+          "type": "string",
+          "enum": [
+            "100",
+            "200",
+            "300",
+            "400",
+            "500",
+            "600",
+            "700",
+            "800",
+            "900"
+          ]
+        }
+      ]
+    },
+    "snygg-padding-value": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "\\s*(?<paddingStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingTop>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingBottom>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*"
+        },
+        {
+          "type": "string",
+          "pattern": "\\s*(?<paddingHorizontal>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingVertical>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*"
+        },
+        {
+          "type": "string",
+          "pattern": "\\s*(?<paddingAll>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*"
+        }
+      ]
+    },
+    "snygg-rectangle-shape-value": {
+      "type": "string",
+      "pattern": "\\s*rectangle[(]\\s*[)]\\s*"
+    },
+    "snygg-circle-shape-value": {
+      "type": "string",
+      "pattern": "\\s*circle[(]\\s*[)]\\s*"
+    },
+    "snygg-rounded-corner-dp-shape-value": {
+      "type": "string",
+      "pattern": "\\s*rounded-corner[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*"
+    },
+    "snygg-rounded-corner-percent-shape-value": {
+      "type": "string",
+      "pattern": "\\s*rounded-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*"
+    },
+    "snygg-cut-corner-dp-shape-value": {
+      "type": "string",
+      "pattern": "\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*"
+    },
+    "snygg-cut-corner-percent-shape-value": {
+      "type": "string",
+      "pattern": "\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*"
+    },
     "snygg-defines-property-set": {
       "type": "object",
       "patternProperties": {
         "^--[a-zA-Z0-9-]+$": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-appearance-value" },
-            { "$ref": "#/definitions/snygg-shape-value" },
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-static-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-light-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-dark-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dp-size-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-sp-size-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-font-style-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-font-weight-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-padding-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-rectangle-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-circle-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-rounded-corner-dp-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-rounded-corner-percent-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-cut-corner-dp-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
+            }
           ]
         }
       },
       "additionalProperties": false
     },
-
     "snygg-property-set": {
       "type": "object",
       "properties": {
         "background": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-appearance-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-static-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-light-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-dark-color-value"
+            }
           ]
         },
         "foreground": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-appearance-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-static-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-light-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-dark-color-value"
+            }
           ]
         },
         "border-color": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-appearance-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-static-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-light-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-dark-color-value"
+            }
           ]
         },
         "border-style": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            }
           ]
         },
         "border-width": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dp-size-value"
+            }
           ]
         },
         "font-family": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            }
           ]
         },
         "font-size": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-sp-size-value"
+            }
           ]
         },
         "font-style": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-value" }
-          ]
-        },
-        "font-variant": {
-          "oneOf": [
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-font-style-value"
+            }
           ]
         },
         "font-weight": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-font-weight-value"
+            }
           ]
         },
         "margin": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-padding-value"
+            }
           ]
         },
         "padding": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-padding-value"
+            }
           ]
         },
         "shadow-color": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-appearance-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-static-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-light-color-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dynamic-dark-color-value"
+            }
           ]
         },
         "shadow-elevation": {
           "oneOf": [
-            { "$ref": "#/definitions/snygg-size-value" },
-            { "$ref": "#/definitions/snygg-value" }
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-dp-size-value"
+            }
+          ]
+        },
+        "shape": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-rectangle-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-circle-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-rounded-corner-dp-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-rounded-corner-percent-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-cut-corner-dp-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
+            }
           ]
         }
       },

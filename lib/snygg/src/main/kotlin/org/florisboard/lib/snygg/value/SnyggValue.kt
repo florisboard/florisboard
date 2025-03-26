@@ -75,7 +75,7 @@ object SnyggInheritValue : SnyggValue, SnyggValueEncoder {
     const val Inherit = "inherit"
 
     override val spec = SnyggValueSpec {
-        keywords(keywords = listOf(Inherit))
+        keywords(id = Inherit, keywords = listOf(Inherit))
     }
 
     override fun defaultValue() = this
@@ -104,7 +104,7 @@ object SnyggUndefinedValue : SnyggValue, SnyggValueEncoder {
     private const val Undefined = "undefined"
 
     override val spec = SnyggValueSpec {
-        keywords(keywords = listOf(Undefined))
+        keywords(id = Undefined, keywords = listOf(Undefined))
     }
 
     override fun defaultValue() = this

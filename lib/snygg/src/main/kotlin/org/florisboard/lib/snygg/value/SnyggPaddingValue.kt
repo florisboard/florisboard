@@ -75,23 +75,23 @@ data class SnyggPaddingValue(val values: PaddingValues) : SnyggValue {
             val map = snyggIdToValueMapOf()
             runCatching { spec.parse(v, map) }.onSuccess {
                 val values = PaddingValues(
-                    start = map.getOrThrow<Float>(PaddingStart).dp,
-                    top = map.getOrThrow<Float>(PaddingTop).dp,
-                    end = map.getOrThrow<Float>(PaddingEnd).dp,
-                    bottom = map.getOrThrow<Float>(PaddingBottom).dp,
+                    start = map.getFloat(PaddingStart).dp,
+                    top = map.getFloat(PaddingTop).dp,
+                    end = map.getFloat(PaddingEnd).dp,
+                    bottom = map.getFloat(PaddingBottom).dp,
                 )
                 return@runCatching SnyggPaddingValue(values)
             }
             runCatching { alternativeSpecs[0].parse(v, map) }.onSuccess {
                 val values = PaddingValues(
-                    horizontal = map.getOrThrow<Float>(PaddingHorizontal).dp,
-                    vertical = map.getOrThrow<Float>(PaddingVertical).dp,
+                    horizontal = map.getFloat(PaddingHorizontal).dp,
+                    vertical = map.getFloat(PaddingVertical).dp,
                 )
                 return@runCatching SnyggPaddingValue(values)
             }
             runCatching { alternativeSpecs[1].parse(v, map) }.onSuccess {
                 val values = PaddingValues(
-                    all = map.getOrThrow<Float>(PaddingAll).dp,
+                    all = map.getFloat(PaddingAll).dp,
                 )
                 return@runCatching SnyggPaddingValue(values)
             }

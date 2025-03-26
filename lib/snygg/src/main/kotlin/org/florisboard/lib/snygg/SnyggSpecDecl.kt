@@ -25,7 +25,7 @@ internal enum class InheritBehavior {
 
 open class SnyggSpecDecl internal constructor(init: SnyggSpecDeclBuilder.() -> Unit) {
     internal val properties: Map<String, SnyggSpecPropertyDecl>
-    private val allEncoders: Set<SnyggValueEncoder>
+    internal val allEncoders: Set<SnyggValueEncoder>
 
     init {
         val builder = SnyggSpecDeclBuilder()

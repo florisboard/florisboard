@@ -9,7 +9,7 @@ import kotlin.test.assertIs
 
 class SnyggAppearanceValueTest {
     @Nested
-    inner class SolidColor {
+    inner class StaticColor {
         private val encoder = SnyggStaticColorValue
 
         private fun helperMakeColor(r: Int, g: Int, b: Int): SnyggStaticColorValue {
@@ -39,7 +39,7 @@ class SnyggAppearanceValueTest {
                 "some-color" to null,
             )
             assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
             } })
         }
 
@@ -65,7 +65,7 @@ class SnyggAppearanceValueTest {
                 "#fff" to null, // we do not allow shorthand notation
             )
             assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
             } })
         }
 
@@ -92,7 +92,7 @@ class SnyggAppearanceValueTest {
                 "#fff" to null, // we do not allow shorthand notation
             )
             assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
             } })
         }
 
@@ -120,7 +120,7 @@ class SnyggAppearanceValueTest {
                 "rgb(0, 0, 0, 1.0)" to null,
             )
             assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
             } })
         }
 
@@ -148,7 +148,7 @@ class SnyggAppearanceValueTest {
                 "rgba(0, 0, 0, 1.5)" to null,
             )
             assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
             } })
         }
 
@@ -161,7 +161,7 @@ class SnyggAppearanceValueTest {
                 SnyggDefinedVarValue("shenanigans") to null
             )
             assertAll(pairs.map { (solidColorValue, expected) -> {
-                assertEquals(expected, encoder.serialize(solidColorValue).getOrNull())
+                assertEquals(expected, encoder.serialize(solidColorValue).getOrNull(), "serialize $solidColorValue")
             } })
         }
 

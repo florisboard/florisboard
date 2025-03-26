@@ -94,3 +94,17 @@ dependencies {
 
     testImplementation(libs.kotlin.test.junit5)
 }
+
+tasks.register<JavaExec>("generateJsonSchema") {
+    dependsOn("build")
+    mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
+    val debugVariant = android.libraryVariants.first { it.name == "debug" }
+    classpath = files(
+        debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },
+    )
+    args = listOf("schemas/stylesheet.schema.json")
+    workingDir = projectDir
+    standardOutput = System.out
+}
+
+tasks["build"].finalizedBy("generateJsonSchema")

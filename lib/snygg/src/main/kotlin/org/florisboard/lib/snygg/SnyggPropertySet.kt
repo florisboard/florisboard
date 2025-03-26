@@ -225,22 +225,22 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         set(v) = setProperty(Snygg.Shape, v)
 
     fun rgbaColor(
-        @IntRange(from = RgbaColor.RedMin.toLong(), to = RgbaColor.RedMax.toLong())
+        @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
         r: Int,
-        @IntRange(from = RgbaColor.GreenMin.toLong(), to = RgbaColor.GreenMax.toLong())
+        @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
         g: Int,
-        @IntRange(from = RgbaColor.BlueMin.toLong(), to = RgbaColor.BlueMax.toLong())
+        @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
         b: Int,
-        @FloatRange(from = RgbaColor.AlphaMin.toDouble(), to = RgbaColor.AlphaMax.toDouble())
-        a: Float = RgbaColor.AlphaMax,
+        @FloatRange(from = RgbaColor.AlphaRangeMin.toDouble(), to = RgbaColor.AlphaRangeMax.toDouble())
+        a: Float = RgbaColor.AlphaRangeMax,
     ): SnyggStaticColorValue {
-        require(r in RgbaColor.Red)
-        require(g in RgbaColor.Green)
-        require(b in RgbaColor.Blue)
-        require(a in RgbaColor.Alpha)
-        val red = r.toFloat() / RgbaColor.RedMax
-        val green = g.toFloat() / RgbaColor.GreenMax
-        val blue = b.toFloat() / RgbaColor.BlueMax
+        require(r in RgbaColor.ColorRange)
+        require(g in RgbaColor.ColorRange)
+        require(b in RgbaColor.ColorRange)
+        require(a in RgbaColor.AlphaRange)
+        val red = r.toFloat() / RgbaColor.ColorRangeMax
+        val green = g.toFloat() / RgbaColor.ColorRangeMax
+        val blue = b.toFloat() / RgbaColor.ColorRangeMax
         return SnyggStaticColorValue(Color(red, green, blue, a))
     }
 

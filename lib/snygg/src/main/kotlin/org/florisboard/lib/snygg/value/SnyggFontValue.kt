@@ -48,7 +48,7 @@ data class SnyggFontStyleValue(val fontStyle: FontStyle) : SnyggFontValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             spec.parse(v, map)
-            val fontStyle = when (map.getOrThrow<String>(FontStyleId)) {
+            val fontStyle = when (map.getString(FontStyleId)) {
                 "normal" -> FontStyle.Normal
                 "italic" -> FontStyle.Italic
                 else -> error("Invalid font style supplied")
@@ -98,11 +98,11 @@ data class SnyggFontWeightValue(val fontWeight: FontWeight) : SnyggFontValue {
         override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = snyggIdToValueMapOf()
             runCatching { spec.parse(v, map) }.onSuccess {
-                val name = map.getOrThrow<String>(FontWeightNamedId)
+                val name = map.getString(FontWeightNamedId)
                 return@runCatching SnyggFontWeightValue(Weights[name]!!)
             }
             runCatching { alternativeSpecs[0].parse(v, map) }.onSuccess {
-                val weightStr = map.getOrThrow<String>(FontWeightNumericId)
+                val weightStr = map.getString(FontWeightNumericId)
                 val fontWeight = FontWeight(weightStr.toInt())
                 return@runCatching SnyggFontWeightValue(fontWeight)
             }
