@@ -16,7 +16,6 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -45,16 +44,16 @@ fun SnyggText(
             .snyggBackground(style)
             .snyggPadding(style),
         text = text,
-        color = style.foreground.colorOrDefault(LocalContentColor.current),
-        fontSize = style.fontSize.spSize(),
-        fontStyle = style.fontStyle.fontStyle(),
-        fontWeight = style.fontWeight.fontWeight(),
+        color = style.foreground(),
+        fontSize = style.fontSize(),
+        fontStyle = style.fontStyle(),
+        fontWeight = style.fontWeight(),
     )
 }
 
 @Preview
 @Composable
-fun SimpleSnyggText() {
+private fun SimpleSnyggText() {
     val stylesheet = SnyggStylesheet.v2 {
         "preview-column" {
             fontSize = fontSize(20.sp)

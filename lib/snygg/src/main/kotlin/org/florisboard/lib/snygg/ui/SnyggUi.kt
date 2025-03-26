@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -140,7 +141,7 @@ internal fun SnyggTheme.rememberQuery(
 internal fun Modifier.snyggBackground(
     style: SnyggPropertySet,
     fallbackColor: Color = Color.Unspecified,
-    shape: Shape = style.shape.shape(),
+    shape: Shape = style.shape(),
 ): Modifier {
     return when (val bg = style.background) {
         is SnyggStaticColorValue -> this.background(
@@ -161,7 +162,7 @@ internal fun Modifier.snyggBorder(
     style: SnyggPropertySet,
     width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     color: Color = style.borderColor.colorOrDefault(default = Color.Unspecified),
-    shape: Shape = style.shape.shape(),
+    shape: Shape = style.shape(),
 ): Modifier {
     return if (color.isSpecified) {
         this.border(width, color, shape)
@@ -172,7 +173,7 @@ internal fun Modifier.snyggBorder(
 
 internal fun Modifier.snyggClip(
     style: SnyggPropertySet,
-    shape: Shape = style.shape.shape(),
+    shape: Shape = style.shape(),
 ): Modifier {
     return this.clip(shape)
 }
@@ -198,7 +199,7 @@ internal fun Modifier.snyggPadding(
 internal fun Modifier.snyggShadow(
     style: SnyggPropertySet,
     elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
-    shape: Shape = style.shape.shape(),
+    shape: Shape = style.shape(),
     color: Color = style.shadowColor.colorOrDefault(default = DefaultShadowColor),
 ): Modifier {
     return this.shadow(elevation, shape, clip = false, ambientColor = color, spotColor = color)
@@ -206,44 +207,52 @@ internal fun Modifier.snyggShadow(
 
 /// SnyggValue helpers
 
-fun SnyggValue.colorOrDefault(default: Color): Color {
+internal fun SnyggValue.colorOrDefault(default: Color): Color {
     return when (this) {
         is SnyggStaticColorValue -> this.color
         else -> default
     }
 }
 
-fun SnyggValue.fontStyle(default: FontStyle = FontStyle.Normal): FontStyle {
-    return when (this) {
-        is SnyggFontStyleValue -> fontStyle
-        else -> default
-    }
-}
-
-fun SnyggValue.fontWeight(default: FontWeight = FontWeight.Normal): FontWeight {
-    return when (this) {
-        is SnyggFontWeightValue -> fontWeight
-        else -> default
-    }
-}
-
-fun SnyggValue.shape(): Shape {
-    return when (this) {
-        is SnyggShapeValue -> this.shape
-        else -> RectangleShape
-    }
-}
-
-fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
+internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     return when (this) {
         is SnyggDpSizeValue -> this.dp
         else -> default
     }
 }
 
-fun SnyggValue.spSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
-    return when (this) {
-        is SnyggSpSizeValue -> this.sp
+@Composable
+internal fun SnyggPropertySet.foreground(default: Color = LocalContentColor.current): Color {
+    return when (foreground) {
+        is SnyggStaticColorValue -> foreground.color
         else -> default
+    }
+}
+
+internal fun SnyggPropertySet.fontSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
+    return when (fontSize) {
+        is SnyggSpSizeValue -> fontSize.sp
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.fontStyle(default: FontStyle? = null): FontStyle? {
+    return when (fontStyle) {
+        is SnyggFontStyleValue -> fontStyle.fontStyle
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.fontWeight(default: FontWeight? = null): FontWeight? {
+    return when (fontWeight) {
+        is SnyggFontWeightValue -> fontWeight.fontWeight
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.shape(): Shape {
+    return when (shape) {
+        is SnyggShapeValue -> shape.shape
+        else -> RectangleShape
     }
 }

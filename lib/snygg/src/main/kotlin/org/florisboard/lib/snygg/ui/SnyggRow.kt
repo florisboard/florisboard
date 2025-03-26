@@ -20,6 +20,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.emptySelectors
 
 @Composable
 fun SnyggRow(
@@ -28,9 +33,44 @@ fun SnyggRow(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val snyggTheme = LocalSnyggTheme.current
-    Row(
-        modifier = modifier,
-        content = content,
-    )
+    val theme = LocalSnyggTheme.current
+    val style = theme.rememberQuery(elementName, attributes, emptySelectors())
+    ProvideSnyggParentStyle(style) {
+        Row(
+            modifier = modifier
+                .snyggMargin(style)
+                .snyggShadow(style)
+                .snyggBorder(style)
+                .snyggBackground(style)
+                .snyggPadding(style),
+            content = content,
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SimpleSnyggRow() {
+    val stylesheet = SnyggStylesheet.v2 {
+        "preview-row" {
+            background = rgbaColor(255, 255, 255)
+            foreground = rgbaColor(255, 0, 0)
+            padding = padding(10.dp)
+        }
+        "preview-text" {
+            fontSize = fontSize(12.sp)
+        }
+        "preview-text"("second" to listOf(1)) {
+            fontSize = fontSize(6.sp)
+            margin = padding(4.dp, 0.dp, 0.dp, 0.dp)
+        }
+    }
+    val theme = rememberSnyggTheme(stylesheet)
+
+    ProvideSnyggTheme(theme) {
+        SnyggRow("preview-row") {
+            SnyggText("preview-text", text = "hello")
+            SnyggText("preview-text", mapOf("second" to 1), text = "world")
+        }
+    }
 }

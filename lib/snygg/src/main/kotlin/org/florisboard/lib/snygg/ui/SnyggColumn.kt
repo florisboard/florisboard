@@ -20,8 +20,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,32 +50,23 @@ fun SnyggColumn(
 
 @Preview
 @Composable
-fun SimpleSnyggColumn() {
+private fun SimpleSnyggColumn() {
     val stylesheet = SnyggStylesheet.v2 {
-        "preview-text" {
+        "preview-column" {
             background = rgbaColor(255, 255, 255)
-            foreground = rgbaColor(0, 0, 0)
-            borderColor = rgbaColor(0, 0, 255)
-            borderWidth = size(1.dp)
-            shadowElevation = size(6.dp)
-            shadowColor = rgbaColor(0, 255, 0)
-            margin = padding(16.dp)
-            padding = padding(6.dp)
-        }
-        "preview-text"("attr" to listOf(1)) {
             foreground = rgbaColor(255, 0, 0)
-            borderWidth = size(0.dp)
-            fontSize = fontSize(10.sp)
-            fontStyle = fontStyle(FontStyle.Italic)
-            fontWeight = fontWeight(FontWeight.Bold)
+            padding = padding(10.dp)
+        }
+        "preview-text" {
+            fontSize = fontSize(12.sp)
         }
     }
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
         SnyggColumn("preview-column") {
-            SnyggText("preview-text", text = "black text")
-            SnyggText("preview-text", mapOf("attr" to 1), text = "red text")
+            SnyggText("preview-text", text = "hello world")
+            SnyggText("preview-text", text = "second text")
         }
     }
 }
