@@ -20,7 +20,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -221,8 +220,14 @@ internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     }
 }
 
-@Composable
-internal fun SnyggPropertySet.foreground(default: Color = LocalContentColor.current): Color {
+internal fun SnyggPropertySet.background(default: Color = Color.Unspecified): Color {
+    return when (background) {
+        is SnyggStaticColorValue -> background.color
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.foreground(default: Color = Color.Unspecified): Color {
     return when (foreground) {
         is SnyggStaticColorValue -> foreground.color
         else -> default

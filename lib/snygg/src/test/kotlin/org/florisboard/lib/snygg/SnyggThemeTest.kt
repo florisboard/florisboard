@@ -263,32 +263,13 @@ class SnyggThemeTest {
                     shadowElevation = size(2.dp)
                     shape = circleShape()
                 }
-                "middle-one-inherits-implicitly" {
-                    // inherits implicitly
-                }
-                "middle-two-inherits-implicitly" {
+                "middle-inherits-implicitly" {
                     // inherits implicitly
                 }
                 "child-inherits-implicitly" {
                     // inherits implicitly
                 }
-                "middle-one-inherits-explicitly" {
-                    background = inherit()
-                    foreground = inherit()
-                    borderColor = inherit()
-                    // borderStyle
-                    borderWidth = inherit()
-                    // fontFamily
-                    fontSize = inherit()
-                    fontStyle = inherit()
-                    fontWeight = inherit()
-                    margin = inherit()
-                    padding = inherit()
-                    shadowColor = inherit()
-                    shadowElevation = inherit()
-                    shape = inherit()
-                }
-                "middle-two-inherits-explicitly" {
+                "middle-inherits-explicitly" {
                     background = inherit()
                     foreground = inherit()
                     borderColor = inherit()
@@ -320,12 +301,28 @@ class SnyggThemeTest {
                     shadowElevation = inherit()
                     shape = inherit()
                 }
+                "child-inherits-without-middle" {
+                    background = inherit()
+                    foreground = inherit()
+                    borderColor = inherit()
+                    // borderStyle
+                    borderWidth = inherit()
+                    // fontFamily
+                    fontSize = inherit()
+                    fontStyle = inherit()
+                    fontWeight = inherit()
+                    margin = inherit()
+                    padding = inherit()
+                    shadowColor = inherit()
+                    shadowElevation = inherit()
+                    shape = inherit()
+                }
             }
+
             val theme = SnyggTheme.compileFrom(stylesheet)
             val parentStyle = theme.helperQuery("parent")
-            val middleOneInheritsImplicitly = theme.helperQuery("middle-one-inherits-implicitly", parentStyle = parentStyle)
-            val middleTwoInheritsImplicitly = theme.helperQuery("middle-two-inherits-implicitly", parentStyle = middleOneInheritsImplicitly)
-            val childImplicit = theme.helperQuery("child-inherits-implicitly", parentStyle = middleTwoInheritsImplicitly)
+            val middleOneInheritsImplicitly = theme.helperQuery("middle-inherits-implicitly", parentStyle = parentStyle)
+            val childImplicit = theme.helperQuery("child-inherits-implicitly", parentStyle = middleOneInheritsImplicitly)
             assertIs<SnyggUndefinedValue>(childImplicit.background)
             assertIs<SnyggStaticColorValue>(childImplicit.foreground)
             assertIs<SnyggUndefinedValue>(childImplicit.borderColor)
@@ -341,9 +338,8 @@ class SnyggThemeTest {
             assertIs<SnyggUndefinedValue>(childImplicit.shadowElevation)
             assertIs<SnyggUndefinedValue>(childImplicit.shape)
 
-            val middleOneInheritsExplicitly = theme.helperQuery("middle-one-inherits-explicitly", parentStyle = parentStyle)
-            val middleTwoInheritsExplicitly = theme.helperQuery("middle-two-inherits-explicitly", parentStyle = middleOneInheritsExplicitly)
-            val childExplicit = theme.helperQuery("child-inherits-explicitly", parentStyle = middleTwoInheritsExplicitly)
+            val middleOneInheritsExplicitly = theme.helperQuery("middle-inherits-explicitly", parentStyle = parentStyle)
+            val childExplicit = theme.helperQuery("child-inherits-explicitly", parentStyle = middleOneInheritsExplicitly)
             assertIs<SnyggStaticColorValue>(childExplicit.background)
             assertIs<SnyggStaticColorValue>(childExplicit.foreground)
             assertIs<SnyggStaticColorValue>(childExplicit.borderColor)
@@ -358,6 +354,23 @@ class SnyggThemeTest {
             assertIs<SnyggStaticColorValue>(childExplicit.shadowColor)
             assertIs<SnyggDpSizeValue>(childExplicit.shadowElevation)
             assertIs<SnyggCircleShapeValue>(childExplicit.shape)
+
+            val middleOneWithoutDefault = theme.helperQuery("middle-without-middle", parentStyle = parentStyle)
+            val childImplicitWithoutDefault = theme.helperQuery("child-inherits-without-middle", parentStyle = middleOneWithoutDefault)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.background)
+            assertIs<SnyggStaticColorValue>(childImplicitWithoutDefault.foreground)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.borderColor)
+            // assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.borderStyle)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.borderWidth)
+            // assertIs<???>(childImplicitWithoutDefault.fontFamily)
+            assertIs<SnyggSpSizeValue>(childImplicitWithoutDefault.fontSize)
+            assertIs<SnyggFontStyleValue>(childImplicitWithoutDefault.fontStyle)
+            assertIs<SnyggFontWeightValue>(childImplicitWithoutDefault.fontWeight)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.margin)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.padding)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.shadowColor)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.shadowElevation)
+            assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.shape)
         }
     }
 }

@@ -142,19 +142,19 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         }
     }
 
-    fun applyAll(thisStyle: SnyggPropertySet, parentStyle: SnyggPropertySet) {
+    internal fun applyAll(thisStyle: SnyggPropertySet, parentStyle: SnyggPropertySet) {
         for ((property, value) in thisStyle.properties) {
             when {
-                value.isUndefined() -> { setProperty(property, null) }
+                value.isUndefined() -> setProperty(property, null)
                 value.isInherit() -> setProperty(property, parentStyle.properties[property])
                 else -> setProperty(property, value)
             }
         }
+        inheritImplicitly(parentStyle)
+    }
+
+    internal fun inheritImplicitly(parentStyle: SnyggPropertySet) {
         for ((property, propertySpec) in SnyggSpec.V2.properties) {
-            if (thisStyle.properties[property] != null) {
-                // explicitly defined, no implicit behavior
-                continue
-            }
             if (propertySpec.inheritsImplicitly() && !properties.contains(property)) {
                 // inherit implicitly
                 setProperty(property, parentStyle.properties[property])

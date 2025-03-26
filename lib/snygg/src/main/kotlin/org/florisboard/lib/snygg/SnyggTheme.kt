@@ -23,6 +23,7 @@ import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import kotlin.collections.contains
 
 /**
  * Pre-compiled style data for a SnyggTheme.
@@ -47,8 +48,9 @@ typealias SnyggQuerySelectors = SnyggRule.Selectors
 fun selectorsOf(
     pressed: Boolean = false,
     focus: Boolean = false,
+    hover: Boolean = false,
     disabled: Boolean = false,
-) = SnyggQuerySelectors(pressed, focus, disabled)
+) = SnyggQuerySelectors(pressed, focus, hover, disabled)
 
 private val EmptyQuerySelector = selectorsOf()
 
@@ -69,8 +71,12 @@ value class SnyggTheme internal constructor(
         dynamicLightColorScheme: ColorScheme,
         dynamicDarkColorScheme: ColorScheme,
     ): SnyggPropertySet {
-        val styleSets = style[elementName] ?: return SnyggPropertySet()
         val editor = SnyggPropertySetEditor()
+        val styleSets = style[elementName]
+        if (styleSets == null) {
+            editor.inheritImplicitly(parentStyle)
+            return editor.build()
+        }
         for ((rule, propertySet) in styleSets) {
             if (rule.isMatchForQuery(attributes, selectors)) {
                 editor.applyAll(propertySet, parentStyle)
@@ -145,6 +151,9 @@ private fun SnyggRule.Selectors.isMatchForQuery(query: SnyggQuerySelectors): Boo
         return false
     }
     if (focus && !query.focus) {
+        return false
+    }
+    if (hover && !query.hover) {
         return false
     }
     if (disabled && !query.disabled) {

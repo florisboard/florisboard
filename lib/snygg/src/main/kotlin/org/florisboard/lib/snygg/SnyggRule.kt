@@ -196,6 +196,7 @@ data class SnyggRule internal constructor(
     data class Selectors internal constructor(
         val pressed: Boolean = false,
         val focus: Boolean = false,
+        val hover: Boolean = false,
         val disabled: Boolean = false,
     ): Comparable<Selectors> {
         override fun compareTo(other: Selectors): Int {
@@ -205,7 +206,8 @@ data class SnyggRule internal constructor(
         private fun comparatorWeight(): Int {
             return (if (pressed) 0x1 else 0) +
                 (if (focus) 0x2 else 0) +
-                (if (disabled) 0x4 else 0)
+                (if (hover) 0x4 else 0) +
+                (if (disabled) 0x8 else 0)
         }
 
         override fun toString(): String {
@@ -218,6 +220,10 @@ data class SnyggRule internal constructor(
                     append(SELECTOR_COLON)
                     append(FOCUS)
                 }
+                if (hover) {
+                    append(SELECTOR_COLON)
+                    append(HOVER)
+                }
                 if (disabled) {
                     append(SELECTOR_COLON)
                     append(DISABLED)
@@ -229,21 +235,24 @@ data class SnyggRule internal constructor(
             private const val SELECTOR_COLON = ":"
             private const val PRESSED = "pressed"
             private const val FOCUS = "focus"
+            private const val HOVER = "hover"
             private const val DISABLED = "disabled"
 
             internal fun from(str: String): Selectors {
                 var pressed = false
                 var focus = false
+                var hover = false
                 var disabled = false
                 SELECTOR_REGEX.findAll(str).forEach { match ->
                     val selector = match.value.substring(1)
                     when (selector) {
                         PRESSED -> pressed = true
                         FOCUS -> focus = true
+                        HOVER -> hover = true
                         DISABLED -> disabled = true
                     }
                 }
-                return Selectors(pressed, focus, disabled)
+                return Selectors(pressed, focus, hover, disabled)
             }
         }
     }

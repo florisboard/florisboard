@@ -16,21 +16,63 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import org.florisboard.lib.snygg.emptySelectors
+import org.florisboard.lib.snygg.selectorsOf
 
 @Composable
 fun SnyggButton(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable RowScope.() -> Unit,
+    icon: Painter? = null,
+    text: String,
+    enabled: Boolean = true,
 ) {
-    val snyggTheme = LocalSnyggTheme.current
-    Row(
+    val theme = LocalSnyggTheme.current
+    val styleDefault = theme.rememberQuery(elementName, attributes, emptySelectors())
+    val stylePressed = theme.rememberQuery(elementName, attributes, selectorsOf(pressed = true))
+    val styleFocus = theme.rememberQuery(elementName, attributes, selectorsOf(focus = true))
+    val styleHover = theme.rememberQuery(elementName, attributes, selectorsOf(hover = true))
+    val styleDisabled = theme.rememberQuery(elementName, attributes, selectorsOf(disabled = true))
+
+    Button(
         modifier = modifier,
-        content = content,
-    )
+        enabled = enabled,
+        shape = styleDefault.shape(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = styleDefault.background(),
+            contentColor = styleDefault.foreground(),
+            disabledContainerColor = styleDisabled.background(),
+            disabledContentColor = styleDisabled.foreground(),
+        ),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = styleDefault.shadowElevation.dpSize(),
+            pressedElevation = stylePressed.shadowElevation.dpSize(),
+            focusedElevation = styleFocus.shadowElevation.dpSize(),
+            hoveredElevation = styleHover.shadowElevation.dpSize(),
+            disabledElevation = styleDisabled.shadowElevation.dpSize(),
+        ),
+        onClick = onClick,
+    ) {
+        if (icon != null) {
+            Icon(
+                modifier = Modifier
+                    .padding(end = ButtonDefaults.IconSpacing)
+                    .size(ButtonDefaults.IconSize),
+                painter = icon,
+                contentDescription = null,
+            )
+        }
+        Text(text, modifier)
+    }
 }
