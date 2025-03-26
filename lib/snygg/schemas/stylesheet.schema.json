@@ -74,35 +74,53 @@
       ]
     },
     "snygg-font-weight-value": {
-      "oneOf": [
-        {
-          "type": "string",
-          "enum": [
-            "thin",
-            "extra-light",
-            "light",
-            "normal",
-            "medium",
-            "semi-bold",
-            "bold",
-            "extra-bold",
-            "black"
-          ]
-        },
-        {
-          "type": "string",
-          "enum": [
-            "100",
-            "200",
-            "300",
-            "400",
-            "500",
-            "600",
-            "700",
-            "800",
-            "900"
-          ]
-        }
+      "type": "string",
+      "enum": [
+        "thin",
+        "extra-light",
+        "light",
+        "normal",
+        "medium",
+        "semi-bold",
+        "bold",
+        "extra-bold",
+        "black",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900"
+      ]
+    },
+    "snygg-text-align-value": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right",
+        "center",
+        "justify",
+        "start",
+        "end"
+      ]
+    },
+    "snygg-text-decoration-line-value": {
+      "type": "string",
+      "enum": [
+        "none",
+        "underline",
+        "line-through"
+      ]
+    },
+    "snygg-text-overflow-value": {
+      "type": "string",
+      "enum": [
+        "clip",
+        "ellipsis",
+        "visible"
       ]
     },
     "snygg-padding-value": {
@@ -176,6 +194,15 @@
             },
             {
               "$ref": "#/definitions/snygg-font-weight-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-text-align-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-text-decoration-line-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-text-overflow-value"
             },
             {
               "$ref": "#/definitions/snygg-padding-value"
@@ -332,6 +359,71 @@
             },
             {
               "$ref": "#/definitions/snygg-font-weight-value"
+            }
+          ]
+        },
+        "letter-spacing": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-sp-size-value"
+            }
+          ]
+        },
+        "line-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-sp-size-value"
+            }
+          ]
+        },
+        "text-align": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-text-align-value"
+            }
+          ]
+        },
+        "text-decoration-line": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-text-decoration-line-value"
+            }
+          ]
+        },
+        "text-overflow": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-text-overflow-value"
             }
           ]
         },
