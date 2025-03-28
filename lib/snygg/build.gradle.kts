@@ -67,6 +67,9 @@ android {
             "-Xwhen-guards",
         )
     }
+    lint {
+        disable += "NewApi"
+    }
 }
 
 tasks.withType<Test> {

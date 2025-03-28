@@ -58,9 +58,39 @@
       "type": "string",
       "pattern": "\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*"
     },
+    "snygg-uri-value": {
+      "type": "string",
+      "pattern": "\\s*uri[(]\\s*(?<enclosedUri>`[^`]*`)\\s*[)]\\s*"
+    },
+    "snygg-object-fit-value": {
+      "type": "string",
+      "enum": [
+        "crop",
+        "fill-bounds",
+        "fill-height",
+        "fill-width",
+        "fit",
+        "inside",
+        "none"
+      ]
+    },
     "snygg-dp-size-value": {
       "type": "string",
       "pattern": "\\s*(?<size>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+)dp\\s*"
+    },
+    "snygg-generic-font-family-value": {
+      "type": "string",
+      "enum": [
+        "system",
+        "sans-serif",
+        "serif",
+        "monospace",
+        "cursive"
+      ]
+    },
+    "snygg-custom-font-family-value": {
+      "type": "string",
+      "pattern": "\\s*(?<enclosedFontName>`[^`]+`)\\s*"
     },
     "snygg-sp-size-value": {
       "type": "string",
@@ -184,7 +214,19 @@
               "$ref": "#/definitions/snygg-dynamic-dark-color-value"
             },
             {
+              "$ref": "#/definitions/snygg-uri-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-object-fit-value"
+            },
+            {
               "$ref": "#/definitions/snygg-dp-size-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-generic-font-family-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-custom-font-family-value"
             },
             {
               "$ref": "#/definitions/snygg-sp-size-value"
@@ -271,6 +313,32 @@
             }
           ]
         },
+        "background-image": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-uri-value"
+            }
+          ]
+        },
+        "object-fit": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-object-fit-value"
+            }
+          ]
+        },
         "border-color": {
           "oneOf": [
             {
@@ -320,6 +388,12 @@
             },
             {
               "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-generic-font-family-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-custom-font-family-value"
             }
           ]
         },
@@ -510,6 +584,19 @@
             },
             {
               "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
+            }
+          ]
+        },
+        "src": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-uri-value"
             }
           ]
         }

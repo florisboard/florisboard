@@ -19,13 +19,14 @@ package org.florisboard.lib.snygg.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.DefaultShadowColor
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -51,9 +53,12 @@ import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
+import org.florisboard.lib.snygg.value.SnyggAssetResolver
+import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggObjectFitValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
@@ -64,35 +69,64 @@ import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
-    staticCompositionLocalOf {
+    compositionLocalOf {
         error("ProvideSnyggTheme not called.")
     }
 
 internal val LocalSnyggDynamicLightColorScheme: ProvidableCompositionLocal<ColorScheme> =
-    staticCompositionLocalOf {
+    compositionLocalOf {
         error("ProvideSnyggTheme not called.")
     }
 
 internal val LocalSnyggDynamicDarkColorScheme: ProvidableCompositionLocal<ColorScheme> =
-    staticCompositionLocalOf {
+    compositionLocalOf {
+        error("ProvideSnyggTheme not called.")
+    }
+
+internal val LocalSnyggAssetResolver: ProvidableCompositionLocal<SnyggAssetResolver> =
+    compositionLocalOf {
         error("ProvideSnyggTheme not called.")
     }
 
 internal val LocalSnyggParentStyle: ProvidableCompositionLocal<SnyggPropertySet> =
-    staticCompositionLocalOf {
+    compositionLocalOf {
         SnyggPropertySet()
     }
 
+/**
+ * Creates a [SnyggTheme] that is remembered across compositions.
+ *
+ * When the stylesheet changes the [SnyggTheme] is recompiled.
+ *
+ * @param stylesheet [SnyggStylesheet] the [SnyggTheme] is compiled from
+ */
 @Composable
-fun rememberSnyggTheme(stylesheet: SnyggStylesheet) = remember(stylesheet) {
-    SnyggTheme.compileFrom(stylesheet)
+fun rememberSnyggTheme(
+    stylesheet: SnyggStylesheet,
+    assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
+) = remember(stylesheet, assetResolver) {
+    SnyggTheme.compileFrom(stylesheet, assetResolver)
 }
 
+/**
+ * Provides the snygg theme to use for all snygg ui composable functions.
+ *
+ * Use [rememberSnyggTheme] to convert a [SnyggStylesheet] to a [SnyggTheme].
+ *
+ * @param snyggTheme The [SnyggTheme] for the composable functions.
+ * @param dynamicAccentColor The [Color] for the dynamic color schemes.
+ * [Color.Unspecified] means default/material you color.
+ * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.florisboard.lib.snygg.value.SnyggUriValue].
+ *
+ * @see rememberSnyggTheme
+ * @see SnyggAssetResolver
+ */
 @Composable
 fun ProvideSnyggTheme(
     snyggTheme: SnyggTheme,
     dynamicAccentColor: Color = Color.Unspecified,
-    content: @Composable () -> Unit
+    assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
+    content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
     val lightScheme = ColorMappings.dynamicLightColorScheme(context, dynamicAccentColor)
@@ -101,6 +135,7 @@ fun ProvideSnyggTheme(
         LocalSnyggTheme provides snyggTheme,
         LocalSnyggDynamicLightColorScheme provides lightScheme,
         LocalSnyggDynamicDarkColorScheme provides darkScheme,
+        LocalSnyggAssetResolver provides assetResolver,
         content = content,
     )
 }
@@ -300,5 +335,12 @@ internal fun SnyggPropertySet.shape(): Shape {
     return when (shape) {
         is SnyggShapeValue -> shape.shape
         else -> RectangleShape
+    }
+}
+
+internal fun SnyggPropertySet.objectFit(default: ContentScale = ContentScale.Fit): ContentScale {
+    return when (objectFit) {
+        is SnyggObjectFitValue -> objectFit.contentScale
+        else -> default
     }
 }

@@ -16,13 +16,19 @@
 
 package org.florisboard.lib.snygg.ui
 
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.value.SnyggUriValue
+
 
 @Composable
 fun SnyggSurface(
@@ -31,12 +37,31 @@ fun SnyggSurface(
     modifier: Modifier = Modifier,
     clip: Boolean = false,
     clickAndSemanticsModifier: Modifier = Modifier,
-    // TODO: implement image loader
-    imageLoader: ((relPath: String) -> Unit)? = null,
+    supportsBackgroundImage: Boolean = false,
+    backgroundImageDescription: String? = null,
     content: @Composable () -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
+    val assetResolver = LocalSnyggAssetResolver.current
     val style = theme.rememberQuery(elementName, attributes)
+
+    @Composable
+    fun SnyggImage() {
+        when (val bg = style.backgroundImage) {
+            is SnyggUriValue -> {
+                val result = assetResolver.resolveAbsolutPath(bg.uri)
+                val path = result.getOrNull() ?: return
+                val bitmap = remember(path) { BitmapFactory.decodeFile(path)?.asImageBitmap() }
+                if (bitmap == null) return
+                Image(
+                    bitmap = bitmap,
+                    contentScale = style.objectFit(),
+                    contentDescription = backgroundImageDescription,
+                )
+            }
+        }
+    }
+
     ProvideSnyggParentStyle(style) {
         Surface(
             modifier = modifier
@@ -47,8 +72,12 @@ fun SnyggSurface(
                 .snyggBackground(style)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
-            content = content,
-        )
+        ) {
+            if (supportsBackgroundImage) {
+                SnyggImage()
+            }
+            content()
+        }
     }
 }
 

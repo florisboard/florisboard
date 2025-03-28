@@ -46,7 +46,7 @@ import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggImageRefValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
@@ -62,6 +62,7 @@ import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
+import java.net.URI
 
 @Serializable(with = SnyggPropertySet.Serializer::class)
 data class SnyggPropertySet internal constructor(
@@ -69,6 +70,9 @@ data class SnyggPropertySet internal constructor(
 ) {
     val background = properties[Snygg.Background] ?: SnyggUndefinedValue
     val foreground = properties[Snygg.Foreground] ?: SnyggUndefinedValue
+
+    val backgroundImage = properties[Snygg.BackgroundImage] ?: SnyggUndefinedValue
+    val objectFit = properties[Snygg.ObjectFit] ?: SnyggUndefinedValue
 
     val borderColor = properties[Snygg.BorderColor] ?: SnyggUndefinedValue
     val borderStyle = properties[Snygg.BorderStyle] ?: SnyggUndefinedValue
@@ -92,6 +96,8 @@ data class SnyggPropertySet internal constructor(
     val shadowElevation = properties[Snygg.ShadowElevation] ?: SnyggUndefinedValue
 
     val shape = properties[Snygg.Shape] ?: SnyggUndefinedValue
+
+    val src = properties[Snygg.Src] ?: SnyggUndefinedValue
 
     fun edit() = SnyggPropertySetEditor(properties)
 
@@ -195,6 +201,13 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         get() =  getProperty(Snygg.Foreground)
         set(v) = setProperty(Snygg.Foreground, v)
 
+    var backgroundImage: SnyggValue?
+        get() =  getProperty(Snygg.BackgroundImage)
+        set(v) = setProperty(Snygg.BackgroundImage, v)
+    var objectFit: SnyggValue?
+        get() =  getProperty(Snygg.ObjectFit)
+        set(v) = setProperty(Snygg.ObjectFit, v)
+
     var borderColor: SnyggValue?
         get() =  getProperty(Snygg.BorderColor)
         set(v) = setProperty(Snygg.BorderColor, v)
@@ -251,6 +264,10 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var shape: SnyggValue?
         get() =  getProperty(Snygg.Shape)
         set(v) = setProperty(Snygg.Shape, v)
+
+    var src: SnyggValue?
+        get() =  getProperty(Snygg.Src)
+        set(v) = setProperty(Snygg.Src, v)
 
     fun rgbaColor(
         @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
@@ -392,8 +409,8 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         return SnyggPercentageSizeValue(percentage)
     }
 
-    fun image(relPath: String): SnyggImageRefValue {
-        return SnyggImageRefValue(relPath)
+    fun uri(uri: URI): SnyggUriValue {
+        return SnyggUriValue(uri)
     }
 
     fun `var`(key: String): SnyggDefinedVarValue {

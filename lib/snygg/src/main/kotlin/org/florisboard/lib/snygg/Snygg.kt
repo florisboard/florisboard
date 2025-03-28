@@ -23,9 +23,13 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.florisboard.lib.snygg.value.SnyggObjectFitValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -42,17 +46,17 @@ import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
  * snygg = Swedish for stylish
  */
 object Snygg {
-    // TODO: add onImagePathResolve API for library consumer
-    const val Background = "background" // TODO: add image() function
-    // TODO: object-fit support
+    const val Background = "background"
     const val Foreground = "foreground"
+
+    const val BackgroundImage = "background-image"
+    const val ObjectFit = "object-fit"
 
     const val BorderColor = "border-color"
     const val BorderStyle = "border-style" // unsupported as of now
     const val BorderWidth = "border-width"
 
-    // TODO: font-family also needs a ref-like system, like image too
-    const val FontFamily = "font-family" // TODO: no impact yet???
+    const val FontFamily = "font-family"
     const val FontSize = "font-size"
     const val FontStyle = "font-style"
     const val FontWeight = "font-weight"
@@ -70,6 +74,8 @@ object Snygg {
     const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"
+
+    const val Src = "src"
 }
 
 // Keep in sync with schemas/stylesheet.schema.json
@@ -92,6 +98,13 @@ object SnyggSpec {
             add(SnyggDynamicDarkColorValue)
         }
 
+        Snygg.BackgroundImage {
+            add(SnyggUriValue)
+        }
+        Snygg.ObjectFit {
+            add(SnyggObjectFitValue)
+        }
+
         Snygg.BorderColor {
             add(SnyggStaticColorValue)
             add(SnyggDynamicLightColorValue)
@@ -106,7 +119,8 @@ object SnyggSpec {
 
         Snygg.FontFamily {
             inheritsImplicitly()
-            // TODO: implement
+            add(SnyggGenericFontFamilyValue)
+            add(SnyggCustomFontFamilyValue)
         }
         Snygg.FontSize {
             inheritsImplicitly()
@@ -165,6 +179,10 @@ object SnyggSpec {
             add(SnyggRoundedCornerPercentShapeValue)
             add(SnyggCutCornerDpShapeValue)
             add(SnyggCutCornerPercentShapeValue)
+        }
+
+        Snygg.Src {
+            add(SnyggUriValue)
         }
     })
 }

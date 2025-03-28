@@ -17,13 +17,23 @@
 package org.florisboard.lib.snygg
 
 import androidx.compose.material3.ColorScheme
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import org.florisboard.lib.color.getColor
+import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import kotlin.collections.contains
+import org.florisboard.lib.snygg.value.SnyggUriValue
+import java.io.File
 
 /**
  * Pre-compiled style data for a SnyggTheme.
@@ -38,17 +48,18 @@ import kotlin.collections.contains
  *    variable references.
  * 5. All annotation elements have been pre-processed and stripped from the data.
  */
-private typealias CompiledStyleData =
-    Map<String, List<Pair<SnyggRule, SnyggPropertySet>>>
+private typealias CompiledStyleData = Map<String, List<Pair<SnyggRule, SnyggPropertySet>>>
 
 typealias SnyggQueryAttributes = Map<String, Int>
+
+private typealias CompiledFontFamilyData = Map<String, FontFamily>
 
 /**
  * Represents the runtime style data, which is used for styling UI elements.
  */
-@JvmInline
-value class SnyggTheme internal constructor(
+data class SnyggTheme internal constructor(
     private val style: CompiledStyleData,
+    private val fontFamilies: CompiledFontFamilyData,
 ) {
     internal fun query(
         elementName: String,
@@ -84,12 +95,53 @@ value class SnyggTheme internal constructor(
     }
 
     companion object {
-        internal fun compileFrom(stylesheet: SnyggStylesheet): SnyggTheme {
+        internal fun compileFrom(
+            stylesheet: SnyggStylesheet,
+            assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
+        ): SnyggTheme {
             val elements = mutableMapOf<String, MutableList<Pair<SnyggRule, SnyggPropertySet>>>()
             var variablesSet: SnyggPropertySet? = null
+            val fonts = mutableMapOf<String, MutableList<Font>>()
             stylesheet.rules.forEach { (rule, propertySet) ->
-                if (rule.isDefinedVariablesRule()) {
-                    variablesSet = propertySet
+                if (rule.isAnnotation) {
+                    when {
+                        rule.isDefinedVariablesRule() -> variablesSet = propertySet
+                        // TODO: can this be done earlier or easier?
+                        rule.isFontFaceRule() -> {
+                            val src = propertySet.src
+                            if (src !is SnyggUriValue) return@forEach
+                            val fontPath = assetResolver
+                                .resolveAbsolutPath(src.uri)
+                                .getOrNull()
+                            if (fontPath == null) return@forEach
+                            val fontFamily = propertySet.fontFamily
+                            if (fontFamily !is SnyggCustomFontFamilyValue) return@forEach
+                            val fontWeight = propertySet.fontWeight.let {
+                                if (it is SnyggFontWeightValue) {
+                                    it.fontWeight
+                                } else {
+                                    FontWeight.Normal
+                                }
+                            }
+                            val fontStyle = propertySet.fontStyle.let {
+                                if (it is SnyggFontStyleValue) {
+                                    it.fontStyle
+                                } else {
+                                    FontStyle.Normal
+                                }
+                            }
+                            fonts.getOrPut(fontFamily.fontName) { mutableListOf() }.apply {
+                                add(
+                                    Font(
+                                        file = File(fontPath),
+                                        weight = fontWeight,
+                                        style = fontStyle,
+                                    )
+                                )
+                            }
+                        }
+                        else -> error("Unsupported annotation rule for $rule")
+                    }
                 } else {
                     val list = elements.getOrDefault(rule.elementName, mutableListOf())
                     list.add(rule to propertySet)
@@ -110,7 +162,10 @@ value class SnyggTheme internal constructor(
                     return@map rule to editor.build()
                 }
             }
-            return SnyggTheme(style)
+            val fontFamilies = fonts.mapValues { (_, fonts) ->
+                FontFamily(fonts)
+            }
+            return SnyggTheme(style, fontFamilies)
         }
     }
 }

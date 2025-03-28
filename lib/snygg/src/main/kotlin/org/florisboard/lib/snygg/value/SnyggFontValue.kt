@@ -16,10 +16,57 @@
 
 package org.florisboard.lib.snygg.value
 
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import org.florisboard.lib.color.ColorPalette
 
 sealed interface SnyggFontValue : SnyggValue
+
+data class SnyggGenericFontFamilyValue(val fontFamily: FontFamily) : SnyggFontValue {
+    companion object : SnyggEnumLikeValueEncoder<FontFamily>(
+        serializationId = "genericFontFamily",
+        serializationMapping = mapOf(
+            "system" to FontFamily.Default,
+            "sans-serif" to FontFamily.SansSerif,
+            "serif" to FontFamily.Serif,
+            "monospace" to FontFamily.Monospace,
+            "cursive" to FontFamily.Cursive,
+        ),
+        default = FontFamily.Default,
+        construct = { SnyggGenericFontFamilyValue(it) },
+        destruct = { (it as SnyggGenericFontFamilyValue).fontFamily },
+    )
+    override fun encoder() = Companion
+}
+
+data class SnyggCustomFontFamilyValue(val fontName: String) : SnyggFontValue {
+    companion object : SnyggValueEncoder {
+        private const val EnclosedFontNameId = "enclosedFontName"
+
+        override val spec = SnyggValueSpec {
+            string(id = EnclosedFontNameId, regex = """`[^`]+`""".toRegex())
+        }
+
+        override fun defaultValue() = SnyggDynamicLightColorValue(ColorPalette.Primary.id)
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggCustomFontFamilyValue)
+            val map = snyggIdToValueMapOf(EnclosedFontNameId to "`${v.fontName}`")
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = snyggIdToValueMapOf()
+            spec.parse(v, map)
+            val enclosedFontName = map.getString(EnclosedFontNameId)
+            val fontName = enclosedFontName.substring(1, enclosedFontName.length - 1)
+            return@runCatching SnyggCustomFontFamilyValue(fontName)
+        }
+    }
+
+    override fun encoder() = Companion
+}
 
 data class SnyggFontStyleValue(val fontStyle: FontStyle) : SnyggFontValue {
     companion object : SnyggEnumLikeValueEncoder<FontStyle>(

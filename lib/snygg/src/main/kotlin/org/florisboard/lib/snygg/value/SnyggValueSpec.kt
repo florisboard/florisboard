@@ -72,6 +72,10 @@ data class SnyggIntValueSpec(
     val unit: String?,
     val numberPattern: Regex?,
 ) : SnyggValueSpec {
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
+    }
+
     override val parsePattern = buildPattern {
         if (prefix != null) {
             append(prefix)
@@ -107,6 +111,10 @@ data class SnyggFloatValueSpec(
     val unit: String?,
     val numberPattern: Regex?,
 ) : SnyggValueSpec {
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
+    }
+
     override val parsePattern = buildPattern {
         if (prefix != null) {
             append(prefix)
@@ -139,6 +147,10 @@ data class SnyggKeywordValueSpec(
     override val id: String,
     val keywords: List<String>,
 ) : SnyggValueSpec {
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
+    }
+
     override val parsePattern = buildPattern {
         append("(?<$id>")
         append(keywords.joinToString("|"))
@@ -154,6 +166,10 @@ data class SnyggStringValueSpec(
     override val id: String,
     private val pattern: Regex,
 ) : SnyggValueSpec {
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
+    }
+
     override val parsePattern = buildPattern {
         append("(?<$id>")
         append(pattern)

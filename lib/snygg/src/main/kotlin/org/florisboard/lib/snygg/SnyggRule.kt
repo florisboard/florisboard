@@ -235,3 +235,11 @@ fun SnyggRule.isDefinedVariablesRule(): Boolean {
 fun SnyggRule.Companion.definedVariablesRule(): SnyggRule {
     return SnyggRule("@defines")
 }
+
+fun SnyggRule.isFontFaceRule(): Boolean {
+    return this.elementName == "@font"
+}
+
+fun SnyggRule.Companion.fontFaceRule(): SnyggRule {
+    return SnyggRule("@font")
+}
