@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -54,10 +55,12 @@ import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggObjectFitValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
@@ -292,6 +295,14 @@ internal fun SnyggPropertySet.fontStyle(default: FontStyle? = null): FontStyle? 
 internal fun SnyggPropertySet.fontWeight(default: FontWeight? = null): FontWeight? {
     return when (fontWeight) {
         is SnyggFontWeightValue -> fontWeight.fontWeight
+        else -> default
+    }
+}
+
+internal fun SnyggPropertySet.fontFamily(theme: SnyggTheme, default: FontFamily? = null): FontFamily? {
+    return when (val family = fontFamily) {
+        is SnyggGenericFontFamilyValue -> family.fontFamily
+        is SnyggCustomFontFamilyValue -> theme.getFontFamily(family.fontName)
         else -> default
     }
 }

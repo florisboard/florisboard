@@ -36,6 +36,7 @@ fun SnyggText(
 ) {
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes)
+
     Text(
         modifier = modifier
             .snyggMargin(style)
@@ -48,6 +49,7 @@ fun SnyggText(
         fontSize = style.fontSize(),
         fontStyle = style.fontStyle(),
         fontWeight = style.fontWeight(),
+        fontFamily = style.fontFamily(theme),
         letterSpacing = style.letterSpacing(),
         lineHeight = style.lineHeight(),
         textAlign = style.textAlign(),
