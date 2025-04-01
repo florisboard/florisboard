@@ -18,27 +18,74 @@ package org.florisboard.lib.snygg
 
 import kotlin.math.min
 
-data class SnyggRule internal constructor(
+sealed interface SnyggRule : Comparable<SnyggRule> {
+    companion object {
+        fun fromOrNull(str: String): SnyggRule? {
+            return SnyggAnnotationRule.Defines.fromOrNull(str)
+                ?: SnyggAnnotationRule.Font.fromOrNull(str)
+                ?: SnyggElementRule.fromOrNull(str)
+        }
+    }
+}
+
+sealed interface SnyggAnnotationRule : SnyggRule {
+    val annotationName: String
+
+    data object Defines : SnyggAnnotationRule {
+        override val annotationName: String = "defines"
+
+        internal val REGEX = """@defines""".toRegex()
+
+        fun fromOrNull(str: String): SnyggRule? {
+            if (str == "@defines") {
+                return Defines
+            }
+            return null
+        }
+
+        override fun compareTo(other: SnyggRule): Int {
+            return when (other) {
+                is Defines -> 0 // same
+                is SnyggAnnotationRule -> annotationName.compareTo(other.annotationName)
+                is SnyggElementRule -> -1 // annotations always come first
+            }
+        }
+    }
+
+    data class Font(val fontName: String) : SnyggAnnotationRule {
+        override val annotationName: String = "font"
+
+        companion object {
+            internal val REGEX = """@font `(?<fontName>[a-zA-Z0-9\s-]+)`""".toRegex()
+
+            fun fromOrNull(str: String): SnyggRule? {
+                val match = REGEX.matchEntire(str) ?: return null
+                return Font(match.groups["fontName"]!!.value)
+            }
+        }
+
+        override fun compareTo(other: SnyggRule): Int {
+            return when (other) {
+                is Font -> fontName.compareTo(other.fontName)
+                is SnyggAnnotationRule -> annotationName.compareTo(other.annotationName)
+                is SnyggElementRule -> -1 // annotations always come first
+            }
+        }
+    }
+}
+
+data class SnyggElementRule(
     val elementName: String,
     val attributes: Attributes = Attributes(),
     val selector: SnyggSelector? = null,
-): Comparable<SnyggRule> {
-    val isAnnotation
-        get() = elementName.startsWith("@")
-
+) : SnyggRule {
     init {
-        requireNotNull(
-            ANNOTATION_NAME_REGEX.matchEntire(elementName) ?:
-                ELEMENT_NAME_REGEX.matchEntire(elementName)
-        ) { "annotation/element name is invalid" }
+        requireNotNull(ELEMENT_NAME_REGEX.matchEntire(elementName)) { "element name is invalid" }
     }
 
     override fun compareTo(other: SnyggRule): Int {
-        if (isAnnotation && !other.isAnnotation) {
-            return -1
-        }
-        if (!isAnnotation && other.isAnnotation) {
-            return 1
+        if (other !is SnyggElementRule) {
+            return 1 // annotations always come first
         }
         val elemDiff = elementName.compareTo(other.elementName)
         if (elemDiff != 0) {
@@ -74,25 +121,20 @@ data class SnyggRule internal constructor(
         private const val ATTRIBUTE_ASSIGN = "="
         private const val ATTRIBUTE_VALUES_SEPARATOR = ","
 
-        private val ANNOTATION_NAME_REGEX = """(?<annotationName>@[a-zA-Z0-9-]+)""".toRegex()
         private val ELEMENT_NAME_REGEX = """(?<elementName>[a-zA-Z0-9-]+)""".toRegex()
         private val ATTRIBUTE_VALUE_REGEX = """[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?""".toRegex()
         private val ATTRIBUTE_REGEX = """\[[a-zA-Z0-9-]+=$ATTRIBUTE_VALUE_REGEX(?:,$ATTRIBUTE_VALUE_REGEX)*]""".toRegex()
         private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:$ATTRIBUTE_REGEX)+)?""".toRegex()
         private val SELECTOR_REGEX = """(?<selectorRaw>:pressed|:focus|:hover|:disabled)?""".toRegex()
-        internal val REGEX = """^$ANNOTATION_NAME_REGEX|$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX${'$'}""".toRegex()
+        internal val REGEX = """^$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX${'$'}""".toRegex()
 
         fun fromOrNull(str: String): SnyggRule? {
             val result = REGEX.matchEntire(str) ?: return null
-            val annotationName = result.groups["annotationName"]?.value
-            if (annotationName != null) {
-                return SnyggRule(elementName = annotationName)
-            }
             val elementName = result.groups["elementName"]!!.value // can not be null logically
             val attributesRaw = result.groups["attributesRaw"]?.value
             val selectorRaw = result.groups["selectorRaw"]?.value
 
-            return SnyggRule(
+            return SnyggElementRule(
                 elementName = elementName,
                 attributes = Attributes.from(attributesRaw ?: ""),
                 selector = SnyggSelector.fromOrNull(selectorRaw ?: ""),
@@ -226,20 +268,4 @@ enum class SnyggSelector(val id: String) {
             return null
         }
     }
-}
-
-fun SnyggRule.isDefinedVariablesRule(): Boolean {
-    return this.elementName == "@defines"
-}
-
-fun SnyggRule.Companion.definedVariablesRule(): SnyggRule {
-    return SnyggRule("@defines")
-}
-
-fun SnyggRule.isFontFaceRule(): Boolean {
-    return this.elementName == "@font"
-}
-
-fun SnyggRule.Companion.fontFaceRule(): SnyggRule {
-    return SnyggRule("@font")
 }

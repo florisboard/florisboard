@@ -27,11 +27,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
@@ -63,8 +58,10 @@ import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
 import java.net.URI
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.iterator
 
-@Serializable(with = SnyggPropertySet.Serializer::class)
 data class SnyggPropertySet internal constructor(
     val properties: Map<String, SnyggValue> = emptyMap(),
 ) {
@@ -105,24 +102,12 @@ data class SnyggPropertySet internal constructor(
         return properties.toString()
     }
 
-    object Serializer : KSerializer<SnyggPropertySet> {
-        override val descriptor: SerialDescriptor
-            get() = JsonObject.serializer().descriptor
-
-        override fun serialize(encoder: Encoder, value: SnyggPropertySet) {
-            val rawProperties = value.properties.mapValues { (_, value) ->
-                val valueStr = value.encoder().serialize(value).getOrThrow()
-                Json.encodeToJsonElement(valueStr)
-            }
-            encoder.encodeSerializableValue(JsonObject.serializer(), JsonObject(rawProperties))
-        }
-
-        override fun deserialize(decoder: Decoder): SnyggPropertySet {
-            val rawProperties = decoder.decodeSerializableValue(JsonObject.serializer())
+    companion object {
+        fun from(rule: SnyggRule, jsonObject: JsonObject): SnyggPropertySet {
             val editor = SnyggPropertySetEditor()
-            propLoop@ for ((property, valueElem) in rawProperties) {
-                val encoders = SnyggSpec.V2.encodersOf(property)
-                requireNotNull(encoders) { "Unknown property: $property" }
+            propLoop@ for ((property, valueElem) in jsonObject) {
+                val encoders = SnyggSpec.encodersOf(rule, property)
+                requireNotNull(encoders) { "Unknown or disallowed property: $property" }
                 val valueStr = Json.decodeFromJsonElement<String>(valueElem)
                 for (encoder in encoders) {
                     val value = encoder.deserialize(valueStr).getOrNull()
@@ -135,6 +120,14 @@ data class SnyggPropertySet internal constructor(
             }
             return editor.build()
         }
+    }
+
+    fun toJsonObject(): JsonObject {
+        val rawProperties = properties.mapValues { (_, value) ->
+            val valueStr = value.encoder().serialize(value).getOrThrow()
+            Json.encodeToJsonElement(valueStr)
+        }
+        return JsonObject(rawProperties)
     }
 }
 
@@ -172,7 +165,8 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     }
 
     internal fun inheritImplicitly(parentStyle: SnyggPropertySet) {
-        for ((property, propertySpec) in SnyggSpec.V2.properties) {
+        // TODO: pattern properties??
+        for ((property, propertySpec) in SnyggSpec.elementsSpec.properties) {
             if (propertySpec.inheritsImplicitly() && !properties.contains(property)) {
                 // inherit implicitly
                 setProperty(property, parentStyle.properties[property])

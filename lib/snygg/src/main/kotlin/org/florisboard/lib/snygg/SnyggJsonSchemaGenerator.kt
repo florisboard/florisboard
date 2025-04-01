@@ -29,13 +29,14 @@ import java.io.File
 
 object SnyggJsonSchemaGenerator {
     private const val DEFINES_PROPERTY_SET_ID = "snygg-defines-property-set"
+    private const val FONT_PROPERTY_SET_ID = "snygg-font-property-set"
     private const val PROPERTY_SET_ID = "snygg-property-set"
 
     @OptIn(ExperimentalSerializationApi::class)
     @JvmStatic
     fun main(args: Array<String>) {
         val jsonSchemaFilePath = args.getOrElse(0) { error("No path provided to persist json schema") }
-        val spec = SnyggSpec.V2
+        val spec = SnyggSpec
 
         val jsonSchema = mapOf(
             "\$schema" to "https://json-schema.org/draft-07/schema",
@@ -48,10 +49,13 @@ object SnyggJsonSchemaGenerator {
                 ),
             ),
             "patternProperties" to mapOf(
-                "^@defines$" to mapOf(
+                SnyggAnnotationRule.Defines.REGEX.toString() to mapOf(
                     "\$ref" to "#/definitions/$DEFINES_PROPERTY_SET_ID",
                 ),
-                SnyggRule.REGEX.toString() to mapOf(
+                SnyggAnnotationRule.Font.REGEX.toString() to mapOf(
+                    "\$ref" to "#/definitions/$FONT_PROPERTY_SET_ID",
+                ),
+                SnyggElementRule.REGEX.toString() to mapOf(
                     "\$ref" to "#/definitions/$PROPERTY_SET_ID",
                 ),
             ),
@@ -60,24 +64,9 @@ object SnyggJsonSchemaGenerator {
                 spec.allEncoders.forEach { encoder ->
                     put(encoder.id(), encoder.schema())
                 }
-                put(DEFINES_PROPERTY_SET_ID, mapOf(
-                    "type" to "object",
-                    "patternProperties" to mapOf(
-                        "^--[a-zA-Z0-9-]+$" to oneOfDefinitionRef(
-                            *spec.allEncoders.map { it.id() }.toTypedArray(),
-                        ),
-                    ),
-                    "additionalProperties" to false,
-                ))
-                put(PROPERTY_SET_ID, mapOf(
-                    "type" to "object",
-                    "properties" to spec.properties.mapValues { (_, propertySpec) ->
-                        oneOfDefinitionRef(
-                            *propertySpec.encoders.map { it.id() }.toTypedArray()
-                        )
-                    },
-                    "additionalProperties" to false,
-                ))
+                put(DEFINES_PROPERTY_SET_ID, convertToSchema(spec.annotationSpecs["defines"]!!))
+                put(FONT_PROPERTY_SET_ID, convertToSchema(spec.annotationSpecs["font"]!!))
+                put(PROPERTY_SET_ID, convertToSchema(spec.elementsSpec))
             },
         )
 
@@ -112,6 +101,23 @@ object SnyggJsonSchemaGenerator {
     @Suppress("UNCHECKED_CAST")
     private fun convertToJsonObjectList(list: List<Any?>): List<JsonObject> {
         return list.map { convertToJsonObject(it as Map<String, Any?>) }
+    }
+
+    private fun convertToSchema(props: SnyggSpecDecl.SnyggPropertySetSpecDecl): Map<String, Any> {
+        return mapOf(
+            "type" to "object",
+            "patternProperties" to props.patternProperties.mapValues { (_, propertySpec) ->
+                oneOfDefinitionRef(
+                    *propertySpec.encoders.map { it.id() }.toTypedArray()
+                )
+            }.mapKeys { (key, _) -> key.toString() },
+            "properties" to props.properties.mapValues { (_, propertySpec) ->
+                oneOfDefinitionRef(
+                    *propertySpec.encoders.map { it.id() }.toTypedArray()
+                )
+            },
+            "additionalProperties" to false,
+        )
     }
 
     private fun oneOf(vararg schemas: Any): Map<String, Any> {

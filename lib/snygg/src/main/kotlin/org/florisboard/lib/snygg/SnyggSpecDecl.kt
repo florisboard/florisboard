@@ -23,76 +23,139 @@ internal enum class InheritBehavior {
     EXPLICITLY_ONLY,
 }
 
-open class SnyggSpecDecl internal constructor(init: SnyggSpecDeclBuilder.() -> Unit) {
-    internal val properties: Map<String, SnyggSpecPropertyDecl>
+open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.() -> Unit) {
+    internal val annotationSpecs: Map<String, SnyggPropertySetSpecDecl>
+    internal val elementsSpec: SnyggPropertySetSpecDecl
+    private val _allEncoders = mutableSetOf<SnyggValueEncoder>()
     internal val allEncoders: Set<SnyggValueEncoder>
+        get() = _allEncoders
 
     init {
         val builder = SnyggSpecDeclBuilder()
-        init(builder)
-        val (builtProperties, builtAllEncoders) = builder.build()
-        properties = builtProperties
-        allEncoders = builtAllEncoders
+        builder.configure()
+        val (annotationSpecsB, elementsSpecB) = builder.build()
+        annotationSpecs = annotationSpecsB
+        elementsSpec = elementsSpecB
     }
 
-    fun encodersOf(property: String): Set<SnyggValueEncoder>? {
-        if (property.startsWith("--")) {
-            // variable
-            return allEncoders
+    fun encodersOf(rule: SnyggRule, property: String): Set<SnyggValueEncoder>? {
+        val propertySetSpec = when (rule) {
+            is SnyggAnnotationRule -> annotationSpecs[rule.annotationName]
+            is SnyggElementRule -> elementsSpec
+        } ?: return null
+        val encoders = propertySetSpec.properties[property]?.encoders
+        if (encoders != null) {
+            return encoders
         }
-        return properties[property]?.encoders
-    }
-}
-
-internal class SnyggSpecDeclBuilder {
-    private val properties: MutableMap<String, SnyggSpecPropertyDeclEditor> = mutableMapOf()
-    private val allPropertyEncoders = mutableSetOf<SnyggValueEncoder>()
-
-    operator fun String.invoke(configure: SnyggSpecPropertyDeclEditor.() -> Unit) {
-        val editor = properties.getOrDefault(this, SnyggSpecPropertyDeclEditor())
-        configure(editor)
-        properties[this] = editor
-    }
-
-    fun allProperties(configure: MutableSet<SnyggValueEncoder>.() -> Unit) {
-        configure(allPropertyEncoders)
-    }
-
-    fun build(): Pair<Map<String, SnyggSpecPropertyDecl>, Set<SnyggValueEncoder>> {
-        val propertySpecs = properties.mapValues { (_, editor) ->
-            editor.build(allPropertyEncoders)
+        for ((regex, patternPropertySetSpec) in propertySetSpec.patternProperties) {
+            if (regex.matchEntire(property) != null) {
+                return patternPropertySetSpec.encoders
+            }
         }
-        val allEncoders = propertySpecs.values.map { it.encoders }.flatten().toSet()
-        return propertySpecs to allEncoders
-    }
-}
-
-internal data class SnyggSpecPropertyDecl(
-    val encoders: Set<SnyggValueEncoder>,
-    val inheritBehavior: InheritBehavior,
-) {
-    fun inheritsImplicitly(): Boolean {
-        return inheritBehavior == InheritBehavior.IMPLICITLY_OR_EXPLICITLY
-    }
-}
-
-internal data class SnyggSpecPropertyDeclEditor(
-    private val encoders: MutableSet<SnyggValueEncoder> = mutableSetOf(),
-    private var inheritBehavior: InheritBehavior = InheritBehavior.EXPLICITLY_ONLY,
-) {
-    fun add(encoder: SnyggValueEncoder) {
-        encoders.add(encoder)
+        return null
     }
 
-    fun inheritsImplicitly() {
-        inheritBehavior = InheritBehavior.IMPLICITLY_OR_EXPLICITLY
-    }
+    internal inner class SnyggSpecDeclBuilder {
+        private val annotationSpecs = mutableMapOf<String, SnyggPropertySetSpecDeclBuilder>()
+        private val elementsSpec = SnyggPropertySetSpecDeclBuilder()
 
-    fun build(allPropertyEncoders: Set<SnyggValueEncoder>): SnyggSpecPropertyDecl {
-        val encoders = buildSet {
-            addAll(allPropertyEncoders)
-            addAll(encoders)
+        fun annotation(name: String, configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
+            val annotationSpec = annotationSpecs.getOrDefault(name, SnyggPropertySetSpecDeclBuilder())
+            annotationSpec.configure()
+            annotationSpecs[name] = annotationSpec
         }
-        return SnyggSpecPropertyDecl(encoders, inheritBehavior)
+
+        fun elements(configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
+            elementsSpec.configure()
+        }
+
+        fun build(): Pair<Map<String, SnyggPropertySetSpecDecl>, SnyggPropertySetSpecDecl> {
+            val annotationSpecs = annotationSpecs.mapValues { (_, builder) ->
+                builder.build()
+            }
+            val elementsSpec = elementsSpec.build()
+            return annotationSpecs to elementsSpec
+        }
+    }
+
+    internal data class SnyggPropertySetSpecDecl(
+        val patternProperties: Map<Regex, SnyggPropertySpecDecl>,
+        val properties: Map<String, SnyggPropertySpecDecl>,
+    )
+
+    internal inner class SnyggPropertySetSpecDeclBuilder {
+        private val patternProperties = mutableMapOf<Regex, SnyggPropertySpecDeclBuilder>()
+        private val properties = mutableMapOf<String, SnyggPropertySpecDeclBuilder>()
+        private val implicitEncoders = mutableSetOf<SnyggValueEncoder>()
+
+        fun pattern(regex: Regex, configure: SnyggPropertySpecDeclBuilder.() -> Unit) {
+            val builder = patternProperties.getOrDefault(regex, SnyggPropertySpecDeclBuilder())
+            builder.configure()
+            patternProperties[regex] = builder
+        }
+
+        operator fun String.invoke(configure: SnyggPropertySpecDeclBuilder.() -> Unit) {
+            val builder = properties.getOrDefault(this, SnyggPropertySpecDeclBuilder())
+            builder.configure()
+            properties[this] = builder
+        }
+
+        fun implicit(configure: MutableSet<SnyggValueEncoder>.() -> Unit) {
+            implicitEncoders.configure()
+        }
+
+        fun build(): SnyggPropertySetSpecDecl {
+            _allEncoders.addAll(implicitEncoders)
+            val patternPropertySpecs = patternProperties.mapValues { (_, builder) ->
+                builder.build(implicitEncoders)
+            }
+            val propertySpecs = properties.mapValues { (_, builder) ->
+                builder.build(implicitEncoders)
+            }
+            return SnyggPropertySetSpecDecl(
+                patternProperties = patternPropertySpecs,
+                properties = propertySpecs,
+            )
+        }
+    }
+
+    internal data class SnyggPropertySpecDecl(
+        val encoders: Set<SnyggValueEncoder>,
+        val inheritBehavior: InheritBehavior,
+    ) {
+        fun inheritsImplicitly(): Boolean {
+            return inheritBehavior == InheritBehavior.IMPLICITLY_OR_EXPLICITLY
+        }
+    }
+
+    internal inner class SnyggPropertySpecDeclBuilder {
+        private val encoders: MutableSet<SnyggValueEncoder> = mutableSetOf()
+        private var inheritBehavior: InheritBehavior = InheritBehavior.EXPLICITLY_ONLY
+        private var isAny: Boolean = false
+
+        fun add(encoder: SnyggValueEncoder) {
+            encoders.add(encoder)
+            _allEncoders.add(encoder)
+        }
+
+        fun any() {
+            isAny = true
+        }
+
+        fun inheritsImplicitly() {
+            inheritBehavior = InheritBehavior.IMPLICITLY_OR_EXPLICITLY
+        }
+
+        fun build(implicitEncoders: Set<SnyggValueEncoder>): SnyggPropertySpecDecl {
+            val encoders = if (isAny) {
+                _allEncoders
+            } else {
+                buildSet {
+                    addAll(implicitEncoders)
+                    addAll(encoders)
+                }
+            }
+            return SnyggPropertySpecDecl(encoders, inheritBehavior)
+        }
     }
 }

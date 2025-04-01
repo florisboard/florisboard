@@ -51,7 +51,7 @@ data class SnyggStylesheet internal constructor(
         override fun serialize(encoder: Encoder, value: SnyggStylesheet) {
             val schemaElem = Json.encodeToJsonElement(value.schema)
             val ruleElems = value.rules.map { (rule, propertySet) ->
-                rule.toString() to Json.encodeToJsonElement(propertySet)
+                rule.toString() to Json.encodeToJsonElement(propertySet.toJsonObject())
             }.toMap()
             val jsonObject = JsonObject(
                 mapOf(
@@ -70,7 +70,7 @@ data class SnyggStylesheet internal constructor(
                     schema = Json.decodeFromJsonElement<String>(elem)
                 } else {
                     val rule = SnyggRule.fromOrNull(key) ?: throw SerializationException("Invalid rule")
-                    val propertySet = Json.decodeFromJsonElement<SnyggPropertySet>(elem)
+                    val propertySet = SnyggPropertySet.from(rule, Json.decodeFromJsonElement<JsonObject>(elem))
                     ruleMap[rule] = propertySet
                 }
             }

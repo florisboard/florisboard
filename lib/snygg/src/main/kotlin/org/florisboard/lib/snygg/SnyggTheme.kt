@@ -48,7 +48,7 @@ import java.io.File
  *    variable references.
  * 5. All annotation elements have been pre-processed and stripped from the data.
  */
-private typealias CompiledStyleData = Map<String, List<Pair<SnyggRule, SnyggPropertySet>>>
+private typealias CompiledStyleData = Map<String, List<Pair<SnyggElementRule, SnyggPropertySet>>>
 
 typealias SnyggQueryAttributes = Map<String, Int>
 
@@ -94,58 +94,62 @@ data class SnyggTheme internal constructor(
         return editor.build()
     }
 
+    internal fun getFontFamily(fontName: String): FontFamily? {
+        return fontFamilies[fontName]
+    }
+
     companion object {
         internal fun compileFrom(
             stylesheet: SnyggStylesheet,
             assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
         ): SnyggTheme {
-            val elements = mutableMapOf<String, MutableList<Pair<SnyggRule, SnyggPropertySet>>>()
+            val elements = mutableMapOf<String, MutableList<Pair<SnyggElementRule, SnyggPropertySet>>>()
             var variablesSet: SnyggPropertySet? = null
             val fonts = mutableMapOf<String, MutableList<Font>>()
             stylesheet.rules.forEach { (rule, propertySet) ->
-                if (rule.isAnnotation) {
-                    when {
-                        rule.isDefinedVariablesRule() -> variablesSet = propertySet
-                        // TODO: can this be done earlier or easier?
-                        rule.isFontFaceRule() -> {
-                            val src = propertySet.src
-                            if (src !is SnyggUriValue) return@forEach
-                            val fontPath = assetResolver
-                                .resolveAbsolutPath(src.uri)
-                                .getOrNull()
-                            if (fontPath == null) return@forEach
-                            val fontFamily = propertySet.fontFamily
-                            if (fontFamily !is SnyggCustomFontFamilyValue) return@forEach
-                            val fontWeight = propertySet.fontWeight.let {
-                                if (it is SnyggFontWeightValue) {
-                                    it.fontWeight
-                                } else {
-                                    FontWeight.Normal
-                                }
-                            }
-                            val fontStyle = propertySet.fontStyle.let {
-                                if (it is SnyggFontStyleValue) {
-                                    it.fontStyle
-                                } else {
-                                    FontStyle.Normal
-                                }
-                            }
-                            fonts.getOrPut(fontFamily.fontName) { mutableListOf() }.apply {
-                                add(
-                                    Font(
-                                        file = File(fontPath),
-                                        weight = fontWeight,
-                                        style = fontStyle,
-                                    )
-                                )
+                when (rule) {
+                    is SnyggAnnotationRule.Defines -> {
+                        variablesSet = propertySet
+                    }
+                    // TODO: can this be done earlier or easier?
+                    is SnyggAnnotationRule.Font -> {
+                        val src = propertySet.src
+                        if (src !is SnyggUriValue) return@forEach
+                        val fontPath = assetResolver
+                            .resolveAbsolutPath(src.uri)
+                            .getOrNull()
+                        if (fontPath == null) return@forEach
+                        val fontFamily = propertySet.fontFamily
+                        if (fontFamily !is SnyggCustomFontFamilyValue) return@forEach
+                        val fontWeight = propertySet.fontWeight.let {
+                            if (it is SnyggFontWeightValue) {
+                                it.fontWeight
+                            } else {
+                                FontWeight.Normal
                             }
                         }
-                        else -> error("Unsupported annotation rule for $rule")
+                        val fontStyle = propertySet.fontStyle.let {
+                            if (it is SnyggFontStyleValue) {
+                                it.fontStyle
+                            } else {
+                                FontStyle.Normal
+                            }
+                        }
+                        fonts.getOrPut(fontFamily.fontName) { mutableListOf() }.apply {
+                            add(
+                                Font(
+                                    file = File(fontPath),
+                                    weight = fontWeight,
+                                    style = fontStyle,
+                                )
+                            )
+                        }
                     }
-                } else {
-                    val list = elements.getOrDefault(rule.elementName, mutableListOf())
-                    list.add(rule to propertySet)
-                    elements[rule.elementName] = list
+                    is SnyggElementRule -> {
+                        val list = elements.getOrDefault(rule.elementName, mutableListOf())
+                        list.add(rule to propertySet)
+                        elements[rule.elementName] = list
+                    }
                 }
             }
             val variables = variablesSet?.properties ?: emptyMap()
@@ -170,7 +174,7 @@ data class SnyggTheme internal constructor(
     }
 }
 
-private fun SnyggRule.isMatchForQuery(
+private fun SnyggElementRule.isMatchForQuery(
     queryAttributes: SnyggQueryAttributes,
     querySelector: SnyggSelector?,
 ): Boolean {
@@ -178,7 +182,7 @@ private fun SnyggRule.isMatchForQuery(
         attributes.isMatchForQuery(queryAttributes)
 }
 
-private fun SnyggRule.Attributes.isMatchForQuery(query: SnyggQueryAttributes): Boolean {
+private fun SnyggElementRule.Attributes.isMatchForQuery(query: SnyggQueryAttributes): Boolean {
     for ((attrKey, attrValues) in this) {
         val queryValue = query[attrKey] ?: return false
         if (!attrValues.contains(queryValue)) {

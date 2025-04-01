@@ -9,22 +9,21 @@
     }
   },
   "patternProperties": {
-    "^@defines$": {
+    "@defines": {
       "$ref": "#/definitions/snygg-defines-property-set"
     },
-    "^(?<annotationName>@[a-zA-Z0-9-]+)|(?<elementName>[a-zA-Z0-9-]+)(?<attributesRaw>(?:\\[[a-zA-Z0-9-]+=[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?(?:,[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?)*])+)?(?<selectorRaw>:pressed|:focus|:hover|:disabled)?$": {
+    "@font `(?<fontName>[a-zA-Z0-9\\s-]+)`": {
+      "$ref": "#/definitions/snygg-font-property-set"
+    },
+    "^(?<elementName>[a-zA-Z0-9-]+)(?<attributesRaw>(?:\\[[a-zA-Z0-9-]+=[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?(?:,[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?)*])+)?(?<selectorRaw>:pressed|:focus|:hover|:disabled)?$": {
       "$ref": "#/definitions/snygg-property-set"
     }
   },
   "additionalProperties": false,
   "definitions": {
-    "snygg-inherit-value": {
+    "snygg-uri-value": {
       "type": "string",
-      "const": "inherit"
-    },
-    "snygg-defined-var-value": {
-      "type": "string",
-      "pattern": "\\s*var[(]\\s*(?<varKey>--[a-zA-Z0-9-]+)\\s*[)]\\s*"
+      "pattern": "\\s*uri[(]\\s*(?<enclosedUri>`[^`]*`)\\s*[)]\\s*"
     },
     "snygg-static-color-value": {
       "oneOf": [
@@ -58,10 +57,6 @@
       "type": "string",
       "pattern": "\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*"
     },
-    "snygg-uri-value": {
-      "type": "string",
-      "pattern": "\\s*uri[(]\\s*(?<enclosedUri>`[^`]*`)\\s*[)]\\s*"
-    },
     "snygg-object-fit-value": {
       "type": "string",
       "enum": [
@@ -90,7 +85,7 @@
     },
     "snygg-custom-font-family-value": {
       "type": "string",
-      "pattern": "\\s*(?<enclosedFontName>`[^`]+`)\\s*"
+      "pattern": "\\s*(?<enclosedFontName>`(?<fontName>[a-zA-Z0-9\\s_-]+)`)\\s*"
     },
     "snygg-sp-size-value": {
       "type": "string",
@@ -193,16 +188,21 @@
       "type": "string",
       "pattern": "\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*"
     },
+    "snygg-inherit-value": {
+      "type": "string",
+      "const": "inherit"
+    },
+    "snygg-defined-var-value": {
+      "type": "string",
+      "pattern": "\\s*var[(]\\s*(?<varKey>--[a-zA-Z0-9-]+)\\s*[)]\\s*"
+    },
     "snygg-defines-property-set": {
       "type": "object",
       "patternProperties": {
-        "^--[a-zA-Z0-9-]+$": {
+        "--[a-zA-Z0-9-]+": {
           "oneOf": [
             {
-              "$ref": "#/definitions/snygg-inherit-value"
-            },
-            {
-              "$ref": "#/definitions/snygg-defined-var-value"
+              "$ref": "#/definitions/snygg-uri-value"
             },
             {
               "$ref": "#/definitions/snygg-static-color-value"
@@ -212,9 +212,6 @@
             },
             {
               "$ref": "#/definitions/snygg-dynamic-dark-color-value"
-            },
-            {
-              "$ref": "#/definitions/snygg-uri-value"
             },
             {
               "$ref": "#/definitions/snygg-object-fit-value"
@@ -266,6 +263,27 @@
             },
             {
               "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            }
+          ]
+        }
+      },
+      "properties": {},
+      "additionalProperties": false
+    },
+    "snygg-font-property-set": {
+      "type": "object",
+      "patternProperties": {},
+      "properties": {
+        "src": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-uri-value"
             }
           ]
         }
@@ -274,6 +292,7 @@
     },
     "snygg-property-set": {
       "type": "object",
+      "patternProperties": {},
       "properties": {
         "background": {
           "oneOf": [
@@ -584,19 +603,6 @@
             },
             {
               "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
-            }
-          ]
-        },
-        "src": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/snygg-inherit-value"
-            },
-            {
-              "$ref": "#/definitions/snygg-defined-var-value"
-            },
-            {
-              "$ref": "#/definitions/snygg-uri-value"
             }
           ]
         }

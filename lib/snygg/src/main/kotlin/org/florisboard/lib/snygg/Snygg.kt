@@ -28,6 +28,7 @@ import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggFontValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggObjectFitValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
@@ -39,6 +40,8 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
+import org.florisboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.snygg.value.SnyggVarValue
 
 /**
  * Main object for defining all known Snygg property names.
@@ -78,10 +81,21 @@ object Snygg {
     const val Src = "src"
 }
 
-// Keep in sync with schemas/stylesheet.schema.json
-object SnyggSpec {
-    object V2 : SnyggSpecDecl({
-        allProperties {
+object SnyggSpec : SnyggSpecDecl({
+    annotation("defines") {
+        pattern(SnyggVarValue.VariableNameRegex) {
+            any()
+        }
+    }
+
+    annotation("font") {
+        Snygg.Src {
+            add(SnyggUriValue)
+        }
+    }
+
+    elements {
+        implicit {
             add(SnyggInheritValue)
             add(SnyggDefinedVarValue)
         }
@@ -180,9 +194,5 @@ object SnyggSpec {
             add(SnyggCutCornerDpShapeValue)
             add(SnyggCutCornerPercentShapeValue)
         }
-
-        Snygg.Src {
-            add(SnyggUriValue)
-        }
-    })
-}
+    }
+})

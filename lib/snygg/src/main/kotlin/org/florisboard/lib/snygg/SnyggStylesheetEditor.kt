@@ -30,17 +30,18 @@ class SnyggStylesheetEditor(
         }
     }
 
-    fun annotation(name: String, propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
+    fun defines(propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
-        val rule = SnyggRule(
-            elementName = "@$name",
-        )
+        val rule = SnyggAnnotationRule.Defines
         rules[rule] = propertySetEditor
     }
 
-    fun defines(propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
-        annotation("defines", propertySetBlock)
+    fun font(fontName: String, propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
+        val propertySetEditor = SnyggPropertySetEditor()
+        propertySetBlock(propertySetEditor)
+        val rule = SnyggAnnotationRule.Font(fontName)
+        rules[rule] = propertySetEditor
     }
 
     operator fun String.invoke(
@@ -50,9 +51,9 @@ class SnyggStylesheetEditor(
     ) {
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
-        val rule = SnyggRule(
+        val rule = SnyggElementRule(
             elementName = this,
-            attributes = SnyggRule.Attributes.of(*attributes),
+            attributes = SnyggElementRule.Attributes.of(*attributes),
             selector = selector,
         )
         rules[rule] = propertySetEditor

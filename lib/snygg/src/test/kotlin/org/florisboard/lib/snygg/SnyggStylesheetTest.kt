@@ -44,14 +44,14 @@ class SnyggStylesheetTest {
         assertEquals("https://schemas.florisboard.org/snygg/v2/stylesheet", stylesheet.schema)
         assertEquals(3, stylesheet.rules.size)
 
-        val defines = stylesheet.rules[SnyggRule.definedVariablesRule()]
+        val defines = stylesheet.rules[SnyggAnnotationRule.Defines]
         assertNotNull(defines)
         assertEquals(1, defines.properties.size)
         val definesTestValue: SnyggValue? = defines.properties["--test"]
         assertIs<SnyggStaticColorValue>(definesTestValue)
         assertEquals(Color.Transparent, definesTestValue.color)
 
-        val smartbar = stylesheet.rules[SnyggRule("smartbar")]
+        val smartbar = stylesheet.rules[SnyggElementRule("smartbar")]
         assertNotNull(smartbar)
         assertEquals(3, smartbar.properties.size)
         val smartbarBackground = assertIs<SnyggStaticColorValue>(smartbar.background)
@@ -61,7 +61,7 @@ class SnyggStylesheetTest {
         val smartbarShadowElevation = assertIs<SnyggDpSizeValue>(smartbar.shadowElevation)
         assertEquals(3.dp, smartbarShadowElevation.dp)
 
-        val keyboard = stylesheet.rules[SnyggRule("keyboard")]
+        val keyboard = stylesheet.rules[SnyggElementRule("keyboard")]
         assertNotNull(keyboard)
         assertEquals(3, keyboard.properties.size)
         val keyboardBackground = assertIs<SnyggStaticColorValue>(keyboard.background)
@@ -112,11 +112,69 @@ class SnyggStylesheetTest {
     }
 
     @Test
+    fun `test stylesheet deserialization with src in element`() {
+        val json = """
+        {
+          "${'$'}schema": "https://schemas.florisboard.org/snygg/v2/stylesheet",
+          "@defines": {
+            "--test": "transparent"
+          },
+          "smartbar": {
+            "background": "#00000000",
+            "shadow-elevation": "3dp",
+            "src": "uri(`path/to/file`)"
+          }
+        }
+        """.trimIndent()
+        assertThrows<IllegalArgumentException> {
+            Json.decodeFromString<SnyggStylesheet>(json)
+        }
+    }
+
+    @Test
+    fun `test stylesheet deserialization with variable in at font`() {
+        val json = """
+        {
+          "${'$'}schema": "https://schemas.florisboard.org/snygg/v2/stylesheet",
+          "@defines": {
+            "--test": "transparent"
+          },
+          "@font": {
+            "--test": "transparent"
+          }
+        }
+        """.trimIndent()
+        assertThrows<IllegalArgumentException> {
+            Json.decodeFromString<SnyggStylesheet>(json)
+        }
+    }
+
+    @Test
+    fun `test stylesheet deserialization with variable in element`() {
+        val json = """
+        {
+          "${'$'}schema": "https://schemas.florisboard.org/snygg/v2/stylesheet",
+          "@defines": {
+            "--test": "transparent"
+          },
+          "smartbar": {
+            "background": "#00000000",
+            "shadow-elevation": "3dp",
+            "--test": "transparent"
+          }
+        }
+        """.trimIndent()
+        assertThrows<IllegalArgumentException> {
+            Json.decodeFromString<SnyggStylesheet>(json)
+        }
+    }
+
+    @Test
     fun `test basic stylesheet serialization`() {
         val stylesheet = SnyggStylesheet(
             schema = "https://schemas.florisboard.org/snygg/v2/stylesheet",
             rules = mapOf(
-                SnyggRule("smartbar") to SnyggPropertySet(mapOf(
+                SnyggElementRule("smartbar") to SnyggPropertySet(mapOf(
                     "background" to SnyggStaticColorValue(Color(255, 0, 0)),
                     "shape" to SnyggRectangleShapeValue(),
                 )),
