@@ -37,10 +37,8 @@ sealed interface SnyggAnnotationRule : SnyggRule {
         internal val REGEX = """@defines""".toRegex()
 
         fun fromOrNull(str: String): SnyggRule? {
-            if (str == "@defines") {
-                return Defines
-            }
-            return null
+            REGEX.matchEntire(str) ?: return null
+            return Defines
         }
 
         override fun compareTo(other: SnyggRule): Int {
@@ -110,8 +108,10 @@ data class SnyggElementRule(
     override fun toString(): String {
         return buildString {
             append(elementName)
-            append(attributes.toString())
-            append(selector?.toString() ?: "")
+            append(attributes)
+            if (selector != null) {
+                append(selector)
+            }
         }
     }
 

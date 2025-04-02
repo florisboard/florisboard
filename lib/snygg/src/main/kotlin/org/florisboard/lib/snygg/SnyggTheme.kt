@@ -111,36 +111,17 @@ data class SnyggTheme internal constructor(
                     is SnyggAnnotationRule.Defines -> {
                         variablesSet = propertySet
                     }
-                    // TODO: can this be done earlier or easier?
                     is SnyggAnnotationRule.Font -> {
                         val src = propertySet.src
                         if (src !is SnyggUriValue) return@forEach
-                        val fontPath = assetResolver
-                            .resolveAbsolutPath(src.uri)
-                            .getOrNull()
+                        val fontPath = assetResolver.resolveAbsolutPath(src.uri).getOrNull()
                         if (fontPath == null) return@forEach
-                        val fontFamily = propertySet.fontFamily
-                        if (fontFamily !is SnyggCustomFontFamilyValue) return@forEach
-                        val fontWeight = propertySet.fontWeight.let {
-                            if (it is SnyggFontWeightValue) {
-                                it.fontWeight
-                            } else {
-                                FontWeight.Normal
-                            }
-                        }
-                        val fontStyle = propertySet.fontStyle.let {
-                            if (it is SnyggFontStyleValue) {
-                                it.fontStyle
-                            } else {
-                                FontStyle.Normal
-                            }
-                        }
-                        fonts.getOrPut(fontFamily.fontName) { mutableListOf() }.apply {
+                        fonts.getOrPut(rule.fontName) { mutableListOf() }.apply {
                             add(
                                 Font(
                                     file = File(fontPath),
-                                    weight = fontWeight,
-                                    style = fontStyle,
+                                    weight = FontWeight.Normal,
+                                    style = FontStyle.Normal,
                                 )
                             )
                         }

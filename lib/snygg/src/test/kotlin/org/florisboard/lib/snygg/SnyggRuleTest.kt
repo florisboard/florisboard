@@ -51,6 +51,12 @@ class SnyggRuleTest {
         val ruleList = listOf(
             SnyggAnnotationRule.Defines to
                 SnyggElementRule("test"),
+            SnyggAnnotationRule.Font(fontName = "Comic Sans") to
+                SnyggElementRule("test"),
+            SnyggAnnotationRule.Defines to
+                SnyggAnnotationRule.Font(fontName = "Comic Sans"),
+            SnyggAnnotationRule.Font(fontName = "Arial") to
+                SnyggAnnotationRule.Font(fontName = "Comic Sans"),
             SnyggElementRule(elementName = "a-test") to
                 SnyggElementRule(elementName = "b-test"),
             SnyggElementRule(elementName = "test", selector = null) to
