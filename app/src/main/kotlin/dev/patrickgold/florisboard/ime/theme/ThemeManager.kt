@@ -56,9 +56,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.value.MaterialYouColor
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
 

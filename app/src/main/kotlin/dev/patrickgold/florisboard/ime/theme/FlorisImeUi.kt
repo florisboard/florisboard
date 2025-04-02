@@ -22,6 +22,8 @@ object FlorisImeUi {
     const val KeyHint = "key-hint"
     const val KeyPopup = "key-popup"
 
+    const val TextInputLayout = "text-input-layout"
+
     const val ClipboardHeader = "clipboard-header"
     const val ClipboardItem = "clipboard-item"
     const val ClipboardItemPopup = "clipboard-item-popup"
@@ -40,6 +42,7 @@ object FlorisImeUi {
     const val IncognitoModeIndicator = "incognito-mode-indicator"
 
     const val OneHandedPanel = "one-handed-panel"
+    const val OneHandedPanelButton = "one-handed-panel-button"
 
     const val Smartbar = "smartbar"
     const val SmartbarSharedActionsRow = "smartbar-shared-actions-row"
