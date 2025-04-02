@@ -16,9 +16,8 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,37 +27,43 @@ import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
-fun SnyggColumn(
+fun SnyggBox(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
     modifier: Modifier = Modifier,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable ColumnScope.() -> Unit,
+    contentAlignment: Alignment = Alignment.TopStart,
+    propagateMinConstraints: Boolean = false,
+    clip: Boolean = false,
+    clickAndSemanticsModifier: Modifier = Modifier,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes)
+
     ProvideSnyggParentStyle(style) {
-        Column(
+        Box(
             modifier = Modifier
                 .snyggMargin(style)
                 .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
+                .then(if (clip) Modifier.snyggClip(style) else Modifier)
                 .snyggBackground(style)
+                .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            content = content,
-        )
+            contentAlignment = contentAlignment,
+            propagateMinConstraints = propagateMinConstraints,
+        ) {
+            content()
+        }
     }
 }
 
 @Preview
 @Composable
-private fun SimpleSnyggColumn() {
+private fun SimpleSnyggBox() {
     val stylesheet = SnyggStylesheet.v2 {
-        "preview-column" {
+        "preview-surface" {
             background = rgbaColor(255, 255, 255)
             foreground = rgbaColor(255, 0, 0)
             padding = padding(10.dp)
@@ -70,9 +75,11 @@ private fun SimpleSnyggColumn() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn("preview-column") {
-            SnyggText("preview-text", text = "hello world")
-            SnyggText("preview-text", text = "second text")
+        SnyggBox("preview-surface") {
+            SnyggColumn("column") {
+                SnyggText("preview-text", text = "hello world")
+                SnyggText("preview-text", text = "second text")
+            }
         }
     }
 }

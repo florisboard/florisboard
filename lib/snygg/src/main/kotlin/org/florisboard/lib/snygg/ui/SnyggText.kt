@@ -38,8 +38,9 @@ fun SnyggText(
     val style = theme.rememberQuery(elementName, attributes)
 
     Text(
-        modifier = modifier
+        modifier = Modifier
             .snyggMargin(style)
+            .then(modifier)
             .snyggShadow(style)
             .snyggBorder(style)
             .snyggBackground(style)

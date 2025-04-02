@@ -16,9 +16,9 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,51 +28,49 @@ import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
-fun SnyggColumn(
+fun SnyggSpacer(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
     modifier: Modifier = Modifier,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    content: @Composable ColumnScope.() -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes)
-    ProvideSnyggParentStyle(style) {
-        Column(
-            modifier = Modifier
-                .snyggMargin(style)
-                .then(modifier)
-                .snyggShadow(style)
-                .snyggBorder(style)
-                .snyggBackground(style)
-                .snyggPadding(style),
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            content = content,
-        )
-    }
+
+    Spacer(
+        modifier = Modifier
+            .snyggMargin(style)
+            .then(modifier)
+            .snyggShadow(style)
+            .snyggBackground(style, fallbackColor = style.foreground())
+            .snyggPadding(style),
+    )
 }
 
 @Preview
 @Composable
-private fun SimpleSnyggColumn() {
+private fun SimpleSnyggSpacer() {
     val stylesheet = SnyggStylesheet.v2 {
-        "preview-column" {
+        "preview-row" {
             background = rgbaColor(255, 255, 255)
-            foreground = rgbaColor(255, 0, 0)
-            padding = padding(10.dp)
+            fontSize = fontSize(16.sp)
+            foreground = rgbaColor(0, 0, 0)
+            padding = padding(12.dp)
         }
-        "preview-text" {
-            fontSize = fontSize(12.sp)
+        "preview-spacer" {
+            margin = padding(horizontal = 12.dp, vertical = 0.dp)
         }
     }
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn("preview-column") {
-            SnyggText("preview-text", text = "hello world")
-            SnyggText("preview-text", text = "second text")
+        SnyggRow("preview-row") {
+            SnyggText("preview-text", text = "hello")
+            SnyggSpacer("preview-spacer",
+                modifier = Modifier
+                    .width(1.dp)
+                    .height(12.dp)
+                    .align(Alignment.CenterVertically))
+            SnyggText("preview-text", text = "world")
         }
     }
 }

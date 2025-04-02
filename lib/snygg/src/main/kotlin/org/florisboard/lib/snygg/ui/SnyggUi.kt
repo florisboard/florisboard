@@ -18,6 +18,7 @@ package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ColorScheme
@@ -242,9 +243,11 @@ internal fun Modifier.snyggMargin(
 
 internal fun Modifier.snyggPadding(
     style: SnyggPropertySet,
+    default: PaddingValues? = null,
 ): Modifier {
     return when (style.padding) {
         is SnyggPaddingValue -> this.padding(style.padding.values)
+        else if (default != null) -> this.padding(default)
         else -> return this
     }
 }
@@ -274,7 +277,7 @@ internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     }
 }
 
-internal fun SnyggPropertySet.background(default: Color = Color.Unspecified): Color {
+fun SnyggPropertySet.background(default: Color = Color.Unspecified): Color {
     return when (background) {
         is SnyggStaticColorValue -> background.color
         else -> default

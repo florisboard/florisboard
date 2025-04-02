@@ -22,7 +22,6 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -61,6 +60,8 @@ import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggSpacer
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.ui.spSize
@@ -78,13 +79,10 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
 
-    val rowStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidatesRow)
-    val spacerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarCandidateSpacer)
-
-    Row(
+    SnyggRow(
+        elementName = FlorisImeUi.SmartbarCandidatesRow,
         modifier = modifier
             .fillMaxSize()
-            .snyggBackground(context, rowStyle)
             .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
                 florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
             },
@@ -115,12 +113,12 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             }
             for ((n, candidate) in list.withIndex()) {
                 if (n > 0) {
-                    Spacer(
+                    SnyggSpacer(
+                        elementName = FlorisImeUi.SmartbarCandidateSpacer,
                         modifier = Modifier
                             .width(1.dp)
                             .fillMaxHeight(0.6f)
-                            .align(Alignment.CenterVertically)
-                            .snyggBackground(context, spacerStyle),
+                            .align(Alignment.CenterVertically),
                     )
                 }
                 CandidateItem(

@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggUriValue
 
-
 @Composable
 fun SnyggSurface(
     elementName: String,
@@ -64,8 +63,9 @@ fun SnyggSurface(
 
     ProvideSnyggParentStyle(style) {
         Surface(
-            modifier = modifier
+            modifier = Modifier
                 .snyggMargin(style)
+                .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .then(if (clip) Modifier.snyggClip(style) else Modifier)

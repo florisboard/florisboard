@@ -40,8 +40,9 @@ fun SnyggRow(
     val style = theme.rememberQuery(elementName, attributes)
     ProvideSnyggParentStyle(style) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .snyggMargin(style)
+                .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .snyggBackground(style)
