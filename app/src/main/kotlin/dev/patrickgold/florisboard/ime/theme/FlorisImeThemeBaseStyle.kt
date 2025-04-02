@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
@@ -46,7 +47,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         shadowElevation = size(2.dp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.Key(pressed = true) {
+    FlorisImeUi.Key(selector = SnyggSelector.PRESSED) {
         background = `var`("surfaceVariant")
         foreground = `var`("onSurface")
     }
@@ -54,7 +55,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("primary")
         foreground = `var`("onSurface")
     }
-    FlorisImeUi.Key("code" to listOf(KeyCode.ENTER), pressed = true) {
+    FlorisImeUi.Key("code" to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
         background = `var`("primaryVariant")
         foreground = `var`("onSurface")
     }
@@ -80,7 +81,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(22.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.KeyPopup(focus = true) {
+    FlorisImeUi.KeyPopup(selector = SnyggSelector.FOCUS) {
         background = rgbaColor(189, 189, 189)
         foreground = `var`("onSurface")
         fontSize = fontSize(22.sp)
@@ -116,7 +117,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(22.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.EmojiKey(pressed = true) {
+    FlorisImeUi.EmojiKey(selector = SnyggSelector.PRESSED) {
         background = `var`("surface")
         foreground = `var`("onSurface")
     }
@@ -159,11 +160,11 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(18.sp)
         shape = roundedCornerShape(20)
     }
-    FlorisImeUi.SmartbarActionKey(pressed = true) {
+    FlorisImeUi.SmartbarActionKey(selector = SnyggSelector.PRESSED) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
-    FlorisImeUi.SmartbarActionKey(pressed = true) {
+    FlorisImeUi.SmartbarActionKey(selector = SnyggSelector.PRESSED) {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("surface")
     }
@@ -173,7 +174,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(14.sp)
         shape = rectangleShape()
     }
-    FlorisImeUi.SmartbarCandidateWord(pressed = true) {
+    FlorisImeUi.SmartbarCandidateWord(selector = SnyggSelector.PRESSED) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }
@@ -183,7 +184,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(14.sp)
         shape = roundedCornerShape(8)
     }
-    FlorisImeUi.SmartbarCandidateClip(pressed = true) {
+    FlorisImeUi.SmartbarCandidateClip(selector = SnyggSelector.PRESSED) {
         background = `var`("surface")
         foreground = rgbaColor(220, 220, 220)
     }

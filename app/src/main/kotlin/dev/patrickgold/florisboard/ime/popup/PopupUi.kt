@@ -61,8 +61,8 @@ fun PopupBaseBox(
     )
     val fontSize = popupStyle.fontSize.spSize() safeTimes fontSizeMultiplier
     SnyggSurface(
+        elementName = FlorisImeUi.KeyPopup,
         modifier = modifier,
-        style = popupStyle,
         clip = true,
     ) {
         key.label?.let { label ->
@@ -71,6 +71,7 @@ fun PopupBaseBox(
                     .fillMaxWidth()
                     .height(key.visibleBounds.height.toDp())
                     .align(Alignment.TopCenter),
+                supportsBackgroundImage = false,
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),

@@ -58,5 +58,6 @@ object FlorisImeUi {
     const val SmartbarCandidateClip = "smartbar-candidate-clip"
     const val SmartbarCandidateSpacer = "smartbar-candidate-spacer"
 
+    //TODO: Deprecate?
     const val SystemNavBar = "system-nav-bar"
 }

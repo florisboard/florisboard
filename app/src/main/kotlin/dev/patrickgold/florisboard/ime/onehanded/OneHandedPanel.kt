@@ -38,8 +38,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.solidColor
+import org.florisboard.lib.snygg.ui.SnyggColumn
 
 @Composable
 fun RowScope.OneHandedPanel(
@@ -52,14 +51,15 @@ fun RowScope.OneHandedPanel(
     val oneHandedPanelStyle = FlorisImeTheme.style.get(FlorisImeUi.OneHandedPanel)
     val context = LocalContext.current
 
-    Column(
+    SnyggColumn(
+        elementName = FlorisImeUi.OneHandedPanel,
         modifier = modifier
             .weight(weight)
-            .snyggBackground(context, oneHandedPanelStyle)
             .height(FlorisImeSizing.imeUiHeight()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
+        //TODO: Add IconButton to Snygg
         IconButton(
             onClick = {
                 inputFeedbackController.keyPress()

@@ -54,6 +54,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import org.florisboard.lib.snygg.ui.solidColor
@@ -105,9 +106,6 @@ class ThemeManager(context: Context) {
         prefs.theme.mode.observeForever {
             updateActiveTheme()
         }
-        prefs.theme.accentColor.observeForever {
-            updateActiveTheme { MaterialYouColor.updateAccentColor(it) }
-        }
         prefs.theme.dayThemeId.observeForever {
             updateActiveTheme()
         }
@@ -122,7 +120,6 @@ class ThemeManager(context: Context) {
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
-            MaterialYouColor.resetColorSchemeCache()
             action()
             previewThemeInfo?.let { previewThemeInfo ->
                 _activeThemeInfo.postValue(previewThemeInfo)
@@ -140,11 +137,9 @@ class ThemeManager(context: Context) {
                     if (themeConfig != null) {
                         val newStylesheet = ZipUtils.readFileFromArchive(
                             appContext, themeExtRef, themeConfig.stylesheetPath(),
-                        ).getOrNull()?.let { raw -> SnyggStylesheetJsonConfig.decodeFromString<SnyggStylesheet>(raw) }
+                        ).getOrNull()?.let { raw -> Json.decodeFromString<SnyggStylesheet>(raw) }
                         if (newStylesheet != null) {
-                            val newCompiledStylesheet = (newStylesheet)
-                                .compileToFullyQualified(FlorisImeUiSpec)
-                            val newInfo = ThemeInfo(activeName, themeConfig, newCompiledStylesheet)
+                            val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet)
                             cachedThemeInfos.add(newInfo)
                             _activeThemeInfo.postValue(newInfo)
                         }
@@ -202,7 +197,7 @@ class ThemeManager(context: Context) {
         context: Context,
         style: SnyggStylesheet = activeThemeInfo.value?.stylesheet ?: FlorisImeThemeBaseStyle,
     ): Bundle {
-        val snyggStyle = style.getStatic(FlorisImeUi.SmartbarSharedActionsToggle)
+        val snyggStyle = style.(FlorisImeUi.SmartbarSharedActionsToggle)
         val bgColor = snyggStyle.background.solidColor(context)
         val fgColor = snyggStyle.foreground.solidColor(context)
 

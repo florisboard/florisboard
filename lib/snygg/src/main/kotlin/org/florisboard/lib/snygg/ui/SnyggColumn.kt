@@ -16,9 +16,11 @@
 
 package org.florisboard.lib.snygg.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +32,8 @@ fun SnyggColumn(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
     modifier: Modifier = Modifier,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
@@ -42,6 +46,8 @@ fun SnyggColumn(
                 .snyggBorder(style)
                 .snyggBackground(style)
                 .snyggPadding(style),
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment,
             content = content,
         )
     }

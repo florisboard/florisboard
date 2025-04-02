@@ -61,7 +61,7 @@ data class SnyggTheme internal constructor(
     private val style: CompiledStyleData,
     private val fontFamilies: CompiledFontFamilyData,
 ) {
-    internal fun query(
+    fun query(
         elementName: String,
         attributes: SnyggQueryAttributes,
         selector: SnyggSelector?,

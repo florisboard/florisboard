@@ -110,7 +110,9 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggClip
@@ -152,23 +154,20 @@ fun ClipboardInputLayout(
 
     @Composable
     fun HeaderRow() {
-        Row(
+        SnyggRow(FlorisImeUi.ClipboardHeader,
             modifier = Modifier
-                .fillMaxWidth()
-                .height(FlorisImeSizing.smartbarHeight)
-                .snyggBackground(context, headerStyle),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FlorisIconButtonWithInnerPadding(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 icon = Icons.AutoMirrored.Filled.ArrowBack,
+                //TODO: how to get color?
                 iconColor = headerStyle.foreground.solidColor(context),
             )
-            Text(
+            SnyggText(FlorisImeUi.ClipboardHeader,
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
-                color = headerStyle.foreground.solidColor(context),
-                fontSize = headerStyle.fontSize.spSize(),
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
@@ -178,6 +177,7 @@ fun ClipboardInputLayout(
                 } else {
                     Icons.Default.ToggleOff
                 },
+                //TODO: how to get color?
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             )
@@ -185,6 +185,7 @@ fun ClipboardInputLayout(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier.autoMirrorForRtl(),
                 icon = Icons.Default.ClearAll,
+                //TODO: how to get color?
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
@@ -193,6 +194,7 @@ fun ClipboardInputLayout(
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
                 icon = Icons.Default.Edit,
+                //TODO: how to get color?
                 iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )

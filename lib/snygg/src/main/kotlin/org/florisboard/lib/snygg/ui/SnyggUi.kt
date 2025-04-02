@@ -161,6 +161,16 @@ val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
     )
 
 @Composable
+fun rememberSnyggThemeQuery(
+    elementName: String,
+    attributes: SnyggQueryAttributes = emptyMap(),
+    selector: SnyggSelector? = null,
+): SnyggPropertySet {
+    val theme = LocalSnyggTheme.current
+    return theme.rememberQuery(elementName, attributes, selector)
+}
+
+@Composable
 internal fun SnyggTheme.rememberQuery(
     elementName: String,
     attributes: SnyggQueryAttributes,
@@ -271,14 +281,14 @@ internal fun SnyggPropertySet.background(default: Color = Color.Unspecified): Co
     }
 }
 
-internal fun SnyggPropertySet.foreground(default: Color = Color.Unspecified): Color {
+fun SnyggPropertySet.foreground(default: Color = Color.Unspecified): Color {
     return when (foreground) {
         is SnyggStaticColorValue -> foreground.color
         else -> default
     }
 }
 
-internal fun SnyggPropertySet.fontSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
+fun SnyggPropertySet.fontSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
     return when (fontSize) {
         is SnyggSpSizeValue -> fontSize.sp
         else -> default

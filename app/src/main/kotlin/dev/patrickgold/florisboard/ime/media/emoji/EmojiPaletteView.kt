@@ -484,6 +484,7 @@ private fun EmojiVariationsPopup(
             },
             onDismissRequest = onDismiss,
         ) {
+            //TODO: Add FlowRow to Snygg
             FlowRow(
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6)

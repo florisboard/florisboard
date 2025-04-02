@@ -57,6 +57,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurface
 
 @SuppressLint("MutableCollectionMutableState")
@@ -118,12 +119,16 @@ internal fun KeyboardLikeButton(
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
     var isPressed by remember { mutableStateOf(false) }
-    val keyStyle = FlorisImeTheme.style.get(
+    /*val keyStyle = FlorisImeTheme.style.get(
         element = element,
         code = keyData.code,
         isPressed = isPressed,
-    )
+    )*/
+    //TODO: Add selector to SnyggSurface
     SnyggSurface(
+        elementName = element,
+        attributes = mapOf("code" to keyData.code),
+
         modifier = modifier.pointerInput(Unit) {
             awaitEachGesture {
                 awaitFirstDown(requireUnconsumed = false).also {
@@ -140,10 +145,10 @@ internal fun KeyboardLikeButton(
                     inputEventDispatcher.sendCancel(keyData)
                 }
             }
-        },
-        style = keyStyle,
+        }
     ) {
-        Row(
+        SnyggRow(
+            elementName = element,
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(horizontal = 12.dp),

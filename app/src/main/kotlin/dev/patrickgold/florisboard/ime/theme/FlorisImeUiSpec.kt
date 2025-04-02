@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+/*
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggLevel
 import org.florisboard.lib.snygg.SnyggPropertySetSpecDeclBuilder
@@ -276,3 +277,40 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         background()
     }
 })
+
+Snygg.init(
+            stylesheetSpec = FlorisImeUiSpec,
+            rulePreferredElementSorting = listOf(
+                FlorisImeUi.Keyboard,
+                FlorisImeUi.Key,
+                FlorisImeUi.KeyHint,
+                FlorisImeUi.KeyPopup,
+                FlorisImeUi.Smartbar,
+                FlorisImeUi.SmartbarSharedActionsRow,
+                FlorisImeUi.SmartbarSharedActionsToggle,
+                FlorisImeUi.SmartbarExtendedActionsRow,
+                FlorisImeUi.SmartbarExtendedActionsToggle,
+                FlorisImeUi.SmartbarActionKey,
+                FlorisImeUi.SmartbarActionTile,
+                FlorisImeUi.SmartbarActionsOverflow,
+                FlorisImeUi.SmartbarActionsOverflowCustomizeButton,
+                FlorisImeUi.SmartbarActionsEditor,
+                FlorisImeUi.SmartbarActionsEditorHeader,
+                FlorisImeUi.SmartbarActionsEditorSubheader,
+                FlorisImeUi.SmartbarCandidatesRow,
+                FlorisImeUi.SmartbarCandidateWord,
+                FlorisImeUi.SmartbarCandidateClip,
+                FlorisImeUi.SmartbarCandidateSpacer,
+            ),
+            rulePlaceholders = mapOf(
+                "c:delete" to KeyCode.DELETE,
+                "c:enter" to KeyCode.ENTER,
+                "c:shift" to KeyCode.SHIFT,
+                "c:space" to KeyCode.SPACE,
+                "sh:unshifted" to InputShiftState.UNSHIFTED.value,
+                "sh:shifted_manual" to InputShiftState.SHIFTED_MANUAL.value,
+                "sh:shifted_automatic" to InputShiftState.SHIFTED_AUTOMATIC.value,
+                "sh:caps_lock" to InputShiftState.CAPS_LOCK.value,
+            ),
+        )
+*/

@@ -123,13 +123,12 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.shape
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.fontSize
+import org.florisboard.lib.snygg.ui.foreground
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -588,10 +587,6 @@ class FlorisImeService : LifecycleInputMethodService() {
     @Composable
     private fun ImeUi() {
         val state by keyboardManager.activeState.collectAsState()
-        val keyboardStyle = FlorisImeTheme.style.get(
-            element = FlorisImeUi.Keyboard,
-            mode = state.inputShiftState.value,
-        )
         val layoutDirection = LocalLayoutDirection.current
         SideEffect {
             if (keyboardManager.activeState.layoutDirection != layoutDirection) {
@@ -600,13 +595,14 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggSurface(
+                elementName = FlorisImeUi.Keyboard,
+                attributes = mapOf("mode" to state.inputShiftState.value),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .onGloballyPositioned { coords -> inputViewSize = coords.size }
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
-                style = keyboardStyle,
             ) {
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {
@@ -750,45 +746,39 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         fun Content() {
-            val context = LocalContext.current
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
-                    val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
-                    val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
-                    val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    Box(
-                        modifier = Modifier
-                            .snyggBackground(context, layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
-                    ) {
-                        Row(
+                    SnyggSurface(elementName = FlorisImeUi.ExtractedLandscapeInputLayout) {
+                        SnyggRow(
+                            elementName = "TODO",
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            val fieldColor =
-                                fieldStyle.foreground.solidColor(context, FlorisImeTheme.fallbackContentColor())
-                            AndroidView(
+                            SnyggSurface(elementName = FlorisImeUi.ExtractedLandscapeInputLayout,
                                 modifier = Modifier
-                                    .padding(8.dp)
                                     .fillMaxHeight()
-                                    .weight(1f)
-                                    .snyggShadow(fieldStyle)
-                                    .snyggBorder(context, fieldStyle)
-                                    .snyggBackground(context, fieldStyle),
-                                factory = { extractEditText },
-                                update = { view ->
-                                    view.background = null
-                                    view.backgroundTintList = null
-                                    view.foregroundTintList = null
-                                    view.setTextColor(fieldColor.toArgb())
-                                    view.setHintTextColor(fieldColor.copy(fieldColor.alpha * 0.6f).toArgb())
-                                    view.setTextSize(
-                                        TypedValue.COMPLEX_UNIT_SP,
-                                        fieldStyle.fontSize.spSize(default = 16.sp).value,
-                                    )
-                                },
-                            )
-                            FlorisButton(
+                                    .weight(1f),
+                            ) {
+                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField)
+                                val foreground = fieldStyle.foreground()
+                                AndroidView(
+                                    factory = { extractEditText },
+                                    update = { view ->
+                                        view.background = null
+                                        view.backgroundTintList = null
+                                        view.foregroundTintList = null
+                                        view.setTextColor(foreground.toArgb())
+                                        view.setHintTextColor(foreground.copy(foreground.alpha * 0.6f).toArgb())
+                                        view.setTextSize(
+                                            TypedValue.COMPLEX_UNIT_SP,
+                                            fieldStyle.fontSize(default = 16.sp).value,
+                                        )
+                                    },
+                                )
+                            }
+                            SnyggButton(
+                                elementName = FlorisImeUi.ExtractedLandscapeInputAction,
                                 onClick = {
                                     if (activeEditorInfo.extractedActionId != 0) {
                                         currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
@@ -800,17 +790,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                                 text = activeEditorInfo.extractedActionLabel
                                     ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
                                     ?: "ACTION",
-                                shape = actionStyle.shape.shape(),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = actionStyle.background.solidColor(
-                                        context,
-                                        FlorisImeTheme.fallbackContentColor()
-                                    ),
-                                    contentColor = actionStyle.foreground.solidColor(
-                                        context,
-                                        FlorisImeTheme.fallbackSurfaceColor()
-                                    ),
-                                ),
                             )
                         }
                     }
