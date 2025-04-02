@@ -25,7 +25,8 @@
     "u": {
       "relevant": [
         { "$": "auto_text_key", "code":  367, "label": "ů" },
-        { "$": "auto_text_key", "code":  250, "label": "ú" }
+        { "$": "auto_text_key", "code":  250, "label": "ú" },
+        { "$": "auto_text_key", "code":  252, "label": "ü" }
       ]
     },
     "i": {
@@ -41,7 +42,8 @@
     },
     "a": {
       "relevant": [
-        { "$": "auto_text_key", "code":  225, "label": "á" }
+        { "$": "auto_text_key", "code":  225, "label": "á" },
+        { "$": "auto_text_key", "code":  228, "label": "ä" }
       ]
     },
     "s": {
