@@ -46,7 +46,7 @@ class SnyggStylesheetEditor(
 
     operator fun String.invoke(
         vararg attributes: Pair<String, List<Int>>,
-        selector: SnyggSelector? = null,
+        selector: SnyggSelector = SnyggSelector.NONE,
         propertySetBlock: SnyggPropertySetEditor.() -> Unit,
     ) {
         val propertySetEditor = SnyggPropertySetEditor()

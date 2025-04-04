@@ -322,16 +322,16 @@ private fun TextKeyButton(
     fontSizeMultiplier: Float,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
-    val context = LocalContext.current
-
+    val attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value)
+    val selector = when {
+        !key.isEnabled -> SnyggSelector.DISABLED
+        key.isPressed -> SnyggSelector.PRESSED
+        else -> SnyggSelector.NONE
+    }
     val keyStyle = rememberSnyggThemeQuery(
         elementName = FlorisImeUi.Key,
-        attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value),
-        selector = when {
-            !key.isEnabled -> SnyggSelector.DISABLED
-            key.isPressed -> SnyggSelector.PRESSED
-            else -> null
-        },
+        attributes = attributes,
+        selector = selector,
     )
     val fontSize = keyStyle.fontSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
         KeyCode.VIEW_CHARACTERS,
@@ -350,7 +350,9 @@ private fun TextKeyButton(
         // TODO: maybe make this customizable through a size property for keyStyle
         val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
         SnyggSurface(
-            style = keyStyle,
+            elementName = FlorisImeUi.Key,
+            attributes = attributes,
+            selector = selector,
             modifier = Modifier
                 .fillMaxWidth()
                 .run {

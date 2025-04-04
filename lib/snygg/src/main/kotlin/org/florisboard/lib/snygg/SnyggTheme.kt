@@ -61,7 +61,7 @@ data class SnyggTheme internal constructor(
     internal fun query(
         elementName: String,
         attributes: SnyggQueryAttributes,
-        selector: SnyggSelector?,
+        selector: SnyggSelector,
         parentStyle: SnyggPropertySet,
         dynamicLightColorScheme: ColorScheme,
         dynamicDarkColorScheme: ColorScheme,
@@ -154,7 +154,7 @@ data class SnyggTheme internal constructor(
 
 private fun SnyggElementRule.isMatchForQuery(
     queryAttributes: SnyggQueryAttributes,
-    querySelector: SnyggSelector?,
+    querySelector: SnyggSelector,
 ): Boolean {
     return selector.isMatchForQuery(querySelector) &&
         attributes.isMatchForQuery(queryAttributes)
@@ -170,6 +170,6 @@ private fun SnyggElementRule.Attributes.isMatchForQuery(query: SnyggQueryAttribu
     return true
 }
 
-private fun SnyggSelector?.isMatchForQuery(query: SnyggSelector?): Boolean {
-    return this == null || this == query
+private fun SnyggSelector.isMatchForQuery(query: SnyggSelector): Boolean {
+    return this == SnyggSelector.NONE || this == query
 }

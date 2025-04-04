@@ -75,7 +75,7 @@ sealed interface SnyggAnnotationRule : SnyggRule {
 data class SnyggElementRule(
     val elementName: String,
     val attributes: Attributes = Attributes(),
-    val selector: SnyggSelector? = null,
+    val selector: SnyggSelector = SnyggSelector.NONE,
 ) : SnyggRule {
     init {
         requireNotNull(ELEMENT_NAME_REGEX.matchEntire(elementName)) { "element name is invalid" }
@@ -93,13 +93,13 @@ data class SnyggElementRule(
         if (attrDiff != 0) {
             return attrDiff
         }
-        if (selector == null && other.selector == null) {
+        if (selector == SnyggSelector.NONE && other.selector == SnyggSelector.NONE) {
             return 0
         }
-        if (selector == null) {
+        if (selector == SnyggSelector.NONE) {
             return -1
         }
-        if (other.selector == null) {
+        if (other.selector == SnyggSelector.NONE) {
             return 1
         }
         return selector.compareTo(other.selector)
@@ -109,9 +109,7 @@ data class SnyggElementRule(
         return buildString {
             append(elementName)
             append(attributes)
-            if (selector != null) {
-                append(selector)
-            }
+            append(selector)
         }
     }
 
@@ -137,7 +135,7 @@ data class SnyggElementRule(
             return SnyggElementRule(
                 elementName = elementName,
                 attributes = Attributes.from(attributesRaw ?: ""),
-                selector = SnyggSelector.fromOrNull(selectorRaw ?: ""),
+                selector = SnyggSelector.from(selectorRaw ?: ""),
             )
         }
     }
@@ -245,12 +243,16 @@ data class SnyggElementRule(
 }
 
 enum class SnyggSelector(val id: String) {
+    NONE("none"),
     PRESSED("pressed"),
     FOCUS("focus"),
     HOVER("hover"),
     DISABLED("disabled");
 
     override fun toString(): String {
+        if (this == NONE) {
+            return ""
+        }
         return buildString {
             append(SELECTOR_COLON)
             append(id)
@@ -260,12 +262,12 @@ enum class SnyggSelector(val id: String) {
     companion object {
         private const val SELECTOR_COLON = ":"
 
-        internal fun fromOrNull(str: String): SnyggSelector? {
+        internal fun from(str: String): SnyggSelector {
             if (str.isNotEmpty()) {
                 val selector = str.substring(1)
                 return entries.first { it.id == selector }
             }
-            return null
+            return SnyggSelector.NONE
         }
     }
 }

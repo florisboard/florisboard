@@ -42,7 +42,7 @@ fun SnyggBox(
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes, selector)
 
-    ProvideSnyggParentStyle(style) {
+    ProvideSnyggParentInfo(style, selector) {
         Box(
             modifier = Modifier
                 .snyggMargin(style)

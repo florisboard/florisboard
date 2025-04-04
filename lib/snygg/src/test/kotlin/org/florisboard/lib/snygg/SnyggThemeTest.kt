@@ -27,7 +27,7 @@ class SnyggThemeTest {
     private fun SnyggTheme.helperQuery(
         elementName: String,
         attributes: SnyggQueryAttributes = emptyMap(),
-        selector: SnyggSelector? = null,
+        selector: SnyggSelector = SnyggSelector.NONE,
         parentStyle: SnyggPropertySet = SnyggPropertySet(),
     ): SnyggPropertySet {
         return this.query(

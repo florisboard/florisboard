@@ -45,28 +45,6 @@ fun SnyggSurface(
 ) {
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes, selector)
-
-    SnyggSurface(
-        style = style,
-        modifier = modifier,
-        clip = clip,
-        clickAndSemanticsModifier = clickAndSemanticsModifier,
-        supportsBackgroundImage = supportsBackgroundImage,
-        backgroundImageDescription = backgroundImageDescription,
-        content = content,
-    )
-}
-
-@Composable
-fun SnyggSurface(
-    style: SnyggPropertySet,
-    modifier: Modifier = Modifier,
-    clip: Boolean = false,
-    clickAndSemanticsModifier: Modifier = Modifier,
-    supportsBackgroundImage: Boolean = false,
-    backgroundImageDescription: String? = null,
-    content: @Composable () -> Unit,
-) {
     val assetResolver = LocalSnyggAssetResolver.current
 
     @Composable
@@ -86,7 +64,7 @@ fun SnyggSurface(
         }
     }
 
-    ProvideSnyggParentStyle(style) {
+    ProvideSnyggParentInfo(style, selector) {
         Surface(
             modifier = Modifier
                 .snyggMargin(style)

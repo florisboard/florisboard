@@ -59,13 +59,13 @@ class SnyggRuleTest {
                 SnyggAnnotationRule.Font(fontName = "Comic Sans"),
             SnyggElementRule(elementName = "a-test") to
                 SnyggElementRule(elementName = "b-test"),
-            SnyggElementRule(elementName = "test", selector = null) to
+            SnyggElementRule(elementName = "test") to
                 SnyggElementRule(elementName = "test", selector = SnyggSelector.PRESSED),
-            SnyggElementRule(elementName = "test", selector = null) to
+            SnyggElementRule(elementName = "test") to
                 SnyggElementRule(elementName = "test", selector = SnyggSelector.FOCUS),
-            SnyggElementRule(elementName = "test", selector = null) to
+            SnyggElementRule(elementName = "test") to
                 SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER),
-            SnyggElementRule(elementName = "test", selector = null) to
+            SnyggElementRule(elementName = "test") to
                 SnyggElementRule(elementName = "test", selector = SnyggSelector.DISABLED),
             SnyggElementRule(elementName = "test", selector = SnyggSelector.PRESSED) to
                 SnyggElementRule(elementName = "test", selector = SnyggSelector.FOCUS),
@@ -106,7 +106,7 @@ class SnyggRuleTest {
             SnyggElementRule("smartbar") to
                 SnyggElementRule("smartbar"),
             SnyggElementRule("smartbar") to
-                SnyggElementRule("smartbar", SnyggElementRule.Attributes(), null)
+                SnyggElementRule("smartbar", SnyggElementRule.Attributes(), SnyggSelector.NONE)
         )
         assertAll(ruleList.map { (leftRule, rightRule) -> {
             assertTrue { leftRule == rightRule }

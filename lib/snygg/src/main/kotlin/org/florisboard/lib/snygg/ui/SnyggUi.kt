@@ -96,6 +96,11 @@ internal val LocalSnyggParentStyle: ProvidableCompositionLocal<SnyggPropertySet>
         SnyggPropertySet()
     }
 
+internal val LocalSnyggParentSelector: ProvidableCompositionLocal<SnyggSelector> =
+    compositionLocalOf {
+        SnyggSelector.NONE
+    }
+
 /**
  * Creates a [SnyggTheme] that is remembered across compositions.
  *
@@ -144,12 +149,15 @@ fun ProvideSnyggTheme(
 }
 
 @Composable
-internal fun ProvideSnyggParentStyle(
+internal fun ProvideSnyggParentInfo(
     parentStyle: SnyggPropertySet,
+    selector: SnyggSelector?,
     content: @Composable () -> Unit
 ) {
+    val parentSelector = selector ?: LocalSnyggParentSelector.current
     CompositionLocalProvider(
         LocalSnyggParentStyle provides parentStyle,
+        LocalSnyggParentSelector provides parentSelector,
         content = content,
     )
 }
@@ -176,14 +184,15 @@ internal fun SnyggTheme.rememberQuery(
     attributes: SnyggQueryAttributes,
     selector: SnyggSelector? = null,
 ): SnyggPropertySet {
+    val mergedSelector = selector ?: LocalSnyggParentSelector.current
     val parentStyle = LocalSnyggParentStyle.current
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
-    return remember(elementName, attributes, selector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
+    return remember(elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
         query(
             elementName,
             attributes,
-            selector,
+            mergedSelector,
             parentStyle,
             dynamicLightColorScheme,
             dynamicDarkColorScheme,
