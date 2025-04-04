@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.util.ViewUtils
@@ -55,7 +56,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggTheme
+import org.florisboard.lib.snygg.ui.background
+import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
 
@@ -183,20 +188,16 @@ class ThemeManager(context: Context) {
      * Creates a new inline suggestion UI bundle based on the attributes of the given [style].
      *
      * @param context The context of the parent view/controller.
-     * @param style The theme from which the color attributes should be fetched. Defaults to
-     *  [FlorisImeThemeBaseStyle].
+     * @param style The style set which is responsible for styling the chips.
      *
      * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
      */
     @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.R)
-    fun createInlineSuggestionUiStyleBundle(
-        context: Context,
-        style: SnyggStylesheet = activeThemeInfo.value?.stylesheet ?: FlorisImeThemeBaseStyle,
-    ): Bundle {
-        val snyggStyle = style.(FlorisImeUi.SmartbarSharedActionsToggle)
-        val bgColor = snyggStyle.background.solidColor(context)
-        val fgColor = snyggStyle.foreground.solidColor(context)
+    fun createInlineSuggestionUiStyleBundle(context: Context): Bundle? {
+        val styleSet = CachedInlineSuggestionsChipStyleSet ?: return null
+        val bgColor = styleSet.background(default = Color.White)
+        val fgColor = styleSet.foreground(default = Color.Black)
 
         val bgDrawableId = androidx.autofill.R.drawable.autofill_inline_suggestion_chip_background
         val bgDrawable = Icon.createWithResource(context, bgDrawableId).apply {
@@ -276,7 +277,7 @@ class ThemeManager(context: Context) {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
                 config = ThemeExtensionComponentImpl(id = "base", label = "Base", authors = listOf()),
-                stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
+                stylesheet = FlorisImeThemeBaseStyle,
             )
         }
     }

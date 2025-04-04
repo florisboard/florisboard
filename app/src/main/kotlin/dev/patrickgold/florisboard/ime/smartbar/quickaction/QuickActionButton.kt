@@ -59,13 +59,15 @@ import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.background
+import org.florisboard.lib.snygg.ui.foreground
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.shape
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggClip
 import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
 
 private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
 private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)
@@ -94,39 +96,32 @@ fun QuickActionButton(
         else -> FlorisImeUi.SmartbarActionTile
     }
     // We always need to know both state's styles to animate smoothly
-    val actionStyleNotPressed = FlorisImeTheme.style.get(
-        element = element,
-        code = action.keyData().code,
-        isPressed = false,
-        isDisabled = !isEnabled,
+    val actionStyleNotPressed = rememberSnyggThemeQuery(
+        elementName = element,
+        attributes = mapOf("code" to action.keyData().code),
+        selector = if (!isEnabled) SnyggSelector.DISABLED else null,
     )
-    val actionStylePressed = FlorisImeTheme.style.get(
-        element = element,
-        code = action.keyData().code,
-        isPressed = true,
-        isDisabled = !isEnabled,
+    val actionStylePressed = rememberSnyggThemeQuery(
+        elementName = element,
+        attributes = mapOf("code" to action.keyData().code),
+        selector = SnyggSelector.PRESSED,
     )
     val actionStyle = if (isPressed) actionStylePressed else actionStyleNotPressed
     val bgColor by animateColorAsState(
         targetValue = if (isPressed) {
-            actionStylePressed.background.solidColor(context)
+            actionStylePressed.background()
         } else {
-            if (actionStyleNotPressed.background.solidColor(context).alpha == 0f) {
-                actionStylePressed.background.solidColor(context).copy(0f)
+            if (actionStyleNotPressed.background().alpha == 0f) {
+                actionStylePressed.background().copy(0f)
             } else {
-                actionStyleNotPressed.background.solidColor(context)
+                actionStyleNotPressed.background()
             }
         },
         animationSpec = BackgroundAnimationSpec, label = "bgColor",
     )
     val fgColor = when (action.keyData().code) {
-        KeyCode.DRAG_MARKER -> {
-            DebugHelperColor
-        }
-
-        else -> {
-            actionStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
-        }
+        KeyCode.DRAG_MARKER -> DebugHelperColor
+        else -> actionStyle.foreground()
     }
     val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f
 
@@ -151,8 +146,8 @@ fun QuickActionButton(
             .aspectRatio(1f)
             .alpha(fgAlpha)
             .snyggShadow(actionStyle)
-            .snyggBorder(context, actionStyle)
-            .background(bgColor, actionStyle.shape.shape())
+            .snyggBorder(actionStyle)
+            .background(bgColor, actionStyle.shape())
             .snyggClip(actionStyle)
             .indication(interactionSource, LocalIndication.current)
             .pointerInput(action, isEnabled) {

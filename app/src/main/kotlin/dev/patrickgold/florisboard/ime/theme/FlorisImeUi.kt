@@ -41,6 +41,8 @@ object FlorisImeUi {
 
     const val IncognitoModeIndicator = "incognito-mode-indicator"
 
+    const val InlineAutofillChip = "inline-autofill-chip"
+
     const val OneHandedPanel = "one-handed-panel"
     const val OneHandedPanelButton = "one-handed-panel-button"
 
@@ -56,6 +58,7 @@ object FlorisImeUi {
     const val SmartbarActionsEditor = "smartbar-actions-editor"
     const val SmartbarActionsEditorHeader = "smartbar-actions-editor-header"
     const val SmartbarActionsEditorSubheader = "smartbar-actions-editor-subheader"
+    const val SmartbarActionsEditorSpacer = "smartbar-actions-editor-spacer"
     const val SmartbarCandidatesRow = "smartbar-candidates-row"
     const val SmartbarCandidateWord = "smartbar-candidate-word"
     const val SmartbarCandidateClip = "smartbar-candidate-clip"

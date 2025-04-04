@@ -20,6 +20,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -95,10 +96,12 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
 import org.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.background
+import org.florisboard.lib.snygg.ui.fontSize
+import org.florisboard.lib.snygg.ui.foreground
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -119,8 +122,8 @@ fun TextKeyboardLayout(
     val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
         evaluator.state.keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
-    val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
-        .foreground.solidColor(context, default = Color.Green)
+    val glideTrailStyle = rememberSnyggThemeQuery(FlorisImeUi.GlideTrail)
+    val glideTrailColor = glideTrailStyle.foreground(default = Color.Green)
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
@@ -321,14 +324,16 @@ private fun TextKeyButton(
 ) = with(LocalDensity.current) {
     val context = LocalContext.current
 
-    val keyStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.Key,
-        code = key.computedData.code,
-        mode = evaluator.state.inputShiftState.value,
-        isPressed = key.isPressed && key.isEnabled,
-        isDisabled = !key.isEnabled,
+    val keyStyle = rememberSnyggThemeQuery(
+        elementName = FlorisImeUi.Key,
+        attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value),
+        selector = when {
+            !key.isEnabled -> SnyggSelector.DISABLED
+            key.isPressed -> SnyggSelector.PRESSED
+            else -> null
+        },
     )
-    val fontSize = keyStyle.fontSize.spSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
+    val fontSize = keyStyle.fontSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
         KeyCode.VIEW_CHARACTERS,
         KeyCode.VIEW_SYMBOLS,
         KeyCode.VIEW_SYMBOLS2 -> 0.80f
@@ -345,6 +350,7 @@ private fun TextKeyButton(
         // TODO: maybe make this customizable through a size property for keyStyle
         val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
         SnyggSurface(
+            style = keyStyle,
             modifier = Modifier
                 .fillMaxWidth()
                 .run {
@@ -355,7 +361,6 @@ private fun TextKeyButton(
                     }
                 }
                 .fillMaxHeight(),
-            style = keyStyle,
             clip = false,
         ) { }
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
@@ -375,7 +380,7 @@ private fun TextKeyButton(
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = customLabel,
-                color = keyStyle.foreground.solidColor(context),
+                color = keyStyle.foreground(),
                 fontSize = fontSize,
                 maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
                 softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
@@ -386,21 +391,23 @@ private fun TextKeyButton(
             )
         }
         key.hintedLabel?.let { hintedLabel ->
-            val keyHintStyle = FlorisImeTheme.style.get(
-                element = FlorisImeUi.KeyHint,
-                code = key.computedHintData.code,
-                mode = evaluator.state.inputShiftState.value,
-                isPressed = key.isPressed,
+            val keyHintStyle = rememberSnyggThemeQuery(
+                elementName = FlorisImeUi.KeyHint,
+                attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value),
+                selector = when {
+                    key.isPressed -> SnyggSelector.PRESSED
+                    else -> null
+                },
             )
-            val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
+            val hintFontSize = keyHintStyle.fontSize() safeTimes fontSizeMultiplier
             Text(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-                    .snyggBackground(context, keyHintStyle)
+                    .background(keyHintStyle.background())
                     .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
                 text = hintedLabel,
-                color = keyHintStyle.foreground.solidColor(context),
+                color = keyHintStyle.foreground(),
                 fontFamily = FontFamily.Monospace,
                 fontSize = hintFontSize,
                 maxLines = 1,
@@ -415,7 +422,7 @@ private fun TextKeyButton(
                     .align(Alignment.Center),
                 imageVector = imageVector,
                 contentDescription = null,
-                tint = keyStyle.foreground.solidColor(context),
+                tint = keyStyle.foreground(),
             )
         }
     }

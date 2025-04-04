@@ -25,16 +25,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggSpacer(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes)
+    val style = theme.rememberQuery(elementName, attributes, selector)
 
     Spacer(
         modifier = Modifier

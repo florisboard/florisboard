@@ -25,19 +25,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggColumn(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes)
+    val style = theme.rememberQuery(elementName, attributes, selector)
     ProvideSnyggParentStyle(style) {
         Column(
             modifier = Modifier

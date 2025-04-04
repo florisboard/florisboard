@@ -40,12 +40,16 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.safeTimes
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.fontSize
+import org.florisboard.lib.snygg.ui.foreground
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
 
 @Composable
 fun PopupBaseBox(
@@ -56,10 +60,8 @@ fun PopupBaseBox(
 ): Unit = with(LocalDensity.current) {
     val context = LocalContext.current
 
-    val popupStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.KeyPopup,
-    )
-    val fontSize = popupStyle.fontSize.spSize() safeTimes fontSizeMultiplier
+    val popupStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopup)
+    val fontSize = popupStyle.fontSize() safeTimes fontSizeMultiplier
     SnyggSurface(
         elementName = FlorisImeUi.KeyPopup,
         modifier = modifier,
@@ -76,7 +78,7 @@ fun PopupBaseBox(
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     text = label,
-                    color = popupStyle.foreground.solidColor(context),
+                    color = popupStyle.foreground(),
                     fontSize = fontSize,
                     maxLines = 1,
                     softWrap = false,
@@ -90,7 +92,7 @@ fun PopupBaseBox(
                     .align(Alignment.CenterEnd),
                 imageVector = Icons.Default.MoreHoriz,
                 contentDescription = null,
-                tint = popupStyle.foreground.solidColor(context),
+                tint = popupStyle.foreground(),
             )
         }
     }
@@ -108,16 +110,7 @@ fun PopupExtBox(
 ): Unit = with(LocalDensity.current) {
     val context = LocalContext.current
 
-    val popupStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.KeyPopup,
-        isFocus = false,
-    )
-    Column(
-        modifier = modifier
-            .snyggShadow(popupStyle)
-            .snyggBorder(context, popupStyle)
-            .snyggBackground(context, popupStyle),
-    ) {
+    SnyggColumn(FlorisImeUi.KeyPopup) {
         for (row in elements.asReversed()) {
             Row(
                 modifier = Modifier
@@ -126,26 +119,16 @@ fun PopupExtBox(
                 horizontalArrangement = elemArrangement,
             ) {
                 for (element in row) {
-                    val elemStyle = if (activeElementIndex == element.orderedIndex) {
-                        FlorisImeTheme.style.get(
-                            element = FlorisImeUi.KeyPopup,
-                            isFocus = true,
-                        )
+                    val selector = if (activeElementIndex == element.orderedIndex) {
+                        SnyggSelector.FOCUS
                     } else {
-                        popupStyle
+                        null
                     }
-                    val elemFontSize = elemStyle.fontSize.spSize() safeTimes fontSizeMultiplier safeTimes
-                        if (element.data.code == KeyCode.URI_COMPONENT_TLD) { 0.6f } else { 1.0f }
-                    Box(
+                    SnyggBox(
+                        elementName = FlorisImeUi.KeyPopup,
+                        selector = selector,
                         modifier = Modifier
-                            .size(elemWidth, elemHeight)
-                            .run {
-                                if (activeElementIndex == element.orderedIndex) {
-                                    snyggBackground(context, elemStyle)
-                                } else {
-                                    this
-                                }
-                            },
+                            .size(elemWidth, elemHeight),
                     ) {
                         element.label?.let { label ->
                             Text(

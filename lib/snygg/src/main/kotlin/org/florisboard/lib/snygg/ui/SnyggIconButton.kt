@@ -19,7 +19,6 @@ package org.florisboard.lib.snygg.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -35,12 +34,14 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggIconButton(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     enabled: Boolean = true,
@@ -48,7 +49,7 @@ fun SnyggIconButton(
     content: @Composable () -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes)
+    val style = theme.rememberQuery(elementName, attributes, selector)
 
     Box(
         modifier = modifier
@@ -77,6 +78,7 @@ fun SnyggIconButton(
 fun SnyggIconButton(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     imageVector: ImageVector,
@@ -87,6 +89,7 @@ fun SnyggIconButton(
     SnyggIconButton(
         elementName = elementName,
         attributes = attributes,
+        selector = selector,
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
@@ -95,6 +98,7 @@ fun SnyggIconButton(
         SnyggIcon(
             elementName = elementName,
             attributes = attributes,
+            selector = selector,
             modifier = Modifier,
             imageVector = imageVector,
             contentDescription = contentDescription,
@@ -106,6 +110,7 @@ fun SnyggIconButton(
 fun SnyggIconButton(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     bitmap: ImageBitmap,
@@ -116,6 +121,7 @@ fun SnyggIconButton(
     SnyggIconButton(
         elementName = elementName,
         attributes = attributes,
+        selector = selector,
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
@@ -124,6 +130,7 @@ fun SnyggIconButton(
         SnyggIcon(
             elementName = elementName,
             attributes = attributes,
+            selector = selector,
             modifier = Modifier,
             bitmap = bitmap,
             contentDescription = contentDescription,
@@ -135,6 +142,7 @@ fun SnyggIconButton(
 fun SnyggIconButton(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     painter: Painter,
@@ -145,6 +153,7 @@ fun SnyggIconButton(
     SnyggIconButton(
         elementName = elementName,
         attributes = attributes,
+        selector = selector,
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
@@ -153,6 +162,7 @@ fun SnyggIconButton(
         SnyggIcon(
             elementName = elementName,
             attributes = attributes,
+            selector = selector,
             modifier = Modifier,
             painter = painter,
             contentDescription = contentDescription,

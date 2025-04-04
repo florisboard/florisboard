@@ -20,7 +20,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -192,7 +191,7 @@ internal fun SnyggTheme.rememberQuery(
     }
 }
 
-internal fun Modifier.snyggBackground(
+fun Modifier.snyggBackground(
     style: SnyggPropertySet,
     fallbackColor: Color = Color.Unspecified,
     shape: Shape = style.shape(),
@@ -212,7 +211,7 @@ internal fun Modifier.snyggBackground(
     }
 }
 
-internal fun Modifier.snyggBorder(
+fun Modifier.snyggBorder(
     style: SnyggPropertySet,
     width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     color: Color = style.borderColor.colorOrDefault(default = Color.Unspecified),
@@ -225,14 +224,14 @@ internal fun Modifier.snyggBorder(
     }
 }
 
-internal fun Modifier.snyggClip(
+fun Modifier.snyggClip(
     style: SnyggPropertySet,
     shape: Shape = style.shape(),
 ): Modifier {
     return this.clip(shape)
 }
 
-internal fun Modifier.snyggMargin(
+fun Modifier.snyggMargin(
     style: SnyggPropertySet,
 ): Modifier {
     return when (style.margin) {
@@ -241,7 +240,7 @@ internal fun Modifier.snyggMargin(
     }
 }
 
-internal fun Modifier.snyggPadding(
+fun Modifier.snyggPadding(
     style: SnyggPropertySet,
     default: PaddingValues? = null,
 ): Modifier {
@@ -252,7 +251,7 @@ internal fun Modifier.snyggPadding(
     }
 }
 
-internal fun Modifier.snyggShadow(
+fun Modifier.snyggShadow(
     style: SnyggPropertySet,
     elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     shape: Shape = style.shape(),
@@ -355,7 +354,7 @@ internal fun SnyggPropertySet.textOverflow(default: TextOverflow = TextOverflow.
     }
 }
 
-internal fun SnyggPropertySet.shape(): Shape {
+fun SnyggPropertySet.shape(): Shape {
     return when (shape) {
         is SnyggShapeValue -> shape.shape
         else -> RectangleShape

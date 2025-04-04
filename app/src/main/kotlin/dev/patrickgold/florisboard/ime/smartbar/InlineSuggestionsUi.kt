@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,8 +33,13 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.toIntOffset
+import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+
+var CachedInlineSuggestionsChipStyleSet: SnyggPropertySet? = null
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
@@ -43,6 +49,11 @@ fun InlineSuggestionsUi(
 ) {
     val scrollState = rememberScrollState()
     val almostEmptyRect = remember { android.graphics.Rect(0, 0, 1, 1) }
+
+    val chipStyleSet = rememberSnyggThemeQuery(FlorisImeUi.InlineAutofillChip)
+    LaunchedEffect(chipStyleSet) {
+        CachedInlineSuggestionsChipStyleSet = chipStyleSet
+    }
 
     Row(
         modifier

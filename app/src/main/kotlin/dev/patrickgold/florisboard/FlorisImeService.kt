@@ -123,6 +123,7 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurface
@@ -465,6 +466,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         flogInfo(LogTopic.IMS_EVENTS) { "Creating inline suggestions request" }
         val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
+        if (stylesBundle == null) {
+            flogWarning(LogTopic.IMS_EVENTS) { "Failed to retrieve inline suggestions style bundle" }
+            return null
+        }
         val spec = InlinePresentationSpec.Builder(
             InlineSuggestionUiSmallestSize,
             InlineSuggestionUiBiggestSize,

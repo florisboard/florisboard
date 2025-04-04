@@ -26,10 +26,7 @@ import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
-import org.florisboard.lib.snygg.value.SnyggFontStyleValue
-import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
@@ -61,7 +58,7 @@ data class SnyggTheme internal constructor(
     private val style: CompiledStyleData,
     private val fontFamilies: CompiledFontFamilyData,
 ) {
-    fun query(
+    internal fun query(
         elementName: String,
         attributes: SnyggQueryAttributes,
         selector: SnyggSelector?,

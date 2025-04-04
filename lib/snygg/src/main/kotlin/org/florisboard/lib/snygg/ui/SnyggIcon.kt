@@ -27,18 +27,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggIcon(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
     contentDescription: String? = null,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes)
+    val style = theme.rememberQuery(elementName, attributes, selector)
 
     Icon(
         modifier = modifier,
@@ -52,12 +54,13 @@ fun SnyggIcon(
 fun SnyggIcon(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     bitmap: ImageBitmap,
     contentDescription: String? = null,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes)
+    val style = theme.rememberQuery(elementName, attributes, selector)
 
     Icon(
         modifier = modifier,
@@ -71,12 +74,13 @@ fun SnyggIcon(
 fun SnyggIcon(
     elementName: String,
     attributes: Map<String, Int> = emptyMap(),
+    selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     painter: Painter,
     contentDescription: String? = null,
 ) {
     val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes)
+    val style = theme.rememberQuery(elementName, attributes, selector)
 
     Icon(
         modifier = modifier,

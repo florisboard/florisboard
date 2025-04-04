@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.lib.util.launchUrl
 import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.solidColor
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 
@@ -46,7 +45,7 @@ fun HowDidWeGetHere() {
     val extensionManager by context.extensionManager()
     val keyboardManager by context.keyboardManager()
 
-    val style = SnyggPropertySet(mapOf(
+    /*val style = SnyggPropertySet(mapOf(
         "background" to SnyggStaticColorValue(Color.Yellow),
         "foreground" to SnyggStaticColorValue(Color.Black),
         "shape" to SnyggRoundedCornerDpShapeValue(16.dp, 16.dp, 16.dp, 16.dp, RoundedCornerShape(16.dp)),
@@ -89,5 +88,5 @@ fun HowDidWeGetHere() {
                 }
             }
         }
-    }
+    }*/
 }
