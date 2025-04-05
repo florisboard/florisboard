@@ -21,16 +21,11 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,27 +39,21 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.SnyggText
 
 val CandidatesRowScrollbarHeight = 2.dp
 
@@ -154,24 +143,17 @@ private fun CandidateItem(
     onLongPress: () -> Boolean = { false },
     longPressDelay: Long,
 ) = with(LocalDensity.current) {
-    val context = LocalContext.current
     var isPressed by remember { mutableStateOf(false) }
 
-    val style = if (candidate is ClipboardSuggestionCandidate) {
-        FlorisImeTheme.style.get(
-            element = FlorisImeUi.SmartbarCandidateClip,
-            isPressed = isPressed,
-        )
+    val elementName = if (candidate is ClipboardSuggestionCandidate) {
+        FlorisImeUi.SmartbarCandidateClip
     } else {
-        FlorisImeTheme.style.get(
-            element = FlorisImeUi.SmartbarCandidateWord,
-            isPressed = isPressed,
-        )
+        FlorisImeUi.SmartbarCandidateWord
     }
 
-    Row(
+    SnyggRow(
+        elementName = elementName,
         modifier = modifier
-            .snyggBackground(context, style)
             .pointerInput(Unit) {
                 awaitEachGesture {
                     val down = awaitFirstDown()
@@ -195,22 +177,13 @@ private fun CandidateItem(
                     }
                     isPressed = false
                 }
-            }
-            .padding(horizontal = 12.dp),
+            },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (candidate.icon != null) {
-            Icon(
-                modifier = Modifier
-                    .requiredSize(
-                        style.fontSize
-                            .spSize()
-                            .toDp() * 1.5f
-                    )
-                    .padding(end = 4.dp),
+            SnyggIcon(
+                elementName = null,
                 imageVector = candidate.icon!!,
-                contentDescription = null,
-                tint = style.foreground.solidColor(context),
             )
         }
         Column(
@@ -218,24 +191,16 @@ private fun CandidateItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(
+            SnyggText(
+                elementName = null,
+                attributes = mapOf("auto-commit" to if (candidate.isEligibleForAutoCommit) 1 else 0),
                 text = candidate.text.toString(),
-                color = style.foreground.solidColor(context),
-                fontSize = style.fontSize.spSize(),
-                fontWeight = if (candidate.isEligibleForAutoCommit) FontWeight.Bold else FontWeight.Normal,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
             )
             if (candidate.secondaryText != null) {
-                Text(
+                SnyggText(
+                    elementName = null,
+                    attributes = mapOf("auto-commit" to if (candidate.isEligibleForAutoCommit) 1 else 0),
                     text = candidate.secondaryText!!.toString(),
-                    color = style.foreground.solidColor(context),
-                    fontSize = style.fontSize.spSize() safeTimes 0.6,
-                    fontWeight = if (candidate.isEligibleForAutoCommit) FontWeight.Bold else FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }

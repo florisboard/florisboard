@@ -29,7 +29,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggBox(
-    elementName: String,
+    elementName: String?,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,

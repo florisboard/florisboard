@@ -21,8 +21,6 @@ import android.content.Context
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -79,59 +77,38 @@ private val LightColorPalette = lightColorScheme(
 @Composable
 fun getColorScheme(
     context: Context,
-    isMaterialYouAware: Boolean,
-    themeColor: Color,
     theme: AppTheme,
 ): ColorScheme {
+    val prefs by florisPreferenceModel()
+    val accentColor by prefs.other.accentColor.observeAsState()
     val isDark = isSystemInDarkTheme()
 
     return when (theme) {
-
         AppTheme.AUTO -> {
-            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
-                when {
-                    isDark -> dynamicDarkColorScheme(context)
-                    else -> dynamicLightColorScheme(context)
-                }
+            if (isDark) {
+                ColorMappings.dynamicDarkColorScheme(context, accentColor)
             } else {
-                ColorMappings.getColorSchemeOrDefault(themeColor, isDark, true)
+                ColorMappings.dynamicLightColorScheme(context, accentColor)
             }
         }
 
         AppTheme.DARK -> {
-            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
-                dynamicDarkColorScheme(context)
-            } else {
-                ColorMappings.getColorSchemeOrDefault(themeColor, isDark = true, settings = true)
-            }
+            ColorMappings.dynamicDarkColorScheme(context, accentColor)
         }
 
         AppTheme.LIGHT -> {
-            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
-                dynamicLightColorScheme(context)
-            } else {
-                ColorMappings.getColorSchemeOrDefault(themeColor, isDark = false, settings = true)
-            }
+            ColorMappings.dynamicLightColorScheme(context, accentColor)
         }
 
         AppTheme.AMOLED_DARK -> {
-            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
-                dynamicDarkColorScheme(context).amoled()
-            } else {
-                ColorMappings.getColorSchemeOrDefault(themeColor, isDark = true, settings = true).amoled()
-            }
+            ColorMappings.dynamicDarkColorScheme(context, accentColor).amoled()
         }
 
         AppTheme.AUTO_AMOLED -> {
-            if (isMaterialYouAware && AndroidVersion.ATLEAST_API31_S) {
-                when {
-                    isDark -> dynamicDarkColorScheme(context).amoled()
-                    else -> dynamicLightColorScheme(context)
-                }
+            if (isDark) {
+                ColorMappings.dynamicDarkColorScheme(context, accentColor).amoled()
             } else {
-                with(ColorMappings.getColorSchemeOrDefault(themeColor, isDark, true)) {
-                    if (isDark) amoled() else this
-                }
+                ColorMappings.dynamicLightColorScheme(context, accentColor)
             }
         }
     }
@@ -144,17 +121,11 @@ fun ColorScheme.amoled(): ColorScheme {
 @Composable
 fun FlorisAppTheme(
     theme: AppTheme,
-    isMaterialYouAware: Boolean,
     content: @Composable () -> Unit,
 ) {
-    val prefs by florisPreferenceModel()
-    val accent by prefs.other.accentColor.observeAsState()
-
     val colors = getColorScheme(
         context = LocalContext.current,
         theme = theme,
-        isMaterialYouAware = isMaterialYouAware,
-        themeColor = accent,
     )
 
     val darkTheme =

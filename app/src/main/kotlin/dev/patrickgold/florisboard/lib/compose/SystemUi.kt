@@ -24,27 +24,26 @@ import android.view.Window
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.ui.solidColor
-
+import org.florisboard.lib.snygg.ui.background
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 @Composable
 fun SystemUiIme() {
     val useDarkIcons = !FlorisImeTheme.config.isNightTheme
-    val context = LocalContext.current
     val view = LocalView.current
-    val backgroundColor = FlorisImeTheme.style.get(FlorisImeUi.SystemNavBar).background.solidColor(context)
+    val bgStyle = rememberSnyggThemeQuery(FlorisImeUi.SystemNavBar)
+    val bgColor = bgStyle.background()
     val window = view.context.findWindow()!!
     val windowInsetsController = WindowInsetsControllerCompat(window, view)
 
-    LaunchedEffect(backgroundColor) {
+    LaunchedEffect(bgColor) {
         if (AndroidVersion.ATLEAST_API26_O) {
-            window.navigationBarColor = backgroundColor.toArgb()
+            window.navigationBarColor = bgColor.toArgb()
             windowInsetsController.isAppearanceLightNavigationBars = useDarkIcons
             if (AndroidVersion.ATLEAST_API29_Q) window.isNavigationBarContrastEnforced = true
         }

@@ -180,7 +180,7 @@ fun rememberSnyggThemeQuery(
 
 @Composable
 internal fun SnyggTheme.rememberQuery(
-    elementName: String,
+    elementName: String?,
     attributes: SnyggQueryAttributes,
     selector: SnyggSelector? = null,
 ): SnyggPropertySet {
@@ -190,7 +190,7 @@ internal fun SnyggTheme.rememberQuery(
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
     return remember(elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
         query(
-            elementName,
+            elementName = elementName ?: "",
             attributes,
             mergedSelector,
             parentStyle,

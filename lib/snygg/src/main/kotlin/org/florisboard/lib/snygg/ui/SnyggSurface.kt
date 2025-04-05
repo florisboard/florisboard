@@ -33,7 +33,7 @@ import org.florisboard.lib.snygg.value.SnyggUriValue
 
 @Composable
 fun SnyggSurface(
-    elementName: String,
+    elementName: String?,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,

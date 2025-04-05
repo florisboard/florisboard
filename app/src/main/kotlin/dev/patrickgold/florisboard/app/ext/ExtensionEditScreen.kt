@@ -83,7 +83,6 @@ import dev.patrickgold.florisboard.lib.ext.validate
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
@@ -271,7 +270,7 @@ private fun EditScreen(
                     val stylesheetEditor = theme.stylesheetEditor
                     if (stylesheetEditor != null) {
                         val stylesheet = stylesheetEditor.build()
-                        stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
+                        stylesheetFile.writeJson(stylesheet)
                     } else {
                         val unmodifiedStylesheetFile = workspace.extDir.subFile(theme.stylesheetPath())
                         if (unmodifiedStylesheetFile.exists()) {
@@ -711,7 +710,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                     val stylesheet = componentEditor.stylesheetEditor!!.build()
                                     val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                     stylesheetFile.parentFile?.mkdirs()
-                                    stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
+                                    stylesheetFile.writeJson(stylesheet)
                                     componentEditor.stylesheetEditor = null
                                 } else {
                                     val srcStylesheetFile = workspace.extDir.subFile(component.stylesheetPath())

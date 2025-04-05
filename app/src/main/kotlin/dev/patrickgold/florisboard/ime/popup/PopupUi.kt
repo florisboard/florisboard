@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.popup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,8 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.ime.keyboard.Key
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.safeTimes
 import org.florisboard.lib.snygg.SnyggSelector
@@ -47,9 +44,6 @@ import org.florisboard.lib.snygg.ui.SnyggSurface
 import org.florisboard.lib.snygg.ui.fontSize
 import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggShadow
 
 @Composable
 fun PopupBaseBox(
@@ -58,8 +52,6 @@ fun PopupBaseBox(
     fontSizeMultiplier: Float,
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
-    val context = LocalContext.current
-
     val popupStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopup)
     val fontSize = popupStyle.fontSize() safeTimes fontSizeMultiplier
     SnyggSurface(
