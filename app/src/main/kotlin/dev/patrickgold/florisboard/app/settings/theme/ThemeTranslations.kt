@@ -92,7 +92,6 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
             FlorisImeUi.SmartbarCandidateWord -> R.string.snygg__rule_element__smartbar_candidate_word
             FlorisImeUi.SmartbarCandidateClip -> R.string.snygg__rule_element__smartbar_candidate_clip
             FlorisImeUi.SmartbarCandidateSpacer -> R.string.snygg__rule_element__smartbar_candidate_spacer
-            FlorisImeUi.SystemNavBar -> R.string.snygg__rule_element__system_nav_bar
             else -> null
         }
     }.let { if (it != null) { stringRes(it) } else { null } }

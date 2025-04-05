@@ -22,8 +22,6 @@ object FlorisImeUi {
     const val KeyHint = "key-hint"
     const val KeyPopup = "key-popup"
 
-    const val TextInputLayout = "text-input-layout"
-
     const val ClipboardHeader = "clipboard-header"
     const val ClipboardItem = "clipboard-item"
     const val ClipboardItemPopup = "clipboard-item-popup"
@@ -63,7 +61,4 @@ object FlorisImeUi {
     const val SmartbarCandidateWord = "smartbar-candidate-word"
     const val SmartbarCandidateClip = "smartbar-candidate-clip"
     const val SmartbarCandidateSpacer = "smartbar-candidate-spacer"
-
-    //TODO: Deprecate?
-    const val SystemNavBar = "system-nav-bar"
 }

@@ -52,6 +52,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -569,19 +570,18 @@ class FlorisImeService : LifecycleInputMethodService() {
             ProvideKeyboardRowBaseHeight {
                 CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
+                        // Do not apply system bar padding here yet, we want to draw it ourselves
                         Column(modifier = Modifier.fillMaxWidth()) {
                             if (!(isFullscreenUiMode && isExtractUiShown)) {
-                                Box(
+                                DevtoolsOverlay(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .weight(1f),
-                                ) {
-                                    DevtoolsOverlay(modifier = Modifier.fillMaxSize())
-                                }
+                                )
                             }
                             ImeUi()
+                            SystemUiIme()
                         }
-                        SystemUiIme()
                     }
                 }
             }
@@ -593,10 +593,8 @@ class FlorisImeService : LifecycleInputMethodService() {
     private fun ImeUi() {
         val state by keyboardManager.activeState.collectAsState()
         val layoutDirection = LocalLayoutDirection.current
-        SideEffect {
-            if (keyboardManager.activeState.layoutDirection != layoutDirection) {
-                keyboardManager.activeState.layoutDirection = layoutDirection
-            }
+        LaunchedEffect(layoutDirection) {
+            keyboardManager.activeState.layoutDirection = layoutDirection
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggSurface(
@@ -619,9 +617,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        // Apply system bars padding here (we already drew our keyboard background)
                         .safeDrawingPadding()
-                        // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
-                        //.height(IntrinsicSize.Min)
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()

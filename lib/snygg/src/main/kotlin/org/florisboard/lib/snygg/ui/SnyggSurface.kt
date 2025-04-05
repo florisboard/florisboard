@@ -22,6 +22,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,9 +73,10 @@ fun SnyggSurface(
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .then(if (clip) Modifier.snyggClip(style) else Modifier)
-                .snyggBackground(style)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
+            color = style.background(default = Color.Transparent),
+            contentColor = style.foreground(),
         ) {
             if (supportsBackgroundImage) {
                 SnyggImage()

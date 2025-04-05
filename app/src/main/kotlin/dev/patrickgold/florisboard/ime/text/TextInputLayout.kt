@@ -30,7 +30,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.Smartbar
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowPanel
@@ -56,7 +55,7 @@ fun TextInputLayout(
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         SnyggColumn(
-            elementName = FlorisImeUi.TextInputLayout,
+            elementName = null,
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -65,10 +64,10 @@ fun TextInputLayout(
             if (state.isActionsOverflowVisible) {
                 QuickActionsOverflowPanel()
             } else {
-                SnyggBox(
-                    elementName = FlorisImeUi.IncognitoModeIndicator,
-                ) {
-                    val showIncognitoIcon = evaluator.state.isIncognitoMode && prefs.keyboard.incognitoDisplayMode.observeAsState().value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
+                SnyggBox(null) {
+                    val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.observeAsState()
+                    val showIncognitoIcon = evaluator.state.isIncognitoMode &&
+                        incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
                     if (showIncognitoIcon) {
                         SnyggIcon(
                             elementName = FlorisImeUi.IncognitoModeIndicator,
@@ -76,20 +75,9 @@ fun TextInputLayout(
                                 .matchParentSize()
                                 .align(Alignment.Center),
                             painter = painterResource(R.drawable.ic_incognito),
-                            contentDescription = null,
                         )
                     }
-                    val debugLayoutResult by keyboardManager.layoutManager
-                        .debugLayoutComputationResultFlow.collectAsState()
-                    if (state.keyboardMode != KeyboardMode.EDITING) {
-                        if (debugLayoutResult?.allLayoutsSuccess() == true) {
-                            TextKeyboardLayout(evaluator = evaluator)
-                        } else {
-                            HowDidWeGetHere()
-                        }
-                    } else {
-                        HowDidWeGetHere()
-                    }
+                    TextKeyboardLayout(evaluator = evaluator)
                 }
             }
         }

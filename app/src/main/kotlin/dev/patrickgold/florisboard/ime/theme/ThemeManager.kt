@@ -121,6 +121,8 @@ class ThemeManager(context: Context) {
      * callback receivers about the new theme.
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
+        // TODO: re-implement stylesheet deserialization logic
+        return@launch // early
         activeThemeGuard.withLock {
             action()
             previewThemeInfo?.let { previewThemeInfo ->

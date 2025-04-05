@@ -245,7 +245,6 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
-    <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
     <string name="snygg__rule_selector__hover">Hover</string>

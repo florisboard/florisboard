@@ -61,6 +61,9 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.background
 import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
@@ -91,23 +94,16 @@ fun QuickActionButton(
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
-    val element = when (type) {
+    val elementName = when (type) {
         QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
         else -> FlorisImeUi.SmartbarActionTile
     }
-    // We always need to know both state's styles to animate smoothly
-    val actionStyleNotPressed = rememberSnyggThemeQuery(
-        elementName = element,
-        attributes = mapOf("code" to action.keyData().code),
-        selector = if (!isEnabled) SnyggSelector.DISABLED else null,
-    )
-    val actionStylePressed = rememberSnyggThemeQuery(
-        elementName = element,
-        attributes = mapOf("code" to action.keyData().code),
-        selector = SnyggSelector.PRESSED,
-    )
-    val actionStyle = if (isPressed) actionStylePressed else actionStyleNotPressed
-    val bgColor by animateColorAsState(
+    val selector = when {
+        isPressed -> SnyggSelector.PRESSED
+        !isEnabled -> SnyggSelector.DISABLED
+        else -> null
+    }
+    /*val bgColor by animateColorAsState(
         targetValue = if (isPressed) {
             actionStylePressed.background()
         } else {
@@ -123,7 +119,7 @@ fun QuickActionButton(
         KeyCode.DRAG_MARKER -> DebugHelperColor
         else -> actionStyle.foreground()
     }
-    val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f
+    val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f*/
 
     // Need to manually cancel an action if this composable suddenly leaves the composition to prevent the key from
     // being stuck in the pressed state
@@ -141,14 +137,14 @@ fun QuickActionButton(
         Modifier
     }
 
-    Box(
+    SnyggBox(
+        elementName = elementName,
+        attributes = mapOf(
+            "drag-marker" to if (action.keyData().code == KeyCode.DRAG_MARKER) 1 else 0,
+        ),
+        selector = selector,
         modifier = modifier
             .aspectRatio(1f)
-            .alpha(fgAlpha)
-            .snyggShadow(actionStyle)
-            .snyggBorder(actionStyle)
-            .background(bgColor, actionStyle.shape())
-            .snyggClip(actionStyle)
             .indication(interactionSource, LocalIndication.current)
             .pointerInput(action, isEnabled) {
                 awaitEachGesture {
@@ -171,8 +167,7 @@ fun QuickActionButton(
                     }
                 }
             }
-            .then(tooltipModifier)
-            .padding(8.dp),
+            .then(tooltipModifier),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -187,24 +182,21 @@ fun QuickActionButton(
                             evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
                         }
                         if (imageVector != null) {
-                            Icon(
+                            SnyggIcon(
+                                elementName = null,
                                 imageVector = imageVector,
-                                contentDescription = null,
-                                tint = fgColor,
                             )
                         } else if (label != null) {
-                            Text(
+                            SnyggText(
+                                elementName = null,
                                 text = label,
-                                color = fgColor,
                             )
                         }
                     }
-
                     is QuickAction.InsertText -> {
-                        Text(
+                        SnyggText(
+                            elementName = null,
                             text = action.data.firstOrNull().toString().ifBlank { "?" },
-                            color = fgColor,
-                            fontSize = 16.sp,
                         )
                     }
                 }
@@ -213,13 +205,9 @@ fun QuickActionButton(
             // Render additional info if this is a tile
             if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
+                SnyggText(
+                    elementName = null,
                     text = action.computeDisplayName(evaluator = evaluator),
-                    color = fgColor,
-                    fontSize = if (type == QuickActionBarType.STATIC_TILE) 10.sp else 13.sp,
-                    textAlign = TextAlign.Center,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
                 )
             }
         }
