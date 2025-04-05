@@ -52,12 +52,13 @@ fun SnyggIconButton(
     val style = theme.rememberQuery(elementName, attributes, selector)
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .minimumInteractiveComponentSize()
             .snyggMargin(style)
             .snyggShadow(style)
             .snyggBorder(style)
             .snyggBackground(style)
+            .then(modifier)
             // TODO: what is the material3 compliant default padding?
             .snyggPadding(style, default = PaddingValues(2.dp))
             .clickable(

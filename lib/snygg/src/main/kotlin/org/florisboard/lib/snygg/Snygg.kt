@@ -64,6 +64,7 @@ object Snygg {
     const val FontStyle = "font-style"
     const val FontWeight = "font-weight"
     const val LetterSpacing = "letter-spacing"
+    const val LineClamp = "line-clamp"
     const val LineHeight = "line-height"
 
     const val TextAlign = "text-align"
@@ -151,6 +152,10 @@ object SnyggSpec : SnyggSpecDecl({
         Snygg.LetterSpacing {
             inheritsImplicitly()
             add(SnyggSpSizeValue)
+        }
+        Snygg.LineClamp {
+            inheritsImplicitly()
+            //add(Snygg)
         }
         Snygg.LineHeight {
             inheritsImplicitly()

@@ -69,9 +69,9 @@ fun SnyggSurface(
         Surface(
             modifier = Modifier
                 .snyggMargin(style)
-                .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
+                .then(modifier)
                 .then(if (clip) Modifier.snyggClip(style) else Modifier)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),

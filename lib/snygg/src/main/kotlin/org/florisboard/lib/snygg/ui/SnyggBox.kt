@@ -46,11 +46,11 @@ fun SnyggBox(
         Box(
             modifier = Modifier
                 .snyggMargin(style)
-                .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .then(if (clip) Modifier.snyggClip(style) else Modifier)
                 .snyggBackground(style)
+                .then(modifier)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
             contentAlignment = contentAlignment,

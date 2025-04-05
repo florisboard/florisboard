@@ -44,10 +44,10 @@ fun SnyggRow(
         Row(
             modifier = Modifier
                 .snyggMargin(style)
-                .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .snyggBackground(style)
+                .then(modifier)
                 .snyggPadding(style),
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = verticalAlignment,

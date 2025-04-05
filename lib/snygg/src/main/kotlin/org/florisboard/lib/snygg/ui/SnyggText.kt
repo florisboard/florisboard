@@ -16,12 +16,14 @@
 
 package org.florisboard.lib.snygg.ui
 
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,10 +44,10 @@ fun SnyggText(
     Text(
         modifier = Modifier
             .snyggMargin(style)
-            .then(modifier)
             .snyggShadow(style)
             .snyggBorder(style)
             .snyggBackground(style)
+            .then(modifier)
             .snyggPadding(style),
         text = text,
         color = style.foreground(),
@@ -57,6 +59,7 @@ fun SnyggText(
         lineHeight = style.lineHeight(),
         textAlign = style.textAlign(),
         textDecoration = style.textDecorationLine(),
+        maxLines = style.lineClamp(),
         overflow = style.textOverflow(),
     )
 }
@@ -88,13 +91,20 @@ private fun SimpleSnyggText() {
             letterSpacing = fontSize(4.sp)
             textDecorationLine = textDecorationLine(TextDecoration.LineThrough)
         }
+        "preview-text"("long" to listOf(1)) {
+            fontSize = fontSize(10.sp)
+            lineClamp = lineClampMax(1)
+            textOverflow = textOverflow(TextOverflow.Ellipsis)
+        }
     }
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn("preview-column") {
+        SnyggColumn("preview-column", modifier = Modifier.widthIn(max = 150.dp)) {
             SnyggText("preview-text", text = "black text")
             SnyggText("preview-text", mapOf("attr" to 1), text = "red text")
+            SnyggText("preview-text", mapOf("long" to 1),
+                text = "this is a very long paragraph that will definitely not fit")
         }
     }
 }

@@ -44,10 +44,10 @@ fun SnyggColumn(
         Column(
             modifier = Modifier
                 .snyggMargin(style)
-                .then(modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .snyggBackground(style)
+                .then(modifier)
                 .snyggPadding(style),
             verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalAlignment,

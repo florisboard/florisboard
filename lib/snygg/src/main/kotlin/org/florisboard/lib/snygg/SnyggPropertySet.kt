@@ -16,51 +16,35 @@
 
 package org.florisboard.lib.snygg
 
-import androidx.annotation.FloatRange
-import androidx.annotation.IntRange
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
-import org.florisboard.lib.snygg.value.RgbaColor
-import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
-import org.florisboard.lib.snygg.value.SnyggInheritValue
-import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggPaddingValue
-import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
-import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggLineClampValue
+import org.florisboard.lib.snygg.value.SnyggObjectFitValue
+import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.isInherit
-import org.florisboard.lib.snygg.value.isUndefined
-import java.net.URI
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.iterator
 
 data class SnyggPropertySet internal constructor(
     val properties: Map<String, SnyggValue> = emptyMap(),
@@ -80,6 +64,8 @@ data class SnyggPropertySet internal constructor(
     val fontStyle = properties[Snygg.FontStyle] ?: SnyggUndefinedValue
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggUndefinedValue
     val letterSpacing = properties[Snygg.LetterSpacing] ?: SnyggUndefinedValue
+
+    val lineClamp = properties[Snygg.LineClamp] ?: SnyggUndefinedValue
     val lineHeight = properties[Snygg.LineHeight] ?: SnyggUndefinedValue
 
     val textAlign = properties[Snygg.TextAlign] ?: SnyggUndefinedValue
@@ -129,289 +115,103 @@ data class SnyggPropertySet internal constructor(
         }
         return JsonObject(rawProperties)
     }
-}
 
-class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
-    val properties = mutableMapOf<String, SnyggValue>()
-
-    init {
-        if (initProperties != null) {
-            properties.putAll(initProperties)
+    fun background(default: Color = Color.Unspecified): Color {
+        return when (background) {
+            is SnyggStaticColorValue -> background.color
+            else -> default
         }
     }
 
-    @Suppress("NOTHING_TO_INLINE")
-    private inline fun getProperty(key: String): SnyggValue? {
-        return properties[key]
-    }
-
-    private fun setProperty(key: String, value: SnyggValue?) {
-        if (value == null) {
-            properties.remove(key)
-        } else {
-            properties[key] = value
+    fun foreground(default: Color = Color.Unspecified): Color {
+        return when (foreground) {
+            is SnyggStaticColorValue -> foreground.color
+            else -> default
         }
     }
 
-    internal fun applyAll(thisStyle: SnyggPropertySet, parentStyle: SnyggPropertySet) {
-        for ((property, value) in thisStyle.properties) {
-            when {
-                value.isUndefined() -> setProperty(property, null)
-                value.isInherit() -> setProperty(property, parentStyle.properties[property])
-                else -> setProperty(property, value)
-            }
-        }
-        inheritImplicitly(parentStyle)
-    }
-
-    internal fun inheritImplicitly(parentStyle: SnyggPropertySet) {
-        // TODO: pattern properties??
-        for ((property, propertySpec) in SnyggSpec.elementsSpec.properties) {
-            if (propertySpec.inheritsImplicitly() && !properties.contains(property)) {
-                // inherit implicitly
-                setProperty(property, parentStyle.properties[property])
-            }
+    fun objectFit(default: ContentScale = ContentScale.Fit): ContentScale {
+        return when (objectFit) {
+            is SnyggObjectFitValue -> objectFit.contentScale
+            else -> default
         }
     }
 
-    fun build() = SnyggPropertySet(properties.toMap())
-
-    infix fun String.to(v: SnyggValue) {
-        properties[this] = v
+    fun fontFamily(theme: SnyggTheme, default: FontFamily? = null): FontFamily? {
+        return when (val family = fontFamily) {
+            is SnyggGenericFontFamilyValue -> family.fontFamily
+            is SnyggCustomFontFamilyValue -> theme.getFontFamily(family.fontName)
+            else -> default
+        }
     }
 
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Only snygg values are allowed",
-    )
-    infix fun String.to(v: Any): Nothing {
-        throw IllegalArgumentException("Only snygg values are allowed (given value: $v)")
+    fun fontSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
+        return when (fontSize) {
+            is SnyggSpSizeValue -> fontSize.sp
+            else -> default
+        }
     }
 
-    var background: SnyggValue?
-        get() =  getProperty(Snygg.Background)
-        set(v) = setProperty(Snygg.Background, v)
-    var foreground: SnyggValue?
-        get() =  getProperty(Snygg.Foreground)
-        set(v) = setProperty(Snygg.Foreground, v)
-
-    var backgroundImage: SnyggValue?
-        get() =  getProperty(Snygg.BackgroundImage)
-        set(v) = setProperty(Snygg.BackgroundImage, v)
-    var objectFit: SnyggValue?
-        get() =  getProperty(Snygg.ObjectFit)
-        set(v) = setProperty(Snygg.ObjectFit, v)
-
-    var borderColor: SnyggValue?
-        get() =  getProperty(Snygg.BorderColor)
-        set(v) = setProperty(Snygg.BorderColor, v)
-    var borderStyle: SnyggValue?
-        get() =  getProperty(Snygg.BorderStyle)
-        set(v) = setProperty(Snygg.BorderStyle, v)
-    var borderWidth: SnyggValue?
-        get() =  getProperty(Snygg.BorderWidth)
-        set(v) = setProperty(Snygg.BorderWidth, v)
-
-    var fontFamily: SnyggValue?
-        get() =  getProperty(Snygg.FontFamily)
-        set(v) = setProperty(Snygg.FontFamily, v)
-    var fontSize: SnyggValue?
-        get() =  getProperty(Snygg.FontSize)
-        set(v) = setProperty(Snygg.FontSize, v)
-    var fontStyle: SnyggValue?
-        get() =  getProperty(Snygg.FontStyle)
-        set(v) = setProperty(Snygg.FontStyle, v)
-    var fontWeight: SnyggValue?
-        get() =  getProperty(Snygg.FontWeight)
-        set(v) = setProperty(Snygg.FontWeight, v)
-    var letterSpacing: SnyggValue?
-        get() =  getProperty(Snygg.LetterSpacing)
-        set(v) = setProperty(Snygg.LetterSpacing, v)
-    var lineHeight: SnyggValue?
-        get() =  getProperty(Snygg.LineHeight)
-        set(v) = setProperty(Snygg.LineHeight, v)
-
-    var textAlign: SnyggValue?
-        get() =  getProperty(Snygg.TextAlign)
-        set(v) = setProperty(Snygg.TextAlign, v)
-    var textDecorationLine: SnyggValue?
-        get() =  getProperty(Snygg.TextDecorationLine)
-        set(v) = setProperty(Snygg.TextDecorationLine, v)
-    var textOverflow: SnyggValue?
-        get() =  getProperty(Snygg.TextOverflow)
-        set(v) = setProperty(Snygg.TextOverflow, v)
-
-    var margin: SnyggValue?
-        get() =  getProperty(Snygg.Margin)
-        set(v) = setProperty(Snygg.Margin, v)
-    var padding: SnyggValue?
-        get() =  getProperty(Snygg.Padding)
-        set(v) = setProperty(Snygg.Padding, v)
-
-    var shadowColor: SnyggValue?
-        get() =  getProperty(Snygg.ShadowColor)
-        set(v) = setProperty(Snygg.ShadowColor, v)
-    var shadowElevation: SnyggValue?
-        get() =  getProperty(Snygg.ShadowElevation)
-        set(v) = setProperty(Snygg.ShadowElevation, v)
-
-    var shape: SnyggValue?
-        get() =  getProperty(Snygg.Shape)
-        set(v) = setProperty(Snygg.Shape, v)
-
-    var src: SnyggValue?
-        get() =  getProperty(Snygg.Src)
-        set(v) = setProperty(Snygg.Src, v)
-
-    fun rgbaColor(
-        @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
-        r: Int,
-        @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
-        g: Int,
-        @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
-        b: Int,
-        @FloatRange(from = RgbaColor.AlphaRangeMin.toDouble(), to = RgbaColor.AlphaRangeMax.toDouble())
-        a: Float = RgbaColor.AlphaRangeMax,
-    ): SnyggStaticColorValue {
-        require(r in RgbaColor.ColorRange)
-        require(g in RgbaColor.ColorRange)
-        require(b in RgbaColor.ColorRange)
-        require(a in RgbaColor.AlphaRange)
-        val red = r.toFloat() / RgbaColor.ColorRangeMax
-        val green = g.toFloat() / RgbaColor.ColorRangeMax
-        val blue = b.toFloat() / RgbaColor.ColorRangeMax
-        return SnyggStaticColorValue(Color(red, green, blue, a))
+    fun fontStyle(default: FontStyle? = null): FontStyle? {
+        return when (fontStyle) {
+            is SnyggFontStyleValue -> fontStyle.fontStyle
+            else -> default
+        }
     }
 
-    fun dynamicLightColor(name: String): SnyggDynamicLightColorValue {
-        return SnyggDynamicLightColorValue(name)
+    fun fontWeight(default: FontWeight? = null): FontWeight? {
+        return when (fontWeight) {
+            is SnyggFontWeightValue -> fontWeight.fontWeight
+            else -> default
+        }
     }
 
-    fun dynamicDarkColor(name: String): SnyggDynamicDarkColorValue {
-        return SnyggDynamicDarkColorValue(name)
+    fun letterSpacing(default: TextUnit = TextUnit.Unspecified): TextUnit {
+        return when (letterSpacing) {
+            is SnyggSpSizeValue -> letterSpacing.sp
+            else -> default
+        }
     }
 
-    fun fontStyle(fontStyle: FontStyle): SnyggFontStyleValue {
-        return SnyggFontStyleValue(fontStyle)
+    fun lineClamp(default: Int = Int.MAX_VALUE): Int {
+        return when (lineClamp) {
+            is SnyggLineClampValue -> lineClamp.maxLines
+            else -> default
+        }
     }
 
-    fun fontWeight(fontWeight: FontWeight): SnyggFontWeightValue {
-        return SnyggFontWeightValue(fontWeight)
+    fun lineHeight(default: TextUnit = TextUnit.Unspecified): TextUnit {
+        return when (lineHeight) {
+            is SnyggSpSizeValue -> lineHeight.sp
+            else -> default
+        }
     }
 
-    fun textAlign(textAlign: TextAlign): SnyggTextAlignValue {
-        return SnyggTextAlignValue(textAlign)
+    fun textAlign(default: TextAlign? = null): TextAlign? {
+        return when (textAlign) {
+            is SnyggTextAlignValue -> textAlign.textAlign
+            else -> default
+        }
     }
 
-    fun textDecorationLine(textDecoration: TextDecoration): SnyggTextDecorationLineValue {
-        return SnyggTextDecorationLineValue(textDecoration)
+    fun textDecorationLine(default: TextDecoration? = null): TextDecoration? {
+        return when (textDecorationLine) {
+            is SnyggTextDecorationLineValue -> textDecorationLine.textDecoration
+            else -> default
+        }
     }
 
-    fun textOverflow(textOverflow: TextOverflow): SnyggTextOverflowValue {
-        return SnyggTextOverflowValue(textOverflow)
+    fun textOverflow(default: TextOverflow = TextOverflow.Clip): TextOverflow {
+        return when (textOverflow) {
+            is SnyggTextOverflowValue -> textOverflow.textOverflow
+            else -> default
+        }
     }
 
-    fun rectangleShape(): SnyggRectangleShapeValue {
-        return SnyggRectangleShapeValue()
-    }
-
-    fun circleShape(): SnyggCircleShapeValue {
-        return SnyggCircleShapeValue()
-    }
-
-    fun cutCornerShape(cornerSize: Dp): SnyggCutCornerDpShapeValue {
-        return SnyggCutCornerDpShapeValue(cornerSize, cornerSize, cornerSize, cornerSize)
-    }
-
-    fun cutCornerShape(
-        topStart: Dp,
-        topEnd: Dp,
-        bottomEnd: Dp,
-        bottomStart: Dp,
-    ): SnyggCutCornerDpShapeValue {
-        return SnyggCutCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-    }
-
-    fun cutCornerShape(cornerSize: Int): SnyggCutCornerPercentShapeValue {
-        return SnyggCutCornerPercentShapeValue(cornerSize, cornerSize, cornerSize, cornerSize)
-    }
-
-    fun cutCornerShape(
-        topStart: Int,
-        topEnd: Int,
-        bottomEnd: Int,
-        bottomStart: Int,
-    ): SnyggCutCornerPercentShapeValue {
-        return SnyggCutCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-    }
-
-    fun roundedCornerShape(cornerSize: Dp): SnyggRoundedCornerDpShapeValue {
-        return SnyggRoundedCornerDpShapeValue(cornerSize, cornerSize, cornerSize, cornerSize)
-    }
-
-    fun roundedCornerShape(
-        topStart: Dp,
-        topEnd: Dp,
-        bottomEnd: Dp,
-        bottomStart: Dp,
-    ): SnyggRoundedCornerDpShapeValue {
-        return SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-    }
-
-    fun roundedCornerShape(cornerSize: Int): SnyggRoundedCornerPercentShapeValue {
-        return SnyggRoundedCornerPercentShapeValue(cornerSize, cornerSize, cornerSize, cornerSize)
-    }
-
-    fun roundedCornerShape(
-        topStart: Int,
-        topEnd: Int,
-        bottomEnd: Int,
-        bottomStart: Int,
-    ): SnyggRoundedCornerPercentShapeValue {
-        return SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-    }
-
-    fun padding(
-        start: Dp,
-        top: Dp,
-        end: Dp,
-        bottom: Dp,
-    ): SnyggPaddingValue {
-        return SnyggPaddingValue(PaddingValues(start, top, end, bottom))
-    }
-
-    fun padding(
-        horizontal: Dp,
-        vertical: Dp,
-    ): SnyggPaddingValue {
-        return SnyggPaddingValue(PaddingValues(horizontal, vertical))
-    }
-
-    fun padding(all: Dp): SnyggPaddingValue {
-        return SnyggPaddingValue(PaddingValues(all))
-    }
-
-    fun size(dp: Dp): SnyggDpSizeValue {
-        return SnyggDpSizeValue(dp)
-    }
-
-    fun fontSize(sp: TextUnit): SnyggSpSizeValue {
-        return SnyggSpSizeValue(sp)
-    }
-
-    fun size(percentage: Float): SnyggPercentageSizeValue {
-        return SnyggPercentageSizeValue(percentage)
-    }
-
-    fun uri(uri: URI): SnyggUriValue {
-        return SnyggUriValue(uri)
-    }
-
-    fun `var`(key: String): SnyggDefinedVarValue {
-        return SnyggDefinedVarValue(key)
-    }
-
-    fun inherit(): SnyggInheritValue {
-        return SnyggInheritValue
+    fun shape(): Shape {
+        return when (shape) {
+            is SnyggShapeValue -> shape.shape
+            else -> RectangleShape
+        }
     }
 }
