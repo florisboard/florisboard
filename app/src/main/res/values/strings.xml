@@ -210,6 +210,7 @@
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
 
+    <!-- TODO: rename and adapt below two strings -> annotation instead of element prefix -->
     <string name="snygg__rule_element__defines">Variables</string>
     <string name="snygg__rule_element__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
@@ -247,9 +248,8 @@
     <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
+    <string name="snygg__rule_selector__hover">Hover</string>
     <string name="snygg__rule_selector__disabled">Disabled</string>
-    <string name="snygg__property_name__width">Width</string>
-    <string name="snygg__property_name__height">Height</string>
     <string name="snygg__property_name__background">Background</string>
     <string name="snygg__property_name__foreground">Foreground</string>
     <string name="snygg__property_name__border_color">Border color</string>
@@ -258,7 +258,6 @@
     <string name="snygg__property_name__font_family">Font family</string>
     <string name="snygg__property_name__font_size">Font size</string>
     <string name="snygg__property_name__font_style">Font style</string>
-    <string name="snygg__property_name__font_variant">Font variant</string>
     <string name="snygg__property_name__font_weight">Font weight</string>
     <string name="snygg__property_name__shadow_elevation">Shadow elevation</string>
     <string name="snygg__property_name__shape">Shape</string>

@@ -24,8 +24,8 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.Snygg
+import org.florisboard.lib.snygg.SnyggElementRule
 import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.value.RgbaColor
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -34,8 +34,8 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -47,13 +47,10 @@ import org.florisboard.lib.snygg.value.SnyggValueEncoder
 import kotlin.math.roundToInt
 
 @Composable
-internal fun translateElementName(rule: SnyggRule, level: SnyggLevel): String {
-    return translateElementName(rule.element, level) ?: remember {
+internal fun translateElementName(rule: SnyggElementRule, level: SnyggLevel): String {
+    return translateElementName(rule.elementName, level) ?: remember {
         buildString {
-            if (rule.isAnnotation) {
-                append(SnyggRule.ANNOTATION_MARKER)
-            }
-            append(rule.element)
+            append(rule.elementName)
         }
     }
 }
@@ -63,7 +60,6 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
         else -> when (element) {
-            "defines" -> R.string.snygg__rule_element__defines
             FlorisImeUi.Keyboard -> R.string.snygg__rule_element__keyboard
             FlorisImeUi.Key -> R.string.snygg__rule_element__key
             FlorisImeUi.KeyHint -> R.string.snygg__rule_element__key_hint
@@ -106,9 +102,8 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
 internal fun translatePropertyName(propertyName: String, level: SnyggLevel): String {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
+        // TODO: add new theme translations
         else -> when (propertyName) {
-            Snygg.Width -> R.string.snygg__property_name__width
-            Snygg.Height -> R.string.snygg__property_name__height
             Snygg.Background -> R.string.snygg__property_name__background
             Snygg.Foreground -> R.string.snygg__property_name__foreground
             Snygg.BorderColor -> R.string.snygg__property_name__border_color
@@ -117,7 +112,6 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
             Snygg.FontFamily -> R.string.snygg__property_name__font_family
             Snygg.FontSize -> R.string.snygg__property_name__font_size
             Snygg.FontStyle -> R.string.snygg__property_name__font_style
-            Snygg.FontVariant -> R.string.snygg__property_name__font_variant
             Snygg.FontWeight -> R.string.snygg__property_name__font_weight
             Snygg.ShadowElevation -> R.string.snygg__property_name__shadow_elevation
             Snygg.Shape -> R.string.snygg__property_name__shape
@@ -181,20 +175,20 @@ internal fun buildColorString(color: Color, displayColorsAs: DisplayColorsAs): S
         DisplayColorsAs.HEX8 -> buildString {
             append(UnicodeCtrlChar.LeftToRightIsolate)
             append("#")
-            append((color.red * RgbaColor.RedMax).roundToInt().toString(16).padStart(2, '0'))
-            append((color.green * RgbaColor.GreenMax).roundToInt().toString(16).padStart(2, '0'))
-            append((color.blue * RgbaColor.BlueMax).roundToInt().toString(16).padStart(2, '0'))
+            append((color.red * RgbaColor.ColorRangeMax).roundToInt().toString(16).padStart(2, '0'))
+            append((color.green * RgbaColor.ColorRangeMax).roundToInt().toString(16).padStart(2, '0'))
+            append((color.blue * RgbaColor.ColorRangeMax).roundToInt().toString(16).padStart(2, '0'))
             append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
             append(UnicodeCtrlChar.PopDirectionalIsolate)
         }
         DisplayColorsAs.RGBA -> buildString {
             append(UnicodeCtrlChar.LeftToRightIsolate)
             append("rgba(")
-            append((color.red * RgbaColor.RedMax).roundToInt())
+            append((color.red * RgbaColor.ColorRangeMax).roundToInt())
             append(",")
-            append((color.green * RgbaColor.GreenMax).roundToInt())
+            append((color.green * RgbaColor.ColorRangeMax).roundToInt())
             append(",")
-            append((color.blue * RgbaColor.BlueMax).roundToInt())
+            append((color.blue * RgbaColor.ColorRangeMax).roundToInt())
             append(",")
             append(color.alpha)
             append(")")
@@ -209,8 +203,8 @@ internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): Stri
         SnyggUndefinedValue -> R.string.general__select_dropdown_value_placeholder
         SnyggInheritValue -> R.string.snygg__property_value__explicit_inherit
         SnyggStaticColorValue -> R.string.snygg__property_value__solid_color
-        SnyggDynamicColorLightColorValue -> R.string.snygg__property_value__material_you_light_color
-        SnyggDynamicColorDarkColorValue -> R.string.snygg__property_value__material_you_dark_color
+        SnyggDynamicLightColorValue -> R.string.snygg__property_value__material_you_light_color
+        SnyggDynamicDarkColorValue -> R.string.snygg__property_value__material_you_dark_color
         SnyggRectangleShapeValue -> R.string.snygg__property_value__rectangle_shape
         SnyggCircleShapeValue -> R.string.snygg__property_value__circle_shape
         SnyggCutCornerDpShapeValue -> R.string.snygg__property_value__cut_corner_shape_dp

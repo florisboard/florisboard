@@ -35,7 +35,7 @@ data class SnyggStylesheet internal constructor(
     fun edit() = SnyggStylesheetEditor(this.schema, this.rules)
 
     companion object {
-        internal const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
+        const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
 
         fun v2(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
             val builder = SnyggStylesheetEditor(SCHEMA_V2)

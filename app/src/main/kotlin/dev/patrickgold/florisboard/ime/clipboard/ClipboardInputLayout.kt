@@ -117,8 +117,6 @@ import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggClip
 import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
 
 private val ContentPadding = PaddingValues(horizontal = 4.dp)
 private val ItemMargin = PaddingValues(all = 6.dp)
@@ -127,6 +125,14 @@ private val DescriptionPadding = PaddingValues(top = 4.dp, start = 12.dp, end = 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
 
+@Composable
+fun ClipboardInputLayout(
+    modifier: Modifier = Modifier,
+) {
+    // TODO: reimplement, this is a mess
+}
+
+/*
 @Composable
 fun ClipboardInputLayout(
     modifier: Modifier = Modifier,
@@ -162,8 +168,6 @@ fun ClipboardInputLayout(
             FlorisIconButtonWithInnerPadding(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 icon = Icons.AutoMirrored.Filled.ArrowBack,
-                //TODO: how to get color?
-                iconColor = headerStyle.foreground.solidColor(context),
             )
             SnyggText(FlorisImeUi.ClipboardHeader,
                 modifier = Modifier.weight(1f),
@@ -177,16 +181,12 @@ fun ClipboardInputLayout(
                 } else {
                     Icons.Default.ToggleOff
                 },
-                //TODO: how to get color?
-                iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier.autoMirrorForRtl(),
                 icon = Icons.Default.ClearAll,
-                //TODO: how to get color?
-                iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
             FlorisIconButtonWithInnerPadding(
@@ -194,8 +194,6 @@ fun ClipboardInputLayout(
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
                 icon = Icons.Default.Edit,
-                //TODO: how to get color?
-                iconColor = headerStyle.foreground.solidColor(context),
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )
             KeyboardLikeButton(
@@ -712,3 +710,4 @@ private fun PopupAction(
         )
     }
 }
+*/

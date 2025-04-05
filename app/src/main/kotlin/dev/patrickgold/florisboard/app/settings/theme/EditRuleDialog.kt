@@ -82,7 +82,6 @@ import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import org.florisboard.lib.android.showShortToast
@@ -100,12 +99,14 @@ import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.kotlin.getKeyByValue
+import org.florisboard.lib.snygg.SnyggElementRule
+import org.florisboard.lib.snygg.SnyggSelector
 
 private val TransparentTextSelectionColors = TextSelectionColors(
     handleColor = Color.Transparent,
     backgroundColor = Color.Transparent,
 )
-internal val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
+internal val SnyggEmptyRuleForAdding = SnyggElementRule(elementName = "- select -")
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -120,8 +121,9 @@ internal fun EditRuleDialog(
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var showAlreadyExistsError by rememberSaveable { mutableStateOf(false) }
 
+    /* TODO rewrite (not too much of a mess though)
     val possibleElementNames = remember {
-        listOf(SnyggEmptyRuleForAdding.element) + FlorisImeUiSpec.elements.keys
+        listOf(SnyggEmptyRuleForAdding) + listOf<String>()
     }
     val possibleElementLabels = possibleElementNames.map { translateElementName(it, level) ?: it }
     var elementsExpanded by remember { mutableStateOf(false) }
@@ -145,9 +147,15 @@ internal fun EditRuleDialog(
     var shiftStateCapsLock by rememberSaveable {
         mutableStateOf(initRule.shiftStates.contains(InputShiftState.CAPS_LOCK.value))
     }
-    var pressedSelector by rememberSaveable { mutableStateOf(initRule.pressedSelector) }
-    var focusSelector by rememberSaveable { mutableStateOf(initRule.focusSelector) }
-    var disabledSelector by rememberSaveable { mutableStateOf(initRule.disabledSelector) }
+
+    var selector by rememberSaveable { mutableStateOf(SnyggSelector.NONE) }
+    fun updateSelector(newSelector: SnyggSelector) {
+        if (selector == newSelector) {
+            selector = SnyggSelector.NONE
+        } else {
+            selector = newSelector
+        }
+    }
 
     JetPrefAlertDialog(
         title = stringRes(if (isAddRuleDialog) {
@@ -174,9 +182,7 @@ internal fun EditRuleDialog(
                         if (shiftStateShiftedAutomatic) { add(InputShiftState.SHIFTED_AUTOMATIC.value) }
                         if (shiftStateCapsLock) { add(InputShiftState.CAPS_LOCK.value) }
                     },
-                    pressedSelector = pressedSelector,
-                    focusSelector = focusSelector,
-                    disabledSelector = disabledSelector,
+                    selector = selector,
                 )
                 if (!onConfirmRule(initRule, newRule)) {
                     showAlreadyExistsError = true
@@ -218,30 +224,38 @@ internal fun EditRuleDialog(
             DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
                 Row(modifier = Modifier.florisHorizontalScroll()) {
                     FlorisChip(
-                        onClick = { pressedSelector = !pressedSelector },
+                        onClick = { updateSelector(SnyggSelector.PRESSED) },
                         modifier = Modifier.padding(end = 4.dp),
                         text = when (level) {
-                            SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
+                            SnyggLevel.DEVELOPER -> SnyggSelector.PRESSED.id
                             else -> stringRes(R.string.snygg__rule_selector__pressed)
                         },
-                        selected = pressedSelector,
+                        selected = selector == SnyggSelector.PRESSED,
                     )
                     FlorisChip(
-                        onClick = { focusSelector = !focusSelector },
+                        onClick = { updateSelector(SnyggSelector.FOCUS) },
                         modifier = Modifier.padding( end = 4.dp),
                         text = when (level) {
-                            SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
+                            SnyggLevel.DEVELOPER -> SnyggSelector.FOCUS.id
                             else -> stringRes(R.string.snygg__rule_selector__focus)
                         },
-                        selected = focusSelector,
+                        selected = selector == SnyggSelector.FOCUS,
                     )
                     FlorisChip(
-                        onClick = { disabledSelector = !disabledSelector },
+                        onClick = { updateSelector(SnyggSelector.HOVER) },
                         text = when (level) {
-                            SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
+                            SnyggLevel.DEVELOPER -> SnyggSelector.HOVER.id
+                            else -> stringRes(R.string.snygg__rule_selector__hover)
+                        },
+                        selected = selector == SnyggSelector.HOVER,
+                    )
+                    FlorisChip(
+                        onClick = { updateSelector(SnyggSelector.DISABLED) },
+                        text = when (level) {
+                            SnyggLevel.DEVELOPER -> SnyggSelector.DISABLED.id
                             else -> stringRes(R.string.snygg__rule_selector__disabled)
                         },
-                        selected = disabledSelector,
+                        selected = selector == SnyggSelector.DISABLED,
                     )
                 }
             }
@@ -334,6 +348,7 @@ internal fun EditRuleDialog(
             onDismiss = { editCodeDialogValue = null },
         )
     }
+    */
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

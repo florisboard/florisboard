@@ -20,7 +20,7 @@ class SnyggStylesheetEditor(
     private val schema: String,
     initRules: Map<SnyggRule, SnyggPropertySet>? = null,
 ) {
-    private val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
+    val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
 
     init {
         if (initRules != null) {

@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.ime.keyboard.Key
@@ -40,7 +38,8 @@ import dev.patrickgold.florisboard.lib.compose.safeTimes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.fontSize
 import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
@@ -54,18 +53,18 @@ fun PopupBaseBox(
 ): Unit = with(LocalDensity.current) {
     val popupStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopup)
     val fontSize = popupStyle.fontSize() safeTimes fontSizeMultiplier
-    SnyggSurface(
+    SnyggBox(
         elementName = FlorisImeUi.KeyPopup,
         modifier = modifier,
         clip = true,
     ) {
         key.label?.let { label ->
-            Box(
+            SnyggBox(
+                elementName = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(key.visibleBounds.height.toDp())
                     .align(Alignment.TopCenter),
-                supportsBackgroundImage = false,
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
@@ -94,15 +93,12 @@ fun PopupBaseBox(
 fun PopupExtBox(
     modifier: Modifier = Modifier,
     elements: List<List<PopupUiController.Element>>,
-    fontSizeMultiplier: Float,
     elemArrangement: Arrangement.Horizontal,
     elemWidth: Dp,
     elemHeight: Dp,
     activeElementIndex: Int,
 ): Unit = with(LocalDensity.current) {
-    val context = LocalContext.current
-
-    SnyggColumn(FlorisImeUi.KeyPopup) {
+    SnyggColumn(FlorisImeUi.KeyPopup, modifier = modifier) {
         for (row in elements.asReversed()) {
             Row(
                 modifier = Modifier
@@ -123,23 +119,17 @@ fun PopupExtBox(
                             .size(elemWidth, elemHeight),
                     ) {
                         element.label?.let { label ->
-                            Text(
+                            SnyggText(
+                                elementName = null,
                                 modifier = Modifier.align(Alignment.Center),
                                 text = label,
-                                color = elemStyle.foreground.solidColor(context),
-                                fontSize = elemFontSize,
-                                maxLines = 1,
-                                softWrap = false,
                             )
                         }
                         element.icon?.let { icon ->
-                            Icon(
-                                modifier = Modifier
-                                    .requiredSize(elemFontSize.toDp() * 1.1f)
-                                    .align(Alignment.Center),
+                            SnyggIcon(
+                                elementName = null,
+                                modifier = Modifier.align(Alignment.Center),
                                 imageVector = icon,
-                                contentDescription = null,
-                                tint = elemStyle.foreground.solidColor(context),
                             )
                         }
                     }

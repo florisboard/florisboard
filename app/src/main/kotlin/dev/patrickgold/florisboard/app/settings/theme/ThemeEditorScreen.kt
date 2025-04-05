@@ -71,7 +71,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
@@ -98,15 +97,15 @@ import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subFile
+import org.florisboard.lib.snygg.SnyggAnnotationRule
+import org.florisboard.lib.snygg.SnyggElementRule
 import org.florisboard.lib.snygg.SnyggLevel
 import org.florisboard.lib.snygg.SnyggPropertySetEditor
-import org.florisboard.lib.snygg.SnyggPropertySetSpec
 import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
-import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
-import org.florisboard.lib.snygg.definedVariablesRule
-import org.florisboard.lib.snygg.isDefinedVariablesRule
+import org.florisboard.lib.snygg.ui.Saver
 
 internal val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
     save = { ArrayList(it) },
@@ -137,16 +136,14 @@ fun ThemeEditorScreen(
             val stylesheetFile = workspace.extDir.subFile(stylesheetPath)
             val stylesheetEditor = if (stylesheetFile.exists()) {
                 try {
-                    stylesheetFile.readJson<SnyggStylesheet>(SnyggStylesheetJsonConfig).edit()
-                } catch (e: Throwable) {
-                    SnyggStylesheetEditor()
+                    stylesheetFile.readJson<SnyggStylesheet>().edit()
+                } catch (_: Throwable) {
+                    SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2)
                 }
             } else {
-                SnyggStylesheetEditor()
+                SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2)
             }
-            if (stylesheetEditor.rules.none { (rule, _) -> rule.isDefinedVariablesRule() }) {
-                stylesheetEditor.rules[SnyggRule.definedVariablesRule()] = SnyggPropertySetEditor()
-            }
+            stylesheetEditor.rules.putIfAbsent(SnyggAnnotationRule.Defines, SnyggPropertySetEditor())
             stylesheetEditor
         }.also { editor.stylesheetEditor = it }
     }
@@ -158,7 +155,6 @@ fun ThemeEditorScreen(
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
     var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
-    var snyggPropertySetSpecForEditing = remember<SnyggPropertySetSpec?> { null }
     var showEditComponentMetaDialog by rememberSaveable { mutableStateOf(false) }
     var showFineTuneDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -229,7 +225,7 @@ fun ThemeEditorScreen(
 
         DisposableEffect(workspace.version) {
             themeManager.previewThemeInfo = ThemeManager.ThemeInfo.DEFAULT.copy(
-                stylesheet = stylesheetEditor.build().compileToFullyQualified(FlorisImeUiSpec),
+                stylesheet = stylesheetEditor.build(),
             )
             onDispose {
                 themeManager.previewThemeInfo = null
@@ -238,7 +234,7 @@ fun ThemeEditorScreen(
 
         val definedVariables = remember(stylesheetEditor.rules) {
             stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
-                if (rule.isDefinedVariablesRule()) {
+                if (rule == SnyggAnnotationRule.Defines) {
                     propertySet.properties
                 } else {
                     null
@@ -263,7 +259,7 @@ fun ThemeEditorScreen(
                         onEditBtnClick = { showEditComponentMetaDialog = true },
                     )
                     if (stylesheetEditor.rules.isEmpty() ||
-                        (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.keys.all { it.isDefinedVariablesRule() })
+                        (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.keys.all { it == SnyggAnnotationRule.Defines })
                     ) {
                         Text(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
@@ -275,8 +271,7 @@ fun ThemeEditorScreen(
             }
 
             items(stylesheetEditor.rules.entries.toList()) { (rule, propertySet) -> key(rule) {
-                val isVariablesRule = rule.isDefinedVariablesRule()
-                val propertySetSpec = FlorisImeUiSpec.propertySetSpec(rule.element)
+                val isVariablesRule = rule == SnyggAnnotationRule.Defines
                 FlorisOutlinedBox(
                     modifier = Modifier
                         .padding(vertical = 8.dp, horizontal = 16.dp)
@@ -292,7 +287,6 @@ fun ThemeEditorScreen(
                             },
                             onAddPropertyBtnClick = {
                                 snyggPropertySetForEditing = propertySet
-                                snyggPropertySetSpecForEditing = propertySetSpec
                                 snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding
                             },
                         )
@@ -305,12 +299,10 @@ fun ThemeEditorScreen(
                             )
                         }
                         for ((propertyName, propertyValue) in propertySet.properties) {
-                            val propertySpec = propertySetSpec?.propertySpec(propertyName)
-                            if (propertySpec != null && propertySpec.level <= snyggLevel || isVariablesRule) {
+                            if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
                                 JetPrefListItem(
                                     modifier = Modifier.rippleClickable {
                                         snyggPropertySetForEditing = propertySet
-                                        snyggPropertySetSpecForEditing = propertySetSpec
                                         snyggPropertyToEdit = PropertyInfo(propertyName, propertyValue)
                                     },
                                     text = translatePropertyName(propertyName, snyggLevel),
@@ -396,7 +388,6 @@ fun ThemeEditorScreen(
         val propertyToEdit = snyggPropertyToEdit
         if (propertyToEdit != null) {
             EditPropertyDialog(
-                propertySetSpec = snyggPropertySetSpecForEditing,
                 initProperty = propertyToEdit,
                 level = snyggLevel,
                 displayColorsAs = displayColorsAs,
@@ -580,38 +571,53 @@ private fun SnyggRuleRow(
                 .weight(1f)
                 .padding(vertical = 8.dp, horizontal = 10.dp),
         ) {
-            Text(
-                text = translateElementName(rule, level),
-                style = MaterialTheme.typography.bodyMedium,
-                fontFamily = FontFamily.Monospace,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Row(modifier = Modifier.fillMaxWidth()) {
-                if (rule.pressedSelector) {
-                    Selector(text = when (level) {
-                        SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
-                        else -> stringRes(R.string.snygg__rule_selector__pressed)
-                    })
+            if (rule is SnyggElementRule) {
+                Text(
+                    text = translateElementName(rule, level),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontFamily = FontFamily.Monospace,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    if (rule.selector == SnyggSelector.PRESSED) {
+                        Selector(
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.PRESSED.id
+                                else -> stringRes(R.string.snygg__rule_selector__pressed)
+                            }
+                        )
+                    }
+                    if (rule.selector == SnyggSelector.FOCUS) {
+                        Selector(
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.FOCUS.id
+                                else -> stringRes(R.string.snygg__rule_selector__focus)
+                            }
+                        )
+                    }
+                    if (rule.selector == SnyggSelector.HOVER) {
+                        Selector(
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.HOVER.id
+                                else -> stringRes(R.string.snygg__rule_selector__hover)
+                            }
+                        )
+                    }
+                    if (rule.selector == SnyggSelector.DISABLED) {
+                        Selector(
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.DISABLED.id
+                                else -> stringRes(R.string.snygg__rule_selector__disabled)
+                            }
+                        )
+                    }
                 }
-                if (rule.focusSelector) {
-                    Selector(text = when (level) {
-                        SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
-                        else -> stringRes(R.string.snygg__rule_selector__focus)
-                    })
+                for ((attrKey, attrValue) in rule.attributes) {
+                    AttributesList(text = attrKey, list = attrValue.toString())
                 }
-                if (rule.disabledSelector) {
-                    Selector(text = when (level) {
-                        SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
-                        else -> stringRes(R.string.snygg__rule_selector__disabled)
-                    })
-                }
-            }
-            if (rule.codes.isNotEmpty()) {
-                AttributesList(text = "code", list = remember(rule.codes) { rule.codes.toString() })
-            }
-            if (rule.shiftStates.isNotEmpty()) {
-                AttributesList(text = "shiftstate", list = remember(rule.shiftStates) { rule.shiftStates.toString() })
+            } else {
+                Text(text = rule.toString())
             }
         }
         if (showEditBtn) {

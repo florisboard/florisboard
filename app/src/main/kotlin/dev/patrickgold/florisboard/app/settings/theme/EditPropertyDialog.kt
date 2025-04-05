@@ -71,17 +71,12 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggPropertySetSpec
-import org.florisboard.lib.snygg.value.MaterialYouColor
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
 import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
@@ -90,7 +85,6 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
-import org.florisboard.lib.snygg.value.SnyggVarValueEncoders
 import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -130,7 +124,20 @@ private enum class ShapeCorner {
 
 @Composable
 internal fun EditPropertyDialog(
-    propertySetSpec: SnyggPropertySetSpec?,
+    initProperty: PropertyInfo,
+    level: SnyggLevel,
+    displayColorsAs: DisplayColorsAs,
+    definedVariables: Map<String, SnyggValue>,
+    onConfirmNewValue: (String, SnyggValue) -> Boolean,
+    onDelete: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    // TODO: reimplement
+}
+
+/*
+@Composable
+internal fun EditPropertyDialog(
     initProperty: PropertyInfo,
     level: SnyggLevel,
     displayColorsAs: DisplayColorsAs,
@@ -947,3 +954,4 @@ private fun PropertyValueEditor(
         }
     }
 }
+*/

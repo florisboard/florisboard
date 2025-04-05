@@ -47,7 +47,6 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -100,11 +99,12 @@ import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
 import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -129,6 +129,15 @@ data class EmojiMappingForView(
     val simple: List<EmojiSet>,
 )
 
+@Composable
+fun EmojiPaletteView(
+    fullEmojiMappings: EmojiData,
+    modifier: Modifier = Modifier,
+) {
+    // TODO reimplement fully, this is a mess
+}
+
+/*
 @Composable
 fun EmojiPaletteView(
     fullEmojiMappings: EmojiData,
@@ -165,9 +174,6 @@ fun EmojiPaletteView(
     val preferredSkinTone by prefs.emoji.preferredSkinTone.observeAsState()
     val emojiHistoryEnabled by prefs.emoji.historyEnabled.observeAsState()
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
-    val emojiKeyStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKey)
-    val emojiKeyFontSize = emojiKeyStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier
-    val contentColor = emojiKeyStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
 
     var activeCategory by remember(emojiHistoryEnabled) {
         if (emojiHistoryEnabled) {
@@ -182,11 +188,9 @@ fun EmojiPaletteView(
 
     @Composable
     fun GridHeader(text: String) {
-        Text(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+        SnyggText(
+            elementName = null,
             text = text,
-            style = MaterialTheme.typography.titleMedium,
-            color = contentColor,
         )
     }
 
@@ -202,8 +206,6 @@ fun EmojiPaletteView(
             preferredSkinTone = preferredSkinTone,
             isPinned = isPinned,
             isRecent = isRecent,
-            contentColor = contentColor,
-            fontSize = emojiKeyFontSize,
             fontSizeMultiplier = fontSizeMultiplier,
             onEmojiInput = { emoji ->
                 keyboardManager.inputEventDispatcher.sendDownUp(emoji)
@@ -378,8 +380,6 @@ private fun EmojiKey(
     preferredSkinTone: EmojiSkinTone,
     isPinned: Boolean,
     isRecent: Boolean,
-    contentColor: Color,
-    fontSize: TextUnit,
     fontSizeMultiplier: Float,
     onEmojiInput: (Emoji) -> Unit,
     onHistoryAction: () -> Unit,
@@ -527,7 +527,6 @@ private fun EmojiHistoryPopup(
 ) {
     val prefs by florisPreferenceModel()
     val scope = rememberCoroutineScope()
-    val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
     val context = LocalContext.current
     val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.observeAsState()
@@ -537,7 +536,8 @@ private fun EmojiHistoryPopup(
 
     @Composable
     fun Action(icon: ImageVector, action: suspend () -> Unit) {
-        Box(
+        SnyggBox(
+            elementName = FlorisImeUi.EmojiKeyPopup,
             modifier = Modifier
                 .pointerInput(Unit) {
                     detectTapGestures {
@@ -551,11 +551,10 @@ private fun EmojiHistoryPopup(
                 .height(emojiKeyHeight)
                 .padding(all = 4.dp),
         ) {
-            Icon(
+            SnyggIcon(
+                elementName = null,
                 modifier = Modifier.align(Alignment.Center),
                 imageVector = icon,
-                contentDescription = null,
-                tint = popupStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
             )
         }
     }
@@ -659,3 +658,4 @@ fun EmojiText(
         )
     }
 }
+*/

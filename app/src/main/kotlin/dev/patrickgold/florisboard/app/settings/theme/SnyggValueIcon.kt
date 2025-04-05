@@ -42,13 +42,14 @@ import androidx.compose.ui.unit.dp
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.checkeredBackground
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 
 object SnyggValueIcon {
     interface Spec {
@@ -91,8 +92,8 @@ internal fun SnyggValueIcon(
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
 
-        is SnyggDynamicColorValue -> {
-            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.loadColor(LocalContext.current))
+        is SnyggDynamicLightColorValue, is SnyggDynamicDarkColorValue -> {
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = Color.Red) // TODO
         }
 
         is SnyggShapeValue -> {
