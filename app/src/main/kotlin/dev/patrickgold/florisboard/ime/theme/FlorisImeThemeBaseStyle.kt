@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,7 +36,9 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         "--surface" to rgbaColor(66, 66, 66)
         "--surface-variant" to rgbaColor(97, 97, 97)
 
+        "--on-primary" to rgbaColor(240, 240, 240)
         "--on-background" to rgbaColor(255, 255, 255)
+        "--on-background-disabled" to rgbaColor(80, 80, 80)
         "--on-surface" to rgbaColor(255, 255, 255)
     }
 
@@ -138,7 +142,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     }
 
     FlorisImeUi.Smartbar {
-        background = rgbaColor(0, 0, 0, 0f)
+        // empty
     }
     FlorisImeUi.SmartbarSharedActionsRow {
         background = rgbaColor(0, 0, 0, 0f)
@@ -163,18 +167,62 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.SmartbarActionKey(selector = SnyggSelector.DISABLED) {
-        foreground = `var`("--surface")
+        foreground = `var`("--on-background-disabled")
     }
     FlorisImeUi.SmartbarActionTile {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        lineClamp = lineClampMax(1)
+        lineClamp = lineClampMax(2)
+        margin = padding(4.dp)
         shape = roundedCornerShape(20)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionTile(selector = SnyggSelector.DISABLED) {
-        foreground = `var`("--surface")
+        foreground = `var`("--on-background-disabled")
     }
+    FlorisImeUi.SmartbarActionsOverflowCustomizeButton {
+        background = `var`("--primary")
+        foreground = `var`("--on-primary")
+        shape = roundedCornerShape(24.dp)
+    }
+
+    FlorisImeUi.SmartbarActionsEditor {
+        background = `var`("--background")
+        foreground = `var`("--on-background")
+        shape = roundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp)
+    }
+    FlorisImeUi.SmartbarActionsEditorHeader {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(16.sp)
+        lineClamp = lineClampMax(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SmartbarActionsEditorSubheader {
+        foreground = `var`("--secondary")
+        fontSize = fontSize(16.sp)
+        fontWeight = fontWeight(FontWeight.Bold)
+        lineClamp = lineClampMax(1)
+        padding = padding(12.dp, 16.dp, 12.dp, 8.dp)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SmartbarActionsEditorTileGrid {
+        margin = padding(4.dp, 0.dp)
+    }
+    FlorisImeUi.SmartbarActionsEditorTile {
+        lineClamp = lineClampMax(2)
+        margin = padding(4.dp)
+        padding = padding(8.dp)
+        textAlign = textAlign(TextAlign.Center)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SmartbarActionsEditorTile("code" to listOf(KeyCode.NOOP)) {
+        foreground = `var`("--on-background-disabled")
+    }
+    FlorisImeUi.SmartbarActionsEditorTile("code" to listOf(KeyCode.DRAG_MARKER)) {
+        foreground = rgbaColor(255, 0, 0)
+    }
+
     FlorisImeUi.SmartbarCandidateWord {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)

@@ -42,12 +42,11 @@ fun SnyggRow(
     val style = theme.rememberQuery(elementName, attributes, selector)
     ProvideSnyggParentInfo(style, selector) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .snyggMargin(style)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .snyggBackground(style)
-                .then(modifier)
                 .snyggPadding(style),
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = verticalAlignment,

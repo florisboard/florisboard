@@ -54,7 +54,6 @@ fun PopupBaseBox(
     SnyggBox(
         elementName = FlorisImeUi.KeyPopup,
         modifier = modifier,
-        clip = true,
     ) {
         key.label?.let { label ->
             SnyggBox(

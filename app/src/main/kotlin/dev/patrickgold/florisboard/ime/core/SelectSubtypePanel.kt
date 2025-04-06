@@ -100,10 +100,6 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                 }
             }
         }
-        SnyggSpacer(
-            elementName = FlorisImeUi.SmartbarActionsEditorSpacer,
-            modifier = Modifier.systemBarsPadding(),
-        )
     }
 }
 

@@ -35,7 +35,6 @@ fun SnyggBox(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = false,
-    clip: Boolean = false,
     clickAndSemanticsModifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
@@ -44,12 +43,11 @@ fun SnyggBox(
 
     ProvideSnyggParentInfo(style, selector) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .snyggMargin(style)
                 .snyggShadow(style)
                 .snyggBorder(style)
-                .snyggBackground(style, clip = clip)
-                .then(modifier)
+                .snyggBackground(style)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
             contentAlignment = contentAlignment,

@@ -42,12 +42,11 @@ fun SnyggText(
     val style = theme.rememberQuery(elementName, attributes, selector)
 
     Text(
-        modifier = Modifier
+        modifier = modifier
             .snyggMargin(style)
             .snyggShadow(style)
             .snyggBorder(style)
             .snyggBackground(style)
-            .then(modifier)
             .snyggPadding(style),
         text = text,
         color = style.foreground(),

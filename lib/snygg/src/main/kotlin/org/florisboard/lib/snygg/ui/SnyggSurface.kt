@@ -66,11 +66,10 @@ fun SnyggSurface(
 
     ProvideSnyggParentInfo(style, selector) {
         Surface(
-            modifier = Modifier
+            modifier = modifier
                 .snyggMargin(style)
                 .snyggShadow(style)
                 .snyggBorder(style)
-                .then(modifier)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
             color = style.background(default = Color.Transparent),

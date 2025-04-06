@@ -39,11 +39,10 @@ fun SnyggSpacer(
     val style = theme.rememberQuery(elementName, attributes, selector)
 
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .snyggMargin(style)
             .snyggShadow(style)
             .snyggBackground(style, default = style.foreground())
-            .then(modifier)
             .snyggPadding(style),
     )
 }

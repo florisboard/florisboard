@@ -52,7 +52,7 @@ import org.florisboard.lib.snygg.ui.SnyggText
 enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
     INTERACTIVE_TILE,
-    STATIC_TILE;
+    EDITOR_TILE;
 }
 
 @Composable
@@ -67,10 +67,11 @@ fun QuickActionButton(
     val inputFeedbackController = FlorisImeService.inputFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isEnabled = type == QuickActionBarType.STATIC_TILE || evaluator.evaluateEnabled(action.keyData())
+    val isEnabled = type == QuickActionBarType.EDITOR_TILE || evaluator.evaluateEnabled(action.keyData())
     val elementName = when (type) {
         QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
-        else -> FlorisImeUi.SmartbarActionTile
+        QuickActionBarType.INTERACTIVE_TILE -> FlorisImeUi.SmartbarActionTile
+        QuickActionBarType.EDITOR_TILE -> FlorisImeUi.SmartbarActionsEditorTile
     }
     val selector = when {
         isPressed -> SnyggSelector.PRESSED
@@ -98,15 +99,15 @@ fun QuickActionButton(
         elementName = elementName,
         attributes = mapOf("code" to action.keyData().code),
         selector = selector,
-        clip = true,
-        modifier = modifier
+        modifier = modifier.then(tooltipModifier),
+        clickAndSemanticsModifier = Modifier
             .aspectRatio(1f)
             .indication(interactionSource, LocalIndication.current)
             .pointerInput(action, isEnabled) {
                 awaitEachGesture {
                     val down = awaitFirstDown()
                     down.consume()
-                    if (isEnabled && type != QuickActionBarType.STATIC_TILE) {
+                    if (isEnabled && type != QuickActionBarType.EDITOR_TILE) {
                         val press = PressInteraction.Press(down.position)
                         inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                         interactionSource.tryEmit(press)

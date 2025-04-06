@@ -185,7 +185,7 @@ fun Modifier.snyggBackground(
     style: SnyggPropertySet,
     default: Color = Color.Unspecified,
     shape: Shape = style.shape(),
-    clip: Boolean = false,
+    clip: Boolean = true,
 ): Modifier {
     return when (val bg = style.background) {
         is SnyggStaticColorValue -> this.background(

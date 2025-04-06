@@ -53,10 +53,13 @@ object FlorisImeUi {
     const val SmartbarActionTile = "smartbar-action-tile"
     const val SmartbarActionsOverflow = "smartbar-actions-overflow"
     const val SmartbarActionsOverflowCustomizeButton = "smartbar-actions-overflow-customize-button"
+
     const val SmartbarActionsEditor = "smartbar-actions-editor"
     const val SmartbarActionsEditorHeader = "smartbar-actions-editor-header"
     const val SmartbarActionsEditorSubheader = "smartbar-actions-editor-subheader"
-    const val SmartbarActionsEditorSpacer = "smartbar-actions-editor-spacer"
+    const val SmartbarActionsEditorTileGrid = "smartbar-actions-editor-tile-grid"
+    const val SmartbarActionsEditorTile = "smartbar-actions-editor-tile"
+
     const val SmartbarCandidatesRow = "smartbar-candidates-row"
     const val SmartbarCandidateWord = "smartbar-candidate-word"
     const val SmartbarCandidateClip = "smartbar-candidate-clip"

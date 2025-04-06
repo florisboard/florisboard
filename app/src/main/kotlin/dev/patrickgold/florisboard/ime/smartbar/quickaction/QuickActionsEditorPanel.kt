@@ -21,8 +21,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -57,10 +57,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.toIntOffset
+import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggSpacer
 import org.florisboard.lib.snygg.ui.SnyggText
 
 private const val ItemNotFound = -1
@@ -68,7 +68,7 @@ private val NoopAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.NOOP))
 private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.DRAG_MARKER))
 
 @Composable
-fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
+fun QuickActionsEditorPanel() {
     val prefs by florisPreferenceModel()
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
@@ -237,29 +237,28 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
         }
     }
 
-    SnyggColumn(FlorisImeUi.SmartbarActionsEditor) {
+    SnyggColumn(FlorisImeUi.SmartbarActionsEditor, modifier = Modifier.safeDrawingPadding()) {
         SnyggRow(
             elementName = FlorisImeUi.SmartbarActionsEditorHeader,
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIconButton(
-                elementName = FlorisImeUi.SmartbarActionsEditorHeader,
+                elementName = null,
                 onClick = {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
             )
             SnyggText(
-                elementName = FlorisImeUi.SmartbarActionsEditorHeader,
+                elementName = null,
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
             )
             Spacer(Modifier.size(48.dp))
         }
 
-        Box {
+        SnyggBox(FlorisImeUi.SmartbarActionsEditorTileGrid) {
             LazyVerticalGrid(
                 modifier = Modifier
                     .pointerInput(Unit) {
@@ -284,7 +283,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         modifier = Modifier.animateItem(),
                         action = stickyAction,
                         evaluator = evaluator,
-                        type = QuickActionBarType.STATIC_TILE,
+                        type = QuickActionBarType.EDITOR_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -298,7 +297,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
-                        type = QuickActionBarType.STATIC_TILE,
+                        type = QuickActionBarType.EDITOR_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -312,7 +311,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
-                        type = QuickActionBarType.STATIC_TILE,
+                        type = QuickActionBarType.EDITOR_TILE,
                     )
                 }
             }
@@ -327,11 +326,10 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         .offset(-size.width / 2, -size.height / 2),
                     action = activeDragAction!!,
                     evaluator = evaluator,
-                    type = QuickActionBarType.STATIC_TILE,
+                    type = QuickActionBarType.EDITOR_TILE,
                 )
             }
         }
-        SnyggSpacer(FlorisImeUi.SmartbarActionsEditorSpacer, modifier = Modifier.systemBarsPadding())
     }
 }
 
