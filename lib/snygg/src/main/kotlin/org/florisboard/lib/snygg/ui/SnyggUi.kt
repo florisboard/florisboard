@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
@@ -36,8 +37,10 @@ import androidx.compose.ui.graphics.DefaultShadowColor
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.SnyggPropertySet
@@ -132,18 +135,22 @@ fun ProvideSnyggTheme(
 }
 
 @Composable
-internal fun ProvideSnyggParentInfo(
-    parentStyle: SnyggPropertySet,
+internal fun ProvideSnyggStyle(
+    elementName: String?,
+    attributes: Map<String, Int>,
     selector: SnyggSelector?,
-    content: @Composable () -> Unit
+    content: @Composable (style: SnyggPropertySet) -> Unit
 ) {
+    val theme = LocalSnyggTheme.current
+    val style = theme.rememberQuery(elementName, attributes, selector)
     val parentSelector = selector ?: LocalSnyggParentSelector.current
     CompositionLocalProvider(
-        LocalSnyggParentStyle provides parentStyle,
+        LocalSnyggParentStyle provides style,
         LocalSnyggParentSelector provides parentSelector,
-        LocalContentColor provides parentStyle.foreground(),
-        content = content,
-    )
+        LocalContentColor provides style.foreground(),
+    ) {
+        content(style)
+    }
 }
 
 val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
@@ -248,6 +255,18 @@ fun Modifier.snyggShadow(
     color: Color = style.shadowColor.colorOrDefault(default = DefaultShadowColor),
 ): Modifier {
     return this.shadow(elevation, shape, clip = false, ambientColor = color, spotColor = color)
+}
+
+@Composable
+internal fun Modifier.snyggIconSize(style: SnyggPropertySet): Modifier {
+    return with(LocalDensity.current) {
+        val fontSize = style.fontSize(default = 0.sp)
+        if (fontSize.isSp && fontSize >= 1.sp) {
+            this@snyggIconSize.size(fontSize.toDp())
+        } else {
+            this@snyggIconSize
+        }
+    }
 }
 
 /// SnyggValue helpers

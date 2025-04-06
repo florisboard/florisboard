@@ -45,28 +45,25 @@ fun SnyggBox(
     backgroundImageDescription: String? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
     val assetResolver = LocalSnyggAssetResolver.current
-
-    @Composable
-    fun SnyggImage() {
-        when (val bg = style.backgroundImage) {
-            is SnyggUriValue -> {
-                val result = assetResolver.resolveAbsolutPath(bg.uri)
-                val path = result.getOrNull() ?: return
-                val bitmap = remember(path) { BitmapFactory.decodeFile(path)?.asImageBitmap() }
-                if (bitmap == null) return
-                Image(
-                    bitmap = bitmap,
-                    contentScale = style.objectFit(),
-                    contentDescription = backgroundImageDescription,
-                )
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        @Composable
+        fun SnyggImage() {
+            when (val bg = style.backgroundImage) {
+                is SnyggUriValue -> {
+                    val result = assetResolver.resolveAbsolutPath(bg.uri)
+                    val path = result.getOrNull() ?: return
+                    val bitmap = remember(path) { BitmapFactory.decodeFile(path)?.asImageBitmap() }
+                    if (bitmap == null) return
+                    Image(
+                        bitmap = bitmap,
+                        contentScale = style.objectFit(),
+                        contentDescription = backgroundImageDescription,
+                    )
+                }
             }
         }
-    }
 
-    ProvideSnyggParentInfo(style, selector) {
         Box(
             modifier = modifier
                 .snyggMargin(style)

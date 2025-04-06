@@ -23,8 +23,13 @@ object FlorisImeUi {
     const val KeyPopup = "key-popup"
 
     const val ClipboardHeader = "clipboard-header"
+    const val ClipboardSubheader = "clipboard-subheader"
+    const val ClipboardContent = "clipboard-content"
     const val ClipboardItem = "clipboard-item"
     const val ClipboardItemPopup = "clipboard-item-popup"
+    const val ClipboardItemPopupAction = "clipboard-item-popup-action"
+    const val ClipboardItemPopupActionIcon = "clipboard-item-popup-action-icon"
+    const val ClipboardItemPopupActionText = "clipboard-item-popup-action-text"
     const val ClipboardEnableHistoryButton = "clipboard-enable-history-button"
 
     const val EmojiKey = "emoji-key"

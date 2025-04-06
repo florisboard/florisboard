@@ -38,9 +38,7 @@ fun SnyggColumn(
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-    ProvideSnyggParentInfo(style, selector) {
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
         Column(
             modifier = modifier
                 .snyggMargin(style)

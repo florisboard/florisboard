@@ -35,16 +35,15 @@ fun SnyggSpacer(
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-
-    Spacer(
-        modifier = modifier
-            .snyggMargin(style)
-            .snyggShadow(style)
-            .snyggBackground(style, default = style.foreground())
-            .snyggPadding(style),
-    )
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        Spacer(
+            modifier = modifier
+                .snyggMargin(style)
+                .snyggShadow(style)
+                .snyggBackground(style, default = style.foreground())
+                .snyggPadding(style),
+        )
+    }
 }
 
 @Preview

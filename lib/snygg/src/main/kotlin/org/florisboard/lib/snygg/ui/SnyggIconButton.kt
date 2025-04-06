@@ -48,30 +48,29 @@ fun SnyggIconButton(
     interactionSource: MutableInteractionSource? = null,
     content: @Composable () -> Unit,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-
-    Box(
-        modifier = Modifier
-            .minimumInteractiveComponentSize()
-            .snyggMargin(style)
-            .snyggShadow(style)
-            .snyggBorder(style)
-            .snyggBackground(style)
-            .then(modifier)
-            // TODO: what is the material3 compliant default padding?
-            .snyggPadding(style, default = PaddingValues(2.dp))
-            .clickable(
-                onClick = onClick,
-                enabled = enabled,
-                role = Role.Button,
-                interactionSource = interactionSource,
-                // TODO: what is the material3 compliant default ripple?
-                indication = ripple(bounded = false),
-            ),
-        contentAlignment = Alignment.Center,
-    ) {
-        content()
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        Box(
+            modifier = Modifier
+                .minimumInteractiveComponentSize()
+                .snyggMargin(style)
+                .snyggShadow(style)
+                .snyggBorder(style)
+                .snyggBackground(style)
+                .then(modifier)
+                // TODO: what is the material3 compliant default padding?
+                .snyggPadding(style, default = PaddingValues(2.dp))
+                .clickable(
+                    onClick = onClick,
+                    enabled = enabled,
+                    role = Role.Button,
+                    interactionSource = interactionSource,
+                    // TODO: what is the material3 compliant default ripple?
+                    indication = ripple(bounded = false),
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            content()
+        }
     }
 }
 

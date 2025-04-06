@@ -95,26 +95,43 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     }
 
     FlorisImeUi.ClipboardHeader {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = `var`("--on-surface")
+        foreground = `var`("--on-background")
         fontSize = fontSize(16.sp)
+    }
+    FlorisImeUi.ClipboardSubheader {
+        fontSize = fontSize(14.sp)
+        margin = padding(6.dp)
+    }
+    FlorisImeUi.ClipboardContent {
+        padding = padding(10.dp)
     }
     FlorisImeUi.ClipboardItem {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
+        padding = padding(12.dp, 8.dp)
         shape = roundedCornerShape(12.dp)
+        clip = yes()
     }
     FlorisImeUi.ClipboardItemPopup {
-        background = rgbaColor(117, 117, 117)
+        background = `var`("--surface")
         foreground = `var`("--on-surface")
-        fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
         shape = roundedCornerShape(12.dp)
+        clip = yes()
+    }
+    FlorisImeUi.ClipboardItemPopupAction {
+        fontSize = fontSize(16.sp)
+        padding = padding(12.dp)
+    }
+    FlorisImeUi.ClipboardItemPopupActionText {
+        margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
     }
     FlorisImeUi.ClipboardEnableHistoryButton {
         background = `var`("--primary")
-        foreground = rgbaColor(0, 0, 0)
-        shape = roundedCornerShape(12.dp)
+        foreground = `var`("--on-primary")
+        shape = roundedCornerShape(24.dp)
     }
 
     FlorisImeUi.EmojiKey {
@@ -165,6 +182,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         foreground = rgbaColor(220, 220, 220)
         fontSize = fontSize(18.sp)
         shape = roundedCornerShape(20)
+        clip = yes()
     }
     FlorisImeUi.SmartbarActionKey(selector = SnyggSelector.DISABLED) {
         foreground = `var`("--on-background-disabled")

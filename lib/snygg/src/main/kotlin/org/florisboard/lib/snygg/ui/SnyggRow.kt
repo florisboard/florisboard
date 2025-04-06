@@ -38,9 +38,7 @@ fun SnyggRow(
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-    ProvideSnyggParentInfo(style, selector) {
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
         Row(
             modifier = modifier
                 .snyggMargin(style)

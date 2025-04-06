@@ -39,15 +39,14 @@ fun SnyggIcon(
     imageVector: ImageVector,
     contentDescription: String? = null,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-
-    Icon(
-        modifier = modifier,
-        imageVector = imageVector,
-        contentDescription = contentDescription,
-        tint = style.foreground(),
-    )
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        Icon(
+            modifier = modifier.snyggIconSize(style),
+            imageVector = imageVector,
+            contentDescription = contentDescription,
+            tint = style.foreground(),
+        )
+    }
 }
 
 @Composable
@@ -59,15 +58,14 @@ fun SnyggIcon(
     bitmap: ImageBitmap,
     contentDescription: String? = null,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-
-    Icon(
-        modifier = modifier,
-        bitmap = bitmap,
-        contentDescription = contentDescription,
-        tint = style.foreground(),
-    )
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        Icon(
+            modifier = modifier.snyggIconSize(style),
+            bitmap = bitmap,
+            contentDescription = contentDescription,
+            tint = style.foreground(),
+        )
+    }
 }
 
 @Composable
@@ -79,15 +77,14 @@ fun SnyggIcon(
     painter: Painter,
     contentDescription: String? = null,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-
-    Icon(
-        modifier = modifier,
-        painter = painter,
-        contentDescription = contentDescription,
-        tint = style.foreground(),
-    )
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        Icon(
+            modifier = modifier.snyggIconSize(style),
+            painter = painter,
+            contentDescription = contentDescription,
+            tint = style.foreground(),
+        )
+    }
 }
 
 @Preview

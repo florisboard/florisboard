@@ -38,29 +38,28 @@ fun SnyggText(
     modifier: Modifier = Modifier,
     text: String,
 ) {
-    val theme = LocalSnyggTheme.current
-    val style = theme.rememberQuery(elementName, attributes, selector)
-
-    Text(
-        modifier = modifier
-            .snyggMargin(style)
-            .snyggShadow(style)
-            .snyggBorder(style)
-            .snyggBackground(style)
-            .snyggPadding(style),
-        text = text,
-        color = style.foreground(),
-        fontSize = style.fontSize(),
-        fontStyle = style.fontStyle(),
-        fontWeight = style.fontWeight(),
-        fontFamily = style.fontFamily(theme),
-        letterSpacing = style.letterSpacing(),
-        lineHeight = style.lineHeight(),
-        textAlign = style.textAlign(),
-        textDecoration = style.textDecorationLine(),
-        maxLines = style.lineClamp(),
-        overflow = style.textOverflow(),
-    )
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        Text(
+            modifier = modifier
+                .snyggMargin(style)
+                .snyggShadow(style)
+                .snyggBorder(style)
+                .snyggBackground(style)
+                .snyggPadding(style),
+            text = text,
+            color = style.foreground(),
+            fontSize = style.fontSize(),
+            fontStyle = style.fontStyle(),
+            fontWeight = style.fontWeight(),
+            fontFamily = style.fontFamily(LocalSnyggTheme.current),
+            letterSpacing = style.letterSpacing(),
+            lineHeight = style.lineHeight(),
+            textAlign = style.textAlign(),
+            textDecoration = style.textDecorationLine(),
+            maxLines = style.lineClamp(),
+            overflow = style.textOverflow(),
+        )
+    }
 }
 
 @Preview
