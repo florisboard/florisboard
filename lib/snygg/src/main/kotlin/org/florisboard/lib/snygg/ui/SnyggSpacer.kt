@@ -42,7 +42,7 @@ fun SnyggSpacer(
         modifier = Modifier
             .snyggMargin(style)
             .snyggShadow(style)
-            .snyggBackground(style, fallbackColor = style.foreground())
+            .snyggBackground(style, default = style.foreground())
             .then(modifier)
             .snyggPadding(style),
     )

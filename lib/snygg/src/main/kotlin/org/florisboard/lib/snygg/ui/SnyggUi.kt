@@ -32,19 +32,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.DefaultShadowColor
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.takeOrElse
 import org.florisboard.lib.color.ColorMappings
@@ -55,20 +46,10 @@ import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
-import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggFontStyleValue
-import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggObjectFitValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
-import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggTextAlignValue
-import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
-import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
@@ -202,22 +183,23 @@ internal fun SnyggTheme.rememberQuery(
 
 fun Modifier.snyggBackground(
     style: SnyggPropertySet,
-    fallbackColor: Color = Color.Unspecified,
+    default: Color = Color.Unspecified,
     shape: Shape = style.shape(),
+    clip: Boolean = false,
 ): Modifier {
     return when (val bg = style.background) {
         is SnyggStaticColorValue -> this.background(
             color = bg.color,
             shape = shape,
         )
-        else if (fallbackColor.isSpecified) -> {
+        else if (default.isSpecified) -> {
             this.background(
-                color = fallbackColor,
+                color = default,
                 shape = shape,
             )
         }
         else -> this
-    }
+    }.then(if (clip) Modifier.clip(shape) else Modifier)
 }
 
 fun Modifier.snyggBorder(
@@ -231,13 +213,6 @@ fun Modifier.snyggBorder(
     } else {
         this
     }
-}
-
-fun Modifier.snyggClip(
-    style: SnyggPropertySet,
-    shape: Shape = style.shape(),
-): Modifier {
-    return this.clip(shape)
 }
 
 fun Modifier.snyggMargin(
@@ -281,98 +256,6 @@ internal fun SnyggValue.colorOrDefault(default: Color): Color {
 internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     return when (this) {
         is SnyggDpSizeValue -> this.dp
-        else -> default
-    }
-}
-
-fun SnyggPropertySet.background(default: Color = Color.Unspecified): Color {
-    return when (background) {
-        is SnyggStaticColorValue -> background.color
-        else -> default
-    }
-}
-
-fun SnyggPropertySet.foreground(default: Color = Color.Unspecified): Color {
-    return when (foreground) {
-        is SnyggStaticColorValue -> foreground.color
-        else -> default
-    }
-}
-
-fun SnyggPropertySet.fontSize(default: TextUnit = TextUnit.Unspecified): TextUnit {
-    return when (fontSize) {
-        is SnyggSpSizeValue -> fontSize.sp
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.fontStyle(default: FontStyle? = null): FontStyle? {
-    return when (fontStyle) {
-        is SnyggFontStyleValue -> fontStyle.fontStyle
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.fontWeight(default: FontWeight? = null): FontWeight? {
-    return when (fontWeight) {
-        is SnyggFontWeightValue -> fontWeight.fontWeight
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.fontFamily(theme: SnyggTheme, default: FontFamily? = null): FontFamily? {
-    return when (val family = fontFamily) {
-        is SnyggGenericFontFamilyValue -> family.fontFamily
-        is SnyggCustomFontFamilyValue -> theme.getFontFamily(family.fontName)
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.letterSpacing(default: TextUnit = TextUnit.Unspecified): TextUnit {
-    return when (letterSpacing) {
-        is SnyggSpSizeValue -> letterSpacing.sp
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.lineHeight(default: TextUnit = TextUnit.Unspecified): TextUnit {
-    return when (lineHeight) {
-        is SnyggSpSizeValue -> lineHeight.sp
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.textAlign(default: TextAlign? = null): TextAlign? {
-    return when (textAlign) {
-        is SnyggTextAlignValue -> textAlign.textAlign
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.textDecorationLine(default: TextDecoration? = null): TextDecoration? {
-    return when (textDecorationLine) {
-        is SnyggTextDecorationLineValue -> textDecorationLine.textDecoration
-        else -> default
-    }
-}
-
-internal fun SnyggPropertySet.textOverflow(default: TextOverflow = TextOverflow.Clip): TextOverflow {
-    return when (textOverflow) {
-        is SnyggTextOverflowValue -> textOverflow.textOverflow
-        else -> default
-    }
-}
-
-fun SnyggPropertySet.shape(): Shape {
-    return when (shape) {
-        is SnyggShapeValue -> shape.shape
-        else -> RectangleShape
-    }
-}
-
-internal fun SnyggPropertySet.objectFit(default: ContentScale = ContentScale.Fit): ContentScale {
-    return when (objectFit) {
-        is SnyggObjectFitValue -> objectFit.contentScale
         else -> default
     }
 }

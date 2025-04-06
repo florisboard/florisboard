@@ -38,7 +38,6 @@ fun SnyggSurface(
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
-    clip: Boolean = false,
     clickAndSemanticsModifier: Modifier = Modifier,
     supportsBackgroundImage: Boolean = false,
     backgroundImageDescription: String? = null,
@@ -72,7 +71,6 @@ fun SnyggSurface(
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .then(modifier)
-                .then(if (clip) Modifier.snyggClip(style) else Modifier)
                 .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
             color = style.background(default = Color.Transparent),

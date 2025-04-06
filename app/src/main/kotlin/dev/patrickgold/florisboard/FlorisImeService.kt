@@ -124,12 +124,9 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
-import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.fontSize
-import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**

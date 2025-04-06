@@ -40,8 +40,6 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.fontSize
-import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 @Composable

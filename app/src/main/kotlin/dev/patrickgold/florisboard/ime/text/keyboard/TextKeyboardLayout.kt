@@ -98,9 +98,6 @@ import kotlinx.coroutines.isActive
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.background
-import org.florisboard.lib.snygg.ui.fontSize
-import org.florisboard.lib.snygg.ui.foreground
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.abs
 import kotlin.math.sqrt
@@ -363,7 +360,6 @@ private fun TextKeyButton(
                     }
                 }
                 .fillMaxHeight(),
-            clip = false,
         ) { }
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->

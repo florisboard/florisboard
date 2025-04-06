@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.input.InputShiftState
@@ -167,7 +168,9 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarActionTile {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
+        lineClamp = lineClampMax(1)
         shape = roundedCornerShape(20)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionTile(selector = SnyggSelector.DISABLED) {
         foreground = `var`("--surface")

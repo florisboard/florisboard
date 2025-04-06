@@ -68,7 +68,6 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.background
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 private const val AnimationDuration = 200

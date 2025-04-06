@@ -115,7 +115,6 @@ import org.florisboard.lib.snygg.ui.SnyggSurface
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.snyggBackground
 import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggClip
 import org.florisboard.lib.snygg.ui.snyggShadow
 
 private val ContentPadding = PaddingValues(horizontal = 4.dp)

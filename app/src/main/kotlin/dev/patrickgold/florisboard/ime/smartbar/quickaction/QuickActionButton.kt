@@ -16,11 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.LocalIndication
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -30,50 +26,28 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.patrickgold.compose.tooltip.tooltip
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.background
-import org.florisboard.lib.snygg.ui.foreground
-import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
-import org.florisboard.lib.snygg.ui.shape
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggClip
-import org.florisboard.lib.snygg.ui.snyggShadow
-
-private val BackgroundAnimationSpec = tween<Color>(durationMillis = 150, easing = FastOutSlowInEasing)
-private val DebugHelperColor = Color.Red.copy(alpha = 0.5f)
 
 enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
@@ -103,23 +77,6 @@ fun QuickActionButton(
         !isEnabled -> SnyggSelector.DISABLED
         else -> null
     }
-    /*val bgColor by animateColorAsState(
-        targetValue = if (isPressed) {
-            actionStylePressed.background()
-        } else {
-            if (actionStyleNotPressed.background().alpha == 0f) {
-                actionStylePressed.background().copy(0f)
-            } else {
-                actionStyleNotPressed.background()
-            }
-        },
-        animationSpec = BackgroundAnimationSpec, label = "bgColor",
-    )
-    val fgColor = when (action.keyData().code) {
-        KeyCode.DRAG_MARKER -> DebugHelperColor
-        else -> actionStyle.foreground()
-    }
-    val fgAlpha = if (action.keyData().code == KeyCode.NOOP) 0.5f else 1f*/
 
     // Need to manually cancel an action if this composable suddenly leaves the composition to prevent the key from
     // being stuck in the pressed state
@@ -139,10 +96,9 @@ fun QuickActionButton(
 
     SnyggBox(
         elementName = elementName,
-        attributes = mapOf(
-            "drag-marker" to if (action.keyData().code == KeyCode.DRAG_MARKER) 1 else 0,
-        ),
+        attributes = mapOf("code" to action.keyData().code),
         selector = selector,
+        clip = true,
         modifier = modifier
             .aspectRatio(1f)
             .indication(interactionSource, LocalIndication.current)
@@ -204,7 +160,6 @@ fun QuickActionButton(
 
             // Render additional info if this is a tile
             if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
-                Spacer(modifier = Modifier.height(4.dp))
                 SnyggText(
                     elementName = null,
                     text = action.computeDisplayName(evaluator = evaluator),
