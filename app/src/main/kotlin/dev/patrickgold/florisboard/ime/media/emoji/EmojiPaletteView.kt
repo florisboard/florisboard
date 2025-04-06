@@ -47,6 +47,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -87,12 +88,10 @@ import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.header
-import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.launch
@@ -102,9 +101,6 @@ import org.florisboard.lib.android.systemService
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggShadow
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -129,15 +125,6 @@ data class EmojiMappingForView(
     val simple: List<EmojiSet>,
 )
 
-@Composable
-fun EmojiPaletteView(
-    fullEmojiMappings: EmojiData,
-    modifier: Modifier = Modifier,
-) {
-    // TODO reimplement fully, this is a mess
-}
-
-/*
 @Composable
 fun EmojiPaletteView(
     fullEmojiMappings: EmojiData,
@@ -173,7 +160,6 @@ fun EmojiPaletteView(
 
     val preferredSkinTone by prefs.emoji.preferredSkinTone.observeAsState()
     val emojiHistoryEnabled by prefs.emoji.historyEnabled.observeAsState()
-    val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
 
     var activeCategory by remember(emojiHistoryEnabled) {
         if (emojiHistoryEnabled) {
@@ -206,7 +192,6 @@ fun EmojiPaletteView(
             preferredSkinTone = preferredSkinTone,
             isPinned = isPinned,
             isRecent = isRecent,
-            fontSizeMultiplier = fontSizeMultiplier,
             onEmojiInput = { emoji ->
                 keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                 scope.launch {
@@ -261,7 +246,6 @@ fun EmojiPaletteView(
                 ) {
                     Text(
                         text = stringRes(R.string.emoji__history__phone_locked_message),
-                        color = contentColor,
                     )
                 }
             } else if (activeCategory == EmojiCategory.RECENTLY_USED && isEmojiHistoryEmpty) {
@@ -272,12 +256,10 @@ fun EmojiPaletteView(
                 ) {
                     Text(
                         text = stringRes(R.string.emoji__history__empty_message),
-                        color = contentColor,
                     )
                     Text(
                         modifier = Modifier.padding(top = 8.dp),
                         text = stringRes(R.string.emoji__history__usage_tip),
-                        color = contentColor,
                         fontStyle = FontStyle.Italic,
                     )
                 }
@@ -286,7 +268,7 @@ fun EmojiPaletteView(
                     LazyVerticalGrid(
                         modifier = Modifier
                             .fillMaxSize()
-                            .florisScrollbar(lazyListState, color = contentColor.copy(alpha = 0.28f)),
+                            .florisScrollbar(lazyListState),
                         columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                         state = lazyListState,
                     ) {
@@ -324,13 +306,7 @@ private fun EmojiCategoriesTabRow(
     onCategoryChange: (EmojiCategory) -> Unit,
     emojiHistoryEnabled: Boolean,
 ) {
-    val context = LocalContext.current
     val inputFeedbackController = LocalInputFeedbackController.current
-    val tabStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab)
-    val tabStyleFocused = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiTab, isFocus = true)
-    val unselectedContentColor = tabStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
-    val selectedContentColor = tabStyleFocused.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor())
-
     val selectedTabIndex = if (emojiHistoryEnabled) {
         EmojiCategoryValues.indexOf(activeCategory)
     } else {
@@ -342,11 +318,10 @@ private fun EmojiCategoriesTabRow(
             .height(FlorisImeSizing.smartbarHeight),
         selectedTabIndex = selectedTabIndex,
         containerColor = Color.Transparent,
-        contentColor = selectedContentColor,
+        contentColor = LocalContentColor.current,
         indicator = { tabPositions ->
             TabRowDefaults.PrimaryIndicator(
                 Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                color = selectedContentColor,
                 height = 4.dp
             )
         },
@@ -366,8 +341,6 @@ private fun EmojiCategoriesTabRow(
                     imageVector = category.icon(),
                     contentDescription = null,
                 ) },
-                unselectedContentColor = unselectedContentColor,
-                selectedContentColor = selectedContentColor,
             )
         }
     }
@@ -380,7 +353,6 @@ private fun EmojiKey(
     preferredSkinTone: EmojiSkinTone,
     isPinned: Boolean,
     isRecent: Boolean,
-    fontSizeMultiplier: Float,
     onEmojiInput: (Emoji) -> Unit,
     onHistoryAction: () -> Unit,
 ) {
@@ -389,7 +361,7 @@ private fun EmojiKey(
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
-    Box(
+    SnyggBox(FlorisImeUi.EmojiKey,
         modifier = Modifier
             .aspectRatio(1f)
             .pointerInput(Unit) {
@@ -413,8 +385,6 @@ private fun EmojiKey(
             modifier = Modifier.align(Alignment.Center),
             text = base.value,
             emojiCompatInstance = emojiCompatInstance,
-            color = contentColor,
-            fontSize = fontSize,
         )
         if (variations.isNotEmpty() || isPinned || isRecent) {
             val shape = when (LocalLayoutDirection.current) {
@@ -426,7 +396,7 @@ private fun EmojiKey(
                     .align(Alignment.BottomEnd)
                     .offset(x = (-4).dp, y = (-4).dp)
                     .size(4.dp)
-                    .background(contentColor, shape),
+                    .background(LocalContentColor.current, shape),
             )
         }
 
@@ -448,7 +418,6 @@ private fun EmojiKey(
                 variations = variations,
                 visible = showVariantsBox,
                 emojiCompatInstance = emojiCompatInstance,
-                fontSizeMultiplier = fontSizeMultiplier,
                 onEmojiTap = { emoji ->
                     onEmojiInput(emoji)
                     showVariantsBox = false
@@ -467,13 +436,10 @@ private fun EmojiVariationsPopup(
     variations: List<Emoji>,
     visible: Boolean,
     emojiCompatInstance: EmojiCompat?,
-    fontSizeMultiplier: Float,
     onEmojiTap: (Emoji) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val popupStyle = FlorisImeTheme.style.get(element = FlorisImeUi.EmojiKeyPopup)
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
-    val context = LocalContext.current
 
     if (visible) {
         Popup(
@@ -487,10 +453,7 @@ private fun EmojiVariationsPopup(
             //TODO: Add FlowRow to Snygg
             FlowRow(
                 modifier = Modifier
-                    .widthIn(max = EmojiBaseWidth * 6)
-                    .snyggShadow(popupStyle)
-                    .snyggBorder(context, popupStyle)
-                    .snyggBackground(context, popupStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor()),
+                    .widthIn(max = EmojiBaseWidth * 6),
             ) {
                 for (emoji in variations) {
                     Box(
@@ -506,8 +469,6 @@ private fun EmojiVariationsPopup(
                             modifier = Modifier.align(Alignment.Center),
                             text = emoji.value,
                             emojiCompatInstance = emojiCompatInstance,
-                            color = popupStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
-                            fontSize = popupStyle.fontSize.spSize(default = EmojiDefaultFontSize) safeTimes fontSizeMultiplier,
                         )
                     }
                 }
@@ -571,10 +532,7 @@ private fun EmojiHistoryPopup(
         ) {
             FlowRow(
                 modifier = Modifier
-                    .widthIn(max = EmojiBaseWidth * 6)
-                    .snyggShadow(popupStyle)
-                    .snyggBorder(context, popupStyle)
-                    .snyggBackground(context, popupStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor()),
+                    .widthIn(max = EmojiBaseWidth * 6),
             ) {
                 if (isCurrentlyPinned) {
                     Action(
@@ -658,4 +616,3 @@ fun EmojiText(
         )
     }
 }
-*/
