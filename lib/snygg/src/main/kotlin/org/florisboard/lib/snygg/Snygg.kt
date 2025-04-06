@@ -17,19 +17,19 @@
 package org.florisboard.lib.snygg
 
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggFontValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggInheritValue
+import org.florisboard.lib.snygg.value.SnyggLineClampValue
+import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggObjectFitValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
@@ -40,8 +40,9 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
-import org.florisboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggVarValue
+import org.florisboard.lib.snygg.value.SnyggYesValue
 
 /**
  * Main object for defining all known Snygg property names.
@@ -78,6 +79,7 @@ object Snygg {
     const val ShadowElevation = "shadow-elevation"
 
     const val Shape = "shape"
+    const val Clip = "clip"
 
     const val Src = "src"
 }
@@ -155,7 +157,7 @@ object SnyggSpec : SnyggSpecDecl({
         }
         Snygg.LineClamp {
             inheritsImplicitly()
-            //add(Snygg)
+            add(SnyggLineClampValue)
         }
         Snygg.LineHeight {
             inheritsImplicitly()
@@ -198,6 +200,10 @@ object SnyggSpec : SnyggSpecDecl({
             add(SnyggRoundedCornerPercentShapeValue)
             add(SnyggCutCornerDpShapeValue)
             add(SnyggCutCornerPercentShapeValue)
+        }
+        Snygg.Clip {
+            add(SnyggYesValue)
+            add(SnyggNoValue)
         }
     }
 })

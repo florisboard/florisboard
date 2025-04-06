@@ -16,16 +16,21 @@
 
 package org.florisboard.lib.snygg.ui
 
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.value.SnyggUriValue
 
 @Composable
 fun SnyggBox(
@@ -33,13 +38,33 @@ fun SnyggBox(
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
+    clickAndSemanticsModifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = false,
-    clickAndSemanticsModifier: Modifier = Modifier,
+    supportsBackgroundImage: Boolean = false,
+    backgroundImageDescription: String? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes, selector)
+    val assetResolver = LocalSnyggAssetResolver.current
+
+    @Composable
+    fun SnyggImage() {
+        when (val bg = style.backgroundImage) {
+            is SnyggUriValue -> {
+                val result = assetResolver.resolveAbsolutPath(bg.uri)
+                val path = result.getOrNull() ?: return
+                val bitmap = remember(path) { BitmapFactory.decodeFile(path)?.asImageBitmap() }
+                if (bitmap == null) return
+                Image(
+                    bitmap = bitmap,
+                    contentScale = style.objectFit(),
+                    contentDescription = backgroundImageDescription,
+                )
+            }
+        }
+    }
 
     ProvideSnyggParentInfo(style, selector) {
         Box(
@@ -53,6 +78,9 @@ fun SnyggBox(
             contentAlignment = contentAlignment,
             propagateMinConstraints = propagateMinConstraints,
         ) {
+            if (supportsBackgroundImage) {
+                SnyggImage()
+            }
             content()
         }
     }
@@ -66,6 +94,8 @@ private fun SimpleSnyggBox() {
             background = rgbaColor(255, 255, 255)
             foreground = rgbaColor(255, 0, 0)
             padding = padding(10.dp)
+            shape = roundedCornerShape(20)
+            clip = yes()
         }
         "preview-text" {
             fontSize = fontSize(12.sp)

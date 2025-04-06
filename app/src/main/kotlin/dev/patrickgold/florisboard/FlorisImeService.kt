@@ -49,11 +49,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -104,7 +102,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -124,9 +121,9 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggSurface
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
@@ -594,7 +591,7 @@ class FlorisImeService : LifecycleInputMethodService() {
             keyboardManager.activeState.layoutDirection = layoutDirection
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-            SnyggSurface(
+            SnyggBox(
                 elementName = FlorisImeUi.Keyboard,
                 attributes = mapOf("mode" to state.inputShiftState.value),
                 modifier = Modifier
@@ -748,13 +745,13 @@ class FlorisImeService : LifecycleInputMethodService() {
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    SnyggSurface(elementName = FlorisImeUi.ExtractedLandscapeInputLayout) {
+                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout) {
                         SnyggRow(
-                            elementName = "TODO",
+                            elementName = null,
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            SnyggSurface(elementName = FlorisImeUi.ExtractedLandscapeInputLayout,
+                            SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout,
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .weight(1f),

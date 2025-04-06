@@ -175,6 +175,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         lineClamp = lineClampMax(2)
         margin = padding(4.dp)
         shape = roundedCornerShape(20)
+        clip = yes()
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionTile(selector = SnyggSelector.DISABLED) {
@@ -190,6 +191,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--background")
         foreground = `var`("--on-background")
         shape = roundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp)
+        clip = yes()
     }
     FlorisImeUi.SmartbarActionsEditorHeader {
         background = `var`("--surface")

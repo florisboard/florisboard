@@ -39,6 +39,7 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggLineClampValue
+import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
@@ -51,6 +52,7 @@ import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.snygg.value.SnyggYesValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
 import java.net.URI
@@ -186,6 +188,9 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var shape: SnyggValue?
         get() =  getProperty(Snygg.Shape)
         set(v) = setProperty(Snygg.Shape, v)
+    var clip: SnyggValue?
+        get() =  getProperty(Snygg.Clip)
+        set(v) = setProperty(Snygg.Clip, v)
 
     var src: SnyggValue?
         get() =  getProperty(Snygg.Src)
@@ -350,5 +355,13 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
 
     fun inherit(): SnyggInheritValue {
         return SnyggInheritValue
+    }
+
+    fun yes(): SnyggYesValue {
+        return SnyggYesValue
+    }
+
+    fun no(): SnyggNoValue {
+        return SnyggNoValue
     }
 }

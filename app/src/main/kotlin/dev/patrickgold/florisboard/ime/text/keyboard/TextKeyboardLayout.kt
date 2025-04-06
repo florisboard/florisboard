@@ -97,7 +97,7 @@ import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.snygg.SnyggSelector
-import org.florisboard.lib.snygg.ui.SnyggSurface
+import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.abs
 import kotlin.math.sqrt
@@ -346,7 +346,7 @@ private fun TextKeyButton(
     ) {
         // TODO: maybe make this customizable through a size property for keyStyle
         val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
-        SnyggSurface(
+        SnyggBox(
             elementName = FlorisImeUi.Key,
             attributes = attributes,
             selector = selector,

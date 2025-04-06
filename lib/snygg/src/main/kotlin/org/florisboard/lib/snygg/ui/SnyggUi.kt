@@ -21,6 +21,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -51,6 +52,7 @@ import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.snygg.value.SnyggYesValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
     compositionLocalOf {
@@ -139,6 +141,7 @@ internal fun ProvideSnyggParentInfo(
     CompositionLocalProvider(
         LocalSnyggParentStyle provides parentStyle,
         LocalSnyggParentSelector provides parentSelector,
+        LocalContentColor provides parentStyle.foreground(),
         content = content,
     )
 }
@@ -185,9 +188,8 @@ fun Modifier.snyggBackground(
     style: SnyggPropertySet,
     default: Color = Color.Unspecified,
     shape: Shape = style.shape(),
-    clip: Boolean = true,
 ): Modifier {
-    return when (val bg = style.background) {
+    val modifier = when (val bg = style.background) {
         is SnyggStaticColorValue -> this.background(
             color = bg.color,
             shape = shape,
@@ -199,7 +201,11 @@ fun Modifier.snyggBackground(
             )
         }
         else -> this
-    }.then(if (clip) Modifier.clip(shape) else Modifier)
+    }
+    if (style.clip is SnyggYesValue) {
+        return modifier.clip(shape)
+    }
+    return modifier
 }
 
 fun Modifier.snyggBorder(

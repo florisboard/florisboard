@@ -54,11 +54,10 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggSurface
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
@@ -125,7 +124,7 @@ internal fun KeyboardLikeButton(
         isPressed = isPressed,
     )*/
     //TODO: Add selector to SnyggSurface
-    SnyggSurface(
+    SnyggBox(
         elementName = element,
         attributes = mapOf("code" to keyData.code),
 

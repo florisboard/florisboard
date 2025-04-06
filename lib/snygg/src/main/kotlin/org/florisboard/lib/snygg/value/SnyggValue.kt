@@ -119,3 +119,51 @@ object SnyggUndefinedValue : SnyggValue, SnyggValueEncoder {
 
     override fun encoder() = this
 }
+
+/**
+ * A simple yes value (useful for boolean style value).
+ */
+object SnyggYesValue : SnyggValue, SnyggValueEncoder {
+    const val Yes = "yes"
+
+    override val spec = SnyggValueSpec {
+        keywords(id = Yes, keywords = listOf(Yes))
+    }
+
+    override fun defaultValue() = this
+
+    override fun serialize(v: SnyggValue) = runCatching<String> {
+        return@runCatching Yes
+    }
+
+    override fun deserialize(v: String) = runCatching<SnyggValue> {
+        check(v.trim() == Yes)
+        return@runCatching SnyggYesValue
+    }
+
+    override fun encoder() = this
+}
+
+/**
+ * A simple no value (useful for boolean style value).
+ */
+object SnyggNoValue : SnyggValue, SnyggValueEncoder {
+    const val No = "no"
+
+    override val spec = SnyggValueSpec {
+        keywords(id = No, keywords = listOf(No))
+    }
+
+    override fun defaultValue() = this
+
+    override fun serialize(v: SnyggValue) = runCatching<String> {
+        return@runCatching No
+    }
+
+    override fun deserialize(v: String) = runCatching<SnyggValue> {
+        check(v.trim() == No)
+        return@runCatching SnyggNoValue
+    }
+
+    override fun encoder() = this
+}
