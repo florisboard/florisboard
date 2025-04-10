@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.10.1"
 kotlinx-serialization-json = "1.8.1"
 ksp = "2.1.20-1.0.32"
 mikepenz-aboutlibraries = "10.10.0"
-patrickgold-compose-tooltip = "0.1.0"
+patrickgold-compose-tooltip = "20250410T130000Z-SNAPSHOT"
 patrickgold-jetpref = "0.2.0-rc01"
 
 # Testing

@@ -36,7 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.compose.tooltip.tooltip
+import dev.patrickgold.compose.tooltip.PlainTooltip
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -89,82 +89,78 @@ fun QuickActionButton(
         }
     }
 
-    val tooltipModifier = if (type == QuickActionBarType.INTERACTIVE_BUTTON) {
-        Modifier.tooltip(action.computeTooltip(evaluator))
-    } else {
-        Modifier
-    }
-
-    SnyggBox(
-        elementName = elementName,
-        attributes = mapOf("code" to action.keyData().code),
-        selector = selector,
-        modifier = modifier.then(tooltipModifier),
-        clickAndSemanticsModifier = Modifier
-            .aspectRatio(1f)
-            .indication(interactionSource, LocalIndication.current)
-            .pointerInput(action, isEnabled) {
-                awaitEachGesture {
-                    val down = awaitFirstDown()
-                    down.consume()
-                    if (isEnabled && type != QuickActionBarType.EDITOR_TILE) {
-                        val press = PressInteraction.Press(down.position)
-                        inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
-                        interactionSource.tryEmit(press)
-                        action.onPointerDown(context)
-                        val up = waitForUpOrCancellation()
-                        if (up != null) {
-                            up.consume()
-                            interactionSource.tryEmit(PressInteraction.Release(press))
-                            action.onPointerUp(context)
-                        } else {
-                            interactionSource.tryEmit(PressInteraction.Cancel(press))
-                            action.onPointerCancel(context)
+    PlainTooltip(action.computeTooltip(evaluator)) {
+        SnyggBox(
+            elementName = elementName,
+            attributes = mapOf("code" to action.keyData().code),
+            selector = selector,
+            modifier = modifier,
+            clickAndSemanticsModifier = Modifier
+                .aspectRatio(1f)
+                .indication(interactionSource, LocalIndication.current)
+                .pointerInput(action, isEnabled) {
+                    awaitEachGesture {
+                        val down = awaitFirstDown()
+                        down.consume()
+                        if (isEnabled && type != QuickActionBarType.EDITOR_TILE) {
+                            val press = PressInteraction.Press(down.position)
+                            inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
+                            interactionSource.tryEmit(press)
+                            action.onPointerDown(context)
+                            val up = waitForUpOrCancellation()
+                            if (up != null) {
+                                up.consume()
+                                interactionSource.tryEmit(PressInteraction.Release(press))
+                                action.onPointerUp(context)
+                            } else {
+                                interactionSource.tryEmit(PressInteraction.Cancel(press))
+                                action.onPointerCancel(context)
+                            }
                         }
                     }
-                }
-            }
-            .then(tooltipModifier),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            // Render foreground
-            Box(
-                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.5f),
-                contentAlignment = Alignment.Center,
-            ) {
-                when (action) {
-                    is QuickAction.InsertKey -> {
-                        val (imageVector, label) = remember(action, evaluator) {
-                            evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                // Render foreground
+                Box(
+                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.5f),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    when (action) {
+                        is QuickAction.InsertKey -> {
+                            val (imageVector, label) = remember(action, evaluator) {
+                                evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
+                            }
+                            if (imageVector != null) {
+                                SnyggIcon(
+                                    elementName = null,
+                                    imageVector = imageVector,
+                                )
+                            } else if (label != null) {
+                                SnyggText(
+                                    elementName = null,
+                                    text = label,
+                                )
+                            }
                         }
-                        if (imageVector != null) {
-                            SnyggIcon(
-                                elementName = null,
-                                imageVector = imageVector,
-                            )
-                        } else if (label != null) {
+
+                        is QuickAction.InsertText -> {
                             SnyggText(
                                 elementName = null,
-                                text = label,
+                                text = action.data.firstOrNull().toString().ifBlank { "?" },
                             )
                         }
                     }
-                    is QuickAction.InsertText -> {
-                        SnyggText(
-                            elementName = null,
-                            text = action.data.firstOrNull().toString().ifBlank { "?" },
-                        )
-                    }
                 }
-            }
 
-            // Render additional info if this is a tile
-            if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
-                SnyggText(
-                    elementName = null,
-                    text = action.computeDisplayName(evaluator = evaluator),
-                )
+                // Render additional info if this is a tile
+                if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
+                    SnyggText(
+                        elementName = null,
+                        text = action.computeDisplayName(evaluator = evaluator),
+                    )
+                }
             }
         }
     }
