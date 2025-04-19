@@ -260,6 +260,12 @@
         "authors": [ "patrickgold", "Hayleia" ],
         "direction": "ltr"
       },
+     {
+        "id": "korean_phonetic",
+        "label": "Korean Phonetic",
+        "authors": [ "patrickgold", "Hayleia" ],
+        "direction": "ltr"
+      },	  
       {
         "id": "kurdish",
         "label": "کوردی (قوەرتی نوێ)",
