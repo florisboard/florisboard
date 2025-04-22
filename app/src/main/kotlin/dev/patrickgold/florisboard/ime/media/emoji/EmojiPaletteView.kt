@@ -361,7 +361,7 @@ private fun EmojiKey(
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
-    SnyggBox(FlorisImeUi.EmojiKey,
+    SnyggBox(FlorisImeUi.EmojiKey.elementName,
         modifier = Modifier
             .aspectRatio(1f)
             .pointerInput(Unit) {
@@ -498,7 +498,7 @@ private fun EmojiHistoryPopup(
     @Composable
     fun Action(icon: ImageVector, action: suspend () -> Unit) {
         SnyggBox(
-            elementName = FlorisImeUi.EmojiKeyPopup,
+            FlorisImeUi.EmojiKeyPopup.elementName,
             modifier = Modifier
                 .pointerInput(Unit) {
                     detectTapGestures {

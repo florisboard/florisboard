@@ -651,7 +651,7 @@ internal fun DialogProperty(
                     .weight(1f)
                     .padding(vertical = 8.dp),
                 text = text,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleMedium,
             )
             trailingIconTitle()
         }

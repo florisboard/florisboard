@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.Snygg
+import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
 import org.florisboard.lib.snygg.SnyggLevel
 import org.florisboard.lib.snygg.value.RgbaColor
@@ -48,9 +49,9 @@ import kotlin.math.roundToInt
 
 @Composable
 internal fun translateElementName(rule: SnyggElementRule, level: SnyggLevel): String {
-    return translateElementName(rule.elementName, level) ?: remember {
+    return translateElementName(rule.name, level) ?: remember {
         buildString {
-            append(rule.elementName)
+            append(rule.name)
         }
     }
 }
@@ -60,38 +61,40 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
         else -> when (element) {
-            FlorisImeUi.Keyboard -> R.string.snygg__rule_element__keyboard
-            FlorisImeUi.Key -> R.string.snygg__rule_element__key
-            FlorisImeUi.KeyHint -> R.string.snygg__rule_element__key_hint
-            FlorisImeUi.KeyPopup -> R.string.snygg__rule_element__key_popup
-            FlorisImeUi.ClipboardHeader -> R.string.snygg__rule_element__clipboard_header
-            FlorisImeUi.ClipboardItem -> R.string.snygg__rule_element__clipboard_item
-            FlorisImeUi.ClipboardItemPopup -> R.string.snygg__rule_element__clipboard_item_popup
-            FlorisImeUi.EmojiKey -> R.string.snygg__rule_element__emoji_key
-            FlorisImeUi.EmojiKeyPopup -> R.string.snygg__rule_element__emoji_key_popup
-            FlorisImeUi.EmojiTab -> R.string.snygg__rule_element__emoji_key_tab
-            FlorisImeUi.ExtractedLandscapeInputLayout -> R.string.snygg__rule_element__extracted_landscape_input_layout
-            FlorisImeUi.ExtractedLandscapeInputField -> R.string.snygg__rule_element__extracted_landscape_input_field
-            FlorisImeUi.ExtractedLandscapeInputAction -> R.string.snygg__rule_element__extracted_landscape_input_action
-            FlorisImeUi.GlideTrail -> R.string.snygg__rule_element__glide_trail
-            FlorisImeUi.IncognitoModeIndicator -> R.string.snygg__rule_element__incognito_mode_indicator
-            FlorisImeUi.OneHandedPanel -> R.string.snygg__rule_element__one_handed_panel
-            FlorisImeUi.Smartbar -> R.string.snygg__rule_element__smartbar
-            FlorisImeUi.SmartbarSharedActionsRow -> R.string.snygg__rule_element__smartbar_shared_actions_row
-            FlorisImeUi.SmartbarSharedActionsToggle -> R.string.snygg__rule_element__smartbar_shared_actions_toggle
-            FlorisImeUi.SmartbarExtendedActionsRow -> R.string.snygg__rule_element__smartbar_extended_actions_row
-            FlorisImeUi.SmartbarExtendedActionsToggle -> R.string.snygg__rule_element__smartbar_extended_actions_toggle
-            FlorisImeUi.SmartbarActionKey -> R.string.snygg__rule_element__smartbar_action_key
-            FlorisImeUi.SmartbarActionTile -> R.string.snygg__rule_element__smartbar_action_tile
-            FlorisImeUi.SmartbarActionsOverflow -> R.string.snygg__rule_element__smartbar_actions_overflow
-            FlorisImeUi.SmartbarActionsOverflowCustomizeButton -> R.string.snygg__rule_element__smartbar_actions_overflow_customize_button
-            FlorisImeUi.SmartbarActionsEditor -> R.string.snygg__rule_element__smartbar_actions_editor
-            FlorisImeUi.SmartbarActionsEditorHeader -> R.string.snygg__rule_element__smartbar_actions_editor_header
-            FlorisImeUi.SmartbarActionsEditorSubheader -> R.string.snygg__rule_element__smartbar_actions_editor_subheader
-            FlorisImeUi.SmartbarCandidatesRow -> R.string.snygg__rule_element__smartbar_candidates_row
-            FlorisImeUi.SmartbarCandidateWord -> R.string.snygg__rule_element__smartbar_candidate_word
-            FlorisImeUi.SmartbarCandidateClip -> R.string.snygg__rule_element__smartbar_candidate_clip
-            FlorisImeUi.SmartbarCandidateSpacer -> R.string.snygg__rule_element__smartbar_candidate_spacer
+            "defines" -> R.string.snygg__rule_element__defines
+            "font" -> R.string.snygg__rule_element__font
+            FlorisImeUi.Keyboard.elementName -> R.string.snygg__rule_element__keyboard
+            FlorisImeUi.Key.elementName -> R.string.snygg__rule_element__key
+            FlorisImeUi.KeyHint.elementName -> R.string.snygg__rule_element__key_hint
+            FlorisImeUi.KeyPopup.elementName -> R.string.snygg__rule_element__key_popup
+            FlorisImeUi.ClipboardHeader.elementName -> R.string.snygg__rule_element__clipboard_header
+            FlorisImeUi.ClipboardItem.elementName -> R.string.snygg__rule_element__clipboard_item
+            FlorisImeUi.ClipboardItemPopup.elementName -> R.string.snygg__rule_element__clipboard_item_popup
+            FlorisImeUi.EmojiKey.elementName -> R.string.snygg__rule_element__emoji_key
+            FlorisImeUi.EmojiKeyPopup.elementName -> R.string.snygg__rule_element__emoji_key_popup
+            FlorisImeUi.EmojiTab.elementName -> R.string.snygg__rule_element__emoji_key_tab
+            FlorisImeUi.ExtractedLandscapeInputLayout.elementName -> R.string.snygg__rule_element__extracted_landscape_input_layout
+            FlorisImeUi.ExtractedLandscapeInputField.elementName -> R.string.snygg__rule_element__extracted_landscape_input_field
+            FlorisImeUi.ExtractedLandscapeInputAction.elementName -> R.string.snygg__rule_element__extracted_landscape_input_action
+            FlorisImeUi.GlideTrail.elementName -> R.string.snygg__rule_element__glide_trail
+            FlorisImeUi.IncognitoModeIndicator.elementName -> R.string.snygg__rule_element__incognito_mode_indicator
+            FlorisImeUi.OneHandedPanel.elementName -> R.string.snygg__rule_element__one_handed_panel
+            FlorisImeUi.Smartbar.elementName -> R.string.snygg__rule_element__smartbar
+            FlorisImeUi.SmartbarSharedActionsRow.elementName -> R.string.snygg__rule_element__smartbar_shared_actions_row
+            FlorisImeUi.SmartbarSharedActionsToggle.elementName -> R.string.snygg__rule_element__smartbar_shared_actions_toggle
+            FlorisImeUi.SmartbarExtendedActionsRow.elementName -> R.string.snygg__rule_element__smartbar_extended_actions_row
+            FlorisImeUi.SmartbarExtendedActionsToggle.elementName -> R.string.snygg__rule_element__smartbar_extended_actions_toggle
+            FlorisImeUi.SmartbarActionKey.elementName -> R.string.snygg__rule_element__smartbar_action_key
+            FlorisImeUi.SmartbarActionTile.elementName -> R.string.snygg__rule_element__smartbar_action_tile
+            FlorisImeUi.SmartbarActionsOverflow.elementName -> R.string.snygg__rule_element__smartbar_actions_overflow
+            FlorisImeUi.SmartbarActionsOverflowCustomizeButton.elementName -> R.string.snygg__rule_element__smartbar_actions_overflow_customize_button
+            FlorisImeUi.SmartbarActionsEditor.elementName -> R.string.snygg__rule_element__smartbar_actions_editor
+            FlorisImeUi.SmartbarActionsEditorHeader.elementName -> R.string.snygg__rule_element__smartbar_actions_editor_header
+            FlorisImeUi.SmartbarActionsEditorSubheader.elementName -> R.string.snygg__rule_element__smartbar_actions_editor_subheader
+            FlorisImeUi.SmartbarCandidatesRow.elementName -> R.string.snygg__rule_element__smartbar_candidates_row
+            FlorisImeUi.SmartbarCandidateWord.elementName -> R.string.snygg__rule_element__smartbar_candidate_word
+            FlorisImeUi.SmartbarCandidateClip.elementName -> R.string.snygg__rule_element__smartbar_candidate_clip
+            FlorisImeUi.SmartbarCandidateSpacer.elementName -> R.string.snygg__rule_element__smartbar_candidate_spacer
             else -> null
         }
     }.let { if (it != null) { stringRes(it) } else { null } }

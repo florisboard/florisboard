@@ -40,7 +40,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
 
     fun encodersOf(rule: SnyggRule, property: String): Set<SnyggValueEncoder>? {
         val propertySetSpec = when (rule) {
-            is SnyggAnnotationRule -> annotationSpecs[rule.annotationName]
+            is SnyggAnnotationRule -> annotationSpecs[rule.name]
             is SnyggElementRule -> elementsSpec
         } ?: return null
         val encoders = propertySetSpec.properties[property]?.encoders

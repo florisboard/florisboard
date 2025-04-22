@@ -19,6 +19,8 @@ package org.florisboard.lib.snygg
 import kotlin.math.min
 
 sealed interface SnyggRule : Comparable<SnyggRule> {
+    val name: String
+
     companion object {
         fun fromOrNull(str: String): SnyggRule? {
             return SnyggAnnotationRule.Defines.fromOrNull(str)
@@ -29,10 +31,8 @@ sealed interface SnyggRule : Comparable<SnyggRule> {
 }
 
 sealed interface SnyggAnnotationRule : SnyggRule {
-    val annotationName: String
-
     data object Defines : SnyggAnnotationRule {
-        override val annotationName: String = "defines"
+        override val name: String = "defines"
 
         internal val REGEX = """@defines""".toRegex()
 
@@ -44,14 +44,18 @@ sealed interface SnyggAnnotationRule : SnyggRule {
         override fun compareTo(other: SnyggRule): Int {
             return when (other) {
                 is Defines -> 0 // same
-                is SnyggAnnotationRule -> annotationName.compareTo(other.annotationName)
+                is SnyggAnnotationRule -> name.compareTo(other.name)
                 is SnyggElementRule -> -1 // annotations always come first
             }
+        }
+
+        override fun toString(): String {
+            return "@defines"
         }
     }
 
     data class Font(val fontName: String) : SnyggAnnotationRule {
-        override val annotationName: String = "font"
+        override val name: String = "font"
 
         companion object {
             internal val REGEX = """@font `(?<fontName>[a-zA-Z0-9\s-]+)`""".toRegex()
@@ -65,27 +69,31 @@ sealed interface SnyggAnnotationRule : SnyggRule {
         override fun compareTo(other: SnyggRule): Int {
             return when (other) {
                 is Font -> fontName.compareTo(other.fontName)
-                is SnyggAnnotationRule -> annotationName.compareTo(other.annotationName)
+                is SnyggAnnotationRule -> name.compareTo(other.name)
                 is SnyggElementRule -> -1 // annotations always come first
             }
+        }
+
+        override fun toString(): String {
+            return "@font `$fontName`"
         }
     }
 }
 
 data class SnyggElementRule(
-    val elementName: String,
+    override val name: String,
     val attributes: Attributes = Attributes(),
     val selector: SnyggSelector = SnyggSelector.NONE,
 ) : SnyggRule {
     init {
-        requireNotNull(ELEMENT_NAME_REGEX.matchEntire(elementName)) { "element name is invalid" }
+        requireNotNull(ELEMENT_NAME_REGEX.matchEntire(name)) { "element name is invalid" }
     }
 
     override fun compareTo(other: SnyggRule): Int {
         if (other !is SnyggElementRule) {
             return 1 // annotations always come first
         }
-        val elemDiff = elementName.compareTo(other.elementName)
+        val elemDiff = name.compareTo(other.name)
         if (elemDiff != 0) {
             return elemDiff
         }
@@ -107,7 +115,7 @@ data class SnyggElementRule(
 
     override fun toString(): String {
         return buildString {
-            append(elementName)
+            append(name)
             append(attributes)
             append(selector)
         }
@@ -133,7 +141,7 @@ data class SnyggElementRule(
             val selectorRaw = result.groups["selectorRaw"]?.value
 
             return SnyggElementRule(
-                elementName = elementName,
+                name = elementName,
                 attributes = Attributes.from(attributesRaw ?: ""),
                 selector = SnyggSelector.from(selectorRaw ?: ""),
             )
@@ -214,6 +222,56 @@ data class SnyggElementRule(
                     append(ATTRIBUTE_CLOSE)
                 }
             }
+        }
+
+        //TODO: Docs, Tests
+        fun including(vararg pairs: Pair<String, Int>): Attributes {
+            val copy = attributes.toMutableMap()
+            pairs.forEach { (key, value) ->
+                copy[key] = buildList {
+                    addAll(copy[key].orEmpty())
+                    add(value)
+                }
+            }
+            return Attributes(copy.toMap())
+        }
+
+        //TODO: Docs, Tests
+        fun excluding(vararg pairs: Pair<String, Int>): Attributes {
+            val copy = attributes.toMutableMap()
+            pairs.forEach { (key, value) ->
+                val list = buildList {
+                    addAll(copy[key].orEmpty())
+                    remove(value)
+                }
+                if (list.isNotEmpty()) {
+                    copy[key] = list
+                } else {
+                    copy.remove(key)
+                }
+            }
+            return Attributes(copy.toMap())
+        }
+
+        //TODO: Docs, Tests
+        fun toggling(vararg pairs: Pair<String, Int>): Attributes {
+            val copy = attributes.toMutableMap()
+            pairs.forEach { (key, value) ->
+                val list = buildList {
+                    addAll(copy[key].orEmpty())
+                    if (contains(value)) {
+                        remove(value)
+                    } else {
+                        add(value)
+                    }
+                }
+                if (list.isNotEmpty()) {
+                    copy[key] = list
+                } else {
+                    copy.remove(key)
+                }
+            }
+            return Attributes(copy.toMap())
         }
 
         companion object {

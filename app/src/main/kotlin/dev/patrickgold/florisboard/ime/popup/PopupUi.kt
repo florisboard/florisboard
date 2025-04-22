@@ -49,10 +49,10 @@ fun PopupBaseBox(
     fontSizeMultiplier: Float,
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
-    val popupStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopup)
+    val popupStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopup.elementName)
     val fontSize = popupStyle.fontSize() safeTimes fontSizeMultiplier
     SnyggBox(
-        elementName = FlorisImeUi.KeyPopup,
+        elementName = FlorisImeUi.KeyPopup.elementName,
         modifier = modifier,
     ) {
         key.label?.let { label ->
@@ -95,7 +95,7 @@ fun PopupExtBox(
     elemHeight: Dp,
     activeElementIndex: Int,
 ): Unit = with(LocalDensity.current) {
-    SnyggColumn(FlorisImeUi.KeyPopup, modifier = modifier) {
+    SnyggColumn(FlorisImeUi.KeyPopup.elementName, modifier = modifier) {
         for (row in elements.asReversed()) {
             Row(
                 modifier = Modifier
@@ -110,7 +110,7 @@ fun PopupExtBox(
                         null
                     }
                     SnyggBox(
-                        elementName = FlorisImeUi.KeyPopup,
+                        elementName = FlorisImeUi.KeyPopup.elementName,
                         selector = selector,
                         modifier = Modifier
                             .size(elemWidth, elemHeight),

@@ -119,7 +119,7 @@ fun TextKeyboardLayout(
     val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
         evaluator.state.keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
-    val glideTrailStyle = rememberSnyggThemeQuery(FlorisImeUi.GlideTrail)
+    val glideTrailStyle = rememberSnyggThemeQuery(FlorisImeUi.GlideTrail.elementName)
     val glideTrailColor = glideTrailStyle.foreground(default = Color.Green)
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
@@ -326,7 +326,7 @@ private fun TextKeyButton(
         else -> SnyggSelector.NONE
     }
     val keyStyle = rememberSnyggThemeQuery(
-        elementName = FlorisImeUi.Key,
+        FlorisImeUi.Key.elementName,
         attributes = attributes,
         selector = selector,
     )
@@ -347,7 +347,7 @@ private fun TextKeyButton(
         // TODO: maybe make this customizable through a size property for keyStyle
         val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
         SnyggBox(
-            elementName = FlorisImeUi.Key,
+            FlorisImeUi.Key.elementName,
             attributes = attributes,
             selector = selector,
             modifier = Modifier
@@ -390,7 +390,7 @@ private fun TextKeyButton(
         }
         key.hintedLabel?.let { hintedLabel ->
             val keyHintStyle = rememberSnyggThemeQuery(
-                elementName = FlorisImeUi.KeyHint,
+                FlorisImeUi.KeyHint.elementName,
                 attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value),
                 selector = when {
                     key.isPressed -> SnyggSelector.PRESSED

@@ -52,7 +52,7 @@ class SnyggStylesheetEditor(
         val propertySetEditor = SnyggPropertySetEditor()
         propertySetBlock(propertySetEditor)
         val rule = SnyggElementRule(
-            elementName = this,
+            name = this,
             attributes = SnyggElementRule.Attributes.of(*attributes),
             selector = selector,
         )

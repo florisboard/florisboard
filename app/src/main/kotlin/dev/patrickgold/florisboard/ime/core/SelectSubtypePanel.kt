@@ -58,9 +58,9 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
 
     val currentlySelected = subtypeManager.activeSubtype.id
 
-    SnyggColumn(FlorisImeUi.SmartbarActionsEditor, modifier = modifier) {
+    SnyggColumn(FlorisImeUi.SmartbarActionsEditor.elementName, modifier = modifier) {
         SnyggRow(
-            elementName = FlorisImeUi.SmartbarActionsEditorHeader,
+            elementName = FlorisImeUi.SmartbarActionsEditorHeader.elementName,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggText(

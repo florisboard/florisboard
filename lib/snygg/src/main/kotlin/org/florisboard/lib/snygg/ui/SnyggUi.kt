@@ -159,6 +159,12 @@ val SnyggRule.Companion.Saver: Saver<SnyggRule?, String>
         restore = { fromOrNull(it) },
     )
 
+val SnyggRule.Companion.NonNullSaver: Saver<SnyggRule, String>
+    get() = Saver(
+        save = { it.toString() },
+        restore = { fromOrNull(it)!! },
+    )
+
 @Composable
 fun rememberSnyggThemeQuery(
     elementName: String,

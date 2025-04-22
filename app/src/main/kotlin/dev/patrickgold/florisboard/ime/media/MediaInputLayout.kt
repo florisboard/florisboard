@@ -113,7 +113,7 @@ internal fun KeyboardLikeButton(
     modifier: Modifier = Modifier,
     inputEventDispatcher: InputEventDispatcher,
     keyData: KeyData,
-    element: String = FlorisImeUi.EmojiKey,
+    element: String = FlorisImeUi.EmojiKey.elementName,
     content: @Composable RowScope.() -> Unit,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current

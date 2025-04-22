@@ -72,7 +72,7 @@ fun QuickActionButton(
         QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
         QuickActionBarType.INTERACTIVE_TILE -> FlorisImeUi.SmartbarActionTile
         QuickActionBarType.EDITOR_TILE -> FlorisImeUi.SmartbarActionsEditorTile
-    }
+    }.elementName
     val selector = when {
         isPressed -> SnyggSelector.PRESSED
         !isEnabled -> SnyggSelector.DISABLED

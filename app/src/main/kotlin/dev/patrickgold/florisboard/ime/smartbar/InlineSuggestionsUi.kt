@@ -50,7 +50,7 @@ fun InlineSuggestionsUi(
     val scrollState = rememberScrollState()
     val almostEmptyRect = remember { android.graphics.Rect(0, 0, 1, 1) }
 
-    val chipStyleSet = rememberSnyggThemeQuery(FlorisImeUi.InlineAutofillChip)
+    val chipStyleSet = rememberSnyggThemeQuery(FlorisImeUi.InlineAutofillChip.elementName)
     LaunchedEffect(chipStyleSet) {
         CachedInlineSuggestionsChipStyleSet = chipStyleSet
     }

@@ -16,57 +16,66 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-object FlorisImeUi {
-    const val Keyboard = "keyboard"
-    const val Key = "key"
-    const val KeyHint = "key-hint"
-    const val KeyPopup = "key-popup"
+enum class FlorisImeUi(val elementName: String) {
+    Keyboard("keyboard"),
+    Key("key"),
+    KeyHint("key-hint"),
+    KeyPopup("key-popup"),
 
-    const val ClipboardHeader = "clipboard-header"
-    const val ClipboardSubheader = "clipboard-subheader"
-    const val ClipboardContent = "clipboard-content"
-    const val ClipboardItem = "clipboard-item"
-    const val ClipboardItemPopup = "clipboard-item-popup"
-    const val ClipboardItemPopupAction = "clipboard-item-popup-action"
-    const val ClipboardItemPopupActionIcon = "clipboard-item-popup-action-icon"
-    const val ClipboardItemPopupActionText = "clipboard-item-popup-action-text"
-    const val ClipboardEnableHistoryButton = "clipboard-enable-history-button"
+    ClipboardHeader("clipboard-header"),
+    ClipboardSubheader("clipboard-subheader"),
+    ClipboardContent("clipboard-content"),
+    ClipboardItem("clipboard-item"),
+    ClipboardItemPopup("clipboard-item-popup"),
+    ClipboardItemPopupAction("clipboard-item-popup-action"),
+    ClipboardItemPopupActionIcon("clipboard-item-popup-action-icon"),
+    ClipboardItemPopupActionText("clipboard-item-popup-action-text"),
+    ClipboardEnableHistoryButton("clipboard-enable-history-button"),
 
-    const val EmojiKey = "emoji-key"
-    const val EmojiKeyPopup = "emoji-key-popup"
-    const val EmojiTab = "emoji-tab"
+    EmojiKey("emoji-key"),
+    EmojiKeyPopup("emoji-key-popup"),
+    EmojiTab("emoji-tab"),
 
-    const val ExtractedLandscapeInputLayout = "extracted-landscape-input-layout"
-    const val ExtractedLandscapeInputField = "extracted-landscape-input-field"
-    const val ExtractedLandscapeInputAction = "extracted-landscape-input-action"
+    ExtractedLandscapeInputLayout("extracted-landscape-input-layout"),
+    ExtractedLandscapeInputField("extracted-landscape-input-field"),
+    ExtractedLandscapeInputAction("extracted-landscape-input-action"),
 
-    const val GlideTrail = "glide-trail"
+    GlideTrail("glide-trail"),
 
-    const val IncognitoModeIndicator = "incognito-mode-indicator"
+    IncognitoModeIndicator("incognito-mode-indicator"),
 
-    const val InlineAutofillChip = "inline-autofill-chip"
+    InlineAutofillChip("inline-autofill-chip"),
 
-    const val OneHandedPanel = "one-handed-panel"
-    const val OneHandedPanelButton = "one-handed-panel-button"
+    OneHandedPanel("one-handed-panel"),
+    OneHandedPanelButton("one-handed-panel-button"),
 
-    const val Smartbar = "smartbar"
-    const val SmartbarSharedActionsRow = "smartbar-shared-actions-row"
-    const val SmartbarSharedActionsToggle = "smartbar-shared-actions-toggle"
-    const val SmartbarExtendedActionsRow = "smartbar-extended-actions-row"
-    const val SmartbarExtendedActionsToggle = "smartbar-extended-actions-toggle"
-    const val SmartbarActionKey = "smartbar-action-key"
-    const val SmartbarActionTile = "smartbar-action-tile"
-    const val SmartbarActionsOverflow = "smartbar-actions-overflow"
-    const val SmartbarActionsOverflowCustomizeButton = "smartbar-actions-overflow-customize-button"
+    Smartbar("smartbar"),
+    SmartbarSharedActionsRow("smartbar-shared-actions-row"),
+    SmartbarSharedActionsToggle("smartbar-shared-actions-toggle"),
+    SmartbarExtendedActionsRow("smartbar-extended-actions-row"),
+    SmartbarExtendedActionsToggle("smartbar-extended-actions-toggle"),
+    SmartbarActionKey("smartbar-action-key"),
+    SmartbarActionTile("smartbar-action-tile"),
+    SmartbarActionsOverflow("smartbar-actions-overflow"),
+    SmartbarActionsOverflowCustomizeButton("smartbar-actions-overflow-customize-button"),
 
-    const val SmartbarActionsEditor = "smartbar-actions-editor"
-    const val SmartbarActionsEditorHeader = "smartbar-actions-editor-header"
-    const val SmartbarActionsEditorSubheader = "smartbar-actions-editor-subheader"
-    const val SmartbarActionsEditorTileGrid = "smartbar-actions-editor-tile-grid"
-    const val SmartbarActionsEditorTile = "smartbar-actions-editor-tile"
+    SmartbarActionsEditor("smartbar-actions-editor"),
+    SmartbarActionsEditorHeader("smartbar-actions-editor-header"),
+    SmartbarActionsEditorSubheader("smartbar-actions-editor-subheader"),
+    SmartbarActionsEditorTileGrid("smartbar-actions-editor-tile-grid"),
+    SmartbarActionsEditorTile("smartbar-actions-editor-tile"),
 
-    const val SmartbarCandidatesRow = "smartbar-candidates-row"
-    const val SmartbarCandidateWord = "smartbar-candidate-word"
-    const val SmartbarCandidateClip = "smartbar-candidate-clip"
-    const val SmartbarCandidateSpacer = "smartbar-candidate-spacer"
+    SmartbarCandidatesRow("smartbar-candidates-row"),
+    SmartbarCandidateWord("smartbar-candidate-word"),
+    SmartbarCandidateClip("smartbar-candidate-clip"),
+    SmartbarCandidateSpacer("smartbar-candidate-spacer");
+
+    companion object {
+        val elementNames by lazy { entries.map { it.elementName } }
+    }
+
+    object Attributes {
+        const val Code = "code"
+        const val ShiftState = "shift-state"
+    }
 }

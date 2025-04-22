@@ -69,7 +69,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
 
     SnyggRow(
-        elementName = FlorisImeUi.SmartbarCandidatesRow,
+        elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
         modifier = modifier
             .fillMaxSize()
             .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
@@ -103,7 +103,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             for ((n, candidate) in list.withIndex()) {
                 if (n > 0) {
                     SnyggSpacer(
-                        elementName = FlorisImeUi.SmartbarCandidateSpacer,
+                        elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
                         modifier = Modifier
                             .width(1.dp)
                             .fillMaxHeight(0.6f)
@@ -149,7 +149,7 @@ private fun CandidateItem(
         FlorisImeUi.SmartbarCandidateClip
     } else {
         FlorisImeUi.SmartbarCandidateWord
-    }
+    }.elementName
 
     SnyggRow(
         elementName = elementName,

@@ -592,7 +592,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggBox(
-                elementName = FlorisImeUi.Keyboard,
+                elementName = FlorisImeUi.Keyboard.elementName,
                 attributes = mapOf("mode" to state.inputShiftState.value),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -745,18 +745,18 @@ class FlorisImeService : LifecycleInputMethodService() {
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout) {
+                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
                         SnyggRow(
                             elementName = null,
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout,
+                            SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .weight(1f),
                             ) {
-                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField)
+                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField.elementName)
                                 val foreground = fieldStyle.foreground()
                                 AndroidView(
                                     factory = { extractEditText },
@@ -774,7 +774,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                                 )
                             }
                             SnyggButton(
-                                elementName = FlorisImeUi.ExtractedLandscapeInputAction,
+                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
                                 onClick = {
                                     if (activeEditorInfo.extractedActionId != 0) {
                                         currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)

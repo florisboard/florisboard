@@ -46,7 +46,7 @@ fun RowScope.OneHandedPanel(
     val inputFeedbackController = LocalInputFeedbackController.current
 
     SnyggColumn(
-        elementName = FlorisImeUi.OneHandedPanel,
+        FlorisImeUi.OneHandedPanel.elementName,
         modifier = modifier
             .weight(weight)
             .height(FlorisImeSizing.imeUiHeight()),
@@ -54,7 +54,7 @@ fun RowScope.OneHandedPanel(
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
         SnyggIconButton(
-            elementName = FlorisImeUi.OneHandedPanelButton,
+            FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedModeEnabled.set(false)
@@ -64,7 +64,7 @@ fun RowScope.OneHandedPanel(
             contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
         )
         SnyggIconButton(
-            elementName = FlorisImeUi.OneHandedPanelButton,
+            FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedMode.set(panelSide)

@@ -155,7 +155,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun SharedActionsToggle() {
         SnyggIconButton(
-            elementName = FlorisImeUi.SmartbarSharedActionsToggle,
+            FlorisImeUi.SmartbarSharedActionsToggle.elementName,
             onClick = {
                 if (/* was */ sharedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
@@ -189,7 +189,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 arrowIcon
             }
             SnyggIcon(
-                elementName = FlorisImeUi.SmartbarSharedActionsToggle,
+                FlorisImeUi.SmartbarSharedActionsToggle.elementName,
                 modifier = Modifier.rotate(if (incognitoDisplayMode.value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD) rotation else 0f),
                 imageVector = icon,
             )
@@ -223,10 +223,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 exit = exitTransition,
             ) {
                 QuickActionsRow(
+                    FlorisImeUi.SmartbarSharedActionsRow.elementName,
                     modifier = modifier
                         .fillMaxWidth()
                         .height(FlorisImeSizing.smartbarHeight),
-                    elementName = FlorisImeUi.SmartbarSharedActionsRow,
                 )
             }
         }
@@ -235,7 +235,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun ExtendedActionsToggle() {
         SnyggIconButton(
-            elementName = FlorisImeUi.SmartbarExtendedActionsToggle,
+            FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
             onClick = {
                 if (/* was */ extendedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
@@ -248,7 +248,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
             // Expanded icon
             SnyggIcon(
-                elementName = FlorisImeUi.SmartbarExtendedActionsToggle,
+                FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
                 modifier = Modifier
                     .alpha(alpha)
                     .rotate(rotation),
@@ -256,7 +256,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             )
             // Not expanded icon
             SnyggIcon(
-                elementName = FlorisImeUi.SmartbarExtendedActionsToggle,
+                FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
                 modifier = Modifier
                     .alpha(1f - alpha)
                     .rotate(rotation - 180f),
@@ -304,7 +304,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     }
 
     SnyggRow(
-        elementName = FlorisImeUi.Smartbar,
+        FlorisImeUi.Smartbar.elementName,
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight),
@@ -322,7 +322,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 if (shouldShowInlineSuggestionsUi) {
                     InlineSuggestionsUi(inlineSuggestions)
                 } else {
-                    QuickActionsRow(elementName = FlorisImeUi.SmartbarSharedActionsRow)
+                    QuickActionsRow(FlorisImeUi.SmartbarSharedActionsRow.elementName)
                 }
             }
 
@@ -357,8 +357,8 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
-    val secondaryRowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarExtendedActionsRow)
-    val keyboardStyle = rememberSnyggThemeQuery(FlorisImeUi.Keyboard)
+    val secondaryRowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarExtendedActionsRow.elementName)
+    val keyboardStyle = rememberSnyggThemeQuery(FlorisImeUi.Keyboard.elementName)
     val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
     val background = secondaryRowStyle.background().let { color ->
@@ -379,11 +379,11 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
         exit = VerticalExitTransition,
     ) {
         QuickActionsRow(
+            FlorisImeUi.SmartbarExtendedActionsRow.elementName,
             modifier = modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight)
                 .background(background),
-            elementName = FlorisImeUi.SmartbarExtendedActionsRow,
         )
     }
 }
