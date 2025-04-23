@@ -234,7 +234,7 @@ fun ThemeEditorScreen(
 
         val definedVariables = remember(stylesheetEditor.rules) {
             stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
-                if (rule == SnyggAnnotationRule.Defines) {
+                if (rule is SnyggAnnotationRule.Defines) {
                     propertySet.properties
                 } else {
                     null
@@ -287,7 +287,9 @@ fun ThemeEditorScreen(
                             },
                             onAddPropertyBtnClick = {
                                 snyggPropertySetForEditing = propertySet
-                                snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding
+                                snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
+                                    rule = rule,
+                                )
                             },
                         )
                         if (isVariablesRule) {
@@ -303,10 +305,10 @@ fun ThemeEditorScreen(
                                 JetPrefListItem(
                                     modifier = Modifier.rippleClickable {
                                         snyggPropertySetForEditing = propertySet
-                                        snyggPropertyToEdit = PropertyInfo(propertyName, propertyValue)
+                                        snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
                                     },
-                                    text = translatePropertyName(propertyName, snyggLevel),
-                                    secondaryText = translatePropertyValue(propertyValue, snyggLevel, displayColorsAs),
+                                    text = translatePropertyName(context, propertyName, snyggLevel),
+                                    secondaryText = translatePropertyValue(context, propertyValue, snyggLevel, displayColorsAs),
                                     singleLineSecondaryText = true,
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                 )

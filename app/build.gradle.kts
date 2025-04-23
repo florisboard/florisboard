@@ -51,6 +51,7 @@ android {
         freeCompilerArgs = listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-Xjvm-default=all-compatibility",
+            "-Xwhen-guards",
         )
     }
 

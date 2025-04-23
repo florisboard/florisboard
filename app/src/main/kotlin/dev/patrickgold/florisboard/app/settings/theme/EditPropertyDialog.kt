@@ -46,6 +46,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
@@ -89,16 +90,28 @@ import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
+import org.florisboard.lib.color.ColorPalette
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.kotlin.toStringWithoutDotZero
+import org.florisboard.lib.snygg.SnyggAnnotationRule
+import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.value.SnyggAppearanceValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
-    name = "- select -",
+    rule = SnyggEmptyRuleForAdding,
+    name = "--select--",
     value = SnyggUndefinedValue,
 )
 
 data class PropertyInfo(
+    val rule: SnyggRule,
     val name: String,
     val value: SnyggValue,
 )
@@ -132,27 +145,13 @@ internal fun EditPropertyDialog(
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    // TODO: reimplement
-}
-
-/*
-@Composable
-internal fun EditPropertyDialog(
-    initProperty: PropertyInfo,
-    level: SnyggLevel,
-    displayColorsAs: DisplayColorsAs,
-    definedVariables: Map<String, SnyggValue>,
-    onConfirmNewValue: (String, SnyggValue) -> Boolean,
-    onDelete: () -> Unit,
-    onDismiss: () -> Unit,
-) {
-    val isAddPropertyDialog = initProperty == SnyggEmptyPropertyInfoForAdding
+    val isAddPropertyDialog = initProperty.name == SnyggEmptyPropertyInfoForAdding.name
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var showAlreadyExistsError by rememberSaveable { mutableStateOf(false) }
 
     var propertyName by rememberSaveable {
         mutableStateOf(
-            if (isAddPropertyDialog && propertySetSpec == null) {
+            if (isAddPropertyDialog) {
                 ""
             } else {
                 initProperty.name
@@ -160,9 +159,11 @@ internal fun EditPropertyDialog(
         )
     }
     val propertyNameValidation = rememberValidationResult(ExtensionValidation.ThemeComponentVariableName, propertyName)
+
+    val encoders = remember(initProperty.rule, propertyName) { SnyggSpec.encodersOf(initProperty.rule, propertyName) }
     var propertyValueEncoder by remember {
         mutableStateOf(
-            if (isAddPropertyDialog && propertySetSpec == null) {
+            if (isAddPropertyDialog && encoders == null) {
                 SnyggUndefinedValue
             } else {
                 initProperty.value.encoder()
@@ -171,7 +172,7 @@ internal fun EditPropertyDialog(
     }
     var propertyValue by remember {
         mutableStateOf(
-            if (isAddPropertyDialog && propertySetSpec == null) {
+            if (isAddPropertyDialog && encoders == null) {
                 SnyggUndefinedValue
             } else {
                 initProperty.value
@@ -180,7 +181,12 @@ internal fun EditPropertyDialog(
     }
 
     fun isPropertyNameValid(): Boolean {
-        return propertyNameValidation.isValid() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+        return when (initProperty.rule) {
+            is SnyggAnnotationRule.Defines -> {
+                propertyNameValidation.isValid() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+            }
+            else -> propertyName.isNotEmpty() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+        }
     }
 
     fun isPropertyValueValid(): Boolean {
@@ -239,11 +245,11 @@ internal fun EditPropertyDialog(
 
             DialogProperty(text = stringRes(R.string.settings__theme_editor__property_name)) {
                 PropertyNameInput(
-                    propertySetSpec = propertySetSpec,
+                    rule = initProperty.rule,
                     name = propertyName,
                     nameValidation = propertyNameValidation,
                     onNameChange = { name ->
-                        if (propertySetSpec != null) {
+                        if (encoders != null) {
                             propertyValueEncoder = SnyggUndefinedValue
                         }
                         propertyName = name
@@ -256,9 +262,7 @@ internal fun EditPropertyDialog(
 
             DialogProperty(text = stringRes(R.string.settings__theme_editor__property_value)) {
                 PropertyValueEncoderDropdown(
-                    supportedEncoders = remember(propertyName) {
-                        propertySetSpec?.propertySpec(propertyName)?.encoders ?: SnyggVarValueEncoders
-                    },
+                    supportedEncoders = encoders.orEmpty(),
                     encoder = propertyValueEncoder,
                     onEncoderChange = { encoder ->
                         propertyValueEncoder = encoder
@@ -283,7 +287,7 @@ internal fun EditPropertyDialog(
 
 @Composable
 private fun PropertyNameInput(
-    propertySetSpec: SnyggPropertySetSpec?,
+    rule: SnyggRule,
     name: String,
     nameValidation: ValidationResult,
     onNameChange: (String) -> Unit,
@@ -291,26 +295,24 @@ private fun PropertyNameInput(
     isAddPropertyDialog: Boolean,
     showSelectAsError: Boolean,
 ) {
-    if (propertySetSpec != null) {
-        val possiblePropertyNames = remember(propertySetSpec) {
-            listOf(SnyggEmptyPropertyInfoForAdding.name) + propertySetSpec.supportedProperties.map { it.name }
+    val context = LocalContext.current
+    if (rule !is SnyggAnnotationRule.Defines) {
+        val possiblePropertyNames = buildList {
+            add(SnyggEmptyPropertyInfoForAdding.name)
+            addAll(SnyggSpec.propertiesOf(rule))
         }
-        val possiblePropertyLabels = possiblePropertyNames.map { translatePropertyName(it, level) }
-        var propertiesExpanded by remember { mutableStateOf(false) }
+        val possiblePropertyLabels = possiblePropertyNames.map { translatePropertyName(context, it, level) }
         val propertiesSelectedIndex = remember(name) {
             possiblePropertyNames.indexOf(name).coerceIn(possiblePropertyNames.indices)
         }
-        FlorisDropdownMenu(
-            items = possiblePropertyLabels,
-            expanded = propertiesExpanded,
-            enabled = isAddPropertyDialog,
-            selectedIndex = propertiesSelectedIndex,
-            isError = showSelectAsError && propertiesSelectedIndex == 0,
-            onSelectItem = { index ->
+        JetPrefDropdown(
+            options = possiblePropertyLabels,
+            selectedOptionIndex = propertiesSelectedIndex,
+            onSelectOption = { index ->
                 onNameChange(possiblePropertyNames[index])
             },
-            onExpandRequest = { propertiesExpanded = true },
-            onDismissRequest = { propertiesExpanded = false },
+            enabled = isAddPropertyDialog,
+            isError = showSelectAsError && propertiesSelectedIndex == 0,
         )
     } else {
         val focusManager = LocalFocusManager.current
@@ -330,7 +332,7 @@ private fun PropertyNameInput(
 
 @Composable
 private fun PropertyValueEncoderDropdown(
-    supportedEncoders: List<SnyggValueEncoder>,
+    supportedEncoders: Set<SnyggValueEncoder>,
     encoder: SnyggValueEncoder,
     onEncoderChange: (SnyggValueEncoder) -> Unit,
     enabled: Boolean = true,
@@ -339,22 +341,19 @@ private fun PropertyValueEncoderDropdown(
     val encoders = remember(supportedEncoders) {
         listOf(SnyggUndefinedValue) + supportedEncoders
     }
-    var expanded by remember { mutableStateOf(false) }
     val selectedIndex = remember(encoder) {
         encoders.indexOf(encoder).coerceIn(encoders.indices)
     }
-    FlorisDropdownMenu(
-        items = encoders,
-        labelProvider = { translatePropertyValueEncoderName(it) },
-        expanded = expanded,
-        enabled = enabled,
-        selectedIndex = selectedIndex,
-        isError = isError,
-        onSelectItem = { index ->
+    val context = LocalContext.current
+    JetPrefDropdown(
+        options = encoders,
+        selectedOptionIndex = selectedIndex,
+        onSelectOption = { index ->
             onEncoderChange(encoders[index])
         },
-        onExpandRequest = { expanded = true },
-        onDismissRequest = { expanded = false },
+        enabled = enabled,
+        isError = isError,
+        optionsLabelProvider = { translatePropertyValueEncoderName(context, it) },
     )
 }
 
@@ -368,6 +367,7 @@ private fun PropertyValueEditor(
     definedVariables: Map<String, SnyggValue>,
     isError: Boolean = false,
 ) {
+    val context = LocalContext.current
     when (value) {
         is SnyggDefinedVarValue -> {
             val variableKeys = remember(definedVariables) {
@@ -386,7 +386,7 @@ private fun PropertyValueEditor(
                         .padding(end = 12.dp)
                         .weight(1f),
                     items = variableKeys,
-                    labelProvider = { translatePropertyName(it, level) },
+                    labelProvider = { translatePropertyName(context, it, level) },
                     expanded = expanded,
                     selectedIndex = selectedIndex,
                     isError = isError,
@@ -405,7 +405,7 @@ private fun PropertyValueEditor(
 
         is SnyggStaticColorValue -> {
             val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
-            val colorPickerStr = translatePropertyValue(value, level, displayColorsAs)
+            val colorPickerStr = translatePropertyValue(context, value, level, displayColorsAs)
             var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 Column(modifier = Modifier.padding(top = 8.dp)) {
@@ -527,37 +527,33 @@ private fun PropertyValueEditor(
 
         is SnyggDynamicColorValue -> {
             val onSelectItem: (Int) -> Unit = when (value) {
-                is SnyggDynamicColorDarkColorValue -> { index ->
-                    onValueChange(SnyggDynamicColorDarkColorValue(MaterialYouColor.colorNames[index]))
+                is SnyggDynamicDarkColorValue -> { index ->
+                    onValueChange(SnyggDynamicDarkColorValue(ColorPalette.colorNames[index]))
                 }
 
-                is SnyggDynamicColorLightColorValue -> { index ->
-                    onValueChange(SnyggDynamicColorLightColorValue(MaterialYouColor.colorNames[index]))
+                is SnyggDynamicLightColorValue -> { index ->
+                    onValueChange(SnyggDynamicLightColorValue(ColorPalette.colorNames[index]))
                 }
             }
 
             val selectedIndex by remember(value.colorName) {
                 mutableIntStateOf(
-                    MaterialYouColor.colorNames.indexOf(value.colorName).coerceIn(MaterialYouColor.colorNames.indices)
+                    ColorPalette.colorNames.indexOf(value.colorName).coerceIn(ColorPalette.colorNames.indices)
                 )
             }
-            var expanded by remember { mutableStateOf(false) }
             Row(
                 modifier = Modifier.padding(top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                FlorisDropdownMenu(
+                JetPrefDropdown(
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .weight(1f),
-                    items = MaterialYouColor.colorNames,
-                    labelProvider = { translatePropertyName(it, level) },
-                    expanded = expanded,
-                    selectedIndex = selectedIndex,
+                    options = ColorPalette.colorNames,
+                    selectedOptionIndex = selectedIndex,
+                    onSelectOption = onSelectItem,
                     isError = isError,
-                    onSelectItem = onSelectItem,
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
+                    optionsLabelProvider = { translatePropertyName(context, it, level) },
                 )
                 SnyggValueIcon(
                     value = value,
@@ -954,4 +950,3 @@ private fun PropertyValueEditor(
         }
     }
 }
-*/

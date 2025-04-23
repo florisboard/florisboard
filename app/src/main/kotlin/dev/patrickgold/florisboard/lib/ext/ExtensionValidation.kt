@@ -144,11 +144,10 @@ object ExtensionValidation {
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_property)
-                str == "-" || str.startsWith("--") -> resultValid()
                 !SnyggVarValue.VariableNameRegex.matches(str) -> {
                     resultInvalid(error = R.string.ext__validation__error_property, "variable_name_regex" to SnyggVarValue.VariableNameRegex)
                 }
-                else -> resultValid(hint = R.string.ext__validation__hint_property)
+                else -> resultValid()
             }
         }
     }

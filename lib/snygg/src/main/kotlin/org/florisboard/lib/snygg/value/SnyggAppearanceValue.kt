@@ -138,7 +138,11 @@ data class SnyggStaticColorValue(val color: Color) : SnyggAppearanceValue {
 private const val ColorNameId = "name"
 private val ColorName = ColorPalette.colorNames.joinToString("|").toRegex()
 
-data class SnyggDynamicLightColorValue(val colorName: String) : SnyggAppearanceValue {
+sealed interface SnyggDynamicColorValue : SnyggAppearanceValue {
+    val colorName: String
+}
+
+data class SnyggDynamicLightColorValue(override val colorName: String) : SnyggDynamicColorValue {
     companion object : SnyggValueEncoder {
         private const val FunctionName = "dynamic-light-color"
 
@@ -169,7 +173,7 @@ data class SnyggDynamicLightColorValue(val colorName: String) : SnyggAppearanceV
     override fun encoder() = Companion
 }
 
-data class SnyggDynamicDarkColorValue(val colorName: String) : SnyggAppearanceValue {
+data class SnyggDynamicDarkColorValue(override val colorName: String) : SnyggDynamicColorValue {
     companion object : SnyggValueEncoder {
         private const val FunctionName = "dynamic-dark-color"
 

@@ -22,6 +22,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
 import org.florisboard.lib.kotlin.io.writeJson
+import org.florisboard.lib.kotlin.simpleNameOrEnclosing
 import org.florisboard.lib.snygg.value.SnyggKeywordValueSpec
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
 import org.florisboard.lib.snygg.value.SnyggValueSpec
@@ -135,13 +136,7 @@ object SnyggJsonSchemaGenerator {
     }
 
     private fun SnyggValueEncoder.id(): String {
-        val className = if (this::class.simpleName == "Companion") {
-            // Companion object => get the enclosing class
-            this::class.java.enclosingClass.simpleName
-        } else {
-            // Normal object => directly get class
-            this::class.simpleName ?: error("could not resolve class name of $this")
-        }
+        val className = this::class.simpleNameOrEnclosing() ?: error("could not resolve class name of $this")
         return className.replace("""([a-z])([A-Z])""".toRegex(), "$1-$2").lowercase()
     }
 

@@ -723,7 +723,6 @@
     <string name="ext__validation__error_stylesheet_path">Please enter a valid stylesheet path matching {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Please enter a variable name</string>
     <string name="ext__validation__error_property">Please enter a valid variable name matching {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">By convention a FlorisCSS variable name starts with two dashes (--)</string>
     <string name="ext__validation__enter_color">Please enter a color string</string>
     <string name="ext__validation__error_color">Please enter a valid color string</string>
     <string name="ext__validation__enter_dp_size">Please enter a dp size</string>

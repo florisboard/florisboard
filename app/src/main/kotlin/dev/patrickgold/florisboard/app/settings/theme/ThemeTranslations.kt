@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.settings.theme
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
 import dev.patrickgold.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.simpleNameOrEnclosing
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
@@ -100,8 +102,7 @@ internal fun translateElementName(element: String, level: SnyggLevel): String? {
     }.let { if (it != null) { stringRes(it) } else { null } }
 }
 
-@Composable
-internal fun translatePropertyName(propertyName: String, level: SnyggLevel): String {
+internal fun translatePropertyName(context: Context, propertyName: String, level: SnyggLevel): String {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
         // TODO: add new theme translations
@@ -136,10 +137,10 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
     }.let { resId ->
         when {
             resId != null -> {
-                stringRes(resId)
+                context.getString(resId)
             }
             propertyName.isBlank() -> {
-                stringRes(R.string.general__select_dropdown_value_placeholder)
+                context.getString(R.string.general__select_dropdown_value_placeholder)
             }
             else -> {
                 propertyName
@@ -148,20 +149,20 @@ internal fun translatePropertyName(propertyName: String, level: SnyggLevel): Str
     }
 }
 
-@Composable
 internal fun translatePropertyValue(
+    context: Context,
     propertyValue: SnyggValue,
     level: SnyggLevel,
     displayColorsAs: DisplayColorsAs,
 ): String {
     return when (propertyValue) {
-        is SnyggStaticColorValue -> remember(propertyValue.color, displayColorsAs) {
+        is SnyggStaticColorValue -> {
             buildColorString(propertyValue.color, displayColorsAs)
         }
         else -> when (level) {
             SnyggLevel.DEVELOPER -> null
             else -> when (propertyValue) {
-                is SnyggDefinedVarValue -> translatePropertyName(propertyValue.key, level)
+                is SnyggDefinedVarValue -> translatePropertyName(context, propertyValue.key, level)
                 else -> null
             }
         } ?: buildString {
@@ -199,8 +200,8 @@ internal fun buildColorString(color: Color, displayColorsAs: DisplayColorsAs): S
     }
 }
 
-@Composable
-internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): String {
+
+internal fun translatePropertyValueEncoderName(context: Context, encoder: SnyggValueEncoder): String {
     return when (encoder) {
         SnyggUndefinedValue -> R.string.general__select_dropdown_value_placeholder
         SnyggInheritValue -> R.string.snygg__property_value__explicit_inherit
@@ -218,5 +219,5 @@ internal fun translatePropertyValueEncoderName(encoder: SnyggValueEncoder): Stri
         SnyggPercentageSizeValue -> R.string.snygg__property_value__percentage_size
         SnyggDefinedVarValue -> R.string.snygg__property_value__defined_var
         else -> null
-    }.let { if (it != null) { stringRes(it) } else { encoder::class.simpleName ?: "" } }.toString()
+    }.let { if (it != null) { context.getString(it) } else { encoder::class.simpleNameOrEnclosing() ?: "" } }.toString()
 }

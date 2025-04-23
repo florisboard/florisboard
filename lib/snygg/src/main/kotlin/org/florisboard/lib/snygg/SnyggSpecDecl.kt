@@ -18,7 +18,7 @@ package org.florisboard.lib.snygg
 
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
 
-internal enum class InheritBehavior {
+enum class InheritBehavior {
     IMPLICITLY_OR_EXPLICITLY,
     EXPLICITLY_ONLY,
 }
@@ -38,11 +38,21 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
         elementsSpec = elementsSpecB
     }
 
-    fun encodersOf(rule: SnyggRule, property: String): Set<SnyggValueEncoder>? {
+    fun propertySetSpecOf(rule: SnyggRule): SnyggPropertySetSpecDecl? {
         val propertySetSpec = when (rule) {
             is SnyggAnnotationRule -> annotationSpecs[rule.name]
             is SnyggElementRule -> elementsSpec
         } ?: return null
+        return propertySetSpec
+    }
+
+    fun propertiesOf(rule: SnyggRule): Set<String> {
+        val propertySetSpec = propertySetSpecOf(rule)
+        return propertySetSpec?.properties?.keys.orEmpty()
+    }
+
+    fun encodersOf(rule: SnyggRule, property: String): Set<SnyggValueEncoder>? {
+        val propertySetSpec = propertySetSpecOf(rule) ?: return null
         val encoders = propertySetSpec.properties[property]?.encoders
         if (encoders != null) {
             return encoders
@@ -78,7 +88,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
         }
     }
 
-    internal data class SnyggPropertySetSpecDecl(
+    data class SnyggPropertySetSpecDecl(
         val patternProperties: Map<Regex, SnyggPropertySpecDecl>,
         val properties: Map<String, SnyggPropertySpecDecl>,
     )
@@ -119,7 +129,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
         }
     }
 
-    internal data class SnyggPropertySpecDecl(
+    data class SnyggPropertySpecDecl(
         val encoders: Set<SnyggValueEncoder>,
         val inheritBehavior: InheritBehavior,
     ) {

@@ -191,7 +191,6 @@ internal fun EditRuleDialog(
                     onSelectOption = { elementsSelectedIndex = it },
                     enabled = isAddRuleDialog,
                     isError = showSelectAsError && elementsSelectedIndex == 0,
-                    appearance = JetPrefDropdownMenuDefaults.outlined(),
                 )
             }
 

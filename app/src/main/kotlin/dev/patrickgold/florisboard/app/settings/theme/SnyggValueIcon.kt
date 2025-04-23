@@ -33,12 +33,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
@@ -48,6 +51,8 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.checkeredBackground
+import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.color.getColor
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 
@@ -87,13 +92,22 @@ internal fun SnyggValueIcon(
     modifier: Modifier = Modifier,
     spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
 ) {
+    val prefs by florisPreferenceModel()
+    val context = LocalContext.current
+    val accentColor by prefs.theme.accentColor.observeAsState()
+
     when (value) {
         is SnyggStaticColorValue -> {
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
 
-        is SnyggDynamicLightColorValue, is SnyggDynamicDarkColorValue -> {
-            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = Color.Red) // TODO
+        is SnyggDynamicLightColorValue -> {
+            val colorScheme = ColorMappings.dynamicLightColorScheme(context, accentColor)
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
+        }
+        is SnyggDynamicDarkColorValue -> {
+            val colorScheme = ColorMappings.dynamicDarkColorScheme(context, accentColor)
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
         }
 
         is SnyggShapeValue -> {
