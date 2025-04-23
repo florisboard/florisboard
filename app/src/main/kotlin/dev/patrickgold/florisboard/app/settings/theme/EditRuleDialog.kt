@@ -188,7 +188,7 @@ internal fun EditRuleDialog(
                 )
             }
 
-            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_element)) {
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_name)) {
                 JetPrefDropdown(
                     options = possibleRuleLabels,
                     selectedOptionIndex = elementsSelectedIndex,
@@ -199,7 +199,7 @@ internal fun EditRuleDialog(
             }
 
             (currentRule as? SnyggAnnotationRule.Font)?.apply {
-                DialogProperty(text = "FöNT NAME") {
+                DialogProperty(text = stringRes(R.string.snygg__rule_annotation__font_name)) {
                     JetPrefTextField(
                         modifier = Modifier,
                         value = fontName,

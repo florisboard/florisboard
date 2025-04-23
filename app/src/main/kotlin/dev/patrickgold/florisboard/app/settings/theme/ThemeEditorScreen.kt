@@ -289,7 +289,7 @@ fun ThemeEditorScreen(
                         if (isVariablesRule) {
                             Text(
                                 modifier = Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
-                                text = stringRes(R.string.snygg__rule_element__defines_description),
+                                text = stringRes(R.string.snygg__rule_annotation__defines_description),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontStyle = FontStyle.Italic,
                             )

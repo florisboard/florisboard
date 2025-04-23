@@ -181,7 +181,7 @@
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
-    <string name="settings__theme_editor__rule_element">Target element</string>
+    <string name="settings__theme_editor__rule_name">Element / Annotation</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
     <string name="settings__theme_editor__rule_shift_states">Shift states</string>
@@ -210,10 +210,11 @@
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
 
-    <!-- TODO: rename and adapt below two strings -> annotation instead of element prefix -->
-    <string name="snygg__rule_element__defines">Variables</string>
-    <string name="snygg__rule_element__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
-    <string name="snygg__rule_element__font">Font Face</string>
+    <string name="snygg__rule_annotation__defines">Variables</string>
+    <string name="snygg__rule_annotation__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
+    <string name="snygg__rule_annotation__font">Font</string>
+    <string name="snygg__rule_annotation__font_name">Font name</string>
+
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>

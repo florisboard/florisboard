@@ -60,8 +60,8 @@ internal fun Context.translateElementName(rule: SnyggElementRule, level: SnyggLe
 }
 
 private val ElementNameMap = mapOf(
-    "defines" to R.string.snygg__rule_element__defines,
-    "font" to R.string.snygg__rule_element__font,
+    "defines" to R.string.snygg__rule_annotation__defines,
+    "font" to R.string.snygg__rule_annotation__font,
     FlorisImeUi.Keyboard.elementName to R.string.snygg__rule_element__keyboard,
     FlorisImeUi.Key.elementName to R.string.snygg__rule_element__key,
     FlorisImeUi.KeyHint.elementName to R.string.snygg__rule_element__key_hint,
