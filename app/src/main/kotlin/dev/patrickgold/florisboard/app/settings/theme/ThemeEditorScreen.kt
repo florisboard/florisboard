@@ -107,11 +107,6 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
 import org.florisboard.lib.snygg.ui.Saver
 
-internal val IntListSaver = Saver<SnapshotStateList<Int>, ArrayList<Int>>(
-    save = { ArrayList(it) },
-    restore = { it.toMutableStateList() },
-)
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ThemeEditorScreen(
@@ -434,8 +429,6 @@ private fun ComponentMetaEditorDialog(
     var authors by rememberSaveable { mutableStateOf(editor.authors.joinToString("\n")) }
     val authorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, authors)
     var isNightTheme by rememberSaveable { mutableStateOf(editor.isNightTheme) }
-    var isBorderless by rememberSaveable { mutableStateOf(editor.isBorderless) }
-    val isMaterialYouAware by rememberSaveable { mutableStateOf(editor.isMaterialYouAware) }
     var stylesheetPath by rememberSaveable { mutableStateOf(editor.stylesheetPath) }
     val stylesheetPathValidation = rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath)
 
@@ -457,8 +450,6 @@ private fun ComponentMetaEditorDialog(
                     editor.label = label.trim()
                     editor.authors = authors.lines().map { it.trim() }.filter { it.isNotBlank() }
                     editor.isNightTheme = isNightTheme
-                    editor.isBorderless = isBorderless
-                    editor.isMaterialYouAware = isMaterialYouAware
                     editor.stylesheetPath = stylesheetPath.trim()
                 }
                 onConfirm()
@@ -501,13 +492,6 @@ private fun ComponentMetaEditorDialog(
                 text = stringRes(R.string.settings__theme_editor__component_meta_is_night_theme),
                 trailing = {
                     Switch(checked = isNightTheme, onCheckedChange = null)
-                },
-            )
-            JetPrefListItem(
-                modifier = Modifier.toggleable(isBorderless) { isBorderless = it },
-                text = stringRes(R.string.settings__theme_editor__component_meta_is_borderless),
-                trailing = {
-                    Switch(checked = isBorderless, onCheckedChange = null)
                 },
             )
             DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_stylesheet_path)) {

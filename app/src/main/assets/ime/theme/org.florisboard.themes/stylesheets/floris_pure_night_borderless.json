@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../../../../../../lib/snygg/schemas/stylesheet.schema.json",
   "@defines": {
     "--primary": "#388e3c",
     "--primary-variant": "#306d32",
@@ -30,18 +31,18 @@
     "background": "#6161617f",
     "foreground": "var(--on-surface)"
   },
-  "key[code={c:enter}]": {
+  "key[code=10]": {
     "background": "var(--primary)",
     "foreground": "var(--on-surface)"
   },
-  "key[code={c:enter}]:pressed": {
+  "key[code=10]:pressed": {
     "background": "var(--primary-variant)",
     "foreground": "var(--on-surface)"
   },
-  "key[code={c:shift}][shiftstate={sh:caps_lock}]": {
+  "key[code=10][shiftstate=3]": {
     "foreground": "var(--secondary)"
   },
-  "key[code={c:space}]": {
+  "key[code=32]": {
     "background": "#61616146",
     "foreground": "var(--on-surface-variant)",
     "font-size": "12sp"
@@ -218,9 +219,5 @@
   "one-handed-panel": {
     "background": "#000000",
     "foreground": "#eeeeee"
-  },
-
-  "system-nav-bar": {
-    "background": "var(--background)"
   }
 }

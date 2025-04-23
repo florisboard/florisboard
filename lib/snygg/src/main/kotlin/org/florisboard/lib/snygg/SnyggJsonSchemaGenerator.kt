@@ -163,7 +163,7 @@ object SnyggJsonSchemaGenerator {
         }
         return mapOf(
             "type" to "string",
-            "pattern" to parsePattern.toString(),
+            "pattern" to "^$parsePattern$",
         )
     }
 }

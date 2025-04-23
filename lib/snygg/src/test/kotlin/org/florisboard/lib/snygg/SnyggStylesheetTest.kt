@@ -285,7 +285,7 @@ class SnyggStylesheetTest {
             assertEquals(1, stylesheet.rules.size)
             val (rule, fontProperties) = stylesheet.rules.entries.first()
             val fontRule = assertIs<SnyggAnnotationRule.Font>(rule)
-            assertEquals("font", fontRule.annotationName)
+            assertEquals("font", fontRule.name)
             assertEquals("Comic Sans", fontRule.fontName)
             val src = assertIs<SnyggUriValue>(fontProperties.src)
             assertEquals("ext", src.uri.scheme)

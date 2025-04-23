@@ -702,8 +702,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 val component = editor.themes.find { it.id == componentName.componentId } ?: return
                                 val componentEditor = component.let { c ->
                                     ThemeExtensionComponentEditor(
-                                        componentId, c.label, c.authors, c.isNightTheme, c.isBorderless,
-                                        c.isMaterialYouAware, stylesheetPath = "",
+                                        componentId, c.label, c.authors, c.isNightTheme, stylesheetPath = "",
                                     ).also { it.stylesheetEditor = c.stylesheetEditor }
                                 }
                                 if (componentEditor.stylesheetEditor != null) {

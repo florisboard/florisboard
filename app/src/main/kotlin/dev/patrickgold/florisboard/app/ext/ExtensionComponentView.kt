@@ -81,14 +81,11 @@ fun ExtensionComponentView(
             when (component) {
                 is ThemeExtensionComponent -> {
                     val text = remember(
-                        component.authors, component.isNightTheme, component.isBorderless,
-                        component.isMaterialYouAware, component.stylesheetPath(),
+                        component.authors, component.isNightTheme, component.stylesheetPath(),
                     ) {
                         buildString {
                             appendLine("authors = ${component.authors}")
                             appendLine("isNightTheme = ${component.isNightTheme}")
-                            appendLine("isBorderless = ${component.isBorderless}")
-                            appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
                             append("stylesheetPath = ${component.stylesheetPath()}")
                         }
                     }

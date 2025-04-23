@@ -23,39 +23,39 @@
   "definitions": {
     "snygg-uri-value": {
       "type": "string",
-      "pattern": "\\s*uri[(]\\s*(?<enclosedUri>`[^`]*`)\\s*[)]\\s*"
+      "pattern": "^\\s*uri[(]\\s*(?<enclosedUri>`[^`]*`)\\s*[)]\\s*$"
     },
     "snygg-static-color-value": {
       "oneOf": [
         {
           "type": "string",
-          "pattern": "\\s*rgba[(]\\s*(?<r>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<g>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<b>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<a>1(?:[.]0)?|0(?:[.][0-9]*)?|[.][0-9]+)\\s*[)]\\s*"
+          "pattern": "^\\s*rgba[(]\\s*(?<r>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<g>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<b>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<a>1(?:[.]0)?|0(?:[.][0-9]*)?|[.][0-9]+)\\s*[)]\\s*$"
         },
         {
           "type": "string",
-          "pattern": "\\s*rgb[(]\\s*(?<r>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<g>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<b>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*[)]\\s*"
+          "pattern": "^\\s*rgb[(]\\s*(?<r>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<g>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*,\\s*(?<b>25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\s*[)]\\s*$"
         },
         {
           "type": "string",
-          "pattern": "\\s*(?<transparent>transparent)\\s*"
+          "pattern": "^\\s*(?<transparent>transparent)\\s*$"
         },
         {
           "type": "string",
-          "pattern": "\\s*(?<hex>#[a-fA-F0-9]{6})\\s*"
+          "pattern": "^\\s*(?<hex>#[a-fA-F0-9]{6})\\s*$"
         },
         {
           "type": "string",
-          "pattern": "\\s*(?<hex>#[a-fA-F0-9]{8})\\s*"
+          "pattern": "^\\s*(?<hex>#[a-fA-F0-9]{8})\\s*$"
         }
       ]
     },
     "snygg-dynamic-light-color-value": {
       "type": "string",
-      "pattern": "\\s*dynamic-light-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*"
+      "pattern": "^\\s*dynamic-light-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*$"
     },
     "snygg-dynamic-dark-color-value": {
       "type": "string",
-      "pattern": "\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*"
+      "pattern": "^\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*$"
     },
     "snygg-object-fit-value": {
       "type": "string",
@@ -71,7 +71,7 @@
     },
     "snygg-dp-size-value": {
       "type": "string",
-      "pattern": "\\s*(?<size>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+)dp\\s*"
+      "pattern": "^\\s*(?<size>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?|[.][0-9]+)dp\\s*$"
     },
     "snygg-generic-font-family-value": {
       "type": "string",
@@ -85,11 +85,11 @@
     },
     "snygg-custom-font-family-value": {
       "type": "string",
-      "pattern": "\\s*(?<enclosedFontName>`(?<fontName>[a-zA-Z0-9\\s_-]+)`)\\s*"
+      "pattern": "^\\s*(?<enclosedFontName>`(?<fontName>[a-zA-Z0-9\\s_-]+)`)\\s*$"
     },
     "snygg-sp-size-value": {
       "type": "string",
-      "pattern": "\\s*(?<size>[1-9][0-9]*(?:[.][0-9]*)?)sp\\s*"
+      "pattern": "^\\s*(?<size>[1-9][0-9]*(?:[.][0-9]*)?)sp\\s*$"
     },
     "snygg-font-style-value": {
       "type": "string",
@@ -120,6 +120,10 @@
         "800",
         "900"
       ]
+    },
+    "snygg-line-clamp-value": {
+      "type": "string",
+      "pattern": "^\\s*(?<lineClamp>none|[1-9][0-9]*)\\s*$"
     },
     "snygg-text-align-value": {
       "type": "string",
@@ -152,41 +156,49 @@
       "oneOf": [
         {
           "type": "string",
-          "pattern": "\\s*(?<paddingStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingTop>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingBottom>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*"
+          "pattern": "^\\s*(?<paddingStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingTop>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingBottom>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*$"
         },
         {
           "type": "string",
-          "pattern": "\\s*(?<paddingHorizontal>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingVertical>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*"
+          "pattern": "^\\s*(?<paddingHorizontal>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s* \\s*(?<paddingVertical>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*$"
         },
         {
           "type": "string",
-          "pattern": "\\s*(?<paddingAll>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*"
+          "pattern": "^\\s*(?<paddingAll>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*$"
         }
       ]
     },
     "snygg-rectangle-shape-value": {
       "type": "string",
-      "pattern": "\\s*rectangle[(]\\s*[)]\\s*"
+      "pattern": "^\\s*rectangle[(]\\s*[)]\\s*$"
     },
     "snygg-circle-shape-value": {
       "type": "string",
-      "pattern": "\\s*circle[(]\\s*[)]\\s*"
+      "pattern": "^\\s*circle[(]\\s*[)]\\s*$"
     },
     "snygg-rounded-corner-dp-shape-value": {
       "type": "string",
-      "pattern": "\\s*rounded-corner[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*"
+      "pattern": "^\\s*rounded-corner[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*$"
     },
     "snygg-rounded-corner-percent-shape-value": {
       "type": "string",
-      "pattern": "\\s*rounded-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*"
+      "pattern": "^\\s*rounded-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*$"
     },
     "snygg-cut-corner-dp-shape-value": {
       "type": "string",
-      "pattern": "\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*"
+      "pattern": "^\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeTopEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomEnd>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*,\\s*(?<cornerSizeBottomStart>(?:0|[1-9][0-9]*)(?:[.][0-9]*)?)dp\\s*[)]\\s*$"
     },
     "snygg-cut-corner-percent-shape-value": {
       "type": "string",
-      "pattern": "\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*"
+      "pattern": "^\\s*cut-corner[(]\\s*(?<cornerSizeTopStart>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeTopEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomEnd>100|[1-9]?[0-9])%\\s*,\\s*(?<cornerSizeBottomStart>100|[1-9]?[0-9])%\\s*[)]\\s*$"
+    },
+    "snygg-yes-value": {
+      "type": "string",
+      "const": "yes"
+    },
+    "snygg-no-value": {
+      "type": "string",
+      "const": "no"
     },
     "snygg-inherit-value": {
       "type": "string",
@@ -194,7 +206,7 @@
     },
     "snygg-defined-var-value": {
       "type": "string",
-      "pattern": "\\s*var[(]\\s*(?<varKey>--[a-zA-Z0-9-]+)\\s*[)]\\s*"
+      "pattern": "^\\s*var[(]\\s*(?<varKey>--[a-zA-Z0-9-]+)\\s*[)]\\s*$"
     },
     "snygg-defines-property-set": {
       "type": "object",
@@ -235,6 +247,9 @@
               "$ref": "#/definitions/snygg-font-weight-value"
             },
             {
+              "$ref": "#/definitions/snygg-line-clamp-value"
+            },
+            {
               "$ref": "#/definitions/snygg-text-align-value"
             },
             {
@@ -263,6 +278,12 @@
             },
             {
               "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-yes-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-no-value"
             },
             {
               "$ref": "#/definitions/snygg-inherit-value"
@@ -468,6 +489,19 @@
             }
           ]
         },
+        "line-clamp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-line-clamp-value"
+            }
+          ]
+        },
         "line-height": {
           "oneOf": [
             {
@@ -603,6 +637,22 @@
             },
             {
               "$ref": "#/definitions/snygg-cut-corner-percent-shape-value"
+            }
+          ]
+        },
+        "clip": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-yes-value"
+            },
+            {
+              "$ref": "#/definitions/snygg-no-value"
             }
           ]
         }
