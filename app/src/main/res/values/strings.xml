@@ -175,7 +175,7 @@
 
     <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
     <string name="settings__theme_editor__fine_tune__level">Editing level</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Display colors as</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Color representation</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Display keyboard after dialogs</string>
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
@@ -834,8 +834,9 @@
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
 
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Red Green Blue</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">Hue Saturation Value</string>
 
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Always show</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Always show the keyboard after closing any editor dialog</string>

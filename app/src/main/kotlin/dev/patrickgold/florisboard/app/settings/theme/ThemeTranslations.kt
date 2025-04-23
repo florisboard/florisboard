@@ -17,14 +17,13 @@
 package dev.patrickgold.florisboard.app.settings.theme
 
 import android.content.Context
-import androidx.compose.ui.graphics.Color
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import org.florisboard.lib.kotlin.simpleNameOrEnclosing
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggElementRule
-import org.florisboard.lib.snygg.value.RgbaColor
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -55,7 +54,6 @@ import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
 import org.florisboard.lib.snygg.value.SnyggYesValue
-import kotlin.math.roundToInt
 
 internal fun Context.translateElementName(rule: SnyggElementRule, level: SnyggLevel): String {
     return translateElementName(rule.name, level) ?: rule.name
@@ -168,11 +166,11 @@ internal fun Context.translatePropertyName(propertyName: String, level: SnyggLev
 internal fun Context.translatePropertyValue(
     propertyValue: SnyggValue,
     level: SnyggLevel,
-    displayColorsAs: DisplayColorsAs,
+    colorRepresentation: ColorRepresentation,
 ): String {
     return when (propertyValue) {
         is SnyggStaticColorValue -> {
-            buildColorString(propertyValue.color, displayColorsAs)
+            colorRepresentation.formatColor(propertyValue.color, withAlpha = true)
         }
         else -> when (level) {
             SnyggLevel.DEVELOPER -> null
@@ -183,33 +181,6 @@ internal fun Context.translatePropertyValue(
         } ?: buildString {
             append(UnicodeCtrlChar.LeftToRightIsolate)
             append(propertyValue.encoder().serialize(propertyValue).getOrElse { propertyValue.toString() })
-            append(UnicodeCtrlChar.PopDirectionalIsolate)
-        }
-    }
-}
-
-internal fun buildColorString(color: Color, displayColorsAs: DisplayColorsAs): String {
-    return when (displayColorsAs) {
-        DisplayColorsAs.HEX8 -> buildString {
-            append(UnicodeCtrlChar.LeftToRightIsolate)
-            append("#")
-            append((color.red * RgbaColor.ColorRangeMax).roundToInt().toString(16).padStart(2, '0'))
-            append((color.green * RgbaColor.ColorRangeMax).roundToInt().toString(16).padStart(2, '0'))
-            append((color.blue * RgbaColor.ColorRangeMax).roundToInt().toString(16).padStart(2, '0'))
-            append((color.alpha * 0xFF).roundToInt().toString(16).padStart(2, '0'))
-            append(UnicodeCtrlChar.PopDirectionalIsolate)
-        }
-        DisplayColorsAs.RGBA -> buildString {
-            append(UnicodeCtrlChar.LeftToRightIsolate)
-            append("rgba(")
-            append((color.red * RgbaColor.ColorRangeMax).roundToInt())
-            append(",")
-            append((color.green * RgbaColor.ColorRangeMax).roundToInt())
-            append(",")
-            append((color.blue * RgbaColor.ColorRangeMax).roundToInt())
-            append(",")
-            append(color.alpha)
-            append(")")
             append(UnicodeCtrlChar.PopDirectionalIsolate)
         }
     }

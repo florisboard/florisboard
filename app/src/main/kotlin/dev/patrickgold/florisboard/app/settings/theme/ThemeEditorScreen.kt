@@ -143,7 +143,7 @@ fun ThemeEditorScreen(
     }
 
     val snyggLevel by prefs.theme.editorLevel.observeAsState()
-    val displayColorsAs by prefs.theme.editorDisplayColorsAs.observeAsState()
+    val colorRepresentation by prefs.theme.editorColorRepresentation.observeAsState()
     val displayKbdAfterDialogs by prefs.theme.editorDisplayKbdAfterDialogs.observeAsState()
     var oldFocusState by remember { mutableStateOf(false) }
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
@@ -302,7 +302,7 @@ fun ThemeEditorScreen(
                                         snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
                                     },
                                     text = context.translatePropertyName(propertyName, snyggLevel),
-                                    secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, displayColorsAs),
+                                    secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
                                     singleLineSecondaryText = true,
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                 )
@@ -386,7 +386,7 @@ fun ThemeEditorScreen(
             EditPropertyDialog(
                 initProperty = propertyToEdit,
                 level = snyggLevel,
-                displayColorsAs = displayColorsAs,
+                colorRepresentation = colorRepresentation,
                 definedVariables = definedVariables,
                 onConfirmNewValue = { name, value ->
                     val properties = snyggPropertySetForEditing?.properties ?: return@EditPropertyDialog false

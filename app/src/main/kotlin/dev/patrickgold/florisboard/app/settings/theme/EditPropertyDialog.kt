@@ -71,6 +71,7 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
@@ -136,7 +137,7 @@ private enum class ShapeCorner {
 internal fun EditPropertyDialog(
     initProperty: PropertyInfo,
     level: SnyggLevel,
-    displayColorsAs: DisplayColorsAs,
+    colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
@@ -274,7 +275,7 @@ internal fun EditPropertyDialog(
                     value = propertyValue,
                     onValueChange = { propertyValue = it },
                     level = level,
-                    displayColorsAs = displayColorsAs,
+                    colorRepresentation = colorRepresentation,
                     definedVariables = definedVariables,
                     isError = showSelectAsError && !isPropertyValueValid(),
                 )
@@ -364,7 +365,7 @@ private fun PropertyValueEditor(
     value: SnyggValue,
     onValueChange: (SnyggValue) -> Unit,
     level: SnyggLevel,
-    displayColorsAs: DisplayColorsAs,
+    colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
     isError: Boolean = false,
 ) {
@@ -402,95 +403,13 @@ private fun PropertyValueEditor(
 
         is SnyggStaticColorValue -> {
             val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
-            val colorPickerStr = context.translatePropertyValue(value, level, displayColorsAs)
-            var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                Column(modifier = Modifier.padding(top = 8.dp)) {
-                    Row(
-                        modifier = Modifier
-                            .rippleClickable {
-                                showEditColorStrDialog = true
-                            }
-                            .padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(end = 12.dp)
-                                .weight(1f),
-                            text = colorPickerStr,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontFamily = FontFamily.Monospace,
-                        )
-                        SnyggValueIcon(
-                            value = value,
-                            definedVariables = definedVariables,
-                        )
-                    }
-                    JetPrefColorPicker(
-                        onColorChange = { onValueChange(SnyggStaticColorValue(it)) },
-                        state = colorPickerState,
-                    )
-                }
-            }
-            if (showEditColorStrDialog) {
-                var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-                var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
-                var colorStr by rememberSaveable { mutableStateOf(colorPickerStr.stripUnicodeCtrlChars()) }
-                val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggStaticColorValue, colorStr)
-                JetPrefAlertDialog(
-                    title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),
-                    confirmLabel = stringRes(R.string.action__apply),
-                    onConfirm = {
-                        if (colorStrValidation.isInvalid()) {
-                            showValidationErrors = true
-                        } else {
-                            val newValue = SnyggStaticColorValue.deserialize(colorStr.trim()).getOrThrow()
-                            onValueChange(newValue)
-                            colorPickerState.setColor((newValue as SnyggStaticColorValue).color)
-                            showEditColorStrDialog = false
-                        }
-                    },
-                    dismissLabel = stringRes(R.string.action__cancel),
-                    onDismiss = {
-                        showEditColorStrDialog = false
-                    },
-                    trailingIconTitle = {
-                        FlorisIconButton(
-                            onClick = { showSyntaxHelp = !showSyntaxHelp },
-                            modifier = Modifier.offset(x = 12.dp),
-                            icon = Icons.AutoMirrored.Filled.HelpOutline,
-                        )
-                    },
-                ) {
-                    Column {
-                        AnimatedVisibility(visible = showSyntaxHelp) {
-                            Column(modifier = Modifier.padding(bottom = 16.dp)) {
-                                Text(text = "Supported color string syntaxes:")
-                                Text(
-                                    text = """
-                                        #RRGGBBAA
-                                         -> all in 00h..FFh
-                                        #RRGGBB
-                                         -> all in 00h..FFh
-                                        rgba(r,g,b,a)
-                                         -> r,g,b in 0..255
-                                         -> a in 0.0..1.0
-                                        rgb(r,g,b)
-                                         -> r,g,b in 0..255
-                                    """.trimIndent(),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontFamily = FontFamily.Monospace,
-                                )
-                            }
-                        }
-                        JetPrefTextField(
-                            value = colorStr,
-                            onValueChange = { colorStr = it },
-                        )
-                        Validation(showValidationErrors, colorStrValidation)
-                    }
-                }
+                JetPrefColorPicker(
+                    modifier = Modifier.padding(top = 8.dp),
+                    onColorChange = { onValueChange(SnyggStaticColorValue(it)) },
+                    initialRepresentation = colorRepresentation,
+                    state = colorPickerState,
+                )
             }
         }
 

@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 
 private val FineTuneContentPadding = PaddingValues(horizontal = 8.dp)
@@ -43,9 +44,9 @@ fun FineTuneDialog(onDismiss: () -> Unit) {
                 entries = enumDisplayEntriesOf(SnyggLevel::class),
             )
             ListPreference(
-                listPref = prefs.theme.editorDisplayColorsAs,
-                title = stringRes(R.string.settings__theme_editor__fine_tune__display_colors_as),
-                entries = enumDisplayEntriesOf(DisplayColorsAs::class),
+                listPref = prefs.theme.editorColorRepresentation,
+                title = stringRes(R.string.settings__theme_editor__fine_tune__color_representation),
+                entries = enumDisplayEntriesOf(ColorRepresentation::class),
             )
             ListPreference(
                 listPref = prefs.theme.editorDisplayKbdAfterDialogs,
