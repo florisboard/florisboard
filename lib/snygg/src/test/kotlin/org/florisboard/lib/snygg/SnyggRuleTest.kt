@@ -1,5 +1,6 @@
 package org.florisboard.lib.snygg
 
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
@@ -163,6 +164,52 @@ class SnyggRuleTest {
     fun `test constructor with invalid element name`() {
         assertThrows<IllegalArgumentException> {
             SnyggElementRule("not so valid !!!!!")
+        }
+    }
+
+    @Nested
+    inner class AttributesCopyHelpers {
+        @Test
+        fun `Attributes including`() = with(SnyggElementRule.Attributes.Companion) {
+            val expectedToActual = listOf(
+                of() to of().including(),
+                of("test" to listOf(1)) to of().including("test" to 1),
+                of("test" to listOf(1)) to of("test" to listOf(1)).including("test" to 1),
+                of("test" to listOf(1), "code" to listOf(2)) to of("test" to listOf(1)).including("code" to 2),
+                of("multiple" to listOf(1,2,3)) to of("multiple" to listOf(1,3)).including("multiple" to 2),
+                of("multiple" to listOf(1,2,3)) to of().including("multiple" to 2, "multiple" to 3, "multiple" to 1),
+                of("a" to listOf(-1), "b" to listOf(-44)) to of("b" to listOf(-44)).including("a" to -1),
+            )
+            assertAll(expectedToActual.map { (expected, actual) -> {
+                assertEquals(expected, actual)
+            }})
+        }
+
+        @Test
+        fun `Attributes excluding`() = with(SnyggElementRule.Attributes.Companion) {
+            val expectedToActual = listOf(
+                of() to of().excluding(),
+                of("a" to listOf(1)) to of("a" to listOf(1)).excluding("b" to 1),
+                of() to of("test" to listOf(1)).excluding("test" to 1),
+                of("test" to listOf(1)) to of("test" to listOf(1,44)).excluding("test" to 44),
+                of("test" to listOf(1)) to of("test" to listOf(1), "code" to listOf(2)).excluding("code" to 2),
+            )
+            assertAll(expectedToActual.map { (expected, actual) -> {
+                assertEquals(expected, actual)
+            }})
+        }
+
+        @Test
+        fun `Attributes toggling`() = with(SnyggElementRule.Attributes.Companion) {
+            val expectedToActual = listOf(
+                of() to of().toggling(),
+                of() to of("test" to listOf(1)).toggling("test" to 1),
+                of("test" to listOf(1)) to of().toggling("test" to 1),
+                of("test" to listOf(1)) to of("test" to listOf(1), "code" to listOf(2)).toggling("code" to 2),
+            )
+            assertAll(expectedToActual.map { (expected, actual) -> {
+                assertEquals(expected, actual)
+            }})
         }
     }
 }
