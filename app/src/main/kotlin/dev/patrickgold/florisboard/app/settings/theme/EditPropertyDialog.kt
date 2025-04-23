@@ -63,35 +63,19 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.compose.DpSizeSaver
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
-import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
+import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.SnyggValueEncoder
 import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
 import org.florisboard.lib.color.ColorPalette
 import org.florisboard.lib.kotlin.curlyFormat
@@ -99,10 +83,23 @@ import org.florisboard.lib.kotlin.toStringWithoutDotZero
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSpec
-import org.florisboard.lib.snygg.value.SnyggAppearanceValue
+import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import org.florisboard.lib.snygg.value.SnyggDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggShapeValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
+import org.florisboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.snygg.value.SnyggValueEncoder
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     rule = SnyggEmptyRuleForAdding,
@@ -316,17 +313,20 @@ private fun PropertyNameInput(
         )
     } else {
         val focusManager = LocalFocusManager.current
-        FlorisOutlinedTextField(
+        JetPrefTextField(
             value = name,
             onValueChange = onNameChange,
             enabled = isAddPropertyDialog,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             singleLine = true,
-            showValidationHint = isAddPropertyDialog,
-            showValidationError = showSelectAsError,
-            validationResult = nameValidation,
+            isError = showSelectAsError
         )
+        Validation(
+            showValidationErrors = isAddPropertyDialog && showSelectAsError,
+            validationResult = nameValidation
+        )
+
     }
 }
 
@@ -376,25 +376,21 @@ private fun PropertyValueEditor(
             val selectedIndex by remember(variableKeys, value.key) {
                 mutableIntStateOf(variableKeys.indexOf(value.key).coerceIn(variableKeys.indices))
             }
-            var expanded by remember { mutableStateOf(false) }
             Row(
                 modifier = Modifier.padding(top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                FlorisDropdownMenu(
+                JetPrefDropdown(
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .weight(1f),
-                    items = variableKeys,
-                    labelProvider = { translatePropertyName(context, it, level) },
-                    expanded = expanded,
-                    selectedIndex = selectedIndex,
+                    options = variableKeys,
+                    optionsLabelProvider = { translatePropertyName(context, it, level) },
+                    selectedOptionIndex = selectedIndex,
                     isError = isError,
-                    onSelectItem = { index ->
+                    onSelectOption = { index ->
                         onValueChange(SnyggDefinedVarValue(variableKeys[index]))
                     },
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
                 )
                 SnyggValueIcon(
                     value = value,
@@ -487,12 +483,11 @@ private fun PropertyValueEditor(
                                 )
                             }
                         }
-                        FlorisOutlinedTextField(
+                        JetPrefTextField(
                             value = colorStr,
                             onValueChange = { colorStr = it },
-                            showValidationError = showValidationErrors,
-                            validationResult = colorStrValidation,
                         )
+                        Validation(showValidationErrors, colorStrValidation)
                     }
                 }
             }
@@ -507,7 +502,7 @@ private fun PropertyValueEditor(
                 modifier = Modifier.padding(top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
                     modifier = Modifier.weight(1f),
                     value = sizeStr,
                     onValueChange = { value ->
@@ -571,7 +566,7 @@ private fun PropertyValueEditor(
                 modifier = Modifier.padding(top = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
                     modifier = Modifier.weight(1f),
                     value = sizeStr,
                     onValueChange = { value ->
@@ -732,12 +727,11 @@ private fun PropertyValueEditor(
                         },
                     ) {
                         Column {
-                            FlorisOutlinedTextField(
+                            JetPrefTextField(
                                 value = size,
                                 onValueChange = { size = it },
-                                showValidationError = showValidationErrors,
-                                validationResult = sizeValidation,
                             )
+                            Validation(showValidationErrors, sizeValidation)
                             FlorisTextButton(
                                 onClick = {
                                     if (sizeValidation.isInvalid()) {
@@ -902,12 +896,11 @@ private fun PropertyValueEditor(
                         },
                     ) {
                         Column {
-                            FlorisOutlinedTextField(
+                            JetPrefTextField(
                                 value = size,
                                 onValueChange = { size = it },
-                                showValidationError = showValidationErrors,
-                                validationResult = sizeValidation,
                             )
+                            Validation(showValidationErrors, sizeValidation)
                             FlorisTextButton(
                                 onClick = {
                                     if (sizeValidation.isInvalid()) {

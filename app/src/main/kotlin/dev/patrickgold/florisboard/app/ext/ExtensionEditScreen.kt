@@ -34,7 +34,6 @@ import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -64,9 +63,9 @@ import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
+import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
@@ -87,10 +86,11 @@ import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import java.util.*
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.io.writeJson
-import java.util.UUID
 import kotlin.reflect.KClass
 
 private val TextFieldVerticalPadding = 8.dp
@@ -811,36 +811,37 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringRes(R.string.ext__meta__id),
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = newId,
                     onValueChange = { newId = it },
                     singleLine = true,
-                    showValidationError = showValidationErrors,
-                    validationResult = newIdValidation,
                 )
+                Validation(showValidationErrors, newIdValidation)
             }
             DialogProperty(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringRes(R.string.ext__meta__label),
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = newLabel,
                     onValueChange = { newLabel = it },
                     singleLine = true,
-                    showValidationError = showValidationErrors,
-                    validationResult = newLabelValidation,
                 )
+                Validation(showValidationErrors, newLabelValidation)
+
             }
             DialogProperty(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringRes(R.string.ext__meta__authors),
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = newAuthors,
                     onValueChange = { newAuthors = it },
-                    showValidationError = showValidationErrors,
-                    validationResult = newAuthorsValidation,
                 )
+                Validation(showValidationErrors, newAuthorsValidation)
             }
         }
     }
@@ -878,18 +879,13 @@ private fun EditorSheetTextField(
                 )
             }
         }
-        FlorisOutlinedTextField(
+        JetPrefTextField(
             modifier = modifier.fillMaxWidth(),
             enabled = enabled,
             value = value,
             onValueChange = onValueChange,
             singleLine = singleLine,
-            showValidationError = showValidationError,
-            validationResult = validationResult,
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = borderColor,
-                disabledBorderColor = borderColor,
-            )
         )
+        Validation(showValidationError, validationResult)
     }
 }

@@ -48,8 +48,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -84,22 +84,22 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggRule
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldDefaults
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
+import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.NonNullSaver
 
@@ -145,16 +145,20 @@ internal fun EditRuleDialog(
     }
 
     JetPrefAlertDialog(
-        title = stringRes(if (isAddRuleDialog) {
-            R.string.settings__theme_editor__add_rule
-        } else {
-            R.string.settings__theme_editor__edit_rule
-        }),
-        confirmLabel = stringRes(if (isAddRuleDialog) {
-            R.string.action__add
-        } else {
-            R.string.action__apply
-        }),
+        title = stringRes(
+            if (isAddRuleDialog) {
+                R.string.settings__theme_editor__add_rule
+            } else {
+                R.string.settings__theme_editor__edit_rule
+            }
+        ),
+        confirmLabel = stringRes(
+            if (isAddRuleDialog) {
+                R.string.action__add
+            } else {
+                R.string.action__apply
+            }
+        ),
         onConfirm = {
             if (isAddRuleDialog && elementsSelectedIndex == 0) {
                 showSelectAsError = true
@@ -195,14 +199,13 @@ internal fun EditRuleDialog(
 
             (currentRule as? SnyggAnnotationRule.Font)?.apply {
                 DialogProperty(text = "FöNT NAME") {
-                    FlorisOutlinedTextField(
+                    JetPrefTextField(
                         modifier = Modifier,
                         value = fontName,
                         onValueChange = {
                             currentRule = copy(fontName = it)
                         },
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(),
                     )
                 }
             }
@@ -455,6 +458,7 @@ private fun EditCodeValueDialog(
                     inputCodeString = data.code.toString()
                     isRecordingKey = false
                 }
+
                 override fun onInputKeyRepeat(data: KeyData) = Unit
                 override fun onInputKeyCancel(data: KeyData) = Unit
             }
@@ -472,16 +476,20 @@ private fun EditCodeValueDialog(
     }
 
     JetPrefAlertDialog(
-        title = stringRes(if (codeValue == NATIVE_NULLPTR.toInt()) {
-            R.string.settings__theme_editor__add_code
-        } else {
-            R.string.settings__theme_editor__edit_code
-        }),
-        confirmLabel = stringRes(if (codeValue == NATIVE_NULLPTR.toInt()) {
-            R.string.action__add
-        } else {
-            R.string.action__apply
-        }),
+        title = stringRes(
+            if (codeValue == NATIVE_NULLPTR.toInt()) {
+                R.string.settings__theme_editor__add_code
+            } else {
+                R.string.settings__theme_editor__edit_code
+            }
+        ),
+        confirmLabel = stringRes(
+            if (codeValue == NATIVE_NULLPTR.toInt()) {
+                R.string.action__add
+            } else {
+                R.string.action__apply
+            }
+        ),
         onConfirm = {
             val code = inputCodeString.trim().toIntOrNull(radix = 10)
             when {
@@ -489,13 +497,16 @@ private fun EditCodeValueDialog(
                     errorId = R.string.settings__theme_editor__code_invalid
                     showError = true
                 }
+
                 code == codeValue -> {
                     onDismiss()
                 }
+
                 checkExisting(code) -> {
                     errorId = R.string.settings__theme_editor__code_already_exists
                     showError = true
                 }
+
                 else -> {
                     if (codeValue != NATIVE_NULLPTR.toInt()) {
                         onDelete(codeValue)
@@ -554,7 +565,7 @@ private fun EditCodeValueDialog(
                     LocalTextSelectionColors.current
                 }
                 CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
-                    FlorisOutlinedTextField(
+                    JetPrefTextField(
                         modifier = Modifier
                             .focusRequester(focusRequester)
                             .weight(1f),
@@ -563,7 +574,7 @@ private fun EditCodeValueDialog(
                             inputCodeString = v
                             showError = false
                         },
-                        placeholder = when {
+                        placeholderText = when {
                             isRecordingKey -> {
                                 stringRes(R.string.settings__theme_editor__code_recording_placeholder)
                             }
@@ -576,21 +587,25 @@ private fun EditCodeValueDialog(
                         },
                         isError = showError,
                         singleLine = true,
-                        colors = if (isRecordingKey) {
-                            OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.Transparent,
-                                cursorColor = Color.Transparent,
+                        appearance = JetPrefTextFieldDefaults.filled(
+                            colors = if (isRecordingKey) {
+                                TextFieldDefaults.colors(
+                                    focusedTextColor = Color.Transparent,
+                                    cursorColor = Color.Transparent,
+                                )
+                            } else {
+                                TextFieldDefaults.colors()
+                            }
+                        ),
+                        trailingIcon = {
+                            FlorisIconButton(
+                                onClick = { requestStartRecording() },
+                                icon = Icons.Default.Pageview,
+                                iconColor = recordingKeyColor,
                             )
-                        } else {
-                            OutlinedTextFieldDefaults.colors()
-                        },
+                        }
                     )
                 }
-                FlorisIconButton(
-                    onClick = { requestStartRecording() },
-                    icon = Icons.Default.Pageview,
-                    iconColor = recordingKeyColor,
-                )
             }
             AnimatedVisibility(visible = showError) {
                 Text(
@@ -622,9 +637,12 @@ private fun TextKeyDataPreviewBox(
                 override val mode = KeyboardMode.NUMERIC_ADVANCED
                 override fun getKeyForPos(pointerX: Float, pointerY: Float) = error("not implemented")
                 override fun keys() = error("not implemented")
-                override fun layout(keyboardWidth: Float, keyboardHeight: Float, desiredKey: Key,
-                                    extendTouchBoundariesDownwards: Boolean) = error("not implemented")
+                override fun layout(
+                    keyboardWidth: Float, keyboardHeight: Float, desiredKey: Key,
+                    extendTouchBoundariesDownwards: Boolean,
+                ) = error("not implemented")
             }
+
             override fun context() = context
         }
     }

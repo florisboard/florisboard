@@ -56,14 +56,15 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryValidation
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
@@ -366,39 +367,35 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             ) {
                 Column {
                     DialogProperty(text = stringRes(R.string.settings__udm__dialog__word_label)) {
-                        FlorisOutlinedTextField(
+                        JetPrefTextField(
                             value = word,
                             onValueChange = { word = it },
-                            showValidationError = showValidationErrors,
-                            validationResult = wordValidation,
                         )
+                        Validation(showValidationErrors, wordValidation)
                     }
                     DialogProperty(text = stringRes(
                         R.string.settings__udm__dialog__freq_label,
                         "f_min" to FREQUENCY_MIN, "f_max" to FREQUENCY_MAX,
                     )) {
-                        FlorisOutlinedTextField(
+                        JetPrefTextField(
                             value = freq,
                             onValueChange = { freq = it },
-                            showValidationError = showValidationErrors,
-                            validationResult = freqValidation,
                         )
+                        Validation(showValidationErrors, freqValidation)
                     }
                     DialogProperty(text = stringRes(R.string.settings__udm__dialog__shortcut_label)) {
-                        FlorisOutlinedTextField(
+                        JetPrefTextField(
                             value = shortcut,
                             onValueChange = { shortcut = it },
-                            showValidationError = showValidationErrors,
-                            validationResult = shortcutValidation,
                         )
+                        Validation(showValidationErrors, shortcutValidation)
                     }
                     DialogProperty(text = stringRes(R.string.settings__udm__dialog__locale_label)) {
-                        FlorisOutlinedTextField(
+                        JetPrefTextField(
                             value = locale,
                             onValueChange = { locale = it },
-                            showValidationError = showValidationErrors,
-                            validationResult = localeValidation,
                         )
+                        Validation(showValidationErrors, localeValidation)
                     }
                 }
             }

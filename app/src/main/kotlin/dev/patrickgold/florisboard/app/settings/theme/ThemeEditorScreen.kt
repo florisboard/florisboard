@@ -38,9 +38,11 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -53,11 +55,8 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -78,9 +77,9 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
+import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
@@ -92,6 +91,7 @@ import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
@@ -99,7 +99,6 @@ import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
-import org.florisboard.lib.snygg.SnyggLevel
 import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
@@ -461,31 +460,28 @@ private fun ComponentMetaEditorDialog(
     ) {
         Column {
             DialogProperty(text = stringRes(R.string.ext__meta__id)) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
                     value = id,
                     onValueChange = { id = it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
                     singleLine = true,
-                    showValidationError = showValidationErrors,
-                    validationResult = idValidation,
                 )
+                Validation(showValidationErrors, idValidation)
             }
             DialogProperty(text = stringRes(R.string.ext__meta__label)) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
                     value = label,
                     onValueChange = { label = it },
                     singleLine = true,
-                    showValidationError = showValidationErrors,
-                    validationResult = labelValidation,
                 )
+                Validation(showValidationErrors, labelValidation)
             }
             DialogProperty(text = stringRes(R.string.ext__meta__authors)) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
                     value = authors,
                     onValueChange = { authors = it },
-                    showValidationError = showValidationErrors,
-                    validationResult = authorsValidation,
                 )
+                Validation(showValidationErrors, authorsValidation)
             }
             JetPrefListItem(
                 modifier = Modifier.toggleable(isNightTheme) { isNightTheme = it },
@@ -493,21 +489,21 @@ private fun ComponentMetaEditorDialog(
                 trailing = {
                     Switch(checked = isNightTheme, onCheckedChange = null)
                 },
+                colors = ListItemDefaults.colors(containerColor = AlertDialogDefaults.containerColor)
             )
             DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_stylesheet_path)) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
                     value = stylesheetPath,
                     onValueChange = { stylesheetPath = it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
                     singleLine = true,
-                    placeholder = if (stylesheetPath.isEmpty()) {
+                    placeholderText = if (stylesheetPath.isEmpty()) {
                         ThemeExtensionComponent.defaultStylesheetPath(id.trim())
                     } else {
                         null
                     },
-                    showValidationError = showValidationErrors,
-                    validationResult = stylesheetPathValidation,
                 )
+                Validation(showValidationErrors, stylesheetPathValidation)
             }
         }
     }

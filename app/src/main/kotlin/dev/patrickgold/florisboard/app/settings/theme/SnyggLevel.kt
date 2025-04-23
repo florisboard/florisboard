@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg
+package dev.patrickgold.florisboard.app.settings.theme
 
 /**
  * SnyggLevel indicates if a rule property is intended to be edited by all users (BASIC) or only by advanced users
  * (ADVANCED). This level is intended for theme editor UIs to hide certain properties in a "basic" mode, for the Snygg
  * theme engine internally this level will be ignored completely.
  */
-// TODO: Move to app module
 enum class SnyggLevel : Comparable<SnyggLevel> {
     /** A property is intended to be edited by all users **/
     BASIC,
