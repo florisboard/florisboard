@@ -97,7 +97,6 @@ import org.florisboard.lib.snygg.SnyggRule
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
@@ -255,7 +254,7 @@ internal fun EditRuleDialog(
                 }
 
                 val codes = remember(currentRule) {
-                    attributes[FlorisImeUi.Attributes.Code] ?: emptyList()
+                    attributes[FlorisImeUi.Attr.Code] ?: emptyList()
                 }
                 var editCodeDialogValue by rememberSaveable { mutableStateOf<Int?>(null) }
                 val initCodeValue = editCodeDialogValue
@@ -265,12 +264,12 @@ internal fun EditRuleDialog(
                         checkExisting = { codes.contains(it) },
                         onAdd = {
                             currentRule = copy(
-                                attributes = attributes.including(FlorisImeUi.Attributes.Code to it)
+                                attributes = attributes.including(FlorisImeUi.Attr.Code to it)
                             )
                         },
                         onDelete = {
                             currentRule = copy(
-                                attributes = attributes.excluding(FlorisImeUi.Attributes.Code to it)
+                                attributes = attributes.excluding(FlorisImeUi.Attr.Code to it)
                             )
                         },
                         onDismiss = { editCodeDialogValue = null },
@@ -310,16 +309,16 @@ internal fun EditRuleDialog(
                 }
 
                 val shiftStateUnshifted = remember(currentRule) {
-                    attributes[FlorisImeUi.Attributes.ShiftState]?.contains(InputShiftState.UNSHIFTED.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.UNSHIFTED.value) == true
                 }
                 val shiftStateShiftedManual = remember(currentRule) {
-                    attributes[FlorisImeUi.Attributes.ShiftState]?.contains(InputShiftState.SHIFTED_MANUAL.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_MANUAL.value) == true
                 }
                 val shiftStateShiftedAutomatic = remember(currentRule) {
-                    attributes[FlorisImeUi.Attributes.ShiftState]?.contains(InputShiftState.SHIFTED_AUTOMATIC.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_AUTOMATIC.value) == true
                 }
                 val shiftStateCapsLock = remember(currentRule) {
-                    attributes[FlorisImeUi.Attributes.ShiftState]?.contains(InputShiftState.CAPS_LOCK.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.CAPS_LOCK.value) == true
                 }
                 DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -327,7 +326,7 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attributes.ShiftState to InputShiftState.UNSHIFTED.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.UNSHIFTED.value
                                     )
                                 )
                             },
@@ -341,7 +340,7 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attributes.ShiftState to InputShiftState.SHIFTED_MANUAL.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_MANUAL.value
                                     )
                                 )
                             },
@@ -355,7 +354,7 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attributes.ShiftState to InputShiftState.SHIFTED_AUTOMATIC.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_AUTOMATIC.value
                                     )
                                 )
                             },
@@ -369,7 +368,7 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attributes.ShiftState to InputShiftState.CAPS_LOCK.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.CAPS_LOCK.value
                                     )
                                 )
                             },

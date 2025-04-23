@@ -126,7 +126,7 @@ internal fun KeyboardLikeButton(
     //TODO: Add selector to SnyggSurface
     SnyggBox(
         elementName = element,
-        attributes = mapOf("code" to keyData.code),
+        attributes = mapOf(FlorisImeUi.Attr.Code to keyData.code),
 
         modifier = modifier.pointerInput(Unit) {
             awaitEachGesture {

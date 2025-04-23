@@ -23,10 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.SnyggStylesheetEditor
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     defines {
@@ -59,21 +57,21 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--surface-variant")
         foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key.elementName("code" to listOf(KeyCode.ENTER)) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER)) {
         background = `var`("--primary")
         foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key.elementName("code" to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
         background = `var`("--primary-variant")
         foreground = `var`("--on-surface")
     }
     FlorisImeUi.Key.elementName(
-        "code" to listOf(KeyCode.SHIFT),
-        "mode" to listOf(InputShiftState.CAPS_LOCK.value),
+        FlorisImeUi.Attr.Code to listOf(KeyCode.SHIFT),
+        FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.value),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }
-    FlorisImeUi.Key.elementName("code" to listOf(KeyCode.SPACE)) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
         background = `var`("--surface")
         foreground = rgbaColor(144, 144, 144)
         fontSize = fontSize(12.sp)
@@ -238,10 +236,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         textAlign = textAlign(TextAlign.Center)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.SmartbarActionsEditorTile.elementName("code" to listOf(KeyCode.NOOP)) {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.NOOP)) {
         foreground = `var`("--on-background-disabled")
     }
-    FlorisImeUi.SmartbarActionsEditorTile.elementName("code" to listOf(KeyCode.DRAG_MARKER)) {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.DRAG_MARKER)) {
         foreground = rgbaColor(255, 0, 0)
     }
 

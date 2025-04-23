@@ -74,8 +74,8 @@ enum class FlorisImeUi(val elementName: String) {
         val elementNames by lazy { entries.map { it.elementName } }
     }
 
-    object Attributes {
+    object Attr {
         const val Code = "code"
-        const val ShiftState = "shift-state"
+        const val ShiftState = "shiftstate"
     }
 }

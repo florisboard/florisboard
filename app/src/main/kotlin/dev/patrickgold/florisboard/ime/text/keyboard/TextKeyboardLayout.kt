@@ -319,7 +319,10 @@ private fun TextKeyButton(
     fontSizeMultiplier: Float,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
-    val attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value)
+    val attributes = mapOf(
+        FlorisImeUi.Attr.Code to key.computedData.code,
+        FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.value,
+    )
     val selector = when {
         !key.isEnabled -> SnyggSelector.DISABLED
         key.isPressed -> SnyggSelector.PRESSED
@@ -391,7 +394,10 @@ private fun TextKeyButton(
         key.hintedLabel?.let { hintedLabel ->
             val keyHintStyle = rememberSnyggThemeQuery(
                 FlorisImeUi.KeyHint.elementName,
-                attributes = mapOf("code" to key.computedData.code, "mode" to evaluator.state.inputShiftState.value),
+                attributes = mapOf(
+                    FlorisImeUi.Attr.Code to key.computedData.code,
+                    FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.value,
+                ),
                 selector = when {
                     key.isPressed -> SnyggSelector.PRESSED
                     else -> null

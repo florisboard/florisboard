@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
@@ -79,7 +81,7 @@ internal val LocalSnyggAssetResolver: ProvidableCompositionLocal<SnyggAssetResol
 
 internal val LocalSnyggParentStyle: ProvidableCompositionLocal<SnyggPropertySet> =
     compositionLocalOf {
-        SnyggPropertySet()
+        error("ProvideSnyggTheme not called.")
     }
 
 internal val LocalSnyggParentSelector: ProvidableCompositionLocal<SnyggSelector> =
@@ -130,6 +132,10 @@ fun ProvideSnyggTheme(
         LocalSnyggDynamicLightColorScheme provides lightScheme,
         LocalSnyggDynamicDarkColorScheme provides darkScheme,
         LocalSnyggAssetResolver provides assetResolver,
+        LocalSnyggParentStyle provides SnyggPropertySetEditor().run {
+            fontSize = fontSize(MaterialTheme.typography.bodyMedium.fontSize)
+            build()
+        },
         content = content,
     )
 }

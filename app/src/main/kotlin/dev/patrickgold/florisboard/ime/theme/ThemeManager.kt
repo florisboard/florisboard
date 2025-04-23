@@ -118,7 +118,7 @@ class ThemeManager(context: Context) {
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         // TODO: re-implement stylesheet deserialization logic
-        return@launch // early
+        //return@launch // early
         activeThemeGuard.withLock {
             action()
             previewThemeInfo?.let { previewThemeInfo ->
@@ -135,13 +135,17 @@ class ThemeManager(context: Context) {
                 if (themeExtRef != null) {
                     val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
                     if (themeConfig != null) {
-                        val newStylesheet = ZipUtils.readFileFromArchive(
-                            appContext, themeExtRef, themeConfig.stylesheetPath(),
-                        ).getOrNull()?.let { raw -> Json.decodeFromString<SnyggStylesheet>(raw) }
+                        val newStylesheet = runCatching {
+                            ZipUtils.readFileFromArchive(
+                                appContext, themeExtRef, themeConfig.stylesheetPath(),
+                            ).getOrNull()?.let { raw -> Json.decodeFromString<SnyggStylesheet>(raw) }
+                        }.getOrNull()
                         if (newStylesheet != null) {
                             val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet)
                             cachedThemeInfos.add(newInfo)
                             _activeThemeInfo.postValue(newInfo)
+                        } else {
+                            _activeThemeInfo.postValue(ThemeInfo.DEFAULT)
                         }
                     }
                 }

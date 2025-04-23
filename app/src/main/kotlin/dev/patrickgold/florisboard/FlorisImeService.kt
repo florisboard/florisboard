@@ -593,7 +593,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggBox(
                 elementName = FlorisImeUi.Keyboard.elementName,
-                attributes = mapOf("mode" to state.inputShiftState.value),
+                attributes = mapOf(FlorisImeUi.Attr.ShiftState to state.inputShiftState.value),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
