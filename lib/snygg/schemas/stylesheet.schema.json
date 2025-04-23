@@ -23,7 +23,7 @@
   "definitions": {
     "snygg-uri-value": {
       "type": "string",
-      "pattern": "^\\s*uri[(]\\s*(?<enclosedUri>`[^`]*`)\\s*[)]\\s*$"
+      "pattern": "^\\s*uri[(]\\s*(?<enclosedUri>`flex:/[^`]+`)\\s*[)]\\s*$"
     },
     "snygg-static-color-value": {
       "oneOf": [

@@ -277,7 +277,7 @@ class SnyggStylesheetTest {
         {
           $SCHEMA_LINE,
           "@font `Comic Sans`": {
-            "src": "uri(`ext:/path/to/file`)"
+            "src": "uri(`flex:/path/to/file`)"
           }
         }
         """.trimIndent()
@@ -288,7 +288,7 @@ class SnyggStylesheetTest {
             assertEquals("font", fontRule.name)
             assertEquals("Comic Sans", fontRule.fontName)
             val src = assertIs<SnyggUriValue>(fontProperties.src)
-            assertEquals("ext", src.uri.scheme)
+            assertEquals("flex", src.uri.scheme)
             assertEquals("/path/to/file", src.uri.path)
         }
 
@@ -298,7 +298,7 @@ class SnyggStylesheetTest {
         {
           $SCHEMA_LINE,
           "@font": {
-            "src": "uri(`path/to/file`)"
+            "src": "uri(`flex:/path/to/file`)"
           }
         }
         """.trimIndent()

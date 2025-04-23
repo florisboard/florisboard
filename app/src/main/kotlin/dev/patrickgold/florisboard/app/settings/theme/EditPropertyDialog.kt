@@ -23,15 +23,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -56,21 +53,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.compose.DpSizeSaver
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -114,6 +107,7 @@ import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
+import java.net.URI
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     rule = SnyggEmptyRuleForAdding,
@@ -201,12 +195,7 @@ internal fun EditPropertyDialog(
     }
 
     fun isPropertyValueValid(): Boolean {
-        return when (val value = propertyValue) {
-            is SnyggUndefinedValue -> false
-            is SnyggDefinedVarValue -> value.key.isNotBlank()
-            is SnyggSpSizeValue -> value.sp.isSpecified && value.sp.value >= 1f
-            else -> true
-        }
+        return propertyValue.let { it.encoder().serialize(it).isSuccess }
     }
 
     JetPrefAlertDialog(
@@ -285,12 +274,13 @@ internal fun EditPropertyDialog(
                 )
 
                 PropertyValueEditor(
+                    modifier = Modifier.padding(top = 8.dp),
                     value = propertyValue,
                     onValueChange = { propertyValue = it },
                     level = level,
                     colorRepresentation = colorRepresentation,
                     definedVariables = definedVariables,
-                    isError = showSelectAsError && !isPropertyValueValid(),
+                    isError = !isPropertyValueValid(),
                 )
             }
         }
@@ -389,8 +379,8 @@ private fun PropertyValueEditor(
             val variableKeys = remember(definedVariables) {
                 listOf("") + definedVariables.keys.toList()
             }
-            val selectedIndex by remember(variableKeys, value.key) {
-                mutableIntStateOf(variableKeys.indexOf(value.key).coerceIn(variableKeys.indices))
+            val selectedIndex = remember(variableKeys, value.key) {
+                variableKeys.indexOf(value.key).coerceIn(variableKeys.indices)
             }
             Row(modifier, verticalAlignment = Alignment.CenterVertically) {
                 JetPrefDropdown(
@@ -435,10 +425,8 @@ private fun PropertyValueEditor(
                 }
             }
 
-            val selectedIndex by remember(value.colorName) {
-                mutableIntStateOf(
-                    ColorPalette.colorNames.indexOf(value.colorName).coerceIn(ColorPalette.colorNames.indices)
-                )
+            val selectedIndex = remember(value.colorName) {
+                ColorPalette.colorNames.indexOf(value.colorName).coerceIn(ColorPalette.colorNames.indices)
             }
             Row(modifier, verticalAlignment = Alignment.CenterVertically) {
                 JetPrefDropdown(
@@ -475,7 +463,19 @@ private fun PropertyValueEditor(
         }
 
         is SnyggLineClampValue -> {
-            // TODO: implement
+            var inputStr by rememberSaveable {
+                mutableStateOf(value.encoder().serialize(value).getOrDefault("???"))
+            }
+            JetPrefTextField(
+                value = inputStr,
+                onValueChange = { newInputStr ->
+                    inputStr = newInputStr
+                    onValueChange(value.encoder().deserialize(newInputStr)
+                        .getOrDefault(SnyggLineClampValue(-1)))
+                    },
+                modifier = modifier,
+                isError = isError,
+            )
         }
 
         is SnyggPaddingValue -> {
@@ -555,7 +555,21 @@ private fun PropertyValueEditor(
         }
 
         is SnyggUriValue -> {
-            // TODO: implement
+            var inputStr by rememberSaveable {
+                mutableStateOf(value.uri.toString())
+            }
+            JetPrefTextField(
+                value = inputStr,
+                onValueChange = { newInputStr ->
+                    inputStr = newInputStr
+                    runCatching { URI.create(newInputStr) }.fold(
+                        onSuccess = { onValueChange(SnyggUriValue(it)) },
+                        onFailure = { onValueChange(SnyggUriValue(URI.create(""))) },
+                    )
+                },
+                modifier = modifier,
+                isError = isError,
+            )
         }
 
         else -> {
@@ -587,6 +601,21 @@ private fun <T> EnumLikeValueEditor(
         },
     )
 }
+
+//@Composable
+//private fun <T> StringSpecValueEditor(
+//    value: SnyggValue,
+//    onValueChange: (SnyggValue) -> Unit,
+//    in
+//    modifier: Modifier = Modifier,
+//) {
+//    val input =
+//    JetPrefTextField(
+//        value = ,
+//        onValueChange = ,
+//        modifier = modifier,
+//    )
+//}
 
 @Composable
 private fun ShapeValueEditor(

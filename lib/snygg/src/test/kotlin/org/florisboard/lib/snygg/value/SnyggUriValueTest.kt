@@ -17,8 +17,8 @@ class SnyggUriValueTest {
     fun `deserialize uri values`() {
         val pairs = listOf(
             // valid
-            "uri(`image:my_image.png`)" to helperMakeUri("image:my_image.png"),
-            "uri(`font:roboto.ttf`)" to helperMakeUri("font:roboto.ttf"),
+            "uri(`flex:/my_image.png`)" to helperMakeUri("flex:/my_image.png"),
+            "uri(`flex:/roboto.ttf`)" to helperMakeUri("flex:/roboto.ttf"),
             // invalid
             "some-color" to null,
         )
@@ -31,8 +31,8 @@ class SnyggUriValueTest {
     fun `serialize uri values`() {
         val pairs = listOf(
             // valid
-            helperMakeUri("image:my_image.png") to "uri(`image:my_image.png`)",
-            helperMakeUri("font:roboto.ttf") to "uri(`font:roboto.ttf`)",
+            helperMakeUri("flex:/my_image.png") to "uri(`flex:/my_image.png`)",
+            helperMakeUri("flex:/roboto.ttf") to "uri(`flex:/roboto.ttf`)",
             // invalid
             SnyggDefinedVarValue("shenanigans") to null
         )
