@@ -250,8 +250,11 @@
     <string name="snygg__rule_selector__focus">Focused</string>
     <string name="snygg__rule_selector__hover">Hover</string>
     <string name="snygg__rule_selector__disabled">Disabled</string>
+
     <string name="snygg__property_name__background">Background</string>
     <string name="snygg__property_name__foreground">Foreground</string>
+    <string name="snygg__property_name__background_image">Background image</string>
+    <string name="snygg__property_name__object_fit">Object fit</string>
     <string name="snygg__property_name__border_color">Border color</string>
     <string name="snygg__property_name__border_style">Border style</string>
     <string name="snygg__property_name__border_width">Border width</string>
@@ -259,8 +262,19 @@
     <string name="snygg__property_name__font_size">Font size</string>
     <string name="snygg__property_name__font_style">Font style</string>
     <string name="snygg__property_name__font_weight">Font weight</string>
+    <string name="snygg__property_name__letter_spacing">Letter spacing</string>
+    <string name="snygg__property_name__line_clamp">Line clamp</string>
+    <string name="snygg__property_name__line_height">Line height</string>
+    <string name="snygg__property_name__text_align">Text align</string>
+    <string name="snygg__property_name__text_decoration_line">Text decoration line</string>
+    <string name="snygg__property_name__text_overflow">Text overflow</string>
+    <string name="snygg__property_name__margin">Margin</string>
+    <string name="snygg__property_name__padding">Padding</string>
+    <string name="snygg__property_name__shadow_color">Shadow color</string>
     <string name="snygg__property_name__shadow_elevation">Shadow elevation</string>
     <string name="snygg__property_name__shape">Shape</string>
+    <string name="snygg__property_name__clip">Clip</string>
+    <string name="snygg__property_name__src">Source</string>
     <string name="snygg__property_name__var_primary">Primary color</string>
     <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>
     <string name="snygg__property_name__var_secondary">Secondary color</string>
@@ -275,11 +289,20 @@
     <string name="snygg__property_name__var_on_surface_variant">Foreground of surface (variant)</string>
     <string name="snygg__property_name__var_shape">Common shape</string>
     <string name="snygg__property_name__var_shape_variant">Common shape (variant)</string>
+
     <string name="snygg__property_value__explicit_inherit">Inherit</string>
+    <string name="snygg__property_value__defined_var">Var reference</string>
+    <string name="snygg__property_value__yes">Yes</string>
+    <string name="snygg__property_value__no">No</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
     <string name="snygg__property_value__material_you_light_color">Material You color (Light)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You color (Dark)</string>
-    <string name="snygg__property_value__image_ref">Image reference</string>
+    <string name="snygg__property_value__font_family_generic">Font family (generic)</string>
+    <string name="snygg__property_value__font_family_custom">Font family (custom)</string>
+    <string name="snygg__property_value__font_style">Font style</string>
+    <string name="snygg__property_value__font_weight">Font weight</string>
+    <string name="snygg__property_value__line_clamp">Line clamp (max lines)</string>
+    <string name="snygg__property_value__padding">Padding or Margin</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
@@ -289,7 +312,11 @@
     <string name="snygg__property_value__dp_size">Size (dp)</string>
     <string name="snygg__property_value__sp_size">Size (sp)</string>
     <string name="snygg__property_value__percentage_size">Size (%)</string>
-    <string name="snygg__property_value__defined_var">Var reference</string>
+    <string name="snygg__property_value__object_fit">Object fit</string>
+    <string name="snygg__property_value__text_align">Text align</string>
+    <string name="snygg__property_value__text_decoration_line">Text decoration line</string>
+    <string name="snygg__property_value__text_overflow">Text overflow</string>
+    <string name="snygg__property_value__uri">URI reference</string>
 
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>

@@ -301,8 +301,8 @@ fun ThemeEditorScreen(
                                         snyggPropertySetForEditing = propertySet
                                         snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
                                     },
-                                    text = translatePropertyName(context, propertyName, snyggLevel),
-                                    secondaryText = translatePropertyValue(context, propertyValue, snyggLevel, displayColorsAs),
+                                    text = context.translatePropertyName(propertyName, snyggLevel),
+                                    secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, displayColorsAs),
                                     singleLineSecondaryText = true,
                                     trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                 )
@@ -517,6 +517,8 @@ private fun SnyggRuleRow(
     onEditRuleBtnClick: () -> Unit,
     onAddPropertyBtnClick: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     @Composable
     fun Selector(text: String) {
         Text(
@@ -555,7 +557,7 @@ private fun SnyggRuleRow(
         ) {
             if (rule is SnyggElementRule) {
                 Text(
-                    text = translateElementName(rule, level),
+                    text = context.translateElementName(rule, level),
                     style = MaterialTheme.typography.bodyMedium,
                     fontFamily = FontFamily.Monospace,
                     maxLines = 1,

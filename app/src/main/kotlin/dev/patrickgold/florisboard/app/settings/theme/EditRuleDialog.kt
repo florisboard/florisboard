@@ -118,6 +118,7 @@ internal fun EditRuleDialog(
     onDeleteRule: (rule: SnyggRule) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val context = LocalContext.current
     val isAddRuleDialog = initRule == SnyggEmptyRuleForAdding
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var showAlreadyExistsError by rememberSaveable { mutableStateOf(false) }
@@ -131,7 +132,7 @@ internal fun EditRuleDialog(
             }
         }
     }
-    val possibleRuleLabels = possibleRuleTemplates.map { translateElementName(it.name, level) ?: it }
+    val possibleRuleLabels = possibleRuleTemplates.map { context.translateElementName(it.name, level) ?: it }
     var elementsSelectedIndex by rememberSaveable {
         val index = possibleRuleTemplates
             .indexOfFirst { it.name == initRule.name }

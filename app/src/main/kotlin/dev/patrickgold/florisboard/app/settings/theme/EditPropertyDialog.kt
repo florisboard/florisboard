@@ -248,6 +248,7 @@ internal fun EditPropertyDialog(
                     onNameChange = { name ->
                         if (encoders != null) {
                             propertyValueEncoder = SnyggUndefinedValue
+                            propertyValue = SnyggUndefinedValue
                         }
                         propertyName = name
                     },
@@ -298,7 +299,7 @@ private fun PropertyNameInput(
             add(SnyggEmptyPropertyInfoForAdding.name)
             addAll(SnyggSpec.propertiesOf(rule))
         }
-        val possiblePropertyLabels = possiblePropertyNames.map { translatePropertyName(context, it, level) }
+        val possiblePropertyLabels = possiblePropertyNames.map { context.translatePropertyName(it, level) }
         val propertiesSelectedIndex = remember(name) {
             possiblePropertyNames.indexOf(name).coerceIn(possiblePropertyNames.indices)
         }
@@ -353,7 +354,7 @@ private fun PropertyValueEncoderDropdown(
         },
         enabled = enabled,
         isError = isError,
-        optionsLabelProvider = { translatePropertyValueEncoderName(context, it) },
+        optionsLabelProvider = { context.translatePropertyValueEncoderName(it) },
     )
 }
 
@@ -385,7 +386,7 @@ private fun PropertyValueEditor(
                         .padding(end = 12.dp)
                         .weight(1f),
                     options = variableKeys,
-                    optionsLabelProvider = { translatePropertyName(context, it, level) },
+                    optionsLabelProvider = { context.translatePropertyName(it, level) },
                     selectedOptionIndex = selectedIndex,
                     isError = isError,
                     onSelectOption = { index ->
@@ -401,7 +402,7 @@ private fun PropertyValueEditor(
 
         is SnyggStaticColorValue -> {
             val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
-            val colorPickerStr = translatePropertyValue(context, value, level, displayColorsAs)
+            val colorPickerStr = context.translatePropertyValue(value, level, displayColorsAs)
             var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 Column(modifier = Modifier.padding(top = 8.dp)) {
@@ -548,7 +549,7 @@ private fun PropertyValueEditor(
                     selectedOptionIndex = selectedIndex,
                     onSelectOption = onSelectItem,
                     isError = isError,
-                    optionsLabelProvider = { translatePropertyName(context, it, level) },
+                    optionsLabelProvider = { context.translatePropertyName(it, level) },
                 )
                 SnyggValueIcon(
                     value = value,
