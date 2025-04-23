@@ -42,6 +42,16 @@ sealed interface SnyggRule : Comparable<SnyggRule> {
     val name: String
 
     /**
+     * Compares this Snygg rule with [other]. The ordering is defined as follows:
+     * - @defines
+     * - @font (multiple fonts => sort by fontName)
+     * - elements (first by element name, then by attributes/selectors)
+     *
+     * @since 0.5.0-alpha01
+     */
+    override fun compareTo(other: SnyggRule): Int
+
+    /**
      * Serializes the Snygg rule to a string. This method never fails.
      *
      * @return The serialized representation of the Snygg rule instance.
@@ -138,9 +148,18 @@ sealed interface SnyggAnnotationRule : SnyggRule {
     }
 }
 
+/**
+ * A core element in the Snygg styling system, this rule allows targeting specific elements with specific attributes
+ * and selectors.
+ *
+ * @property name The element name this rule targets, it can be seen similarly to a CSS class.
+ * @property attributes The attributes this rule targets.
+ * @property selector The selector this rule targets, or [SnyggSelector.NONE] for not specified.
+ * @since 0.5.0-alpha01
+ */
 data class SnyggElementRule(
     override val name: String,
-    val attributes: Attributes = Attributes(),
+    val attributes: SnyggAttributes = SnyggAttributes(),
     val selector: SnyggSelector = SnyggSelector.NONE,
 ) : SnyggRule {
     init {
@@ -180,15 +199,9 @@ data class SnyggElementRule(
     }
 
     companion object {
-        private const val ATTRIBUTE_OPEN = "["
-        private const val ATTRIBUTE_CLOSE = "]"
-        private const val ATTRIBUTE_ASSIGN = "="
-        private const val ATTRIBUTE_VALUES_SEPARATOR = ","
-
         private val ELEMENT_NAME_REGEX = """(?<elementName>[a-zA-Z0-9-]+)""".toRegex()
-        private val ATTRIBUTE_VALUE_REGEX = """[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?""".toRegex()
-        private val ATTRIBUTE_REGEX = """\[[a-zA-Z0-9-]+=$ATTRIBUTE_VALUE_REGEX(?:,$ATTRIBUTE_VALUE_REGEX)*]""".toRegex()
-        private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:$ATTRIBUTE_REGEX)+)?""".toRegex()
+
+        private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:${SnyggAttributes.ATTRIBUTE_REGEX})+)?""".toRegex()
         private val SELECTOR_REGEX = """(?<selectorRaw>:pressed|:focus|:hover|:disabled)?""".toRegex()
         internal val REGEX = """^$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX$""".toRegex()
 
@@ -208,180 +221,194 @@ data class SnyggElementRule(
 
             return SnyggElementRule(
                 name = elementName,
-                attributes = Attributes.from(attributesRaw ?: ""),
+                attributes = SnyggAttributes.from(attributesRaw ?: ""),
                 selector = SnyggSelector.from(selectorRaw ?: ""),
             )
         }
     }
+}
 
-    data class Attributes internal constructor(
-        private val attributes: Map<String, List<Int>> = emptyMap(),
-    ) : Map<String, List<Int>> by attributes, Comparable<Attributes> {
-        override fun compareTo(other: Attributes): Int {
-            if (attributes.isEmpty() && other.attributes.isEmpty()) {
-                return 0
-            }
-            val sizeDiff = attributes.size.compareTo(other.attributes.size)
-            if (sizeDiff != 0) {
-                return sizeDiff
-            }
-            // both have attributes at this point and size matches
-            val attrs = attributes.entries.toList().sortedBy { it.key }
-            val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
-            for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
-                val attr = attrs[attrIndex]
-                val otherAttr = otherAttrs[attrIndex]
-                val keyDiff = attr.key.compareTo(otherAttr.key)
-                if (keyDiff != 0) {
-                    return keyDiff
-                }
-                for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
-                    val value = attr.value[valueIndex]
-                    val otherValue = otherAttr.value[valueIndex]
-                    val valueDiff = value.compareTo(otherValue)
-                    if (valueDiff != 0) {
-                        return valueDiff
-                    }
-                }
-                val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
-                if (valueSizeDiff != 0) {
-                    return valueSizeDiff
-                }
-            }
+data class SnyggAttributes internal constructor(
+    private val attributes: Map<String, List<Int>> = emptyMap(),
+) : Map<String, List<Int>> by attributes, Comparable<SnyggAttributes> {
+    override fun compareTo(other: SnyggAttributes): Int {
+        if (attributes.isEmpty() && other.attributes.isEmpty()) {
             return 0
         }
-
-        override fun toString(): String {
-            return buildString {
-                for ((key, values) in attributes) {
-                    append(ATTRIBUTE_OPEN)
-                    append(key)
-                    append(ATTRIBUTE_ASSIGN)
-                    val valueStrings = mutableListOf<String>()
-                    values.fold(mutableListOf<IntRange>()) { acc, value ->
-                        if (acc.isEmpty()) {
-                            acc.add(value..value)
-                        } else {
-                            val lastRange = acc.last()
-                            if (lastRange.last + 1 == value) {
-                                acc[acc.size - 1] = lastRange.first..value
-                            } else {
-                                acc.add(value..value)
-                            }
-                        }
-                        acc
-                    }.forEach { range ->
-                        when (range.first) {
-                            range.last -> {
-                                valueStrings.add(range.first.toString())
-                            }
-                            range.last - 1 -> {
-                                valueStrings.add(range.first.toString())
-                                valueStrings.add((range.first + 1).toString())
-                            }
-                            else -> {
-                                valueStrings.add(range.toString())
-                            }
-                        }
-                    }
-                    append(valueStrings.joinToString(ATTRIBUTE_VALUES_SEPARATOR))
-                    append(ATTRIBUTE_CLOSE)
+        val sizeDiff = attributes.size.compareTo(other.attributes.size)
+        if (sizeDiff != 0) {
+            return sizeDiff
+        }
+        // both have attributes at this point and size matches
+        val attrs = attributes.entries.toList().sortedBy { it.key }
+        val otherAttrs = other.attributes.entries.toList().sortedBy { it.key }
+        for (attrIndex in 0..<min(attrs.size, otherAttrs.size)) {
+            val attr = attrs[attrIndex]
+            val otherAttr = otherAttrs[attrIndex]
+            val keyDiff = attr.key.compareTo(otherAttr.key)
+            if (keyDiff != 0) {
+                return keyDiff
+            }
+            for (valueIndex in 0..<min(attr.value.size, otherAttr.value.size)) {
+                val value = attr.value[valueIndex]
+                val otherValue = otherAttr.value[valueIndex]
+                val valueDiff = value.compareTo(otherValue)
+                if (valueDiff != 0) {
+                    return valueDiff
                 }
             }
-        }
-
-        /**
-         * Copies the attributes, including the given key-value pairs. Duplicate key-value pairs are ignored.
-         *
-         * @param pairs The list of key-value pairs to include in the copy.
-         * @return A new copy of the attribute mapping.
-         * @since 0.5.0-alpha01
-         */
-        fun including(vararg pairs: Pair<String, Int>): Attributes {
-            val copy = attributes.toMutableMap()
-            pairs.forEach { (key, value) ->
-                copy[key] = buildSet {
-                    addAll(copy[key].orEmpty())
-                    add(value)
-                }.toList().sorted()
+            val valueSizeDiff = attr.value.size.compareTo(otherAttr.value.size)
+            if (valueSizeDiff != 0) {
+                return valueSizeDiff
             }
-            return Attributes(copy.toMap())
         }
+        return 0
+    }
 
-        /**
-         * Copies the attributes, excluding the given key-value pairs. Ignores non-present pairs.
-         *
-         * @param pairs The list of key-value pairs to exclude in the copy.
-         * @return A new copy of the attribute mapping.
-         * @since 0.5.0-alpha01
-         */
-        fun excluding(vararg pairs: Pair<String, Int>): Attributes {
-            val copy = attributes.toMutableMap()
-            pairs.forEach { (key, value) ->
-                val list = buildSet {
-                    addAll(copy[key].orEmpty())
-                    remove(value)
-                }.toList().sorted()
-                if (list.isNotEmpty()) {
-                    copy[key] = list
-                } else {
-                    copy.remove(key)
-                }
-            }
-            return Attributes(copy.toMap())
-        }
-
-        /**
-         * Copies the attributes, toggling the given key-value pairs. Existing key-value pairs will be removed,
-         * non-existing will be added.
-         *
-         * @param pairs The list of key-value pairs to toggle in the copy.
-         * @return A new copy of the attribute mapping.
-         * @since 0.5.0-alpha01
-         */
-        fun toggling(vararg pairs: Pair<String, Int>): Attributes {
-            val copy = attributes.toMutableMap()
-            pairs.forEach { (key, value) ->
-                val list = buildSet {
-                    addAll(copy[key].orEmpty())
-                    if (contains(value)) {
-                        remove(value)
+    /**
+     * Serializes the attributes to a string.
+     *
+     * @return The serialized representation of the attributes.
+     * @since 0.5.0-alpha01
+     */
+    override fun toString(): String {
+        return buildString {
+            for ((key, values) in attributes) {
+                append(ATTRIBUTE_OPEN)
+                append(key)
+                append(ATTRIBUTE_ASSIGN)
+                val valueStrings = mutableListOf<String>()
+                values.fold(mutableListOf<IntRange>()) { acc, value ->
+                    if (acc.isEmpty()) {
+                        acc.add(value..value)
                     } else {
-                        add(value)
-                    }
-                }.toList().sorted()
-                if (list.isNotEmpty()) {
-                    copy[key] = list
-                } else {
-                    copy.remove(key)
-                }
-            }
-            return Attributes(copy.toMap())
-        }
-
-        companion object {
-            internal fun from(str: String): Attributes {
-                val attributes = mutableMapOf<String, List<Int>>()
-                ATTRIBUTE_REGEX.findAll(str).forEach { attrRawMatch ->
-                    val attrRaw = attrRawMatch.value.substring(1, attrRawMatch.value.length - 1)
-                    val (key, valuesRaw) = attrRaw.split(ATTRIBUTE_ASSIGN)
-                    val values = mutableSetOf<Int>()
-                    ATTRIBUTE_VALUE_REGEX.findAll(valuesRaw).forEach { valueRawMatch ->
-                        val valueRaw = valueRawMatch.value
-                        if (valueRaw.contains("..")) {
-                            val (start, end) = valueRaw.split("..")
-                            values.addAll(start.toInt()..end.toInt())
+                        val lastRange = acc.last()
+                        if (lastRange.last + 1 == value) {
+                            acc[acc.size - 1] = lastRange.first..value
                         } else {
-                            values.add(valueRaw.toInt())
+                            acc.add(value..value)
                         }
                     }
-                    attributes[key] = values.toList().sorted()
+                    acc
+                }.forEach { range ->
+                    when (range.first) {
+                        range.last -> {
+                            valueStrings.add(range.first.toString())
+                        }
+                        range.last - 1 -> {
+                            valueStrings.add(range.first.toString())
+                            valueStrings.add((range.first + 1).toString())
+                        }
+                        else -> {
+                            valueStrings.add(range.toString())
+                        }
+                    }
                 }
-                return Attributes(attributes.toMap())
+                append(valueStrings.joinToString(ATTRIBUTE_VALUES_SEPARATOR))
+                append(ATTRIBUTE_CLOSE)
             }
-
-            internal fun of(vararg pairs: Pair<String, List<Int>>) = Attributes(mapOf(*pairs))
         }
+    }
+
+    /**
+     * Copies the attributes, including the given key-value pairs. Duplicate key-value pairs are ignored.
+     *
+     * @param pairs The list of key-value pairs to include in the copy.
+     * @return A new copy of the attribute mapping.
+     * @since 0.5.0-alpha01
+     */
+    fun including(vararg pairs: Pair<String, Int>): SnyggAttributes {
+        val copy = attributes.toMutableMap()
+        pairs.forEach { (key, value) ->
+            copy[key] = buildSet {
+                addAll(copy[key].orEmpty())
+                add(value)
+            }.toList().sorted()
+        }
+        return SnyggAttributes(copy.toMap())
+    }
+
+    /**
+     * Copies the attributes, excluding the given key-value pairs. Ignores non-present pairs.
+     *
+     * @param pairs The list of key-value pairs to exclude in the copy.
+     * @return A new copy of the attribute mapping.
+     * @since 0.5.0-alpha01
+     */
+    fun excluding(vararg pairs: Pair<String, Int>): SnyggAttributes {
+        val copy = attributes.toMutableMap()
+        pairs.forEach { (key, value) ->
+            val list = buildSet {
+                addAll(copy[key].orEmpty())
+                remove(value)
+            }.toList().sorted()
+            if (list.isNotEmpty()) {
+                copy[key] = list
+            } else {
+                copy.remove(key)
+            }
+        }
+        return SnyggAttributes(copy.toMap())
+    }
+
+    /**
+     * Copies the attributes, toggling the given key-value pairs. Existing key-value pairs will be removed,
+     * non-existing will be added.
+     *
+     * @param pairs The list of key-value pairs to toggle in the copy.
+     * @return A new copy of the attribute mapping.
+     * @since 0.5.0-alpha01
+     */
+    fun toggling(vararg pairs: Pair<String, Int>): SnyggAttributes {
+        val copy = attributes.toMutableMap()
+        pairs.forEach { (key, value) ->
+            val list = buildSet {
+                addAll(copy[key].orEmpty())
+                if (contains(value)) {
+                    remove(value)
+                } else {
+                    add(value)
+                }
+            }.toList().sorted()
+            if (list.isNotEmpty()) {
+                copy[key] = list
+            } else {
+                copy.remove(key)
+            }
+        }
+        return SnyggAttributes(copy.toMap())
+    }
+
+    companion object {
+        private const val ATTRIBUTE_OPEN = "["
+        private const val ATTRIBUTE_CLOSE = "]"
+        private const val ATTRIBUTE_ASSIGN = "="
+        private const val ATTRIBUTE_VALUES_SEPARATOR = ","
+
+        private val ATTRIBUTE_VALUE_REGEX = """[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?""".toRegex()
+        internal val ATTRIBUTE_REGEX = """\[[a-zA-Z0-9-]+=$ATTRIBUTE_VALUE_REGEX(?:,$ATTRIBUTE_VALUE_REGEX)*]""".toRegex()
+
+        internal fun from(str: String): SnyggAttributes {
+            val attributes = mutableMapOf<String, List<Int>>()
+            ATTRIBUTE_REGEX.findAll(str).forEach { attrRawMatch ->
+                val attrRaw = attrRawMatch.value.substring(1, attrRawMatch.value.length - 1)
+                val (key, valuesRaw) = attrRaw.split(ATTRIBUTE_ASSIGN)
+                val values = mutableSetOf<Int>()
+                ATTRIBUTE_VALUE_REGEX.findAll(valuesRaw).forEach { valueRawMatch ->
+                    val valueRaw = valueRawMatch.value
+                    if (valueRaw.contains("..")) {
+                        val (start, end) = valueRaw.split("..")
+                        values.addAll(start.toInt()..end.toInt())
+                    } else {
+                        values.add(valueRaw.toInt())
+                    }
+                }
+                attributes[key] = values.toList().sorted()
+            }
+            return SnyggAttributes(attributes.toMap())
+        }
+
+        internal fun of(vararg pairs: Pair<String, List<Int>>) = SnyggAttributes(mapOf(*pairs))
     }
 }
 
@@ -448,12 +475,6 @@ enum class SnyggSelector(val id: String) {
     companion object {
         private const val SELECTOR_COLON = ":"
 
-        /**
-         * Deserializes the given [str] to a Snygg selector, [NONE] otherwise.
-         *
-         * @param str The string to deserialize.
-         * @return The Snygg selector, [NONE] by default and in error cases.
-         */
         internal fun from(str: String): SnyggSelector {
             if (str.isNotEmpty()) {
                 val selector = str.substring(1)

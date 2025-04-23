@@ -160,7 +160,7 @@ private fun SnyggElementRule.isMatchForQuery(
         attributes.isMatchForQuery(queryAttributes)
 }
 
-private fun SnyggElementRule.Attributes.isMatchForQuery(query: SnyggQueryAttributes): Boolean {
+private fun SnyggAttributes.isMatchForQuery(query: SnyggQueryAttributes): Boolean {
     for ((attrKey, attrValues) in this) {
         val queryValue = query[attrKey] ?: return false
         if (!attrValues.contains(queryValue)) {

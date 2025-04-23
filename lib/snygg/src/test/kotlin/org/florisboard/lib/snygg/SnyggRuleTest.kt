@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 class SnyggRuleTest {
     private val testRule: SnyggRule = SnyggElementRule(
         name = "smartbar",
-        attributes = SnyggElementRule.Attributes(mapOf(
+        attributes = SnyggAttributes(mapOf(
             "code" to listOf(0, 1, 2, 3, 4, 5),
             "group" to listOf(0, 2, 3, 4),
             "shift" to listOf(0, 2, 4),
@@ -45,7 +45,7 @@ class SnyggRuleTest {
 
     @Test
     fun `test fromOrNull attributes duplicate entries`() {
-        assertEquals(SnyggElementRule("smartbar", SnyggElementRule.Attributes.of("code" to listOf(-1826))), SnyggRule.fromOrNull("smartbar[code=-1826,-1826,-1826,-1826]"))
+        assertEquals(SnyggElementRule("smartbar", SnyggAttributes.of("code" to listOf(-1826))), SnyggRule.fromOrNull("smartbar[code=-1826,-1826,-1826,-1826]"))
     }
 
     @Test
@@ -81,23 +81,23 @@ class SnyggRuleTest {
             SnyggElementRule(name = "test", selector = SnyggSelector.HOVER) to
                 SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
             SnyggElementRule(name = "test") to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(11))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10, 11))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("group" to listOf(10))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("groups" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("groups" to listOf(11))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("shiftStates" to listOf(0))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("shiftStates" to listOf(1))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(32), "shiftStates" to listOf(0))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(32), "shiftStates" to listOf(1))),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10), "group" to listOf(10)),),
-            SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggElementRule.Attributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(11))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10, 11))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("group" to listOf(10))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(10))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(11))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(0))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(1))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(0))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(1))),
+            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),),
+            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
         )
         assertAll(ruleList.map { (lowerRule, upperRule) -> {
             assertTrue("$lowerRule should be less than $upperRule") { lowerRule < upperRule }
@@ -113,7 +113,7 @@ class SnyggRuleTest {
             SnyggElementRule("smartbar") to
                 SnyggElementRule("smartbar"),
             SnyggElementRule("smartbar") to
-                SnyggElementRule("smartbar", SnyggElementRule.Attributes(), SnyggSelector.NONE)
+                SnyggElementRule("smartbar", SnyggAttributes(), SnyggSelector.NONE)
         )
         assertAll(ruleList.map { (leftRule, rightRule) -> {
             assertTrue { leftRule == rightRule }
@@ -170,7 +170,7 @@ class SnyggRuleTest {
     @Nested
     inner class AttributesCopyHelpers {
         @Test
-        fun `Attributes including`() = with(SnyggElementRule.Attributes.Companion) {
+        fun `Attributes including`() = with(SnyggAttributes.Companion) {
             val expectedToActual = listOf(
                 of() to of().including(),
                 of("test" to listOf(1)) to of().including("test" to 1),
@@ -186,7 +186,7 @@ class SnyggRuleTest {
         }
 
         @Test
-        fun `Attributes excluding`() = with(SnyggElementRule.Attributes.Companion) {
+        fun `Attributes excluding`() = with(SnyggAttributes.Companion) {
             val expectedToActual = listOf(
                 of() to of().excluding(),
                 of("a" to listOf(1)) to of("a" to listOf(1)).excluding("b" to 1),
@@ -200,7 +200,7 @@ class SnyggRuleTest {
         }
 
         @Test
-        fun `Attributes toggling`() = with(SnyggElementRule.Attributes.Companion) {
+        fun `Attributes toggling`() = with(SnyggAttributes.Companion) {
             val expectedToActual = listOf(
                 of() to of().toggling(),
                 of() to of("test" to listOf(1)).toggling("test" to 1),
