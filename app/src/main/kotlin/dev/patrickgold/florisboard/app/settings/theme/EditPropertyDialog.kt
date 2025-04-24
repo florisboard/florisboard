@@ -17,14 +17,21 @@
 package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -43,6 +50,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -70,7 +79,9 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.jetpref.material.ui.checkeredBackground
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
+import java.net.URI
 import org.florisboard.lib.color.ColorPalette
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.kotlin.toStringWithoutDotZero
@@ -107,7 +118,6 @@ import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
-import java.net.URI
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     rule = SnyggEmptyRuleForAdding,
@@ -137,6 +147,23 @@ private enum class ShapeCorner {
                 BOTTOM_START -> R.string.enum__shape_corner__bottom_start
             }
         )
+    }
+}
+
+private enum class PaddingValue {
+    TOP,
+    BOTTOM,
+    START,
+    END;
+
+    @Composable
+    fun label(): String {
+        return when (this) {
+            TOP -> "Top"
+            BOTTOM -> "Bottom"
+            START -> "Start"
+            END -> "End"
+        }
     }
 }
 
@@ -190,6 +217,7 @@ internal fun EditPropertyDialog(
             is SnyggAnnotationRule.Defines -> {
                 propertyNameValidation.isValid() && propertyName != SnyggEmptyPropertyInfoForAdding.name
             }
+
             else -> propertyName.isNotEmpty() && propertyName != SnyggEmptyPropertyInfoForAdding.name
         }
     }
@@ -470,16 +498,18 @@ private fun PropertyValueEditor(
                 value = inputStr,
                 onValueChange = { newInputStr ->
                     inputStr = newInputStr
-                    onValueChange(value.encoder().deserialize(newInputStr)
-                        .getOrDefault(SnyggLineClampValue(-1)))
-                    },
+                    onValueChange(
+                        value.encoder().deserialize(newInputStr)
+                            .getOrDefault(SnyggLineClampValue(-1))
+                    )
+                },
                 modifier = modifier,
                 isError = isError,
             )
         }
 
         is SnyggPaddingValue -> {
-            // TODO: implement
+            PaddingValueEditor(value, onValueChange, modifier)
         }
 
         is SnyggShapeValue -> {
@@ -535,7 +565,26 @@ private fun PropertyValueEditor(
         }
 
         is SnyggPercentageSizeValue -> {
-            // TODO: implement
+            var sizeStr by remember {
+                mutableStateOf(value.percentage.toString())
+            }
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefTextField(
+                    modifier = Modifier.weight(1f),
+                    value = sizeStr,
+                    onValueChange = { value ->
+                        sizeStr = value
+                        val size = sizeStr.toFloatOrNull()?.let { SnyggPercentageSizeValue(it) }
+                        onValueChange(size ?: SnyggPercentageSizeValue(0f))
+                    },
+                    isError = value.percentage < 0f || value.percentage > 1f,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "%",
+                    fontFamily = FontFamily.Monospace,
+                )
+            }
         }
 
         is SnyggObjectFitValue -> {
@@ -602,20 +651,170 @@ private fun <T> EnumLikeValueEditor(
     )
 }
 
-//@Composable
-//private fun <T> StringSpecValueEditor(
-//    value: SnyggValue,
-//    onValueChange: (SnyggValue) -> Unit,
-//    in
-//    modifier: Modifier = Modifier,
-//) {
-//    val input =
-//    JetPrefTextField(
-//        value = ,
-//        onValueChange = ,
-//        modifier = modifier,
-//    )
-//}
+@Composable
+private fun PaddingValueEditor(
+    value: SnyggPaddingValue,
+    onValueChange: (SnyggValue) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val layoutDirection = LocalLayoutDirection.current
+    val paddingValue = value.values
+    var showDialogInitDp by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(0.dp)
+    }
+    var showDialogForPaddingValue by rememberSaveable {
+        mutableStateOf<PaddingValue?>(null)
+    }
+    var start by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateStartPadding(layoutDirection))
+    }
+    var end by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateEndPadding(layoutDirection))
+    }
+    var top by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateTopPadding())
+    }
+    var bottom by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateBottomPadding())
+    }
+    val paddingValues = remember(start, end, top, bottom) {
+        PaddingValues(start, top, end, bottom)
+    }
+
+    LaunchedEffect(paddingValues) {
+        onValueChange(
+            SnyggPaddingValue(paddingValues)
+        )
+    }
+
+    @Composable
+    fun DpChip(
+        onClick: () -> Unit,
+        text: String,
+        alignment: Alignment,
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = alignment,
+        ) {
+            FlorisChip(
+                onClick = onClick,
+                text = text,
+                shape = MaterialTheme.shapes.medium,
+            )
+        }
+    }
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f)) {
+            DpChip(
+                onClick = {
+                    showDialogInitDp = start
+                    showDialogForPaddingValue = PaddingValue.START
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to start.value.toStringWithoutDotZero()),
+                alignment = Alignment.CenterEnd,
+            )
+        }
+        Spacer(Modifier.width(8.dp))
+        Column(Modifier.weight(1f)) {
+            DpChip(
+                onClick = {
+                    showDialogInitDp = top
+                    showDialogForPaddingValue = PaddingValue.TOP
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to top.value.toStringWithoutDotZero()),
+                alignment = Alignment.Center,
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(paddingValues)
+                    .background(MaterialTheme.colorScheme.inversePrimary),
+            )
+            DpChip(
+                onClick = {
+                    showDialogInitDp = bottom
+                    showDialogForPaddingValue = PaddingValue.BOTTOM
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottom.value.toStringWithoutDotZero()),
+                alignment = Alignment.Center,
+            )
+        }
+        Spacer(Modifier.width(8.dp))
+        Column(Modifier.weight(1f)) {
+            DpChip(
+                onClick = {
+                    showDialogInitDp = end
+                    showDialogForPaddingValue = PaddingValue.END
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to end.value.toStringWithoutDotZero()),
+                alignment = Alignment.CenterStart,
+            )
+        }
+    }
+
+    val dialogForPaddingValue = showDialogForPaddingValue
+    if (dialogForPaddingValue != null) {
+        var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+        var size by rememberSaveable {
+            mutableStateOf(showDialogInitDp.value.toStringWithoutDotZero())
+        }
+        val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
+        JetPrefAlertDialog(
+            title = dialogForPaddingValue.label(),
+            confirmLabel = stringRes(R.string.action__apply),
+            onConfirm = {
+                if (sizeValidation.isInvalid()) {
+                    showValidationErrors = true
+                } else {
+                    val sizeDp = size.toFloat().dp
+                    when (dialogForPaddingValue) {
+                        PaddingValue.TOP -> top = sizeDp
+                        PaddingValue.BOTTOM -> bottom = sizeDp
+                        PaddingValue.START -> start = sizeDp
+                        PaddingValue.END -> end = sizeDp
+                    }
+                    showDialogForPaddingValue = null
+                }
+            },
+            dismissLabel = stringRes(R.string.action__cancel),
+            onDismiss = {
+                showDialogForPaddingValue = null
+            },
+        ) {
+            Column {
+                JetPrefTextField(
+                    value = size,
+                    onValueChange = { size = it },
+                )
+                Validation(showValidationErrors, sizeValidation)
+                FlorisTextButton(
+                    onClick = {
+                        if (sizeValidation.isInvalid()) {
+                            showValidationErrors = true
+                        } else {
+                            val sizeDp = size.toFloat().dp
+                            top = sizeDp
+                            bottom = sizeDp
+                            start = sizeDp
+                            end = sizeDp
+                            showDialogForPaddingValue = null
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.End),
+                    text = "Apply for all",
+                )
+            }
+        }
+    }
+}
 
 @Composable
 private fun ShapeValueEditor(
