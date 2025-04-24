@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
@@ -56,7 +57,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -97,10 +97,13 @@ import kotlinx.coroutines.isActive
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.abs
 import kotlin.math.sqrt
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextKeyboardLayout(
@@ -294,7 +297,7 @@ fun TextKeyboardLayout(
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, evaluator, fontSizeMultiplier,
+                textKey, evaluator,
                 debugShowTouchBoundaries,
             )
         }
@@ -315,7 +318,6 @@ fun TextKeyboardLayout(
 private fun TextKeyButton(
     key: TextKey,
     evaluator: ComputingEvaluator,
-    fontSizeMultiplier: Float,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
     val attributes = mapOf(
@@ -327,32 +329,28 @@ private fun TextKeyButton(
         key.isPressed -> SnyggSelector.PRESSED
         else -> SnyggSelector.NONE
     }
-    val keyStyle = rememberSnyggThemeQuery(
+//    val keyStyle = rememberSnyggThemeQuery(
+//        FlorisImeUi.Key.elementName,
+//        attributes = attributes,
+//        selector = selector,
+//    )
+//    val fontSize = keyStyle.fontSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
+//        KeyCode.VIEW_CHARACTERS,
+//        KeyCode.VIEW_SYMBOLS,
+//        KeyCode.VIEW_SYMBOLS2 -> 0.80f
+//        KeyCode.VIEW_NUMERIC,
+//        KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
+//        else -> 1.0f
+//    }
+    val size = key.visibleBounds.size.toDpSize()
+    SnyggBox(
         FlorisImeUi.Key.elementName,
         attributes = attributes,
         selector = selector,
-    )
-    val fontSize = keyStyle.fontSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
-        KeyCode.VIEW_CHARACTERS,
-        KeyCode.VIEW_SYMBOLS,
-        KeyCode.VIEW_SYMBOLS2 -> 0.80f
-        KeyCode.VIEW_NUMERIC,
-        KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
-        else -> 1.0f
-    }
-    val size = key.visibleBounds.size.toDpSize()
-    Box(
         modifier = Modifier
             .requiredSize(size)
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
     ) {
-        SnyggBox(
-            FlorisImeUi.Key.elementName,
-            attributes = attributes,
-            selector = selector,
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { }
         val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             var customLabel = label
@@ -365,57 +363,62 @@ private fun TextKeyButton(
                     SpaceBarMode.SPACE_BAR_KEY -> customLabel = "␣"
                 }
             }
-            Text(
+            SnyggText(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = customLabel,
-                color = keyStyle.foreground(),
-                fontSize = fontSize,
-                maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
-                softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
-                overflow = when (key.computedData.code) {
-                    KeyCode.SPACE -> TextOverflow.Ellipsis
-                    else -> TextOverflow.Visible
-                },
+//                color = keyStyle.foreground(),
+//                fontSize = fontSize,
+//                maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
+//                softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
+//                overflow = when (key.computedData.code) {
+//                    KeyCode.SPACE -> TextOverflow.Ellipsis
+//                    else -> TextOverflow.Visible
+//                },
             )
         }
         key.hintedLabel?.let { hintedLabel ->
-            val keyHintStyle = rememberSnyggThemeQuery(
-                FlorisImeUi.KeyHint.elementName,
-                attributes = mapOf(
-                    FlorisImeUi.Attr.Code to key.computedData.code,
-                    FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.value,
-                ),
-                selector = when {
-                    key.isPressed -> SnyggSelector.PRESSED
-                    else -> null
-                },
-            )
-            val hintFontSize = keyHintStyle.fontSize() safeTimes fontSizeMultiplier
-            Text(
+//            val keyHintStyle = rememberSnyggThemeQuery(
+//                FlorisImeUi.KeyHint.elementName,
+//                attributes = mapOf(
+//                    FlorisImeUi.Attr.Code to key.computedData.code,
+//                    FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.value,
+//                ),
+//                selector = when {
+//                    key.isPressed -> SnyggSelector.PRESSED
+//                    else -> null
+//                },
+//            )
+//            val hintFontSize = keyHintStyle.fontSize() safeTimes fontSizeMultiplier
+            SnyggText(
+                elementName = FlorisImeUi.KeyHint.elementName,
+                attributes = attributes,
+                selector = selector,
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-                    .background(keyHintStyle.background())
-                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
+                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd),
                 text = hintedLabel,
-                color = keyHintStyle.foreground(),
-                fontFamily = FontFamily.Monospace,
-                fontSize = hintFontSize,
-                maxLines = 1,
-                softWrap = false,
-                overflow = TextOverflow.Visible,
             )
+//            Text(
+//                modifier = Modifier
+//                    .wrapContentSize()
+//                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
+//                    .background(keyHintStyle.background())
+//                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
+//                text = hintedLabel,
+//                color = keyHintStyle.foreground(),
+//                fontSize = hintFontSize,
+//                maxLines = 1,
+//                softWrap = false,
+//                overflow = TextOverflow.Visible,
+//            )
         }
         key.foregroundImageVector?.let { imageVector ->
-            Icon(
-                modifier = Modifier
-                    .requiredSize(fontSize.toDp() * 1.1f)
-                    .align(Alignment.Center),
+            SnyggIcon(
+                modifier = Modifier.align(Alignment.Center),
                 imageVector = imageVector,
                 contentDescription = null,
-                tint = keyStyle.foreground(),
             )
         }
     }

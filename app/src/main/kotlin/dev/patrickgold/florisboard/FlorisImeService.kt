@@ -747,7 +747,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
                     SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
                         SnyggRow(
-                            elementName = null,
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {

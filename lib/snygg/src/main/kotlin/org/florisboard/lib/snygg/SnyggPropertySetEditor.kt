@@ -20,6 +20,7 @@ import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +38,7 @@ import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
@@ -222,6 +224,10 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
 
     fun dynamicDarkColor(name: String): SnyggDynamicDarkColorValue {
         return SnyggDynamicDarkColorValue(name)
+    }
+
+    fun genericFontFamily(fontFamily: FontFamily): SnyggGenericFontFamilyValue {
+        return SnyggGenericFontFamilyValue(fontFamily)
     }
 
     fun fontStyle(fontStyle: FontStyle): SnyggFontStyleValue {

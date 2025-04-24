@@ -64,7 +64,6 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggText(
-                elementName = null,
                 modifier = Modifier.clickable(false) {},
                 text = stringRes(R.string.select_subtype_panel__header),
             )

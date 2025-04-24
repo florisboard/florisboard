@@ -19,7 +19,6 @@ package org.florisboard.lib.snygg.value
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import org.florisboard.lib.color.ColorPalette
 import org.florisboard.lib.snygg.value.SnyggFontValue.Companion.FontNameRegex
 
 sealed interface SnyggFontValue : SnyggValue {
@@ -53,7 +52,7 @@ data class SnyggCustomFontFamilyValue(val fontName: String) : SnyggFontValue {
             string(id = EnclosedFontNameId, regex = FontNameRegex)
         }
 
-        override fun defaultValue() = SnyggDynamicLightColorValue(ColorPalette.Primary.id)
+        override fun defaultValue() = SnyggCustomFontFamilyValue("")
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggCustomFontFamilyValue)

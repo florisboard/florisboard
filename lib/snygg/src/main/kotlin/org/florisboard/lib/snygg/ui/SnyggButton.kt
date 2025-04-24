@@ -29,7 +29,7 @@ import org.florisboard.lib.snygg.SnyggSelector
 
 @Composable
 fun SnyggButton(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

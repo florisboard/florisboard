@@ -174,10 +174,7 @@ fun EmojiPaletteView(
 
     @Composable
     fun GridHeader(text: String) {
-        SnyggText(
-            elementName = null,
-            text = text,
-        )
+        SnyggText(text = text)
     }
 
     @Composable
@@ -513,7 +510,6 @@ private fun EmojiHistoryPopup(
                 .padding(all = 4.dp),
         ) {
             SnyggIcon(
-                elementName = null,
                 modifier = Modifier.align(Alignment.Center),
                 imageVector = icon,
             )

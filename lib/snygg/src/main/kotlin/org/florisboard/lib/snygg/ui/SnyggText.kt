@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -32,7 +33,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggText(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
@@ -90,6 +91,7 @@ private fun SimpleSnyggText() {
             textDecorationLine = textDecorationLine(TextDecoration.LineThrough)
         }
         "preview-text"("long" to listOf(1)) {
+            fontFamily = genericFontFamily(FontFamily.Serif)
             fontSize = fontSize(10.sp)
             lineClamp = lineClampMax(1)
             textOverflow = textOverflow(TextOverflow.Ellipsis)

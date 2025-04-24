@@ -57,7 +57,6 @@ fun PopupBaseBox(
     ) {
         key.label?.let { label ->
             SnyggBox(
-                elementName = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(key.visibleBounds.height.toDp())
@@ -117,14 +116,12 @@ fun PopupExtBox(
                     ) {
                         element.label?.let { label ->
                             SnyggText(
-                                elementName = null,
                                 modifier = Modifier.align(Alignment.Center),
                                 text = label,
                             )
                         }
                         element.icon?.let { icon ->
                             SnyggIcon(
-                                elementName = null,
                                 modifier = Modifier.align(Alignment.Center),
                                 imageVector = icon,
                             )

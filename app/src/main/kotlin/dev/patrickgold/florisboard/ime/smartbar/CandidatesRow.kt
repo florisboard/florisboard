@@ -181,10 +181,7 @@ private fun CandidateItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (candidate.icon != null) {
-            SnyggIcon(
-                elementName = null,
-                imageVector = candidate.icon!!,
-            )
+            SnyggIcon(imageVector = candidate.icon!!)
         }
         Column(
             modifier = if (displayMode == CandidatesDisplayMode.CLASSIC) Modifier.weight(1f) else Modifier,

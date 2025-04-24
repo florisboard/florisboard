@@ -31,20 +31,13 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -54,9 +47,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -73,12 +64,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDirection
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -90,14 +75,12 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.safeTimes
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
@@ -106,7 +89,6 @@ import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
-import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -114,9 +96,6 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggShadow
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -148,15 +127,15 @@ fun ClipboardInputLayout(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(null,
+            SnyggIconButton(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             )
-            SnyggText(null,
+            SnyggText(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
             )
-            SnyggIconButton(null,
+            SnyggIconButton(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier.autoMirrorForRtl(),
                 imageVector = if (historyEnabled) {
@@ -166,13 +145,13 @@ fun ClipboardInputLayout(
                 },
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             )
-            SnyggIconButton(null,
+            SnyggIconButton(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier.autoMirrorForRtl(),
                 imageVector = Icons.Default.ClearAll,
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
-            SnyggIconButton(null,
+            SnyggIconButton(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
@@ -229,7 +208,7 @@ fun ClipboardInputLayout(
                         contentScale = ContentScale.FillWidth,
                     )
                 } else {
-                    SnyggText(null,
+                    SnyggText(
                         modifier = Modifier.fillMaxWidth(),
                         text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
                     )
@@ -271,7 +250,7 @@ fun ClipboardInputLayout(
                         tint = Color.Black,
                     )
                 } else {
-                    SnyggText(null,
+                    SnyggText(
                         modifier = Modifier.fillMaxWidth(),
                         text = bitmap.exceptionOrNull()?.message ?: "Unknown error",
                     )
@@ -280,7 +259,7 @@ fun ClipboardInputLayout(
                 val text = item.stringRepresentation()
                 Column {
                     ClipTextItemDescription(text)
-                    SnyggText(null,
+                    SnyggText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this },
@@ -297,7 +276,7 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
         ) {
             val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
-            SnyggColumn(null,
+            SnyggColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .alpha(historyAlpha)
@@ -335,7 +314,7 @@ fun ClipboardInputLayout(
                 }
             }
             if (popupItem != null) {
-                SnyggRow(null,
+                SnyggRow(
                     modifier = Modifier
                         .fillMaxSize()
                         .pointerInput(Unit) {
@@ -383,7 +362,7 @@ fun ClipboardInputLayout(
                 }
             }
             if (showClearAllHistory) {
-                SnyggRow(null,
+                SnyggRow(
                     modifier = Modifier
                         .fillMaxSize()
                         .pointerInput(Unit) {
@@ -392,25 +371,25 @@ fun ClipboardInputLayout(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
-                    SnyggColumn(null,
+                    SnyggColumn(
                         modifier = Modifier
                             .pointerInput(Unit) {
                                 detectTapGestures { /* Do nothing */ }
                             },
                     ) {
-                        SnyggText(null,
+                        SnyggText(
                             modifier = Modifier.padding(all = 16.dp),
                             text = stringRes(R.string.clipboard__confirm_clear_history__message),
                         )
-                        SnyggRow(null) {
+                        SnyggRow {
                             Spacer(modifier = Modifier.weight(1f))
-                            SnyggButton(null,
+                            SnyggButton(
                                 onClick = {
                                     showClearAllHistory = false
                                 },
                                 text = stringRes(R.string.action__no),
                             )
-                            SnyggButton(null,
+                            SnyggButton(
                                 onClick = {
                                     clipboardManager.clearHistory()
                                     context.showShortToast(R.string.clipboard__cleared_history)
@@ -431,10 +410,10 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SnyggText(null,
+            SnyggText(
                 text = stringRes(R.string.clipboard__empty__title),
             )
-            SnyggText(null,
+            SnyggText(
                 text = stringRes(R.string.clipboard__empty__message),
             )
         }
@@ -445,11 +424,11 @@ fun ClipboardInputLayout(
         SnyggColumn(FlorisImeUi.ClipboardContent.elementName,
             modifier = Modifier.fillMaxSize(),
         ) {
-            SnyggText(null,
+            SnyggText(
                 modifier = Modifier.padding(bottom = 8.dp),
                 text = stringRes(R.string.clipboard__disabled__title),
             )
-            SnyggText(null,
+            SnyggText(
                 text = stringRes(R.string.clipboard__disabled__message),
             )
             SnyggButton(FlorisImeUi.ClipboardEnableHistoryButton.elementName,
@@ -465,16 +444,16 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            SnyggText(null,
+            SnyggText(
                 text = stringRes(R.string.clipboard__locked__title),
             )
-            SnyggText(null,
+            SnyggText(
                 text = stringRes(R.string.clipboard__locked__message),
             )
         }
     }
 
-    SnyggColumn(null,
+    SnyggColumn(
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.imeUiHeight()),
@@ -533,14 +512,14 @@ private fun ClipTextItemDescription(
         }
     }
     if (iconId != null && description != null) {
-        SnyggRow(null,
+        SnyggRow(
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIcon(null,
+            SnyggIcon(
                 painter = painterResource(id = iconId),
             )
-            SnyggText(null,
+            SnyggText(
                 modifier = Modifier.weight(1f),
                 text = description,
             )

@@ -34,7 +34,7 @@ import org.florisboard.lib.snygg.value.SnyggUriValue
 
 @Composable
 fun SnyggBox(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,

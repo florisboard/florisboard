@@ -55,7 +55,6 @@ fun TextInputLayout(
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         SnyggColumn(
-            elementName = null,
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -64,7 +63,7 @@ fun TextInputLayout(
             if (state.isActionsOverflowVisible) {
                 QuickActionsOverflowPanel()
             } else {
-                SnyggBox(null) {
+                SnyggBox {
                     val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.observeAsState()
                     val showIncognitoIcon = evaluator.state.isIncognitoMode &&
                         incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD

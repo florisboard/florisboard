@@ -133,21 +133,14 @@ fun QuickActionButton(
                                 evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
                             }
                             if (imageVector != null) {
-                                SnyggIcon(
-                                    elementName = null,
-                                    imageVector = imageVector,
-                                )
+                                SnyggIcon(imageVector = imageVector)
                             } else if (label != null) {
-                                SnyggText(
-                                    elementName = null,
-                                    text = label,
-                                )
+                                SnyggText(text = label)
                             }
                         }
 
                         is QuickAction.InsertText -> {
                             SnyggText(
-                                elementName = null,
                                 text = action.data.firstOrNull().toString().ifBlank { "?" },
                             )
                         }
@@ -157,7 +150,6 @@ fun QuickActionButton(
                 // Render additional info if this is a tile
                 if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                     SnyggText(
-                        elementName = null,
                         text = action.computeDisplayName(evaluator = evaluator),
                     )
                 }

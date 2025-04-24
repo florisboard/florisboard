@@ -244,14 +244,12 @@ fun QuickActionsEditorPanel() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIconButton(
-                elementName = null,
                 onClick = {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
             )
             SnyggText(
-                elementName = null,
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
             )

@@ -39,7 +39,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggIconButton(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
@@ -76,7 +76,7 @@ fun SnyggIconButton(
 
 @Composable
 fun SnyggIconButton(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
@@ -108,7 +108,7 @@ fun SnyggIconButton(
 
 @Composable
 fun SnyggIconButton(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
@@ -140,7 +140,7 @@ fun SnyggIconButton(
 
 @Composable
 fun SnyggIconButton(
-    elementName: String?,
+    elementName: String? = null,
     attributes: Map<String, Int> = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
