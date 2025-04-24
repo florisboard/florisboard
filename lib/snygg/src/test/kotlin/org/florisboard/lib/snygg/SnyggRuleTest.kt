@@ -5,131 +5,89 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class SnyggRuleTest {
-    private val testRule: SnyggRule = SnyggElementRule(
-        name = "smartbar",
-        attributes = SnyggAttributes(mapOf(
-            "code" to listOf(0, 1, 2, 3, 4, 5),
-            "group" to listOf(0, 2, 3, 4),
-            "shift" to listOf(0, 2, 4),
-            "test" to listOf(0, 1),
-        )),
-        selector = SnyggSelector.PRESSED,
-    )
-
-    private val testFontRule: SnyggRule = SnyggAnnotationRule.Font(
-        fontName = "My Comic Sans"
-    )
-
-    @Test
-    fun `test toString`() {
-        assertEquals("smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed", testRule.toString())
-        assertEquals("@defines", SnyggAnnotationRule.Defines.toString())
-        assertEquals("@font `My Comic Sans`", testFontRule.toString())
-    }
-
-    @Test
-    fun `test fromOrNull`() {
-        assertEquals(testRule, SnyggRule.fromOrNull("smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed"))
-    }
-
-    @Test
-    fun `test fromOrNull elementName = smartbar`() {
-        assertEquals(SnyggElementRule("smartbar"), SnyggRule.fromOrNull("smartbar"))
-    }
-
-    @Test
-    fun `test fromOrNull attributes duplicate entries`() {
-        assertEquals(SnyggElementRule("smartbar", SnyggAttributes.of("code" to listOf(-1826))), SnyggRule.fromOrNull("smartbar[code=-1826,-1826,-1826,-1826]"))
-    }
-
-    @Test
-    fun `test fromOrNull annotation`() {
-        assertEquals(SnyggAnnotationRule.Defines, SnyggRule.fromOrNull("@defines"))
-    }
-
-    @Test
-    fun `test rule ordering`() {
-        val ruleList = listOf(
-            SnyggAnnotationRule.Defines to
-                SnyggElementRule("test"),
-            SnyggAnnotationRule.Font(fontName = "Comic Sans") to
-                SnyggElementRule("test"),
-            SnyggAnnotationRule.Defines to
-                SnyggAnnotationRule.Font(fontName = "Comic Sans"),
-            SnyggAnnotationRule.Font(fontName = "Arial") to
-                SnyggAnnotationRule.Font(fontName = "Comic Sans"),
-            SnyggElementRule(name = "a-test") to
-                SnyggElementRule(name = "b-test"),
-            SnyggElementRule(name = "test") to
-                SnyggElementRule(name = "test", selector = SnyggSelector.PRESSED),
-            SnyggElementRule(name = "test") to
-                SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS),
-            SnyggElementRule(name = "test") to
-                SnyggElementRule(name = "test", selector = SnyggSelector.HOVER),
-            SnyggElementRule(name = "test") to
-                SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
-            SnyggElementRule(name = "test", selector = SnyggSelector.PRESSED) to
-                SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS),
-            SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS) to
-                SnyggElementRule(name = "test", selector = SnyggSelector.HOVER),
-            SnyggElementRule(name = "test", selector = SnyggSelector.HOVER) to
-                SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
-            SnyggElementRule(name = "test") to
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(11))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10, 11))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("group" to listOf(10))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(11))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(0))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(1))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(0))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(1))),
-            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),),
-            SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
+    @Nested
+    inner class Serialization {
+        val validRules = listOf(
+            "@defines" to SnyggAnnotationRule.Defines,
+            "@font `Test`" to SnyggAnnotationRule.Font("Test"),
+            "@font `Comic Sans`" to SnyggAnnotationRule.Font("Comic Sans"),
+            "elem" to SnyggElementRule(
+                name = "elem",
+            ),
+            "elem-with-hyphens" to SnyggElementRule(
+                name = "elem-with-hyphens",
+            ),
+            "elem[code=1]" to SnyggElementRule(
+                name = "elem",
+                attributes = SnyggAttributes.of("code" to listOf(1)),
+            ),
+            "elem[code=1,3..6,`str`]" to SnyggElementRule(
+                name = "elem",
+                attributes = SnyggAttributes.of("code" to listOf(1,3,4,5,6,"str")),
+            ),
+            "elem[code=-200,10,`str`]" to SnyggElementRule(
+                name = "elem",
+                attributes = SnyggAttributes.of("code" to listOf(-200,10,"str")),
+            ),
+            "elem[code=`str with spaces`]" to SnyggElementRule(
+                name = "elem",
+                attributes = SnyggAttributes.of("code" to listOf("str with spaces")),
+            ),
+            "elem[code=1]:pressed" to SnyggElementRule(
+                name = "elem",
+                attributes = SnyggAttributes.of("code" to listOf(1)),
+                selector = SnyggSelector.PRESSED,
+            ),
+            "elem:pressed" to SnyggElementRule(
+                name = "elem",
+                selector = SnyggSelector.PRESSED,
+            ),
+            "elem:focus" to SnyggElementRule(
+                name = "elem",
+                selector = SnyggSelector.FOCUS,
+            ),
+            "elem:hover" to SnyggElementRule(
+                name = "elem",
+                selector = SnyggSelector.HOVER,
+            ),
+            "elem:disabled" to SnyggElementRule(
+                name = "elem",
+                selector = SnyggSelector.DISABLED,
+            ),
+            "smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed" to SnyggElementRule(
+                name = "smartbar",
+                attributes = SnyggAttributes.of(
+                    "code" to listOf(0, 1, 2, 3, 4, 5),
+                    "group" to listOf(0, 2, 3, 4),
+                    "shift" to listOf(0, 2, 4),
+                    "test" to listOf(0, 1),
+                ),
+                selector = SnyggSelector.PRESSED,
+            ),
         )
-        assertAll(ruleList.map { (lowerRule, upperRule) -> {
-            assertTrue("$lowerRule should be less than $upperRule") { lowerRule < upperRule }
-            assertFalse("$lowerRule should not be greater than $upperRule") { lowerRule > upperRule }
-            assertTrue("$upperRule should be greater than $lowerRule") { upperRule > lowerRule }
-            assertFalse("$upperRule should not be less than $lowerRule") { upperRule < lowerRule }
-        } })
-    }
 
-    @Test
-    fun `test rule equality`() {
-        val ruleList = listOf(
-            SnyggElementRule("smartbar") to
-                SnyggElementRule("smartbar"),
-            SnyggElementRule("smartbar") to
-                SnyggElementRule("smartbar", SnyggAttributes(), SnyggSelector.NONE)
+        val validNonOrderedAttributes = listOf(
+            // non-ordered to ordered output
+            "elem[code=2,1]" to "elem[code=1,2]",
+            "elem[code=`str`,1]" to "elem[code=1,`str`]",
+            "elem[code=2,`str`,1]" to "elem[code=1,2,`str`]",
+            "elem[code=1,2,3]" to "elem[code=1..3]",
+            "elem[code=1..1]" to "elem[code=1]",
+            "elem[code=1..0]" to "elem",
+            "elem[code=6..2]" to "elem",
+            "elem[b=1][a=1]" to "elem[a=1][b=1]",
+            "elem[a=1][a=2]" to "elem[a=1,2]",
+            "elem[a=1,5][a=3,5]" to "elem[a=1,3,5]",
+            "elem[a=`str`,1][a=2,1]" to "elem[a=1,2,`str`]",
         )
-        assertAll(ruleList.map { (leftRule, rightRule) -> {
-            assertTrue { leftRule == rightRule }
-            assertTrue { leftRule.compareTo(rightRule) == 0 }
-        } })
-    }
 
-    @Test
-    fun `test direct invalid input`(){
-        assertFails { SnyggElementRule("@") }
-        assertFails { SnyggElementRule("button_name") }
-    }
-
-    @Test
-    fun `test fromOrNull with invalid input`() {
-        val invalidInput = listOf(
+        val invalidRules = listOf(
             "",
             " ",
             "button_name",
@@ -137,6 +95,7 @@ class SnyggRuleTest {
             "#button",
             "[code=1]",
             "button#id",
+            "button[]",
             "button[code=]",
             "button[group]",
             "button[mode=normal]",
@@ -147,30 +106,145 @@ class SnyggRuleTest {
             "smartbar::",
             "smartbar:",
             "smartbar[code=]",
+            "smartbar[code=,]",
+            "smartbar[code='string']",
+            "smartbar[code=\"string\"]",
             "smartbar[&=0..5]",
             "smart.bar",
+            ":pressed",
             "@defines:pressed",
             "\$paragraph",
             "@",
             "@defines:pressed",
             "@defines[code=-1826,-1826,-1826,-1826]",
+            "@font",
+            "@font ",
+            "@font ``",
+            "@font ''",
+            "@font \"\"",
+            "@font \"test\"",
+            "@font(`Test`)",
         )
-        invalidInput.forEach { input ->
-            assertNull(SnyggRule.fromOrNull(input))
+
+        @Test
+        fun `serialize valid rules succeeds`() {
+            assertAll(validRules.map { (expectedRaw, rule) -> {
+                assertEquals(expectedRaw, rule.toString())
+            } })
+        }
+
+        @Test
+        fun `deserialize valid rules succeeds`() {
+            assertAll(validRules.map { (raw, expectedRule) -> {
+                val actualRule = SnyggRule.fromOrNull(raw)
+                assertNotNull(actualRule)
+                assertEquals(expectedRule::class, actualRule::class)
+                assertEquals(expectedRule, actualRule)
+            } })
+        }
+
+        @Test
+        fun `deserialize non-ordered attributes serializes to ordered`() {
+            assertAll(validNonOrderedAttributes.map { (nonOrderedRaw, orderedRaw) -> {
+                assertEquals(orderedRaw, SnyggRule.fromOrNull(nonOrderedRaw)?.toString())
+            } })
+        }
+
+        @Test
+        fun `deserialize invalid rules fails`() {
+            assertAll(invalidRules.map { raw -> {
+                assertNull(SnyggRule.fromOrNull(raw))
+            } })
         }
     }
 
-    @Test
-    fun `test constructor with invalid element name`() {
-        assertThrows<IllegalArgumentException> {
-            SnyggElementRule("not so valid !!!!!")
+    @Nested
+    inner class Semantics {
+        @Test
+        fun `rule ordering`() {
+            val ruleList = listOf(
+                SnyggAnnotationRule.Defines to
+                    SnyggElementRule("test"),
+                SnyggAnnotationRule.Font(fontName = "Comic Sans") to
+                    SnyggElementRule("test"),
+                SnyggAnnotationRule.Defines to
+                    SnyggAnnotationRule.Font(fontName = "Comic Sans"),
+                SnyggAnnotationRule.Font(fontName = "Arial") to
+                    SnyggAnnotationRule.Font(fontName = "Comic Sans"),
+                SnyggElementRule(name = "a-test") to
+                    SnyggElementRule(name = "b-test"),
+                SnyggElementRule(name = "test") to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.PRESSED),
+                SnyggElementRule(name = "test") to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS),
+                SnyggElementRule(name = "test") to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.HOVER),
+                SnyggElementRule(name = "test") to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
+                SnyggElementRule(name = "test", selector = SnyggSelector.PRESSED) to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS),
+                SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS) to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.HOVER),
+                SnyggElementRule(name = "test", selector = SnyggSelector.HOVER) to
+                    SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
+                SnyggElementRule(name = "test") to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(11))),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10, 11))),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("group" to listOf(10))),
+                SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(10))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(11))),
+                SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(0))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(1))),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(0))) to
+                    SnyggElementRule(
+                        name = "test",
+                        SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(1))
+                    ),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),),
+                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
+            )
+            assertAll(ruleList.map { (lowerRule, upperRule) ->
+                {
+                    assertTrue("$lowerRule should be less than $upperRule") { lowerRule < upperRule }
+                    assertFalse("$lowerRule should not be greater than $upperRule") { lowerRule > upperRule }
+                    assertTrue("$upperRule should be greater than $lowerRule") { upperRule > lowerRule }
+                    assertFalse("$upperRule should not be less than $lowerRule") { upperRule < lowerRule }
+                }
+            })
+        }
+
+        @Test
+        fun `rule equality`() {
+            val ruleList = listOf(
+                SnyggElementRule("smartbar") to
+                    SnyggElementRule("smartbar"),
+                SnyggElementRule("smartbar") to
+                    SnyggElementRule("smartbar", SnyggAttributes(), SnyggSelector.NONE)
+            )
+            assertAll(ruleList.map { (leftRule, rightRule) -> {
+                assertTrue { leftRule == rightRule }
+                assertTrue { leftRule.compareTo(rightRule) == 0 }
+            } })
+        }
+
+        @Test
+        fun `element rule constructor with invalid name fails`() {
+            assertThrows<IllegalArgumentException> {
+                SnyggElementRule("not so valid !!!!!")
+            }
         }
     }
 
     @Nested
     inner class AttributesCopyHelpers {
         @Test
-        fun `Attributes including`() = with(SnyggAttributes.Companion) {
+        fun `copy including`() = with(SnyggAttributes.Companion) {
             val expectedToActual = listOf(
                 of() to of().including(),
                 of("test" to listOf(1)) to of().including("test" to 1),
@@ -179,6 +253,7 @@ class SnyggRuleTest {
                 of("multiple" to listOf(1,2,3)) to of("multiple" to listOf(1,3)).including("multiple" to 2),
                 of("multiple" to listOf(1,2,3)) to of().including("multiple" to 2, "multiple" to 3, "multiple" to 1),
                 of("a" to listOf(-1), "b" to listOf(-44)) to of("b" to listOf(-44)).including("a" to -1),
+                of("a" to listOf(1, "test"), "b" to listOf(4)) to of("b" to listOf(4)).including("a" to 1, "a" to "test"),
             )
             assertAll(expectedToActual.map { (expected, actual) -> {
                 assertEquals(expected, actual)
@@ -186,7 +261,7 @@ class SnyggRuleTest {
         }
 
         @Test
-        fun `Attributes excluding`() = with(SnyggAttributes.Companion) {
+        fun `copy excluding`() = with(SnyggAttributes.Companion) {
             val expectedToActual = listOf(
                 of() to of().excluding(),
                 of("a" to listOf(1)) to of("a" to listOf(1)).excluding("b" to 1),
@@ -200,7 +275,7 @@ class SnyggRuleTest {
         }
 
         @Test
-        fun `Attributes toggling`() = with(SnyggAttributes.Companion) {
+        fun `copy toggling`() = with(SnyggAttributes.Companion) {
             val expectedToActual = listOf(
                 of() to of().toggling(),
                 of() to of("test" to listOf(1)).toggling("test" to 1),

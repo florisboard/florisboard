@@ -34,13 +34,14 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggIconButton(
     elementName: String? = null,
-    attributes: Map<String, Int> = emptyMap(),
+    attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
@@ -77,7 +78,7 @@ fun SnyggIconButton(
 @Composable
 fun SnyggIconButton(
     elementName: String? = null,
-    attributes: Map<String, Int> = emptyMap(),
+    attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
@@ -109,7 +110,7 @@ fun SnyggIconButton(
 @Composable
 fun SnyggIconButton(
     elementName: String? = null,
-    attributes: Map<String, Int> = emptyMap(),
+    attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
@@ -141,7 +142,7 @@ fun SnyggIconButton(
 @Composable
 fun SnyggIconButton(
     elementName: String? = null,
-    attributes: Map<String, Int> = emptyMap(),
+    attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,

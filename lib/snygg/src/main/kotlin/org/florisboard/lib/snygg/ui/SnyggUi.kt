@@ -143,7 +143,7 @@ fun ProvideSnyggTheme(
 @Composable
 internal fun ProvideSnyggStyle(
     elementName: String?,
-    attributes: Map<String, Int>,
+    attributes: SnyggQueryAttributes,
     selector: SnyggSelector?,
     content: @Composable (style: SnyggPropertySet) -> Unit
 ) {

@@ -47,7 +47,7 @@ import java.io.File
  */
 private typealias CompiledStyleData = Map<String, List<Pair<SnyggElementRule, SnyggPropertySet>>>
 
-typealias SnyggQueryAttributes = Map<String, Int>
+typealias SnyggQueryAttributes = Map<String, Any>
 
 private typealias CompiledFontFamilyData = Map<String, FontFamily>
 
@@ -162,7 +162,7 @@ private fun SnyggElementRule.isMatchForQuery(
 
 private fun SnyggAttributes.isMatchForQuery(query: SnyggQueryAttributes): Boolean {
     for ((attrKey, attrValues) in this) {
-        val queryValue = query[attrKey] ?: return false
+        val queryValue = query[attrKey]?.toString() ?: return false
         if (!attrValues.contains(queryValue)) {
             return false
         }

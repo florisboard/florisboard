@@ -25,13 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 @Composable
 fun SnyggSpacer(
     elementName: String? = null,
-    attributes: Map<String, Int> = emptyMap(),
+    attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
 ) {

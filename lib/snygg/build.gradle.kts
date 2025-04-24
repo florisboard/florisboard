@@ -65,6 +65,7 @@ android {
         freeCompilerArgs = listOf(
             "-Xconsistent-data-class-copy-visibility",
             "-Xwhen-guards",
+            "-XXLanguage:+BreakContinueInInlineLambdas",
         )
     }
 }

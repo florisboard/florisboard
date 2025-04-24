@@ -25,12 +25,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 
 @Composable
 fun SnyggButton(
     elementName: String? = null,
-    attributes: Map<String, Int> = emptyMap(),
+    attributes: SnyggQueryAttributes = emptyMap(),
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: Painter? = null,
