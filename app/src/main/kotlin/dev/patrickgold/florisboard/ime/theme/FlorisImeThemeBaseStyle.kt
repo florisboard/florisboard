@@ -67,7 +67,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     }
     FlorisImeUi.Key.elementName(
         FlorisImeUi.Attr.Code to listOf(KeyCode.SHIFT),
-        FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.value),
+        FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.attrName()),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }

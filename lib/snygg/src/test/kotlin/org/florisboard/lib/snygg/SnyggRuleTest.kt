@@ -81,6 +81,7 @@ class SnyggRuleTest {
             "elem[code=1..1]" to "elem[code=1]",
             "elem[code=1..0]" to "elem",
             "elem[code=6..2]" to "elem",
+            "elem[code=`6`]" to "elem[code=6]",
             "elem[b=1][a=1]" to "elem[a=1][b=1]",
             "elem[a=1][a=2]" to "elem[a=1,2]",
             "elem[a=1,5][a=3,5]" to "elem[a=1,3,5]",

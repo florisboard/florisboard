@@ -260,7 +260,7 @@ internal fun EditRuleDialog(
                 val codes = remember(currentRule) {
                     attributes[FlorisImeUi.Attr.Code] ?: emptyList()
                 }
-                var editCodeDialogValue by rememberSaveable { mutableStateOf<Int?>(null) }
+                var editCodeDialogValue by rememberSaveable { mutableStateOf<String?>(null) }
                 val initCodeValue = editCodeDialogValue
                 if (initCodeValue != null) {
                     EditCodeValueDialog(
@@ -283,7 +283,7 @@ internal fun EditRuleDialog(
                     text = stringRes(R.string.settings__theme_editor__rule_codes),
                     trailingIconTitle = {
                         FlorisIconButton(
-                            onClick = { editCodeDialogValue = KeyCode.UNSPECIFIED },
+                            onClick = { editCodeDialogValue = KeyCode.UNSPECIFIED.toString() },
                             modifier = Modifier.offset(x = 12.dp),
                             icon = Icons.Default.Add,
                         )
@@ -313,16 +313,16 @@ internal fun EditRuleDialog(
                 }
 
                 val shiftStateUnshifted = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.UNSHIFTED.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.UNSHIFTED.attrName()) == true
                 }
                 val shiftStateShiftedManual = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_MANUAL.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_MANUAL.attrName()) == true
                 }
                 val shiftStateShiftedAutomatic = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_AUTOMATIC.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_AUTOMATIC.attrName()) == true
                 }
                 val shiftStateCapsLock = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.CAPS_LOCK.value) == true
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.CAPS_LOCK.attrName()) == true
                 }
                 DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -330,12 +330,12 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.UNSHIFTED.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.UNSHIFTED.attrName()
                                     )
                                 )
                             },
                             text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.UNSHIFTED.name
+                                SnyggLevel.DEVELOPER -> InputShiftState.UNSHIFTED.attrName()
                                 else -> stringRes(R.string.enum__input_shift_state__unshifted)
                             },
                             selected = shiftStateUnshifted,
@@ -344,12 +344,12 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_MANUAL.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_MANUAL.attrName()
                                     )
                                 )
                             },
                             text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_MANUAL.name
+                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_MANUAL.attrName()
                                 else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
                             },
                             selected = shiftStateShiftedManual,
@@ -358,12 +358,12 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_AUTOMATIC.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_AUTOMATIC.attrName()
                                     )
                                 )
                             },
                             text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_AUTOMATIC.name
+                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_AUTOMATIC.attrName()
                                 else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
                             },
                             selected = shiftStateShiftedAutomatic,
@@ -372,12 +372,12 @@ internal fun EditRuleDialog(
                             onClick = {
                                 currentRule = copy(
                                     attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.CAPS_LOCK.value
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.CAPS_LOCK.attrName()
                                     )
                                 )
                             },
                             text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.CAPS_LOCK.name
+                                SnyggLevel.DEVELOPER -> InputShiftState.CAPS_LOCK.attrName()
                                 else -> stringRes(R.string.enum__input_shift_state__caps_lock)
                             },
                             selected = shiftStateCapsLock,
@@ -392,17 +392,17 @@ internal fun EditRuleDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EditCodeValueDialog(
-    codeValue: Int,
-    checkExisting: (Int) -> Boolean,
-    onAdd: (Int) -> Unit,
-    onDelete: (Int) -> Unit,
+    codeValue: String,
+    checkExisting: (String) -> Boolean,
+    onAdd: (String) -> Unit,
+    onDelete: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
     var inputCodeString by rememberSaveable(codeValue) {
-        val str = if (codeValue == 0) "" else codeValue.toString()
+        val str = if (codeValue == KeyCode.UNSPECIFIED.toString()) "" else codeValue.toString()
         mutableStateOf(str)
     }
     val textKeyData = remember(inputCodeString) {
@@ -478,14 +478,14 @@ private fun EditCodeValueDialog(
 
     JetPrefAlertDialog(
         title = stringRes(
-            if (codeValue == NATIVE_NULLPTR.toInt()) {
+            if (codeValue == KeyCode.UNSPECIFIED.toString()) {
                 R.string.settings__theme_editor__add_code
             } else {
                 R.string.settings__theme_editor__edit_code
             }
         ),
         confirmLabel = stringRes(
-            if (codeValue == NATIVE_NULLPTR.toInt()) {
+            if (codeValue == KeyCode.UNSPECIFIED.toString()) {
                 R.string.action__add
             } else {
                 R.string.action__apply
@@ -499,27 +499,27 @@ private fun EditCodeValueDialog(
                     showError = true
                 }
 
-                code == codeValue -> {
+                code.toString() == codeValue -> {
                     onDismiss()
                 }
 
-                checkExisting(code) -> {
+                checkExisting(code.toString()) -> {
                     errorId = R.string.settings__theme_editor__code_already_exists
                     showError = true
                 }
 
                 else -> {
-                    if (codeValue != NATIVE_NULLPTR.toInt()) {
+                    if (codeValue != KeyCode.UNSPECIFIED.toString()) {
                         onDelete(codeValue)
                     }
-                    onAdd(code)
+                    onAdd(code.toString())
                     onDismiss()
                 }
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
-        neutralLabel = if (codeValue != NATIVE_NULLPTR.toInt()) {
+        neutralLabel = if (codeValue != KeyCode.UNSPECIFIED.toString()) {
             stringRes(R.string.action__delete)
         } else {
             null

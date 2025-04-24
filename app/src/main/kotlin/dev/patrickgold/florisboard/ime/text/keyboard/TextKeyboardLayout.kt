@@ -322,7 +322,7 @@ private fun TextKeyButton(
 ) = with(LocalDensity.current) {
     val attributes = mapOf(
         FlorisImeUi.Attr.Code to key.computedData.code,
-        FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.value,
+        FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.attrName(),
     )
     val selector = when {
         !key.isEnabled -> SnyggSelector.DISABLED
