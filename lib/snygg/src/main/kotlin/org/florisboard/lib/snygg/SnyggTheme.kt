@@ -66,12 +66,8 @@ data class SnyggTheme internal constructor(
         dynamicLightColorScheme: ColorScheme,
         dynamicDarkColorScheme: ColorScheme,
     ): SnyggPropertySet {
-        val editor = SnyggPropertySetEditor()
-        val styleSets = style[elementName]
-        if (styleSets == null) {
-            editor.inheritImplicitly(parentStyle)
-            return editor.build()
-        }
+        val editor = SnyggPropertySetEditor().also { it.inheritImplicitly(parentStyle) }
+        val styleSets = style[elementName] ?: return editor.build()
         for ((rule, propertySet) in styleSets) {
             if (rule.isMatchForQuery(attributes, selector)) {
                 editor.applyAll(propertySet, parentStyle)

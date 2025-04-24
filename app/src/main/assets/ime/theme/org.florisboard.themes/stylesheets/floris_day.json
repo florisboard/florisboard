@@ -18,13 +18,15 @@
   },
 
   "keyboard": {
-    "background": "var(--background)"
+    "background": "var(--background)",
+    "foreground": "var(--on-background)"
   },
 
   "key": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
+    "line-clamp": "1",
     "shape": "var(--shape)",
     "shadow-elevation": "2dp"
   },
@@ -40,29 +42,45 @@
     "background": "var(--primary-variant)",
     "foreground": "var(--on-surface)"
   },
-  "key[code=-11][shiftstate=3]": {
-    "foreground": "var(--secondary)"
-  },
   "key[code=32]": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface-variant)",
+    "font-size": "12sp",
+    "text-overflow": "ellipsis"
+  },
+  "key[code=-11][shiftstate=`caps_lock`]": {
+    "foreground": "var(--secondary)"
+  },
+  "key[code=-201,-202,-203]": {
+    "font-size": "18sp"
+  },
+  "key[code=-204,-205]": {
     "font-size": "12sp"
+  },
+  "key[code=-205]": {
+    "line-clamp": "2"
   },
   "key-hint": {
     "background": "transparent",
     "foreground": "var(--on-surface-variant)",
-    "font-size": "12sp"
+    "font-family": "monospace",
+    "font-size": "12sp",
+    "line-clamp": "1",
+    "padding": "0dp 1dp 1dp 0dp"
   },
-  "key-popup": {
+  "key-popup-box": {
     "background": "#eeeeee",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
     "shape": "var(--shape)",
     "shadow-elevation": "2dp"
   },
-  "key-popup:focus": {
+  "key-popup-element:focus": {
     "background": "#bdbdbd",
-    "foreground": "var(--on-surface)"
+    "shape": "var(--shape)"
+  },
+  "key-popup-extended-indicator": {
+    "font-size": "16sp"
   },
 
   "smartbar-shared-actions-toggle": {

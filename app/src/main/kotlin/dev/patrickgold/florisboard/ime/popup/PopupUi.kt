@@ -21,12 +21,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,25 +31,21 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.compose.safeTimes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 @Composable
 fun PopupBaseBox(
     modifier: Modifier = Modifier,
     key: Key,
-    fontSizeMultiplier: Float,
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
-    val popupStyle = rememberSnyggThemeQuery(FlorisImeUi.KeyPopup.elementName)
-    val fontSize = popupStyle.fontSize() safeTimes fontSizeMultiplier
     SnyggBox(
-        elementName = FlorisImeUi.KeyPopup.elementName,
+        elementName = FlorisImeUi.KeyPopupBox.elementName,
         modifier = modifier,
     ) {
         key.label?.let { label ->
@@ -62,24 +55,17 @@ fun PopupBaseBox(
                     .height(key.visibleBounds.height.toDp())
                     .align(Alignment.TopCenter),
             ) {
-                Text(
+                SnyggText(
                     modifier = Modifier.align(Alignment.Center),
                     text = label,
-                    color = popupStyle.foreground(),
-                    fontSize = fontSize,
-                    maxLines = 1,
-                    softWrap = false,
                 )
             }
         }
         if (shouldIndicateExtendedPopups) {
-            Icon(
-                modifier = Modifier
-                    .requiredSize(fontSize.toDp() * 0.65f)
-                    .align(Alignment.CenterEnd),
+            SnyggIcon(
+                FlorisImeUi.KeyPopupExtendedIndicator.elementName,
+                modifier = Modifier.align(Alignment.CenterEnd),
                 imageVector = Icons.Default.MoreHoriz,
-                contentDescription = null,
-                tint = popupStyle.foreground(),
             )
         }
     }
@@ -94,9 +80,9 @@ fun PopupExtBox(
     elemHeight: Dp,
     activeElementIndex: Int,
 ): Unit = with(LocalDensity.current) {
-    SnyggColumn(FlorisImeUi.KeyPopup.elementName, modifier = modifier) {
+    SnyggColumn(FlorisImeUi.KeyPopupBox.elementName, modifier = modifier) {
         for (row in elements.asReversed()) {
-            Row(
+            SnyggRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .requiredHeight(elemHeight),
@@ -109,10 +95,9 @@ fun PopupExtBox(
                         null
                     }
                     SnyggBox(
-                        elementName = FlorisImeUi.KeyPopup.elementName,
+                        elementName = FlorisImeUi.KeyPopupElement.elementName,
                         selector = selector,
-                        modifier = Modifier
-                            .size(elemWidth, elemHeight),
+                        modifier = Modifier.size(elemWidth, elemHeight),
                     ) {
                         element.label?.let { label ->
                             SnyggText(

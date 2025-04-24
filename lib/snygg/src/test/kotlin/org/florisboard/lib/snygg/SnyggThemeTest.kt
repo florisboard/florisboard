@@ -372,5 +372,32 @@ class SnyggThemeTest {
             assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.shadowElevation)
             assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.shape)
         }
+
+        @Test
+        fun `child only selector declared inherit behavior`() {
+            val stylesheet = SnyggStylesheet.v2 {
+                "parent" {
+                    background = rgbaColor(30,0,0,0f)
+                    fontSize = fontSize(7.sp)
+                }
+                "child"(selector = SnyggSelector.FOCUS) {
+                    background = rgbaColor(42,0,0,0f)
+                }
+            }
+            val theme = SnyggTheme.compileFrom(stylesheet)
+
+            val parentStyle = theme.helperQuery("parent")
+            val intermediateImplicitStyle = theme.helperQuery(
+                elementName = "",
+                parentStyle = parentStyle,
+            )
+            val childFocusStyle = theme.helperQuery(
+                elementName = "child",
+                parentStyle = intermediateImplicitStyle,
+            )
+            assertIs<SnyggUndefinedValue>(childFocusStyle.background)
+            val fontSize = assertIs<SnyggSpSizeValue>(childFocusStyle.fontSize)
+            assertEquals(7.sp, fontSize.sp)
+        }
     }
 }

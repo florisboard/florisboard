@@ -218,7 +218,9 @@
     <string name="snygg__rule_element__keyboard">Keyboard window</string>
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>
-    <string name="snygg__rule_element__key_popup">Key popup</string>
+    <string name="snygg__rule_element__key_popup_box">Key popup box</string>
+    <string name="snygg__rule_element__key_popup_element">Key popup element</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Key popup extended indicator</string>
     <string name="snygg__rule_element__clipboard_header">Clipboard header</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>

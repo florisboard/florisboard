@@ -15,7 +15,7 @@
     "^@font `(?<fontName>[a-zA-Z0-9\\s-]+)`$": {
       "$ref": "#/definitions/snygg-font-property-set"
     },
-    "^(?<elementName>[a-zA-Z0-9-]+)(?<attributesRaw>(?:\\[[a-zA-Z0-9-]+=[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?(?:,[+-]?(?:0|[1-9][0-9]*)(?:[.]{2}[+-]?(?:0|[1-9][0-9]*))?)*])+)?(?<selectorRaw>:pressed|:focus|:hover|:disabled)?$": {
+    "^(?<elementName>[a-zA-Z0-9-]+)(?<attributesRaw>(?:\\[(?<attrKey>[a-zA-Z0-9-]+)=(?<attrRawValues>(?:`[^`]+`|(?:0|-?[1-9][0-9]*)[.]{2}(?:0|-?[1-9][0-9]*)|(?:0|-?[1-9][0-9]*))(?:,(?:`[^`]+`|(?:0|-?[1-9][0-9]*)[.]{2}(?:0|-?[1-9][0-9]*)|(?:0|-?[1-9][0-9]*)))*)])+)?(?<selectorRaw>:pressed|:focus|:hover|:disabled)?$": {
       "$ref": "#/definitions/snygg-property-set"
     }
   },

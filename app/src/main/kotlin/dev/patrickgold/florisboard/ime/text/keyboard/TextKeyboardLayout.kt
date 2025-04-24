@@ -320,8 +320,10 @@ private fun TextKeyButton(
     evaluator: ComputingEvaluator,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
+    evaluator.keyboard.mode
     val attributes = mapOf(
         FlorisImeUi.Attr.Code to key.computedData.code,
+        FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.attrName(),
         FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.attrName(),
     )
     val selector = when {
@@ -329,19 +331,6 @@ private fun TextKeyButton(
         key.isPressed -> SnyggSelector.PRESSED
         else -> SnyggSelector.NONE
     }
-//    val keyStyle = rememberSnyggThemeQuery(
-//        FlorisImeUi.Key.elementName,
-//        attributes = attributes,
-//        selector = selector,
-//    )
-//    val fontSize = keyStyle.fontSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
-//        KeyCode.VIEW_CHARACTERS,
-//        KeyCode.VIEW_SYMBOLS,
-//        KeyCode.VIEW_SYMBOLS2 -> 0.80f
-//        KeyCode.VIEW_NUMERIC,
-//        KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
-//        else -> 1.0f
-//    }
     val size = key.visibleBounds.size.toDpSize()
     SnyggBox(
         FlorisImeUi.Key.elementName,
@@ -351,7 +340,7 @@ private fun TextKeyButton(
             .requiredSize(size)
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
     ) {
-        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
+        val isTelPadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
@@ -366,53 +355,20 @@ private fun TextKeyButton(
             SnyggText(
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
+                    .align(if (isTelPadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = customLabel,
-//                color = keyStyle.foreground(),
-//                fontSize = fontSize,
-//                maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
-//                softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
-//                overflow = when (key.computedData.code) {
-//                    KeyCode.SPACE -> TextOverflow.Ellipsis
-//                    else -> TextOverflow.Visible
-//                },
             )
         }
         key.hintedLabel?.let { hintedLabel ->
-//            val keyHintStyle = rememberSnyggThemeQuery(
-//                FlorisImeUi.KeyHint.elementName,
-//                attributes = mapOf(
-//                    FlorisImeUi.Attr.Code to key.computedData.code,
-//                    FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.value,
-//                ),
-//                selector = when {
-//                    key.isPressed -> SnyggSelector.PRESSED
-//                    else -> null
-//                },
-//            )
-//            val hintFontSize = keyHintStyle.fontSize() safeTimes fontSizeMultiplier
             SnyggText(
                 elementName = FlorisImeUi.KeyHint.elementName,
                 attributes = attributes,
                 selector = selector,
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd),
+                    .align(if (isTelPadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd),
                 text = hintedLabel,
             )
-//            Text(
-//                modifier = Modifier
-//                    .wrapContentSize()
-//                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-//                    .background(keyHintStyle.background())
-//                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
-//                text = hintedLabel,
-//                color = keyHintStyle.foreground(),
-//                fontSize = hintFontSize,
-//                maxLines = 1,
-//                softWrap = false,
-//                overflow = TextOverflow.Visible,
-//            )
         }
         key.foregroundImageVector?.let { imageVector ->
             SnyggIcon(

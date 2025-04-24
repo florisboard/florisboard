@@ -34,5 +34,7 @@ enum class KeyboardMode(val value: Int) {
         fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: CHARACTERS
     }
 
+    fun attrName() = name.lowercase()
+
     fun toInt() = value
 }

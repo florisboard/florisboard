@@ -20,7 +20,9 @@ enum class FlorisImeUi(val elementName: String) {
     Keyboard("keyboard"),
     Key("key"),
     KeyHint("key-hint"),
-    KeyPopup("key-popup"),
+    KeyPopupBox("key-popup-box"),
+    KeyPopupElement("key-popup-element"),
+    KeyPopupExtendedIndicator("key-popup-extended-indicator"),
 
     ClipboardHeader("clipboard-header"),
     ClipboardSubheader("clipboard-subheader"),
@@ -76,6 +78,7 @@ enum class FlorisImeUi(val elementName: String) {
 
     object Attr {
         const val Code = "code"
+        const val Mode = "mode"
         const val ShiftState = "shiftstate"
     }
 }

@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,6 +41,9 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         "--on-background" to rgbaColor(255, 255, 255)
         "--on-background-disabled" to rgbaColor(80, 80, 80)
         "--on-surface" to rgbaColor(255, 255, 255)
+
+        "--shape" to roundedCornerShape(8.dp)
+        "--shape-variant" to roundedCornerShape(12.dp)
     }
 
     FlorisImeUi.Keyboard.elementName {
@@ -79,19 +83,24 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.KeyHint.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(184, 184, 184)
+        fontFamily = genericFontFamily(FontFamily.Monospace)
         fontSize = fontSize(12.sp)
+        lineClamp = lineClampMax(1)
+        padding = padding(0.dp, 1.dp, 1.dp, 0.dp)
     }
-    FlorisImeUi.KeyPopup.elementName {
+    FlorisImeUi.KeyPopupBox.elementName {
         background = rgbaColor(117, 117, 117)
         foreground = `var`("--on-surface")
         fontSize = fontSize(22.sp)
-        shape = roundedCornerShape(20)
+        shape = `var`("--shape")
+        shadowElevation = size(2.dp)
     }
-    FlorisImeUi.KeyPopup.elementName(selector = SnyggSelector.FOCUS) {
+    FlorisImeUi.KeyPopupElement.elementName(selector = SnyggSelector.FOCUS) {
         background = rgbaColor(189, 189, 189)
-        foreground = `var`("--on-surface")
-        fontSize = fontSize(22.sp)
-        shape = roundedCornerShape(20)
+        shape = `var`("--shape")
+    }
+    FlorisImeUi.KeyPopupExtendedIndicator.elementName {
+        fontSize = fontSize(16.sp)
     }
 
     FlorisImeUi.ClipboardHeader.elementName {

@@ -454,7 +454,6 @@ class PopupUiController(
                     .requiredSize(renderInfo.bounds.size.toDpSize())
                     .absoluteOffset { renderInfo.bounds.topLeft.toIntOffset() },
                 key = renderInfo.key,
-                fontSizeMultiplier = fontSizeMultiplier,
                 shouldIndicateExtendedPopups = renderInfo.shouldIndicateExtendedPopups && extRenderInfo == null,
             )
         }
