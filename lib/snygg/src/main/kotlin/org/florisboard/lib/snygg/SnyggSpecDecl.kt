@@ -24,8 +24,9 @@ enum class InheritBehavior {
 }
 
 open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.() -> Unit) {
-    internal val annotationSpecs: Map<String, SnyggPropertySetSpecDecl>
+    internal val annotationSpecs: Map<RuleDecl, SnyggPropertySetSpecDecl>
     internal val elementsSpec: SnyggPropertySetSpecDecl
+    internal val meta: JsonSchemaMeta
     private val _allEncoders = mutableSetOf<SnyggValueEncoder>()
     internal val allEncoders: Set<SnyggValueEncoder>
         get() = _allEncoders
@@ -33,14 +34,15 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
     init {
         val builder = SnyggSpecDeclBuilder()
         builder.configure()
-        val (annotationSpecsB, elementsSpecB) = builder.build()
+        val (annotationSpecsB, elementsSpecB, metaB) = builder.build()
         annotationSpecs = annotationSpecsB
         elementsSpec = elementsSpecB
+        meta = metaB
     }
 
     fun propertySetSpecOf(rule: SnyggRule): SnyggPropertySetSpecDecl? {
         val propertySetSpec = when (rule) {
-            is SnyggAnnotationRule -> annotationSpecs[rule.name]
+            is SnyggAnnotationRule -> annotationSpecs[rule.meta()]
             is SnyggElementRule -> elementsSpec
         } ?: return null
         return propertySetSpec
@@ -65,37 +67,45 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
         return null
     }
 
-    internal inner class SnyggSpecDeclBuilder {
-        private val annotationSpecs = mutableMapOf<String, SnyggPropertySetSpecDeclBuilder>()
-        private val elementsSpec = SnyggPropertySetSpecDeclBuilder()
+    interface RuleDecl {
+        val name: String
+        val pattern: Regex
+    }
 
-        fun annotation(name: String, configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
-            val annotationSpec = annotationSpecs.getOrDefault(name, SnyggPropertySetSpecDeclBuilder())
+    internal inner class SnyggSpecDeclBuilder {
+        private val annotationSpecs = mutableMapOf<RuleDecl, SnyggPropertySetSpecDeclBuilder>()
+        private val elementsSpec = SnyggPropertySetSpecDeclBuilder()
+        val meta = JsonSchemaMetaBuilder()
+
+        fun annotation(meta: RuleDecl, configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
+            val annotationSpec = annotationSpecs.getOrDefault(meta, SnyggPropertySetSpecDeclBuilder())
             annotationSpec.configure()
-            annotationSpecs[name] = annotationSpec
+            annotationSpecs[meta] = annotationSpec
         }
 
         fun elements(configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
             elementsSpec.configure()
         }
 
-        fun build(): Pair<Map<String, SnyggPropertySetSpecDecl>, SnyggPropertySetSpecDecl> {
+        fun build(): Triple<Map<RuleDecl, SnyggPropertySetSpecDecl>, SnyggPropertySetSpecDecl, JsonSchemaMeta> {
             val annotationSpecs = annotationSpecs.mapValues { (_, builder) ->
                 builder.build()
             }
             val elementsSpec = elementsSpec.build()
-            return annotationSpecs to elementsSpec
+            return Triple(annotationSpecs, elementsSpec, meta.build())
         }
     }
 
     data class SnyggPropertySetSpecDecl(
         val patternProperties: Map<Regex, SnyggPropertySpecDecl>,
         val properties: Map<String, SnyggPropertySpecDecl>,
+        val meta: JsonSchemaMeta,
     )
 
     internal inner class SnyggPropertySetSpecDeclBuilder {
         private val patternProperties = mutableMapOf<Regex, SnyggPropertySpecDeclBuilder>()
         private val properties = mutableMapOf<String, SnyggPropertySpecDeclBuilder>()
+        val meta = JsonSchemaMetaBuilder()
         private val implicitEncoders = mutableSetOf<SnyggValueEncoder>()
 
         fun pattern(regex: Regex, configure: SnyggPropertySpecDeclBuilder.() -> Unit) {
@@ -125,6 +135,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
             return SnyggPropertySetSpecDecl(
                 patternProperties = patternPropertySpecs,
                 properties = propertySpecs,
+                meta = meta.build(),
             )
         }
     }
@@ -132,6 +143,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
     data class SnyggPropertySpecDecl(
         val encoders: Set<SnyggValueEncoder>,
         val inheritBehavior: InheritBehavior,
+        val meta: JsonSchemaMeta,
     ) {
         fun inheritsImplicitly(): Boolean {
             return inheritBehavior == InheritBehavior.IMPLICITLY_OR_EXPLICITLY
@@ -141,6 +153,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
     internal inner class SnyggPropertySpecDeclBuilder {
         private val encoders: MutableSet<SnyggValueEncoder> = mutableSetOf()
         private var inheritBehavior: InheritBehavior = InheritBehavior.EXPLICITLY_ONLY
+        val meta = JsonSchemaMetaBuilder()
         private var isAny: Boolean = false
 
         fun add(encoder: SnyggValueEncoder) {
@@ -165,7 +178,21 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
                     addAll(encoders)
                 }
             }
-            return SnyggPropertySpecDecl(encoders, inheritBehavior)
+            return SnyggPropertySpecDecl(encoders, inheritBehavior, meta.build())
         }
+    }
+}
+
+data class JsonSchemaMeta(
+    val title: String,
+    val description: String,
+)
+
+class JsonSchemaMetaBuilder(
+    var title: String = "",
+    var description: String = "",
+) {
+    fun build(): JsonSchemaMeta {
+        return JsonSchemaMeta(title, description)
     }
 }

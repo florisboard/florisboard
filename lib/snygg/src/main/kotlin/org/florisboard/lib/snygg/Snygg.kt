@@ -85,13 +85,13 @@ object Snygg {
 }
 
 object SnyggSpec : SnyggSpecDecl({
-    annotation("defines") {
+    annotation(SnyggAnnotationRule.Defines) {
         pattern(SnyggVarValue.VariableNameRegex) {
             any()
         }
     }
 
-    annotation("font") {
+    annotation(SnyggAnnotationRule.Font) {
         Snygg.Src {
             add(SnyggUriValue)
         }

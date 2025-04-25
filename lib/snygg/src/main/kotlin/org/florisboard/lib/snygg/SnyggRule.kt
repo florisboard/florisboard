@@ -41,6 +41,8 @@ sealed interface SnyggRule : Comparable<SnyggRule> {
      */
     val name: String
 
+    fun meta(): SnyggSpecDecl.RuleDecl
+
     /**
      * Compares this Snygg rule with [other]. The ordering is defined as follows:
      * - @defines
@@ -83,8 +85,12 @@ sealed interface SnyggRule : Comparable<SnyggRule> {
  * @see [SnyggAnnotationRule.Font]
  */
 sealed interface SnyggAnnotationRule : SnyggRule {
-    data object Defines : SnyggAnnotationRule {
+    data object Defines : SnyggAnnotationRule, SnyggSpecDecl.RuleDecl {
         override val name: String = "defines"
+
+        override val pattern = """^@$name$""".toRegex()
+
+        override fun meta() = this
 
         override fun compareTo(other: SnyggRule): Int {
             return when (other) {
@@ -98,8 +104,6 @@ sealed interface SnyggAnnotationRule : SnyggRule {
             return "@defines"
         }
 
-        internal val REGEX = """^@defines$""".toRegex()
-
         /**
          * Attempts to parse the given string into a `defines` annotation rule instance, or `null` if the given string
          * does not represent a `defines` annotation rule.
@@ -109,13 +113,15 @@ sealed interface SnyggAnnotationRule : SnyggRule {
          * @since 0.5.0-alpha01
          */
         fun fromOrNull(str: String): Defines? {
-            REGEX.matchEntire(str) ?: return null
+            pattern.matchEntire(str) ?: return null
             return Defines
         }
     }
 
     data class Font(val fontName: String) : SnyggAnnotationRule {
-        override val name: String = "font"
+        override val name: String = Companion.name
+
+        override fun meta() = Companion
 
         override fun compareTo(other: SnyggRule): Int {
             return when (other) {
@@ -129,8 +135,9 @@ sealed interface SnyggAnnotationRule : SnyggRule {
             return "@font `$fontName`"
         }
 
-        companion object {
-            internal val REGEX = """^@font `(?<fontName>[a-zA-Z0-9\s-]+)`$""".toRegex()
+        companion object : SnyggSpecDecl.RuleDecl {
+            override val name = "font"
+            override val pattern = """^@$name `(?<fontName>[a-zA-Z0-9\s-]+)`$""".toRegex()
 
             /**
              * Attempts to parse the given string into a `font` annotation rule instance, or `null` if the given string
@@ -141,7 +148,7 @@ sealed interface SnyggAnnotationRule : SnyggRule {
              * @since 0.5.0-alpha01
              */
             fun fromOrNull(str: String): Font? {
-                val match = REGEX.matchEntire(str) ?: return null
+                val match = pattern.matchEntire(str) ?: return null
                 return Font(match.groups["fontName"]!!.value)
             }
         }
@@ -165,6 +172,8 @@ data class SnyggElementRule(
     init {
         requireNotNull(ELEMENT_NAME_REGEX.matchEntire(name)) { "element name is invalid" }
     }
+
+    override fun meta() = Companion
 
     override fun compareTo(other: SnyggRule): Int {
         if (other !is SnyggElementRule) {
@@ -196,12 +205,13 @@ data class SnyggElementRule(
         append(selector)
     }
 
-    companion object {
+    companion object : SnyggSpecDecl.RuleDecl {
+        override val name = "element"
         private val ELEMENT_NAME_REGEX = """(?<elementName>[a-zA-Z0-9-]+)""".toRegex()
 
         private val ATTRIBUTES_REGEX = """(?<attributesRaw>(?:${SnyggAttributes.ATTRIBUTE_REGEX})+)?""".toRegex()
         private val SELECTOR_REGEX = """(?<selectorRaw>:pressed|:focus|:hover|:disabled)?""".toRegex()
-        internal val REGEX = """^$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX$""".toRegex()
+        override val pattern = """^$ELEMENT_NAME_REGEX$ATTRIBUTES_REGEX$SELECTOR_REGEX$""".toRegex()
 
         /**
          * Attempts to parse the given string into an element rule instance, or `null` if the given string
@@ -212,7 +222,7 @@ data class SnyggElementRule(
          * @since 0.5.0-alpha01
          */
         fun fromOrNull(str: String): SnyggElementRule? {
-            val result = REGEX.matchEntire(str) ?: return null
+            val result = pattern.matchEntire(str) ?: return null
             val elementName = result.groups["elementName"]!!.value // cannot be null logically
             val attributesRaw = result.groups["attributesRaw"]?.value
             val selectorRaw = result.groups["selectorRaw"]?.value
