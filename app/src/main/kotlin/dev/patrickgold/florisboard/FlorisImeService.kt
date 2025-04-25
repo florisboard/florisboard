@@ -600,6 +600,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     .onGloballyPositioned { coords -> inputViewSize = coords.size }
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
+                supportsBackgroundImage = true,
             ) {
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {

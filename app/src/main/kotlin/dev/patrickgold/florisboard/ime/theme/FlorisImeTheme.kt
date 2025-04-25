@@ -54,9 +54,10 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val activeConfig = remember(activeThemeInfo) { activeThemeInfo.config }
     val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
 
-    // TODO: pass assetResolver
-    val snyggTheme = rememberSnyggTheme(activeStyle)
-    //val snyggTheme = rememberSnyggTheme(FlorisImeThemeBaseStyle)
+    val assetResolver = remember(context, activeThemeInfo.config) {
+        FlorisAssetResolver(context, activeThemeInfo.name.extensionId)
+    }
+    val snyggTheme = rememberSnyggTheme(activeStyle, assetResolver)
 
     MaterialTheme {
         CompositionLocalProvider(
@@ -66,7 +67,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
             ProvideSnyggTheme(
                 snyggTheme = snyggTheme,
                 dynamicAccentColor = accentColor,
-                // TODO: pass assetResolver
+                assetResolver = assetResolver,
                 content = content,
             )
         }

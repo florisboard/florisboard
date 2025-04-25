@@ -16,22 +16,29 @@
 
 package org.florisboard.lib.snygg.ui
 
-import android.graphics.BitmapFactory
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
+import coil3.compose.AsyncImage
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggUriValue
+import java.io.File
 
 @Composable
 fun SnyggBox(
@@ -46,40 +53,54 @@ fun SnyggBox(
     backgroundImageDescription: String? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val assetResolver = LocalSnyggAssetResolver.current
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
-        @Composable
-        fun SnyggImage() {
-            when (val bg = style.backgroundImage) {
-                is SnyggUriValue -> {
-                    val result = assetResolver.resolveAbsolutPath(bg.uri)
-                    val path = result.getOrNull() ?: return
-                    val bitmap = remember(path) { BitmapFactory.decodeFile(path)?.asImageBitmap() }
-                    if (bitmap == null) return
-                    Image(
-                        bitmap = bitmap,
-                        contentScale = style.objectFit(),
-                        contentDescription = backgroundImageDescription,
-                    )
+        if (!supportsBackgroundImage) {
+            Box(
+                modifier = modifier
+                    .snyggMargin(style)
+                    .snyggShadow(style)
+                    .snyggBorder(style)
+                    .snyggBackground(style)
+                    .then(clickAndSemanticsModifier)
+                    .snyggPadding(style),
+                contentAlignment = contentAlignment,
+                propagateMinConstraints = propagateMinConstraints,
+                content = content,
+            )
+        } else {
+            val assetResolver = LocalSnyggAssetResolver.current
+            var contentSize by remember { mutableStateOf(IntSize.Zero) }
+            Box(
+                modifier = modifier
+                    .snyggMargin(style)
+                    .onSizeChanged { contentSize = it }
+                    .snyggShadow(style)
+                    .snyggBorder(style)
+                    .snyggBackground(style)
+                    .then(clickAndSemanticsModifier)
+                    .snyggPadding(style),
+                contentAlignment = contentAlignment,
+                propagateMinConstraints = propagateMinConstraints,
+            ) {
+                when (val bg = style.backgroundImage) {
+                    is SnyggUriValue -> {
+                        val result = assetResolver.resolveAbsolutPath(bg.uri)
+                        val path = result.getOrNull()
+                        // TODO: silent errors are hard to debug :/
+                        if (path != null) {
+                            AsyncImage(
+                                modifier = with(LocalDensity.current) {
+                                    Modifier.size(contentSize.toSize().toDpSize())
+                                },
+                                model = File(path),
+                                contentScale = style.objectFit(),
+                                contentDescription = backgroundImageDescription,
+                            )
+                        }
+                    }
                 }
+                content()
             }
-        }
-
-        Box(
-            modifier = modifier
-                .snyggMargin(style)
-                .snyggShadow(style)
-                .snyggBorder(style)
-                .snyggBackground(style)
-                .then(clickAndSemanticsModifier)
-                .snyggPadding(style),
-            contentAlignment = contentAlignment,
-            propagateMinConstraints = propagateMinConstraints,
-        ) {
-            if (supportsBackgroundImage) {
-                SnyggImage()
-            }
-            content()
         }
     }
 }

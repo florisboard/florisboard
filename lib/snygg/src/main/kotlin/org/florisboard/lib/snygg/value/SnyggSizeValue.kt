@@ -115,7 +115,7 @@ data class SnyggObjectFitValue(val contentScale: ContentScale) : SnyggSizeValue 
             "inside" to ContentScale.Inside,
             "none" to ContentScale.None,
         ),
-        default = ContentScale.Fit,
+        default = ContentScale.FillBounds,
         construct = { SnyggObjectFitValue(it) },
         destruct = { (it as SnyggObjectFitValue).contentScale },
     )

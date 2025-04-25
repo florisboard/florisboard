@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
+import dev.patrickgold.florisboard.lib.cache.loadedExtensionDir
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.util.ViewUtils
@@ -55,7 +56,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.Json
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
@@ -117,8 +120,6 @@ class ThemeManager(context: Context) {
      * callback receivers about the new theme.
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
-        // TODO: re-implement stylesheet deserialization logic
-        //return@launch // early
         activeThemeGuard.withLock {
             action()
             previewThemeInfo?.let { previewThemeInfo ->
@@ -136,10 +137,14 @@ class ThemeManager(context: Context) {
                     val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
                     if (themeConfig != null) {
                         val newStylesheet = runCatching {
-                            ZipUtils.readFileFromArchive(
-                                appContext, themeExtRef, themeConfig.stylesheetPath(),
-                            ).getOrNull()?.let { raw -> Json.decodeFromString<SnyggStylesheet>(raw) }
+                            val loadedDir = appContext.loadedExtensionDir(themeExt.meta.id)
+                            loadedDir.mkdirs()
+                            loadedDir.deleteContentsRecursively()
+                            ZipUtils.unzip(appContext, themeExtRef, loadedDir).getOrThrow()
+                            val stylesheetFile = loadedDir.subFile(themeConfig.stylesheetPath())
+                            stylesheetFile.readJson<SnyggStylesheet>()
                         }.getOrNull()
+                        // TODO: better error handling - maybe error notification?
                         if (newStylesheet != null) {
                             val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet)
                             cachedThemeInfos.add(newInfo)

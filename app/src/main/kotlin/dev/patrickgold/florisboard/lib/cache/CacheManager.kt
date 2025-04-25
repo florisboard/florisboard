@@ -51,6 +51,7 @@ import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import java.io.Closeable
+import java.io.File
 import java.util.UUID
 
 class CacheManager(context: Context) {
@@ -62,6 +63,8 @@ class CacheManager(context: Context) {
         private const val ExporterDirName = "exporter"
         private const val EditorDirName = "editor"
         private const val BackupAndRestoreDirName = "backup-and-restore"
+
+        const val LoadedDirName = "loaded"
     }
 
     private val appContext by context.appContext()
@@ -236,4 +239,8 @@ class CacheManager(context: Context) {
         val ext: Extension?,
         var skipReason: Int = NATIVE_NULLPTR.toInt(),
     )
+}
+
+fun Context.loadedExtensionDir(extId: String): File {
+    return cacheDir.subDir(CacheManager.LoadedDirName).subDir(extId).canonicalFile
 }

@@ -15,6 +15,7 @@ androidx-navigation = "2.8.9"
 androidx-profileinstaller = "1.4.1"
 androidx-room = "2.6.1"
 cache4k = "0.7.0"
+coil = "3.1.0"
 kotlin = "2.1.20"
 kotlinx-coroutines = "1.10.1"
 kotlinx-serialization-json = "1.8.1"
@@ -54,6 +55,8 @@ androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstall
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }
