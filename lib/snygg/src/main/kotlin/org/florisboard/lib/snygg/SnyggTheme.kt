@@ -120,9 +120,9 @@ data class SnyggTheme internal constructor(
                         }
                     }
                     is SnyggElementRule -> {
-                        val list = elements.getOrDefault(rule.name, mutableListOf())
+                        val list = elements.getOrDefault(rule.elementName, mutableListOf())
                         list.add(rule to propertySet)
-                        elements[rule.name] = list
+                        elements[rule.elementName] = list
                     }
                 }
             }

@@ -34,14 +34,11 @@ import kotlin.math.min
  */
 sealed interface SnyggRule : Comparable<SnyggRule> {
     /**
-     * The name of this Snygg rule. For annotations this is the annotation name, for element rules it represents the
-     * element name.
+     * Returns the associated declaration of this rule.
      *
      * @since 0.5.0-alpha01
      */
-    val name: String
-
-    fun meta(): SnyggSpecDecl.RuleDecl
+    fun decl(): SnyggSpecDecl.RuleDecl
 
     /**
      * Compares this Snygg rule with [other]. The ordering is defined as follows:
@@ -90,12 +87,12 @@ sealed interface SnyggAnnotationRule : SnyggRule {
 
         override val pattern = """^@$name$""".toRegex()
 
-        override fun meta() = this
+        override fun decl() = this
 
         override fun compareTo(other: SnyggRule): Int {
             return when (other) {
                 is Defines -> 0 // same
-                is SnyggAnnotationRule -> name.compareTo(other.name)
+                is SnyggAnnotationRule -> decl().name.compareTo(other.decl().name)
                 is SnyggElementRule -> -1 // annotations always come first
             }
         }
@@ -119,14 +116,12 @@ sealed interface SnyggAnnotationRule : SnyggRule {
     }
 
     data class Font(val fontName: String) : SnyggAnnotationRule {
-        override val name: String = Companion.name
-
-        override fun meta() = Companion
+        override fun decl() = Companion
 
         override fun compareTo(other: SnyggRule): Int {
             return when (other) {
                 is Font -> fontName.compareTo(other.fontName)
-                is SnyggAnnotationRule -> name.compareTo(other.name)
+                is SnyggAnnotationRule -> decl().name.compareTo(other.decl().name)
                 is SnyggElementRule -> -1 // annotations always come first
             }
         }
@@ -159,27 +154,27 @@ sealed interface SnyggAnnotationRule : SnyggRule {
  * A core element in the Snygg styling system, this rule allows targeting specific elements with specific attributes
  * and selectors.
  *
- * @property name The element name this rule targets, it can be seen similarly to a CSS class.
+ * @property elementName The element name this rule targets, it can be seen similarly to a CSS class.
  * @property attributes The attributes this rule targets.
  * @property selector The selector this rule targets, or [SnyggSelector.NONE] for not specified.
  * @since 0.5.0-alpha01
  */
 data class SnyggElementRule(
-    override val name: String,
+    val elementName: String,
     val attributes: SnyggAttributes = SnyggAttributes(),
     val selector: SnyggSelector = SnyggSelector.NONE,
 ) : SnyggRule {
     init {
-        requireNotNull(ELEMENT_NAME_REGEX.matchEntire(name)) { "element name is invalid" }
+        requireNotNull(ELEMENT_NAME_REGEX.matchEntire(elementName)) { "element name is invalid" }
     }
 
-    override fun meta() = Companion
+    override fun decl() = Companion
 
     override fun compareTo(other: SnyggRule): Int {
         if (other !is SnyggElementRule) {
             return 1 // annotations always come first
         }
-        val elemDiff = name.compareTo(other.name)
+        val elemDiff = elementName.compareTo(other.elementName)
         if (elemDiff != 0) {
             return elemDiff
         }
@@ -200,7 +195,7 @@ data class SnyggElementRule(
     }
 
     override fun toString() = buildString {
-        append(name)
+        append(elementName)
         append(attributes)
         append(selector)
     }
@@ -228,7 +223,7 @@ data class SnyggElementRule(
             val selectorRaw = result.groups["selectorRaw"]?.value
 
             return SnyggElementRule(
-                name = elementName,
+                elementName = elementName,
                 attributes = SnyggAttributes.from(attributesRaw ?: ""),
                 selector = SnyggSelector.from(selectorRaw ?: ""),
             )

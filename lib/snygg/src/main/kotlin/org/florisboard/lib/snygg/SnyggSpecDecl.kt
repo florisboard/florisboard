@@ -42,7 +42,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
 
     fun propertySetSpecOf(rule: SnyggRule): SnyggPropertySetSpecDecl? {
         val propertySetSpec = when (rule) {
-            is SnyggAnnotationRule -> annotationSpecs[rule.meta()]
+            is SnyggAnnotationRule -> annotationSpecs[rule.decl()]
             is SnyggElementRule -> elementsSpec
         } ?: return null
         return propertySetSpec
@@ -77,10 +77,10 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
         private val elementsSpec = SnyggPropertySetSpecDeclBuilder()
         val meta = JsonSchemaMetaBuilder()
 
-        fun annotation(meta: RuleDecl, configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
-            val annotationSpec = annotationSpecs.getOrDefault(meta, SnyggPropertySetSpecDeclBuilder())
+        fun annotation(ruleDecl: RuleDecl, configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {
+            val annotationSpec = annotationSpecs.getOrDefault(ruleDecl, SnyggPropertySetSpecDeclBuilder())
             annotationSpec.configure()
-            annotationSpecs[meta] = annotationSpec
+            annotationSpecs[ruleDecl] = annotationSpec
         }
 
         fun elements(configure: SnyggPropertySetSpecDeclBuilder.() -> Unit) {

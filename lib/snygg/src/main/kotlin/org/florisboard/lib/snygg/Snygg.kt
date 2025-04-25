@@ -85,6 +85,9 @@ object Snygg {
 }
 
 object SnyggSpec : SnyggSpecDecl({
+    meta.title = "Snygg Stylesheet Specification"
+    meta.description = "This document describes the Snygg stylesheet specification."
+
     annotation(SnyggAnnotationRule.Defines) {
         pattern(SnyggVarValue.VariableNameRegex) {
             any()

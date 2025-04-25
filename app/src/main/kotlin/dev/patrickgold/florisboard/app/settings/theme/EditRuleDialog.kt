@@ -107,7 +107,7 @@ private val TransparentTextSelectionColors = TextSelectionColors(
     handleColor = Color.Transparent,
     backgroundColor = Color.Transparent,
 )
-internal val SnyggEmptyRuleForAdding = SnyggElementRule(name = "--select--")
+internal val SnyggEmptyRuleForAdding = SnyggElementRule(elementName = "--select--")
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -132,10 +132,10 @@ internal fun EditRuleDialog(
             }
         }
     }
-    val possibleRuleLabels = possibleRuleTemplates.map { context.translateElementName(it.name, level) ?: it }
+    val possibleRuleLabels = possibleRuleTemplates.map { context.translateElementName(it.decl().name, level) ?: it }
     var elementsSelectedIndex by rememberSaveable {
         val index = possibleRuleTemplates
-            .indexOfFirst { it.name == initRule.name }
+            .indexOfFirst { it.decl().name == initRule.decl().name }
             .coerceIn(possibleRuleTemplates.indices)
         mutableIntStateOf(index)
     }
@@ -213,7 +213,7 @@ internal fun EditRuleDialog(
 
             // TODO: Move to toplevel @Composable function
             (currentRule as? SnyggElementRule)?.apply {
-                if (name == SnyggEmptyRuleForAdding.name) {
+                if (elementName == SnyggEmptyRuleForAdding.elementName) {
                     return@apply
                 }
                 DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {

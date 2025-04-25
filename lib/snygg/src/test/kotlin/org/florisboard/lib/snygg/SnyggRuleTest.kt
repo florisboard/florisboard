@@ -18,50 +18,50 @@ class SnyggRuleTest {
             "@font `Test`" to SnyggAnnotationRule.Font("Test"),
             "@font `Comic Sans`" to SnyggAnnotationRule.Font("Comic Sans"),
             "elem" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
             ),
             "elem-with-hyphens" to SnyggElementRule(
-                name = "elem-with-hyphens",
+                elementName = "elem-with-hyphens",
             ),
             "elem[code=1]" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 attributes = SnyggAttributes.of("code" to listOf(1)),
             ),
             "elem[code=1,3..6,`str`]" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 attributes = SnyggAttributes.of("code" to listOf(1,3,4,5,6,"str")),
             ),
             "elem[code=-200,10,`str`]" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 attributes = SnyggAttributes.of("code" to listOf(-200,10,"str")),
             ),
             "elem[code=`str with spaces`]" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 attributes = SnyggAttributes.of("code" to listOf("str with spaces")),
             ),
             "elem[code=1]:pressed" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 attributes = SnyggAttributes.of("code" to listOf(1)),
                 selector = SnyggSelector.PRESSED,
             ),
             "elem:pressed" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 selector = SnyggSelector.PRESSED,
             ),
             "elem:focus" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 selector = SnyggSelector.FOCUS,
             ),
             "elem:hover" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 selector = SnyggSelector.HOVER,
             ),
             "elem:disabled" to SnyggElementRule(
-                name = "elem",
+                elementName = "elem",
                 selector = SnyggSelector.DISABLED,
             ),
             "smartbar[code=0..5][group=0,2..4][shift=0,2,4][test=0,1]:pressed" to SnyggElementRule(
-                name = "smartbar",
+                elementName = "smartbar",
                 attributes = SnyggAttributes.of(
                     "code" to listOf(0, 1, 2, 3, 4, 5),
                     "group" to listOf(0, 2, 3, 4),
@@ -172,43 +172,43 @@ class SnyggRuleTest {
                     SnyggAnnotationRule.Font(fontName = "Comic Sans"),
                 SnyggAnnotationRule.Font(fontName = "Arial") to
                     SnyggAnnotationRule.Font(fontName = "Comic Sans"),
-                SnyggElementRule(name = "a-test") to
-                    SnyggElementRule(name = "b-test"),
-                SnyggElementRule(name = "test") to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.PRESSED),
-                SnyggElementRule(name = "test") to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS),
-                SnyggElementRule(name = "test") to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.HOVER),
-                SnyggElementRule(name = "test") to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
-                SnyggElementRule(name = "test", selector = SnyggSelector.PRESSED) to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS),
-                SnyggElementRule(name = "test", selector = SnyggSelector.FOCUS) to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.HOVER),
-                SnyggElementRule(name = "test", selector = SnyggSelector.HOVER) to
-                    SnyggElementRule(name = "test", selector = SnyggSelector.DISABLED),
-                SnyggElementRule(name = "test") to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))),
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(11))),
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10, 11))),
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("group" to listOf(10))),
-                SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(10))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("groups" to listOf(11))),
-                SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(0))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("shiftStates" to listOf(1))),
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(0))) to
+                SnyggElementRule(elementName = "a-test") to
+                    SnyggElementRule(elementName = "b-test"),
+                SnyggElementRule(elementName = "test") to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.PRESSED),
+                SnyggElementRule(elementName = "test") to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.FOCUS),
+                SnyggElementRule(elementName = "test") to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER),
+                SnyggElementRule(elementName = "test") to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.DISABLED),
+                SnyggElementRule(elementName = "test", selector = SnyggSelector.PRESSED) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.FOCUS),
+                SnyggElementRule(elementName = "test", selector = SnyggSelector.FOCUS) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER),
+                SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.DISABLED),
+                SnyggElementRule(elementName = "test") to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(11))),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10, 11))),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("group" to listOf(10))),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("groups" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("groups" to listOf(11))),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("shiftStates" to listOf(0))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("shiftStates" to listOf(1))),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(0))) to
                     SnyggElementRule(
-                        name = "test",
+                        elementName = "test",
                         SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(1))
                     ),
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),),
-                SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10))) to
-                    SnyggElementRule(name = "test", SnyggAttributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
             )
             assertAll(ruleList.map { (lowerRule, upperRule) ->
                 {

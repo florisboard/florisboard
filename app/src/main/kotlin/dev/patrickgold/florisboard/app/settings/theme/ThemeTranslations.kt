@@ -56,7 +56,7 @@ import org.florisboard.lib.snygg.value.SnyggValueEncoder
 import org.florisboard.lib.snygg.value.SnyggYesValue
 
 internal fun Context.translateElementName(rule: SnyggElementRule, level: SnyggLevel): String {
-    return translateElementName(rule.name, level) ?: rule.name
+    return translateElementName(rule.elementName, level) ?: rule.elementName
 }
 
 private val ElementNameMap = mapOf(
