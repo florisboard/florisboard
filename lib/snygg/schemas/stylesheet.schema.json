@@ -60,7 +60,7 @@
       "type": "string",
       "pattern": "^\\s*dynamic-dark-color[(]\\s*(?<name>primary|onPrimary|primaryContainer|onPrimaryContainer|inversePrimary|secondary|onSecondary|secondaryContainer|onSecondaryContainer|tertiary|onTertiary|tertiaryContainer|onTertiaryContainer|background|onBackground|onSurface|surfaceVariant|onSurfaceVariant|surfaceTint|inverseSurface|inverseOnSurface|error|onError|errorContainer|onErrorContainer|outline|outlineVariant|scrim|surfaceBright|surfaceDim|surfaceContainer|surfaceContainerHigh|surfaceContainerHighest|surfaceContainerLow|surfaceContainerLowest)\\s*[)]\\s*$"
     },
-    "snygg-object-fit-value": {
+    "snygg-content-scale-value": {
       "type": "string",
       "enum": [
         "crop",
@@ -229,7 +229,7 @@
               "$ref": "#/$defs/snygg-dynamic-dark-color-value"
             },
             {
-              "$ref": "#/$defs/snygg-object-fit-value"
+              "$ref": "#/$defs/snygg-content-scale-value"
             },
             {
               "$ref": "#/$defs/snygg-dp-size-value"
@@ -369,7 +369,7 @@
             }
           ]
         },
-        "object-fit": {
+        "content-scale": {
           "oneOf": [
             {
               "$ref": "#/$defs/snygg-inherit-value"
@@ -378,7 +378,7 @@
               "$ref": "#/$defs/snygg-defined-var-value"
             },
             {
-              "$ref": "#/$defs/snygg-object-fit-value"
+              "$ref": "#/$defs/snygg-content-scale-value"
             }
           ]
         },

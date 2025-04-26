@@ -16,6 +16,7 @@
 
 package org.florisboard.lib.snygg.value
 
+import androidx.compose.ui.layout.ContentScale
 import java.net.URI
 
 data class SnyggUriValue(val uri: String) : SnyggValue {
@@ -48,6 +49,25 @@ data class SnyggUriValue(val uri: String) : SnyggValue {
         }
     }
 
+    override fun encoder() = Companion
+}
+
+data class SnyggContentScaleValue(val contentScale: ContentScale) : SnyggValue {
+    companion object : SnyggEnumLikeValueEncoder<ContentScale>(
+        serializationId = "textAlign",
+        serializationMapping = mapOf(
+            "crop" to ContentScale.Crop,
+            "fill-bounds" to ContentScale.FillBounds,
+            "fill-height" to ContentScale.FillHeight,
+            "fill-width" to ContentScale.FillWidth,
+            "fit" to ContentScale.Fit,
+            "inside" to ContentScale.Inside,
+            "none" to ContentScale.None,
+        ),
+        default = ContentScale.FillBounds,
+        construct = { SnyggContentScaleValue(it) },
+        destruct = { (it as SnyggContentScaleValue).contentScale },
+    )
     override fun encoder() = Companion
 }
 

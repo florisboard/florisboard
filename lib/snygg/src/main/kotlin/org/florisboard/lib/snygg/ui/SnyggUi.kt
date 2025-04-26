@@ -61,6 +61,7 @@ import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggYesValue
 
@@ -318,5 +319,12 @@ internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     return when (this) {
         is SnyggDpSizeValue -> this.dp
         else -> default
+    }
+}
+
+internal fun SnyggValue.uriOrNull(): String? {
+    return when (this) {
+        is SnyggUriValue -> this.uri
+        else -> null
     }
 }

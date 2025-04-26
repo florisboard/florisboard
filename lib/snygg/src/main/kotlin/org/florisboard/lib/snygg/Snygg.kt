@@ -30,7 +30,7 @@ import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
-import org.florisboard.lib.snygg.value.SnyggObjectFitValue
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
@@ -54,7 +54,7 @@ object Snygg {
     const val Foreground = "foreground"
 
     const val BackgroundImage = "background-image"
-    const val ObjectFit = "object-fit"
+    const val ContentScale = "content-scale"
 
     const val BorderColor = "border-color"
     const val BorderStyle = "border-style" // unsupported as of now
@@ -121,8 +121,8 @@ object SnyggSpec : SnyggSpecDecl({
         Snygg.BackgroundImage {
             add(SnyggUriValue)
         }
-        Snygg.ObjectFit {
-            add(SnyggObjectFitValue)
+        Snygg.ContentScale {
+            add(SnyggContentScaleValue)
         }
 
         Snygg.BorderColor {

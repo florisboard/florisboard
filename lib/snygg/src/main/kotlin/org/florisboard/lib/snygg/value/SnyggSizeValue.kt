@@ -16,7 +16,6 @@
 
 package org.florisboard.lib.snygg.value
 
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -100,24 +99,5 @@ data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
         }
     }
 
-    override fun encoder() = Companion
-}
-
-data class SnyggObjectFitValue(val contentScale: ContentScale) : SnyggSizeValue {
-    companion object : SnyggEnumLikeValueEncoder<ContentScale>(
-        serializationId = "textAlign",
-        serializationMapping = mapOf(
-            "crop" to ContentScale.Crop,
-            "fill-bounds" to ContentScale.FillBounds,
-            "fill-height" to ContentScale.FillHeight,
-            "fill-width" to ContentScale.FillWidth,
-            "fit" to ContentScale.Fit,
-            "inside" to ContentScale.Inside,
-            "none" to ContentScale.None,
-        ),
-        default = ContentScale.FillBounds,
-        construct = { SnyggObjectFitValue(it) },
-        destruct = { (it as SnyggObjectFitValue).contentScale },
-    )
     override fun encoder() = Companion
 }

@@ -57,7 +57,6 @@ import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggYesValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
-import java.net.URI
 
 class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     val properties = mutableMapOf<String, SnyggValue>()
@@ -126,9 +125,9 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     var backgroundImage: SnyggValue?
         get() =  getProperty(Snygg.BackgroundImage)
         set(v) = setProperty(Snygg.BackgroundImage, v)
-    var objectFit: SnyggValue?
-        get() =  getProperty(Snygg.ObjectFit)
-        set(v) = setProperty(Snygg.ObjectFit, v)
+    var contentScale: SnyggValue?
+        get() =  getProperty(Snygg.ContentScale)
+        set(v) = setProperty(Snygg.ContentScale, v)
 
     var borderColor: SnyggValue?
         get() =  getProperty(Snygg.BorderColor)

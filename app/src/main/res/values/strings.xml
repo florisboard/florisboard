@@ -257,7 +257,7 @@
     <string name="snygg__property_name__background">Background</string>
     <string name="snygg__property_name__foreground">Foreground</string>
     <string name="snygg__property_name__background_image">Background image</string>
-    <string name="snygg__property_name__object_fit">Object fit</string>
+    <string name="snygg__property_name__content_scale">Content scale</string>
     <string name="snygg__property_name__border_color">Border color</string>
     <string name="snygg__property_name__border_style">Border style</string>
     <string name="snygg__property_name__border_width">Border width</string>
@@ -315,7 +315,7 @@
     <string name="snygg__property_value__dp_size">Size (dp)</string>
     <string name="snygg__property_value__sp_size">Size (sp)</string>
     <string name="snygg__property_value__percentage_size">Size (%)</string>
-    <string name="snygg__property_value__object_fit">Object fit</string>
+    <string name="snygg__property_value__content_scale">Content scale</string>
     <string name="snygg__property_value__text_align">Text align</string>
     <string name="snygg__property_value__text_decoration_line">Text decoration line</string>
     <string name="snygg__property_value__text_overflow">Text overflow</string>

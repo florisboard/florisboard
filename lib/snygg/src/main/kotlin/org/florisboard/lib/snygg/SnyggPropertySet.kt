@@ -36,7 +36,7 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggLineClampValue
-import org.florisboard.lib.snygg.value.SnyggObjectFitValue
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
@@ -53,7 +53,7 @@ data class SnyggPropertySet internal constructor(
     val foreground = properties[Snygg.Foreground] ?: SnyggUndefinedValue
 
     val backgroundImage = properties[Snygg.BackgroundImage] ?: SnyggUndefinedValue
-    val objectFit = properties[Snygg.ObjectFit] ?: SnyggUndefinedValue
+    val contentScale = properties[Snygg.ContentScale] ?: SnyggUndefinedValue
 
     val borderColor = properties[Snygg.BorderColor] ?: SnyggUndefinedValue
     val borderStyle = properties[Snygg.BorderStyle] ?: SnyggUndefinedValue
@@ -131,9 +131,9 @@ data class SnyggPropertySet internal constructor(
         }
     }
 
-    fun objectFit(default: ContentScale = ContentScale.Fit): ContentScale {
-        return when (objectFit) {
-            is SnyggObjectFitValue -> objectFit.contentScale
+    fun contentScale(default: ContentScale = ContentScale.Crop): ContentScale {
+        return when (contentScale) {
+            is SnyggContentScaleValue -> contentScale.contentScale
             else -> default
         }
     }

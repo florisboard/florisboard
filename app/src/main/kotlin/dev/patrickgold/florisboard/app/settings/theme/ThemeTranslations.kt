@@ -38,7 +38,7 @@ import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
-import org.florisboard.lib.snygg.value.SnyggObjectFitValue
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
@@ -109,7 +109,7 @@ private val PropertyNameMap = mapOf(
     Snygg.Background to R.string.snygg__property_name__background,
     Snygg.Foreground to R.string.snygg__property_name__foreground,
     Snygg.BackgroundImage to R.string.snygg__property_name__background_image,
-    Snygg.ObjectFit to R.string.snygg__property_name__object_fit,
+    Snygg.ContentScale to R.string.snygg__property_name__content_scale,
     Snygg.BorderColor to R.string.snygg__property_name__border_color,
     Snygg.BorderStyle to R.string.snygg__property_name__border_style,
     Snygg.BorderWidth to R.string.snygg__property_name__border_width,
@@ -212,7 +212,7 @@ private val PropertyValueEncoderNameMap = mapOf(
     SnyggDpSizeValue to R.string.snygg__property_value__dp_size,
     SnyggSpSizeValue to R.string.snygg__property_value__sp_size,
     SnyggPercentageSizeValue to R.string.snygg__property_value__percentage_size,
-    SnyggObjectFitValue to R.string.snygg__property_value__object_fit,
+    SnyggContentScaleValue to R.string.snygg__property_value__content_scale,
     SnyggTextAlignValue to R.string.snygg__property_value__text_align,
     SnyggTextDecorationLineValue to R.string.snygg__property_value__text_decoration_line,
     SnyggTextOverflowValue to R.string.snygg__property_value__text_overflow,
