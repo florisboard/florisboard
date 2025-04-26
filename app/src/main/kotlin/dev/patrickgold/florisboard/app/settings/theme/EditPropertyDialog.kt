@@ -605,15 +605,15 @@ private fun PropertyValueEditor(
 
         is SnyggUriValue -> {
             var inputStr by rememberSaveable {
-                mutableStateOf(value.uri.toString())
+                mutableStateOf(value.uri)
             }
             JetPrefTextField(
                 value = inputStr,
                 onValueChange = { newInputStr ->
                     inputStr = newInputStr
-                    runCatching { URI.create(newInputStr) }.fold(
+                    runCatching { URI.create(newInputStr).toString() }.fold(
                         onSuccess = { onValueChange(SnyggUriValue(it)) },
-                        onFailure = { onValueChange(SnyggUriValue(URI.create(""))) },
+                        onFailure = { onValueChange(SnyggUriValue("")) },
                     )
                 },
                 modifier = modifier,

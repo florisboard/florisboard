@@ -288,8 +288,7 @@ class SnyggStylesheetTest {
             assertEquals("font", fontRule.decl().name)
             assertEquals("Comic Sans", fontRule.fontName)
             val src = assertIs<SnyggUriValue>(fontProperties.src)
-            assertEquals("flex", src.uri.scheme)
-            assertEquals("/path/to/file", src.uri.path)
+            assertEquals("flex:/path/to/file", src.uri)
         }
 
         @Test

@@ -22,8 +22,9 @@ import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import java.net.URI
 
-class FlorisAssetResolver(val context: Context, val themeInfo: ThemeManager.ThemeInfo) : SnyggAssetResolver() {
-    override fun resolveAbsolutePath(uri: URI) = runCatching {
+class FlorisAssetResolver(val context: Context, val themeInfo: ThemeManager.ThemeInfo) : SnyggAssetResolver {
+    override fun resolveAbsolutePath(uri: String) = runCatching {
+        val uri = URI.create(uri)
         require(uri.scheme == "flex")
         require(uri.authority.isNullOrEmpty())
         val baseDir = checkNotNull(themeInfo.loadedDir) { "Loaded directory was null" }

@@ -351,7 +351,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         return SnyggPercentageSizeValue(percentage)
     }
 
-    fun uri(uri: URI): SnyggUriValue {
+    fun uri(uri: String): SnyggUriValue {
         return SnyggUriValue(uri)
     }
 

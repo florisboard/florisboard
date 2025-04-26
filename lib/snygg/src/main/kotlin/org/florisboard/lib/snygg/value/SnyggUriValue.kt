@@ -18,7 +18,7 @@ package org.florisboard.lib.snygg.value
 
 import java.net.URI
 
-data class SnyggUriValue(val uri: URI) : SnyggValue {
+data class SnyggUriValue(val uri: String) : SnyggValue {
     companion object : SnyggValueEncoder {
         private const val EnclosedUriFunction = "uri"
         private const val EnclosedUriId = "enclosedUri"
@@ -31,7 +31,7 @@ data class SnyggUriValue(val uri: URI) : SnyggValue {
             }
         }
 
-        override fun defaultValue() = SnyggUriValue(URI.create(""))
+        override fun defaultValue() = SnyggUriValue("")
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggUriValue)
@@ -44,7 +44,7 @@ data class SnyggUriValue(val uri: URI) : SnyggValue {
             spec.parse(v, map)
             val enclosedUri = map.getString(EnclosedUriId)
             val uri = enclosedUri.substring(1, enclosedUri.length - 1)
-            return@runCatching SnyggUriValue(URI.create(uri))
+            return@runCatching SnyggUriValue(URI.create(uri).toString())
         }
     }
 
@@ -52,27 +52,28 @@ data class SnyggUriValue(val uri: URI) : SnyggValue {
 }
 
 /**
- * The AssetResolver for [SnyggUriValue].
+ * The assert resolver for [SnyggUriValue].
  *
- * Override this class if you want to use [SnyggUriValue] (image and custom font-family support)
- * and pass the instance to [ProvideSnyggTheme][org.florisboard.lib.snygg.ui.ProvideSnyggTheme]
+ * Implement this interface if you want to use [SnyggUriValue] (image and custom font-family support)
+ * and pass the instance to [org.florisboard.lib.snygg.ui.ProvideSnyggTheme]
  *
+ * @since 0.5.0-alpha01
  * @see [org.florisboard.lib.snygg.ui.ProvideSnyggTheme]
  */
-abstract class SnyggAssetResolver {
+interface SnyggAssetResolver {
     /**
-     * Resolve a [URI] to an absolute path.
-     * If the asset cannot be found i.e. the uri is invalid, return [Result.Failure]
+     * Resolve a given flex URI to an absolute path.
+     * If the asset cannot be found i.e. the uri is invalid, return [Result.Failure].
      *
-     * @param uri the [URI] of the asset
-     *
-     * @return Result with the absolute path ([String]) of the asset or a [Result.Failure]
+     * @param uri The URI of the asset.
+     * @return Result with the absolute path of the asset or a [Result.Failure].
+     * @since 0.5.0-alpha01
      */
-    abstract fun resolveAbsolutePath(uri: URI): Result<String>
+    fun resolveAbsolutePath(uri: String): Result<String>
 }
 
-internal object SnyggDefaultAssetResolver : SnyggAssetResolver() {
-    override fun resolveAbsolutePath(uri: URI): Result<String> {
+internal object SnyggDefaultAssetResolver : SnyggAssetResolver {
+    override fun resolveAbsolutePath(uri: String): Result<String> {
         return Result.failure(NotImplementedError("Default asset resolver does not implement path resolve ability"))
     }
 }
