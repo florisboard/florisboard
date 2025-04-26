@@ -53,7 +53,7 @@ fun SnyggText(
             fontSize = style.fontSize(),
             fontStyle = style.fontStyle(),
             fontWeight = style.fontWeight(),
-            fontFamily = style.fontFamily(LocalSnyggTheme.current),
+            fontFamily = style.fontFamily(LocalSnyggPreloadedCustomFontFamilies.current),
             letterSpacing = style.letterSpacing(),
             lineHeight = style.lineHeight(),
             textAlign = style.textAlign(),

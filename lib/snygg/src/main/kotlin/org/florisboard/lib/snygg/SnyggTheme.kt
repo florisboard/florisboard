@@ -45,18 +45,18 @@ import java.io.File
  *    variable references.
  * 5. All annotation elements have been pre-processed and stripped from the data.
  */
-private typealias CompiledStyleData = Map<String, List<Pair<SnyggElementRule, SnyggPropertySet>>>
+internal typealias CompiledStyleData = Map<String, List<Pair<SnyggElementRule, SnyggPropertySet>>>
 
 typealias SnyggQueryAttributes = Map<String, Any>
 
-private typealias CompiledFontFamilyData = Map<String, FontFamily>
+internal typealias CompiledFontFamilyData = Map<String, FontFamily>
 
 /**
  * Represents the runtime style data, which is used for styling UI elements.
  */
 data class SnyggTheme internal constructor(
-    private val style: CompiledStyleData,
-    private val fontFamilies: CompiledFontFamilyData,
+    internal val style: CompiledStyleData,
+    internal val fontFamilies: CompiledFontFamilyData,
 ) {
     internal fun query(
         elementName: String,
@@ -87,10 +87,6 @@ data class SnyggTheme internal constructor(
         return editor.build()
     }
 
-    internal fun getFontFamily(fontName: String): FontFamily? {
-        return fontFamilies[fontName]
-    }
-
     companion object {
         internal fun compileFrom(
             stylesheet: SnyggStylesheet,
@@ -107,7 +103,7 @@ data class SnyggTheme internal constructor(
                     is SnyggAnnotationRule.Font -> {
                         val src = propertySet.src
                         if (src !is SnyggUriValue) return@forEach
-                        val fontPath = assetResolver.resolveAbsolutPath(src.uri).getOrNull()
+                        val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
                         if (fontPath == null) return@forEach
                         fonts.getOrPut(rule.fontName) { mutableListOf() }.apply {
                             add(

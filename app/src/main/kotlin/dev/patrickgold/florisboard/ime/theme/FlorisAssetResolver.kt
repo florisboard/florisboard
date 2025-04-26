@@ -17,22 +17,30 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import android.content.Context
-import dev.patrickgold.florisboard.lib.cache.loadedExtensionDir
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import java.net.URI
 
-class FlorisAssetResolver(val context: Context, val extId: String) : SnyggAssetResolver() {
-    override fun resolveAbsolutPath(uri: URI) = runCatching {
+class FlorisAssetResolver(val context: Context, val themeInfo: ThemeManager.ThemeInfo) : SnyggAssetResolver() {
+    override fun resolveAbsolutePath(uri: URI) = runCatching {
         require(uri.scheme == "flex")
         require(uri.authority.isNullOrEmpty())
-        val baseDir = context.loadedExtensionDir(extId)
-        val absFile = baseDir.subFile(uri.path).canonicalFile
-        val absPath = absFile.absolutePath
-        check(absPath.startsWith(baseDir.absolutePath))
-        absPath
+        val baseDir = checkNotNull(themeInfo.loadedDir) { "Loaded directory was null" }
+        val basePath = baseDir.canonicalPath
+        val canonicalFile = baseDir.subFile(uri.path).canonicalFile
+        val canonicalPath = canonicalFile.path
+        check(canonicalPath.startsWith(basePath)) {
+            "Calculated path '$canonicalPath' does not start with base path '$basePath'"
+        }
+        check(canonicalFile.exists()) {
+            "Calculated path '$canonicalPath' does not exist"
+        }
+        check(canonicalFile.isFile()) {
+            "Calculated path '$canonicalPath' is not a file"
+        }
+        canonicalPath
     }.onFailure { exception ->
-        flogError { "FlorisAssetResolver failed to resolve URI `$uri` (error: $exception)" }
+        flogError { "FlorisAssetResolver failed to resolve URI '$uri'\n  error: ${exception.message}\n  with:  $themeInfo" }
     }
 }

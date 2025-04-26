@@ -46,7 +46,7 @@ import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
-import dev.patrickgold.florisboard.lib.cache.loadedExtensionDir
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.util.ViewUtils
@@ -56,11 +56,14 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import java.util.UUID
 import kotlin.properties.Delegates
 
 /**
@@ -136,17 +139,20 @@ class ThemeManager(context: Context) {
                 if (themeExtRef != null) {
                     val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
                     if (themeConfig != null) {
+                        // TODO: loaded dir is implemented already...
+                        // TODO: this leaks the loaded dir, but at least the state is not kaputt from compose viewpoint
+                        val loadedDir = appContext.cacheDir.subDir("loaded").subDir(UUID.randomUUID().toString())
                         val newStylesheet = runCatching {
-                            val loadedDir = appContext.loadedExtensionDir(themeExt.meta.id)
                             loadedDir.mkdirs()
                             loadedDir.deleteContentsRecursively()
                             ZipUtils.unzip(appContext, themeExtRef, loadedDir).getOrThrow()
+                            flogInfo { "Loaded extension ${themeExt.meta.id} into $loadedDir" }
                             val stylesheetFile = loadedDir.subFile(themeConfig.stylesheetPath())
                             stylesheetFile.readJson<SnyggStylesheet>()
                         }.getOrNull()
                         // TODO: better error handling - maybe error notification?
                         if (newStylesheet != null) {
-                            val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet)
+                            val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet, loadedDir)
                             cachedThemeInfos.add(newInfo)
                             _activeThemeInfo.postValue(newInfo)
                         } else {
@@ -279,12 +285,18 @@ class ThemeManager(context: Context) {
         val name: ExtensionComponentName,
         val config: ThemeExtensionComponent,
         val stylesheet: SnyggStylesheet,
+        val loadedDir: FsDir?,
     ) {
+        override fun toString(): String {
+            return "ThemeInfo(name=$name, config=$config, loadedDir=$loadedDir)"
+        }
+
         companion object {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
                 config = ThemeExtensionComponentImpl(id = "base", label = "Base", authors = listOf()),
                 stylesheet = FlorisImeThemeBaseStyle,
+                loadedDir = null,
             )
         }
     }

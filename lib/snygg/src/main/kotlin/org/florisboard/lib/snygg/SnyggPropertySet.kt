@@ -138,10 +138,10 @@ data class SnyggPropertySet internal constructor(
         }
     }
 
-    fun fontFamily(theme: SnyggTheme, default: FontFamily? = null): FontFamily? {
+    fun fontFamily(preloadedFontFamilies: CompiledFontFamilyData, default: FontFamily? = null): FontFamily? {
         return when (val family = fontFamily) {
             is SnyggGenericFontFamilyValue -> family.fontFamily
-            is SnyggCustomFontFamilyValue -> theme.getFontFamily(family.fontName)
+            is SnyggCustomFontFamilyValue -> preloadedFontFamilies[family.fontName]
             else -> default
         }
     }

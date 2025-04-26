@@ -74,6 +74,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
@@ -219,7 +220,9 @@ fun ThemeEditorScreen(
 
         DisposableEffect(workspace.version) {
             themeManager.previewThemeInfo = ThemeManager.ThemeInfo.DEFAULT.copy(
+                name = extPreviewTheme(System.currentTimeMillis().toString()),
                 stylesheet = stylesheetEditor.build(),
+                loadedDir = workspace.extDir,
             )
             onDispose {
                 themeManager.previewThemeInfo = null

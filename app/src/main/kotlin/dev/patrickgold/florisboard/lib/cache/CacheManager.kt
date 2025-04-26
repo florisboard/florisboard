@@ -240,7 +240,3 @@ class CacheManager(context: Context) {
         var skipReason: Int = NATIVE_NULLPTR.toInt(),
     )
 }
-
-fun Context.loadedExtensionDir(extId: String): File {
-    return cacheDir.subDir(CacheManager.LoadedDirName).subDir(extId).canonicalFile
-}

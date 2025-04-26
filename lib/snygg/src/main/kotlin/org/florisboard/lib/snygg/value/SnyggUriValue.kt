@@ -68,11 +68,11 @@ abstract class SnyggAssetResolver {
      *
      * @return Result with the absolute path ([String]) of the asset or a [Result.Failure]
      */
-    abstract fun resolveAbsolutPath(uri: URI): Result<String>
+    abstract fun resolveAbsolutePath(uri: URI): Result<String>
 }
 
 internal object SnyggDefaultAssetResolver : SnyggAssetResolver() {
-    override fun resolveAbsolutPath(uri: URI): Result<String> {
+    override fun resolveAbsolutePath(uri: URI): Result<String> {
         return Result.failure(NotImplementedError("Default asset resolver does not implement path resolve ability"))
     }
 }

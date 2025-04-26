@@ -28,6 +28,12 @@ inline fun extCoreTheme(id: String) = ExtensionComponentName(
     componentId = id,
 )
 
+@Suppress("NOTHING_TO_INLINE")
+inline fun extPreviewTheme(id: String) = ExtensionComponentName(
+    extensionId = "local.themes.preview",
+    componentId = id,
+)
+
 interface ThemeExtensionComponent : ExtensionComponent {
     companion object {
         fun defaultStylesheetPath(id: String): String {

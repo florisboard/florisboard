@@ -84,7 +84,7 @@ fun SnyggBox(
             ) {
                 when (val bg = style.backgroundImage) {
                     is SnyggUriValue -> {
-                        val result = assetResolver.resolveAbsolutPath(bg.uri)
+                        val result = assetResolver.resolveAbsolutePath(bg.uri)
                         val path = result.getOrNull()
                         // TODO: silent errors are hard to debug :/
                         if (path != null) {

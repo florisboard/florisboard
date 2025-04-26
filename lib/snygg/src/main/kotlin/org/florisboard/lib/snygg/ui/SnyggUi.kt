@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.Modifier
@@ -39,11 +40,15 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFontFamilyResolver
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
+import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.snygg.CompiledFontFamilyData
 import org.florisboard.lib.snygg.SnyggPropertySet
 import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggQueryAttributes
@@ -75,6 +80,11 @@ internal val LocalSnyggDynamicDarkColorScheme: ProvidableCompositionLocal<ColorS
     }
 
 internal val LocalSnyggAssetResolver: ProvidableCompositionLocal<SnyggAssetResolver> =
+    compositionLocalOf {
+        error("ProvideSnyggTheme not called.")
+    }
+
+internal val LocalSnyggPreloadedCustomFontFamilies: ProvidableCompositionLocal<CompiledFontFamilyData> =
     compositionLocalOf {
         error("ProvideSnyggTheme not called.")
     }
@@ -127,11 +137,25 @@ fun ProvideSnyggTheme(
     val context = LocalContext.current
     val lightScheme = ColorMappings.dynamicLightColorScheme(context, dynamicAccentColor)
     val darkScheme = ColorMappings.dynamicDarkColorScheme(context, dynamicAccentColor)
+
+    val resolver = LocalFontFamilyResolver.current
+    val customFontFamilies = remember(snyggTheme) {
+        runBlocking {
+            snyggTheme.fontFamilies.mapValues { (_, fontFamily) ->
+                runCatching { resolver.preload(fontFamily) }.fold(
+                    onSuccess = { fontFamily },
+                    onFailure = { FontFamily.Default },
+                )
+            }
+        }
+    }
+
     CompositionLocalProvider(
         LocalSnyggTheme provides snyggTheme,
         LocalSnyggDynamicLightColorScheme provides lightScheme,
         LocalSnyggDynamicDarkColorScheme provides darkScheme,
         LocalSnyggAssetResolver provides assetResolver,
+        LocalSnyggPreloadedCustomFontFamilies provides customFontFamilies,
         LocalSnyggParentStyle provides SnyggPropertySetEditor().run {
             fontSize = fontSize(MaterialTheme.typography.bodyMedium.fontSize)
             build()
