@@ -89,6 +89,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import java.util.*
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.io.writeJson
 import kotlin.reflect.KClass
@@ -196,7 +197,7 @@ private fun ExtensionEditScreenSheetSwitcher(
                     ManageDependenciesScreen(workspace)
                 }
                 is EditorAction.ManageFiles -> {
-                    ManageFilesScreen(workspace)
+                    ExtensionEditFilesScreen(workspace)
                 }
                 is EditorAction.CreateComponent<*> -> {
                     CreateComponentScreen(workspace, action.type)
@@ -264,6 +265,15 @@ private fun EditScreen(
         manifestFile.writeJson(manifest, ExtensionJsonConfig)
         when (extEditor) {
             is ThemeExtensionEditor -> {
+                // TODO: this is hacky
+                val fonts = workspace.extDir.subDir("fonts")
+                if (fonts.exists()) {
+                    fonts.copyRecursively(workspace.saverDir.subDir("fonts"), overwrite = true)
+                }
+                val images = workspace.extDir.subDir("images")
+                if (images.exists()) {
+                    images.copyRecursively(workspace.saverDir.subDir("images"), overwrite = true)
+                }
                 for (theme in extEditor.themes) {
                     val stylesheetFile = workspace.saverDir.subFile(theme.stylesheetPath())
                     stylesheetFile.parentFile?.mkdirs()
@@ -581,35 +591,6 @@ private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<
     }
 }
 
-@Composable
-private fun ManageFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
-    title = stringRes(R.string.ext__editor__files__title)
-
-    fun handleBackPress() {
-        workspace.currentAction = null
-    }
-
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.Default.Close,
-        )
-    }
-
-    content {
-        BackHandler {
-            handleBackPress()
-        }
-
-        FlorisInfoCard(
-            modifier = Modifier.padding(all = 8.dp),
-            text = """
-                Managing archive files is currently not supported.
-                """.trimIndent().replace('\n', ' '),
-        )
-    }
-}
-
 private enum class CreateFrom {
     EMPTY,
     EXISTING;
@@ -859,7 +840,6 @@ private fun EditorSheetTextField(
     showValidationError: Boolean = false,
     validationResult: ValidationResult? = null,
 ) {
-    val borderColor = MaterialTheme.colorScheme.outline
     Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
         Row(
             modifier = Modifier
