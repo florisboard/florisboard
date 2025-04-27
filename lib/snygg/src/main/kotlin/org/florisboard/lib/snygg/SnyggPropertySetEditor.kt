@@ -58,7 +58,11 @@ import org.florisboard.lib.snygg.value.SnyggYesValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
 
-class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
+sealed interface SnyggPropertySetEditor {
+    fun build(): SnyggPropertySet
+}
+
+class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = null) : SnyggPropertySetEditor {
     val properties = mutableMapOf<String, SnyggValue>()
 
     init {
@@ -80,7 +84,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         }
     }
 
-    internal fun applyAll(thisStyle: SnyggPropertySet, parentStyle: SnyggPropertySet) {
+    internal fun applyAll(thisStyle: SnyggSinglePropertySet, parentStyle: SnyggSinglePropertySet) {
         for ((property, value) in thisStyle.properties) {
             when {
                 value.isUndefined() -> setProperty(property, null)
@@ -91,7 +95,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         inheritImplicitly(parentStyle)
     }
 
-    internal fun inheritImplicitly(parentStyle: SnyggPropertySet) {
+    internal fun inheritImplicitly(parentStyle: SnyggSinglePropertySet) {
         // TODO: pattern properties??
         for ((property, propertySpec) in SnyggSpec.elementsSpec.properties) {
             if (propertySpec.inheritsImplicitly() && !properties.contains(property)) {
@@ -101,7 +105,7 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
         }
     }
 
-    fun build() = SnyggPropertySet(properties.toMap())
+    override fun build() = SnyggSinglePropertySet(properties.toMap())
 
     infix fun String.to(v: SnyggValue) {
         properties[this] = v
@@ -369,4 +373,20 @@ class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {
     fun no(): SnyggNoValue {
         return SnyggNoValue
     }
+}
+
+class SnyggMultiplePropertySetsEditor(initSets: List<SnyggSinglePropertySet>? = null) : SnyggPropertySetEditor {
+    val sets = mutableListOf<SnyggSinglePropertySetEditor>()
+
+    init {
+        initSets?.forEach { sets.add(it.edit()) }
+    }
+
+    fun add(configure: SnyggSinglePropertySetEditor.() -> Unit) {
+        val editor = SnyggSinglePropertySetEditor()
+        editor.configure()
+        sets.add(editor)
+    }
+
+    override fun build() = SnyggMultiplePropertySets(sets.map { it.build() })
 }

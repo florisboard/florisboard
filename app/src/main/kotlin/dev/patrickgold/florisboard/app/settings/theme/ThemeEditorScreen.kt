@@ -100,9 +100,13 @@ import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
+import org.florisboard.lib.snygg.SnyggMultiplePropertySetsEditor
 import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.SnyggSinglePropertySetEditor
+import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.SnyggSpecDecl
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
 import org.florisboard.lib.snygg.ui.Saver
@@ -138,7 +142,7 @@ fun ThemeEditorScreen(
             } else {
                 SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2)
             }
-            stylesheetEditor.rules.putIfAbsent(SnyggAnnotationRule.Defines, SnyggPropertySetEditor())
+            stylesheetEditor.rules.putIfAbsent(SnyggAnnotationRule.Defines, SnyggSinglePropertySetEditor())
             stylesheetEditor
         }.also { editor.stylesheetEditor = it }
     }
@@ -149,7 +153,7 @@ fun ThemeEditorScreen(
     var oldFocusState by remember { mutableStateOf(false) }
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }
-    var snyggPropertySetForEditing = remember<SnyggPropertySetEditor?> { null }
+    var snyggPropertySetForEditing = remember<SnyggSinglePropertySetEditor?> { null }
     var showEditComponentMetaDialog by rememberSaveable { mutableStateOf(false) }
     var showFineTuneDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -231,7 +235,7 @@ fun ThemeEditorScreen(
 
         val definedVariables = remember(stylesheetEditor.rules) {
             stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
-                if (rule is SnyggAnnotationRule.Defines) {
+                if (rule is SnyggAnnotationRule.Defines && propertySet is SnyggSinglePropertySetEditor) {
                     propertySet.properties
                 } else {
                     null
@@ -283,6 +287,10 @@ fun ThemeEditorScreen(
                                 snyggRuleToEdit = rule
                             },
                             onAddPropertyBtnClick = {
+                                if (propertySet !is SnyggSinglePropertySetEditor) {
+                                    // TODO: implement
+                                    return@SnyggRuleRow
+                                }
                                 snyggPropertySetForEditing = propertySet
                                 snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
                                     rule = rule,
@@ -297,18 +305,25 @@ fun ThemeEditorScreen(
                                 fontStyle = FontStyle.Italic,
                             )
                         }
-                        for ((propertyName, propertyValue) in propertySet.properties) {
-                            if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
-                                JetPrefListItem(
-                                    modifier = Modifier.rippleClickable {
-                                        snyggPropertySetForEditing = propertySet
-                                        snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
-                                    },
-                                    text = context.translatePropertyName(propertyName, snyggLevel),
-                                    secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
-                                    singleLineSecondaryText = true,
-                                    trailing = { SnyggValueIcon(propertyValue, definedVariables) },
-                                )
+                        when (propertySet) {
+                            is SnyggSinglePropertySetEditor -> {
+                                for ((propertyName, propertyValue) in propertySet.properties) {
+                                    if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
+                                        JetPrefListItem(
+                                            modifier = Modifier.rippleClickable {
+                                                snyggPropertySetForEditing = propertySet
+                                                snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
+                                            },
+                                            text = context.translatePropertyName(propertyName, snyggLevel),
+                                            secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
+                                            singleLineSecondaryText = true,
+                                            trailing = { SnyggValueIcon(propertyValue, definedVariables) },
+                                        )
+                                    }
+                                }
+                            }
+                            is SnyggMultiplePropertySetsEditor -> {
+                                // TODO implement
                             }
                         }
                     }
@@ -360,7 +375,14 @@ fun ThemeEditorScreen(
                                     true
                                 }
                                 oldRule == SnyggEmptyRuleForAdding -> {
-                                    rules[newRule] = SnyggPropertySetEditor()
+                                    when (SnyggSpec.propertySetSpecOf(newRule)!!.type) {
+                                        SnyggSpecDecl.PropertySet.Type.SINGLE_SET -> {
+                                            rules[newRule] = SnyggSinglePropertySetEditor()
+                                        }
+                                        SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
+                                            rules[newRule] = SnyggMultiplePropertySetsEditor()
+                                        }
+                                    }
                                     snyggRuleToEdit = null
                                     scope.launch {
                                         lazyListState.animateScrollToItem(index = rules.keys.indexOf(newRule))

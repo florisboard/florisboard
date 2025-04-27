@@ -28,8 +28,8 @@ class SnyggThemeTest {
         elementName: String,
         attributes: SnyggQueryAttributes = emptyMap(),
         selector: SnyggSelector = SnyggSelector.NONE,
-        parentStyle: SnyggPropertySet = SnyggPropertySet(),
-    ): SnyggPropertySet {
+        parentStyle: SnyggSinglePropertySet = SnyggSinglePropertySet(),
+    ): SnyggSinglePropertySet {
         return this.query(
             elementName,
             attributes,

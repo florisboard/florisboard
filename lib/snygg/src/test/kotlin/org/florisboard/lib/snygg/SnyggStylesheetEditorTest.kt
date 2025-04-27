@@ -33,6 +33,7 @@ class SnyggStylesheetEditorTest {
 
         val defines = stylesheet.rules[SnyggAnnotationRule.Defines]
         assertNotNull(defines)
+        assertIs<SnyggSinglePropertySet>(defines)
         val definesSmallSize = assertIs<SnyggDpSizeValue>(defines.properties["--small-size"])
         assertNotNull(definesSmallSize)
         assertEquals(12.dp, definesSmallSize.dp)
@@ -42,6 +43,7 @@ class SnyggStylesheetEditorTest {
 
         val smartbar = stylesheet.rules[SnyggElementRule("smartbar")]
         assertNotNull(smartbar)
+        assertIs<SnyggSinglePropertySet>(smartbar)
         val smartbarBackground = assertIs<SnyggStaticColorValue>(smartbar.background)
         assertNotNull(smartbar.background)
         assertEquals(Color(255, 0, 0), smartbarBackground.color)
@@ -55,7 +57,7 @@ class SnyggStylesheetEditorTest {
         val stylesheet = SnyggStylesheet(
             schema = "/schema/path",
             rules = mapOf(
-                SnyggElementRule("smartbar") to SnyggPropertySet(mapOf(
+                SnyggElementRule("smartbar") to SnyggSinglePropertySet(mapOf(
                     "background" to SnyggStaticColorValue(Color(255, 0, 0)),
                     "shape" to SnyggRectangleShapeValue(),
                 )),

@@ -107,27 +107,57 @@ object SnyggJsonSchemaGenerator {
         return list.map { convertToJsonObject(it as Map<String, Any?>) }
     }
 
-    private fun convertToSchema(props: SnyggSpecDecl.SnyggPropertySetSpecDecl): Map<String, Any> {
-        return mapWithoutBlankValuesOf(
-            "title" to props.meta.title,
-            "description" to props.meta.description,
-            "type" to "object",
-            "patternProperties" to props.patternProperties.mapValues { (_, propertySpec) ->
+    private fun convertToSchema(props: SnyggSpecDecl.PropertySet): Map<String, Any> {
+        return when (props.type) {
+            SnyggSpecDecl.PropertySet.Type.SINGLE_SET -> {
                 mapWithoutBlankValuesOf(
-                    "title" to propertySpec.meta.title,
-                    "description" to propertySpec.meta.description,
-                    "oneOf" to oneOfList(propertySpec.encoders)
+                    "title" to props.meta.title,
+                    "description" to props.meta.description,
+                    "type" to "object",
+                    "patternProperties" to props.patternProperties.mapValues { (_, propertySpec) ->
+                        mapWithoutBlankValuesOf(
+                            "title" to propertySpec.meta.title,
+                            "description" to propertySpec.meta.description,
+                            "oneOf" to oneOfList(propertySpec.encoders)
+                        )
+                    }.mapKeys { (key, _) -> key.toString() },
+                    "properties" to props.properties.mapValues { (_, propertySpec) ->
+                        mapWithoutBlankValuesOf(
+                            "title" to propertySpec.meta.title,
+                            "description" to propertySpec.meta.description,
+                            "oneOf" to oneOfList(propertySpec.encoders)
+                        )
+                    },
+                    "additionalProperties" to false,
                 )
-            }.mapKeys { (key, _) -> key.toString() },
-            "properties" to props.properties.mapValues { (_, propertySpec) ->
+            }
+            SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
                 mapWithoutBlankValuesOf(
-                    "title" to propertySpec.meta.title,
-                    "description" to propertySpec.meta.description,
-                    "oneOf" to oneOfList(propertySpec.encoders)
+                    "title" to props.meta.title,
+                    "description" to props.meta.description,
+                    "type" to "array",
+                    "items" to mapOf(
+                        "type" to "object",
+                        "patternProperties" to props.patternProperties.mapValues { (_, propertySpec) ->
+                            mapWithoutBlankValuesOf(
+                                "title" to propertySpec.meta.title,
+                                "description" to propertySpec.meta.description,
+                                "oneOf" to oneOfList(propertySpec.encoders)
+                            )
+                        }.mapKeys { (key, _) -> key.toString() },
+                        "properties" to props.properties.mapValues { (_, propertySpec) ->
+                            mapWithoutBlankValuesOf(
+                                "title" to propertySpec.meta.title,
+                                "description" to propertySpec.meta.description,
+                                "oneOf" to oneOfList(propertySpec.encoders)
+                            )
+                        },
+                        "additionalProperties" to false,
+                    )
                 )
-            },
-            "additionalProperties" to false,
-        )
+            }
+        }
+
     }
 
     private fun oneOfList(encoders: Set<SnyggValueEncoder>): List<Map<String, Any>> {

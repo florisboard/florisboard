@@ -88,13 +88,13 @@ object SnyggSpec : SnyggSpecDecl({
     meta.title = "Snygg Stylesheet Specification"
     meta.description = "This document describes the Snygg stylesheet specification."
 
-    annotation(SnyggAnnotationRule.Defines) {
+    annotation(SnyggAnnotationRule.Defines).singleSet {
         pattern(SnyggVarValue.VariableNameRegex) {
             any()
         }
     }
 
-    annotation(SnyggAnnotationRule.Font) {
+    annotation(SnyggAnnotationRule.Font).multipleSets {
         Snygg.Src {
             add(SnyggUriValue)
         }

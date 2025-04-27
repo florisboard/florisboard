@@ -45,7 +45,7 @@ import java.io.File
  *    variable references.
  * 5. All annotation elements have been pre-processed and stripped from the data.
  */
-internal typealias CompiledStyleData = Map<String, List<Pair<SnyggElementRule, SnyggPropertySet>>>
+internal typealias CompiledStyleData = Map<String, List<Pair<SnyggElementRule, SnyggSinglePropertySet>>>
 
 typealias SnyggQueryAttributes = Map<String, Any>
 
@@ -62,11 +62,11 @@ data class SnyggTheme internal constructor(
         elementName: String,
         attributes: SnyggQueryAttributes,
         selector: SnyggSelector,
-        parentStyle: SnyggPropertySet,
+        parentStyle: SnyggSinglePropertySet,
         dynamicLightColorScheme: ColorScheme,
         dynamicDarkColorScheme: ColorScheme,
-    ): SnyggPropertySet {
-        val editor = SnyggPropertySetEditor().also { it.inheritImplicitly(parentStyle) }
+    ): SnyggSinglePropertySet {
+        val editor = SnyggSinglePropertySetEditor().also { it.inheritImplicitly(parentStyle) }
         val styleSets = style[elementName] ?: return editor.build()
         for ((rule, propertySet) in styleSets) {
             if (rule.isMatchForQuery(attributes, selector)) {
@@ -92,30 +92,35 @@ data class SnyggTheme internal constructor(
             stylesheet: SnyggStylesheet,
             assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
         ): SnyggTheme {
-            val elements = mutableMapOf<String, MutableList<Pair<SnyggElementRule, SnyggPropertySet>>>()
-            var variablesSet: SnyggPropertySet? = null
+            val elements = mutableMapOf<String, MutableList<Pair<SnyggElementRule, SnyggSinglePropertySet>>>()
+            var variablesSet: SnyggSinglePropertySet? = null
             val fonts = mutableMapOf<String, MutableList<Font>>()
             stylesheet.rules.forEach { (rule, propertySet) ->
                 when (rule) {
                     is SnyggAnnotationRule.Defines -> {
+                        check(propertySet is SnyggSinglePropertySet)
                         variablesSet = propertySet
                     }
                     is SnyggAnnotationRule.Font -> {
-                        val src = propertySet.src
-                        if (src !is SnyggUriValue) return@forEach
-                        val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
-                        if (fontPath == null) return@forEach
+                        check(propertySet is SnyggMultiplePropertySets)
                         fonts.getOrPut(rule.fontName) { mutableListOf() }.apply {
-                            add(
-                                Font(
-                                    file = File(fontPath),
-                                    weight = FontWeight.Normal,
-                                    style = FontStyle.Normal,
+                            propertySet.sets.forEach { fontSet ->
+                                val src = fontSet.src
+                                if (src !is SnyggUriValue) return@forEach
+                                val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
+                                if (fontPath == null) return@forEach
+                                add(
+                                    Font(
+                                        file = File(fontPath),
+                                        weight = FontWeight.Normal,
+                                        style = FontStyle.Normal,
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                     is SnyggElementRule -> {
+                        check(propertySet is SnyggSinglePropertySet)
                         val list = elements.getOrDefault(rule.elementName, mutableListOf())
                         list.add(rule to propertySet)
                         elements[rule.elementName] = list

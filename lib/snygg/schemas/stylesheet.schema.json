@@ -301,18 +301,21 @@
       "additionalProperties": false
     },
     "snygg-font-property-set": {
-      "type": "object",
-      "patternProperties": {},
-      "properties": {
-        "src": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/snygg-uri-value"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
+      "type": "array",
+      "items": {
+        "type": "object",
+        "patternProperties": {},
+        "properties": {
+          "src": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/snygg-uri-value"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
     },
     "snygg-element-property-set": {
       "type": "object",

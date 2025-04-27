@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.Modifier
@@ -50,10 +49,11 @@ import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.CompiledFontFamilyData
 import org.florisboard.lib.snygg.SnyggPropertySet
-import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.SnyggSinglePropertySet
+import org.florisboard.lib.snygg.SnyggSinglePropertySetEditor
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
@@ -90,7 +90,7 @@ internal val LocalSnyggPreloadedCustomFontFamilies: ProvidableCompositionLocal<C
         error("ProvideSnyggTheme not called.")
     }
 
-internal val LocalSnyggParentStyle: ProvidableCompositionLocal<SnyggPropertySet> =
+internal val LocalSnyggParentStyle: ProvidableCompositionLocal<SnyggSinglePropertySet> =
     compositionLocalOf {
         error("ProvideSnyggTheme not called.")
     }
@@ -157,7 +157,7 @@ fun ProvideSnyggTheme(
         LocalSnyggDynamicDarkColorScheme provides darkScheme,
         LocalSnyggAssetResolver provides assetResolver,
         LocalSnyggPreloadedCustomFontFamilies provides customFontFamilies,
-        LocalSnyggParentStyle provides SnyggPropertySetEditor().run {
+        LocalSnyggParentStyle provides SnyggSinglePropertySetEditor().run {
             fontSize = fontSize(MaterialTheme.typography.bodyMedium.fontSize)
             build()
         },
@@ -170,7 +170,7 @@ internal fun ProvideSnyggStyle(
     elementName: String?,
     attributes: SnyggQueryAttributes,
     selector: SnyggSelector?,
-    content: @Composable (style: SnyggPropertySet) -> Unit
+    content: @Composable (style: SnyggSinglePropertySet) -> Unit
 ) {
     val theme = LocalSnyggTheme.current
     val style = theme.rememberQuery(elementName, attributes, selector)
@@ -201,7 +201,7 @@ fun rememberSnyggThemeQuery(
     elementName: String,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
-): SnyggPropertySet {
+): SnyggSinglePropertySet {
     val theme = LocalSnyggTheme.current
     return theme.rememberQuery(elementName, attributes, selector)
 }
@@ -211,7 +211,7 @@ internal fun SnyggTheme.rememberQuery(
     elementName: String?,
     attributes: SnyggQueryAttributes,
     selector: SnyggSelector? = null,
-): SnyggPropertySet {
+): SnyggSinglePropertySet {
     val mergedSelector = selector ?: LocalSnyggParentSelector.current
     val parentStyle = LocalSnyggParentStyle.current
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
@@ -229,7 +229,7 @@ internal fun SnyggTheme.rememberQuery(
 }
 
 fun Modifier.snyggBackground(
-    style: SnyggPropertySet,
+    style: SnyggSinglePropertySet,
     default: Color = Color.Unspecified,
     shape: Shape = style.shape(),
 ): Modifier {
@@ -253,7 +253,7 @@ fun Modifier.snyggBackground(
 }
 
 fun Modifier.snyggBorder(
-    style: SnyggPropertySet,
+    style: SnyggSinglePropertySet,
     width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     color: Color = style.borderColor.colorOrDefault(default = Color.Unspecified),
     shape: Shape = style.shape(),
@@ -266,7 +266,7 @@ fun Modifier.snyggBorder(
 }
 
 fun Modifier.snyggMargin(
-    style: SnyggPropertySet,
+    style: SnyggSinglePropertySet,
 ): Modifier {
     return when (style.margin) {
         is SnyggPaddingValue -> this.padding(style.margin.values)
@@ -275,7 +275,7 @@ fun Modifier.snyggMargin(
 }
 
 fun Modifier.snyggPadding(
-    style: SnyggPropertySet,
+    style: SnyggSinglePropertySet,
     default: PaddingValues? = null,
 ): Modifier {
     return when (style.padding) {
@@ -286,7 +286,7 @@ fun Modifier.snyggPadding(
 }
 
 fun Modifier.snyggShadow(
-    style: SnyggPropertySet,
+    style: SnyggSinglePropertySet,
     elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     shape: Shape = style.shape(),
     color: Color = style.shadowColor.colorOrDefault(default = DefaultShadowColor),
@@ -295,7 +295,9 @@ fun Modifier.snyggShadow(
 }
 
 @Composable
-internal fun Modifier.snyggIconSize(style: SnyggPropertySet): Modifier {
+internal fun Modifier.snyggIconSize(
+    style: SnyggSinglePropertySet,
+): Modifier {
     return with(LocalDensity.current) {
         val fontSize = style.fontSize(default = 0.sp)
         if (fontSize.isSp && fontSize >= 1.sp) {

@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
@@ -54,6 +55,7 @@ class SnyggStylesheetTest {
 
             val defines = stylesheet.rules[SnyggAnnotationRule.Defines]
             assertNotNull(defines)
+            assertIs<SnyggSinglePropertySet>(defines)
             assertEquals(1, defines.properties.size)
             val definesTestValue: SnyggValue? = defines.properties["--test"]
             assertIs<SnyggStaticColorValue>(definesTestValue)
@@ -61,6 +63,7 @@ class SnyggStylesheetTest {
 
             val smartbar = stylesheet.rules[SnyggElementRule("smartbar")]
             assertNotNull(smartbar)
+            assertIs<SnyggSinglePropertySet>(smartbar)
             assertEquals(3, smartbar.properties.size)
             val smartbarBackground = assertIs<SnyggStaticColorValue>(smartbar.background)
             assertEquals(Color.Transparent, smartbarBackground.color)
@@ -71,6 +74,7 @@ class SnyggStylesheetTest {
 
             val keyboard = stylesheet.rules[SnyggElementRule("keyboard")]
             assertNotNull(keyboard)
+            assertIs<SnyggSinglePropertySet>(keyboard)
             assertEquals(3, keyboard.properties.size)
             val keyboardBackground = assertIs<SnyggStaticColorValue>(keyboard.background)
             assertEquals(Color(255, 255, 255), keyboardBackground.color)
@@ -124,13 +128,13 @@ class SnyggStylesheetTest {
             val stylesheet = SnyggStylesheet(
                 schema = "https://schemas.florisboard.org/snygg/v2/stylesheet",
                 rules = mapOf(
-                    SnyggElementRule("smartbar") to SnyggPropertySet(
+                    SnyggElementRule("smartbar") to SnyggSinglePropertySet(
                         mapOf(
                             "background" to SnyggStaticColorValue(Color(255, 0, 0)),
                             "shape" to SnyggRectangleShapeValue(),
                         )
                     ),
-                    SnyggElementRule("key", selector = SnyggSelector.PRESSED) to SnyggPropertySet(
+                    SnyggElementRule("key", selector = SnyggSelector.PRESSED) to SnyggSinglePropertySet(
                         mapOf(
                             "shape" to SnyggCircleShapeValue(),
                         )
@@ -184,6 +188,7 @@ class SnyggStylesheetTest {
             assertEquals(1, stylesheet.rules.size)
             val (rule, definesProperties) = stylesheet.rules.entries.first()
             assertIs<SnyggAnnotationRule.Defines>(rule)
+            assertIs<SnyggSinglePropertySet>(definesProperties)
             val variables = definesProperties.properties
             assertEquals(3, variables.size)
 
@@ -238,9 +243,11 @@ class SnyggStylesheetTest {
               "@defines": {
                 "--test": "transparent"
               },
-              "@font": {
-                "--test": "transparent"
-              }
+              "@font `My Font`": [
+                {
+                  "--test": "transparent"
+                }
+              ]
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
@@ -274,33 +281,55 @@ class SnyggStylesheetTest {
         @Test
         fun `deserialization with valid font`() {
             val json = """
-        {
-          $SCHEMA_LINE,
-          "@font `Comic Sans`": {
-            "src": "uri(`flex:/path/to/file`)"
-          }
-        }
-        """.trimIndent()
+            {
+              $SCHEMA_LINE,
+              "@font `Comic Sans`": [
+                {
+                  "src": "uri(`flex:/path/to/file`)"
+                }
+              ]
+            }
+            """.trimIndent()
             val stylesheet = Json.decodeFromString<SnyggStylesheet>(json)
             assertEquals(1, stylesheet.rules.size)
-            val (rule, fontProperties) = stylesheet.rules.entries.first()
+            val (rule, properties) = stylesheet.rules.entries.first()
             val fontRule = assertIs<SnyggAnnotationRule.Font>(rule)
             assertEquals("font", fontRule.decl().name)
             assertEquals("Comic Sans", fontRule.fontName)
-            val src = assertIs<SnyggUriValue>(fontProperties.src)
+            val fontSets = assertIs<SnyggMultiplePropertySets>(properties).sets
+            assertEquals(1, fontSets.size)
+            val font = fontSets.first()
+            val src = assertIs<SnyggUriValue>(font.src)
             assertEquals("flex:/path/to/file", src.uri)
+        }
+
+        @Test
+        fun `deserialization as single set should fail`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@font `Comic Sans`": {
+                "src": "uri(`flex:/path/to/file`)"
+              }
+            }
+            """.trimIndent()
+            assertThrows<IllegalArgumentException> {
+                Json.decodeFromString<SnyggStylesheet>(json)
+            }
         }
 
         @Test
         fun `deserialization with missing font name should fail`() {
             val json = """
-        {
-          $SCHEMA_LINE,
-          "@font": {
-            "src": "uri(`flex:/path/to/file`)"
-          }
-        }
-        """.trimIndent()
+            {
+              $SCHEMA_LINE,
+              "@font": [
+                {
+                  "src": "uri(`flex:/path/to/file`)"
+                }
+              ]
+            }
+            """.trimIndent()
             assertThrows<IllegalArgumentException> {
                 Json.decodeFromString<SnyggStylesheet>(json)
             }
@@ -309,13 +338,15 @@ class SnyggStylesheetTest {
         @Test
         fun `deserialization with empty font name should fail`() {
             val json = """
-        {
-          $SCHEMA_LINE,
-          "@font ``": {
-            "src": "uri(`path/to/file`)"
-          }
-        }
-        """.trimIndent()
+            {
+              $SCHEMA_LINE,
+              "@font ``": [
+                {
+                  "src": "uri(`flex:/path/to/file`)"
+                }
+              ]
+            }
+            """.trimIndent()
             assertThrows<IllegalArgumentException> {
                 Json.decodeFromString<SnyggStylesheet>(json)
             }
@@ -324,16 +355,34 @@ class SnyggStylesheetTest {
         @Test
         fun `deserialization with invalid font name should fail`() {
             val json = """
-        {
-          $SCHEMA_LINE,
-          "@font `Test ^$%\\``": {
-            "src": "uri(`path/to/file`)"
-          }
-        }
-        """.trimIndent()
+            {
+              $SCHEMA_LINE,
+              "@font `Test ^$%\\``": [
+                {
+                  "src": "uri(`flex:/path/to/file`)"
+                }
+              ]
+            }
+            """.trimIndent()
             assertThrows<IllegalArgumentException> {
                 Json.decodeFromString<SnyggStylesheet>(json)
             }
+        }
+
+        @Test
+        fun `serialization of valid font (single)`() {
+            val stylesheet = SnyggStylesheet.v2 {
+                font("Comic Sans") {
+                    add {
+                        src = uri("flex:/path/to/font.ttf")
+                    }
+                }
+            }
+            @Language("json")
+            val expectedJson =
+                """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"}]}"""
+            val actualJson = Json.encodeToString(stylesheet)
+            assertEquals(expectedJson, actualJson)
         }
     }
 }

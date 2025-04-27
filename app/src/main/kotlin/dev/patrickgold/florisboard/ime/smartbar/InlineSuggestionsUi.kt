@@ -37,9 +37,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.toIntOffset
 import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.snygg.SnyggSinglePropertySet
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
-var CachedInlineSuggestionsChipStyleSet: SnyggPropertySet? = null
+var CachedInlineSuggestionsChipStyleSet: SnyggSinglePropertySet? = null
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
