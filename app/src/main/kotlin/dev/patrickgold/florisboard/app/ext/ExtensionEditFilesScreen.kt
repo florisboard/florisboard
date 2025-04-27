@@ -56,10 +56,10 @@ import org.florisboard.lib.kotlin.io.subFile
 import java.io.File
 import java.util.*
 
-private const val FONTS = "fonts"
-private const val IMAGES = "images"
+const val FONTS = "fonts"
+const val IMAGES = "images"
 
-private val MIME_TYPES = mapOf(
+val MIME_TYPES = mapOf(
     FONTS to listOf(
         // Source: https://www.alienfactory.co.uk/articles/mime-types-for-web-fonts-in-bedsheet#mimeTypes
         "font/*",
@@ -92,10 +92,10 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         val context = LocalContext.current
         var version by rememberSaveable { mutableIntStateOf(0) }
         val fontFiles = remember(version) {
-            workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().toList()
+            workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().asList()
         }
         val imageFiles = remember(version) {
-            workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().toList()
+            workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().asList()
         }
 
         var currentImportDest by remember { mutableStateOf<String?>(null) }

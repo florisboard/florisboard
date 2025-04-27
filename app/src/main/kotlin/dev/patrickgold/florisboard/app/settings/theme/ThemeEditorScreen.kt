@@ -391,6 +391,7 @@ fun ThemeEditorScreen(
                 level = snyggLevel,
                 colorRepresentation = colorRepresentation,
                 definedVariables = definedVariables,
+                workspace = workspace,
                 onConfirmNewValue = { name, value ->
                     val properties = snyggPropertySetForEditing?.properties ?: return@EditPropertyDialog false
                     if (propertyToEdit == SnyggEmptyPropertyInfoForAdding && properties.containsKey(name)) {

@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.settings.theme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,11 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ManageSearch
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -64,9 +69,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ext.FONTS
+import dev.patrickgold.florisboard.app.ext.IMAGES
 import dev.patrickgold.florisboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.DpSizeSaver
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
+import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -77,15 +86,17 @@ import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
-import java.net.URI
 import org.florisboard.lib.color.ColorPalette
 import org.florisboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.toStringWithoutDotZero
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
@@ -100,7 +111,6 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggLineClampValue
-import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
@@ -171,6 +181,7 @@ internal fun EditPropertyDialog(
     level: SnyggLevel,
     colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
+    workspace: CacheManager.ExtEditorWorkspace<*>,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
@@ -306,6 +317,7 @@ internal fun EditPropertyDialog(
                     level = level,
                     colorRepresentation = colorRepresentation,
                     definedVariables = definedVariables,
+                    workspace = workspace,
                     isError = !isPropertyValueValid(),
                 )
             }
@@ -396,6 +408,7 @@ private fun PropertyValueEditor(
     level: SnyggLevel,
     colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
+    workspace: CacheManager.ExtEditorWorkspace<*>,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
 ) {
@@ -477,6 +490,7 @@ private fun PropertyValueEditor(
         }
 
         is SnyggCustomFontFamilyValue -> {
+            
             // TODO: implement
         }
 
@@ -605,18 +619,54 @@ private fun PropertyValueEditor(
             var inputStr by rememberSaveable {
                 mutableStateOf(value.uri)
             }
-            JetPrefTextField(
-                value = inputStr,
-                onValueChange = { newInputStr ->
-                    inputStr = newInputStr
-                    runCatching { URI.create(newInputStr).toString() }.fold(
-                        onSuccess = { onValueChange(SnyggUriValue(it)) },
-                        onFailure = { onValueChange(SnyggUriValue("")) },
-                    )
-                },
-                modifier = modifier,
-                isError = isError,
-            )
+            Column(modifier) {
+                val workspaceFiles = remember {
+                    buildList {
+                        addAll(workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().asList())
+                        addAll(workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().asList())
+                    }
+                }
+                var showSelectFileDialog by rememberSaveable { mutableStateOf(false) }
+                if (showSelectFileDialog) {
+                    JetPrefAlertDialog(
+                        title = "Select file",
+                        dismissLabel = stringRes(R.string.action__cancel),
+                        onDismiss = {
+                            showSelectFileDialog = false
+                        },
+                        contentPadding = PaddingValues(horizontal = 8.dp),
+                    ) {
+                        Column {
+                            workspaceFiles.forEach { file ->
+                                JetPrefListItem(
+                                    modifier = Modifier.clickable {
+                                        val relPath = file.path.removePrefix(workspace.extDir.path)
+                                        inputStr = "flex:$relPath"
+                                        onValueChange(SnyggUriValue(inputStr))
+                                        showSelectFileDialog = false
+                                    },
+                                    text = file.name,
+                                    colors = ListItemDefaults.colors(
+                                        containerColor = AlertDialogDefaults.containerColor
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+                JetPrefTextField(
+                    value = inputStr,
+                    onValueChange = {},
+                    isError = isError,
+                    enabled = false,
+                    trailingIcon = {
+                        FlorisIconButton(
+                            onClick = { showSelectFileDialog = true },
+                            icon = Icons.AutoMirrored.Filled.ManageSearch,
+                        )
+                    },
+                )
+            }
         }
 
         else -> {
@@ -829,36 +879,16 @@ private fun ShapeValueEditor(
                 mutableStateOf<ShapeCorner?>(null)
             }
             var topStart by rememberSaveable(stateSaver = DpSizeSaver) {
-                mutableStateOf(
-                    when (value) {
-                        is SnyggCutCornerDpShapeValue -> value.topStart
-                        is SnyggRoundedCornerDpShapeValue -> value.topStart
-                    }
-                )
+                mutableStateOf(value.topStart)
             }
             var topEnd by rememberSaveable(stateSaver = DpSizeSaver) {
-                mutableStateOf(
-                    when (value) {
-                        is SnyggCutCornerDpShapeValue -> value.topEnd
-                        is SnyggRoundedCornerDpShapeValue -> value.topEnd
-                    }
-                )
+                mutableStateOf(value.topEnd)
             }
             var bottomEnd by rememberSaveable(stateSaver = DpSizeSaver) {
-                mutableStateOf(
-                    when (value) {
-                        is SnyggCutCornerDpShapeValue -> value.bottomEnd
-                        is SnyggRoundedCornerDpShapeValue -> value.bottomEnd
-                    }
-                )
+                mutableStateOf(value.bottomEnd)
             }
             var bottomStart by rememberSaveable(stateSaver = DpSizeSaver) {
-                mutableStateOf(
-                    when (value) {
-                        is SnyggCutCornerDpShapeValue -> value.bottomStart
-                        is SnyggRoundedCornerDpShapeValue -> value.bottomStart
-                    }
-                )
+                mutableStateOf(value.bottomStart)
             }
             val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
                 when (value) {
@@ -995,36 +1025,16 @@ private fun ShapeValueEditor(
                 mutableStateOf<ShapeCorner?>(null)
             }
             var topStart by rememberSaveable {
-                mutableIntStateOf(
-                    when (value) {
-                        is SnyggCutCornerPercentShapeValue -> value.topStart
-                        is SnyggRoundedCornerPercentShapeValue -> value.topStart
-                    }
-                )
+                mutableIntStateOf(value.topStart)
             }
             var topEnd by rememberSaveable {
-                mutableIntStateOf(
-                    when (value) {
-                        is SnyggCutCornerPercentShapeValue -> value.topEnd
-                        is SnyggRoundedCornerPercentShapeValue -> value.topEnd
-                    }
-                )
+                mutableIntStateOf(value.topEnd)
             }
             var bottomEnd by rememberSaveable {
-                mutableIntStateOf(
-                    when (value) {
-                        is SnyggCutCornerPercentShapeValue -> value.bottomEnd
-                        is SnyggRoundedCornerPercentShapeValue -> value.bottomEnd
-                    }
-                )
+                mutableIntStateOf(value.bottomEnd)
             }
             var bottomStart by rememberSaveable {
-                mutableIntStateOf(
-                    when (value) {
-                        is SnyggCutCornerPercentShapeValue -> value.bottomStart
-                        is SnyggRoundedCornerPercentShapeValue -> value.bottomStart
-                    }
-                )
+                mutableIntStateOf(value.bottomStart)
             }
             val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
                 when (value) {
