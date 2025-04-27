@@ -110,7 +110,6 @@ import org.florisboard.lib.snygg.value.SnyggEnumLikeValueEncoder
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
@@ -121,6 +120,7 @@ import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
@@ -490,7 +490,7 @@ private fun PropertyValueEditor(
         }
 
         is SnyggCustomFontFamilyValue -> {
-            
+
             // TODO: implement
         }
 
@@ -500,24 +500,6 @@ private fun PropertyValueEditor(
 
         is SnyggFontWeightValue -> {
             EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
-        }
-
-        is SnyggLineClampValue -> {
-            var inputStr by rememberSaveable {
-                mutableStateOf(value.encoder().serialize(value).getOrDefault("???"))
-            }
-            JetPrefTextField(
-                value = inputStr,
-                onValueChange = { newInputStr ->
-                    inputStr = newInputStr
-                    onValueChange(
-                        value.encoder().deserialize(newInputStr)
-                            .getOrDefault(SnyggLineClampValue(-1))
-                    )
-                },
-                modifier = modifier,
-                isError = isError,
-            )
         }
 
         is SnyggPaddingValue -> {
@@ -609,6 +591,24 @@ private fun PropertyValueEditor(
 
         is SnyggTextDecorationLineValue -> {
             EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggTextMaxLinesValue -> {
+            var inputStr by rememberSaveable {
+                mutableStateOf(value.encoder().serialize(value).getOrDefault("???"))
+            }
+            JetPrefTextField(
+                value = inputStr,
+                onValueChange = { newInputStr ->
+                    inputStr = newInputStr
+                    onValueChange(
+                        value.encoder().deserialize(newInputStr)
+                            .getOrDefault(SnyggTextMaxLinesValue(-1))
+                    )
+                },
+                modifier = modifier,
+                isError = isError,
+            )
         }
 
         is SnyggTextOverflowValue -> {

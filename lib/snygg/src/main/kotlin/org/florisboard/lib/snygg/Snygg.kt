@@ -28,7 +28,6 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
-import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
@@ -39,6 +38,7 @@ import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggVarValue
@@ -65,12 +65,7 @@ object Snygg {
     const val FontStyle = "font-style"
     const val FontWeight = "font-weight"
     const val LetterSpacing = "letter-spacing"
-    const val LineClamp = "line-clamp"
     const val LineHeight = "line-height"
-
-    const val TextAlign = "text-align"
-    const val TextDecorationLine = "text-decoration-line"
-    const val TextOverflow = "text-overflow"
 
     const val Margin = "margin"
     const val Padding = "padding"
@@ -82,6 +77,11 @@ object Snygg {
     const val Clip = "clip"
 
     const val Src = "src"
+
+    const val TextAlign = "text-align"
+    const val TextDecorationLine = "text-decoration-line"
+    const val TextMaxLines = "text-max-lines"
+    const val TextOverflow = "text-overflow"
 }
 
 object SnyggSpec : SnyggSpecDecl({
@@ -165,26 +165,9 @@ object SnyggSpec : SnyggSpecDecl({
             inheritsImplicitly()
             add(SnyggSpSizeValue)
         }
-        Snygg.LineClamp {
-            inheritsImplicitly()
-            add(SnyggLineClampValue)
-        }
         Snygg.LineHeight {
             inheritsImplicitly()
             add(SnyggSpSizeValue)
-        }
-
-        Snygg.TextAlign {
-            inheritsImplicitly()
-            add(SnyggTextAlignValue)
-        }
-        Snygg.TextDecorationLine {
-            inheritsImplicitly()
-            add(SnyggTextDecorationLineValue)
-        }
-        Snygg.TextOverflow {
-            inheritsImplicitly()
-            add(SnyggTextOverflowValue)
         }
 
         Snygg.Margin {
@@ -214,6 +197,23 @@ object SnyggSpec : SnyggSpecDecl({
         Snygg.Clip {
             add(SnyggYesValue)
             add(SnyggNoValue)
+        }
+
+        Snygg.TextAlign {
+            inheritsImplicitly()
+            add(SnyggTextAlignValue)
+        }
+        Snygg.TextDecorationLine {
+            inheritsImplicitly()
+            add(SnyggTextDecorationLineValue)
+        }
+        Snygg.TextMaxLines {
+            inheritsImplicitly()
+            add(SnyggTextMaxLinesValue)
+        }
+        Snygg.TextOverflow {
+            inheritsImplicitly()
+            add(SnyggTextOverflowValue)
         }
     }
 })

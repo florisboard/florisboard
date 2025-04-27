@@ -38,13 +38,13 @@ import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggValue
@@ -101,12 +101,7 @@ data class SnyggSinglePropertySet internal constructor(
     val fontWeight = properties[Snygg.FontWeight] ?: SnyggUndefinedValue
     val letterSpacing = properties[Snygg.LetterSpacing] ?: SnyggUndefinedValue
 
-    val lineClamp = properties[Snygg.LineClamp] ?: SnyggUndefinedValue
     val lineHeight = properties[Snygg.LineHeight] ?: SnyggUndefinedValue
-
-    val textAlign = properties[Snygg.TextAlign] ?: SnyggUndefinedValue
-    val textDecorationLine = properties[Snygg.TextDecorationLine] ?: SnyggUndefinedValue
-    val textOverflow = properties[Snygg.TextOverflow] ?: SnyggUndefinedValue
 
     val margin = properties[Snygg.Margin] ?: SnyggUndefinedValue
     val padding = properties[Snygg.Padding] ?: SnyggUndefinedValue
@@ -118,6 +113,11 @@ data class SnyggSinglePropertySet internal constructor(
     val clip = properties[Snygg.Clip] ?: SnyggUndefinedValue
 
     val src = properties[Snygg.Src] ?: SnyggUndefinedValue
+
+    val textAlign = properties[Snygg.TextAlign] ?: SnyggUndefinedValue
+    val textDecorationLine = properties[Snygg.TextDecorationLine] ?: SnyggUndefinedValue
+    val textMaxLines = properties[Snygg.TextMaxLines] ?: SnyggUndefinedValue
+    val textOverflow = properties[Snygg.TextOverflow] ?: SnyggUndefinedValue
 
     override fun edit() = SnyggSinglePropertySetEditor(properties)
 
@@ -223,17 +223,17 @@ data class SnyggSinglePropertySet internal constructor(
         }
     }
 
-    fun lineClamp(default: Int = Int.MAX_VALUE): Int {
-        return when (lineClamp) {
-            is SnyggLineClampValue -> lineClamp.maxLines
-            else -> default
-        }
-    }
-
     fun lineHeight(default: TextUnit = TextUnit.Unspecified): TextUnit {
         return when (lineHeight) {
             is SnyggSpSizeValue -> lineHeight.sp
             else -> default
+        }
+    }
+
+    fun shape(): Shape {
+        return when (shape) {
+            is SnyggShapeValue -> shape.shape
+            else -> RectangleShape
         }
     }
 
@@ -251,17 +251,17 @@ data class SnyggSinglePropertySet internal constructor(
         }
     }
 
-    fun textOverflow(default: TextOverflow = TextOverflow.Clip): TextOverflow {
-        return when (textOverflow) {
-            is SnyggTextOverflowValue -> textOverflow.textOverflow
+    fun textMaxLines(default: Int = Int.MAX_VALUE): Int {
+        return when (textMaxLines) {
+            is SnyggTextMaxLinesValue -> textMaxLines.maxLines
             else -> default
         }
     }
 
-    fun shape(): Shape {
-        return when (shape) {
-            is SnyggShapeValue -> shape.shape
-            else -> RectangleShape
+    fun textOverflow(default: TextOverflow = TextOverflow.Clip): TextOverflow {
+        return when (textOverflow) {
+            is SnyggTextOverflowValue -> textOverflow.textOverflow
+            else -> default
         }
     }
 }

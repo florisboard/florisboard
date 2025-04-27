@@ -85,8 +85,8 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         foreground = rgbaColor(184, 184, 184)
         fontFamily = genericFontFamily(FontFamily.Monospace)
         fontSize = fontSize(12.sp)
-        lineClamp = lineClampMax(1)
         padding = padding(0.dp, 1.dp, 1.dp, 0.dp)
+        textMaxLines = textMaxLines(1)
     }
     FlorisImeUi.KeyPopupBox.elementName {
         background = rgbaColor(117, 117, 117)
@@ -199,10 +199,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarActionTile.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        lineClamp = lineClampMax(2)
         margin = padding(4.dp)
         shape = roundedCornerShape(20)
         clip = yes()
+        textMaxLines = textMaxLines(2)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionTile.elementName(selector = SnyggSelector.DISABLED) {
@@ -224,25 +224,25 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(16.sp)
-        lineClamp = lineClampMax(1)
+        textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionsEditorSubheader.elementName {
         foreground = `var`("--secondary")
         fontSize = fontSize(16.sp)
         fontWeight = fontWeight(FontWeight.Bold)
-        lineClamp = lineClampMax(1)
         padding = padding(12.dp, 16.dp, 12.dp, 8.dp)
+        textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionsEditorTileGrid.elementName {
         margin = padding(4.dp, 0.dp)
     }
     FlorisImeUi.SmartbarActionsEditorTile.elementName {
-        lineClamp = lineClampMax(2)
         margin = padding(4.dp)
         padding = padding(8.dp)
         textAlign = textAlign(TextAlign.Center)
+        textMaxLines = textMaxLines(2)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.NOOP)) {

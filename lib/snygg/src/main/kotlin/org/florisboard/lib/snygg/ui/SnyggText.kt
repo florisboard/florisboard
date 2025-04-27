@@ -58,7 +58,7 @@ fun SnyggText(
             lineHeight = style.lineHeight(),
             textAlign = style.textAlign(),
             textDecoration = style.textDecorationLine(),
-            maxLines = style.lineClamp(),
+            maxLines = style.textMaxLines(),
             overflow = style.textOverflow(),
         )
     }
@@ -94,7 +94,7 @@ private fun SimpleSnyggText() {
         "preview-text"("long" to listOf(1)) {
             fontFamily = genericFontFamily(FontFamily.Serif)
             fontSize = fontSize(10.sp)
-            lineClamp = lineClampMax(1)
+            textMaxLines = textMaxLines(1)
             textOverflow = textOverflow(TextOverflow.Ellipsis)
         }
     }

@@ -28,6 +28,36 @@
       "type": "string",
       "pattern": "^\\s*uri[(]\\s*(?<enclosedUri>`flex:/[^`]+`)\\s*[)]\\s*$"
     },
+    "snygg-font-style-value": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "italic"
+      ]
+    },
+    "snygg-font-weight-value": {
+      "type": "string",
+      "enum": [
+        "thin",
+        "extra-light",
+        "light",
+        "normal",
+        "medium",
+        "semi-bold",
+        "bold",
+        "extra-bold",
+        "black",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900"
+      ]
+    },
     "snygg-static-color-value": {
       "oneOf": [
         {
@@ -94,67 +124,6 @@
       "type": "string",
       "pattern": "^\\s*(?<size>[1-9][0-9]*(?:[.][0-9]*)?)sp\\s*$"
     },
-    "snygg-font-style-value": {
-      "type": "string",
-      "enum": [
-        "normal",
-        "italic"
-      ]
-    },
-    "snygg-font-weight-value": {
-      "type": "string",
-      "enum": [
-        "thin",
-        "extra-light",
-        "light",
-        "normal",
-        "medium",
-        "semi-bold",
-        "bold",
-        "extra-bold",
-        "black",
-        "100",
-        "200",
-        "300",
-        "400",
-        "500",
-        "600",
-        "700",
-        "800",
-        "900"
-      ]
-    },
-    "snygg-line-clamp-value": {
-      "type": "string",
-      "pattern": "^\\s*(?<lineClamp>none|[1-9][0-9]*)\\s*$"
-    },
-    "snygg-text-align-value": {
-      "type": "string",
-      "enum": [
-        "left",
-        "right",
-        "center",
-        "justify",
-        "start",
-        "end"
-      ]
-    },
-    "snygg-text-decoration-line-value": {
-      "type": "string",
-      "enum": [
-        "none",
-        "underline",
-        "line-through"
-      ]
-    },
-    "snygg-text-overflow-value": {
-      "type": "string",
-      "enum": [
-        "clip",
-        "ellipsis",
-        "visible"
-      ]
-    },
     "snygg-padding-value": {
       "oneOf": [
         {
@@ -203,6 +172,37 @@
       "type": "string",
       "const": "no"
     },
+    "snygg-text-align-value": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right",
+        "center",
+        "justify",
+        "start",
+        "end"
+      ]
+    },
+    "snygg-text-decoration-line-value": {
+      "type": "string",
+      "enum": [
+        "none",
+        "underline",
+        "line-through"
+      ]
+    },
+    "snygg-text-max-lines-value": {
+      "type": "string",
+      "pattern": "^\\s*(?<textMaxLines>none|[1-9][0-9]*)\\s*$"
+    },
+    "snygg-text-overflow-value": {
+      "type": "string",
+      "enum": [
+        "clip",
+        "ellipsis",
+        "visible"
+      ]
+    },
     "snygg-inherit-value": {
       "type": "string",
       "const": "inherit"
@@ -218,6 +218,12 @@
           "oneOf": [
             {
               "$ref": "#/$defs/snygg-uri-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-font-style-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-font-weight-value"
             },
             {
               "$ref": "#/$defs/snygg-static-color-value"
@@ -242,24 +248,6 @@
             },
             {
               "$ref": "#/$defs/snygg-sp-size-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-font-style-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-font-weight-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-line-clamp-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-text-align-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-text-decoration-line-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-text-overflow-value"
             },
             {
               "$ref": "#/$defs/snygg-padding-value"
@@ -289,6 +277,18 @@
               "$ref": "#/$defs/snygg-no-value"
             },
             {
+              "$ref": "#/$defs/snygg-text-align-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-decoration-line-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-max-lines-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-overflow-value"
+            },
+            {
               "$ref": "#/$defs/snygg-inherit-value"
             },
             {
@@ -308,6 +308,20 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/snygg-uri-value"
+              }
+            ]
+          },
+          "font-style": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/snygg-font-style-value"
+              }
+            ]
+          },
+          "font-weight": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/snygg-font-weight-value"
               }
             ]
           }
@@ -495,19 +509,6 @@
             }
           ]
         },
-        "line-clamp": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/snygg-inherit-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-defined-var-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-line-clamp-value"
-            }
-          ]
-        },
         "line-height": {
           "oneOf": [
             {
@@ -518,45 +519,6 @@
             },
             {
               "$ref": "#/$defs/snygg-sp-size-value"
-            }
-          ]
-        },
-        "text-align": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/snygg-inherit-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-defined-var-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-text-align-value"
-            }
-          ]
-        },
-        "text-decoration-line": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/snygg-inherit-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-defined-var-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-text-decoration-line-value"
-            }
-          ]
-        },
-        "text-overflow": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/snygg-inherit-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-defined-var-value"
-            },
-            {
-              "$ref": "#/$defs/snygg-text-overflow-value"
             }
           ]
         },
@@ -659,6 +621,58 @@
             },
             {
               "$ref": "#/$defs/snygg-no-value"
+            }
+          ]
+        },
+        "text-align": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-align-value"
+            }
+          ]
+        },
+        "text-decoration-line": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-decoration-line-value"
+            }
+          ]
+        },
+        "text-max-lines": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-max-lines-value"
+            }
+          ]
+        },
+        "text-overflow": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/snygg-inherit-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-defined-var-value"
+            },
+            {
+              "$ref": "#/$defs/snygg-text-overflow-value"
             }
           ]
         }

@@ -26,9 +26,9 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
-    "line-clamp": "1",
     "shape": "var(--shape)",
-    "shadow-elevation": "2dp"
+    "shadow-elevation": "2dp",
+    "text-max-lines": "1"
   },
   "key:pressed": {
     "background": "var(--surface-variant)",
@@ -58,15 +58,15 @@
     "font-size": "12sp"
   },
   "key[code=-205]": {
-    "line-clamp": "2"
+    "text-max-lines": "2"
   },
   "key-hint": {
     "background": "transparent",
     "foreground": "var(--on-surface-variant)",
     "font-family": "monospace",
     "font-size": "12sp",
-    "line-clamp": "1",
-    "padding": "0dp 1dp 1dp 0dp"
+    "padding": "0dp 1dp 1dp 0dp",
+    "text-max-lines": "1"
   },
   "key-popup-box": {
     "background": "#eeeeee",

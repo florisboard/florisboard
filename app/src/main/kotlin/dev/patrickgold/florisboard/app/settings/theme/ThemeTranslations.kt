@@ -36,7 +36,6 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
-import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
@@ -48,6 +47,7 @@ import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
@@ -118,11 +118,7 @@ private val PropertyNameMap = mapOf(
     Snygg.FontStyle to R.string.snygg__property_name__font_style,
     Snygg.FontWeight to R.string.snygg__property_name__font_weight,
     Snygg.LetterSpacing to R.string.snygg__property_name__letter_spacing,
-    Snygg.LineClamp to R.string.snygg__property_name__line_clamp,
     Snygg.LineHeight to R.string.snygg__property_name__line_height,
-    Snygg.TextAlign to R.string.snygg__property_name__text_align,
-    Snygg.TextDecorationLine to R.string.snygg__property_name__text_decoration_line,
-    Snygg.TextOverflow to R.string.snygg__property_name__text_overflow,
     Snygg.Margin to R.string.snygg__property_name__margin,
     Snygg.Padding to R.string.snygg__property_name__padding,
     Snygg.ShadowColor to R.string.snygg__property_name__shadow_color,
@@ -130,6 +126,10 @@ private val PropertyNameMap = mapOf(
     Snygg.Shape to R.string.snygg__property_name__shape,
     Snygg.Clip to R.string.snygg__property_name__clip,
     Snygg.Src to R.string.snygg__property_name__src,
+    Snygg.TextAlign to R.string.snygg__property_name__text_align,
+    Snygg.TextDecorationLine to R.string.snygg__property_name__text_decoration_line,
+    Snygg.TextMaxLines to R.string.snygg__property_name__text_max_lines,
+    Snygg.TextOverflow to R.string.snygg__property_name__text_overflow,
     "--primary" to R.string.snygg__property_name__var_primary,
     "--primary-variant" to R.string.snygg__property_name__var_primary_variant,
     "--secondary" to R.string.snygg__property_name__var_secondary,
@@ -201,7 +201,6 @@ private val PropertyValueEncoderNameMap = mapOf(
     SnyggCustomFontFamilyValue to R.string.snygg__property_value__font_family_custom,
     SnyggFontStyleValue to R.string.snygg__property_value__font_style,
     SnyggFontWeightValue to R.string.snygg__property_value__font_weight,
-    SnyggLineClampValue to R.string.snygg__property_value__line_clamp,
     SnyggPaddingValue to R.string.snygg__property_value__padding,
     SnyggRectangleShapeValue to R.string.snygg__property_value__rectangle_shape,
     SnyggCircleShapeValue to R.string.snygg__property_value__circle_shape,
@@ -215,6 +214,7 @@ private val PropertyValueEncoderNameMap = mapOf(
     SnyggContentScaleValue to R.string.snygg__property_value__content_scale,
     SnyggTextAlignValue to R.string.snygg__property_value__text_align,
     SnyggTextDecorationLineValue to R.string.snygg__property_value__text_decoration_line,
+    SnyggTextMaxLinesValue to R.string.snygg__property_value__text_max_lines,
     SnyggTextOverflowValue to R.string.snygg__property_value__text_overflow,
     SnyggUriValue to R.string.snygg__property_value__uri,
 )

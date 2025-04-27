@@ -55,6 +55,39 @@ data class SnyggTextDecorationLineValue(val textDecoration: TextDecoration) : Sn
     override fun encoder() = Companion
 }
 
+data class SnyggTextMaxLinesValue(val maxLines: Int) : SnyggTextValue {
+    companion object : SnyggValueEncoder {
+        private const val TextMaxLinesId = "textMaxLines"
+        private const val NoneKey = "none"
+        private const val NoneValue = Int.MAX_VALUE
+
+        override val spec = SnyggValueSpec {
+            string(id = TextMaxLinesId, regex = """$NoneKey|[1-9][0-9]*""".toRegex())
+        }
+
+        override fun defaultValue() = SnyggTextMaxLinesValue(NoneValue)
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggTextMaxLinesValue)
+            require(v.maxLines >= 1)
+            val map = snyggIdToValueMapOf(TextMaxLinesId to (
+                if (v.maxLines == NoneValue) NoneKey else v.maxLines.toString()
+                ))
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = snyggIdToValueMapOf()
+            spec.parse(v, map)
+            val clampValue = map.getString(TextMaxLinesId)
+            val maxLines = if (clampValue == NoneKey) NoneValue else clampValue.toInt()
+            return@runCatching SnyggTextMaxLinesValue(maxLines)
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
 data class SnyggTextOverflowValue(val textOverflow: TextOverflow) : SnyggTextValue {
     companion object : SnyggEnumLikeValueEncoder<TextOverflow>(
         serializationId = "textAlign",

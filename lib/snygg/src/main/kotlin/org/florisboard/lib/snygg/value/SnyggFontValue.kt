@@ -115,36 +115,3 @@ data class SnyggFontWeightValue(val fontWeight: FontWeight) : SnyggFontValue {
     )
     override fun encoder() = Companion
 }
-
-data class SnyggLineClampValue(val maxLines: Int) : SnyggFontValue {
-    companion object : SnyggValueEncoder {
-        private const val LineClampId = "lineClamp"
-        private const val NoneKey = "none"
-        private const val NoneValue = Int.MAX_VALUE
-
-        override val spec = SnyggValueSpec {
-            string(id = LineClampId, regex = """$NoneKey|[1-9][0-9]*""".toRegex())
-        }
-
-        override fun defaultValue() = SnyggLineClampValue(NoneValue)
-
-        override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggLineClampValue)
-            require(v.maxLines >= 1)
-            val map = snyggIdToValueMapOf(LineClampId to (
-                if (v.maxLines == NoneValue) NoneKey else v.maxLines.toString()
-            ))
-            return@runCatching spec.pack(map)
-        }
-
-        override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = snyggIdToValueMapOf()
-            spec.parse(v, map)
-            val clampValue = map.getString(LineClampId)
-            val maxLines = if (clampValue == NoneKey) NoneValue else clampValue.toInt()
-            return@runCatching SnyggLineClampValue(maxLines)
-        }
-    }
-
-    override fun encoder() = Companion
-}

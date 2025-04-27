@@ -40,7 +40,6 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
-import org.florisboard.lib.snygg.value.SnyggLineClampValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
@@ -51,6 +50,7 @@ import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
@@ -161,22 +161,9 @@ class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = nu
         get() =  getProperty(Snygg.LetterSpacing)
         set(v) = setProperty(Snygg.LetterSpacing, v)
 
-    var lineClamp: SnyggValue?
-        get() =  getProperty(Snygg.LineClamp)
-        set(v) = setProperty(Snygg.LineClamp, v)
     var lineHeight: SnyggValue?
         get() =  getProperty(Snygg.LineHeight)
         set(v) = setProperty(Snygg.LineHeight, v)
-
-    var textAlign: SnyggValue?
-        get() =  getProperty(Snygg.TextAlign)
-        set(v) = setProperty(Snygg.TextAlign, v)
-    var textDecorationLine: SnyggValue?
-        get() =  getProperty(Snygg.TextDecorationLine)
-        set(v) = setProperty(Snygg.TextDecorationLine, v)
-    var textOverflow: SnyggValue?
-        get() =  getProperty(Snygg.TextOverflow)
-        set(v) = setProperty(Snygg.TextOverflow, v)
 
     var margin: SnyggValue?
         get() =  getProperty(Snygg.Margin)
@@ -202,6 +189,19 @@ class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = nu
     var src: SnyggValue?
         get() =  getProperty(Snygg.Src)
         set(v) = setProperty(Snygg.Src, v)
+
+    var textAlign: SnyggValue?
+        get() =  getProperty(Snygg.TextAlign)
+        set(v) = setProperty(Snygg.TextAlign, v)
+    var textDecorationLine: SnyggValue?
+        get() =  getProperty(Snygg.TextDecorationLine)
+        set(v) = setProperty(Snygg.TextDecorationLine, v)
+    var textMaxLines: SnyggValue?
+        get() =  getProperty(Snygg.TextMaxLines)
+        set(v) = setProperty(Snygg.TextMaxLines, v)
+    var textOverflow: SnyggValue?
+        get() =  getProperty(Snygg.TextOverflow)
+        set(v) = setProperty(Snygg.TextOverflow, v)
 
     fun rgbaColor(
         @IntRange(from = RgbaColor.ColorRangeMin.toLong(), to = RgbaColor.ColorRangeMax.toLong())
@@ -251,17 +251,17 @@ class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = nu
         return SnyggTextDecorationLineValue(textDecoration)
     }
 
+    fun textMaxLinesNone(): SnyggTextMaxLinesValue {
+        return SnyggTextMaxLinesValue.defaultValue()
+    }
+
+    fun textMaxLines(maxLines: Int): SnyggTextMaxLinesValue {
+        require(maxLines >= 1)
+        return SnyggTextMaxLinesValue(maxLines)
+    }
+
     fun textOverflow(textOverflow: TextOverflow): SnyggTextOverflowValue {
         return SnyggTextOverflowValue(textOverflow)
-    }
-
-    fun lineClampNone(): SnyggLineClampValue {
-        return SnyggLineClampValue.defaultValue()
-    }
-
-    fun lineClampMax(maxLines: Int): SnyggLineClampValue {
-        require(maxLines >= 1)
-        return SnyggLineClampValue(maxLines)
     }
 
     fun rectangleShape(): SnyggRectangleShapeValue {

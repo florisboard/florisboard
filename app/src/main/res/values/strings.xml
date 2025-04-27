@@ -266,11 +266,7 @@
     <string name="snygg__property_name__font_style">Font style</string>
     <string name="snygg__property_name__font_weight">Font weight</string>
     <string name="snygg__property_name__letter_spacing">Letter spacing</string>
-    <string name="snygg__property_name__line_clamp">Line clamp</string>
     <string name="snygg__property_name__line_height">Line height</string>
-    <string name="snygg__property_name__text_align">Text align</string>
-    <string name="snygg__property_name__text_decoration_line">Text decoration line</string>
-    <string name="snygg__property_name__text_overflow">Text overflow</string>
     <string name="snygg__property_name__margin">Margin</string>
     <string name="snygg__property_name__padding">Padding</string>
     <string name="snygg__property_name__shadow_color">Shadow color</string>
@@ -278,6 +274,10 @@
     <string name="snygg__property_name__shape">Shape</string>
     <string name="snygg__property_name__clip">Clip</string>
     <string name="snygg__property_name__src">Source</string>
+    <string name="snygg__property_name__text_align">Text align</string>
+    <string name="snygg__property_name__text_decoration_line">Text decoration line</string>
+    <string name="snygg__property_name__text_max_lines">Text max lines</string>
+    <string name="snygg__property_name__text_overflow">Text overflow</string>
     <string name="snygg__property_name__var_primary">Primary color</string>
     <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>
     <string name="snygg__property_name__var_secondary">Secondary color</string>
@@ -304,7 +304,6 @@
     <string name="snygg__property_value__font_family_custom">Font family (custom)</string>
     <string name="snygg__property_value__font_style">Font style</string>
     <string name="snygg__property_value__font_weight">Font weight</string>
-    <string name="snygg__property_value__line_clamp">Line clamp (max lines)</string>
     <string name="snygg__property_value__padding">Padding or Margin</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>
@@ -318,6 +317,7 @@
     <string name="snygg__property_value__content_scale">Content scale</string>
     <string name="snygg__property_value__text_align">Text align</string>
     <string name="snygg__property_value__text_decoration_line">Text decoration line</string>
+    <string name="snygg__property_value__text_max_lines">Text max lines</string>
     <string name="snygg__property_value__text_overflow">Text overflow</string>
     <string name="snygg__property_value__uri">URI reference</string>
 
