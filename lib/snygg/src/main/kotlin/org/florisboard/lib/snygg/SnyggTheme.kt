@@ -27,6 +27,8 @@ import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
@@ -105,15 +107,16 @@ data class SnyggTheme internal constructor(
                         check(propertySet is SnyggMultiplePropertySets)
                         fonts.getOrPut(rule.fontName) { mutableListOf() }.apply {
                             propertySet.sets.forEach { fontSet ->
-                                val src = fontSet.src
-                                if (src !is SnyggUriValue) return@forEach
+                                val src = fontSet.src as? SnyggUriValue ?: return@forEach
                                 val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
                                 if (fontPath == null) return@forEach
+                                val fontStyle = (fontSet.fontStyle as? SnyggFontStyleValue)?.fontStyle
+                                val fontWeight = (fontSet.fontWeight as? SnyggFontWeightValue)?.fontWeight
                                 add(
                                     Font(
                                         file = File(fontPath),
-                                        weight = FontWeight.Normal,
-                                        style = FontStyle.Normal,
+                                        weight = fontWeight ?: FontWeight.Normal,
+                                        style = fontStyle ?: FontStyle.Normal,
                                     )
                                 )
                             }

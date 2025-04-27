@@ -99,6 +99,12 @@ object SnyggSpec : SnyggSpecDecl({
             required()
             add(SnyggUriValue)
         }
+        Snygg.FontStyle {
+            add(SnyggFontStyleValue)
+        }
+        Snygg.FontWeight {
+            add(SnyggFontWeightValue)
+        }
     }
 
     elements {
