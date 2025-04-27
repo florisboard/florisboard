@@ -57,12 +57,14 @@ import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggYesValue
 import org.florisboard.lib.snygg.value.isInherit
 import org.florisboard.lib.snygg.value.isUndefined
+import java.util.UUID
 
 sealed interface SnyggPropertySetEditor {
     fun build(): SnyggPropertySet
 }
 
 class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = null) : SnyggPropertySetEditor {
+    val uuid = UUID.randomUUID().toString()
     val properties = mutableMapOf<String, SnyggValue>()
 
     init {

@@ -89,6 +89,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import java.util.*
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.io.writeJson
@@ -261,6 +262,7 @@ private fun EditScreen(
             return
         }
         val manifest = extEditor.build()
+        workspace.saverDir.deleteContentsRecursively()
         val manifestFile = workspace.saverDir.subFile(ExtensionDefaults.MANIFEST_FILE_NAME)
         manifestFile.writeJson(manifest, ExtensionJsonConfig)
         when (extEditor) {
@@ -279,8 +281,14 @@ private fun EditScreen(
                     stylesheetFile.parentFile?.mkdirs()
                     val stylesheetEditor = theme.stylesheetEditor
                     if (stylesheetEditor != null) {
-                        val stylesheet = stylesheetEditor.build()
-                        stylesheetFile.writeJson(stylesheet)
+                        runCatching {
+                            val stylesheet = stylesheetEditor.build()
+                            stylesheetFile.writeJson(stylesheet)
+                        }.onFailure {
+                            // TODO: better error handling
+                            context.showLongToast(it.message.toString())
+                            return
+                        }
                     } else {
                         val unmodifiedStylesheetFile = workspace.extDir.subFile(theme.stylesheetPath())
                         if (unmodifiedStylesheetFile.exists()) {
