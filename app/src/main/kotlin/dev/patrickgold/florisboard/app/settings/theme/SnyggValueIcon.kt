@@ -26,8 +26,23 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FormatAlignLeft
+import androidx.compose.material.icons.automirrored.filled.FormatAlignRight
+import androidx.compose.material.icons.automirrored.filled.WrapText
+import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
+import androidx.compose.material.icons.filled.FontDownload
+import androidx.compose.material.icons.filled.FormatAlignCenter
+import androidx.compose.material.icons.filled.FormatAlignJustify
+import androidx.compose.material.icons.filled.FormatBold
+import androidx.compose.material.icons.filled.FormatItalic
 import androidx.compose.material.icons.filled.FormatSize
+import androidx.compose.material.icons.filled.FormatStrikethrough
+import androidx.compose.material.icons.filled.FormatUnderlined
 import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.OpenInFull
+import androidx.compose.material.icons.filled.Padding
 import androidx.compose.material.icons.filled.Straighten
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +53,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -53,8 +70,20 @@ import org.florisboard.lib.snygg.value.SnyggValue
 import dev.patrickgold.jetpref.material.ui.checkeredBackground
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.color.getColor
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggNoValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
+import org.florisboard.lib.snygg.value.SnyggTextAlignValue
+import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.florisboard.lib.snygg.value.SnyggYesValue
 
 object SnyggValueIcon {
     interface Spec {
@@ -100,7 +129,6 @@ internal fun SnyggValueIcon(
         is SnyggStaticColorValue -> {
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
-
         is SnyggDynamicLightColorValue -> {
             val colorScheme = ColorMappings.dynamicLightColorScheme(context, accentColor)
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
@@ -110,6 +138,36 @@ internal fun SnyggValueIcon(
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
         }
 
+        is SnyggGenericFontFamilyValue, is SnyggCustomFontFamilyValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.FontDownload,
+                contentDescription = null,
+            )
+        }
+        is SnyggFontStyleValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.FormatItalic,
+                contentDescription = null,
+            )
+        }
+        is SnyggFontWeightValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.FormatBold,
+                contentDescription = null,
+            )
+        }
+
+        is SnyggPaddingValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.Padding,
+                contentDescription = null,
+            )
+        }
+
         is SnyggShapeValue -> {
             Box(
                 modifier = modifier
@@ -117,6 +175,7 @@ internal fun SnyggValueIcon(
                     .border(spec.borderWith, MaterialTheme.colorScheme.onBackground, value.alwaysPercentShape())
             )
         }
+
         is SnyggDpSizeValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -131,6 +190,37 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
+
+        is SnyggTextAlignValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = when (value.textAlign) {
+                    TextAlign.Left, TextAlign.Start -> Icons.AutoMirrored.Default.FormatAlignLeft
+                    TextAlign.Right, TextAlign.End -> Icons.AutoMirrored.Default.FormatAlignRight
+                    TextAlign.Justify -> Icons.Default.FormatAlignJustify
+                    else -> Icons.Default.FormatAlignCenter
+                },
+                contentDescription = null,
+            )
+        }
+        is SnyggTextDecorationLineValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = when (value.textDecoration) {
+                    TextDecoration.LineThrough -> Icons.Default.FormatStrikethrough
+                    else -> Icons.Default.FormatUnderlined
+                },
+                contentDescription = null,
+            )
+        }
+        is SnyggTextOverflowValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.AutoMirrored.Default.WrapText,
+                contentDescription = null,
+            )
+        }
+
         is SnyggDefinedVarValue -> {
             val realValue = definedVariables[value.key]
             if (realValue == null) {
@@ -165,6 +255,37 @@ internal fun SnyggValueIcon(
                 }
             }
         }
+
+        is SnyggUriValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.AttachFile,
+                contentDescription = null,
+            )
+        }
+        is SnyggContentScaleValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.OpenInFull,
+                contentDescription = null,
+            )
+        }
+
+        is SnyggYesValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.FormatBold,
+                contentDescription = null,
+            )
+        }
+        is SnyggNoValue -> {
+            Icon(
+                modifier = modifier.requiredSize(spec.iconSize),
+                imageVector = Icons.Default.CheckBoxOutlineBlank,
+                contentDescription = null,
+            )
+        }
+
         else -> {
             // Render nothing
         }
