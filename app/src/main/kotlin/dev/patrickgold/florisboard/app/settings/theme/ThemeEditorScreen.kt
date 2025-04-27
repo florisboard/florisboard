@@ -101,7 +101,6 @@ import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
 import org.florisboard.lib.snygg.SnyggMultiplePropertySetsEditor
-import org.florisboard.lib.snygg.SnyggPropertySetEditor
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggSinglePropertySetEditor
@@ -287,14 +286,18 @@ fun ThemeEditorScreen(
                                 snyggRuleToEdit = rule
                             },
                             onAddPropertyBtnClick = {
-                                if (propertySet !is SnyggSinglePropertySetEditor) {
-                                    // TODO: implement
-                                    return@SnyggRuleRow
+                                when(propertySet) {
+                                    is SnyggMultiplePropertySetsEditor -> {
+                                        //TODO: Implement multiple property adding
+                                        return@SnyggRuleRow
+                                    }
+                                    is SnyggSinglePropertySetEditor -> {
+                                        snyggPropertySetForEditing = propertySet
+                                        snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
+                                            rule = rule,
+                                        )
+                                    }
                                 }
-                                snyggPropertySetForEditing = propertySet
-                                snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
-                                    rule = rule,
-                                )
                             },
                         )
                         if (isVariablesRule) {
@@ -305,25 +308,35 @@ fun ThemeEditorScreen(
                                 fontStyle = FontStyle.Italic,
                             )
                         }
-                        when (propertySet) {
-                            is SnyggSinglePropertySetEditor -> {
-                                for ((propertyName, propertyValue) in propertySet.properties) {
-                                    if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
-                                        JetPrefListItem(
-                                            modifier = Modifier.rippleClickable {
-                                                snyggPropertySetForEditing = propertySet
-                                                snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
-                                            },
-                                            text = context.translatePropertyName(propertyName, snyggLevel),
-                                            secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
-                                            singleLineSecondaryText = true,
-                                            trailing = { SnyggValueIcon(propertyValue, definedVariables) },
-                                        )
-                                    }
+
+                        @Composable
+                        fun SinglePropertySetEditor(
+                            propertySet: SnyggSinglePropertySetEditor,
+                        ) {
+                            for ((propertyName, propertyValue) in propertySet.properties) {
+                                if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
+                                    JetPrefListItem(
+                                        modifier = Modifier.rippleClickable {
+                                            snyggPropertySetForEditing = propertySet
+                                            snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
+                                        },
+                                        text = context.translatePropertyName(propertyName, snyggLevel),
+                                        secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
+                                        singleLineSecondaryText = true,
+                                        trailing = { SnyggValueIcon(propertyValue, definedVariables) },
+                                    )
                                 }
                             }
+                        }
+
+                        when (propertySet) {
+                            is SnyggSinglePropertySetEditor -> {
+                                SinglePropertySetEditor(propertySet)
+                            }
                             is SnyggMultiplePropertySetsEditor -> {
-                                // TODO implement
+                                propertySet.sets.forEach { propertySet ->
+                                    SinglePropertySetEditor(propertySet)
+                                }
                             }
                         }
                     }
