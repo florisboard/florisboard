@@ -124,6 +124,46 @@ class SnyggStylesheetTest {
         }
 
         @Test
+        fun `basic deserialization with invalid property key`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#00000000",
+                "border-color": "var(--test)",
+                "schatten-erhebung": "3dp"
+              }
+            }
+            """.trimIndent()
+            assertThrows<SerializationException> {
+                Json.decodeFromString<SnyggStylesheet>(json)
+            }
+        }
+
+        @Test
+        fun `basic deserialization with invalid property value`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#00000000",
+                "border-color": "var(--test)",
+                "shadow-elevation": "some invalid text that shouldn't be here"
+              }
+            }
+            """.trimIndent()
+            assertThrows<SerializationException> {
+                Json.decodeFromString<SnyggStylesheet>(json)
+            }
+        }
+
+        @Test
         fun `basic serialization`() {
             val stylesheet = SnyggStylesheet(
                 schema = "https://schemas.florisboard.org/snygg/v2/stylesheet",
@@ -319,6 +359,22 @@ class SnyggStylesheetTest {
         }
 
         @Test
+        fun `deserialization of font without required src should fail`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@font `Comic Sans`": [
+                {
+                }
+              ]
+            }
+            """.trimIndent()
+            assertThrows<SerializationException> {
+                Json.decodeFromString<SnyggStylesheet>(json)
+            }
+        }
+
+        @Test
         fun `deserialization with missing font name should fail`() {
             val json = """
             {
@@ -370,7 +426,7 @@ class SnyggStylesheetTest {
         }
 
         @Test
-        fun `serialization of valid font (single)`() {
+        fun `serialization of valid font (with one source)`() {
             val stylesheet = SnyggStylesheet.v2 {
                 font("Comic Sans") {
                     add {
@@ -383,6 +439,38 @@ class SnyggStylesheetTest {
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"}]}"""
             val actualJson = Json.encodeToString(stylesheet)
             assertEquals(expectedJson, actualJson)
+        }
+
+        @Test
+        fun `serialization of valid font (with two sources)`() {
+            val stylesheet = SnyggStylesheet.v2 {
+                font("Comic Sans") {
+                    add {
+                        src = uri("flex:/path/to/font.ttf")
+                    }
+                    add {
+                        src = uri("flex:/path/to/font2.ttf")
+                    }
+                }
+            }
+            @Language("json")
+            val expectedJson =
+                """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"},{"src":"uri(`flex:/path/to/font2.ttf`)"}]}"""
+            val actualJson = Json.encodeToString(stylesheet)
+            assertEquals(expectedJson, actualJson)
+        }
+
+        @Test
+        fun `serialization of font without required src should fail`() {
+            val stylesheet = SnyggStylesheet.v2 {
+                font("Comic Sans") {
+                    add {
+                    }
+                }
+            }
+            assertThrows<SerializationException> {
+                Json.encodeToString(stylesheet)
+            }
         }
     }
 }

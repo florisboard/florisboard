@@ -297,14 +297,12 @@
           ]
         }
       },
-      "properties": {},
       "additionalProperties": false
     },
     "snygg-font-property-set": {
       "type": "array",
       "items": {
         "type": "object",
-        "patternProperties": {},
         "properties": {
           "src": {
             "oneOf": [
@@ -314,12 +312,14 @@
             ]
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "src"
+        ]
       }
     },
     "snygg-element-property-set": {
       "type": "object",
-      "patternProperties": {},
       "properties": {
         "background": {
           "oneOf": [

@@ -166,6 +166,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
     data class Property(
         val encoders: Set<SnyggValueEncoder>,
         val inheritBehavior: InheritBehavior,
+        val required: Boolean,
         val meta: JsonSchemaMeta,
     ) {
         fun inheritsImplicitly(): Boolean {
@@ -176,6 +177,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
     internal inner class PropertyBuilder {
         private val encoders: MutableSet<SnyggValueEncoder> = mutableSetOf()
         private var inheritBehavior: InheritBehavior = InheritBehavior.EXPLICITLY_ONLY
+        private var required = false
         val meta = JsonSchemaMetaBuilder()
         private var isAny: Boolean = false
 
@@ -192,6 +194,10 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
             inheritBehavior = InheritBehavior.IMPLICITLY_OR_EXPLICITLY
         }
 
+        fun required() {
+            required = true
+        }
+
         fun build(implicitEncoders: Set<SnyggValueEncoder>): Property {
             val encoders = if (isAny) {
                 _allEncoders
@@ -201,7 +207,7 @@ open class SnyggSpecDecl internal constructor(configure: SnyggSpecDeclBuilder.()
                     addAll(encoders)
                 }
             }
-            return Property(encoders, inheritBehavior, meta.build())
+            return Property(encoders, inheritBehavior, required, meta.build())
         }
     }
 }

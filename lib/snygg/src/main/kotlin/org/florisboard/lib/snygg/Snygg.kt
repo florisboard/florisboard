@@ -96,6 +96,7 @@ object SnyggSpec : SnyggSpecDecl({
 
     annotation(SnyggAnnotationRule.Font).multipleSets {
         Snygg.Src {
+            required()
             add(SnyggUriValue)
         }
     }
