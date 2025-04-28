@@ -96,7 +96,7 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            assertThrows<SerializationException> {
+            assertThrows<SnyggMissingSchemaException> {
                 SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
@@ -116,13 +116,13 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            assertThrows<SerializationException> {
+            assertThrows<SnyggInvalidRuleException> {
                 SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
         @Test
-        fun `basic deserialization with invalid property key`() {
+        fun `basic deserialization with invalid property`() {
             val json = """
             {
               $SCHEMA_LINE,
@@ -136,13 +136,13 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            assertThrows<SerializationException> {
+            assertThrows<SnyggInvalidPropertyException> {
                 SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
         @Test
-        fun `basic deserialization with invalid property value`() {
+        fun `basic deserialization with invalid value`() {
             val json = """
             {
               $SCHEMA_LINE,
@@ -156,7 +156,7 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            assertThrows<SerializationException> {
+            assertThrows<SnyggInvalidValueException> {
                 SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
@@ -518,7 +518,7 @@ class SnyggStylesheetTest {
         }
 
         @Test
-        fun `deserialization with invalid property but ignoreUnknownProperties=true should succeed`() {
+        fun `deserialization with invalid property but ignoreInvalidProperties=true should succeed`() {
             val json = """
             {
               $SCHEMA_LINE,
@@ -534,14 +534,14 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            val config = SnyggJsonConfiguration.of(ignoreUnknownProperties = true)
+            val config = SnyggJsonConfiguration.of(ignoreInvalidProperties = true)
             val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
 
             assertEquals(3, stylesheet.rules.size)
         }
 
         @Test
-        fun `deserialization with invalid value but ignoreUnknownValues=true should succeed`() {
+        fun `deserialization with invalid value but ignoreInvalidValues=true should succeed`() {
             val json = """
             {
               $SCHEMA_LINE,
@@ -557,7 +557,7 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            val config = SnyggJsonConfiguration.of(ignoreUnknownValues = true)
+            val config = SnyggJsonConfiguration.of(ignoreInvalidValues = true)
             val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
 
             assertEquals(3, stylesheet.rules.size)

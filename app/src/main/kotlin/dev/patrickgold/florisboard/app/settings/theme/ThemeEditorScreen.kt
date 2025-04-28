@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -80,7 +79,6 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -101,7 +99,6 @@ import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
@@ -119,8 +116,8 @@ import kotlin.Boolean
 
 internal val LenientStylesheetConfig = SnyggJsonConfiguration.of(
     ignoreInvalidRules = true,
-    ignoreUnknownProperties = true,
-    ignoreUnknownValues = true,
+    ignoreInvalidProperties = true,
+    ignoreInvalidValues = true,
     prettyPrint = true,
     prettyPrintIndent = "  ",
 )

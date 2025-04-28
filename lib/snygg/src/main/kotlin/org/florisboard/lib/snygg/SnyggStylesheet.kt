@@ -58,29 +58,29 @@ data class SnyggStylesheet internal constructor(
             config: SnyggJsonConfiguration = SnyggJsonConfiguration.DEFAULT,
         ): Result<SnyggStylesheet> = runCatching {
             val jsonObject = config.json.decodeFromString<JsonObject>(json)
-            var schema: String? = null
+            var schema: String? = jsonObject["\$schema"]?.let { config.json.decodeFromJsonElement(it) }
+            if (schema == null) {
+                if (config.ignoreMissingSchema) {
+                    // assume schema
+                    schema = SCHEMA_V2
+                } else {
+                    throw SnyggMissingSchemaException()
+                }
+            }
             val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
             for ((key, jsonElement) in jsonObject.entries) {
                 if (key == "\$schema") {
-                    schema = config.json.decodeFromJsonElement<String>(jsonElement)
+                    continue
                 } else {
                     val rule = SnyggRule.fromOrNull(key)
                     if (rule == null) {
                         if (config.ignoreInvalidRules) {
                             continue
                         }
-                        throw SerializationException("Invalid rule '$key'")
+                        throw SnyggInvalidRuleException(key)
                     }
                     val propertySet = SnyggPropertySet.fromJsonElement(rule, config, jsonElement)
                     ruleMap[rule] = propertySet
-                }
-            }
-            if (schema == null) {
-                if (config.ignoreMissingSchema) {
-                    // assume schema
-                    schema = SCHEMA_V2
-                } else {
-                    throw SerializationException("no schema provided :(")
                 }
             }
             SnyggStylesheet(schema, ruleMap)
@@ -91,8 +91,8 @@ data class SnyggStylesheet internal constructor(
 data class SnyggJsonConfiguration private constructor(
     internal val ignoreMissingSchema: Boolean = false,
     internal val ignoreInvalidRules: Boolean = false,
-    internal val ignoreUnknownProperties: Boolean = false,
-    internal val ignoreUnknownValues: Boolean = false,
+    internal val ignoreInvalidProperties: Boolean = false,
+    internal val ignoreInvalidValues: Boolean = false,
     internal val json: Json,
 ) {
     companion object {
@@ -102,16 +102,16 @@ data class SnyggJsonConfiguration private constructor(
         fun of(
             ignoreMissingSchema: Boolean = false,
             ignoreInvalidRules: Boolean = false,
-            ignoreUnknownProperties: Boolean = false,
-            ignoreUnknownValues: Boolean = false,
+            ignoreInvalidProperties: Boolean = false,
+            ignoreInvalidValues: Boolean = false,
             prettyPrint: Boolean = false,
             prettyPrintIndent: String = "  ",
         ): SnyggJsonConfiguration {
             return SnyggJsonConfiguration(
                 ignoreMissingSchema,
                 ignoreInvalidRules,
-                ignoreUnknownProperties,
-                ignoreUnknownValues,
+                ignoreInvalidProperties,
+                ignoreInvalidValues,
                 json = Json {
                     if (prettyPrint) {
                         this.prettyPrint = true
@@ -122,3 +122,23 @@ data class SnyggJsonConfiguration private constructor(
         }
     }
 }
+
+class SnyggMissingSchemaException : SerializationException(
+    message = "Stylesheet is missing schema information",
+)
+
+class SnyggMissingRequiredPropertyException(rule: SnyggRule, property: String) : SerializationException(
+    message = "Rule '$rule' is missing required property '$property'",
+)
+
+class SnyggInvalidRuleException(ruleStr: String) : SerializationException(
+    message = "Invalid rule '$ruleStr'",
+)
+
+class SnyggInvalidPropertyException(rule: SnyggRule, property: String) : SerializationException(
+    message = "Rule '$rule' contains unknown or invalid property '$property'",
+)
+
+class SnyggInvalidValueException(rule: SnyggRule, property: String, valueStr: String) : SerializationException(
+    message = "Rule '$rule' property '$property' contains unknown or invalid value '$valueStr'",
+)

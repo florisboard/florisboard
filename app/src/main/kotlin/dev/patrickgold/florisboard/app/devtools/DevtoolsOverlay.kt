@@ -54,6 +54,7 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.SnyggMissingSchemaException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -237,18 +238,32 @@ private fun DevtoolsInlineAutofillOverlay() {
 @Composable
 private fun DevtoolsStylesheetFailedToLoadOverlay(loadFailure: ThemeManager.LoadFailure) {
     DevtoolsOverlayBox(title = "Failed to load stylesheet, fell back to base style") {
-        DevtoolsSubGroup(title = "Extension Info") {
+        DevtoolsSubGroup(title = "Extension") {
             DevtoolsText(text = "id:       ${loadFailure.extension.id}")
             DevtoolsText(text = "title:    ${loadFailure.extension.title}")
             DevtoolsText(text = "version:  ${loadFailure.extension.version}")
         }
-        DevtoolsSubGroup(title = "Component Info") {
+        DevtoolsSubGroup(title = "Component") {
             DevtoolsText(text = "id:       ${loadFailure.component.id}")
             DevtoolsText(text = "label:    ${loadFailure.component.label}")
             DevtoolsText(text = "path:     ${loadFailure.component.stylesheetPath()}")
         }
+        val cause = loadFailure.cause
         DevtoolsSubGroup(title = "Cause") {
-            DevtoolsText(text = "${loadFailure.cause.message}")
+            DevtoolsText(text = "${cause.message}")
+        }
+        if (cause is SnyggMissingSchemaException) {
+            DevtoolsSubGroup(title = "Explanation") {
+                DevtoolsText(
+                    text = """
+                    It appears you’re trying to load a theme designed for FlorisBoard v0.4 (Snygg v1), which isn’t compatible with the latest release using Snygg v2.
+
+                    If you are the theme author, please update your theme to support Snygg v2.
+
+                    If you’re a user, please update your theme via the Addons Store. If an updated version isn’t available yet, please select one of the built-in themes during this transition period.
+                """.trimIndent()
+                )
+            }
         }
     }
 }

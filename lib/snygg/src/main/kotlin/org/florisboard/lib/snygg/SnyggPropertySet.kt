@@ -166,10 +166,10 @@ data class SnyggSinglePropertySet internal constructor(
             propLoop@ for ((property, valueElem) in jsonObject) {
                 val encoders = SnyggSpec.encodersOf(rule, property)
                 if (encoders == null) {
-                    if (config.ignoreUnknownProperties) {
+                    if (config.ignoreInvalidProperties) {
                         continue@propLoop
                     }
-                    throw SerializationException("Rule '$rule' contains unknown property '$property'")
+                    throw SnyggInvalidPropertyException(rule, property)
                 }
                 val valueStr = config.json.decodeFromJsonElement<String>(valueElem)
                 for (encoder in encoders) {
@@ -179,14 +179,14 @@ data class SnyggSinglePropertySet internal constructor(
                         continue@propLoop
                     }
                 }
-                if (config.ignoreUnknownValues) {
+                if (config.ignoreInvalidValues) {
                     continue@propLoop
                 }
-                throw SerializationException("Rule '$rule' property '$property' contains unknown value '$valueStr'")
+                throw SnyggInvalidValueException(rule, property, valueStr)
             }
             SnyggSpec.propertySetSpecOf(rule)!!.properties.forEach { (propKey, propSpec) ->
                 if (propSpec.required && !editor.properties.contains(propKey)) {
-                    throw SerializationException("Rule '$rule' is missing required property '$propKey'")
+                    throw SnyggMissingRequiredPropertyException(rule, propKey)
                 }
             }
             return editor.build()
