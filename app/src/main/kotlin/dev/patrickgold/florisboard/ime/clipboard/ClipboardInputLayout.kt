@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -129,6 +130,7 @@ fun ClipboardInputLayout(
         ) {
             SnyggIconButton(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
+                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             )
             SnyggText(
@@ -137,7 +139,9 @@ fun ClipboardInputLayout(
             )
             SnyggIconButton(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
-                modifier = Modifier.autoMirrorForRtl(),
+                modifier = Modifier
+                    .size(FlorisImeSizing.smartbarHeight * 0.7f)
+                    .autoMirrorForRtl(),
                 imageVector = if (historyEnabled) {
                     Icons.Default.ToggleOn
                 } else {
@@ -147,7 +151,9 @@ fun ClipboardInputLayout(
             )
             SnyggIconButton(
                 onClick = { showClearAllHistory = true },
-                modifier = Modifier.autoMirrorForRtl(),
+                modifier = Modifier
+                    .size(FlorisImeSizing.smartbarHeight * 0.7f)
+                    .autoMirrorForRtl(),
                 imageVector = Icons.Default.ClearAll,
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             )
@@ -155,6 +161,7 @@ fun ClipboardInputLayout(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
+                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
                 imageVector = Icons.Default.Edit,
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             )

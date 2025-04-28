@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -162,6 +163,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 }
                 prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
             },
+            modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f)
         ) {
             val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
             val rotation by transition.animateFloat(

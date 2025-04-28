@@ -50,12 +50,14 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--background")
         foreground = `var`("--on-background")
     }
+
     FlorisImeUi.Key.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(22.sp)
         shadowElevation = size(2.dp)
         shape = roundedCornerShape(20)
+        textMaxLines = textMaxLines(1)
     }
     FlorisImeUi.Key.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface-variant")
@@ -69,20 +71,21 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--primary-variant")
         foreground = `var`("--on-surface")
     }
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(12.sp)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
     FlorisImeUi.Key.elementName(
         FlorisImeUi.Attr.Code to listOf(KeyCode.SHIFT),
         FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.attrName()),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
-        background = `var`("--surface")
-        foreground = rgbaColor(144, 144, 144)
-        fontSize = fontSize(12.sp)
-    }
     FlorisImeUi.KeyHint.elementName {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(184, 184, 184)
+        foreground = `var`("--on-surface-variant")
         fontFamily = genericFontFamily(FontFamily.Monospace)
         fontSize = fontSize(12.sp)
         padding = padding(0.dp, 1.dp, 1.dp, 0.dp)
@@ -103,72 +106,8 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(16.sp)
     }
 
-    FlorisImeUi.ClipboardHeader.elementName {
-        foreground = `var`("--on-background")
-        fontSize = fontSize(16.sp)
-    }
-    FlorisImeUi.ClipboardSubheader.elementName {
-        fontSize = fontSize(14.sp)
-        margin = padding(6.dp)
-    }
-    FlorisImeUi.ClipboardContent.elementName {
-        padding = padding(10.dp)
-    }
-    FlorisImeUi.ClipboardItem.elementName {
-        background = `var`("--surface")
-        foreground = `var`("--on-surface")
-        fontSize = fontSize(14.sp)
-        margin = padding(4.dp)
-        padding = padding(12.dp, 8.dp)
-        shape = roundedCornerShape(12.dp)
-        clip = yes()
-    }
-    FlorisImeUi.ClipboardItemPopup.elementName {
-        background = `var`("--surface")
-        foreground = `var`("--on-surface")
-        margin = padding(4.dp)
-        shape = roundedCornerShape(12.dp)
-        clip = yes()
-    }
-    FlorisImeUi.ClipboardItemPopupAction.elementName {
-        fontSize = fontSize(16.sp)
-        padding = padding(12.dp)
-    }
-    FlorisImeUi.ClipboardItemPopupActionText.elementName {
-        margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
-    }
-    FlorisImeUi.ClipboardEnableHistoryButton.elementName {
-        background = `var`("--primary")
-        foreground = `var`("--on-primary")
-        shape = roundedCornerShape(24.dp)
-    }
-
-    FlorisImeUi.EmojiKey.elementName {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = `var`("--on-background")
-        fontSize = fontSize(22.sp)
-        shape = roundedCornerShape(20)
-    }
-    FlorisImeUi.EmojiKey.elementName(selector = SnyggSelector.PRESSED) {
-        background = `var`("--surface")
-        foreground = `var`("--on-surface")
-    }
-
-    FlorisImeUi.GlideTrail.elementName {
-        foreground = `var`("--primary")
-    }
-
-    FlorisImeUi.IncognitoModeIndicator.elementName {
-        foreground = rgbaColor(255, 255, 255, 0.067f)
-    }
-
-    FlorisImeUi.OneHandedPanel.elementName {
-        background = rgbaColor(27, 94, 32)
-        foreground = rgbaColor(238, 238, 238)
-    }
-
     FlorisImeUi.Smartbar.elementName {
-        // empty
+        fontSize = fontSize(18.sp)
     }
     FlorisImeUi.SmartbarSharedActionsRow.elementName {
         background = rgbaColor(0, 0, 0, 0f)
@@ -189,8 +128,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarActionKey.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        fontSize = fontSize(18.sp)
-        shape = roundedCornerShape(20)
+        shape = `var`("--shape")
         clip = yes()
     }
     FlorisImeUi.SmartbarActionKey.elementName(selector = SnyggSelector.DISABLED) {
@@ -198,7 +136,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     }
     FlorisImeUi.SmartbarActionTile.elementName {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(220, 220, 220)
+        foreground = `var`("--on-background")
         margin = padding(4.dp)
         shape = roundedCornerShape(20)
         clip = yes()
@@ -274,5 +212,69 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     }
     FlorisImeUi.SmartbarCandidateSpacer.elementName {
         foreground = rgbaColor(255, 255, 255, 0.25f)
+    }
+
+    FlorisImeUi.ClipboardHeader.elementName {
+        foreground = `var`("--on-background")
+        fontSize = fontSize(16.sp)
+    }
+    FlorisImeUi.ClipboardSubheader.elementName {
+        fontSize = fontSize(14.sp)
+        margin = padding(6.dp)
+    }
+    FlorisImeUi.ClipboardContent.elementName {
+        padding = padding(10.dp)
+    }
+    FlorisImeUi.ClipboardItem.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
+        padding = padding(12.dp, 8.dp)
+        shape = `var`("--shape-variant")
+        clip = yes()
+    }
+    FlorisImeUi.ClipboardItemPopup.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        margin = padding(4.dp)
+        shape = roundedCornerShape(12.dp)
+        clip = yes()
+    }
+    FlorisImeUi.ClipboardItemPopupAction.elementName {
+        fontSize = fontSize(16.sp)
+        padding = padding(12.dp)
+    }
+    FlorisImeUi.ClipboardItemPopupActionText.elementName {
+        margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
+    }
+    FlorisImeUi.ClipboardEnableHistoryButton.elementName {
+        background = `var`("--primary")
+        foreground = `var`("--on-primary")
+        shape = roundedCornerShape(24.dp)
+    }
+
+    FlorisImeUi.EmojiKey.elementName {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = `var`("--on-background")
+        fontSize = fontSize(22.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.EmojiKey.elementName(selector = SnyggSelector.PRESSED) {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+    }
+
+    FlorisImeUi.GlideTrail.elementName {
+        foreground = `var`("--primary")
+    }
+
+    FlorisImeUi.IncognitoModeIndicator.elementName {
+        foreground = rgbaColor(255, 255, 255, 0.067f)
+    }
+
+    FlorisImeUi.OneHandedPanel.elementName {
+        background = rgbaColor(27, 94, 32)
+        foreground = rgbaColor(238, 238, 238)
     }
 }

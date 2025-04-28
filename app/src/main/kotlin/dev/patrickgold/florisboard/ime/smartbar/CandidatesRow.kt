@@ -50,6 +50,8 @@ import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
@@ -153,6 +155,7 @@ private fun CandidateItem(
 
     SnyggRow(
         elementName = elementName,
+        selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE,
         modifier = modifier
             .pointerInput(Unit) {
                 awaitEachGesture {
@@ -183,7 +186,7 @@ private fun CandidateItem(
         if (candidate.icon != null) {
             SnyggIcon(imageVector = candidate.icon!!)
         }
-        Column(
+        SnyggColumn(
             modifier = if (displayMode == CandidatesDisplayMode.CLASSIC) Modifier.weight(1f) else Modifier,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
