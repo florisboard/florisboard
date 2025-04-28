@@ -16,23 +16,33 @@
 
 package org.florisboard.lib.snygg
 
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
 
-@Serializable(with = SnyggStylesheet.Serializer::class)
 data class SnyggStylesheet internal constructor(
     val schema: String,
     val rules: Map<SnyggRule, SnyggPropertySet>,
 ) {
     fun edit() = SnyggStylesheetEditor(this.schema, this.rules)
+
+    fun toJson(
+        config: SnyggJsonConfiguration = SnyggJsonConfiguration.DEFAULT,
+    ): Result<String> = runCatching {
+        val schemaElem = config.json.encodeToJsonElement(schema)
+        val ruleElems = rules.map { (rule, propertySet) ->
+            rule.toString() to propertySet.toJsonElement(rule, config)
+        }.toMap()
+        val jsonObject = JsonObject(
+            mapOf(
+                "\$schema" to schemaElem
+            ) + ruleElems
+        )
+        config.json.encodeToString(jsonObject)
+    }
 
     companion object {
         const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
@@ -42,42 +52,73 @@ data class SnyggStylesheet internal constructor(
             stylesheetBlock(builder)
             return builder.build()
         }
-    }
 
-    object Serializer : KSerializer<SnyggStylesheet> {
-        override val descriptor: SerialDescriptor
-            get() = JsonObject.serializer().descriptor
-
-        override fun serialize(encoder: Encoder, value: SnyggStylesheet) {
-            val schemaElem = Json.encodeToJsonElement(value.schema)
-            val ruleElems = value.rules.map { (rule, propertySet) ->
-                rule.toString() to propertySet.toJsonElement(rule)
-            }.toMap()
-            val jsonObject = JsonObject(
-                mapOf(
-                    "\$schema" to schemaElem
-                ) + ruleElems
-            )
-            encoder.encodeSerializableValue(JsonObject.serializer(), jsonObject)
-        }
-
-        override fun deserialize(decoder: Decoder): SnyggStylesheet {
-            val jsonObject = decoder.decodeSerializableValue(JsonObject.serializer())
+        fun fromJson(
+            json: String,
+            config: SnyggJsonConfiguration = SnyggJsonConfiguration.DEFAULT,
+        ): Result<SnyggStylesheet> = runCatching {
+            val jsonObject = config.json.decodeFromString<JsonObject>(json)
             var schema: String? = null
             val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
-            for ((key, elem) in jsonObject.entries) {
+            for ((key, jsonElement) in jsonObject.entries) {
                 if (key == "\$schema") {
-                    schema = Json.decodeFromJsonElement<String>(elem)
+                    schema = config.json.decodeFromJsonElement<String>(jsonElement)
                 } else {
-                    val rule = SnyggRule.fromOrNull(key) ?: throw SerializationException("Invalid rule")
-                    val propertySet = SnyggPropertySet.from(rule, elem)
+                    val rule = SnyggRule.fromOrNull(key)
+                    if (rule == null) {
+                        if (config.ignoreInvalidRules) {
+                            continue
+                        }
+                        throw SerializationException("Invalid rule '$key'")
+                    }
+                    val propertySet = SnyggPropertySet.fromJsonElement(rule, config, jsonElement)
                     ruleMap[rule] = propertySet
                 }
             }
             if (schema == null) {
-                throw SerializationException("no schema :(")
+                if (config.ignoreMissingSchema) {
+                    // assume schema
+                    schema = SCHEMA_V2
+                } else {
+                    throw SerializationException("no schema provided :(")
+                }
             }
-            return SnyggStylesheet(schema, ruleMap)
+            SnyggStylesheet(schema, ruleMap)
+        }
+    }
+}
+
+data class SnyggJsonConfiguration private constructor(
+    internal val ignoreMissingSchema: Boolean = false,
+    internal val ignoreInvalidRules: Boolean = false,
+    internal val ignoreUnknownProperties: Boolean = false,
+    internal val ignoreUnknownValues: Boolean = false,
+    internal val json: Json,
+) {
+    companion object {
+        val DEFAULT = of()
+
+        @OptIn(ExperimentalSerializationApi::class)
+        fun of(
+            ignoreMissingSchema: Boolean = false,
+            ignoreInvalidRules: Boolean = false,
+            ignoreUnknownProperties: Boolean = false,
+            ignoreUnknownValues: Boolean = false,
+            prettyPrint: Boolean = false,
+            prettyPrintIndent: String = "  ",
+        ): SnyggJsonConfiguration {
+            return SnyggJsonConfiguration(
+                ignoreMissingSchema,
+                ignoreInvalidRules,
+                ignoreUnknownProperties,
+                ignoreUnknownValues,
+                json = Json {
+                    if (prettyPrint) {
+                        this.prettyPrint = true
+                        this.prettyPrintIndent = prettyPrintIndent
+                    }
+                },
+            )
         }
     }
 }

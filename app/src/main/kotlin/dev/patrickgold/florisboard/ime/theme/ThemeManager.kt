@@ -148,7 +148,8 @@ class ThemeManager(context: Context) {
                             ZipUtils.unzip(appContext, themeExtRef, loadedDir).getOrThrow()
                             flogInfo { "Loaded extension ${themeExt.meta.id} into $loadedDir" }
                             val stylesheetFile = loadedDir.subFile(themeConfig.stylesheetPath())
-                            stylesheetFile.readJson<SnyggStylesheet>()
+                            val stylesheetJson = stylesheetFile.readText()
+                            SnyggStylesheet.fromJson(stylesheetJson).getOrThrow()
                         }.getOrNull()
                         // TODO: better error handling - maybe error notification?
                         if (newStylesheet != null) {

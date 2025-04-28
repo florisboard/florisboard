@@ -28,7 +28,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -50,32 +49,50 @@ import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import kotlin.collections.contains
 
-sealed interface SnyggPropertySet {
-    fun edit(): SnyggPropertySetEditor
+sealed class SnyggPropertySet {
+    abstract fun edit(): SnyggPropertySetEditor
 
-    fun toJsonElement(rule: SnyggRule): JsonElement {
-        val spec = SnyggSpec.propertySetSpecOf(rule)!!
+    internal fun toJsonElement(rule: SnyggRule, config: SnyggJsonConfiguration): JsonElement {
+        val spec = SnyggSpec.propertySetSpecOf(rule)
+        checkNotNull(spec) {
+            "Encoder passed rule '$rule' for which no property spec is associated. Please report this bug in the " +
+                "florisboard issue tracker."
+        }
         return when (spec.type) {
             SnyggSpecDecl.PropertySet.Type.SINGLE_SET -> {
-                check(this is SnyggSinglePropertySet)
-                this.toJsonElementInternal(rule)
+                check(this is SnyggSinglePropertySet) {
+                    "Encoder called toJsonElement() for rule '$rule' on a MULTIPLE_SETS instance, even though the " +
+                        "spec requires a SINGLE_SET. Please report this bug in the florisboard issue tracker."
+                }
+                this.toJsonElementSpecialized(rule, config)
             }
             SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
-                check(this is SnyggMultiplePropertySets)
-                this.toJsonElementInternal(rule)
+                check(this is SnyggMultiplePropertySets) {
+                    "Encoder called toJsonElement() for rule '$rule' on a SINGLE_SET instance, even though the " +
+                        "spec requires a MULTIPLE_SETS. Please report this bug in the florisboard issue tracker."
+                }
+                this.toJsonElementSpecialized(rule, config)
             }
         }
     }
 
     companion object {
-        fun from(rule: SnyggRule, jsonElement: JsonElement): SnyggPropertySet {
-            val spec = SnyggSpec.propertySetSpecOf(rule)!!
+        internal fun fromJsonElement(
+            rule: SnyggRule,
+            config: SnyggJsonConfiguration,
+            jsonElement: JsonElement,
+        ): SnyggPropertySet {
+            val spec = SnyggSpec.propertySetSpecOf(rule)
+            checkNotNull(spec) {
+                "Decoder passed rule '$rule' for which no property spec is associated. Please report this bug in the " +
+                    "florisboard issue tracker."
+            }
             return when (spec.type) {
                 SnyggSpecDecl.PropertySet.Type.SINGLE_SET -> {
-                    SnyggSinglePropertySet.from(rule, jsonElement)
+                    SnyggSinglePropertySet.fromJsonElementSpecialized(rule, config, jsonElement)
                 }
                 SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
-                    SnyggMultiplePropertySets.from(rule, jsonElement)
+                    SnyggMultiplePropertySets.fromJsonElementSpecialized(rule, config, jsonElement)
                 }
             }
         }
@@ -84,7 +101,7 @@ sealed interface SnyggPropertySet {
 
 data class SnyggSinglePropertySet internal constructor(
     val properties: Map<String, SnyggValue> = emptyMap(),
-) : SnyggPropertySet {
+) : SnyggPropertySet() {
     val background = properties[Snygg.Background] ?: SnyggUndefinedValue
     val foreground = properties[Snygg.Foreground] ?: SnyggUndefinedValue
 
@@ -125,16 +142,36 @@ data class SnyggSinglePropertySet internal constructor(
         return properties.toString()
     }
 
+    internal fun toJsonElementSpecialized(rule: SnyggRule, config: SnyggJsonConfiguration): JsonElement {
+        val rawProperties = properties.mapValues { (_, value) ->
+            val valueStr = value.encoder().serialize(value).getOrThrow()
+            config.json.encodeToJsonElement(valueStr)
+        }
+        SnyggSpec.propertySetSpecOf(rule)!!.properties.forEach { (propKey, propSpec) ->
+            if (propSpec.required && !rawProperties.contains(propKey)) {
+                throw SerializationException("Rule '$rule' is missing required property '$propKey'")
+            }
+        }
+        return config.json.encodeToJsonElement(JsonObject(rawProperties))
+    }
+
     companion object {
-        internal fun from(rule: SnyggRule, jsonElement: JsonElement): SnyggSinglePropertySet {
-            val jsonObject = Json.decodeFromJsonElement<JsonObject>(jsonElement)
+        internal fun fromJsonElementSpecialized(
+            rule: SnyggRule,
+            config: SnyggJsonConfiguration,
+            jsonElement: JsonElement,
+        ): SnyggSinglePropertySet {
+            val jsonObject = config.json.decodeFromJsonElement<JsonObject>(jsonElement)
             val editor = SnyggSinglePropertySetEditor()
             propLoop@ for ((property, valueElem) in jsonObject) {
                 val encoders = SnyggSpec.encodersOf(rule, property)
                 if (encoders == null) {
-                    throw SerializationException("Rule '$rule' contains unknown or disallowed property '$property'")
+                    if (config.ignoreUnknownProperties) {
+                        continue@propLoop
+                    }
+                    throw SerializationException("Rule '$rule' contains unknown property '$property'")
                 }
-                val valueStr = Json.decodeFromJsonElement<String>(valueElem)
+                val valueStr = config.json.decodeFromJsonElement<String>(valueElem)
                 for (encoder in encoders) {
                     val value = encoder.deserialize(valueStr).getOrNull()
                     if (value != null) {
@@ -142,7 +179,10 @@ data class SnyggSinglePropertySet internal constructor(
                         continue@propLoop
                     }
                 }
-                throw SerializationException("Rule '$rule' cound not find encoder for property '$property'")
+                if (config.ignoreUnknownValues) {
+                    continue@propLoop
+                }
+                throw SerializationException("Rule '$rule' property '$property' contains unknown value '$valueStr'")
             }
             SnyggSpec.propertySetSpecOf(rule)!!.properties.forEach { (propKey, propSpec) ->
                 if (propSpec.required && !editor.properties.contains(propKey)) {
@@ -151,19 +191,6 @@ data class SnyggSinglePropertySet internal constructor(
             }
             return editor.build()
         }
-    }
-
-    internal fun toJsonElementInternal(rule: SnyggRule): JsonElement {
-        val rawProperties = properties.mapValues { (_, value) ->
-            val valueStr = value.encoder().serialize(value).getOrThrow()
-            Json.encodeToJsonElement(valueStr)
-        }
-        SnyggSpec.propertySetSpecOf(rule)!!.properties.forEach { (propKey, propSpec) ->
-            if (propSpec.required && !rawProperties.contains(propKey)) {
-                throw SerializationException("Rule '$rule' is missing required property '$propKey'")
-            }
-        }
-        return Json.encodeToJsonElement(JsonObject(rawProperties))
     }
 
     fun background(default: Color = Color.Unspecified): Color {
@@ -268,20 +295,26 @@ data class SnyggSinglePropertySet internal constructor(
 
 data class SnyggMultiplePropertySets internal constructor(
     val sets: List<SnyggSinglePropertySet>
-) : SnyggPropertySet {
+) : SnyggPropertySet() {
     override fun edit() = SnyggMultiplePropertySetsEditor(sets)
 
-    internal fun toJsonElementInternal(rule: SnyggRule): JsonElement {
+    internal fun toJsonElementSpecialized(rule: SnyggRule, config: SnyggJsonConfiguration): JsonElement {
         val rawSets = sets.map { set ->
-            set.toJsonElementInternal(rule)
+            set.toJsonElementSpecialized(rule, config)
         }
-        return Json.encodeToJsonElement(JsonArray(rawSets))
+        return config.json.encodeToJsonElement(JsonArray(rawSets))
     }
 
     companion object {
-        internal fun from(rule: SnyggRule, jsonElement: JsonElement): SnyggMultiplePropertySets {
-            val jsonArray = Json.decodeFromJsonElement<JsonArray>(jsonElement)
-            val sets = jsonArray.map { SnyggSinglePropertySet.from(rule, it) }
+        internal fun fromJsonElementSpecialized(
+            rule: SnyggRule,
+            config: SnyggJsonConfiguration,
+            jsonElement: JsonElement,
+        ): SnyggMultiplePropertySets {
+            val jsonArray = config.json.decodeFromJsonElement<JsonArray>(jsonElement)
+            val sets = jsonArray.map { jsonElement ->
+                SnyggSinglePropertySet.fromJsonElementSpecialized(rule, config, jsonElement)
+            }
             return SnyggMultiplePropertySets(sets)
         }
     }

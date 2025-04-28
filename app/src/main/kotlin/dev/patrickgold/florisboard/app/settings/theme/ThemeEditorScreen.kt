@@ -105,6 +105,7 @@ import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
+import org.florisboard.lib.snygg.SnyggJsonConfiguration
 import org.florisboard.lib.snygg.SnyggMultiplePropertySetsEditor
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
@@ -114,6 +115,15 @@ import org.florisboard.lib.snygg.SnyggSpecDecl
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
 import org.florisboard.lib.snygg.ui.Saver
+import kotlin.Boolean
+
+internal val LenientStylesheetConfig = SnyggJsonConfiguration.of(
+    ignoreInvalidRules = true,
+    ignoreUnknownProperties = true,
+    ignoreUnknownValues = true,
+    prettyPrint = true,
+    prettyPrintIndent = "  ",
+)
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -139,8 +149,11 @@ fun ThemeEditorScreen(
             val stylesheetFile = workspace.extDir.subFile(stylesheetPath)
             val stylesheetEditor = if (stylesheetFile.exists()) {
                 try {
-                    stylesheetFile.readJson<SnyggStylesheet>().edit()
-                } catch (_: Throwable) {
+                    val stylesheetJson = stylesheetFile.readText()
+                    SnyggStylesheet.fromJson(stylesheetJson, LenientStylesheetConfig).getOrThrow().edit()
+                } catch (e: Throwable) {
+                    // TODO: better error handling
+                    context.showLongToast(e.message.toString())
                     SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2)
                 }
             } else {

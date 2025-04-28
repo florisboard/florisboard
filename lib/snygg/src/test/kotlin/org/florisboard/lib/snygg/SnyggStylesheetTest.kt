@@ -4,8 +4,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
@@ -49,7 +47,7 @@ class SnyggStylesheetTest {
 
         @Test
         fun `basic deserialization`() {
-            val stylesheet = Json.decodeFromString<SnyggStylesheet>(BasicStylesheetJson)
+            val stylesheet = SnyggStylesheet.fromJson(BasicStylesheetJson).getOrThrow()
             assertEquals("https://schemas.florisboard.org/snygg/v2/stylesheet", stylesheet.schema)
             assertEquals(3, stylesheet.rules.size)
 
@@ -99,7 +97,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<SerializationException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -119,7 +117,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<SerializationException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -139,7 +137,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<SerializationException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -159,7 +157,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<SerializationException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -184,7 +182,7 @@ class SnyggStylesheetTest {
             @Language("json")
             val expectedJson =
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","smartbar":{"background":"rgba(255,0,0,1)","shape":"rectangle()"},"key:pressed":{"shape":"circle()"}}"""
-            val actualJson = Json.encodeToString(stylesheet)
+            val actualJson = stylesheet.toJson().getOrThrow()
             assertEquals(expectedJson, actualJson)
         }
 
@@ -204,7 +202,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
     }
@@ -223,7 +221,7 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            val stylesheet = Json.decodeFromString<SnyggStylesheet>(json)
+            val stylesheet = SnyggStylesheet.fromJson(json).getOrThrow()
 
             assertEquals(1, stylesheet.rules.size)
             val (rule, definesProperties) = stylesheet.rules.entries.first()
@@ -255,8 +253,8 @@ class SnyggStylesheetTest {
               }
             }
             """.trimIndent()
-            assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+            assertThrows<SerializationException> {
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -271,7 +269,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -291,7 +289,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -311,7 +309,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
     }
@@ -330,7 +328,7 @@ class SnyggStylesheetTest {
               ]
             }
             """.trimIndent()
-            val stylesheet = Json.decodeFromString<SnyggStylesheet>(json)
+            val stylesheet = SnyggStylesheet.fromJson(json).getOrThrow()
             assertEquals(1, stylesheet.rules.size)
             val (rule, properties) = stylesheet.rules.entries.first()
             val fontRule = assertIs<SnyggAnnotationRule.Font>(rule)
@@ -354,7 +352,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -370,7 +368,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<SerializationException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -387,7 +385,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -404,7 +402,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -421,7 +419,7 @@ class SnyggStylesheetTest {
             }
             """.trimIndent()
             assertThrows<IllegalArgumentException> {
-                Json.decodeFromString<SnyggStylesheet>(json)
+                SnyggStylesheet.fromJson(json).getOrThrow()
             }
         }
 
@@ -437,7 +435,7 @@ class SnyggStylesheetTest {
             @Language("json")
             val expectedJson =
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"}]}"""
-            val actualJson = Json.encodeToString(stylesheet)
+            val actualJson = stylesheet.toJson().getOrThrow()
             assertEquals(expectedJson, actualJson)
         }
 
@@ -456,7 +454,7 @@ class SnyggStylesheetTest {
             @Language("json")
             val expectedJson =
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"},{"src":"uri(`flex:/path/to/font2.ttf`)"}]}"""
-            val actualJson = Json.encodeToString(stylesheet)
+            val actualJson = stylesheet.toJson().getOrThrow()
             assertEquals(expectedJson, actualJson)
         }
 
@@ -469,8 +467,126 @@ class SnyggStylesheetTest {
                 }
             }
             assertThrows<SerializationException> {
-                Json.encodeToString(stylesheet)
+                stylesheet.toJson().getOrThrow()
             }
+        }
+    }
+
+    @Nested
+    inner class LenientDeserialization {
+        @Test
+        fun `deserialization with missing schema but ignoreMissingSchema=true should succeed`() {
+            val json = """
+            {
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#ff0000"
+              },
+              "element:pressed": {
+                "foreground": "#ff0000"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(ignoreMissingSchema = true)
+            val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
+
+            assertEquals(3, stylesheet.rules.size)
+        }
+
+        @Test
+        fun `deserialization with invalid rule but ignoreInvalidRules=true should succeed`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#ff0000"
+              },
+              "elem-invalid{prop=name}": {
+                "foreground": "#ff0000"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(ignoreInvalidRules = true)
+            val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
+
+            assertEquals(2, stylesheet.rules.size)
+        }
+
+        @Test
+        fun `deserialization with invalid property but ignoreUnknownProperties=true should succeed`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#ff0000",
+                "sunshine": "#ffff00"
+              },
+              "element:pressed": {
+                "foreground": "#ff0000"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(ignoreUnknownProperties = true)
+            val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
+
+            assertEquals(3, stylesheet.rules.size)
+        }
+
+        @Test
+        fun `deserialization with invalid value but ignoreUnknownValues=true should succeed`() {
+            val json = """
+            {
+              $SCHEMA_LINE,
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#ff0000",
+                "foreground": "sunshine-heaven"
+              },
+              "element:pressed": {
+                "foreground": "#ff0000"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(ignoreUnknownValues = true)
+            val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
+
+            assertEquals(3, stylesheet.rules.size)
+        }
+    }
+
+    @Nested
+    inner class PrettyPrintSerialization {
+        @Test
+        fun `serialization pretty print format should match`() {
+            val expectedJson = """
+            {
+              $SCHEMA_LINE,
+              "@defines": {
+                "--test": "rgba(0,0,0,1)"
+              },
+              "element": {
+                "background": "rgba(255,0,0,1)"
+              },
+              "element:pressed": {
+                "foreground": "rgba(255,0,0,1)"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(prettyPrint = true, prettyPrintIndent = "  ")
+            val stylesheet = SnyggStylesheet.fromJson(expectedJson, config).getOrThrow()
+            val actualJson = stylesheet.toJson(config).getOrThrow()
+
+            assertEquals(expectedJson, actualJson)
         }
     }
 }
