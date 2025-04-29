@@ -8,7 +8,7 @@
   "properties": {
     "$schema": {
       "type": "string",
-      "format": "uri-reference"
+      "const": "https://schemas.florisboard.org/snygg/v2/stylesheet"
     }
   },
   "patternProperties": {

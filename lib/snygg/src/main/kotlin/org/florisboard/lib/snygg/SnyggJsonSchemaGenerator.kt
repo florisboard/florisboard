@@ -45,7 +45,7 @@ object SnyggJsonSchemaGenerator {
             "properties" to mapOf(
                 "\$schema" to mapOf(
                     "type" to "string",
-                    "format" to "uri-reference",
+                    "const" to SnyggStylesheet.SCHEMA_V2,
                 ),
             ),
             "patternProperties" to buildMap {

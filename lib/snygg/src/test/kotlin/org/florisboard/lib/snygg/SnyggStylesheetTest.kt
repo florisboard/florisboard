@@ -496,6 +496,50 @@ class SnyggStylesheetTest {
         }
 
         @Test
+        fun `deserialization with invalid schema but ignoreInvalidSchema=true should succeed`() {
+            val json = """
+            {
+              "${'$'}schema": "local/path/to/stylesheet.schema.json",
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#ff0000"
+              },
+              "element:pressed": {
+                "foreground": "#ff0000"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(ignoreInvalidSchema = true)
+            val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
+
+            assertEquals(3, stylesheet.rules.size)
+        }
+
+        @Test
+        fun `deserialization with unsupported schema but ignoreUnsupportedSchema=true should succeed`() {
+            val json = """
+            {
+              "${'$'}schema": "https://schemas.florisboard.org/snygg/v1/stylesheet",
+              "@defines": {
+                "--test": "transparent"
+              },
+              "element": {
+                "background": "#ff0000"
+              },
+              "element:pressed": {
+                "foreground": "#ff0000"
+              }
+            }
+            """.trimIndent()
+            val config = SnyggJsonConfiguration.of(ignoreUnsupportedSchema = true)
+            val stylesheet = SnyggStylesheet.fromJson(json, config).getOrThrow()
+
+            assertEquals(3, stylesheet.rules.size)
+        }
+
+        @Test
         fun `deserialization with invalid rule but ignoreInvalidRules=true should succeed`() {
             val json = """
             {

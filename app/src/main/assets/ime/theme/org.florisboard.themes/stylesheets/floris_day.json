@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../../../lib/snygg/schemas/stylesheet.schema.json",
+  "$schema": "https://schemas.florisboard.org/snygg/v2/stylesheet",
   "@defines": {
     "--primary": "#4caf50",
     "--primary-variant": "#388e3c",

@@ -47,6 +47,8 @@ data class SnyggStylesheet internal constructor(
     companion object {
         const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
 
+        private val SCHEMA_PATTERN = """^https://schemas.florisboard.org/snygg/v[0-9]+/stylesheet$""".toRegex()
+
         fun v2(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
             val builder = SnyggStylesheetEditor(SCHEMA_V2)
             stylesheetBlock(builder)
@@ -65,6 +67,19 @@ data class SnyggStylesheet internal constructor(
                     schema = SCHEMA_V2
                 } else {
                     throw SnyggMissingSchemaException()
+                }
+            } else {
+                val schemaMatch = SCHEMA_PATTERN.matchEntire(schema)
+                if (schemaMatch == null) {
+                    if (config.ignoreInvalidSchema) {
+                        // assume schema
+                        schema = SCHEMA_V2
+                    } else {
+                        throw SnyggInvalidSchemaException(schema)
+                    }
+                }
+                if (schema != SCHEMA_V2 && !config.ignoreUnsupportedSchema) {
+                    throw SnyggUnsupportedSchemaException(schema)
                 }
             }
             val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
@@ -90,6 +105,8 @@ data class SnyggStylesheet internal constructor(
 
 data class SnyggJsonConfiguration private constructor(
     internal val ignoreMissingSchema: Boolean = false,
+    internal val ignoreInvalidSchema: Boolean = false,
+    internal val ignoreUnsupportedSchema: Boolean = false,
     internal val ignoreInvalidRules: Boolean = false,
     internal val ignoreInvalidProperties: Boolean = false,
     internal val ignoreInvalidValues: Boolean = false,
@@ -101,6 +118,8 @@ data class SnyggJsonConfiguration private constructor(
         @OptIn(ExperimentalSerializationApi::class)
         fun of(
             ignoreMissingSchema: Boolean = false,
+            ignoreInvalidSchema: Boolean = false,
+            ignoreUnsupportedSchema: Boolean = false,
             ignoreInvalidRules: Boolean = false,
             ignoreInvalidProperties: Boolean = false,
             ignoreInvalidValues: Boolean = false,
@@ -109,6 +128,8 @@ data class SnyggJsonConfiguration private constructor(
         ): SnyggJsonConfiguration {
             return SnyggJsonConfiguration(
                 ignoreMissingSchema,
+                ignoreInvalidSchema,
+                ignoreUnsupportedSchema,
                 ignoreInvalidRules,
                 ignoreInvalidProperties,
                 ignoreInvalidValues,
@@ -124,7 +145,15 @@ data class SnyggJsonConfiguration private constructor(
 }
 
 class SnyggMissingSchemaException : SerializationException(
-    message = "Stylesheet is missing schema information",
+    message = "Stylesheet is missing schema reference",
+)
+
+class SnyggInvalidSchemaException(schema: String) : SerializationException(
+    message = "Stylesheet references invalid schema '$schema'",
+)
+
+class SnyggUnsupportedSchemaException(schema: String) : SerializationException(
+    message = "Stylesheet references unsupported schema '$schema'",
 )
 
 class SnyggMissingRequiredPropertyException(rule: SnyggRule, property: String) : SerializationException(

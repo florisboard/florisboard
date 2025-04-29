@@ -115,9 +115,6 @@ import org.florisboard.lib.snygg.ui.Saver
 import kotlin.Boolean
 
 internal val LenientStylesheetConfig = SnyggJsonConfiguration.of(
-    ignoreInvalidRules = true,
-    ignoreInvalidProperties = true,
-    ignoreInvalidValues = true,
     prettyPrint = true,
     prettyPrintIndent = "  ",
 )
