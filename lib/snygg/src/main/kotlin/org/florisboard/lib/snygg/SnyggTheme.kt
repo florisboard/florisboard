@@ -105,21 +105,23 @@ data class SnyggTheme internal constructor(
                     }
                     is SnyggAnnotationRule.Font -> {
                         check(propertySet is SnyggMultiplePropertySets)
-                        fonts.getOrPut(rule.fontName) { mutableListOf() }.apply {
-                            propertySet.sets.forEach { fontSet ->
-                                val src = fontSet.src as? SnyggUriValue ?: return@forEach
-                                val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
-                                if (fontPath == null) return@forEach
-                                val fontStyle = (fontSet.fontStyle as? SnyggFontStyleValue)?.fontStyle
-                                val fontWeight = (fontSet.fontWeight as? SnyggFontWeightValue)?.fontWeight
-                                add(
-                                    Font(
-                                        file = File(fontPath),
-                                        weight = fontWeight ?: FontWeight.Normal,
-                                        style = fontStyle ?: FontStyle.Normal,
-                                    )
+                        val fontList = fonts.getOrDefault(rule.fontName, mutableListOf())
+                        propertySet.sets.forEach { fontSet ->
+                            val src = fontSet.src as? SnyggUriValue ?: return@forEach
+                            val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
+                            if (fontPath == null) return@forEach
+                            val fontStyle = (fontSet.fontStyle as? SnyggFontStyleValue)?.fontStyle
+                            val fontWeight = (fontSet.fontWeight as? SnyggFontWeightValue)?.fontWeight
+                            fontList.add(
+                                Font(
+                                    file = File(fontPath),
+                                    weight = fontWeight ?: FontWeight.Normal,
+                                    style = fontStyle ?: FontStyle.Normal,
                                 )
-                            }
+                            )
+                        }
+                        if (fontList.isNotEmpty()) {
+                            fonts.put(rule.fontName, fontList)
                         }
                     }
                     is SnyggElementRule -> {

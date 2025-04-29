@@ -113,6 +113,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
 import org.florisboard.lib.snygg.ui.Saver
 import kotlin.Boolean
+import kotlin.String
 
 internal val LenientStylesheetConfig = SnyggJsonConfiguration.of(
     prettyPrint = true,
@@ -252,6 +253,16 @@ fun ThemeEditorScreen(
                     null
                 }
             } ?: emptyMap()
+        }
+
+        val fontNames = remember(stylesheetEditor.rules) {
+            stylesheetEditor.rules.keys.mapNotNull { rule ->
+                if (rule is SnyggAnnotationRule.Font) {
+                    rule.fontName
+                } else {
+                    null
+                }
+            }
         }
 
         // TODO: (priority = low)
@@ -509,6 +520,7 @@ fun ThemeEditorScreen(
                 level = snyggLevel,
                 colorRepresentation = colorRepresentation,
                 definedVariables = definedVariables,
+                fontNames = fontNames,
                 workspace = workspace,
                 onConfirmNewValue = { name, value ->
                     val properties = snyggPropertySetForEditing?.properties ?: return@EditPropertyDialog false

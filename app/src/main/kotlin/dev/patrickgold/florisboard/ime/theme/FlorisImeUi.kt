@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.ime.theme
 
 enum class FlorisImeUi(val elementName: String) {
+    Root("root"),
+
     Keyboard("keyboard"),
     Key("key"),
     KeyHint("key-hint"),

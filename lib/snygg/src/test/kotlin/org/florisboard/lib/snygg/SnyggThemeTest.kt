@@ -16,6 +16,7 @@ import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.junit.jupiter.api.Nested
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -164,6 +165,23 @@ class SnyggThemeTest {
 
         val key = theme.helperQuery("key")
         assertIs<SnyggUndefinedValue>(key.background)
+    }
+
+    @Test
+    fun `theme with font with zero source sets should not crash`() {
+        val stylesheet = SnyggStylesheet.v2 {
+            font("Comic Sans") {
+                // empty
+            }
+            "key" {
+                textMaxLines = textMaxLines(3)
+            }
+        }
+        val theme = SnyggTheme.compileFrom(stylesheet)
+
+        val key = theme.helperQuery("key")
+        val maxLines = assertIs<SnyggTextMaxLinesValue>(key.textMaxLines)
+        assertEquals(3, maxLines.maxLines)
     }
 
     @Nested

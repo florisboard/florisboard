@@ -178,7 +178,7 @@
   },
   "smartbar-candidate-word:pressed": {
     "background": "var(--surface)",
-    "foreground": "var(--on-background)"
+    "foreground": "var(--on-surface)"
   },
   "smartbar-candidate-clip": {
     "background": "transparent",
@@ -192,10 +192,10 @@
   },
   "smartbar-candidate-clip:pressed": {
     "background": "var(--surface)",
-    "foreground": "var(--on-background)"
+    "foreground": "var(--on-surface)"
   },
   "smartbar-candidate-spacer": {
-    "foreground": "var(--on-surface)"
+    "foreground": "rgba(0, 0, 0, 0.25)"
   },
 
   "clipboard-header": {

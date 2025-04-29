@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.takeOrElse
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.CompiledFontFamilyData
-import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.snygg.SnyggAttributes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
@@ -151,18 +151,26 @@ fun ProvideSnyggTheme(
         }
     }
 
+    val initFontSize = MaterialTheme.typography.bodyMedium.fontSize
+    val initParentStyle = remember(initFontSize) {
+        SnyggSinglePropertySetEditor().run {
+            fontSize = fontSize(initFontSize)
+            build()
+        }
+    }
+
     CompositionLocalProvider(
         LocalSnyggTheme provides snyggTheme,
         LocalSnyggDynamicLightColorScheme provides lightScheme,
         LocalSnyggDynamicDarkColorScheme provides darkScheme,
         LocalSnyggAssetResolver provides assetResolver,
         LocalSnyggPreloadedCustomFontFamilies provides customFontFamilies,
-        LocalSnyggParentStyle provides SnyggSinglePropertySetEditor().run {
-            fontSize = fontSize(MaterialTheme.typography.bodyMedium.fontSize)
-            build()
-        },
-        content = content,
-    )
+        LocalSnyggParentStyle provides initParentStyle,
+    ) {
+        ProvideSnyggStyle("root", SnyggAttributes.of(), SnyggSelector.NONE) {
+            content()
+        }
+    }
 }
 
 @Composable

@@ -65,7 +65,7 @@ fun SnyggButton(
         onClick = onClick,
     ) {
         if (icon != null) {
-            Icon(
+            SnyggIcon(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .size(ButtonDefaults.IconSize),
@@ -73,6 +73,6 @@ fun SnyggButton(
                 contentDescription = null,
             )
         }
-        Text(text, modifier)
+        SnyggText(text = text, modifier = modifier)
     }
 }

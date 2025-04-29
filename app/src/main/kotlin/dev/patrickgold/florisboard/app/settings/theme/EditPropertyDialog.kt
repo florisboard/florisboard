@@ -181,6 +181,7 @@ internal fun EditPropertyDialog(
     level: SnyggLevel,
     colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
+    fontNames: List<String>,
     workspace: CacheManager.ExtEditorWorkspace<*>,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
@@ -317,6 +318,7 @@ internal fun EditPropertyDialog(
                     level = level,
                     colorRepresentation = colorRepresentation,
                     definedVariables = definedVariables,
+                    fontNames = fontNames,
                     workspace = workspace,
                     isError = !isPropertyValueValid(),
                 )
@@ -408,6 +410,7 @@ private fun PropertyValueEditor(
     level: SnyggLevel,
     colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
+    fontNames: List<String>,
     workspace: CacheManager.ExtEditorWorkspace<*>,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
@@ -490,8 +493,7 @@ private fun PropertyValueEditor(
         }
 
         is SnyggCustomFontFamilyValue -> {
-
-            // TODO: implement
+            CustomFontFamilyValueEditor(value, onValueChange, fontNames, isError, modifier)
         }
 
         is SnyggFontStyleValue -> {
@@ -696,6 +698,44 @@ private fun <T> EnumLikeValueEditor(
             val value = encoder.construct(innerValue)
             onValueChange(value)
         },
+    )
+}
+
+@Composable
+private fun CustomFontFamilyValueEditor(
+    value: SnyggCustomFontFamilyValue,
+    onValueChange: (SnyggValue) -> Unit,
+    fontNames: List<String>,
+    isError: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val options = remember(fontNames) {
+        listOf("-select-") + fontNames
+    }
+    val selectedIndex = remember(value) {
+        val index = fontNames.indexOf(value.fontName)
+        if (index == -1) {
+            0
+        } else {
+            index + 1
+        }
+    }
+
+    JetPrefDropdown(
+        modifier = modifier,
+        options = options,
+        selectedOptionIndex = selectedIndex,
+        onSelectOption = { index ->
+            if (index == 0) {
+                val value = SnyggCustomFontFamilyValue("```")
+                onValueChange(value)
+            } else {
+                val fontName = fontNames.elementAt(index - 1)
+                val value = SnyggCustomFontFamilyValue(fontName)
+                onValueChange(value)
+            }
+        },
+        isError = isError,
     )
 }
 
