@@ -188,6 +188,14 @@ class SnyggRuleTest {
                     SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER),
                 SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER) to
                     SnyggElementRule(elementName = "test", selector = SnyggSelector.DISABLED),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.PRESSED),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.FOCUS),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.HOVER),
+                SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
+                    SnyggElementRule(elementName = "test", selector = SnyggSelector.DISABLED),
                 SnyggElementRule(elementName = "test") to
                     SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))),
                 SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to

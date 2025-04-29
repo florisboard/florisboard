@@ -178,20 +178,20 @@ data class SnyggElementRule(
         if (elemDiff != 0) {
             return elemDiff
         }
+        if (selector != SnyggSelector.NONE || other.selector != SnyggSelector.NONE) {
+            if (selector == SnyggSelector.NONE) {
+                return -1
+            }
+            if (other.selector == SnyggSelector.NONE) {
+                return 1
+            }
+            val selectorDiff = selector.compareTo(other.selector)
+            if (selectorDiff != 0) {
+                return selectorDiff
+            }
+        }
         val attrDiff = attributes.compareTo(other.attributes)
-        if (attrDiff != 0) {
-            return attrDiff
-        }
-        if (selector == SnyggSelector.NONE && other.selector == SnyggSelector.NONE) {
-            return 0
-        }
-        if (selector == SnyggSelector.NONE) {
-            return -1
-        }
-        if (other.selector == SnyggSelector.NONE) {
-            return 1
-        }
-        return selector.compareTo(other.selector)
+        return attrDiff
     }
 
     override fun toString() = buildString {
