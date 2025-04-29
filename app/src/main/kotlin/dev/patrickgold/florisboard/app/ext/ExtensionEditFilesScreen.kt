@@ -20,13 +20,18 @@ import android.provider.OpenableColumns
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.Photo
+import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,7 +40,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.core.content.MimeTypeFilter
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.cache.CacheManager
@@ -43,9 +53,10 @@ import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import java.io.File
+import java.util.*
 import org.florisboard.lib.android.query
 import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
@@ -53,8 +64,6 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.kotlin.io.parentDir
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
-import java.io.File
-import java.util.*
 
 const val FONTS = "fonts"
 const val IMAGES = "images"
@@ -135,51 +144,104 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         }
 
         @Composable
-        fun FileList(files: List<File>) {
+        fun FileList(title: String, icon: ImageVector, files: List<File>, onAdd: () -> Unit) {
+            var dialogFile by remember { mutableStateOf<File?>(null) }
+            ListItem(
+                headlineContent = {
+                    Text(
+                        text = title,
+                        color = MaterialTheme.colorScheme.secondary,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                },
+                leadingContent = {
+                    Spacer(modifier = Modifier.width(24.dp))
+                },
+                trailingContent = {
+                    IconButton(
+                        onClick = onAdd,
+                    ) {
+                        Icon(Icons.Default.Add, null)
+                    }
+                },
+            )
             for (file in files) {
                 Preference(
-                    trailing = {
-                        IconButton(
-                            onClick = {
-                                if (file.delete()) {
-                                    context.showShortToast("Successfully deleted")
-                                } else {
-                                    context.showShortToast("Failed to remove")
-                                }
-                                version++
-                            },
-                        ) {
-                            Icon(Icons.Default.DeleteForever, null)
-                        }
+                    onClick = {
+                        dialogFile = file
                     },
-                    icon = Icons.Default.AttachFile,
+                    icon = icon,
                     title = file.name,
                 )
             }
+
+            dialogFile?.let { file ->
+                var fileNameInput by rememberSaveable { mutableStateOf(file.name) }
+                JetPrefAlertDialog(
+                    title = "Rename or remove",
+                    confirmLabel = stringRes(R.string.action__apply),
+                    dismissLabel = stringRes(R.string.action__cancel),
+                    neutralLabel = stringRes(R.string.action__delete),
+                    allowOutsideDismissal = true,
+                    onNeutral = {
+                        if (file.delete()) {
+                            context.showShortToast("Successfully deleted")
+                        } else {
+                            context.showShortToast("Failed to remove")
+                        }
+                        dialogFile = null
+                        version++
+                    },
+                    onConfirm = {
+                        val newFile = file.parentFile!!.subFile(fileNameInput).canonicalFile
+                        if (newFile.parentFile != file.canonicalFile.parentFile) {
+                            context.showLongToast("Invalid file name!")
+                            return@JetPrefAlertDialog
+                        }
+                        if (newFile.exists()) {
+                            context.showShortToast("Filename already exists.")
+                            return@JetPrefAlertDialog
+                        }
+                        val success = file.renameTo(newFile)
+                        if (success) {
+                            context.showShortToast("Successfully renamed")
+                        } else {
+                            context.showShortToast("Failed to rename the file.")
+                        }
+                        dialogFile = null
+                        version++
+                    },
+                    onDismiss = {
+                        dialogFile = null
+                    },
+                ) {
+                    JetPrefTextField(
+                        value = fileNameInput,
+                        onValueChange = { fileNameInput = it },
+                        singleLine = true,
+                    )
+                }
+            }
         }
 
-        PreferenceGroup(title = FONTS.replaceFirstChar { it.uppercase() }) {
-            Preference(
-                onClick = {
-                    currentImportDest = FONTS
-                    importLauncher.launch("*/*")
-                },
-                icon = Icons.Default.Add,
-                title = "Add font",
-            )
-            FileList(fontFiles)
+        FileList(
+            title = FONTS.replaceFirstChar { it.uppercase() },
+            icon = Icons.Default.TextFields,
+            files = fontFiles,
+        ) {
+            currentImportDest = FONTS
+            importLauncher.launch("*/*")
         }
 
-        PreferenceGroup(title = IMAGES.replaceFirstChar { it.uppercase() }) {
-            Preference(
-                onClick = {
-                    currentImportDest = IMAGES
-                    importLauncher.launch("*/*")
-                },
-                icon = Icons.Default.Add,
-                title = "Add image",
-            )
-            FileList(imageFiles)
+        FileList(
+            title = IMAGES.replaceFirstChar { it.uppercase() },
+            icon = Icons.Default.Photo,
+            files = imageFiles,
+        ) {
+            currentImportDest = IMAGES
+            importLauncher.launch("*/*")
         }
 
         val dest = currentImportDest
@@ -220,6 +282,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                 JetPrefTextField(
                     value = fileNameInput,
                     onValueChange = { fileNameInput = it },
+                    singleLine = true,
                 )
             }
         }
