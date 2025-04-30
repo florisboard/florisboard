@@ -106,6 +106,12 @@ internal val LocalSnyggParentSelector: ProvidableCompositionLocal<SnyggSelector>
  * When the stylesheet changes the [SnyggTheme] is recompiled.
  *
  * @param stylesheet [SnyggStylesheet] the [SnyggTheme] is compiled from
+ * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.florisboard.lib.snygg.value.SnyggUriValue]
+ *
+ * @since 0.5.0-alpha01
+ *
+ * @see SnyggAssetResolver
+ * @see SnyggDefaultAssetResolver
  */
 @Composable
 fun rememberSnyggTheme(
@@ -117,6 +123,7 @@ fun rememberSnyggTheme(
 
 /**
  * Provides the snygg theme to use for all snygg ui composable functions.
+ * This function **must** be called for snygg ui composables to work.
  *
  * Use [rememberSnyggTheme] to convert a [SnyggStylesheet] to a [SnyggTheme].
  *
@@ -125,8 +132,11 @@ fun rememberSnyggTheme(
  * [Color.Unspecified] means default/material you color.
  * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.florisboard.lib.snygg.value.SnyggUriValue].
  *
+ * @since 0.5.0-alpha01
+ *
  * @see rememberSnyggTheme
  * @see SnyggAssetResolver
+ * @see SnyggDefaultAssetResolver
  */
 @Composable
 fun ProvideSnyggTheme(
