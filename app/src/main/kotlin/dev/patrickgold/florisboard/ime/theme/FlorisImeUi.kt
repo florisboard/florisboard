@@ -35,6 +35,10 @@ enum class FlorisImeUi(val elementName: String) {
     ClipboardItemPopupActionIcon("clipboard-item-popup-action-icon"),
     ClipboardItemPopupActionText("clipboard-item-popup-action-text"),
     ClipboardEnableHistoryButton("clipboard-enable-history-button"),
+    ClipboardClearAllDialog("clipboard-clear-all-dialog"),
+    ClipboardClearAllDialogMessage("clipboard-clear-all-dialog-message"),
+    ClipboardClearAllDialogButtons("clipboard-clear-all-dialog-buttons"),
+    ClipboardClearAllDialogButton("clipboard-clear-all-dialog-button"),
 
     EmojiKey("emoji-key"),
     EmojiKeyPopup("emoji-key-popup"),

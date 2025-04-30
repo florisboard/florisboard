@@ -125,7 +125,7 @@
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
     "shape": "circle()",
-    "shadow-elevation": "2dp"
+    "clip": "yes"
   },
 
   "smartbar-actions-editor": {
@@ -235,6 +235,25 @@
     "background": "var(--primary)",
     "foreground": "var(--on-primary)",
     "shape": "rounded-corner(24dp,24dp,24dp,24dp)"
+  },
+  "clipboard-clear-all-dialog": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "shape": "var(--shape-variant)",
+    "clip": "yes",
+    "shadow-elevation": "1dp"
+  },
+  "clipboard-clear-all-dialog-message": {
+    "padding": "16dp"
+  },
+  "clipboard-clear-all-dialog-buttons": {
+    "padding": "4dp"
+  },
+  "clipboard-clear-all-dialog-button": {
+    "background": "transparent",
+    "foreground": "var(--on-surface)",
+    "shape": "var(--shape-variant)",
+    "clip": "yes"
   },
 
   "emoji-key": {

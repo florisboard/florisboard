@@ -38,6 +38,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -379,24 +380,30 @@ fun ClipboardInputLayout(
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     SnyggColumn(
+                        elementName = FlorisImeUi.ClipboardClearAllDialog.elementName,
                         modifier = Modifier
+                            .width(DialogWidth)
                             .pointerInput(Unit) {
                                 detectTapGestures { /* Do nothing */ }
                             },
                     ) {
                         SnyggText(
-                            modifier = Modifier.padding(all = 16.dp),
+                            elementName = FlorisImeUi.ClipboardClearAllDialogMessage.elementName,
                             text = stringRes(R.string.clipboard__confirm_clear_history__message),
                         )
-                        SnyggRow {
+                        SnyggRow(FlorisImeUi.ClipboardClearAllDialogButtons.elementName) {
                             Spacer(modifier = Modifier.weight(1f))
                             SnyggButton(
+                                elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
+                                attributes = mapOf("action" to "no"),
                                 onClick = {
                                     showClearAllHistory = false
                                 },
                                 text = stringRes(R.string.action__no),
                             )
                             SnyggButton(
+                                elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
+                                attributes = mapOf("action" to "yes"),
                                 onClick = {
                                     clipboardManager.clearHistory()
                                     context.showShortToast(R.string.clipboard__cleared_history)

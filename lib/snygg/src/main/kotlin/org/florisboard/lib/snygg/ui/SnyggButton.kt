@@ -16,15 +16,22 @@
 
 package org.florisboard.lib.snygg.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 
@@ -38,41 +45,31 @@ fun SnyggButton(
     text: String,
     enabled: Boolean = true,
 ) {
-    val theme = LocalSnyggTheme.current
-    val styleDefault = theme.rememberQuery(elementName, attributes)
-    val stylePressed = theme.rememberQuery(elementName, attributes, SnyggSelector.PRESSED)
-    val styleFocus = theme.rememberQuery(elementName, attributes, SnyggSelector.FOCUS)
-    val styleHover = theme.rememberQuery(elementName, attributes, SnyggSelector.HOVER)
-    val styleDisabled = theme.rememberQuery(elementName, attributes, SnyggSelector.DISABLED)
-
-    Button(
-        modifier = modifier,
-        enabled = enabled,
-        shape = styleDefault.shape(),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = styleDefault.background(),
-            contentColor = styleDefault.foreground(),
-            disabledContainerColor = styleDisabled.background(),
-            disabledContentColor = styleDisabled.foreground(),
-        ),
-        elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = styleDefault.shadowElevation.dpSize(),
-            pressedElevation = stylePressed.shadowElevation.dpSize(),
-            focusedElevation = styleFocus.shadowElevation.dpSize(),
-            hoveredElevation = styleHover.shadowElevation.dpSize(),
-            disabledElevation = styleDisabled.shadowElevation.dpSize(),
-        ),
-        onClick = onClick,
+    val interactionSource = remember { MutableInteractionSource() }
+    val selector = if (enabled) SnyggSelector.NONE else SnyggSelector.DISABLED
+    SnyggBox(
+        elementName = elementName,
+        attributes = attributes,
+        selector = selector,
+        modifier = modifier.semantics { role = Role.Button },
+        clickAndSemanticsModifier = Modifier
+            .clickable(interactionSource, ripple(), enabled, null, Role.Button, onClick),
     ) {
-        if (icon != null) {
-            SnyggIcon(
-                modifier = Modifier
-                    .padding(end = ButtonDefaults.IconSpacing)
-                    .size(ButtonDefaults.IconSize),
-                painter = icon,
-                contentDescription = null,
-            )
+        Row(
+            modifier = Modifier.padding(ButtonDefaults.ContentPadding),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (icon != null) {
+                SnyggIcon(
+                    modifier = Modifier
+                        .padding(end = ButtonDefaults.IconSpacing)
+                        .size(ButtonDefaults.IconSize),
+                    painter = icon,
+                    contentDescription = null,
+                )
+            }
+            SnyggText(text = text, modifier = modifier)
         }
-        SnyggText(text = text, modifier = modifier)
     }
 }
