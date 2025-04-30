@@ -32,6 +32,18 @@ import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
+/**
+ * Simple text composable, which must be used inside a [ProvideSnyggTheme] block
+ * and will get styled by the [org.florisboard.lib.snygg.SnyggTheme].
+ *
+ * @param elementName The name of this Element. If `null` the style will be inherited from the parent element.
+ * @param attributes The Attributes of the Element used to refine the query.
+ * @param selector A specific [SnyggSelector] to query the style for.
+ * @param modifier The [Modifier] to be applied to the Text.
+ * @param text The text of the element.
+ *
+ * @since 0.5.0-alpha01
+ */
 @Composable
 fun SnyggText(
     elementName: String? = null,
