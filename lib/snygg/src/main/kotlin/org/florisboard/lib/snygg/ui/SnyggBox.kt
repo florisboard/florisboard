@@ -41,6 +41,27 @@ import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
+/**
+ * Simple layout composable with [content]
+ *
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
+ * required to be provided by [ProvideSnyggTheme].
+ *
+ * @param elementName The name of this element. If `null` the style will be inherited from the parent element.
+ * @param attributes The attributes of the element used to refine the query.
+ * @param selector A specific SnyggSelector to query the style for.
+ * @param modifier The modifier to be applied to the layout.
+ * @param clickAndSemanticsModifier The modifier to be applied to the layout after drawing the background.
+ * @param contentAlignment The default alignment inside the Box.
+ * @param propagateMinConstraints Whether the incoming min constraints should be passed to content.
+ * @param supportsBackgroundImage controls if this Box supports background images.
+ * @param backgroundImageDescription The content description of the background image.
+ * @param content The content of the Box
+ *
+ * @since 0.5.0-alpha01
+ *
+ * @see [Box]
+ */
 @Composable
 fun SnyggBox(
     elementName: String? = null,

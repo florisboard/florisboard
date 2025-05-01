@@ -32,21 +32,23 @@ import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
 /**
- * Simple Icon composable, which can be used inside a [ProvideSnyggTheme] block
- * and will get styled by the [org.florisboard.lib.snygg.SnyggTheme]
+ * Simple Icon composable, which displays a given [imageVector] annotated by the [contentDescription].
  *
- * @param elementName The name of this Element. If `null` the style will be inherited from the parent element.
- * @param attributes The Attributes of the Element used to refine the query.
- * @param selector A specific [SnyggSelector] to query the style for.
- * @param modifier The [Modifier] to be applied to the Icon.
- * @param imageVector The [ImageVector] which will be drawn as Icon.
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
+ * required to be provided by [ProvideSnyggTheme].
+ *
+ * @param elementName The name of this element. If `null` the style will be inherited from the parent element.
+ * @param attributes The attributes of the element used to refine the query.
+ * @param selector A specific SnyggSelector to query the style for.
+ * @param modifier The modifier to be applied to the Icon.
+ * @param imageVector The imageVector which will be drawn as Icon.
  * @param contentDescription Text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes,
  * and does not represent a meaningful action that a user can take.
  *
  * @since 0.5.0-alpha01
  *
- * @see [SnyggSelector]
+ * @see [Icon]
  */
 @Composable
 fun SnyggIcon(
@@ -68,19 +70,23 @@ fun SnyggIcon(
 }
 
 /**
- * Simple Icon composable, which can be used inside a [ProvideSnyggTheme] block
- * and will get styled by the [org.florisboard.lib.snygg.SnyggTheme]
+ * Simple Icon composable, which displays a given [bitmap] annotated by the [contentDescription].
  *
- * @param elementName The name of this Element. If `null` the style will be inherited from the parent element.
- * @param attributes The Attributes of the Element used to refine the query.
- * @param selector A specific [SnyggSelector] to query the style for.
- * @param modifier The [Modifier] to be applied to the Icon.
- * @param bitmap The [ImageBitmap] which will be drawn as Icon.
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
+ * required to be provided by [ProvideSnyggTheme].
+ *
+ * @param elementName The name of this element. If `null` the style will be inherited from the parent element.
+ * @param attributes The attributes of the element used to refine the query.
+ * @param selector A specific SnyggSelector to query the style for.
+ * @param modifier The modifier to be applied to the Icon.
+ * @param bitmap The imageBitmap which will be drawn as Icon.
  * @param contentDescription Text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes,
  * and does not represent a meaningful action that a user can take.
  *
  * @since 0.5.0-alpha01
+ *
+ * @see [Icon]
  */
 @Composable
 fun SnyggIcon(
@@ -102,19 +108,23 @@ fun SnyggIcon(
 }
 
 /**
- * Simple Icon composable, which can be used inside a [ProvideSnyggTheme] block
- * and will get styled by the [org.florisboard.lib.snygg.SnyggTheme].
+ * Simple Icon composable, which displays a given [painter] annotated by the [contentDescription].
  *
- * @param elementName The name of this Element. If `null` the style will be inherited from the parent element.
- * @param attributes The Attributes of the Element used to refine the query.
- * @param selector A specific [SnyggSelector] to query the style for.
- * @param modifier The [Modifier] to be applied to the Icon.
- * @param painter The [Painter] which will be drawn as Icon.
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
+ * required to be provided by [ProvideSnyggTheme].
+ *
+ * @param elementName The name of this element. If `null` the style will be inherited from the parent element.
+ * @param attributes The attributes of the element used to refine the query.
+ * @param selector A specific SnyggSelector to query the style for.
+ * @param modifier The modifier to be applied to the Icon.
+ * @param painter The painter which will be drawn as Icon.
  * @param contentDescription Text used by accessibility services to describe what this icon represents.
  * This should always be provided unless this icon is used for decorative purposes,
  * and does not represent a meaningful action that a user can take.
  *
  * @since 0.5.0-alpha01
+ *
+ * @see [Icon]
  */
 @Composable
 fun SnyggIcon(

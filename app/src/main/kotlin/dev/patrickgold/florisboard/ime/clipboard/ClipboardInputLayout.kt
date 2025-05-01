@@ -95,7 +95,6 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -129,43 +128,55 @@ fun ClipboardInputLayout(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(
+            SnyggButton(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            )
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                )
+            }
             SnyggText(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
             )
-            SnyggIconButton(
+            SnyggButton(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier
                     .size(FlorisImeSizing.smartbarHeight * 0.7f)
                     .autoMirrorForRtl(),
-                imageVector = if (historyEnabled) {
-                    Icons.Default.ToggleOn
-                } else {
-                    Icons.Default.ToggleOff
-                },
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
-            )
-            SnyggIconButton(
+            ) {
+                SnyggIcon(
+                    imageVector = if (historyEnabled) {
+                        Icons.Default.ToggleOn
+                    } else {
+                        Icons.Default.ToggleOff
+                    },
+                )
+            }
+            SnyggButton(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier
                     .size(FlorisImeSizing.smartbarHeight * 0.7f)
                     .autoMirrorForRtl(),
-                imageVector = Icons.Default.ClearAll,
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
-            )
-            SnyggIconButton(
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.Default.ClearAll,
+                )
+            }
+            SnyggButton(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
-                imageVector = Icons.Default.Edit,
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
-            )
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.Default.Edit,
+                )
+            }
             KeyboardLikeButton(
                 inputEventDispatcher = keyboardManager.inputEventDispatcher,
                 keyData = TextKeyData.DELETE,

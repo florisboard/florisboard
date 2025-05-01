@@ -34,7 +34,8 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggIcon
 
 @Composable
 fun RowScope.OneHandedPanel(
@@ -53,35 +54,43 @@ fun RowScope.OneHandedPanel(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
-        SnyggIconButton(
+        SnyggButton(
             FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedModeEnabled.set(false)
             },
             modifier = Modifier.fillMaxWidth(),
-            imageVector = Icons.Default.ZoomOutMap,
-            contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
-        )
-        SnyggIconButton(
+
+        ) {
+            SnyggIcon(
+                imageVector = Icons.Default.ZoomOutMap,
+                contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
+            )
+        }
+        SnyggButton(
             FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedMode.set(panelSide)
             },
             modifier = Modifier.weight(1f).fillMaxWidth(),
-            imageVector = if (panelSide == OneHandedMode.START) {
-                Icons.AutoMirrored.Filled.KeyboardArrowLeft
-            } else {
-                Icons.AutoMirrored.Filled.KeyboardArrowRight
-            },
-            contentDescription = stringRes(
-                if (panelSide == OneHandedMode.START) {
-                    R.string.one_handed__move_start_btn_content_description
+
+        ) {
+            SnyggIcon(
+                imageVector = if (panelSide == OneHandedMode.START) {
+                    Icons.AutoMirrored.Filled.KeyboardArrowLeft
                 } else {
-                    R.string.one_handed__move_end_btn_content_description
-                }
-            ),
-        )
+                    Icons.AutoMirrored.Filled.KeyboardArrowRight
+                },
+                contentDescription = stringRes(
+                    if (panelSide == OneHandedMode.START) {
+                        R.string.one_handed__move_start_btn_content_description
+                    } else {
+                        R.string.one_handed__move_end_btn_content_description
+                    }
+                ),
+            )
+        }
     }
 }

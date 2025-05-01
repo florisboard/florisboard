@@ -214,6 +214,15 @@ val SnyggRule.Companion.NonNullSaver: Saver<SnyggRule, String>
         restore = { fromOrNull(it)!! },
     )
 
+/**
+ * Remembers the [PropertySet][SnyggSinglePropertySet] for the params given.
+ *
+ * @param elementName The name of this element. If `null` the style will be inherited from the parent element.
+ * @param attributes The attributes of the element used to refine the query.
+ * @param selector A specific SnyggSelector to query the style for.
+ *
+ * @return the [queried property set][SnyggSinglePropertySet] for usage in custom elements
+ */
 @Composable
 fun rememberSnyggThemeQuery(
     elementName: String,
@@ -246,7 +255,9 @@ internal fun SnyggTheme.rememberQuery(
     }
 }
 
-fun Modifier.snyggBackground(
+/// Modifier helpers
+
+internal fun Modifier.snyggBackground(
     style: SnyggSinglePropertySet,
     default: Color = Color.Unspecified,
     shape: Shape = style.shape(),
@@ -270,7 +281,7 @@ fun Modifier.snyggBackground(
     return modifier
 }
 
-fun Modifier.snyggBorder(
+internal fun Modifier.snyggBorder(
     style: SnyggSinglePropertySet,
     width: Dp = style.borderWidth.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     color: Color = style.borderColor.colorOrDefault(default = Color.Unspecified),
@@ -283,7 +294,7 @@ fun Modifier.snyggBorder(
     }
 }
 
-fun Modifier.snyggMargin(
+internal fun Modifier.snyggMargin(
     style: SnyggSinglePropertySet,
 ): Modifier {
     return when (style.margin) {
@@ -292,7 +303,7 @@ fun Modifier.snyggMargin(
     }
 }
 
-fun Modifier.snyggPadding(
+internal fun Modifier.snyggPadding(
     style: SnyggSinglePropertySet,
     default: PaddingValues? = null,
 ): Modifier {
@@ -303,7 +314,7 @@ fun Modifier.snyggPadding(
     }
 }
 
-fun Modifier.snyggShadow(
+internal fun Modifier.snyggShadow(
     style: SnyggSinglePropertySet,
     elevation: Dp = style.shadowElevation.dpSize().takeOrElse { 0.dp }.coerceAtLeast(0.dp),
     shape: Shape = style.shape(),

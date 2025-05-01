@@ -20,30 +20,48 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 
+/**
+ * Simple interactive Box with integrated clickable state management.
+ *
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
+ * required to be provided by [ProvideSnyggTheme].
+ *
+ * @param elementName The name of this element. If `null` the style will be inherited from the parent element.
+ * @param attributes The attributes of the element used to refine the query.
+ * @param onClick called when this button is clicked
+ * @param modifier The modifier to be applied to the Icon.
+ * @param enabled controls the enabled state of this button. When `false`, this component will not
+ * respond to user input, and it will appear visually disabled and disabled to accessibility
+ * services.
+ * @param content The content displayed on the button, expected to be text, icon or image.
+ *
+ * @since 0.5.0-alpha01
+ */
 @Composable
 fun SnyggButton(
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: Painter? = null,
-    text: String,
     enabled: Boolean = true,
+    content: @Composable RowScope.() -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val selector = if (enabled) SnyggSelector.NONE else SnyggSelector.DISABLED
@@ -59,17 +77,7 @@ fun SnyggButton(
             modifier = Modifier.padding(ButtonDefaults.ContentPadding),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-        ) {
-            if (icon != null) {
-                SnyggIcon(
-                    modifier = Modifier
-                        .padding(end = ButtonDefaults.IconSpacing)
-                        .size(ButtonDefaults.IconSize),
-                    painter = icon,
-                    contentDescription = null,
-                )
-            }
-            SnyggText(text = text, modifier = modifier)
-        }
+            content = content,
+        )
     }
 }

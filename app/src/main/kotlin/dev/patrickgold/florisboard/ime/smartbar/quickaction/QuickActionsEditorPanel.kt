@@ -58,8 +58,9 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.toIntOffset
 import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -243,12 +244,15 @@ fun QuickActionsEditorPanel() {
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(
+            SnyggButton(
                 onClick = {
                     keyboardManager.activeState.isActionsEditorVisible = false
                 },
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-            )
+            ) {
+                SnyggIcon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                )
+            }
             SnyggText(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
