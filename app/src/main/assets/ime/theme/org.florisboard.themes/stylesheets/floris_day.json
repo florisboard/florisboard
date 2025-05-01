@@ -9,6 +9,17 @@
     "--surface": "#ffffff",
     "--surface-variant": "#f5f5f5",
 
+    "--popup-surface": "#eeeeee",
+    "--focused-popup-surface": "#bdbdbd",
+
+    "--drag-marker": "rgb(255,0,0)",
+    "--spacer-color": "rgba(0 ,0, 0, 0.25)",
+
+    "--one-hand-background": "#e8f5e9",
+    "--one-hand-foreground": "#424242",
+
+    "--incognito-icon-color": "#00000011",
+
     "--on-primary": "#f0f0f0",
     "--on-background": "#121212",
     "--on-background-disabled": "rgb(175,175,175)",
@@ -71,14 +82,14 @@
     "text-max-lines": "1"
   },
   "key-popup-box": {
-    "background": "#eeeeee",
+    "background": "var(--popup-surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
     "shape": "var(--shape)",
     "shadow-elevation": "2dp"
   },
   "key-popup-element:focus": {
-    "background": "#bdbdbd",
+    "background": "var(--focused-popup-surface)",
     "shape": "var(--shape)"
   },
   "key-popup-extended-indicator": {
@@ -163,7 +174,7 @@
     "foreground": "var(--on-background-disabled)"
   },
   "smartbar-actions-editor-tile[code=-991]": {
-    "foreground": "rgb(255,0,0)"
+    "foreground": "var(--drag-marker)"
   },
 
   "smartbar-candidate-word": {
@@ -195,7 +206,7 @@
     "foreground": "var(--on-surface)"
   },
   "smartbar-candidate-spacer": {
-    "foreground": "rgba(0, 0, 0, 0.25)"
+    "foreground": "var(--spacer)"
   },
 
   "clipboard-header": {
@@ -267,7 +278,7 @@
     "foreground": "var(--on-surface)"
   },
   "emoji-key-popup": {
-    "background": "#eeeeee",
+    "background": "var(--popup-surface)",
     "foreground": "var(--on-surface)",
     "font-size": "22sp",
     "shape": "var(--shape)",
@@ -302,11 +313,11 @@
   },
 
   "incognito-mode-indicator": {
-    "foreground": "#00000011"
+    "foreground": "var(--incognito-icon-color)"
   },
 
   "one-handed-panel": {
-    "background": "#e8f5e9",
-    "foreground": "#424242"
+    "background": "var(--one-hand-background)",
+    "foreground": "var(--one-hand-foreground)"
   }
 }
