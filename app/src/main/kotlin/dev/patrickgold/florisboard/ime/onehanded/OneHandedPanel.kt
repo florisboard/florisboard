@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 
 @Composable
 fun RowScope.OneHandedPanel(
@@ -54,30 +55,32 @@ fun RowScope.OneHandedPanel(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
-        SnyggButton(
+        SnyggIconButton(
             FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedModeEnabled.set(false)
             },
             modifier = Modifier.fillMaxWidth(),
-
         ) {
             SnyggIcon(
+                modifier = Modifier.fillMaxWidth(),
                 imageVector = Icons.Default.ZoomOutMap,
                 contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
             )
         }
-        SnyggButton(
+        SnyggIconButton(
             FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedMode.set(panelSide)
             },
-            modifier = Modifier.weight(1f).fillMaxWidth(),
-
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
         ) {
             SnyggIcon(
+                modifier = Modifier.fillMaxWidth(),
                 imageVector = if (panelSide == OneHandedMode.START) {
                     Icons.AutoMirrored.Filled.KeyboardArrowLeft
                 } else {

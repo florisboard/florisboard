@@ -95,6 +95,7 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -128,7 +129,7 @@ fun ClipboardInputLayout(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggButton(
+            SnyggIconButton(
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
             ) {
@@ -140,7 +141,7 @@ fun ClipboardInputLayout(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
             )
-            SnyggButton(
+            SnyggIconButton(
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
                 modifier = Modifier
                     .size(FlorisImeSizing.smartbarHeight * 0.7f)
@@ -155,7 +156,7 @@ fun ClipboardInputLayout(
                     },
                 )
             }
-            SnyggButton(
+            SnyggIconButton(
                 onClick = { showClearAllHistory = true },
                 modifier = Modifier
                     .size(FlorisImeSizing.smartbarHeight * 0.7f)
@@ -166,7 +167,7 @@ fun ClipboardInputLayout(
                     imageVector = Icons.Default.ClearAll,
                 )
             }
-            SnyggButton(
+            SnyggIconButton(
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
@@ -410,8 +411,11 @@ fun ClipboardInputLayout(
                                 onClick = {
                                     showClearAllHistory = false
                                 },
-                                text = stringRes(R.string.action__no),
-                            )
+                            ) {
+                                SnyggText(
+                                    text = stringRes(R.string.action__no),
+                                )
+                            }
                             SnyggButton(
                                 elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
                                 attributes = mapOf("action" to "yes"),
@@ -420,8 +424,11 @@ fun ClipboardInputLayout(
                                     context.showShortToast(R.string.clipboard__cleared_history)
                                     showClearAllHistory = false
                                 },
-                                text = stringRes(R.string.action__yes),
-                            )
+                            ) {
+                                SnyggText(
+                                    text = stringRes(R.string.action__yes),
+                                )
+                            }
                         }
                     }
                 }
@@ -458,8 +465,11 @@ fun ClipboardInputLayout(
             )
             SnyggButton(FlorisImeUi.ClipboardEnableHistoryButton.elementName,
                 onClick = { prefs.clipboard.historyEnabled.set(true) },
-                text = stringRes(R.string.clipboard__disabled__enable_button),
-            )
+            ) {
+                SnyggText(
+                    text = stringRes(R.string.clipboard__disabled__enable_button),
+                )
+            }
         }
     }
 

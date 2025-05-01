@@ -68,6 +68,7 @@ import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
@@ -155,7 +156,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun SharedActionsToggle() {
-        SnyggButton(
+        SnyggIconButton(
             FlorisImeUi.SmartbarSharedActionsToggle.elementName,
             onClick = {
                 if (/* was */ sharedActionsExpanded) {
@@ -236,7 +237,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     @Composable
     fun ExtendedActionsToggle() {
-        SnyggButton(
+        SnyggIconButton(
             FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
             onClick = {
                 if (/* was */ extendedActionsExpanded) {

@@ -125,6 +125,7 @@ import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
@@ -784,10 +785,13 @@ class FlorisImeService : LifecycleInputMethodService() {
                                     }
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                text = activeEditorInfo.extractedActionLabel
-                                    ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
-                                    ?: "ACTION",
-                            )
+                            ) {
+                                SnyggText(
+                                    text = activeEditorInfo.extractedActionLabel
+                                        ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
+                                        ?: "ACTION",
+                                )
+                            }
                         }
                     }
                 }

@@ -38,6 +38,7 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggButton
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggText
 
 @Composable
 fun QuickActionsOverflowPanel() {
@@ -83,8 +84,11 @@ fun QuickActionsOverflowPanel() {
                     onClick = { keyboardManager.activeState.isActionsEditorVisible = true },
                     modifier = Modifier
                         .wrapContentWidth(),
-                    text = stringRes(R.string.quick_actions_overflow__customize_actions_button),
-                )
+                ) {
+                    SnyggText(
+                        text = stringRes(R.string.quick_actions_overflow__customize_actions_button),
+                    )
+                }
             }
         }
     }
