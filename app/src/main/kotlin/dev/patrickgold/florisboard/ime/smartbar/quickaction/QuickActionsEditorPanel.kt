@@ -19,10 +19,13 @@ package dev.patrickgold.florisboard.ime.smartbar.quickaction
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -245,14 +248,19 @@ fun QuickActionsEditorPanel() {
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            SnyggIconButton(
-                onClick = {
-                    keyboardManager.activeState.isActionsEditorVisible = false
-                },
-            ) {
-                SnyggIcon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                )
+            // Extra box wrapper is needed to enforce size constraint but still allow for Snygg margin to be used
+            Box(modifier = Modifier.size(48.dp)) {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.SmartbarActionsEditorHeaderButton.elementName,
+                    modifier = Modifier.fillMaxHeight().aspectRatio(1f),
+                    onClick = {
+                        keyboardManager.activeState.isActionsEditorVisible = false
+                    },
+                ) {
+                    SnyggIcon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    )
+                }
             }
             SnyggText(
                 modifier = Modifier.weight(1f),

@@ -59,6 +59,7 @@ import org.florisboard.lib.snygg.SnyggTheme
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
@@ -275,7 +276,7 @@ internal fun Modifier.snyggBackground(
         }
         else -> this
     }
-    if (style.clip is SnyggYesValue) {
+    if (style.clip !is SnyggNoValue) {
         return modifier.clip(shape)
     }
     return modifier

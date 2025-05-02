@@ -32,7 +32,8 @@
 
   "keyboard": {
     "background": "var(--background)",
-    "foreground": "var(--on-background)"
+    "foreground": "var(--on-background)",
+    "clip": "no"
   },
 
   "key": {
@@ -102,6 +103,7 @@
   "smartbar-shared-actions-toggle": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
+    "margin": "6dp",
     "shape": "circle()",
     "shadow-elevation": "2dp"
   },
@@ -113,8 +115,7 @@
   "smartbar-action-key": {
     "background": "transparent",
     "foreground": "var(--on-background)",
-    "shape": "var(--shape)",
-    "clip": "yes"
+    "shape": "var(--shape)"
   },
   "smartbar-action-key:disabled": {
     "foreground": "var(--on-background-disabled)"
@@ -124,8 +125,8 @@
     "foreground": "var(--on-background)",
     "font-size": "14sp",
     "shape": "var(--shape)",
-    "clip": "yes",
     "text-max-lines": "2",
+    "text-align": "center",
     "text-overflow": "ellipsis"
   },
   "smartbar-action-tile:disabled": {
@@ -135,15 +136,13 @@
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
-    "shape": "circle()",
-    "clip": "yes"
+    "shape": "circle()"
   },
 
   "smartbar-actions-editor": {
     "background": "var(--background)",
     "foreground": "var(--on-background)",
-    "shape": "rounded-corner(24dp, 24dp, 0dp, 0dp)",
-    "clip": "yes"
+    "shape": "rounded-corner(24dp, 24dp, 0dp, 0dp)"
   },
   "smartbar-actions-editor-header": {
     "background": "var(--surface)",
@@ -151,6 +150,10 @@
     "font-size": "16sp",
     "text-max-lines": "1",
     "text-overflow": "ellipsis"
+  },
+  "smartbar-actions-editor-header-button": {
+    "margin": "4dp",
+    "shape": "circle()"
   },
   "smartbar-actions-editor-subheader": {
     "foreground": "var(--secondary)",
@@ -213,6 +216,17 @@
     "foreground": "var(--on-background)",
     "font-size": "16sp"
   },
+  "clipboard-header-button": {
+    "margin": "4dp",
+    "shape": "circle()"
+  },
+  "clipboard-header-button:disabled": {
+    "foreground": "var(--on-background-disabled)"
+  },
+  "clipboard-header-text": {
+    "text-max-lines": "1",
+    "text-overflow": "ellipsis"
+  },
   "clipboard-subheader": {
     "font-size": "14sp",
     "margin": "6dp"
@@ -227,7 +241,6 @@
     "margin": "4dp",
     "padding": "12dp 8dp",
     "shape": "var(--shape-variant)",
-    "clip": "yes",
     "shadow-elevation": "2dp"
   },
   "clipboard-item-popup": {
@@ -235,23 +248,16 @@
     "foreground": "var(--on-surface)",
     "margin": "4dp",
     "shape": "var(--shape-variant)",
-    "clip": "yes",
     "shadow-elevation": "2dp"
   },
   "clipboard-item-popup-action": {
     "font-size": "16sp",
     "padding": "12dp"
   },
-  "clipboard-enable-history-button": {
-    "background": "var(--primary)",
-    "foreground": "var(--on-primary)",
-    "shape": "rounded-corner(24dp,24dp,24dp,24dp)"
-  },
   "clipboard-clear-all-dialog": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "shape": "var(--shape-variant)",
-    "clip": "yes",
     "shadow-elevation": "1dp"
   },
   "clipboard-clear-all-dialog-message": {
@@ -263,32 +269,26 @@
   "clipboard-clear-all-dialog-button": {
     "background": "transparent",
     "foreground": "var(--on-surface)",
-    "shape": "var(--shape-variant)",
-    "clip": "yes"
+    "shape": "var(--shape-variant)"
   },
-
-  "emoji-key": {
-    "background": "transparent",
-    "foreground": "var(--on-background)",
-    "font-size": "22sp",
-    "shape": "var(--shape)"
+  "clipboard-history-disabled-title": {
+    "font-weight": "bold"
   },
-  "emoji-key:pressed": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-surface)"
+  "clipboard-history-disabled-message": {
+    "padding": "0dp 4dp 0dp 8dp"
   },
-  "emoji-key-popup": {
-    "background": "var(--popup-surface)",
-    "foreground": "var(--on-surface)",
-    "font-size": "22sp",
-    "shape": "var(--shape)",
-    "shadow-elevation": "2dp"
+  "clipboard-history-disabled-button": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)",
+    "shape": "rounded-corner(24dp,24dp,24dp,24dp)"
   },
-  "emoji-tab": {
-    "foreground": "var(--on-background)"
+  "clipboard-history-locked-title": {
+    "font-weight": "bold",
+    "text-align": "center"
   },
-  "emoji-tab:focus": {
-    "foreground": "var(--primary)"
+  "clipboard-history-locked-message": {
+    "padding": "0dp 4dp 0dp 0dp",
+    "text-align": "center"
   },
 
   "extracted-landscape-input-layout": {
@@ -316,8 +316,62 @@
     "foreground": "var(--incognito-icon-color)"
   },
 
+  "media-emoji-subheader": {
+    "font-weight": "bold",
+    "margin": "4dp"
+  },
+  "media-emoji-key": {
+    "background": "transparent",
+    "foreground": "var(--on-background)",
+    "font-size": "22sp",
+    "shape": "var(--shape)"
+  },
+  "media-emoji-key:pressed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
+  "media-emoji-key-popup-box": {
+    "background": "var(--popup-surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "22sp",
+    "shape": "var(--shape)",
+    "shadow-elevation": "2dp"
+  },
+  "media-emoji-key-popup-element:focus": {
+    "background": "var(--focused-popup-surface)",
+    "shape": "var(--shape)"
+  },
+  "media-emoji-tab": {
+    "foreground": "var(--on-background)"
+  },
+  "media-emoji-tab:focus": {
+    "foreground": "var(--primary)"
+  },
+  "media-bottom-row-button": {
+    "padding": "16dp 0dp",
+    "shape": "var(--shape)"
+  },
+  "media-emoji-key-popup-extended-indicator": {
+    "foreground": "inherit"
+  },
+
   "one-handed-panel": {
     "background": "var(--one-hand-background)",
     "foreground": "var(--one-hand-foreground)"
+  },
+
+  "subtype-panel": {
+    "background": "var(--background)",
+    "foreground": "var(--on-background)",
+    "shape": "rounded-corner(24dp, 24dp, 0dp, 0dp)"
+  },
+  "subtype-panel-header": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "font-size": "18sp",
+    "padding": "12dp",
+    "text-align": "center",
+    "text-max-lines": "1",
+    "text-overflow": "ellipsis"
   }
 }

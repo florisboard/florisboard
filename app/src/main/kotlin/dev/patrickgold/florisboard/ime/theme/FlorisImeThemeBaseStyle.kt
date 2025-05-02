@@ -274,19 +274,19 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.ClipboardItemPopupActionText.elementName {
         margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
     }
-    FlorisImeUi.ClipboardEnableHistoryButton.elementName {
+    FlorisImeUi.ClipboardHistoryDisabledButton.elementName {
         background = `var`("--primary")
         foreground = `var`("--on-primary")
         shape = roundedCornerShape(24.dp)
     }
 
-    FlorisImeUi.EmojiKey.elementName {
+    FlorisImeUi.MediaEmojiKey.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("--on-background")
         fontSize = fontSize(22.sp)
         shape = `var`("--shape")
     }
-    FlorisImeUi.EmojiKey.elementName(selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.MediaEmojiKey.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }

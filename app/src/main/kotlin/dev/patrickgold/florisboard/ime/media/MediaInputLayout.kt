@@ -20,18 +20,19 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -46,7 +47,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -56,7 +56,9 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggRow
 
 @SuppressLint("MutableCollectionMutableState")
@@ -73,7 +75,8 @@ fun MediaInputLayout(
     }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-        Column(
+        SnyggColumn(
+            elementName = FlorisImeUi.Media.elementName,
             modifier = modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.imeUiHeight()),
@@ -82,14 +85,17 @@ fun MediaInputLayout(
                 modifier = Modifier.weight(1f),
                 fullEmojiMappings = emojiLayoutDataMap,
             )
-            Row(
+            SnyggRow(
+                elementName = FlorisImeUi.MediaBottomRow.elementName,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
             ) {
                 KeyboardLikeButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
                     inputEventDispatcher = keyboardManager.inputEventDispatcher,
                     keyData = TextKeyData.IME_UI_MODE_TEXT,
+                    modifier = Modifier.fillMaxHeight(),
                 ) {
                     Text(
                         text = "ABC",
@@ -98,8 +104,10 @@ fun MediaInputLayout(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 KeyboardLikeButton(
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
                     inputEventDispatcher = keyboardManager.inputEventDispatcher,
                     keyData = TextKeyData.DELETE,
+                    modifier = Modifier.fillMaxHeight(),
                 ) {
                     Icon(imageVector = Icons.AutoMirrored.Outlined.Backspace, contentDescription = null)
                 }
@@ -113,46 +121,45 @@ internal fun KeyboardLikeButton(
     modifier: Modifier = Modifier,
     inputEventDispatcher: InputEventDispatcher,
     keyData: KeyData,
-    element: String = FlorisImeUi.EmojiKey.elementName,
-    content: @Composable RowScope.() -> Unit,
+    elementName: String = FlorisImeUi.MediaEmojiKey.elementName,
+    content: @Composable () -> Unit,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
-    var isPressed by remember { mutableStateOf(false) }
-    /*val keyStyle = FlorisImeTheme.style.get(
-        element = element,
-        code = keyData.code,
-        isPressed = isPressed,
-    )*/
-    //TODO: Add selector to SnyggSurface
-    SnyggBox(
-        elementName = element,
-        attributes = mapOf(FlorisImeUi.Attr.Code to keyData.code),
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val selector = if (isPressed) {
+        SnyggSelector.PRESSED
+    } else {
+        SnyggSelector.NONE
+    }
 
-        modifier = modifier.pointerInput(Unit) {
-            awaitEachGesture {
-                awaitFirstDown(requireUnconsumed = false).also {
-                    if (it.pressed != it.previousPressed) it.consume()
+    SnyggBox(
+        elementName = elementName,
+        attributes = mapOf(FlorisImeUi.Attr.Code to keyData.code),
+        selector = selector,
+        clickAndSemanticsModifier = modifier
+            .indication(interactionSource, ripple())
+            .pointerInput(Unit) {
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false).also {
+                        if (it.pressed != it.previousPressed) it.consume()
+                    }
+                    val press = PressInteraction.Press(down.position)
+                    interactionSource.tryEmit(press)
+                    inputEventDispatcher.sendDown(keyData)
+                    inputFeedbackController.keyPress(keyData)
+                    val up = waitForUpOrCancellation()
+                    if (up != null) {
+                        interactionSource.tryEmit(PressInteraction.Release(press))
+                        inputEventDispatcher.sendUp(keyData)
+                    } else {
+                        interactionSource.tryEmit(PressInteraction.Cancel(press))
+                        inputEventDispatcher.sendCancel(keyData)
+                    }
                 }
-                isPressed = true
-                inputEventDispatcher.sendDown(keyData)
-                inputFeedbackController.keyPress(keyData)
-                val up = waitForUpOrCancellation()
-                isPressed = false
-                if (up != null) {
-                    inputEventDispatcher.sendUp(keyData)
-                } else {
-                    inputEventDispatcher.sendCancel(keyData)
-                }
-            }
-        }
+            },
+        contentAlignment = Alignment.Center,
     ) {
-        SnyggRow(
-            elementName = element,
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            content = content,
-        )
+        content()
     }
 }

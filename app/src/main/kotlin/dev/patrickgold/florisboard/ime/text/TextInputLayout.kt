@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
@@ -54,7 +56,7 @@ fun TextInputLayout(
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-        SnyggColumn(
+        Column(
             modifier = modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -63,7 +65,7 @@ fun TextInputLayout(
             if (state.isActionsOverflowVisible) {
                 QuickActionsOverflowPanel()
             } else {
-                SnyggBox {
+                Box {
                     val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.observeAsState()
                     val showIncognitoIcon = evaluator.state.isIncognitoMode &&
                         incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD

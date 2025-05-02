@@ -599,7 +599,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .onGloballyPositioned { coords -> inputViewSize = coords.size }
+                    .onGloballyPositioned { coords -> inputViewSize = coords.size },
+                clickAndSemanticsModifier = Modifier
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
                 supportsBackgroundImage = true,
@@ -619,7 +620,9 @@ class FlorisImeService : LifecycleInputMethodService() {
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                    println("oneHandedMode: $oneHandedMode")
                     val oneHandedModeEnabled by prefs.keyboard.oneHandedModeEnabled.observeAsState()
+                    println("oneHandedModeEnabled: $oneHandedModeEnabled")
                     val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
                     val keyboardWeight = when {
                         !oneHandedModeEnabled || configuration.isOrientationLandscape() -> 1f

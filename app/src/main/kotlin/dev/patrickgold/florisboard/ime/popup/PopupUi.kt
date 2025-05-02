@@ -63,7 +63,7 @@ fun PopupBaseBox(
         }
         if (shouldIndicateExtendedPopups) {
             SnyggIcon(
-                FlorisImeUi.KeyPopupExtendedIndicator.elementName,
+                elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
                 modifier = Modifier.align(Alignment.CenterEnd),
                 imageVector = Icons.Default.MoreHoriz,
             )

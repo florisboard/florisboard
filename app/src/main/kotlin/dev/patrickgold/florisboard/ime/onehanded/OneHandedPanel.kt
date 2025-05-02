@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.onehanded
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
@@ -34,7 +35,6 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 
@@ -61,7 +61,9 @@ fun RowScope.OneHandedPanel(
                 inputFeedbackController.keyPress()
                 prefs.keyboard.oneHandedModeEnabled.set(false)
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f),
         ) {
             SnyggIcon(
                 modifier = Modifier.fillMaxWidth(),

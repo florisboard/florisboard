@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.core
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -44,7 +44,6 @@ import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggSpacer
 import org.florisboard.lib.snygg.ui.SnyggText
 
 @Composable
@@ -58,13 +57,16 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
 
     val currentlySelected = subtypeManager.activeSubtype.id
 
-    SnyggColumn(FlorisImeUi.SmartbarActionsEditor.elementName, modifier = modifier) {
+    SnyggColumn(FlorisImeUi.SubtypePanel.elementName, modifier = modifier.safeDrawingPadding()) {
         SnyggRow(
-            elementName = FlorisImeUi.SmartbarActionsEditorHeader.elementName,
+            elementName = FlorisImeUi.SubtypePanelHeader.elementName,
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggText(
-                modifier = Modifier.clickable(false) {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(false) {},
                 text = stringRes(R.string.select_subtype_panel__header),
             )
         }

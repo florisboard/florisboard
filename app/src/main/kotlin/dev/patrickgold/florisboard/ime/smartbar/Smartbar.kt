@@ -32,7 +32,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -66,7 +66,6 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -157,14 +156,14 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun SharedActionsToggle() {
         SnyggIconButton(
-            FlorisImeUi.SmartbarSharedActionsToggle.elementName,
+            elementName = FlorisImeUi.SmartbarSharedActionsToggle.elementName,
             onClick = {
                 if (/* was */ sharedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
                 }
                 prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
             },
-            modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f)
+            modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
         ) {
             val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
             val rotation by transition.animateFloat(
@@ -192,7 +191,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 arrowIcon
             }
             SnyggIcon(
-                FlorisImeUi.SmartbarSharedActionsToggle.elementName,
                 modifier = Modifier.rotate(if (incognitoDisplayMode.value == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD) rotation else 0f),
                 imageVector = icon,
             )

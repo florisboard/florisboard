@@ -98,9 +98,12 @@ import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -174,7 +177,10 @@ fun EmojiPaletteView(
 
     @Composable
     fun GridHeader(text: String) {
-        SnyggText(text = text)
+        SnyggText(
+            elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
+            text = text,
+        )
     }
 
     @Composable
@@ -309,17 +315,23 @@ private fun EmojiCategoriesTabRow(
     } else {
         EmojiCategoryValues.indexOf(activeCategory) - 1
     }
+    val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiTab.elementName)
     TabRow(
         modifier = Modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight),
         selectedTabIndex = selectedTabIndex,
         containerColor = Color.Transparent,
-        contentColor = LocalContentColor.current,
+        contentColor = style.foreground(),
         indicator = { tabPositions ->
+            val style = rememberSnyggThemeQuery(
+                elementName = FlorisImeUi.MediaEmojiTab.elementName,
+                selector = SnyggSelector.FOCUS,
+            )
             TabRowDefaults.PrimaryIndicator(
                 Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                height = 4.dp
+                height = 4.dp,
+                color = style.foreground(),
             )
         },
     ) {
@@ -333,10 +345,11 @@ private fun EmojiCategoriesTabRow(
                     onCategoryChange(category)
                 },
                 selected = activeCategory == category,
-                icon = { Icon(
+                icon = { SnyggIcon(
+                    elementName = FlorisImeUi.MediaEmojiTab.elementName,
+                    selector = if (activeCategory == category) SnyggSelector.FOCUS else SnyggSelector.NONE,
                     modifier = Modifier.size(ButtonDefaults.IconSize),
                     imageVector = category.icon(),
-                    contentDescription = null,
                 ) },
             )
         }
@@ -358,7 +371,7 @@ private fun EmojiKey(
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
-    SnyggBox(FlorisImeUi.EmojiKey.elementName,
+    SnyggBox(FlorisImeUi.MediaEmojiKey.elementName,
         modifier = Modifier
             .aspectRatio(1f)
             .pointerInput(Unit) {
@@ -384,6 +397,7 @@ private fun EmojiKey(
             emojiCompatInstance = emojiCompatInstance,
         )
         if (variations.isNotEmpty() || isPinned || isRecent) {
+            val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiKeyPopupExtendedIndicator.elementName)
             val shape = when (LocalLayoutDirection.current) {
                 LayoutDirection.Ltr -> VariantsTriangleShapeLtr
                 LayoutDirection.Rtl -> VariantsTriangleShapeRtl
@@ -393,7 +407,7 @@ private fun EmojiKey(
                     .align(Alignment.BottomEnd)
                     .offset(x = (-4).dp, y = (-4).dp)
                     .size(4.dp)
-                    .background(LocalContentColor.current, shape),
+                    .background(style.foreground(), shape),
             )
         }
 
@@ -447,20 +461,20 @@ private fun EmojiVariationsPopup(
             },
             onDismissRequest = onDismiss,
         ) {
-            //TODO: Add FlowRow to Snygg
-            FlowRow(
+            SnyggRow(
+                elementName = FlorisImeUi.MediaEmojiKeyPopupBox.elementName,
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6),
             ) {
                 for (emoji in variations) {
-                    Box(
+                    SnyggBox(
+                        elementName = FlorisImeUi.MediaEmojiKeyPopupElement.elementName,
                         modifier = Modifier
                             .pointerInput(Unit) {
                                 detectTapGestures { onEmojiTap(emoji) }
                             }
                             .width(EmojiBaseWidth)
-                            .height(emojiKeyHeight)
-                            .padding(all = 4.dp),
+                            .height(emojiKeyHeight),
                     ) {
                         EmojiText(
                             modifier = Modifier.align(Alignment.Center),
@@ -495,7 +509,7 @@ private fun EmojiHistoryPopup(
     @Composable
     fun Action(icon: ImageVector, action: suspend () -> Unit) {
         SnyggBox(
-            FlorisImeUi.EmojiKeyPopup.elementName,
+            elementName = FlorisImeUi.MediaEmojiKeyPopupElement.elementName,
             modifier = Modifier
                 .pointerInput(Unit) {
                     detectTapGestures {
@@ -506,8 +520,7 @@ private fun EmojiHistoryPopup(
                     }
                 }
                 .width(EmojiBaseWidth)
-                .height(emojiKeyHeight)
-                .padding(all = 4.dp),
+                .height(emojiKeyHeight),
         ) {
             SnyggIcon(
                 modifier = Modifier.align(Alignment.Center),
@@ -526,7 +539,8 @@ private fun EmojiHistoryPopup(
             },
             onDismissRequest = onDismiss,
         ) {
-            FlowRow(
+            SnyggRow(
+                elementName = FlorisImeUi.MediaEmojiKeyPopupBox.elementName,
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6),
             ) {

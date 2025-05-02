@@ -20,14 +20,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.minimumInteractiveComponentSize
-import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,7 +68,6 @@ fun SnyggIconButton(
 
         Box(
             modifier = Modifier
-                .minimumInteractiveComponentSize()
                 .snyggMargin(style)
                 //TODO: We need to apply a size and a clip here
                 // otherwise the indication is wrong (see: OnHandedPanel buttons)
@@ -80,15 +75,13 @@ fun SnyggIconButton(
                 .snyggBorder(style)
                 .snyggBackground(style)
                 .then(modifier)
-                //TODO: what is the material3 compliant default padding?
-                .snyggPadding(style, default = PaddingValues(2.dp))
+                .snyggPadding(style)
                 .clickable(
                     onClick = onClick,
                     enabled = enabled,
                     role = Role.Button,
                     interactionSource = interactionSource,
-                    //TODO: this is actually bounded = true in material 3
-                    indication = ripple(bounded = false),
+                    indication = ripple(),
                 ),
             contentAlignment = Alignment.Center,
         ) {

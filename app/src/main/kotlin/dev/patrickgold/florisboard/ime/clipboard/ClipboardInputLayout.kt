@@ -33,11 +33,12 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
@@ -129,23 +130,27 @@ fun ClipboardInputLayout(
                 .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            val sizeModifier = Modifier
+                .sizeIn(maxHeight = FlorisImeSizing.smartbarHeight)
+                .aspectRatio(1f)
             SnyggIconButton(
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
-                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
+                modifier = sizeModifier,
             ) {
                 SnyggIcon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 )
             }
             SnyggText(
+                elementName = FlorisImeUi.ClipboardHeaderText.elementName,
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
             )
             SnyggIconButton(
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
-                modifier = Modifier
-                    .size(FlorisImeSizing.smartbarHeight * 0.7f)
-                    .autoMirrorForRtl(),
+                modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
@@ -157,10 +162,9 @@ fun ClipboardInputLayout(
                 )
             }
             SnyggIconButton(
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { showClearAllHistory = true },
-                modifier = Modifier
-                    .size(FlorisImeSizing.smartbarHeight * 0.7f)
-                    .autoMirrorForRtl(),
+                modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
@@ -168,10 +172,11 @@ fun ClipboardInputLayout(
                 )
             }
             SnyggIconButton(
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = {
                     context.showShortToast("TODO: implement inline clip item editing")
                 },
-                modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.7f),
+                modifier = sizeModifier,
                 enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
@@ -179,11 +184,12 @@ fun ClipboardInputLayout(
                 )
             }
             KeyboardLikeButton(
+                modifier = sizeModifier,
                 inputEventDispatcher = keyboardManager.inputEventDispatcher,
                 keyData = TextKeyData.DELETE,
-                element = FlorisImeUi.ClipboardHeader.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
             ) {
-                Icon(Icons.AutoMirrored.Outlined.Backspace, null)
+                SnyggIcon(imageVector = Icons.AutoMirrored.Outlined.Backspace)
             }
         }
     }
@@ -457,14 +463,17 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
         ) {
             SnyggText(
+                elementName = FlorisImeUi.ClipboardHistoryDisabledTitle.elementName,
                 modifier = Modifier.padding(bottom = 8.dp),
                 text = stringRes(R.string.clipboard__disabled__title),
             )
             SnyggText(
+                elementName = FlorisImeUi.ClipboardHistoryDisabledMessage.elementName,
                 text = stringRes(R.string.clipboard__disabled__message),
             )
-            SnyggButton(FlorisImeUi.ClipboardEnableHistoryButton.elementName,
+            SnyggButton(FlorisImeUi.ClipboardHistoryDisabledButton.elementName,
                 onClick = { prefs.clipboard.historyEnabled.set(true) },
+                modifier = Modifier.align(Alignment.End),
             ) {
                 SnyggText(
                     text = stringRes(R.string.clipboard__disabled__enable_button),
@@ -480,9 +489,11 @@ fun ClipboardInputLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SnyggText(
+                elementName = FlorisImeUi.ClipboardHistoryLockedTitle.elementName,
                 text = stringRes(R.string.clipboard__locked__title),
             )
             SnyggText(
+                elementName = FlorisImeUi.ClipboardHistoryLockedMessage.elementName,
                 text = stringRes(R.string.clipboard__locked__message),
             )
         }

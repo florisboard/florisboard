@@ -27,6 +27,8 @@ enum class FlorisImeUi(val elementName: String) {
     KeyPopupExtendedIndicator("key-popup-extended-indicator"),
 
     ClipboardHeader("clipboard-header"),
+    ClipboardHeaderButton("clipboard-header-button"),
+    ClipboardHeaderText("clipboard-header-text"),
     ClipboardSubheader("clipboard-subheader"),
     ClipboardContent("clipboard-content"),
     ClipboardItem("clipboard-item"),
@@ -34,15 +36,15 @@ enum class FlorisImeUi(val elementName: String) {
     ClipboardItemPopupAction("clipboard-item-popup-action"),
     ClipboardItemPopupActionIcon("clipboard-item-popup-action-icon"),
     ClipboardItemPopupActionText("clipboard-item-popup-action-text"),
-    ClipboardEnableHistoryButton("clipboard-enable-history-button"),
     ClipboardClearAllDialog("clipboard-clear-all-dialog"),
     ClipboardClearAllDialogMessage("clipboard-clear-all-dialog-message"),
     ClipboardClearAllDialogButtons("clipboard-clear-all-dialog-buttons"),
     ClipboardClearAllDialogButton("clipboard-clear-all-dialog-button"),
-
-    EmojiKey("emoji-key"),
-    EmojiKeyPopup("emoji-key-popup"),
-    EmojiTab("emoji-tab"),
+    ClipboardHistoryDisabledTitle("clipboard-history-disabled-title"),
+    ClipboardHistoryDisabledMessage("clipboard-history-disabled-message"),
+    ClipboardHistoryDisabledButton("clipboard-history-disabled-button"),
+    ClipboardHistoryLockedTitle("clipboard-history-locked-title"),
+    ClipboardHistoryLockedMessage("clipboard-history-locked-message"),
 
     ExtractedLandscapeInputLayout("extracted-landscape-input-layout"),
     ExtractedLandscapeInputField("extracted-landscape-input-field"),
@@ -53,6 +55,18 @@ enum class FlorisImeUi(val elementName: String) {
     IncognitoModeIndicator("incognito-mode-indicator"),
 
     InlineAutofillChip("inline-autofill-chip"),
+
+    Media("media"),
+
+    MediaEmojiSubheader("media-emoji-subheader"),
+    MediaEmojiKey("media-emoji-key"),
+    MediaEmojiKeyPopupBox("media-emoji-key-popup-box"),
+    MediaEmojiKeyPopupElement("media-emoji-key-popup-element"),
+    MediaEmojiKeyPopupExtendedIndicator("media-emoji-key-popup-extended-indicator"),
+    MediaEmojiTab("media-emoji-tab"),
+
+    MediaBottomRow("media-bottom-row"),
+    MediaBottomRowButton("media-bottom-row-button"),
 
     OneHandedPanel("one-handed-panel"),
     OneHandedPanelButton("one-handed-panel-button"),
@@ -69,6 +83,7 @@ enum class FlorisImeUi(val elementName: String) {
 
     SmartbarActionsEditor("smartbar-actions-editor"),
     SmartbarActionsEditorHeader("smartbar-actions-editor-header"),
+    SmartbarActionsEditorHeaderButton("smartbar-actions-editor-header-button"),
     SmartbarActionsEditorSubheader("smartbar-actions-editor-subheader"),
     SmartbarActionsEditorTileGrid("smartbar-actions-editor-tile-grid"),
     SmartbarActionsEditorTile("smartbar-actions-editor-tile"),
@@ -76,7 +91,10 @@ enum class FlorisImeUi(val elementName: String) {
     SmartbarCandidatesRow("smartbar-candidates-row"),
     SmartbarCandidateWord("smartbar-candidate-word"),
     SmartbarCandidateClip("smartbar-candidate-clip"),
-    SmartbarCandidateSpacer("smartbar-candidate-spacer");
+    SmartbarCandidateSpacer("smartbar-candidate-spacer"),
+
+    SubtypePanel("subtype-panel"),
+    SubtypePanelHeader("subtype-panel-header");
 
     companion object {
         val elementNames by lazy { entries.map { it.elementName } }
