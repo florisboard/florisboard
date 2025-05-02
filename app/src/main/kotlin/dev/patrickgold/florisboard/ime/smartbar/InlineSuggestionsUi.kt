@@ -42,6 +42,14 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 var CachedInlineSuggestionsChipStyleSet: SnyggSinglePropertySet? = null
 
+@Composable
+fun InlineSuggestionsStyleCache() {
+    val chipStyleSet = rememberSnyggThemeQuery(FlorisImeUi.InlineAutofillChip.elementName)
+    LaunchedEffect(chipStyleSet) {
+        CachedInlineSuggestionsChipStyleSet = chipStyleSet
+    }
+}
+
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun InlineSuggestionsUi(
@@ -50,11 +58,6 @@ fun InlineSuggestionsUi(
 ) {
     val scrollState = rememberScrollState()
     val almostEmptyRect = remember { android.graphics.Rect(0, 0, 1, 1) }
-
-    val chipStyleSet = rememberSnyggThemeQuery(FlorisImeUi.InlineAutofillChip.elementName)
-    LaunchedEffect(chipStyleSet) {
-        CachedInlineSuggestionsChipStyleSet = chipStyleSet
-    }
 
     Row(
         modifier
