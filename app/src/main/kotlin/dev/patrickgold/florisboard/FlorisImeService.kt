@@ -529,6 +529,7 @@ class FlorisImeService : LifecycleInputMethodService() {
      */
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
+        // TODO: setting this to false kinda helps with the nav bar color bug, but introduces padding issues...
         WindowCompat.setDecorFitsSystemWindows(w, true)
         ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
         val layoutHeight = if (isFullscreenUiMode) {
