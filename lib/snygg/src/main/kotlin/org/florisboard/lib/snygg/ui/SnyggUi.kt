@@ -262,6 +262,7 @@ internal fun Modifier.snyggBackground(
     style: SnyggSinglePropertySet,
     default: Color = Color.Unspecified,
     shape: Shape = style.shape(),
+    allowClip: Boolean = true,
 ): Modifier {
     val modifier = when (val bg = style.background) {
         is SnyggStaticColorValue -> this.background(
@@ -276,7 +277,7 @@ internal fun Modifier.snyggBackground(
         }
         else -> this
     }
-    if (style.clip !is SnyggNoValue) {
+    if (allowClip && style.clip !is SnyggNoValue) {
         return modifier.clip(shape)
     }
     return modifier

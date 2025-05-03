@@ -62,7 +62,7 @@ fun SnyggText(
                 .snyggMargin(style)
                 .snyggShadow(style)
                 .snyggBorder(style)
-                .snyggBackground(style)
+                .snyggBackground(style, allowClip = false)
                 .snyggPadding(style),
             text = text,
             color = style.foreground(),

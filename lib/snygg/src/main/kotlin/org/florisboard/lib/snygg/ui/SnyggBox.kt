@@ -18,22 +18,13 @@ package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.allowHardware
@@ -78,7 +69,6 @@ fun SnyggBox(
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
         val assetResolver = LocalSnyggAssetResolver.current
         val context = LocalContext.current
-        var contentSize by remember { mutableStateOf(IntSize.Zero) }
         val imagePath = when {
             supportsBackgroundImage -> {
                 style.backgroundImage.uriOrNull()?.let { imageUri ->
@@ -90,7 +80,6 @@ fun SnyggBox(
         Box(
             modifier = modifier
                 .snyggMargin(style)
-                .then(if (imagePath != null) Modifier.onSizeChanged { contentSize = it } else Modifier)
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .snyggBackground(style)
@@ -101,9 +90,7 @@ fun SnyggBox(
         ) {
             if (imagePath != null) {
                 AsyncImage(
-                    modifier = with(LocalDensity.current) {
-                        Modifier.size(contentSize.toSize().toDpSize())
-                    },
+                    modifier = Modifier.matchParentSize(),
                     // https://github.com/coil-kt/coil/issues/159
                     model = ImageRequest.Builder(context)
                         .data(imagePath)
