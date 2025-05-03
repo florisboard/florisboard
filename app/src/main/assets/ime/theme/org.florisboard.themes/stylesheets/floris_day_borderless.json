@@ -324,7 +324,7 @@
   },
 
   "incognito-mode-indicator": {
-    "foreground": "#00000011"
+    "foreground": "var(--incognito-icon-color)"
   },
 
   "media-emoji-subheader": {

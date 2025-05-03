@@ -209,7 +209,7 @@
     "foreground": "var(--on-surface)"
   },
   "smartbar-candidate-spacer": {
-    "foreground": "var(--spacer)"
+    "foreground": "var(--spacer-color)"
   },
 
   "clipboard-header": {
