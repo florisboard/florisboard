@@ -73,6 +73,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
@@ -245,8 +246,29 @@ fun ThemeEditorScreen(
             }
         }
 
-        val definedVariables = remember(stylesheetEditor.rules) {
-            stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
+        @Suppress("IfThenToElvis")
+        val customSortedRules = remember(stylesheetEditor.rules) {
+            stylesheetEditor.rules.entries.sortedWith { (aRule, _), (bRule, _) ->
+                if (aRule !is SnyggElementRule || bRule !is SnyggElementRule || aRule.elementName == bRule.elementName) {
+                    aRule.compareTo(bRule)
+                } else {
+                    val aOrdinal = FlorisImeUi.elementNamesToOrdinals[aRule.elementName]
+                    val bOrdinal = FlorisImeUi.elementNamesToOrdinals[bRule.elementName]
+                    if (aOrdinal == null && bOrdinal == null) {
+                        aRule.elementName.compareTo(bRule.elementName)
+                    } else if (bOrdinal == null) {
+                        -1
+                    } else if (aOrdinal == null) {
+                        1
+                    } else {
+                        aOrdinal.compareTo(bOrdinal)
+                    }
+                }
+            }.toList()
+        }
+
+        val definedVariables = remember(customSortedRules) {
+            customSortedRules.firstNotNullOfOrNull { (rule, propertySet) ->
                 if (rule is SnyggAnnotationRule.Defines && propertySet is SnyggSinglePropertySetEditor) {
                     propertySet.properties
                 } else {
@@ -255,8 +277,8 @@ fun ThemeEditorScreen(
             } ?: emptyMap()
         }
 
-        val fontNames = remember(stylesheetEditor.rules) {
-            stylesheetEditor.rules.keys.mapNotNull { rule ->
+        val fontNames = remember(customSortedRules) {
+            customSortedRules.mapNotNull { (rule, _) ->
                 if (rule is SnyggAnnotationRule.Font) {
                     rule.fontName
                 } else {
@@ -281,8 +303,8 @@ fun ThemeEditorScreen(
                         component = editor,
                         onEditBtnClick = { showEditComponentMetaDialog = true },
                     )
-                    if (stylesheetEditor.rules.isEmpty() ||
-                        (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.keys.all { it == SnyggAnnotationRule.Defines })
+                    if (customSortedRules.isEmpty() ||
+                        (customSortedRules.size == 1 && customSortedRules.all { (rule, _) -> rule == SnyggAnnotationRule.Defines })
                     ) {
                         Text(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
@@ -293,7 +315,7 @@ fun ThemeEditorScreen(
                 }
             }
 
-            items(stylesheetEditor.rules.entries.toList()) { (rule, propertySet) -> key(rule) {
+            items(customSortedRules) { (rule, propertySet) -> key(rule) {
                 val propertySetSpec = SnyggSpec.propertySetSpecOf(rule)
                 val isVariablesRule = rule == SnyggAnnotationRule.Defines
                 FlorisOutlinedBox(

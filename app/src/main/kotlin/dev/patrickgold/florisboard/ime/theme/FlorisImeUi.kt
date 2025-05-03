@@ -98,6 +98,15 @@ enum class FlorisImeUi(val elementName: String) {
 
     companion object {
         val elementNames by lazy { entries.map { it.elementName } }
+
+        val elementNamesToOrdinals by lazy {
+            val enumEntries = entries
+            buildMap {
+                enumEntries.forEach { entry ->
+                    put(entry.elementName, entry.ordinal)
+                }
+            }
+        }
     }
 
     object Attr {
