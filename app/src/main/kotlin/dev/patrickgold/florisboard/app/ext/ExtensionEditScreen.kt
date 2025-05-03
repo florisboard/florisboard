@@ -48,7 +48,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
-import dev.patrickgold.florisboard.app.settings.theme.LenientStylesheetConfig
+import dev.patrickgold.florisboard.app.settings.theme.PrettyPrintConfig
 import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
@@ -283,7 +283,7 @@ private fun EditScreen(
                     val stylesheetEditor = theme.stylesheetEditor
                     if (stylesheetEditor != null) {
                         runCatching {
-                            val stylesheet = stylesheetEditor.build().toJson(LenientStylesheetConfig).getOrThrow()
+                            val stylesheet = stylesheetEditor.build().toJson(PrettyPrintConfig).getOrThrow()
                             stylesheetFile.writeText(stylesheet)
                         }.onFailure {
                             // TODO: better error handling

@@ -27,7 +27,9 @@ data class SnyggStylesheet internal constructor(
     val schema: String,
     val rules: Map<SnyggRule, SnyggPropertySet>,
 ) {
-    fun edit() = SnyggStylesheetEditor(this.schema, this.rules)
+    fun edit(comparator: Comparator<SnyggRule>? = null): SnyggStylesheetEditor {
+        return SnyggStylesheetEditor(this.schema, this.rules, comparator)
+    }
 
     fun toJson(
         config: SnyggJsonConfiguration = SnyggJsonConfiguration.DEFAULT,

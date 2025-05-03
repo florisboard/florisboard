@@ -132,10 +132,26 @@ internal fun EditRuleDialog(
             }
         }
     }
-    val possibleRuleLabels = possibleRuleTemplates.map { context.translateElementName(it.decl().name, level) ?: it }
+    val possibleRuleLabels = possibleRuleTemplates.map { rule ->
+        val elementName = when (rule) {
+            is SnyggElementRule -> rule.elementName
+            else -> rule.decl().name
+        }
+        context.translateElementName(elementName, level) ?: rule
+    }
     var elementsSelectedIndex by rememberSaveable {
         val index = possibleRuleTemplates
-            .indexOfFirst { it.decl().name == initRule.decl().name }
+            .indexOfFirst {  rule ->
+                val elementName = when (rule) {
+                    is SnyggElementRule -> rule.elementName
+                    else -> rule.decl().name
+                }
+                val initElementName = when (initRule) {
+                    is SnyggElementRule -> initRule.elementName
+                    else -> initRule.decl().name
+                }
+                elementName == initElementName
+            }
             .coerceIn(possibleRuleTemplates.indices)
         mutableIntStateOf(index)
     }
@@ -216,11 +232,18 @@ internal fun EditRuleDialog(
                 if (elementName == SnyggEmptyRuleForAdding.elementName) {
                     return@apply
                 }
+                fun updateCurrentRule(newSelector: SnyggSelector) {
+                    currentRule = if (selector == newSelector) {
+                        copy(selector = SnyggSelector.NONE)
+                    } else {
+                        copy(selector = newSelector)
+                    }
+                }
                 DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
                     Row(modifier = Modifier.florisHorizontalScroll()) {
                         //TODO: LazyRow
                         FlorisChip(
-                            onClick = { currentRule = copy(selector = SnyggSelector.PRESSED) },
+                            onClick = { updateCurrentRule(SnyggSelector.PRESSED) },
                             modifier = Modifier.padding(end = 4.dp),
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.PRESSED.id
@@ -229,7 +252,7 @@ internal fun EditRuleDialog(
                             selected = selector == SnyggSelector.PRESSED,
                         )
                         FlorisChip(
-                            onClick = { currentRule = copy(selector = SnyggSelector.FOCUS) },
+                            onClick = { updateCurrentRule(SnyggSelector.FOCUS) },
                             modifier = Modifier.padding( end = 4.dp),
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.FOCUS.id
@@ -238,7 +261,7 @@ internal fun EditRuleDialog(
                             selected = selector == SnyggSelector.FOCUS,
                         )
                         FlorisChip(
-                            onClick = { currentRule = copy(selector = SnyggSelector.HOVER) },
+                            onClick = { updateCurrentRule(SnyggSelector.HOVER) },
                             modifier = Modifier.padding( end = 4.dp),
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.HOVER.id
@@ -247,7 +270,7 @@ internal fun EditRuleDialog(
                             selected = selector == SnyggSelector.HOVER,
                         )
                         FlorisChip(
-                            onClick = { currentRule = copy(selector = SnyggSelector.DISABLED) },
+                            onClick = { updateCurrentRule(SnyggSelector.DISABLED) },
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.DISABLED.id
                                 else -> stringRes(R.string.snygg__rule_selector__disabled)

@@ -19,8 +19,9 @@ package org.florisboard.lib.snygg
 class SnyggStylesheetEditor(
     private val schema: String,
     initRules: Map<SnyggRule, SnyggPropertySet>? = null,
+    comparator: Comparator<SnyggRule>? = null,
 ) {
-    val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
+    val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>(comparator ?: DefaultRuleComparator)
 
     init {
         if (initRules != null) {
@@ -62,5 +63,11 @@ class SnyggStylesheetEditor(
     fun build(): SnyggStylesheet {
         val rulesMap = rules.mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
         return SnyggStylesheet(schema, rulesMap)
+    }
+
+    private object DefaultRuleComparator : Comparator<SnyggRule> {
+        override fun compare(a: SnyggRule, b: SnyggRule): Int {
+            return a.compareTo(b)
+        }
     }
 }

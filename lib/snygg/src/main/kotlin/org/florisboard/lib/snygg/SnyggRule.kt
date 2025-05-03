@@ -78,6 +78,7 @@ sealed interface SnyggRule : Comparable<SnyggRule> {
  * Annotation rule base interface. See the specific implementations for details.
  *
  * @since 0.5.0-alpha01
+ *
  * @see [SnyggAnnotationRule.Defines]
  * @see [SnyggAnnotationRule.Font]
  */
@@ -107,6 +108,7 @@ sealed interface SnyggAnnotationRule : SnyggRule {
          *
          * @param str The string to parse into a `defines` annotation rule instance.
          * @return A `defines` annotation rule instance or `null`.
+         *
          * @since 0.5.0-alpha01
          */
         fun fromOrNull(str: String): Defines? {
@@ -140,6 +142,7 @@ sealed interface SnyggAnnotationRule : SnyggRule {
              *
              * @param str The string to parse into a `font` annotation rule instance.
              * @return A `font` annotation rule instance or `null`.
+             *
              * @since 0.5.0-alpha01
              */
             fun fromOrNull(str: String): Font? {
@@ -157,6 +160,7 @@ sealed interface SnyggAnnotationRule : SnyggRule {
  * @property elementName The element name this rule targets, it can be seen similarly to a CSS class.
  * @property attributes The attributes this rule targets.
  * @property selector The selector this rule targets, or [SnyggSelector.NONE] for not specified.
+ *
  * @since 0.5.0-alpha01
  */
 data class SnyggElementRule(
@@ -214,6 +218,7 @@ data class SnyggElementRule(
          *
          * @param str the string to parse into an element rule instance
          * @return an element rule instance or `null`
+         *
          * @since 0.5.0-alpha01
          */
         fun fromOrNull(str: String): SnyggElementRule? {
@@ -272,6 +277,7 @@ data class SnyggAttributes internal constructor(
      * Serializes the attributes to a string.
      *
      * @return The serialized representation of the attributes.
+     *
      * @since 0.5.0-alpha01
      */
     override fun toString() = buildString {
@@ -331,6 +337,7 @@ data class SnyggAttributes internal constructor(
      *
      * @param pairs The list of key-value pairs to include in the copy.
      * @return A new copy of the attribute mapping.
+     *
      * @since 0.5.0-alpha01
      */
     fun including(vararg pairs: Pair<String, Any>): SnyggAttributes {
@@ -350,6 +357,7 @@ data class SnyggAttributes internal constructor(
      *
      * @param pairs The list of key-value pairs to exclude in the copy.
      * @return A new copy of the attribute mapping.
+     *
      * @since 0.5.0-alpha01
      */
     fun excluding(vararg pairs: Pair<String, Any>): SnyggAttributes {
@@ -375,6 +383,7 @@ data class SnyggAttributes internal constructor(
      *
      * @param pairs The list of key-value pairs to toggle in the copy.
      * @return A new copy of the attribute mapping.
+     *
      * @since 0.5.0-alpha01
      */
     fun toggling(vararg pairs: Pair<String, Any>): SnyggAttributes {
@@ -454,6 +463,7 @@ data class SnyggAttributes internal constructor(
  * pass the current interaction state to Snygg to allow for correct style resolving.
  *
  * @property id The id of the selector.
+ *
  * @since 0.5.0-alpha01
  */
 enum class SnyggSelector(val id: String) {
@@ -496,6 +506,7 @@ enum class SnyggSelector(val id: String) {
      * Serializes the selector to a string. If [NONE], an empty string is returned.
      *
      * @return The serialized representation of this selector.
+     *
      * @since 0.5.0-alpha01
      */
     override fun toString(): String {

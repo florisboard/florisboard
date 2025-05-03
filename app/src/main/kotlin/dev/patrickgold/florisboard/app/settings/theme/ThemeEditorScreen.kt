@@ -116,10 +116,25 @@ import org.florisboard.lib.snygg.ui.Saver
 import kotlin.Boolean
 import kotlin.String
 
-internal val LenientStylesheetConfig = SnyggJsonConfiguration.of(
+internal val PrettyPrintConfig = SnyggJsonConfiguration.of(
     prettyPrint = true,
     prettyPrintIndent = "  ",
 )
+
+private val LenientConfig = SnyggJsonConfiguration.of(
+    ignoreMissingSchema = true,
+    ignoreInvalidSchema = true,
+    ignoreUnsupportedSchema = true,
+    ignoreInvalidRules = true,
+    ignoreInvalidProperties = true,
+    ignoreInvalidValues = true,
+)
+
+private enum class StylesheetLoadingStrategy {
+    TRY_LOAD_OR_ASK_ON_CONFLICT, // default state
+    TRY_LOAD_OR_EMPTY, // user chose to not auto-fix errors
+    TRY_LOAD_OR_PARSE_LENIENT; // user chose to auto-fix errors
+}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -138,26 +153,57 @@ fun ThemeEditorScreen(
     val scope = rememberCoroutineScope()
     val previewFieldController = rememberPreviewFieldController().also { it.isVisible = true }
 
-    val stylesheetEditor = remember {
-        editor.stylesheetEditor ?: run {
+    var stylesheetLoadingStrategy by rememberSaveable {
+        mutableStateOf(StylesheetLoadingStrategy.TRY_LOAD_OR_ASK_ON_CONFLICT)
+    }
+    var stylesheetEditorFailure by remember { mutableStateOf<Throwable?>(null) }
+    val stylesheetEditor = remember(stylesheetLoadingStrategy) {
+        run {
+            stylesheetEditorFailure = null
             val stylesheetPath = editor.stylesheetPath()
             editor.stylesheetPathOnLoad = stylesheetPath
             val stylesheetFile = workspace.extDir.subFile(stylesheetPath)
             val stylesheetEditor = if (stylesheetFile.exists()) {
                 try {
                     val stylesheetJson = stylesheetFile.readText()
-                    SnyggStylesheet.fromJson(stylesheetJson, LenientStylesheetConfig).getOrThrow().edit()
-                } catch (e: Throwable) {
-                    // TODO: better error handling
-                    context.showLongToast(e.message.toString())
-                    SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2)
+                    val config = when (stylesheetLoadingStrategy) {
+                        StylesheetLoadingStrategy.TRY_LOAD_OR_PARSE_LENIENT -> LenientConfig
+                        else -> PrettyPrintConfig
+                    }
+                    SnyggStylesheet.fromJson(stylesheetJson, config).getOrThrow().edit(CustomRuleComparator)
+                } catch (error: Throwable) {
+                    stylesheetEditorFailure = when (stylesheetLoadingStrategy) {
+                        StylesheetLoadingStrategy.TRY_LOAD_OR_ASK_ON_CONFLICT -> error
+                        else -> null
+                    }
+                    SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2, comparator = CustomRuleComparator)
                 }
             } else {
-                SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2)
+                SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2, comparator = CustomRuleComparator)
             }
             stylesheetEditor.rules.putIfAbsent(SnyggAnnotationRule.Defines, SnyggSinglePropertySetEditor())
             stylesheetEditor
         }.also { editor.stylesheetEditor = it }
+    }
+
+    val definedVariables = remember(stylesheetEditor.rules) {
+        stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
+            if (rule is SnyggAnnotationRule.Defines && propertySet is SnyggSinglePropertySetEditor) {
+                propertySet.properties
+            } else {
+                null
+            }
+        } ?: emptyMap()
+    }
+
+    val fontNames = remember(stylesheetEditor.rules) {
+        stylesheetEditor.rules.mapNotNull { (rule, _) ->
+            if (rule is SnyggAnnotationRule.Font) {
+                rule.fontName
+            } else {
+                null
+            }
+        }
     }
 
     val snyggLevel by prefs.theme.editorLevel.observeAsState()
@@ -206,6 +252,23 @@ fun ThemeEditorScreen(
     }
 
     content {
+        stylesheetEditorFailure?.let { failure ->
+            JetPrefAlertDialog(
+                title = "HEHEHEHA GRRRR",
+                confirmLabel = "OK",
+                onConfirm = {
+                    stylesheetLoadingStrategy = StylesheetLoadingStrategy.TRY_LOAD_OR_PARSE_LENIENT
+                },
+                dismissLabel = "Nein, du kek",
+                onDismiss = {
+                    stylesheetLoadingStrategy = StylesheetLoadingStrategy.TRY_LOAD_OR_EMPTY
+                },
+            ) {
+                Text(failure.message ?: "Invalid")
+                Text("Go fuck yourself")
+            }
+        }
+
         BackHandler {
             handleBackPress()
         }
@@ -246,47 +309,6 @@ fun ThemeEditorScreen(
             }
         }
 
-        @Suppress("IfThenToElvis")
-        val customSortedRules = remember(stylesheetEditor.rules) {
-            stylesheetEditor.rules.entries.sortedWith { (aRule, _), (bRule, _) ->
-                if (aRule !is SnyggElementRule || bRule !is SnyggElementRule || aRule.elementName == bRule.elementName) {
-                    aRule.compareTo(bRule)
-                } else {
-                    val aOrdinal = FlorisImeUi.elementNamesToOrdinals[aRule.elementName]
-                    val bOrdinal = FlorisImeUi.elementNamesToOrdinals[bRule.elementName]
-                    if (aOrdinal == null && bOrdinal == null) {
-                        aRule.elementName.compareTo(bRule.elementName)
-                    } else if (bOrdinal == null) {
-                        -1
-                    } else if (aOrdinal == null) {
-                        1
-                    } else {
-                        aOrdinal.compareTo(bOrdinal)
-                    }
-                }
-            }.toList()
-        }
-
-        val definedVariables = remember(customSortedRules) {
-            customSortedRules.firstNotNullOfOrNull { (rule, propertySet) ->
-                if (rule is SnyggAnnotationRule.Defines && propertySet is SnyggSinglePropertySetEditor) {
-                    propertySet.properties
-                } else {
-                    null
-                }
-            } ?: emptyMap()
-        }
-
-        val fontNames = remember(customSortedRules) {
-            customSortedRules.mapNotNull { (rule, _) ->
-                if (rule is SnyggAnnotationRule.Font) {
-                    rule.fontName
-                } else {
-                    null
-                }
-            }
-        }
-
         // TODO: (priority = low)
         //  Floris scrollbar does not like lazy lists with non-constant item heights.
         //  Consider building a custom scrollbar tailored for this list specifically.
@@ -303,8 +325,8 @@ fun ThemeEditorScreen(
                         component = editor,
                         onEditBtnClick = { showEditComponentMetaDialog = true },
                     )
-                    if (customSortedRules.isEmpty() ||
-                        (customSortedRules.size == 1 && customSortedRules.all { (rule, _) -> rule == SnyggAnnotationRule.Defines })
+                    if (stylesheetEditor.rules.isEmpty() ||
+                        (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.all { (rule, _) -> rule == SnyggAnnotationRule.Defines })
                     ) {
                         Text(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
@@ -315,7 +337,7 @@ fun ThemeEditorScreen(
                 }
             }
 
-            items(customSortedRules) { (rule, propertySet) -> key(rule) {
+            items(stylesheetEditor.rules.toList()) { (rule, propertySet) -> key(rule) {
                 val propertySetSpec = SnyggSpec.propertySetSpecOf(rule)
                 val isVariablesRule = rule == SnyggAnnotationRule.Defines
                 FlorisOutlinedBox(
@@ -796,5 +818,26 @@ internal fun DialogProperty(
             trailingIconTitle()
         }
         content()
+    }
+}
+
+private object CustomRuleComparator : Comparator<SnyggRule> {
+    @Suppress("IfThenToElvis")
+    override fun compare(a: SnyggRule, b: SnyggRule): Int {
+        return if (a !is SnyggElementRule || b !is SnyggElementRule || a.elementName == b.elementName) {
+            a.compareTo(b)
+        } else {
+            val aOrdinal = FlorisImeUi.elementNamesToOrdinals[a.elementName]
+            val bOrdinal = FlorisImeUi.elementNamesToOrdinals[b.elementName]
+            if (aOrdinal == null && bOrdinal == null) {
+                a.elementName.compareTo(b.elementName)
+            } else if (bOrdinal == null) {
+                -1
+            } else if (aOrdinal == null) {
+                1
+            } else {
+                aOrdinal.compareTo(bOrdinal)
+            }
+        }
     }
 }
