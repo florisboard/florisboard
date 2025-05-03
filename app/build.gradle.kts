@@ -15,6 +15,7 @@
  */
 
 import java.io.ByteArrayOutputStream
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -159,6 +160,12 @@ android {
             it.useJUnitPlatform()
         }
     }
+}
+
+composeCompiler {
+    // DO NOT ENABLE STRONG SKIPPING! This project currently relies on
+    // recomposition on parent state change to update the UI correctly.
+    featureFlags.add(ComposeFeatureFlag.StrongSkipping.disabled())
 }
 
 tasks.withType<Test> {
