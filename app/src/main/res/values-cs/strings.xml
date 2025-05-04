@@ -97,6 +97,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Připnutá akce ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Dynamické akce ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Skrýt akce ({n})</string>
+    <string name="select_subtype_panel__header">Vyberte podtyp</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Anonymní režim je nyní povolen\n\nV tomto režimu se {app_name} nebude učit slova z vašeho zadávání</string>
     <string name="incognito_mode__toast_after_disabled">Anonymní režim je nyní ve výchozím nastavení zakázán</string>
@@ -111,6 +112,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard není vybrán jako výchozí vstupní metoda. Kliknutím sem tento problém vyřešíte.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozložení</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zobrazovat názvy jazyků v</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Zobrazit popisky kláves v jazyce podtypu</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Přidat podtyp</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Spravovat nainstalované jazykové balíčky</string>
@@ -151,8 +153,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noční motiv</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Barva (motivy Material You)
-    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Podklady aplikace FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
@@ -161,13 +161,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vyberte noční motiv</string>
     <string name="settings__theme_editor__fine_tune__title">Jemné doladění editoru</string>
     <string name="settings__theme_editor__fine_tune__level">Úprava úrovně</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Zobrazit barvy jako</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zobrazit klávesnici po dialozích</string>
     <string name="settings__theme_editor__add_rule">Přidat pravidlo</string>
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
     <string name="settings__theme_editor__no_rules_defined">Tato tabulka stylů nemá definována žádná pravidla. Přidejte pravidlo, abyste mohli začít přizpůsobovat tuto tabulku.</string>
     <string name="settings__theme_editor__rule_already_exists">Pravidlo této tabulky stylů je již definováno.</string>
-    <string name="settings__theme_editor__rule_element">Cílový prvek</string>
     <string name="settings__theme_editor__rule_codes">Kódy cílových kláves</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
     <string name="settings__theme_editor__rule_shift_states">Stavy shiftu</string>
@@ -195,18 +193,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Cesta tabulky stylů</string>
-    <string name="snygg__rule_element__defines">Proměnné</string>
-    <string name="snygg__rule_element__defines_description">Pomocí tohoto pravidla definujte proměnné pro opětovné použití běžných barev nebo velikostí ve vaší tabulce stylů.</string>
-    <string name="snygg__rule_element__keyboard">Okno klávesnice</string>
     <string name="snygg__rule_element__key">Klávesa</string>
     <string name="snygg__rule_element__key_hint">Nápovědy klávesy</string>
-    <string name="snygg__rule_element__key_popup">Vyskakovací okno klávesy</string>
     <string name="snygg__rule_element__clipboard_header">Záhlaví schránky</string>
     <string name="snygg__rule_element__clipboard_item">Položka schránky</string>
     <string name="snygg__rule_element__clipboard_item_popup">Vyskakovací nabídka položky schránky</string>
-    <string name="snygg__rule_element__emoji_key">Klávesa emoji</string>
-    <string name="snygg__rule_element__emoji_key_popup">Vyskakovací okno klávesy emoji</string>
-    <string name="snygg__rule_element__emoji_key_tab">Záložka emoji</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Rozložení vstupu na šířku</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Pole vstupu na šířku</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Akce vstupu na šířku</string>
@@ -229,12 +220,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutá položka v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
-    <string name="snygg__rule_element__system_nav_bar">Systémová navigační lišta</string>
     <string name="snygg__rule_selector__pressed">Stisknuto</string>
     <string name="snygg__rule_selector__focus">Zaměřeno</string>
     <string name="snygg__rule_selector__disabled">Zakázáno</string>
-    <string name="snygg__property_name__width">Šířka</string>
-    <string name="snygg__property_name__height">Výška</string>
     <string name="snygg__property_name__background">Pozadí</string>
     <string name="snygg__property_name__foreground">Popředí</string>
     <string name="snygg__property_name__border_color">Barva okraje</string>
@@ -243,7 +231,6 @@
     <string name="snygg__property_name__font_family">Rodina písem</string>
     <string name="snygg__property_name__font_size">Velikost písma</string>
     <string name="snygg__property_name__font_style">Styl písma</string>
-    <string name="snygg__property_name__font_variant">Varianta písma</string>
     <string name="snygg__property_name__font_weight">Tloušťka písma</string>
     <string name="snygg__property_name__shadow_elevation">Výška stínu</string>
     <string name="snygg__property_name__shape">Tvar</string>
@@ -262,10 +249,10 @@
     <string name="snygg__property_name__var_shape">Běžný tvar</string>
     <string name="snygg__property_name__var_shape_variant">Běžný tvar (varianta)</string>
     <string name="snygg__property_value__explicit_inherit">Zdědit</string>
+    <string name="snygg__property_value__defined_var">Odkaz na proměnnou</string>
     <string name="snygg__property_value__solid_color">Pevná barva</string>
     <string name="snygg__property_value__material_you_light_color">Barva Material You (světlá)</string>
     <string name="snygg__property_value__material_you_dark_color">Barva Material You (tmavá)</string>
-    <string name="snygg__property_value__image_ref">Odkaz na obrázek</string>
     <string name="snygg__property_value__rectangle_shape">Obdélníkový tvar</string>
     <string name="snygg__property_value__circle_shape">Kruhový tvar</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Tvar ořezaného rohu (dp)</string>
@@ -275,7 +262,6 @@
     <string name="snygg__property_value__dp_size">Velikost (dp)</string>
     <string name="snygg__property_value__sp_size">Velikost (sp)</string>
     <string name="snygg__property_value__percentage_size">Velikost (%)</string>
-    <string name="snygg__property_value__defined_var">Odkaz na proměnnou</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky a vibrace</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Zvuková odezva / zvuky</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Povolit zvukovou odezvu</string>
@@ -350,11 +336,8 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Poskytuje návrhy, zatímco píšete</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Režim zobrazování návrhů</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokovat možná urážlivá slova</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Návrhy obsahu schránky</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Navrhnout obsah dříve zkopírovaný do schránky</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Omezit návrhy ze schránky na</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Položky zkopírované v posledních {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zobrazit návrhy na řádku poskytnuté službami automatického doplnění</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Anonymní režim</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalizovat slova na základě aktuálního vstupního kontextu</string>
@@ -428,18 +411,17 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dlouhé stisknutí klávesy ke smazání</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Práh vzdálenosti přejetí</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Pokročilé</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motiv nastavení</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Výchozí podle systému (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Temná</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Nastavení barvy
+    <string name="settings__other__title" comment="Title of Other settings">Ostatní</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Motiv nastavení</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Podle systému (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Světlý</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Tmavý</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED tmavý</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Barva nastavení
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vždy povoleno na Android 10+ kvůli omezením systému</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Anonymní režim</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Jazyk nastavení</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Zobrazit ikonu aplikace na domovské obrazovce</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Vždy povoleno v systému Android 10+ kvůli systémovým omezením</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>
@@ -561,6 +543,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Aktualizace systémové schránky také zahrnují schránku Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizovat do systémové schránky</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualizace schránky Floris také zahrnují systémovou schránku</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Návrhy schránky</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Obsah návrhu schránky</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Navrhnout obsah dříve zkopírovaný do schránky</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Omezit návrhy ze schránky na</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Položky zkopírované v posledních {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Historie schránky</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Ponechat obsah schránky pro rychlý přístup</string>
@@ -681,7 +668,6 @@
     <string name="ext__validation__error_stylesheet_path">Zadejte prosím platnou cestu tabulky stylů odpovídající {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Zadejte prosím název proměnné</string>
     <string name="ext__validation__error_property">Zadejte prosím platný název proměnné odpovídající {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Názvy proměnných ve FlorisCSS obvykle začínají dvěma spojovníky (--)</string>
     <string name="ext__validation__enter_color">Zadejte prosím řetězec barvy</string>
     <string name="ext__validation__error_color">Zadejte prosím platný řetězec barvy</string>
     <string name="ext__validation__enter_dp_size">Zadejte prosím velikost dp</string>
@@ -757,8 +743,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamická šířka a skrolovatelné</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Zapnout Caps Lock při dvojitém klepnutí na Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Přepnout na další krok kapitalizace při každém stisknutí klávesy Shift</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimální</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Červená Zelená Modrá Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Vždy zobrazit</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Vždy zobrazit klávesnici po zavření jakéhokoli dialogu editoru</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nikdy nezobrazovat</string>
@@ -827,7 +811,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Vypnuto</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>

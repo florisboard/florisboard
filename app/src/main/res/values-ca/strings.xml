@@ -82,7 +82,6 @@
     <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecciona el tema del dia</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecciona el tema de nit</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Mostrar els colors com</string>
     <string name="settings__theme_editor__add_rule">Afegir norma</string>
     <string name="settings__theme_editor__edit_rule">Editar norma</string>
     <string name="settings__theme_editor__rule_groups">Grups</string>
@@ -94,8 +93,6 @@
     <string name="snygg__rule_selector__pressed">Premut</string>
     <string name="snygg__rule_selector__focus">Enfocat</string>
     <string name="snygg__rule_selector__disabled">Desactivat</string>
-    <string name="snygg__property_name__width">Amplada</string>
-    <string name="snygg__property_name__height">Altura</string>
     <string name="snygg__property_name__background">Fons</string>
     <string name="snygg__property_name__foreground">Primer pla</string>
     <string name="snygg__property_name__border_color">Color dels marges</string>
@@ -173,7 +170,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Desactivat</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode esquerrà</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode dretà</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Amagar el teclat</string>

@@ -81,11 +81,9 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Rûkarê tarî hilbijêre</string>
     <string name="settings__theme_editor__fine_tune__title">Edîtorê awazê xweşik</string>
     <string name="settings__theme_editor__fine_tune__level">Asta sererastkirinê</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Rengan wekî</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Piştî diyalogan klavyeyê nîşande</string>
     <string name="settings__theme_editor__add_rule">Rêbazekê tevlî bike</string>
     <string name="settings__theme_editor__edit_rule">Rêbazê serrast bike</string>
-    <string name="settings__theme_editor__rule_element">Hêmana armancê</string>
     <string name="settings__theme_editor__rule_codes">Kodên sereke yên armanc</string>
     <string name="settings__theme_editor__rule_groups">Kom</string>
     <string name="settings__theme_editor__rule_selectors">Hilbijêr</string>
@@ -103,15 +101,10 @@
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Ji bo hemî kûçeyan bicîh bikin</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Rêza rengîn biguherîne</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Mijara şevê ye</string>
-    <string name="snygg__rule_element__defines">Têgûherr</string>
     <string name="snygg__rule_element__key">Kilîd</string>
-    <string name="snygg__rule_element__emoji_key">Mifteya emoji</string>
-    <string name="snygg__rule_element__system_nav_bar">Darikê navîgasyonê yê pergalê</string>
     <string name="snygg__rule_selector__pressed">Çewisandî</string>
     <string name="snygg__rule_selector__focus">Bal kişand</string>
     <string name="snygg__rule_selector__disabled">Hat neçalakkirin</string>
-    <string name="snygg__property_name__width">Firehî</string>
-    <string name="snygg__property_name__height">Bilindt</string>
     <string name="snygg__property_name__background">Piştzemîn</string>
     <string name="snygg__property_name__foreground">Pêşerd</string>
     <string name="snygg__property_name__border_color">Rengê çarçoveyê</string>
@@ -120,18 +113,17 @@
     <string name="snygg__property_name__font_family">Şêweya fontê</string>
     <string name="snygg__property_name__font_size">Mezinahiya nivîsê</string>
     <string name="snygg__property_name__font_style">Şêwaza nivîsê</string>
-    <string name="snygg__property_name__font_variant">Curenivîs varyant</string>
     <string name="snygg__property_name__font_weight">Tîpên curenivîsê</string>
     <string name="snygg__property_name__shadow_elevation">Bilindbûna siyê</string>
     <string name="snygg__property_name__shape">Şikil</string>
     <string name="snygg__property_name__var_primary">Rengê serekî</string>
     <string name="snygg__property_name__var_secondary">Rengê duyem</string>
     <string name="snygg__property_value__explicit_inherit">Mîras</string>
+    <string name="snygg__property_value__defined_var">Referans bû</string>
     <string name="snygg__property_value__solid_color">Rengê tarî</string>
     <string name="snygg__property_value__dp_size">Mezinahî (dp)</string>
     <string name="snygg__property_value__sp_size">Mezinahî (sp)</string>
     <string name="snygg__property_value__percentage_size">Mezinahî (%)</string>
-    <string name="snygg__property_value__defined_var">Referans bû</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Deng &amp; Vibrasyon</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>
@@ -171,7 +163,6 @@
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">شێوەی دەرکەوتنی پێشنیارەکان</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پێشنیارکردنی لەبەرگیراوەکان</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Li gorî konteksa têkevinê ya niha peyvan mezin bikin</string>
@@ -211,15 +202,6 @@
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Şemitîna bişkojka çepê jê bibe</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Derbenda lêvegerê şemitîn</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Derbenda mesafeyê şemitîn</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Pêşveçû</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Mijara mîhengan</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Ya heyî ya pergalê (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ronî</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tarî</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Reş AMOLED</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Ziman</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Ji ber sînordarkirina pergalê her dem di Android 10+ de çalak e</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya FlorisBoard</string>
@@ -370,8 +352,6 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasîk (3 stûn)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Firehiya dînamîk</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Firehiya dînamîk û pelçiqandî</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Alfaya Kesk a Sor</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Qet nîşan nede</string>
     <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} Çermê navîn</string>
@@ -385,7 +365,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Tu carî nîşan nede</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dînamîk nîşan bide</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Girtî</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Moda destê-çepê</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Moda destê-rastê</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Bingehîn</string>

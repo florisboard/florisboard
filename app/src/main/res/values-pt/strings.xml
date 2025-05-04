@@ -83,13 +83,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecionar tema noturno</string>
     <string name="settings__theme_editor__fine_tune__title">Editor preciso</string>
     <string name="settings__theme_editor__fine_tune__level">Nível de edição</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Mostrar cores como</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostrar teclado após os diálogos</string>
     <string name="settings__theme_editor__add_rule">Adicionar regra</string>
     <string name="settings__theme_editor__edit_rule">Editar regra</string>
     <string name="settings__theme_editor__no_rules_defined">Esta folha de estilo não tem regras definidas. Adicione uma regra para começar a editar.</string>
     <string name="settings__theme_editor__rule_already_exists">Esta regra de folha de estilos já está definida.</string>
-    <string name="settings__theme_editor__rule_element">Elemento destino</string>
     <string name="settings__theme_editor__rule_codes">Códigos-chave alvo</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
     <string name="settings__theme_editor__rule_shift_states">Estados de troca</string>
@@ -112,26 +110,17 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">É tema noturno</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Não tem contornos</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Caminho da folha de estilo</string>
-    <string name="snygg__rule_element__defines">Variáveis</string>
-    <string name="snygg__rule_element__keyboard">Janela do teclado</string>
     <string name="snygg__rule_element__key">Tecla</string>
     <string name="snygg__rule_element__key_hint">Dica de tecla</string>
-    <string name="snygg__rule_element__key_popup">Popup de tecla</string>
     <string name="snygg__rule_element__clipboard_item">Item da área de transferência</string>
-    <string name="snygg__rule_element__emoji_key">Tecla emoji</string>
-    <string name="snygg__rule_element__emoji_key_popup">Pop-up da tecla emoji</string>
-    <string name="snygg__rule_element__emoji_key_tab">Separador emoji</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Esquema de introdução horizontal</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Campo de introdução horizontal</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Ação de introdução horizontal</string>
     <string name="snygg__rule_element__glide_trail">Rasto de gestos</string>
     <string name="snygg__rule_element__one_handed_panel">Painel de uma mão</string>
-    <string name="snygg__rule_element__system_nav_bar">Barra de navegação do sistema</string>
     <string name="snygg__rule_selector__pressed">Premido</string>
     <string name="snygg__rule_selector__focus">Focado</string>
     <string name="snygg__rule_selector__disabled">Desativada</string>
-    <string name="snygg__property_name__width">Largura</string>
-    <string name="snygg__property_name__height">Altura</string>
     <string name="snygg__property_name__background">Fundo</string>
     <string name="snygg__property_name__foreground">Principal</string>
     <string name="snygg__property_name__border_color">Cor do contorno</string>
@@ -152,7 +141,6 @@
     <string name="snygg__property_name__var_shape_variant">Forma comun (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Herdar</string>
     <string name="snygg__property_value__solid_color">Cor sólida</string>
-    <string name="snygg__property_value__image_ref">Referência da imagem</string>
     <string name="snygg__property_value__rectangle_shape">Forma de retângulo</string>
     <string name="snygg__property_value__circle_shape">Forma de círculo</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Forma de canto cortado (dp)</string>
@@ -214,7 +202,6 @@
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modo de exibição das sugestões</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Conteúdo da área de transferência</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Colocar letras maiúsculas tendo em conta o contexto das palavras</string>
@@ -280,15 +267,6 @@
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar para a esquerda na tecla de retrocesso</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidade de deslize</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Distância de deslize</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Avançado</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema das definições</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Definição do sistema (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Escuro</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Preto AMOLED</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Definições de idioma</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone na página inicial</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre ativa em Android 10+ devido a restrições do sistema</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre o FlorisBoard</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do FlorisBoard</string>
@@ -524,8 +502,6 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Clássico (3 colunas)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Largura dinâmica</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largura dinâmica e deslocável</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alfa</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nunca mostrar</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Lembrar último estado</string>
@@ -555,7 +531,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Não mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinamicamente</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Desligado</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modo esquerdino</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modo destro</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Início do topo</string>

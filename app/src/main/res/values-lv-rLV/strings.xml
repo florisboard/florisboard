@@ -80,6 +80,7 @@
     <string name="quick_action__toggle_actions_overflow__tooltip">Parādīt vai paslēpt papildu darbības</string>
     <string name="quick_action__toggle_incognito_mode" maxLength="12">Slepenība</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Pārslēgt slepenību</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Autolabošana</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Pārslēgt automātisko labošanu</string>
     <string name="quick_action__voice_input" maxLength="12">Balss ievade</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Atvērt balss ievades nodrošinātāju</string>
@@ -88,11 +89,12 @@
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Pašreizējā rādītāja vilkšanas atrašanās vieta</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nekas</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nav darbības</string>
-    <string name="quick_actions_overflow__customize_actions_button">Ierakstītāja darbības</string>
+    <string name="quick_actions_overflow__customize_actions_button">Mainīt darbības secību</string>
     <string name="quick_actions_editor__header">Pielāgot darbību secību</string>
     <string name="quick_actions_editor__subheader_sticky_action">Lipīga darbība ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Dinamiskas darbības ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Paslēptas darbības ({n})</string>
+    <string name="select_subtype_panel__header">Atlasīt apakšveidu</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Slepenība tagad ir iespējota\n\n{app_name} neiegaumēs ievadītos vārdus, kamēr darbojas slepenība</string>
     <string name="incognito_mode__toast_after_disabled">Slepenība tagad ir atspējota pēc noklusējuma</string>
@@ -107,6 +109,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nav atlasīts kā noklusējuma ievades veids. Klikšķināt šeit, lai to novērstu.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Valodas un izkārtojumi</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Attēlot valodu nosaukumu</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Attēlot tastatūras iezīmes apakšveida valodā</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Apakšveidi</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pievienot apakšveidu</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Pārvaldīt uzstādītās valodas</string>
@@ -147,8 +150,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Saulrieta laikā</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dienas izskats</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nakts izskats</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Uzsvara krāsa (Material You izskati)
-    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
@@ -157,13 +158,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Atlasīt nakts izskatu</string>
     <string name="settings__theme_editor__fine_tune__title">Smalkas pielāgošanas redaktors</string>
     <string name="settings__theme_editor__fine_tune__level">Labošanas līmenis</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Attēlot krāsas kā</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Parādīt tastatūru pēc ziņojumlodziņiem</string>
     <string name="settings__theme_editor__add_rule">Pievienot nosacījumu</string>
     <string name="settings__theme_editor__edit_rule">Labot nosacījumu</string>
     <string name="settings__theme_editor__no_rules_defined">Šī stila lapa nesatur nosacījumus. Lai to pielāgotu, jāpievieno kāds nosacījums.</string>
     <string name="settings__theme_editor__rule_already_exists">Šis stila lapas nosacījums jau ir noteikts.</string>
-    <string name="settings__theme_editor__rule_element">Mērķa elements</string>
     <string name="settings__theme_editor__rule_codes">Mērķa taustiņu kodi</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
     <string name="settings__theme_editor__rule_shift_states">Pārslēgšanās taustiņa stāvokļi</string>
@@ -191,18 +190,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Ir nakts izskats</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Ir bezapmales</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stilu lapas ceļš</string>
-    <string name="snygg__rule_element__defines">Mainīgie</string>
-    <string name="snygg__rule_element__defines_description">Šajā nosacījumā var izveidot mainīgos, lai stila lapā atkārtoti izmantotu kopējas krāsas vai izmērus.</string>
-    <string name="snygg__rule_element__keyboard">Tastatūras logs</string>
     <string name="snygg__rule_element__key">Taustiņš</string>
     <string name="snygg__rule_element__key_hint">Taustiņa norāde</string>
-    <string name="snygg__rule_element__key_popup">Taustiņa uznirstošais lodziņš</string>
     <string name="snygg__rule_element__clipboard_header">Starpliktuves galvene</string>
     <string name="snygg__rule_element__clipboard_item">Starpliktuves vienums</string>
     <string name="snygg__rule_element__clipboard_item_popup">Starpliktuves vienuma uznirstošais lodziņš</string>
-    <string name="snygg__rule_element__emoji_key">Sajūtu rakstzījmju taustiņš</string>
-    <string name="snygg__rule_element__emoji_key_popup">Sajūtu rakstzīmju taustiņa uznirstošais lodziņš</string>
-    <string name="snygg__rule_element__emoji_key_tab">Sajūtu rakstzīmju cilne</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Līmeniskās ievades izkārtojums</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Līmeniskās ievades lauks</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Līmeniskās ievades darbība</string>
@@ -225,12 +217,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Viedjoslas ieteikumu vārds</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>
-    <string name="snygg__rule_element__system_nav_bar">Sistēmas pāriešanas josla</string>
     <string name="snygg__rule_selector__pressed">Nospiests</string>
     <string name="snygg__rule_selector__focus">Fokusēts</string>
     <string name="snygg__rule_selector__disabled">Atspējots</string>
-    <string name="snygg__property_name__width">Platums</string>
-    <string name="snygg__property_name__height">Augstums</string>
     <string name="snygg__property_name__background">Pamats</string>
     <string name="snygg__property_name__foreground">Priekšplāns</string>
     <string name="snygg__property_name__border_color">Apmales krāsa</string>
@@ -239,7 +228,6 @@
     <string name="snygg__property_name__font_family">Fontu saime</string>
     <string name="snygg__property_name__font_size">Burtu lielums</string>
     <string name="snygg__property_name__font_style">Burtu veids</string>
-    <string name="snygg__property_name__font_variant">Burtu paveids</string>
     <string name="snygg__property_name__font_weight">Burtu biezums</string>
     <string name="snygg__property_name__shadow_elevation">Ēnas pacēlums</string>
     <string name="snygg__property_name__shape">Veidols</string>
@@ -258,10 +246,10 @@
     <string name="snygg__property_name__var_shape">Kopējs veidols</string>
     <string name="snygg__property_name__var_shape_variant">Kopējs veidols (paveids)</string>
     <string name="snygg__property_value__explicit_inherit">Mantot</string>
+    <string name="snygg__property_value__defined_var">Mainīgā atsauce</string>
     <string name="snygg__property_value__solid_color">Tīrtoņa krāsa</string>
     <string name="snygg__property_value__material_you_light_color">Material You krāsa (gaiša)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You krāsa (tumša)</string>
-    <string name="snygg__property_value__image_ref">Attēla atsauce</string>
     <string name="snygg__property_value__rectangle_shape">Taisnstūra veidols</string>
     <string name="snygg__property_value__circle_shape">Apļa veidols</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Nogriezta stūra aprise (dp)</string>
@@ -271,7 +259,6 @@
     <string name="snygg__property_value__dp_size">Lielums (dp)</string>
     <string name="snygg__property_value__sp_size">Lielums (sp)</string>
     <string name="snygg__property_value__percentage_size">Lielums (%)</string>
-    <string name="snygg__property_value__defined_var">Mainīgā atsauce</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Skaņas un trīcēšana</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
@@ -346,11 +333,8 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Rakstot tiek piedāvāti ieteikumi</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Ieteikumu attēlošanas veids</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Neļaut iespējami aizskarošus vārdus</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ierobežot starpliktuves ieteikumus līdz</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Vienumi ievietoti starpliktuvē pēdējās {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Attēlot iekļautus ieteikumus, kurus nodrošina pašaizpildīšanas pakalpojumi</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Slepenība</string>
     <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pārveidot vārdu sākumburtus par lielajiem, balstoties uz pašreizējo ievades kopumu</string>
@@ -424,18 +408,17 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Dzēšanas taustiņa ilga piespiešana</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Pavilkšanas ātruma slieksnis</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Pavilkšanas attāluma slieksnis</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Papildus</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Iestatījumu izskats</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Sistēmas noklusējums (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Gaišs</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumšs</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED tumšs</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Iestatījumu uzsvara krāsa
+    <string name="settings__other__title" comment="Title of Other settings">Cits</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Iestatījumu izskats</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Sistēmas noklusējums (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Gaišs</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Tumšs</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED tumšs</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Iestatījumu uzsvara krāsa
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Iestatījumu valoda</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Slepenība</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Iestatījumu valoda</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Rādīt lietotnes ikonu palaidējā</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>
@@ -557,6 +540,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Starpliktuves ieteikumi</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ierobežot starpliktuves ieteikumus līdz</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Vienumi ievietoti starpliktuvē pēdējās {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Starpliktuves vēsture</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Iespējot starpliktuves vēsturi</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus ātrai piekļuvei</string>
@@ -677,7 +665,6 @@
     <string name="ext__validation__error_stylesheet_path">Lūgums ievadīt derīgu stila lapas ceļu, kas atbilst {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Lūgums ievadīt mainīgā nosaukumu</string>
     <string name="ext__validation__error_property">Lūgums ievadīt derīgu mainīgā nosaukumu, kas atbilst {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Ir pieņemts, ka FlorisCSS mainīgā nosaukums sākas ar divām domuzīmēm (--)</string>
     <string name="ext__validation__enter_color">Lūgums ievadīt krāsas virkni</string>
     <string name="ext__validation__error_color">Lūgums ievadīt derīgu krāsas virkni</string>
     <string name="ext__validation__enter_dp_size">Lūgums ievadīt dp izmēru</string>
@@ -753,8 +740,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Mainīgs platums un ritināms</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Iespējot burtslēgu ar divkāršu piesitienu pārslēgšanas taustiņam</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Pārslēgties uz nākamo lielā burta rakstīšānas soli katru reizi, kad tiek nospiests pārslēgšanas taustiņš</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Sešpadsmitisks</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Sarkans Zaļš Zils Caurredzamība</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Vienmēr rādīt tastatūru pēc jebkura labošanas ziņojumlodziņa aizvēršanas</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nerādīt nekad</string>
@@ -823,7 +808,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nerādīt nekad</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Rādīt pielāgojoties</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Izslēgts</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Ievade ar kreiso roku</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Ievade ar labo roku</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Augšas sākums</string>

@@ -111,12 +111,10 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">انتخاب تم شب</string>
     <string name="settings__theme_editor__fine_tune__title">ویرایشگر دقیق</string>
     <string name="settings__theme_editor__fine_tune__level">سطح ویرایشگر</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">رنگ را مانند ... نشان بده</string>
     <string name="settings__theme_editor__add_rule">افزودن قانون</string>
     <string name="settings__theme_editor__edit_rule">ویرایش قانون</string>
     <string name="settings__theme_editor__no_rules_defined">این شیوه نامه قانون تعریف شده ای ندارد. یک قانون اضافه کنید تا این شیوه نامه را شخصی سازی کنید.</string>
     <string name="settings__theme_editor__rule_already_exists">این قانون شیوه نامه از قبل تعریف شده است.</string>
-    <string name="settings__theme_editor__rule_element">مؤلفه مورد نظر</string>
     <string name="settings__theme_editor__rule_codes">کد کلیدهای مورد نظر</string>
     <string name="settings__theme_editor__rule_groups">گروه ها</string>
     <string name="settings__theme_editor__rule_selectors">انتخابگرها</string>
@@ -141,16 +139,12 @@
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">برای تمام گوشه ها اعمال کن</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">ویرایش متن رنگ</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">پس زمینه شب</string>
-    <string name="snygg__rule_element__defines">متغیرها</string>
     <string name="snygg__rule_element__key">کلید</string>
     <string name="snygg__rule_element__key_hint">راهنما دکمه</string>
-    <string name="snygg__rule_element__key_popup">کلید خود بازشونده</string>
     <string name="snygg__rule_element__clipboard_item">وسیله کلیپ بورد</string>
-    <string name="snygg__rule_element__emoji_key">کلید ایموجی</string>
     <string name="snygg__rule_element__smartbar">اسمارت‌بار</string>
     <string name="snygg__property_name__font_size">اندازه نوشته</string>
     <string name="snygg__property_name__font_style">شکل نوشته</string>
-    <string name="snygg__property_name__font_variant">نوع نوشته</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">صداها &amp; لرزش</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">صدای بازخورد / صداها</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">فعالسازی صدای بازخورد</string>
@@ -178,7 +172,6 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">پیشنهادات محتوای کلیپ بورد</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
@@ -228,14 +221,6 @@
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">کشیدن دکمه پاک کردن به چپ</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">آستانه سرعت کشیدن</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">آستانه مسافت کشیدن</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">پیشرفته</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">تنظیمات زمینه</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">روشن</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">تاریک</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">تاریک AMOLED</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">زبان تنظیمات</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">قرار دادن آیکون برنامه در لانچر</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>
@@ -334,7 +319,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">هرگز نشان نده</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">همیشه نشان بده</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">به صورت پویا نشان بده</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">خاموش</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">حالت دست چپی</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">حالت دست راستی</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استفاده از زبان سیستم</string>

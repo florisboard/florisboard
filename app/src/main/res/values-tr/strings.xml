@@ -15,6 +15,24 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Tercih edilen emoji ten rengi</string>
     <string name="prefs__media__emoji_preferred_hair_style">Tercih edilen emoji saç tipi</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji geçmişi</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Emoji geçmişini etkinleştir</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Hızlı ulaşım için son kullanılan emojileri sakla</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Stratejiyi güncelle (Sabitlenmiş)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Stratejiyi güncelle (Son kullanılan)</string>
+    <string name="prefs__media__emoji_history_max_size">Saklanabilir en fazla öğe</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Sabitlenmiş emoji\'leri sıfırla</string>
+    <string name="prefs__media__emoji_history_reset">Son kullanılan emoji\'leri sıfırla</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji önerileri</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Emoji önerilerini güncelle</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Yazarken emoji öner</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Tetikleyici türü</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Emoji geçmişini güncelle</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Önerilen emoji\'leri onaylamak onları emoji geçmişine ekler</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Emoji ismini göster</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Emoji önerileri emoji\'lerin yanında isimlerini de gösterir</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">En az sorgu uzunluğu</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">En fazla aday sayısı</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Suratlar &amp; İfadeler</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Kişiler &amp; Bedenler</string>
@@ -25,6 +43,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">Nesneler</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Semboller</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bayraklar</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Son kullanılan emoji bulunamadı. Emojileri kullanmaya başladığınızda burada gözükecektir.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Lütfen emoji geçmişinize erişmek için cihazınızın ekran kilidini açın.</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Yukarı ok</string>
     <string name="quick_action__arrow_up__tooltip">Yukarı okunu göster</string>
@@ -133,13 +153,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Koyu temayı seç</string>
     <string name="settings__theme_editor__fine_tune__title">İnce ayar düzenleyici</string>
     <string name="settings__theme_editor__fine_tune__level">Seviyeyi düzenle</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Renkleri şu şekilde göster</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Diyaloglardan sonra klavyeyi görüntüle</string>
     <string name="settings__theme_editor__add_rule">Kural ekle</string>
     <string name="settings__theme_editor__edit_rule">Kuralı düzenle</string>
     <string name="settings__theme_editor__no_rules_defined">Bu biçem sayfası için hiçbir kural tanımlanmamış. Kişiselleştirmeye başlamak için bir kural ekleyin.</string>
     <string name="settings__theme_editor__rule_already_exists">Bu biçem sayfası kuralı halihazırda atanmış.</string>
-    <string name="settings__theme_editor__rule_element">Hedef Element</string>
     <string name="settings__theme_editor__rule_codes">Hedef anahtar kodları</string>
     <string name="settings__theme_editor__rule_groups">Gruplar</string>
     <string name="settings__theme_editor__rule_shift_states">Durumları değiştir</string>
@@ -167,18 +185,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Gece teması</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Kenarsız</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stil sayfası erişim yolu</string>
-    <string name="snygg__rule_element__defines">Değişkenler</string>
-    <string name="snygg__rule_element__defines_description">Stil sayfanda ortak renkleri veya boyutları yeniden kullanmak için bu kuraldaki değişkenleri tanımla.</string>
-    <string name="snygg__rule_element__keyboard">Klavye penceresi</string>
     <string name="snygg__rule_element__key">Tuş</string>
     <string name="snygg__rule_element__key_hint">Tuş ipucu</string>
-    <string name="snygg__rule_element__key_popup">Tuş popup</string>
     <string name="snygg__rule_element__clipboard_header">Pano başlığı</string>
     <string name="snygg__rule_element__clipboard_item">Pano öğesi</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pano öğesi için açılan pencere</string>
-    <string name="snygg__rule_element__emoji_key">Emoji Tuşu</string>
-    <string name="snygg__rule_element__emoji_key_popup">Emoji tuşu popup</string>
-    <string name="snygg__rule_element__emoji_key_tab">Emoji sekmesi</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Yatay mod girdi düzeni</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Yatay mod girdi alanı</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Yatay mod girdi davranışı</string>
@@ -194,12 +205,9 @@
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Akıllı bar aksiyon düzenleyici alt başlığı</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Akıllı bar aday satırı</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Akıllı bar aday kelime</string>
-    <string name="snygg__rule_element__system_nav_bar">Sistem navigasyon barı</string>
     <string name="snygg__rule_selector__pressed">Basılıyken</string>
     <string name="snygg__rule_selector__focus">Odaklanmış</string>
     <string name="snygg__rule_selector__disabled">Kapalı</string>
-    <string name="snygg__property_name__width">Genişlik</string>
-    <string name="snygg__property_name__height">Yükseklik</string>
     <string name="snygg__property_name__background">Arkaplan</string>
     <string name="snygg__property_name__foreground">Ön plan</string>
     <string name="snygg__property_name__border_color">Kenar rengi</string>
@@ -208,7 +216,6 @@
     <string name="snygg__property_name__font_family">Yazı tipi ailesi</string>
     <string name="snygg__property_name__font_size">Yazı Boyutu</string>
     <string name="snygg__property_name__font_style">Yazı tipi</string>
-    <string name="snygg__property_name__font_variant">Yazıtipi biçimi</string>
     <string name="snygg__property_name__font_weight">Yazı tipi kalınlığı</string>
     <string name="snygg__property_name__shadow_elevation">Gölge yüksekliği</string>
     <string name="snygg__property_name__shape">Şekil</string>
@@ -227,10 +234,10 @@
     <string name="snygg__property_name__var_shape">Ortak şekil</string>
     <string name="snygg__property_name__var_shape_variant">Ortak şekil (varyant)</string>
     <string name="snygg__property_value__explicit_inherit">Devral</string>
+    <string name="snygg__property_value__defined_var">Değişken referansı</string>
     <string name="snygg__property_value__solid_color">Düz renk</string>
     <string name="snygg__property_value__material_you_light_color">Material You rengi (Açık)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You rengi (Koyu)</string>
-    <string name="snygg__property_value__image_ref">Resim referansı</string>
     <string name="snygg__property_value__rectangle_shape">Dikdörtgen şekli</string>
     <string name="snygg__property_value__circle_shape">Yuvarlak şeklinde</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Kesik köşeli şekil (dp)</string>
@@ -240,7 +247,6 @@
     <string name="snygg__property_value__dp_size">Boyut (dp)</string>
     <string name="snygg__property_value__sp_size">Boyut (sp)</string>
     <string name="snygg__property_value__percentage_size">Boyut (%)</string>
-    <string name="snygg__property_value__defined_var">Değişken referansı</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ses &amp; Titreşim</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>
@@ -311,10 +317,6 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Siz yazarken önerileri gösterir</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Öneri gösterim modu</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Rahatsız edici olabilecek kelimeleri engelle</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Kopyalanmış pano içeriğini öner</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Pano önerilerini şu şekilde sınırla</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Son {v} saniye içinde kopyalanan öğeler</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Otomatik doldurma hizmeti tarafından sağlanan satır içi önerileri göster</string>
     <string name="pref__correction__title" comment="Preference group title">Düzeltmeler</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Otomatik olarak büyük harf yap</string>
@@ -388,16 +390,6 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Silmek için uzun süre basınız</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Kaydırma hızı eşiği</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Kaydırma mesafesi eşiği</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Gelişmiş</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ayarlar teması</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Sistem varsayılanı (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Aydınlık</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Karanlık</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Siyah</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Dili ayarla</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Uygulama simgesini başlatıcıda göster</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Gizli mod</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard’un uygulama simgesi</string>
@@ -634,8 +626,6 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Klasik (3 sütun)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dinamik genişlik</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamik genişlik &amp; kaydırılabilir</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Onaltılık</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Kırmızı Yeşil Mavi (Rgb)</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Her zaman göster</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Asla gösterme</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Son durumu hatırla</string>
@@ -655,7 +645,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Asla gösterme</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Her zaman göster</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamik olarak göster</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Kapalı</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Sol el modu</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Sağ el modu</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Temel</string>

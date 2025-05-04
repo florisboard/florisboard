@@ -94,8 +94,10 @@
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna operazione</string>
     <string name="quick_actions_overflow__customize_actions_button">Riordina azioni</string>
     <string name="quick_actions_editor__header">Riordina ordine azioni</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Azione fissata ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Azioni dinamiche ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Azioni nascoste ({n})</string>
+    <string name="select_subtype_panel__header">Seleziona sottotipo</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">La modalità in incognito è ora attiva\n\n{app_name} non apprenderà le parole dai tuoi input mentre questa modalità è in funzione</string>
     <string name="incognito_mode__toast_after_disabled">La modalità Incognito è ora disabilitata per impostazione predefinita</string>
@@ -158,13 +160,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Seleziona tema scuro</string>
     <string name="settings__theme_editor__fine_tune__title">Editor delle regolazioni</string>
     <string name="settings__theme_editor__fine_tune__level">Livello di modifica</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Visualizza colori come</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostra la tastiera dopo le finestre di dialogo</string>
     <string name="settings__theme_editor__add_rule">Aggiungi regola</string>
     <string name="settings__theme_editor__edit_rule">Modifica regola</string>
     <string name="settings__theme_editor__no_rules_defined">Questo file di stile non ha regole definite. Aggiungi una regola per iniziare a personalizzare questo file di stile.</string>
     <string name="settings__theme_editor__rule_already_exists">Questa regola del file di stile è già definita.</string>
-    <string name="settings__theme_editor__rule_element">Elemento di destinazione</string>
     <string name="settings__theme_editor__rule_codes">Codici tasto di destinazione</string>
     <string name="settings__theme_editor__rule_groups">Gruppi</string>
     <string name="settings__theme_editor__rule_shift_states">Stati Maiusc</string>
@@ -192,18 +192,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">È tema scuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">È senza bordi</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Percorso del file di stile</string>
-    <string name="snygg__rule_element__defines">Variabili</string>
-    <string name="snygg__rule_element__defines_description">Definire le variabili all\'interno di questa regola per riutilizzare i colori o le dimensioni comuni nel file di stile.</string>
-    <string name="snygg__rule_element__keyboard">Finestra della tastiera</string>
     <string name="snygg__rule_element__key">Tasto</string>
     <string name="snygg__rule_element__key_hint">Suggerimento tasto</string>
-    <string name="snygg__rule_element__key_popup">Popup tasto</string>
     <string name="snygg__rule_element__clipboard_header">Intestazione degli appunti</string>
     <string name="snygg__rule_element__clipboard_item">Elemento degli appunti</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elemento degli appunti</string>
-    <string name="snygg__rule_element__emoji_key">Tasto emoji</string>
-    <string name="snygg__rule_element__emoji_key_popup">Popup tasto emoji</string>
-    <string name="snygg__rule_element__emoji_key_tab">Scheda emoji</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Layout di input orizzontale</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Campo di input orizzontale</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Azione di input orizzontale</string>
@@ -216,16 +209,15 @@
     <string name="snygg__rule_element__smartbar_extended_actions_row">Riga estesa d\'azioni della Smartbar</string>
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Attiva azioni estese nella Smartbar</string>
     <string name="snygg__rule_element__smartbar_action_key">Tasto d\'azione della Smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Riquadro d\'azione della Smartbar</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Editor delle azioni della smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Riga candidati della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Parola candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Clip candidata della Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Spaziatore candidato della Smartbar</string>
-    <string name="snygg__rule_element__system_nav_bar">Barra di navigazione del sistema</string>
     <string name="snygg__rule_selector__pressed">Premuto</string>
     <string name="snygg__rule_selector__focus">Focalizzato</string>
     <string name="snygg__rule_selector__disabled">Disabilitato</string>
-    <string name="snygg__property_name__width">Larghezza</string>
-    <string name="snygg__property_name__height">Altezza</string>
     <string name="snygg__property_name__background">Sfondo</string>
     <string name="snygg__property_name__foreground">In primo piano</string>
     <string name="snygg__property_name__border_color">Colore del bordo</string>
@@ -234,7 +226,6 @@
     <string name="snygg__property_name__font_family">Famiglia di caratteri</string>
     <string name="snygg__property_name__font_size">Dimensioni carattere</string>
     <string name="snygg__property_name__font_style">Stile carattere</string>
-    <string name="snygg__property_name__font_variant">Variante carattere</string>
     <string name="snygg__property_name__font_weight">Spessore carattere</string>
     <string name="snygg__property_name__shadow_elevation">Elevazione dell\'ombra</string>
     <string name="snygg__property_name__shape">Forma</string>
@@ -253,10 +244,10 @@
     <string name="snygg__property_name__var_shape">Forma comune</string>
     <string name="snygg__property_name__var_shape_variant">Forma comune (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Eredita</string>
+    <string name="snygg__property_value__defined_var">Riferimento Var</string>
     <string name="snygg__property_value__solid_color">Tinta unita</string>
     <string name="snygg__property_value__material_you_light_color">Material You (Chiaro)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You (Scuro)</string>
-    <string name="snygg__property_value__image_ref">Riferimento dell\'immagine</string>
     <string name="snygg__property_value__rectangle_shape">Forma rettangolare</string>
     <string name="snygg__property_value__circle_shape">Forma di cerchio</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Forma tagliata nell\'angolo (dp)</string>
@@ -266,7 +257,6 @@
     <string name="snygg__property_value__dp_size">Dimensione (dp)</string>
     <string name="snygg__property_value__sp_size">Dimensione (sp)</string>
     <string name="snygg__property_value__percentage_size">Dimensione (%)</string>
-    <string name="snygg__property_value__defined_var">Riferimento Var</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Suoni &amp; Vibrazione</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suoni</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Attiva feedback audio</string>
@@ -322,6 +312,7 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra spaziatrice riporta ai caratteri</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indicatore in incognito</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilita Smartbar</string>
@@ -331,6 +322,8 @@
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Inverti pulsanti di attivazione</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Inverte i pulsanti di attivazione nella riga di azione</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Espandi/riduci automaticamente</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Espande/comprime automaticamente la riga di azione condivisa in base allo stato corrente</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Posizionamento riga d\'azione</string>
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
@@ -338,11 +331,8 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Fornisce suggerimenti durante la digitazione</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Modalità visualizzazione dei suggerimenti</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blocca parole possibilmente offensive</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggerimenti per il contenuto degli appunti</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggerisci il contenuto degli appunti copiato in precedenza</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limita i suggerimenti degli appunti a</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Elementi copiati negli ultimi {v} secondi</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra suggerimenti in linea forniti dall\'autocompilazione</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Modalità incognito</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Rendi maiuscole le parole in base al contesto attuale</string>
@@ -416,16 +406,12 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Pressione prolungata del tasto Elimina</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Soglia di velocità dello swipe</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Soglia di distanza dello swipe</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzate</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Impostazioni tema</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Predefinito di sistema (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Chiaro</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Scuro</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Scuro</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Lingua delle impostazioni</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostra icona nel launcher</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre abilitato su Android 10+ a causa delle restrizioni del sistema</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Modalità in incognito</string>
+    <string name="settings__other__title" comment="Title of Other settings">Altro</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Impostazioni tema</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Predefinito di sistema (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Chiaro</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Scuro</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED Scuro</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informazioni su</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app FlorisBoard</string>
@@ -696,8 +682,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Larghezza dinamica &amp; scorrevole</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Abilita Capslock cliccando due volte su shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Passa alla prossime maiuscole ogni volta che premi shift</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Esadecimale</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Rosso Verde Blu Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostra sempre</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Mostra sempre la tastiera dopo aver chiuso qualsiasi finestra di dialogo dell\'editor</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Non mostrare mai</string>
@@ -760,7 +744,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Non visualizzare mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostra sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostra dinamicamente</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Spento</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Modalità per mancini</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Modalità per destri</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inizio parte superiore</string>

@@ -28,9 +28,9 @@
     <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Fournit des suggestions d\'émoji lors de la saisie</string>
     <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Type de déclencheur</string>
     <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Mettre à jour l\'historique émoji</string>
-    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Ajoute les émojis suggérés et acceptés à l\'historique</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Accepter les émojis suggérés les ajoute à l\'historique</string>
     <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Afficher le nom de l\'émoji</string>
-    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Affiche le nom des suggestions d\'émoji à côté de l\'émoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">La suggestion des émojis affiche leur nom à côté des émojis</string>
     <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Longueur minimale de la requête</string>
     <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Nombre maximal de candidats</string>
     <!-- Emoji strings -->
@@ -59,7 +59,7 @@
     <string name="quick_action__arrow_right" maxLength="12">Droite</string>
     <string name="quick_action__arrow_right__tooltip">Appui sur la flèche droite</string>
     <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Effacer clip</string>
-    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Effacer le clip primaire du presse-papiers</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Effacer l\'élément du presse-papiers principal</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Copier</string>
     <string name="quick_action__clipboard_copy__tooltip">Copie vers le presse-papier</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Couper</string>
@@ -97,6 +97,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Action collante ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Actions dynamiques ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Actions cachées ({n})</string>
+    <string name="select_subtype_panel__header">Choisir le sous-type</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Le mode \"Incognito\" est désormais activé\n\n{app_name} n\'apprendra pas de mots à partir de votre saisie tant que ce mode sera actif</string>
     <string name="incognito_mode__toast_after_disabled">Le mode \"Incognito\" est désormais désactivé par défaut</string>
@@ -111,6 +112,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard n\'est pas sélectionné comme méthode de saisie par défaut. Cliquez ici pour résoudre ce problème.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Langues &amp; Dispositions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Afficher les noms de langue dans</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Affiche les libellés de clavier dans le sous-type de langue</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Dispositions</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Ajouter une disposition</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gérer les packs de langue installés</string>
@@ -151,8 +153,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Heure de coucher du soleil</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Thème clair</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Thème sombre</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Couleur accentuée (Thèmes Material you)
-    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gérer les thèmes installés</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ressources de l’application FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Stockage interne</string>
@@ -161,13 +161,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Sélectionner le thème sombre</string>
     <string name="settings__theme_editor__fine_tune__title">Éditeur de réglage fin</string>
     <string name="settings__theme_editor__fine_tune__level">Modifier le niveau</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Afficher les couleurs comme</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Afficher le clavier après les boîtes de dialogue</string>
     <string name="settings__theme_editor__add_rule">Ajouter une règle</string>
     <string name="settings__theme_editor__edit_rule">Modifier la règle</string>
     <string name="settings__theme_editor__no_rules_defined">Cette feuille de style n\'a pas de règles définies. Ajoutez une règle pour commencer à personnaliser cette feuille de style.</string>
     <string name="settings__theme_editor__rule_already_exists">Cette règle de feuille de style est déjà définie.</string>
-    <string name="settings__theme_editor__rule_element">Élément cible</string>
     <string name="settings__theme_editor__rule_codes">Codes de touche de la cible</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
     <string name="settings__theme_editor__rule_shift_states">États de décalage</string>
@@ -195,18 +193,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Est le thème sombre</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Est sans bordures</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Chemin vers la feuille de style</string>
-    <string name="snygg__rule_element__defines">Variables</string>
-    <string name="snygg__rule_element__defines_description">Définissez des variables dans cette règle pour réutiliser des couleurs ou des tailles courantes dans votre feuille de style.</string>
-    <string name="snygg__rule_element__keyboard">Fenêtre du clavier</string>
     <string name="snygg__rule_element__key">Touche</string>
     <string name="snygg__rule_element__key_hint">Indice de touche</string>
-    <string name="snygg__rule_element__key_popup">Pop-up de touche</string>
     <string name="snygg__rule_element__clipboard_header">En-tête du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item">Élément du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up d\'élément du presse-papiers</string>
-    <string name="snygg__rule_element__emoji_key">Touche Émoji</string>
-    <string name="snygg__rule_element__emoji_key_popup">Fenêtre popup de la touche Émoji</string>
-    <string name="snygg__rule_element__emoji_key_tab">Onglet Émoji</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposition en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Champ d\'entrée en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Action d\'entrée en mode paysage</string>
@@ -229,12 +220,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Suggestion du presse-papier dans la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espacement des suggestions dans la Smartbar</string>
-    <string name="snygg__rule_element__system_nav_bar">Barre de navigation du système</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>
     <string name="snygg__rule_selector__focus">Focalisé</string>
     <string name="snygg__rule_selector__disabled">Désactivé</string>
-    <string name="snygg__property_name__width">Largeur</string>
-    <string name="snygg__property_name__height">Hauteur</string>
     <string name="snygg__property_name__background">Arrière-plan</string>
     <string name="snygg__property_name__foreground">Premier plan</string>
     <string name="snygg__property_name__border_color">Couleur de la bordure</string>
@@ -243,7 +231,6 @@
     <string name="snygg__property_name__font_family">Famille de police</string>
     <string name="snygg__property_name__font_size">Taille de police</string>
     <string name="snygg__property_name__font_style">Style de police</string>
-    <string name="snygg__property_name__font_variant">Variante de police</string>
     <string name="snygg__property_name__font_weight">Taille de police</string>
     <string name="snygg__property_name__shadow_elevation">Élévation de l\'ombre</string>
     <string name="snygg__property_name__shape">Forme</string>
@@ -262,10 +249,10 @@
     <string name="snygg__property_name__var_shape">Forme commune</string>
     <string name="snygg__property_name__var_shape_variant">Forme commune (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Hériter</string>
+    <string name="snygg__property_value__defined_var">Référence Var</string>
     <string name="snygg__property_value__solid_color">Couleur unie</string>
     <string name="snygg__property_value__material_you_light_color">Couleur Material You (clair)</string>
     <string name="snygg__property_value__material_you_dark_color">Couleur Material You (sombre)</string>
-    <string name="snygg__property_value__image_ref">Référence d\'image</string>
     <string name="snygg__property_value__rectangle_shape">Forme rectangulaire</string>
     <string name="snygg__property_value__circle_shape">Forme circulaire</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Forme de coin coupé (dp)</string>
@@ -275,7 +262,6 @@
     <string name="snygg__property_value__dp_size">Taille (dp)</string>
     <string name="snygg__property_value__sp_size">Taille (sp)</string>
     <string name="snygg__property_value__percentage_size">Taille (%)</string>
-    <string name="snygg__property_value__defined_var">Référence Var</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retour Audio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activer le retour audio</string>
@@ -351,12 +337,9 @@
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode d\'affichage des suggestions</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloquer les termes potentiellement choquants</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Empêche la suggestion de mots potentiellement offensants lorsque vous écrivez</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suggestions de contenu du presse-papiers</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggère le contenu du presse-papiers précédemment copié</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limiter les suggestions du presse-papier à</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Éléments copiés durant les dernières {v} sec</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">Suggestions dans l\'auto-remplissage du système</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Afficher les suggestions fournies par les services d\'autocomplétion</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Mode incognito</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalisation</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitaliser les mots en fonction du contexte de saisie actuel</string>
@@ -430,18 +413,17 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Touche de suppression pression longue</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Seuil de vitesse de glissement</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Seuil de la distance de glissement</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Avancé</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Thème des paramètres</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Système par défaut (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Clair</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sombre</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sombre</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Paramètrage de couleur accentuée
+    <string name="settings__other__title" comment="Title of Other settings">Autre</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Paramètres des thèmes</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Système par défaut (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Clair</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Sombre</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED sombre</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Réglage de couleur accentuée
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Paramètre de langue</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Mode incognito</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Paramètre de langue</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Afficher l\'icône de l\'application dans le lanceur</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Toujours activé sur Android 10+ en raison des restrictions du système</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">À propos</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icône de l\'application FlorisBoard</string>
@@ -563,6 +545,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Les mises à jour du presse-papiers du système mettent également à jour le presse-papiers de FlorisBoard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniser vers le presse-papier système</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Le presse-papier Floris met aussi à jour le presse-papier du système</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Suggestions du presse-papiers</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggestions de contenu du presse-papiers</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggérer le contenu précédemment copié</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limiter les suggestions du presse-papier à</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Éléments copiés durant les {v} dernières sec</string>
     <string name="pref__clipboard__group_clipboard_history__label">Historique du presse-papiers</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Activer l\'historique du presse-papier</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserver les éléments du presse-papiers pour un accès rapide</string>
@@ -683,7 +670,6 @@
     <string name="ext__validation__error_stylesheet_path">Veuillez saisir un chemin de feuille de style correspondant {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Veuillez saisir un nom de variable</string>
     <string name="ext__validation__error_property">Veuillez saisir un nom de variable correspondant {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Par convention, le nom d\'une variable FlorisCSS commence par deux tirets (--)</string>
     <string name="ext__validation__enter_color">Veuillez saisir un nom de couleur</string>
     <string name="ext__validation__error_color">Veuillez saisir un nom de couleur valide</string>
     <string name="ext__validation__enter_dp_size">Veuillez saisir la taille dpi</string>
@@ -759,8 +745,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Largeur dynamique &amp; déroulant</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Activer le Ver Maj en appuyant deux fois sur Maj</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Basculer sur le prochain mode de capitalisation à chaque appui sur la touche Maj</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadécimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Rouge Vert Bleu Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Toujours afficher</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Toujours afficher le clavier après la fermeture de toute boîte de dialogue d\'éditeur</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Ne jamais afficher</string>
@@ -829,13 +813,12 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ne jamais afficher</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Toujours afficher</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Affichage dynamique</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Arrêt</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode gaucher</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode droitier</string>
-    <string name="enum__shape_corner__top_start" comment="Enum value label">Top départ</string>
-    <string name="enum__shape_corner__top_end" comment="Enum value label">Top fin</string>
-    <string name="enum__shape_corner__bottom_end" comment="Enum value label">Extrémité inférieure</string>
-    <string name="enum__shape_corner__bottom_start" comment="Enum value label">Extrémité supérieure</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">En haut à gauche</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">En haut à droite</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">En bas à droite</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">En bas à gauche</string>
     <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Suggestions uniquement</string>
     <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Affiche uniquement la rangée des candidats, sans action de rangée/de basculement ou action collante</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions uniquement</string>

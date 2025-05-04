@@ -97,6 +97,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Fixierte Aktion ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Dynamische Aktionen ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Versteckte Aktionen ({n})</string>
+    <string name="select_subtype_panel__header"></string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Inkognito-Modus ist nun aktiviert \n\n{app_name} wird während dieses Modus keine neuen Wörter lernen</string>
     <string name="incognito_mode__toast_after_disabled">Inkognito-Modus ist nun standardmäßig deaktiviert</string>
@@ -151,8 +152,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Helles Design</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Dunkles Design</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Akzentfarbe (Material you designs)
-    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Installierte Designs verwalten</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Ressourcen</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interner Speicher</string>
@@ -161,13 +160,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Nacht-Design auswählen</string>
     <string name="settings__theme_editor__fine_tune__title">Editoreinstellungen</string>
     <string name="settings__theme_editor__fine_tune__level">Bearbeitungsmodus</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Zeige Farben als</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zeige Tastatur nach Dialogen</string>
     <string name="settings__theme_editor__add_rule">Regel hinzufügen</string>
     <string name="settings__theme_editor__edit_rule">Regel bearbeiten</string>
     <string name="settings__theme_editor__no_rules_defined">Für das Stylesheet sind keine Regeln definiert. Füge eine Regel hinzu, um dieses Stylesheet anzupassen.</string>
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
-    <string name="settings__theme_editor__rule_element">Zielelement</string>
     <string name="settings__theme_editor__rule_codes">Ziel-Codes</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
     <string name="settings__theme_editor__rule_shift_states">Umschalt-Status</string>
@@ -195,18 +192,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Ist Nachtthema</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Ist randlos</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheetpfad</string>
-    <string name="snygg__rule_element__defines">Variablen</string>
-    <string name="snygg__rule_element__defines_description">Definiere Variablen innerhalb dieser Regel, um gängige Farben oder Größen in deinem Stylesheet wiederzuverwenden.</string>
-    <string name="snygg__rule_element__keyboard">Tastaturfenster</string>
     <string name="snygg__rule_element__key">Taste</string>
     <string name="snygg__rule_element__key_hint">Tastenhinweis</string>
-    <string name="snygg__rule_element__key_popup">Tasten Pop-Up</string>
     <string name="snygg__rule_element__clipboard_header">Zwischenablagekopfzeile</string>
     <string name="snygg__rule_element__clipboard_item">Zwischenablagenitem</string>
     <string name="snygg__rule_element__clipboard_item_popup">Zwischensblagenitem-Popup</string>
-    <string name="snygg__rule_element__emoji_key">Emoji Taste</string>
-    <string name="snygg__rule_element__emoji_key_popup">Emoji Tasten Pop-Up</string>
-    <string name="snygg__rule_element__emoji_key_tab">Emoji Tab</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Eingabeanordnung im Querformat</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Eingabefeld im Querformat</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Eingabeaktion im Querformat</string>
@@ -229,12 +219,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar Wortkandidat</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar Kandidatenclip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar Kandidaten-Abstandshalter</string>
-    <string name="snygg__rule_element__system_nav_bar">System-Navigationsleiste</string>
     <string name="snygg__rule_selector__pressed">Gedrückt</string>
     <string name="snygg__rule_selector__focus">Fokussiert</string>
     <string name="snygg__rule_selector__disabled">Deaktiviert</string>
-    <string name="snygg__property_name__width">Breite</string>
-    <string name="snygg__property_name__height">Höhe</string>
     <string name="snygg__property_name__background">Hintergrund</string>
     <string name="snygg__property_name__foreground">Vordergrund</string>
     <string name="snygg__property_name__border_color">Rahmenfarbe</string>
@@ -243,7 +230,6 @@
     <string name="snygg__property_name__font_family">Schriftart</string>
     <string name="snygg__property_name__font_size">Schriftgröße</string>
     <string name="snygg__property_name__font_style">Schriftstil</string>
-    <string name="snygg__property_name__font_variant">Schriftvariante</string>
     <string name="snygg__property_name__font_weight">Schriftstärke</string>
     <string name="snygg__property_name__shadow_elevation">Höhe des Schattens</string>
     <string name="snygg__property_name__shape">Form</string>
@@ -262,10 +248,10 @@
     <string name="snygg__property_name__var_shape">Gemeinsame Form</string>
     <string name="snygg__property_name__var_shape_variant">Gemeinsame Form (Variante)</string>
     <string name="snygg__property_value__explicit_inherit">Erben</string>
+    <string name="snygg__property_value__defined_var">Variable referenzieren</string>
     <string name="snygg__property_value__solid_color">Einfarbig</string>
     <string name="snygg__property_value__material_you_light_color">Material You Farbe (Hell)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You Farbe (Dunkel)</string>
-    <string name="snygg__property_value__image_ref">Bildreferenz</string>
     <string name="snygg__property_value__rectangle_shape">Rechteckform</string>
     <string name="snygg__property_value__circle_shape">Kreisform</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Form mit eckigen Ecken (dp)</string>
@@ -275,7 +261,6 @@
     <string name="snygg__property_value__dp_size">Größe (dp)</string>
     <string name="snygg__property_value__sp_size">Größe (sp)</string>
     <string name="snygg__property_value__percentage_size">Größe (%)</string>
-    <string name="snygg__property_value__defined_var">Variable referenzieren</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Ton &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ton Rückmeldung / Klänge</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ton Rückmeldung aktivieren</string>
@@ -350,10 +335,6 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Bietet Vorschläge an während Sie tippen</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Darstellungsart für Vorschläge</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Möglicherweise unangebrachte Wörter blockieren</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Inhalt der Zwischenablage</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Beschränkung für die Vorschläge der Zwischenablage</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Elemente, kopiert in den letzten {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Zeige Inline-Vorschläge von Autofill-Diensten</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
@@ -428,18 +409,7 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Aktion bei lang gedrückter Löschtaste</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Gesten-Distanzschwelle</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Erweitert</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">App-Design</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Systemstandard (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hell</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dunkel</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dunkel</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Akzentfarben-Einstellungen
-    </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">App-Sprache</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zeige die App in der Übersicht</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognito-Modus</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Dunkel</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Über</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-Icon von FlorisBoard</string>
@@ -558,6 +528,7 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Änderungen in der Systemzwischenablage aktualisieren auch die interne Zwischenablage</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__group_clipboard_history__label">Zwischenablageverlauf</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Verlauf für Zwischenablage aktivieren</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Speichere Elemente der Zwischenablage für schnellen Zugriff</string>
@@ -677,7 +648,6 @@
     <string name="ext__validation__error_stylesheet_path">Bitte einen Stylesheet-Pfad eingeben, welcher zu {stylesheet_path_regex} passt</string>
     <string name="ext__validation__enter_property">Bitte gib einen Variablennamen an</string>
     <string name="ext__validation__error_property">Bitte einen gültigen Variablennamen eingeben, welcher zu {variable_name_regex} passt</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">Nach FlorisCSS-Konvention beginnt ein Variablenname mit zwei Bindestrichen (--)</string>
     <string name="ext__validation__enter_color">Bitte gib einen Farbstring ein</string>
     <string name="ext__validation__error_color">Bitte gib einen gültigen Farbstring ein</string>
     <string name="ext__validation__enter_dp_size">Bitte gib eine dp-Größe an</string>
@@ -753,8 +723,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamische Breite &amp; scrollbar</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Aktiviere die Feststelltaste durch Doppeltippen von Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Wechsel mit jedem Drücken der Shift-Taste zur nächsten Großschreibstufe</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadezimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Rot Grün Blau Alpha</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Immer die Tastatur nach Schließen eines Editordialogs anzeigen</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nie anzeigen</string>
@@ -823,7 +791,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nie anzeigen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch anzeigen</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Aus</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Linkshänder-Modus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Rechtshänder-Modus</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Anfang oben</string>

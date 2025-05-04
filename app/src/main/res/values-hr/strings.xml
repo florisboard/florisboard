@@ -81,13 +81,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Odaberite tamnu temu</string>
     <string name="settings__theme_editor__fine_tune__title">Uređivač</string>
     <string name="settings__theme_editor__fine_tune__level">Razina uređivanja</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Prikaži boje kao</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Prikaži tipkovnicu nakon dijaloga</string>
     <string name="settings__theme_editor__add_rule">Dodajte pravilo</string>
     <string name="settings__theme_editor__edit_rule">Uredite pravilo</string>
     <string name="settings__theme_editor__no_rules_defined">Nema definiranih pravila za ovaj stilski obrazac. Dodajte pravilo ili započnite prilagođavati ovaj stilski obrazac.</string>
     <string name="settings__theme_editor__rule_already_exists">Ovo pravilo stilskog obrasca je već definirano.</string>
-    <string name="settings__theme_editor__rule_element">Ciljani element</string>
     <string name="settings__theme_editor__rule_codes">Ciljani kod pločice</string>
     <string name="settings__theme_editor__rule_groups">Grupe</string>
     <string name="settings__theme_editor__rule_shift_states">Promijenite stanja</string>
@@ -115,18 +113,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Je tamna tema</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Nema rubova</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Put stilskog obrasca</string>
-    <string name="snygg__rule_element__defines">Varijable</string>
-    <string name="snygg__rule_element__defines_description">Definirajte varijable unutar ovog pravila kako biste ponovno koristili učestale boje ili veličine u svom stilskom obrascu.</string>
-    <string name="snygg__rule_element__keyboard">Prozor tipkovnice</string>
     <string name="snygg__rule_element__key">Pločica</string>
     <string name="snygg__rule_element__key_hint">Naglasak pločice</string>
-    <string name="snygg__rule_element__key_popup">Skočni prozor pločice</string>
     <string name="snygg__rule_element__clipboard_header">Zaglavlje međuspremnika</string>
     <string name="snygg__rule_element__clipboard_item">Predmet međuspremnika</string>
     <string name="snygg__rule_element__clipboard_item_popup">Skočni prozor predmeta međuspremnika</string>
-    <string name="snygg__rule_element__emoji_key">Pločica emotikona</string>
-    <string name="snygg__rule_element__emoji_key_popup">Skočni prozor pločice emotikona</string>
-    <string name="snygg__rule_element__emoji_key_tab">Kategorija emotikona</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Raspored unosa u horizontalnom položaju</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Prostor unosa u horizontalnom položaju</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Radnja unosa u horizontalnom položaju</string>
@@ -135,12 +126,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Preddložena riječ Smartbara</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Predloženi predmet međuspremnika u Smartbaru</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Predloženi predmet razmaka Smartbara</string>
-    <string name="snygg__rule_element__system_nav_bar">Navigacijska traka sistema</string>
     <string name="snygg__rule_selector__pressed">Pritisnuto</string>
     <string name="snygg__rule_selector__focus">Fokusirano</string>
     <string name="snygg__rule_selector__disabled">Onemogućeno</string>
-    <string name="snygg__property_name__width">Širina</string>
-    <string name="snygg__property_name__height">Visina</string>
     <string name="snygg__property_name__background">Pozadina</string>
     <string name="snygg__property_name__foreground">Prednji plan</string>
     <string name="snygg__property_name__border_color">Boja obruba</string>
@@ -149,7 +137,6 @@
     <string name="snygg__property_name__font_family">Skupina fontova</string>
     <string name="snygg__property_name__font_size">Veličina fonta</string>
     <string name="snygg__property_name__font_style">Stil fonta</string>
-    <string name="snygg__property_name__font_variant">Varijanta fonta</string>
     <string name="snygg__property_name__font_weight">Debljina fonta</string>
     <string name="snygg__property_name__shadow_elevation">Visina sjene</string>
     <string name="snygg__property_name__shape">Oblik</string>
@@ -168,8 +155,8 @@
     <string name="snygg__property_name__var_shape">Zajednički oblik</string>
     <string name="snygg__property_name__var_shape_variant">Zajednički oblik (varijanta)</string>
     <string name="snygg__property_value__explicit_inherit">Naslijedi svojstvo</string>
+    <string name="snygg__property_value__defined_var">Var referenca</string>
     <string name="snygg__property_value__solid_color">Jednolično</string>
-    <string name="snygg__property_value__image_ref">Referenca slike</string>
     <string name="snygg__property_value__rectangle_shape">Oblik pravokutnika</string>
     <string name="snygg__property_value__circle_shape">Oblik kruga</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Odreži oblik kuta (dp)</string>
@@ -179,7 +166,6 @@
     <string name="snygg__property_value__dp_size">Veličina (dp)</string>
     <string name="snygg__property_value__sp_size">Veličina (sp)</string>
     <string name="snygg__property_value__percentage_size">Veličina (%)</string>
-    <string name="snygg__property_value__defined_var">Var referenca</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuk &amp; Vibracija</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Povratna informacija zvukom / Zvukovi</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Omogući zvučnu povratnu informaciju</string>
@@ -216,10 +202,6 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Daje prijedoge dok tipkate</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Način prikazivanja prijedloga</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Blokiraj potencijalno neprimjerene riječi</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Prijedlog sadržaja međuspremnika</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Predloži prethodno kopiran sadržaj</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ograniči prijedloge međuspremnika za</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Predmeti kopirani unutar zadnjih {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Prikaži prijedloge unutar retka pomoću automatskog popunjavanja</string>
     <string name="pref__correction__title" comment="Preference group title">Ispravci</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. veliko poč. sl</string>

@@ -15,6 +15,24 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Tekst-emoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Foretrukken emoji-hudfarve</string>
     <string name="prefs__media__emoji_preferred_hair_style">Foretrukken emoji-frisure</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji-historik</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Aktiver emoji-historik</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Bibehold nyligt brugte emojis til hurtig adgang</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Opdateringsstrategi (Fastgjorte)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Opdateringsstrategi (Seneste)</string>
+    <string name="prefs__media__emoji_history_max_size">Maksimalt antal emner gemt</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Nulstil fastgjorte emojis</string>
+    <string name="prefs__media__emoji_history_reset">Nulstil seneste emojis</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emoji-anbefalinger</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Aktiver emoji-forslag</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Giv emoji-forslag imens du skriver</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Udløsertype</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Opdater emoji-historik</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Accepterede emoji-anbefalinger tilføjes til emoji-historikken</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Vis emoji-navn</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Emoji-forslag viser deres navn ved siden af emojien</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Minimal forespørgselslængde</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maksimal antal muligheder</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Følelser</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Personer &amp; Krop</string>
@@ -25,6 +43,12 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objekter</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flag</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Ingen nyligt brugte emojis fundet. Når du starter med at indtaste emojis, vil de dukke op her.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Åben din enhed for at tilgå din emoji-historik.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Godt råd: Tryk og hold inde på en emojier i emoji-historikken for at fastgøre eller fjerne dem!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Fjernede {emoji} fra emoji historik</string>
+    <string name="emoji__history__pinned">Fastgjorte</string>
+    <string name="emoji__history__recent">Seneste</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pil op</string>
     <string name="quick_action__arrow_up__tooltip">Udfør pil op</string>
@@ -36,21 +60,43 @@
     <string name="quick_action__arrow_right__tooltip">Udfør pil højre</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Udfør ryd primær udklipsholder</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Kopiér</string>
+    <string name="quick_action__clipboard_copy__tooltip">Udfør udklipsholder kopiering</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Klip</string>
+    <string name="quick_action__clipboard_cut__tooltip">Udfør udklipsholder klip</string>
     <string name="quick_action__clipboard_paste" maxLength="12">Indsæt</string>
+    <string name="quick_action__clipboard_paste__tooltip">Udfør udklipsholder indsæt</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Vælg alle</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Udfør udklipsholder marker alt</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Åben udklipsholder historik</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Åbn emoji-panel</string>
     <string name="quick_action__settings__tooltip">Åbn indstillinger</string>
     <string name="quick_action__undo" maxLength="12">Fortryd</string>
+    <string name="quick_action__undo__tooltip">Fortryd sidste indtastning</string>
+    <string name="quick_action__redo" maxLength="12">Gentag</string>
+    <string name="quick_action__redo__tooltip">Gentag sidste indtastning</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Vis eller skjul flere handlinger</string>
     <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Slå inkognito-tilstand til/fra</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Stavekontrol</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Slå stavekontrol til og fra</string>
     <string name="quick_action__voice_input" maxLength="12">Stemmeinput</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Åbn stemmeinput-udbyder</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Enhåndet</string>
     <string name="quick_action__one_handed_mode__tooltip">Skift enhåndstilstand</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Træk markør</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Nuværende træk-markør position</string>
     <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen handling</string>
+    <string name="quick_actions_overflow__customize_actions_button">Tilpas handlinger</string>
+    <string name="quick_actions_editor__header">Tilpas handlingsrækkefølge</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Klæbrig handling ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Dynamiske handlinger ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Skjulte handlinger ({n})</string>
+    <string name="select_subtype_panel__header">Vælg undertype</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Inkognitotilstand er nu aktiveret\n\n{app_name} lærer ikke ord fra dine indtastninger når denne tilstand er aktiv</string>
+    <string name="incognito_mode__toast_after_disabled">Inkognitotilstand er nu deaktiveret som standard</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Indstillinger</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prøv din opsætning</string>
@@ -68,18 +114,69 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Ændre undertastatur</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Primært sprog</string>
     <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">Inkognito-tilstand er nu aktiveret. Vil ikke lærer ord fra dine input mens denne tilstand er aktiv</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerisk opsætning</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Numerisk (avanceret) opsætning</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">Vælg sprog</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">Vis alle</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det ser ud til, at der ikke er konfigureret nogle undertastaturer. I dette tilfælde faldes der tilbage på Engelsk/QWERTY!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (ikke installeret)</string>
+    <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Opsætninger</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tematilstand</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Solopgangstidspunkt</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Solnedgangstidspunkt</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dagstema</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nattema</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern lagerplads</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Vælg dagstema</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vælg nattema</string>
+    <string name="settings__theme_editor__rule_groups">Grupper</string>
     <string name="settings__theme_editor__rule_selectors"></string>
-    <string name="snygg__rule_element__keyboard">Tastatur vindue</string>
+    <string name="settings__theme_editor__code_placeholder">Kode</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Optager…</string>
+    <string name="settings__theme_editor__add_property">Tilføj egenskab</string>
+    <string name="settings__theme_editor__edit_property">Rediger egenskab</string>
+    <string name="settings__theme_editor__property_name">Egenskabsnavn</string>
+    <string name="settings__theme_editor__property_value">Egenskabsværdi</string>
+    <string name="snygg__rule_selector__pressed">Trykket</string>
+    <string name="snygg__rule_selector__focus">Fokuseret</string>
+    <string name="snygg__rule_selector__disabled">Deaktiveret</string>
+    <string name="snygg__property_name__background">Baggrund</string>
+    <string name="snygg__property_name__foreground">Forgrund</string>
+    <string name="snygg__property_name__border_color">Kantfarve</string>
+    <string name="snygg__property_name__border_style">Kantstil</string>
+    <string name="snygg__property_name__border_width">Kantbredde</string>
+    <string name="snygg__property_name__font_family">Skrifttype</string>
+    <string name="snygg__property_name__font_size">Skriftstørrelse</string>
+    <string name="snygg__property_name__font_style">Skriftstil</string>
+    <string name="snygg__property_name__font_weight">Skrifttykkelse</string>
+    <string name="snygg__property_name__shadow_elevation">Skyggehøjde</string>
+    <string name="snygg__property_name__shape">Form</string>
+    <string name="snygg__property_name__var_primary">Primær farve</string>
+    <string name="snygg__property_name__var_primary_variant">Primær farve (variant)</string>
+    <string name="snygg__property_name__var_secondary">Sekundær farve</string>
+    <string name="snygg__property_name__var_secondary_variant">Sekundær farve (variant)</string>
+    <string name="snygg__property_value__explicit_inherit">Overtag</string>
+    <string name="snygg__property_value__solid_color">Ensfarvet</string>
+    <string name="snygg__property_value__material_you_light_color">Material You color (Light)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You color (Dark)</string>
+    <string name="snygg__property_value__rectangle_shape">Rektangelform</string>
+    <string name="snygg__property_value__circle_shape">Cirkelform</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktivér lydfeedback</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Aktiver haptisk feedback</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibrationstilstand</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsvarighed</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstyrke</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Tasttryksvibration</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Langt tasttryksvibration</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">ikke implementeret</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerække</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Opsætning</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Enhåndstilstand</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Enhåndstilstand tastaturbredde</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastaturhøjde</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetryk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup synlighed</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Hvis popup ved tastetryk</string>
@@ -88,9 +185,12 @@
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">SmartBjælke</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivér Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vil blive vist over tastaturet</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Opsætning</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Indtastning</string>
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Udklipsholder indholdsforslag</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Vis anbefalinger</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Vis forslag imens du skriver</string>
     <string name="pref__correction__title" comment="Preference group title">Rettelser</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatisk stort bogstav</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Gør bogstaver i ord store baseret på nuværende inputskontekst</string>
@@ -98,9 +198,15 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock vil forblive aktiveret ved skift af tekstfelter</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dobbelt-mellemrumspunktum</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tast to gange på mellemrum for at indætte et punktum efterfulgt af mellemrum</string>
+    <string name="pref__spelling__title" comment="Preference group title">Stavning</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprog</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Brugerordbøger</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktiver systembrugerordbøger</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle sprog</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Tilføj ord</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Rediger ord</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Indtast venligst et ord</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Genvej (valgfri)</string>
     <string name="settings__gestures__title" comment="Title of Gestures screen">Bevægelser &amp; Strygeskrivning</string>
     <string name="pref__glide__title" comment="Preference group title">Strygeskrivning</string>
@@ -111,22 +217,38 @@
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Stryg til venstre</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe til højre</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Space bar knalde op</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Avanceret</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Stryg til venstre på mellemrumstasten</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Stryg til højre på mellemrumstasten</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Langt tryk på mellemrumstasten</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Stryg til venstre på slettetasten</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Langt tryk på slettetasten</string>
+    <string name="settings__other__title" comment="Title of Other settings">Andet</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Temaindstillinger</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System standard (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Lys</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Mørk</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED mørk</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Sprogindstillinger</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Omkring</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licenser</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Source kode</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Open source licenser</string>
     <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version kopieret til udklipsholderen</string>
     <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Noget gik galt: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Ændringslog</string>
+    <string name="about__changelog__summary" comment="Preference summary">Nyheder</string>
+    <string name="about__repository__title" comment="Preference title">Projektarkiv (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Kildekode, diskussioner, problemer og information</string>
     <string name="about__privacy_policy__title" comment="Preference title">Privatlivspolitik</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Privatlivspolitikken for dette projekt</string>
     <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Velkommen!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privatlivspolitik</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Projektarkiv</string>
     <string name="setup__enable_ime__title">Aktivér {app_name}</string>
     <string name="setup__select_ime__title">Vælg {app_name}</string>
     <string name="setup__select_ime__switch_keyboard_btn">Skift tastatur</string>

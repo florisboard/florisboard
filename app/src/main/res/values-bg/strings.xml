@@ -97,6 +97,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Винаги видимо действие ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Динамично показвани действия ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Скрити действия ({n})</string>
+    <string name="select_subtype_panel__header">Изберете подвид</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Режимът инкогнито е включен\n\n{app_name} няма да запомня нещата, които въвеждате докато този режим е включен</string>
     <string name="incognito_mode__toast_after_disabled">Режимът инкогнито е изключен по подразбиране</string>
@@ -111,6 +112,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като подразбиран метод за въвеждане. Докоснете, за да направите промяната.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Изписване на езиците на</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Етикети на клавиатурата на езика на подредбата</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подредби</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подредба</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Управление на инсталираните езикови пакети</string>
@@ -151,7 +153,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Време на залез</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневна тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нощна тема</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Допълнителен цвят (за теми на Material you)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи на FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Вътрешно хранилище</string>
@@ -160,13 +161,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Избор на нощна тема</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки на редактора</string>
     <string name="settings__theme_editor__fine_tune__level">Режим</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Формат на цветовете</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Видима клавиатура след диалог</string>
     <string name="settings__theme_editor__add_rule">Добавяне на правило</string>
     <string name="settings__theme_editor__edit_rule">Променяне на правило</string>
     <string name="settings__theme_editor__no_rules_defined">Стиловият лист няма правила. За да промените стиловете добавете правила.</string>
     <string name="settings__theme_editor__rule_already_exists">Вече има такова правило.</string>
-    <string name="settings__theme_editor__rule_element">Целеви елемент</string>
     <string name="settings__theme_editor__rule_codes">Целеви кодове</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
     <string name="settings__theme_editor__rule_shift_states">Състояние на Shift</string>
@@ -194,18 +193,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Нощна тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
-    <string name="snygg__rule_element__defines">Променливи</string>
-    <string name="snygg__rule_element__defines_description">Създайте променливи в това правило, за да използвате общи цветове или размери в стиловия лист.</string>
-    <string name="snygg__rule_element__keyboard">Прозорец на клавиатурата</string>
     <string name="snygg__rule_element__key">Клавиш</string>
     <string name="snygg__rule_element__key_hint">Горен индекс на клавиш</string>
-    <string name="snygg__rule_element__key_popup">Подсказка на клавиш</string>
     <string name="snygg__rule_element__clipboard_header">Заглавка на междинната памет</string>
     <string name="snygg__rule_element__clipboard_item">Елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_popup">Подсказка на елемент от междинната памет</string>
-    <string name="snygg__rule_element__emoji_key">Клавиш за емоции</string>
-    <string name="snygg__rule_element__emoji_key_popup">Подсказка на клавиша за емоции</string>
-    <string name="snygg__rule_element__emoji_key_tab">Раздел с емоции</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Пейзажен изглед за въвеждане</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Пейзажно поле за въвеждане</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие на пейзажно поле за въвеждане</string>
@@ -228,12 +220,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Интелигентна лента, кандидат за дума</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидати</string>
-    <string name="snygg__rule_element__system_nav_bar">Интелигентна лента, лента за навигация</string>
     <string name="snygg__rule_selector__pressed">Натиснат</string>
     <string name="snygg__rule_selector__focus">На фокус</string>
     <string name="snygg__rule_selector__disabled">Изключен</string>
-    <string name="snygg__property_name__width">Ширина</string>
-    <string name="snygg__property_name__height">Височина</string>
     <string name="snygg__property_name__background">Фон</string>
     <string name="snygg__property_name__foreground">Преден план</string>
     <string name="snygg__property_name__border_color">Цвят на канта</string>
@@ -242,7 +231,6 @@
     <string name="snygg__property_name__font_family">Семейство на шрифта</string>
     <string name="snygg__property_name__font_size">Размер на шрифта</string>
     <string name="snygg__property_name__font_style">Стил на шрифта</string>
-    <string name="snygg__property_name__font_variant">Вариант на шрифта</string>
     <string name="snygg__property_name__font_weight">Тежест на шрифта</string>
     <string name="snygg__property_name__shadow_elevation">Големина на сянката</string>
     <string name="snygg__property_name__shape">Форма</string>
@@ -261,10 +249,10 @@
     <string name="snygg__property_name__var_shape">Обща форма</string>
     <string name="snygg__property_name__var_shape_variant">Обща форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследяване</string>
+    <string name="snygg__property_value__defined_var">От променлива</string>
     <string name="snygg__property_value__solid_color">Плътен цвят</string>
     <string name="snygg__property_value__material_you_light_color">Цвят на Material You (светъл)</string>
     <string name="snygg__property_value__material_you_dark_color">Цвят на Material You (тъмен)</string>
-    <string name="snygg__property_value__image_ref">От изображение</string>
     <string name="snygg__property_value__rectangle_shape">Правоъгълна форма</string>
     <string name="snygg__property_value__circle_shape">Кръгла форма</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Форма с рязани ъгли (dp)</string>
@@ -274,7 +262,6 @@
     <string name="snygg__property_value__dp_size">Размер (dp)</string>
     <string name="snygg__property_value__sp_size">Размер (sp)</string>
     <string name="snygg__property_value__percentage_size">Размер (%)</string>
-    <string name="snygg__property_value__defined_var">От променлива</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
@@ -349,11 +336,8 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Показва предложения докато въвеждате</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Оформление на предложенията</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Спиране на предполагаемо обидни думи</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предложения от междинната памет</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ограничаване на предложенията от временната памет до</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Елементите, копирани последните {v} сек.</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показване на предложения от услугите за автоматично попълване</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Поверителен режим</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматично въвеждане на главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Използват се главни букви въз основа на контекста на въвеждане</string>
@@ -427,17 +411,16 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Задържане на клавиш „изтриване“</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Праг за скоростта на плъзгане</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Минимално разстояние на плъзване</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Разширени</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Тема на настройките</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Според системата (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тъмна</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тъмна AMOLED</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">Допълнителен цвят на настройките</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Език на настройките</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Икона на приложението в стартовия панел</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Поверителен режим</string>
+    <string name="settings__other__title" comment="Title of Other settings">Други</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Тема на настройките</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Според системата (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Светла</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Тъмна</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">Тъмна AMOLED</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">Допълнителен цвят на настройките</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Език на настройките</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Пиктограма на приложението на началния екран</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението FlorisBoard</string>
@@ -557,6 +540,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Промените в системната памет се отразяват в тази на приложението</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Изнасяне в системната междинна памет</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Промените в междинната памет на приложението се отразяват и в системната</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Предложения от междинната памет</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предложения от съдържанието на междинната памет</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ограничаване на предложенията от междинната памет до</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Елементи, копирани през последните {v} секунди</string>
     <string name="pref__clipboard__group_clipboard_history__label">История на междинната памет</string>
     <string name="pref__clipboard__enable_clipboard_history__label">История</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Запазване на копираното за по-бърз достъп до него</string>
@@ -676,7 +664,6 @@
     <string name="ext__validation__error_stylesheet_path">Въведете път към стилов лист, удовлетворяващ регулярния израз {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Въведете име на променливата</string>
     <string name="ext__validation__error_property">Въведете име на променлива, удовлетворяващо регулярния израз {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">По правило имената на променливите на FlorisCSS започват с две тирета (--)</string>
     <string name="ext__validation__enter_color">Въведете низ на цвят</string>
     <string name="ext__validation__error_color">Въведете низ на съществуващ цвят</string>
     <string name="ext__validation__enter_dp_size">Въведете размер на dp</string>
@@ -752,8 +739,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамична ширина с плъзгач</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Само главни букви при двойно докосване на клавиша Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Превключва способите за въвеждане на главни букви при всяко докосване на Shift</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Шестнадесетичен</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Червено, зелено, синьо, прозрачност</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Винаги се показва</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Клавиатурата се показва винаги след затваряне на диалог</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Никога не се показва</string>
@@ -822,7 +807,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не се показва</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Винаги се показва</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Показва се динамично</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>

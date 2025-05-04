@@ -51,10 +51,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Generalne gestikulacije</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestikulacije na razmaknici</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Prevuci desno</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Napredno</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema za podešavanja</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Svijetlo</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tamno</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informacije o...</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikonica FlorisBoard aplikacije</string>
@@ -79,7 +75,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikad ne prikaži</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Uvijek prikaži</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Prikaži dinamički</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Isključeno</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mod za lijevu ruku</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mod za desnu ruku</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Bez akcije</string>

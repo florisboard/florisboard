@@ -102,13 +102,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">夜間テーマを選択</string>
     <string name="settings__theme_editor__fine_tune__title">微調整エディター</string>
     <string name="settings__theme_editor__fine_tune__level">編集レベル</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">色を次のように表示</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">ダイアログの後にキーボードを表示</string>
     <string name="settings__theme_editor__add_rule">ルールを追加</string>
     <string name="settings__theme_editor__edit_rule">ルールを編集</string>
     <string name="settings__theme_editor__no_rules_defined">このスタイルシートにはルールが定義されていません。 このスタイルシートのカスタマイズを開始するルールを追加します。</string>
     <string name="settings__theme_editor__rule_already_exists">このスタイルシートルールはすでに定義されています。</string>
-    <string name="settings__theme_editor__rule_element">ターゲット要素</string>
     <string name="settings__theme_editor__rule_groups">グループ</string>
     <string name="settings__theme_editor__rule_selectors">セレクター</string>
     <string name="settings__theme_editor__code_already_exists">このキーコードはすでに定義されています。</string>
@@ -124,12 +122,8 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">夜間のテーマ</string>
     <string name="settings__theme_editor__component_meta_is_borderless">ボーダレスです</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">スタイルシートパス</string>
-    <string name="snygg__rule_element__defines">変数</string>
-    <string name="snygg__rule_element__defines_description">このルール内で変数を定義して、スタイルシートで一般的な色またはサイズを再利用します。</string>
-    <string name="snygg__rule_element__keyboard">キーボードウィンドウ</string>
     <string name="snygg__rule_element__key">キー</string>
     <string name="snygg__rule_element__key_hint">重要なヒント</string>
-    <string name="snygg__rule_element__key_popup">キーポップアップ</string>
     <string name="snygg__rule_element__clipboard_header">クリップボードヘッダー</string>
     <string name="snygg__rule_element__clipboard_item">クリップボードアイテム</string>
     <string name="snygg__rule_element__clipboard_item_popup">クリップボードアイテムのポップアップ</string>
@@ -138,12 +132,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">スマートバー候補の単語</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">スマートバー候補クリップ</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">スマートバー候補スペーサー</string>
-    <string name="snygg__rule_element__system_nav_bar">システムナビゲーションバー</string>
     <string name="snygg__rule_selector__pressed">押された</string>
     <string name="snygg__rule_selector__focus">集中</string>
     <string name="snygg__rule_selector__disabled">無効</string>
-    <string name="snygg__property_name__width">幅</string>
-    <string name="snygg__property_name__height">高さ</string>
     <string name="snygg__property_name__background">バックグラウンド</string>
     <string name="snygg__property_name__foreground">フォアグラウンド</string>
     <string name="snygg__property_name__border_color">ボーダの色</string>
@@ -152,7 +143,6 @@
     <string name="snygg__property_name__font_family">フォントファミリー</string>
     <string name="snygg__property_name__font_size">フォントのサイズ</string>
     <string name="snygg__property_name__font_style">フォントスタイル</string>
-    <string name="snygg__property_name__font_variant">フォントバリアント</string>
     <string name="snygg__property_name__font_weight">フォントの太さ</string>
     <string name="snygg__property_name__shadow_elevation">影の標高</string>
     <string name="snygg__property_name__shape">形態</string>
@@ -171,8 +161,8 @@
     <string name="snygg__property_name__var_shape">一般的な形状</string>
     <string name="snygg__property_name__var_shape_variant">一般的な形状(バリアント)</string>
     <string name="snygg__property_value__explicit_inherit">継承</string>
+    <string name="snygg__property_value__defined_var">変数リファレンス</string>
     <string name="snygg__property_value__solid_color">ソリッドカラー</string>
-    <string name="snygg__property_value__image_ref">画像リファレンス</string>
     <string name="snygg__property_value__rectangle_shape">長方形</string>
     <string name="snygg__property_value__circle_shape">円形</string>
     <string name="snygg__property_value__cut_corner_shape_dp">カットコーナー形状(dp)</string>
@@ -182,7 +172,6 @@
     <string name="snygg__property_value__dp_size">サイズ (dp)</string>
     <string name="snygg__property_value__sp_size">サイズ (sp)</string>
     <string name="snygg__property_value__percentage_size">サイズ (%)</string>
-    <string name="snygg__property_value__defined_var">変数リファレンス</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">音とバイブレーション</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ハウリング</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">ハウリングを有効にする</string>
@@ -241,7 +230,6 @@
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">提案</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">提案表示モード</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">クリップボードコンテンツの提案</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">オートフィルサービスによって提供されるインライン提案を表示する</string>
     <string name="pref__correction__title" comment="Preference group title">訂正</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">自動大文字変換</string>

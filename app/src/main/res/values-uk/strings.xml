@@ -97,6 +97,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Закріплена дія ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Динамічні дії ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Приховані дії ({n})</string>
+    <string name="select_subtype_panel__header">Вибрати підвид</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Режим анонімного перегляду увімкнено\n\n{app_name} не перевірятиме слова, поки цей режим активовано</string>
     <string name="incognito_mode__toast_after_disabled">Режим анонімного перегляду вимкнено за замовчуванням</string>
@@ -151,8 +152,6 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Час заходу</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Денна тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нічна тема</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Акцентний колір (теми Material you)
-    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Керування встановленими темами</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ресурси FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Внутрішня пам\'ять</string>
@@ -161,13 +160,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Виберіть нічну тему</string>
     <string name="settings__theme_editor__fine_tune__title">Налаштування редактора тем</string>
     <string name="settings__theme_editor__fine_tune__level">Рівень редагування</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Показувати кольори як</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Показувати клавіатуру після діалогів</string>
     <string name="settings__theme_editor__add_rule">Додати правило</string>
     <string name="settings__theme_editor__edit_rule">Змінити правило</string>
     <string name="settings__theme_editor__no_rules_defined">Ця таблиця стилів не має визначених правил. Додайте правило, щоб розпочати налаштування цієї таблиці стилів.</string>
     <string name="settings__theme_editor__rule_already_exists">Це правило таблиці стилів уже визначено.</string>
-    <string name="settings__theme_editor__rule_element">Цільовий елемент</string>
     <string name="settings__theme_editor__rule_codes">Цільові коди клавіш</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
     <string name="settings__theme_editor__rule_shift_states">Зсув</string>
@@ -195,18 +192,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Це Нічна тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контуру</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Шлях таблиці стилів</string>
-    <string name="snygg__rule_element__defines">Змінні</string>
-    <string name="snygg__rule_element__defines_description">Визначте змінні в цьому правилі, щоб повторно використовувати загальні кольори або розміри у вашій таблиці стилів.</string>
-    <string name="snygg__rule_element__keyboard">Вікно клавіатури</string>
     <string name="snygg__rule_element__key">Клавіша</string>
     <string name="snygg__rule_element__key_hint">Підказка клавіші</string>
-    <string name="snygg__rule_element__key_popup">Спливаюче вікно кнопки</string>
     <string name="snygg__rule_element__clipboard_header">Заголовок буфера обміну</string>
     <string name="snygg__rule_element__clipboard_item">Елемент буфера обміну</string>
     <string name="snygg__rule_element__clipboard_item_popup">Спливаюче вікно елемента буфера обміну</string>
-    <string name="snygg__rule_element__emoji_key">Кнопка емоджі</string>
-    <string name="snygg__rule_element__emoji_key_popup">Спливаюче вікно клавіші Emoji</string>
-    <string name="snygg__rule_element__emoji_key_tab">Вкладка Emoji</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Горизонтальна схема введення</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Альбомне поле введення</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Дія альбомного введення</string>
@@ -229,12 +219,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-кандидат розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запис-кандидат розумної панелі</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Роздільник-кандидат розумної панелі</string>
-    <string name="snygg__rule_element__system_nav_bar">Панель системної навігації</string>
     <string name="snygg__rule_selector__pressed">Натиснуто</string>
     <string name="snygg__rule_selector__focus">У фокусі</string>
     <string name="snygg__rule_selector__disabled">Вимкнено</string>
-    <string name="snygg__property_name__width">Ширина</string>
-    <string name="snygg__property_name__height">Висота</string>
     <string name="snygg__property_name__background">Тло</string>
     <string name="snygg__property_name__foreground">Передній план</string>
     <string name="snygg__property_name__border_color">Колір контуру</string>
@@ -243,7 +230,6 @@
     <string name="snygg__property_name__font_family">Сім’я шрифтів</string>
     <string name="snygg__property_name__font_size">Розмір шрифту</string>
     <string name="snygg__property_name__font_style">Стиль шрифту</string>
-    <string name="snygg__property_name__font_variant">Варіант шрифту</string>
     <string name="snygg__property_name__font_weight">Накреслення</string>
     <string name="snygg__property_name__shadow_elevation">Висота тіні</string>
     <string name="snygg__property_name__shape">Форма</string>
@@ -262,10 +248,10 @@
     <string name="snygg__property_name__var_shape">Звичайна форма</string>
     <string name="snygg__property_name__var_shape_variant">Звичайна форма (варіант)</string>
     <string name="snygg__property_value__explicit_inherit">Успадкувати</string>
+    <string name="snygg__property_value__defined_var">Посилання на змінну</string>
     <string name="snygg__property_value__solid_color">Суцільний колір</string>
     <string name="snygg__property_value__material_you_light_color">Material You колір (світлий)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You колір (темний)</string>
-    <string name="snygg__property_value__image_ref">Джерело зображення</string>
     <string name="snygg__property_value__rectangle_shape">Форма прямокутника</string>
     <string name="snygg__property_value__circle_shape">Форма кола</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Зрізання кутів (dp)</string>
@@ -275,7 +261,6 @@
     <string name="snygg__property_value__dp_size">Розмір (dp)</string>
     <string name="snygg__property_value__sp_size">Розмір (sp)</string>
     <string name="snygg__property_value__percentage_size">Розмір (%)</string>
-    <string name="snygg__property_value__defined_var">Посилання на змінну</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звуки &amp; Вібрація</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звуковий відгук / Звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Увімкнути звуковий відгук</string>
@@ -350,11 +335,8 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Надає підказки під час введення тексту</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим показу пропозицій</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Блокування можливих образливих слів</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Пропозиції вмісту буферу обміну</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Запропоновувати раніше скопійований вміст буфера обміну</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Обмежити пропозиції буфера обміну до</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Елементи, скопійовані за останні {v} с</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показувати вбудовані пропозиції, надані сервісами автозаповнення</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Анонімний режим</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Використовувати великі літери на основі поточного контексту введення</string>
@@ -428,18 +410,17 @@
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Довге натискання клавіші «Видалити»</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Поріг швидкості проведення</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Поріг відстані проведення</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Розширені</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Налаштування теми</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Як в системі (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Світла</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темна</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Темний AMOLED</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Налаштування акцентного кольору
+    <string name="settings__other__title" comment="Title of Other settings">Інше</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Налаштування теми</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Як в системі (Чорна)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Світла</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Темна</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">Чорна</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Налаштування акцентного кольору
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Налаштування мови</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показувати значок програми на робочому столі</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Завжди ввімкнено на Android 10+ через обмеження системи</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Режим інкогніто</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Налаштування мови</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Показувати значок застосунку в лаунчері</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Завжди ввімкнено на Android 10+ через обмеження системи</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Про додаток</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок програми FlorisBoard</string>
@@ -561,6 +542,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Оновлення системного буферу також оновить буфер обміну Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронізувати з системним буфером обміну</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обміну Floris також оновлює системний буфер обміну</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Пропозиції буфера обміну</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Пропозиції вмісту буфера обміну</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Пропонувати раніше скопійований вміст буфера обміну</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Обмежити пропозиції буфера обміну до</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Елементи, скопійовані за останні {v} с</string>
     <string name="pref__clipboard__group_clipboard_history__label">Історія буфера обміну</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Увімкнути історію буферу обміну</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Збереження елементів буфера обміну для швидкого доступу</string>
@@ -680,7 +666,6 @@
     <string name="ext__validation__error_stylesheet_path">Введіть дійсний шлях до таблиці стилів, що відповідає {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Введіть ім\'я змінної</string>
     <string name="ext__validation__error_property">Введіть дійсне ім\'я змінної, що відповідає {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">За правилами ім\'я змінної FlorisCSS починається з двох дефісів (--)</string>
     <string name="ext__validation__enter_color">Введіть рядок кольору</string>
     <string name="ext__validation__error_color">Введіть правильний рядок кольору</string>
     <string name="ext__validation__enter_dp_size">Введіть розмір в dp</string>
@@ -756,8 +741,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамічна ширина та прокрутка</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Увімкнути Caps Lock подвійним натисканням клавіші Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Перехід до друкування з великої літери при кожному натисканні клавіші Shift</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Шістнадцятковий</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Червоний, зелений, синій, прозорість</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Завжди показувати</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Завжди показувати клавіатуру після закриття будь-якого діалогового вікна редактора</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Ніколи не показувати</string>
@@ -826,7 +809,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ніколи не відображати</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Завжди відображати</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамічно показувати</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Вимк</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Режим лівші</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Режим правші</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Вгорі початок</string>

@@ -146,7 +146,6 @@
     <string name="settings__theme_editor__fine_tune__level">Úroveň úprav</string>
     <string name="settings__theme_editor__add_rule">Pridať pravidlo</string>
     <string name="settings__theme_editor__edit_rule">Upraviť pravidlo</string>
-    <string name="settings__theme_editor__rule_element">Cieľový prvok</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
     <string name="settings__theme_editor__add_property">Pridať vlastnosť</string>
     <string name="settings__theme_editor__edit_property">Upraviť vlastnosť</string>
@@ -154,18 +153,12 @@
     <string name="settings__theme_editor__property_name">Názov vlastnosti</string>
     <string name="settings__theme_editor__property_value">Hodnota vlastnosti</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Použiť na všetky rohy</string>
-    <string name="snygg__rule_element__defines">Premenné</string>
-    <string name="snygg__rule_element__keyboard">Okno klávesnice</string>
     <string name="snygg__rule_element__key">Kláves</string>
-    <string name="snygg__rule_element__emoji_key">Kláves emodži</string>
-    <string name="snygg__rule_element__emoji_key_tab">Záložka s emodži</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Indikátor inkognito režimu</string>
     <string name="snygg__rule_element__smartbar">Inteligentná lišta</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Editor akcií inteligentnej lišty</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Hlavička editora akcií inteligentnej lišty</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Riadok navrhnutých slov inteligentnej lišty</string>
-    <string name="snygg__property_name__width">Šírka</string>
-    <string name="snygg__property_name__height">Výška</string>
     <string name="snygg__property_name__font_family">Rodina písiem</string>
     <string name="snygg__property_name__font_size">Veľkosť písma</string>
     <string name="snygg__property_name__font_style">Štýl písma</string>
@@ -257,15 +250,6 @@
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Potiahnutie nadol</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Potiahnutie vľavo</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Potiahnutie vpravo</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Pokročilé nastavenia</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motív nastavení</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Podľa systému (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Svetlý</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Jazyk nastavení</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobraziť ikonu aplikácie v spúšťači aplikácií</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">V Androide 10 alebo novšom je toto nastavenie vždy zapnuté z dôvodu obmedzení systému</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognito režim</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikácii</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikácie FlorisBoard</string>

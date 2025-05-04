@@ -89,17 +89,13 @@
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamientu internu</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Fornidor esternu</string>
     <string name="settings__theme_editor__no_rules_defined">Esta fueya d\'estilu nun tien nenguna regla definida. Amiesta una regla pa comenzar a personalizar la fueya d\'estilu.</string>
-    <string name="settings__theme_editor__rule_element">Elementu de destín</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
     <string name="settings__theme_editor__rule_selectors">Selectores</string>
     <string name="settings__theme_editor__no_codes_defined">Aplica la regla a tolos elementos de destín.</string>
-    <string name="snygg__rule_element__defines">Variables</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Distribución d\'entrada n\'horizontal</string>
     <string name="snygg__rule_element__smartbar">Barra intelixente</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Alternador de les aiciones compartíes de la barra intelixente</string>
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Alternador de les aiciones estendíes de la barra intelixente</string>
-    <string name="snygg__property_name__width">Llargor</string>
-    <string name="snygg__property_name__height">Altor</string>
     <string name="snygg__property_name__shape">Forma</string>
     <string name="snygg__property_name__var_primary">Color primariu</string>
     <string name="snygg__property_name__var_secondary">Color secundariu</string>
@@ -135,10 +131,6 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Forne suxerencies mentanto teclexes</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Mou de l\'apaición de les suxerencies</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloquiar les pallabres ofensives</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Suxerencies del conteníu del cartafueyu</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suxer el conteníu del cartafueyu copiáu anteriormente</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Llendar les suxerencies del cartafueyu a</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">los elementos copiaos nos últimos {v} s</string>
     <string name="pref__correction__title" comment="Preference group title">Correiciones</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúscules automátiques</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pon en mayúscula la primer lletra de les pallabres según el contestu de la entrada actual</string>
@@ -157,10 +149,6 @@
     <string name="pref__glide__enabled__label" comment="Preference title">Activar la escritura eslizante</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Xestos en xeneral</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Xestos de la barra d\'espaciu</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Configuración avanzada</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Estilu de la configuración</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Llingua de la configuración</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Amosar l\'iconu l\'aplicación nel llanzador</string>
     <!-- About UI strings -->
     <string name="about__view_licenses" comment="Label of View licenses button in About">Llicencies de códigu abiertu</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidá</string>
@@ -225,6 +213,7 @@
     <string name="settings__clipboard__title">Cartafueyu</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar el cartafueyu internu</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa un cartafueyu internu en cuentes del que tien sistema</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Suxerencies del cartafueyu</string>
     <string name="send_to_clipboard__unknown_error">Prodúxose un error desconocíu. ¡Volvi tentalo!</string>
     <string name="send_to_clipboard__type_not_supported_error">Esti elementu multimedia nun ye compatible.</string>
     <!-- Devtools strings -->

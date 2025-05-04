@@ -18,19 +18,19 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">История эмодзи</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Включить историю эмодзи</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Сохраняйте недавно использованные эмодзи для быстрого доступа</string>
-    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Обновление истории (Закрепленного)</string>
-    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Обновление истории (Недавнего)</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Обновление истории (закрепленного)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Обновление истории (недавнего)</string>
     <string name="prefs__media__emoji_history_max_size">Максимум элементов, которые можно сохранить</string>
-    <string name="prefs__media__emoji_history_pinned_reset">Сбросить закрепленные смайлики</string>
-    <string name="prefs__media__emoji_history_reset">Сбросить последние смайлики</string>
-    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Подсказки смайликов</string>
-    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Включить подсказки смайликов</string>
-    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Предлагать смайлики при наборе текста</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Сбросить закрепленные эмодзи</string>
+    <string name="prefs__media__emoji_history_reset">Сбросить последние эмодзи</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Подсказки эмодзи</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Включить подсказки эмодзи</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Предлагать эмодзи при наборе текста</string>
     <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Тип триггера</string>
-    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Обновить историю смайликов</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Обновить историю эмодзи</string>
     <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Принятие предложенных эмодзи добавляет их в историю эмодзи</string>
-    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Показать название смайлика</string>
-    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Предложения смайликов отображают их название рядом</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Показать название эмодзи</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Предложения эмодзи отображают их название рядом</string>
     <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Минимальная длина запроса</string>
     <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Максимальное количество предложений</string>
     <!-- Emoji strings -->
@@ -45,15 +45,15 @@
     <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
     <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Недавно использованные эмодзи не найдены. Как только вы начнете использовать эмодзи, они автоматически будут появляться здесь.</string>
     <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Чтобы получить доступ к истории эмодзи, сначала разблокируйте ваше устройство.</string>
-    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Совет: Долго нажимайте на эмодзи в истории эмодзи, чтобы закрепить или удалить их!</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Совет: долгое нажатие на эмодзи в истории эмодзи для его закрепления или удаления!</string>
     <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Удаление {emoji} из истории эмодзи</string>
     <string name="emoji__history__pinned">Закреплено</string>
     <string name="emoji__history__recent">Недавние</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">В начало</string>
-    <string name="quick_action__arrow_up__tooltip">Переместить курсор в начало</string>
-    <string name="quick_action__arrow_down" maxLength="12">Стрелка вниз</string>
-    <string name="quick_action__arrow_down__tooltip">Переместить курсор в конец</string>
+    <string name="quick_action__arrow_up" maxLength="12">Вверх</string>
+    <string name="quick_action__arrow_up__tooltip">Переместить курсор вверх</string>
+    <string name="quick_action__arrow_down" maxLength="12">Вниз</string>
+    <string name="quick_action__arrow_down__tooltip">Переместить курсор вниз</string>
     <string name="quick_action__arrow_left" maxLength="12">Влево</string>
     <string name="quick_action__arrow_left__tooltip">Переместить курсор влево</string>
     <string name="quick_action__arrow_right" maxLength="12">Вправо</string>
@@ -97,6 +97,7 @@
     <string name="quick_actions_editor__subheader_sticky_action">Закреплённое действие ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Динамические действия ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Скрытые действия ({n})</string>
+    <string name="select_subtype_panel__header">Выбрать подтип</string>
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Режим инкогнито включён\n\n{app_name} не будет обучаться под ваш стиль письма, пока этот режим активен</string>
     <string name="incognito_mode__toast_after_disabled">Режим инкогнито отключён по умолчанию</string>
@@ -111,9 +112,10 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Языки и раскладки</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Подписи к языкам</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Отображать надписи на клавиатуре на языке подтипов</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Подвиды</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить раскладку</string>
-    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Управление установленными языковыми пакетами</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Установленные языковые пакеты</string>
     <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">Экспериментально: управление расширениями, которые добавляют поддержку определенных языков (на данный момент китайский ввод на основе формы)</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Изменить раскладку</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Основной язык</string>
@@ -159,13 +161,11 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки редактора тем</string>
     <string name="settings__theme_editor__fine_tune__level">Уровень редактирования</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Показывать цвета как</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Отображать клавиатуру после диалогов</string>
     <string name="settings__theme_editor__add_rule">Добавить правило</string>
     <string name="settings__theme_editor__edit_rule">Изменить правило</string>
     <string name="settings__theme_editor__no_rules_defined">В таблице стилей не определены правила. Добавьте правило, чтобы начать её настройку.</string>
     <string name="settings__theme_editor__rule_already_exists">Это правило таблицы стилей уже определено.</string>
-    <string name="settings__theme_editor__rule_element">Целевой элемент</string>
     <string name="settings__theme_editor__rule_codes">Целевые коды клавиш</string>
     <string name="settings__theme_editor__rule_groups">Группы</string>
     <string name="settings__theme_editor__rule_shift_states">Сдвиг</string>
@@ -193,18 +193,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
-    <string name="snygg__rule_element__defines">Переменные</string>
-    <string name="snygg__rule_element__defines_description">Определите переменные в этом правиле, чтобы использовать общие цвета или размеры в своей таблице стилей.</string>
-    <string name="snygg__rule_element__keyboard">Окно клавиатуры</string>
     <string name="snygg__rule_element__key">Кнопка</string>
     <string name="snygg__rule_element__key_hint">Подсказка кнопки</string>
-    <string name="snygg__rule_element__key_popup">Всплывающее окно кнопки</string>
     <string name="snygg__rule_element__clipboard_header">Заголовок буфера обмена</string>
     <string name="snygg__rule_element__clipboard_item">Элемент буфера обмена</string>
     <string name="snygg__rule_element__clipboard_item_popup">Всплывающее окно элемента буфера обмена</string>
-    <string name="snygg__rule_element__emoji_key">Кнопка эмодзи</string>
-    <string name="snygg__rule_element__emoji_key_popup">Всплывающее окно кнопки эмодзи</string>
-    <string name="snygg__rule_element__emoji_key_tab">Вкладка эмодзи</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Схема горизонтального ввода</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Горизонтальное поле ввода</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие горизонтального ввода</string>
@@ -227,12 +220,9 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-предложение умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-предложение умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-предложение умной панели</string>
-    <string name="snygg__rule_element__system_nav_bar">Панели навигации системы</string>
     <string name="snygg__rule_selector__pressed">При нажатии</string>
     <string name="snygg__rule_selector__focus">При фокусе</string>
     <string name="snygg__rule_selector__disabled">Отключено</string>
-    <string name="snygg__property_name__width">Ширина</string>
-    <string name="snygg__property_name__height">Высота</string>
     <string name="snygg__property_name__background">Фон</string>
     <string name="snygg__property_name__foreground">Передний план</string>
     <string name="snygg__property_name__border_color">Цвет контура</string>
@@ -241,7 +231,6 @@
     <string name="snygg__property_name__font_family">Семейство шрифтов</string>
     <string name="snygg__property_name__font_size">Размер шрифта</string>
     <string name="snygg__property_name__font_style">Стиль шрифта</string>
-    <string name="snygg__property_name__font_variant">Вариант шрифта</string>
     <string name="snygg__property_name__font_weight">Начертание шрифта</string>
     <string name="snygg__property_name__shadow_elevation">Высота тени</string>
     <string name="snygg__property_name__shape">Форма</string>
@@ -260,10 +249,10 @@
     <string name="snygg__property_name__var_shape">Обычная форма</string>
     <string name="snygg__property_name__var_shape_variant">Обычная форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследование</string>
+    <string name="snygg__property_value__defined_var">Ссылка на значение</string>
     <string name="snygg__property_value__solid_color">Сплошной цвет</string>
     <string name="snygg__property_value__material_you_light_color">Динамический цвет (из светлой темы)</string>
     <string name="snygg__property_value__material_you_dark_color">Динамический цвет (из тёмной темы)</string>
-    <string name="snygg__property_value__image_ref">Источник изображения</string>
     <string name="snygg__property_value__rectangle_shape">Прямоугольная форма</string>
     <string name="snygg__property_value__circle_shape">Круглая форма</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Форма со срезанием углов (dp)</string>
@@ -273,7 +262,6 @@
     <string name="snygg__property_value__dp_size">Размер (dp)</string>
     <string name="snygg__property_value__sp_size">Размер (sp)</string>
     <string name="snygg__property_value__percentage_size">Размер (%)</string>
-    <string name="snygg__property_value__defined_var">Ссылка на значение</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
@@ -348,11 +336,8 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Предлагать подсказки при наборе текста</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Режим отображения предложений</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Блокировать возможные оскорбительные слова</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Предлагать ранее скопированное содержимое буфера обмена</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Ограничить предложения буфера обмена до</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Элементы, скопированные за последние {v} с.</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Показывать встроенные предложения, предоставляемые службами автозаполнения</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Режим инкогнито</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
@@ -423,21 +408,20 @@
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Жест вправо на пробеле</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Долгое нажатие пробела</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Жест влево на кнопке удаления</string>
-    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Долгое нажатие \"Удалить\"</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Долгое нажатие «Удалить»</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Порог скорости жеста</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Порог срабатывания жеста</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">Как в системе (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">        Настройки цвета акцента
+    <string name="settings__other__title" comment="Title of Other settings">Прочее</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Настройки темы</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Как в системе (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Светлая</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Темная</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">Темная AMOLED</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Настройки цвета акцента
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Режим инкогнито</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Настройки языка</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Показывать значок приложения а лаунчере</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">О приложении</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок приложения FlorisBoard</string>
@@ -505,7 +489,7 @@
     <string name="backup_and_restore__restore__metadata">Выберите файл резервной копии</string>
     <string name="backup_and_restore__restore__metadata_warn_different_version">Этот файл резервной копии был создан в версии приложения, отличной от текущей поддерживаемой. Имейте в виду, что могут возникнуть незначительные проблемы или некоторые настройки могут быть восстановлены неправильно из-за различий в функционале.</string>
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">Файл резервной копии был создан в стороннем приложении, которое поддерживается не полностью. Возможна потеря данных, восстанавливайте на свой страх и риск!</string>
-    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Этот файл резервной копии содержит недопустимые метаданные. Либо он поврежден, либо неправильно изменен. Восстановление из этого файла невозможно, выберите другой.</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Этот файл резервной копии содержит недопустимые метаданные. Либо он повреждён, либо неправильно изменён. Восстановление из этого файла невозможно, выберите другой.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Этот файл резервной копии не содержит данных для восстановления, выберите другой.</string>
     <string name="backup_and_restore__restore__mode">Режим восстановления</string>
     <string name="backup_and_restore__restore__mode_merge">Слияние с текущими данными</string>
@@ -559,6 +543,11 @@
     <string name="pref__clipboard__sync_from_system_clipboard__summary">Изменения в буфере обмена системы отражаются в буфере Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронизировать с системным буфером обмена</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обмена Floris так же обновляет системный буфер обмена</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Предлагать буфер обмена</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлагать ранее скопированное содержимое буфера обмена</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ограничить предложения буфера обмена до</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Элементы, скопированные за последние {v} с</string>
     <string name="pref__clipboard__group_clipboard_history__label">История буфера обмена</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Включить историю буфера обмена</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Сохранение записей буфера обмена для быстрого доступа</string>
@@ -680,7 +669,6 @@
     <string name="ext__validation__error_stylesheet_path">Укажите правильный путь к стилю, соответствующий {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Укажите название переменной</string>
     <string name="ext__validation__error_property">Укажите правильное название переменной, соответствующее {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">По правилам, название переменной FlorisCSS начинается двумя дефисами (--)</string>
     <string name="ext__validation__enter_color">Укажите строку цвета</string>
     <string name="ext__validation__error_color">Укажите правильную строку цвета</string>
     <string name="ext__validation__enter_dp_size">Укажите размер в dp</string>
@@ -695,8 +683,8 @@
     <string name="ext__addon_management_box__addon_manager_info">Все задачи, связанные с импортом, экспортом, созданием, персонализацией и удалением расширений могут быть выполнены через централизованный менеджер расширений.</string>
     <string name="ext__addon_management_box__go_to_page">Перейти к {ext_home_title}</string>
     <string name="ext__home__info">Вы можете скачать и установить расширения через магазин расширений FlorisBoard или импортировать любые файлы расширений, скачанные из интернета.</string>
-    <string name="ext__home__visit_store">Посетить магазин расширений</string>
-    <string name="ext__home__manage_extensions">Управление установленными расширениями</string>
+    <string name="ext__home__visit_store">Магазин расширений</string>
+    <string name="ext__home__manage_extensions">Установленные расширения</string>
     <string name="ext__list__view_details">Подробности</string>
     <string name="ext__check_updates__title">Проверить обновления</string>
     <!-- Action strings -->
@@ -756,8 +744,6 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамическая ширина и прокрутка</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Активировать Capslock двойным нажатием</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Переключать режимы регистра с каждым нажатием</string>
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Шестнадцатеричные коды</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Красный Зелёный Синий Прозрачность</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Отображать всегда</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Отображать клавиатуру всегда после закрытия любого диалогового окна редактора</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Не показывать</string>
@@ -828,7 +814,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Автоматически</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Отключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Для левши</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Для правши</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Верх начало</string>
