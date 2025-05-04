@@ -16,281 +16,160 @@
 
 package org.florisboard.lib.snygg
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.SnyggVarValueEncoders
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.encodeToJsonElement
 
-val SnyggStylesheetJsonConfig = Json
-
-@Serializable(with = SnyggStylesheetSerializer::class)
-class SnyggStylesheet(
+data class SnyggStylesheet internal constructor(
+    val schema: String,
     val rules: Map<SnyggRule, SnyggPropertySet>,
-    val isFullyQualified: Boolean = false,
+) {
+    fun edit(comparator: Comparator<SnyggRule>? = null): SnyggStylesheetEditor {
+        return SnyggStylesheetEditor(this.schema, this.rules, comparator)
+    }
+
+    fun toJson(
+        config: SnyggJsonConfiguration = SnyggJsonConfiguration.DEFAULT,
+    ): Result<String> = runCatching {
+        val schemaElem = config.json.encodeToJsonElement(schema)
+        val ruleElems = rules.map { (rule, propertySet) ->
+            rule.toString() to propertySet.toJsonElement(rule, config)
+        }.toMap()
+        val jsonObject = JsonObject(
+            mapOf(
+                "\$schema" to schemaElem
+            ) + ruleElems
+        )
+        config.json.encodeToString(jsonObject)
+    }
+
+    companion object {
+        const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
+
+        private val SCHEMA_PATTERN = """^https://schemas.florisboard.org/snygg/v[0-9]+/stylesheet$""".toRegex()
+
+        fun v2(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
+            val builder = SnyggStylesheetEditor(SCHEMA_V2)
+            stylesheetBlock(builder)
+            return builder.build()
+        }
+
+        fun fromJson(
+            json: String,
+            config: SnyggJsonConfiguration = SnyggJsonConfiguration.DEFAULT,
+        ): Result<SnyggStylesheet> = runCatching {
+            val jsonObject = config.json.decodeFromString<JsonObject>(json)
+            var schema: String? = jsonObject["\$schema"]?.let { config.json.decodeFromJsonElement(it) }
+            if (schema == null) {
+                if (config.ignoreMissingSchema) {
+                    // assume schema
+                    schema = SCHEMA_V2
+                } else {
+                    throw SnyggMissingSchemaException()
+                }
+            } else {
+                val schemaMatch = SCHEMA_PATTERN.matchEntire(schema)
+                if (schemaMatch == null) {
+                    if (config.ignoreInvalidSchema) {
+                        // assume schema
+                        schema = SCHEMA_V2
+                    } else {
+                        throw SnyggInvalidSchemaException(schema)
+                    }
+                }
+                if (schema != SCHEMA_V2 && !config.ignoreUnsupportedSchema) {
+                    throw SnyggUnsupportedSchemaException(schema)
+                }
+            }
+            val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
+            for ((key, jsonElement) in jsonObject.entries) {
+                if (key == "\$schema") {
+                    continue
+                } else {
+                    val rule = SnyggRule.fromOrNull(key)
+                    if (rule == null) {
+                        if (config.ignoreInvalidRules) {
+                            continue
+                        }
+                        throw SnyggInvalidRuleException(key)
+                    }
+                    val propertySet = SnyggPropertySet.fromJsonElement(rule, config, jsonElement)
+                    ruleMap[rule] = propertySet
+                }
+            }
+            SnyggStylesheet(schema, ruleMap)
+        }
+    }
+}
+
+data class SnyggJsonConfiguration private constructor(
+    internal val ignoreMissingSchema: Boolean = false,
+    internal val ignoreInvalidSchema: Boolean = false,
+    internal val ignoreUnsupportedSchema: Boolean = false,
+    internal val ignoreInvalidRules: Boolean = false,
+    internal val ignoreInvalidProperties: Boolean = false,
+    internal val ignoreInvalidValues: Boolean = false,
+    internal val json: Json,
 ) {
     companion object {
-        private const val Unspecified = Int.MIN_VALUE
-        private val FallbackPropertySet = SnyggPropertySet(mapOf())
+        val DEFAULT = of()
 
-        fun getPropertySets(
-            rules: Map<SnyggRule, SnyggPropertySet>,
-            referenceRule: SnyggRule,
-        ): List<SnyggPropertySet> {
-            return rules.keys.filter { rule ->
-                rule.element == referenceRule.element
-                    && (rule.codes.isEmpty() || referenceRule.codes.isEmpty() || rule.codes.any { it in referenceRule.codes })
-                    && (rule.groups.isEmpty() || referenceRule.groups.isEmpty() || rule.groups.any { it in referenceRule.groups })
-                    && (rule.shiftStates.isEmpty() || referenceRule.shiftStates.isEmpty() || rule.shiftStates.any { it in referenceRule.shiftStates })
-                    && ((referenceRule.pressedSelector == rule.pressedSelector) || !rule.pressedSelector)
-                    && ((referenceRule.focusSelector == rule.focusSelector) || !rule.focusSelector)
-                    && ((referenceRule.disabledSelector == rule.disabledSelector) || !rule.disabledSelector)
-            }.sortedDescending().map { rules[it]!! }
-        }
-
-        fun getPropertySet(
-            rules: Map<SnyggRule, SnyggPropertySet>,
-            element: String,
-            code: Int = Unspecified,
-            group: Int = Unspecified,
-            mode: Int = Unspecified,
-            isPressed: Boolean = false,
-            isFocus: Boolean = false,
-            isDisabled: Boolean = false,
-        ): SnyggPropertySet {
-            val possibleRules = rules.keys.filter { rule ->
-                rule.element == element
-                    && (code == Unspecified || rule.codes.isEmpty() || rule.codes.contains(code))
-                    && (group == Unspecified || rule.groups.isEmpty() || rule.groups.contains(group))
-                    && (mode == Unspecified || rule.shiftStates.isEmpty() || rule.shiftStates.contains(mode))
-                    && (isPressed == rule.pressedSelector || !rule.pressedSelector)
-                    && (isFocus == rule.focusSelector || !rule.focusSelector)
-                    && (isDisabled == rule.disabledSelector || !rule.disabledSelector)
-            }.sorted()
-            return when {
-                possibleRules.isEmpty() -> FallbackPropertySet
-                possibleRules.size == 1 -> rules[possibleRules.first()]!!
-                else -> {
-                    val mergedPropertySets = mutableMapOf<String, SnyggValue>()
-                    for (rule in possibleRules) {
-                        val propertySet = rules[rule]!!
-                        mergedPropertySets.putAll(propertySet.properties)
+        @OptIn(ExperimentalSerializationApi::class)
+        fun of(
+            ignoreMissingSchema: Boolean = false,
+            ignoreInvalidSchema: Boolean = false,
+            ignoreUnsupportedSchema: Boolean = false,
+            ignoreInvalidRules: Boolean = false,
+            ignoreInvalidProperties: Boolean = false,
+            ignoreInvalidValues: Boolean = false,
+            prettyPrint: Boolean = false,
+            prettyPrintIndent: String = "  ",
+        ): SnyggJsonConfiguration {
+            return SnyggJsonConfiguration(
+                ignoreMissingSchema,
+                ignoreInvalidSchema,
+                ignoreUnsupportedSchema,
+                ignoreInvalidRules,
+                ignoreInvalidProperties,
+                ignoreInvalidValues,
+                json = Json {
+                    if (prettyPrint) {
+                        this.prettyPrint = true
+                        this.prettyPrintIndent = prettyPrintIndent
                     }
-                    SnyggPropertySet(mergedPropertySets)
-                }
-            }
+                },
+            )
         }
-    }
-
-    @Composable
-    fun get(
-        element: String,
-        code: Int = Unspecified,
-        group: Int = Unspecified,
-        mode: Int = Unspecified,
-        isPressed: Boolean = false,
-        isFocus: Boolean = false,
-        isDisabled: Boolean = false,
-    ) = remember(this, element, code, group, mode, isPressed, isFocus, isDisabled) {
-        getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
-    }
-
-    fun getStatic(
-        element: String,
-        code: Int = Unspecified,
-        group: Int = Unspecified,
-        mode: Int = Unspecified,
-        isPressed: Boolean = false,
-        isFocus: Boolean = false,
-        isDisabled: Boolean = false,
-    ) = getPropertySet(rules, element, code, group, mode, isPressed, isFocus, isDisabled)
-
-    operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
-        val mergedRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
-        mergedRules.putAll(other.rules)
-        for ((rule, propertySet) in rules) {
-            if (mergedRules.containsKey(rule)) {
-                val otherPropertySet = mergedRules[rule]!!
-                val mergedProperties = buildMap {
-                    putAll(propertySet.properties)
-                    putAll(otherPropertySet.properties)
-                }
-                mergedRules[rule] = SnyggPropertySet(mergedProperties)
-            } else {
-                mergedRules[rule] = propertySet
-            }
-        }
-        return SnyggStylesheet(mergedRules)
-    }
-
-    // TODO: divide in smaller, testable sections
-    fun compileToFullyQualified(stylesheetSpec: SnyggSpec): SnyggStylesheet {
-        val newRules = mutableMapOf<SnyggRule, SnyggPropertySet>()
-        var definedVariables: SnyggPropertySet? = null
-        for (rule in rules.keys.sorted()) {
-            if (rule.isAnnotation) {
-                if (rule.element == "defines") {
-                    definedVariables = rules[rule]
-                }
-                continue
-            }
-            val editor = rules[rule]!!.edit()
-            for ((propertyName, propertyValue) in editor.properties) {
-                if (propertyValue is SnyggDefinedVarValue) {
-                    editor.properties[propertyName] =
-                        definedVariables?.properties?.get(propertyValue.key) ?: SnyggImplicitInheritValue
-                }
-            }
-            newRules[rule] = editor.build()
-        }
-        val newRulesWithPressed = mutableMapOf<SnyggRule, SnyggPropertySet>()
-        for ((rule, propSet) in newRules) {
-            newRulesWithPressed[rule] = propSet
-            if (!rule.pressedSelector) {
-                val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
-                val pressedRule = rule.copy(pressedSelector = true)
-                if (!newRules.containsKey(pressedRule)) {
-                    val editor = SnyggPropertySetEditor()
-                    val possiblePropertySets = getPropertySets(rules, pressedRule) + getPropertySets(newRules, pressedRule)
-                    propertySetSpec.supportedProperties.forEach { supportedProperty ->
-                        if (!editor.properties.containsKey(supportedProperty.name)) {
-                            val value = possiblePropertySets.firstNotNullOfOrNull {
-                                it.properties[supportedProperty.name]
-                            } ?: SnyggImplicitInheritValue
-                            editor.properties[supportedProperty.name] = if (value is SnyggDefinedVarValue) {
-                                definedVariables?.properties?.get(value.key) ?: SnyggImplicitInheritValue
-                            } else {
-                                value
-                            }
-                        }
-                    }
-                    newRulesWithPressed[pressedRule] = editor.build()
-                }
-            }
-        }
-        return SnyggStylesheet(newRulesWithPressed, isFullyQualified = true)
-    }
-
-    fun edit(): SnyggStylesheetEditor {
-        val ruleMap = rules.mapValues { (_, propertySet) -> propertySet.edit() }
-        return SnyggStylesheetEditor(ruleMap)
     }
 }
 
-fun SnyggStylesheet(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
-    val builder = SnyggStylesheetEditor()
-    stylesheetBlock(builder)
-    return builder.build()
-}
+class SnyggMissingSchemaException : SerializationException(
+    message = "Stylesheet is missing schema reference",
+)
 
-class SnyggStylesheetEditor(initRules: Map<SnyggRule, SnyggPropertySetEditor>? = null){
-    val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>()
+class SnyggInvalidSchemaException(schema: String) : SerializationException(
+    message = "Stylesheet references invalid schema '$schema'",
+)
 
-    init {
-        if (initRules != null) {
-            rules.putAll(initRules)
-        }
-    }
+class SnyggUnsupportedSchemaException(schema: String) : SerializationException(
+    message = "Stylesheet references unsupported schema '$schema'",
+)
 
-    fun annotation(name: String, propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
-        val propertySetEditor = SnyggPropertySetEditor()
-        propertySetBlock(propertySetEditor)
-        val rule = SnyggRule(
-            isAnnotation = true,
-            element = name,
-        )
-        rules[rule] = propertySetEditor
-    }
+class SnyggMissingRequiredPropertyException(rule: SnyggRule, property: String) : SerializationException(
+    message = "Rule '$rule' is missing required property '$property'",
+)
 
-    fun defines(propertySetBlock: SnyggPropertySetEditor.() -> Unit) {
-        annotation("defines", propertySetBlock)
-    }
+class SnyggInvalidRuleException(ruleStr: String) : SerializationException(
+    message = "Invalid rule '$ruleStr'",
+)
 
-    operator fun String.invoke(
-        codes: List<Int> = listOf(),
-        groups: List<Int> = listOf(),
-        modes: List<Int> = listOf(),
-        pressedSelector: Boolean = false,
-        focusSelector: Boolean = false,
-        disabledSelector: Boolean = false,
-        propertySetBlock: SnyggPropertySetEditor.() -> Unit,
-    ) {
-        val propertySetEditor = SnyggPropertySetEditor()
-        propertySetBlock(propertySetEditor)
-        val rule = SnyggRule(
-            isAnnotation = false,
-            element = this,
-            codes.toMutableList(),
-            groups.toMutableList(),
-            modes.toMutableList(),
-            pressedSelector,
-            focusSelector,
-            disabledSelector,
-        )
-        rules[rule] = propertySetEditor
-    }
+class SnyggInvalidPropertyException(rule: SnyggRule, property: String) : SerializationException(
+    message = "Rule '$rule' contains unknown or invalid property '$property'",
+)
 
-    fun build(isFullyQualified: Boolean = false): SnyggStylesheet {
-        val rulesMap = rules.mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
-        return SnyggStylesheet(rulesMap, isFullyQualified)
-    }
-}
-
-class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
-    private val propertyMapSerializer = MapSerializer(String.serializer(), String.serializer())
-    private val ruleMapSerializer = MapSerializer(SnyggRule.serializer(), propertyMapSerializer)
-
-    override val descriptor = ruleMapSerializer.descriptor
-
-    companion object {
-        var GlobalStylesheetSpec: SnyggSpec? = null
-    }
-
-    override fun serialize(encoder: Encoder, value: SnyggStylesheet) {
-        val rawRuleMap = value.rules.mapValues { (_, propertySet) ->
-            propertySet.properties.mapValues { (_, snyggValue) ->
-                snyggValue.encoder().serialize(snyggValue).getOrThrow()
-            }
-        }
-        ruleMapSerializer.serialize(encoder, rawRuleMap)
-    }
-
-    override fun deserialize(decoder: Decoder): SnyggStylesheet {
-        val rawRuleMap = ruleMapSerializer.deserialize(decoder)
-        val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
-        for ((rule, rawProperties) in rawRuleMap) {
-            val stylesheetSpec = GlobalStylesheetSpec ?:
-                throw IllegalStateException("No global stylesheet spec defined")
-            if (rule.isDefinedVariablesRule()) {
-                val parsedProperties = rawProperties.mapValues { (_, rawValue) ->
-                    SnyggVarValueEncoders.firstNotNullOfOrNull { it.deserialize(rawValue).getOrNull() }
-                        ?: SnyggImplicitInheritValue
-                }
-                ruleMap[rule] = SnyggPropertySet(parsedProperties)
-                continue
-            }
-            val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
-            val properties = rawProperties.mapValues { (name, value) ->
-                val propertySpec = propertySetSpec.propertySpec(name)
-                if (propertySpec != null) {
-                    for (encoder in propertySpec.encoders) {
-                        encoder.deserialize(value).onSuccess { snyggValue ->
-                            return@mapValues snyggValue
-                        }
-                    }
-                }
-                return@mapValues SnyggImplicitInheritValue
-            }
-            ruleMap[rule] = SnyggPropertySet(properties)
-        }
-        return SnyggStylesheet(ruleMap)
-    }
-}
+class SnyggInvalidValueException(rule: SnyggRule, property: String, valueStr: String) : SerializationException(
+    message = "Rule '$rule' property '$property' contains unknown or invalid value '$valueStr'",
+)

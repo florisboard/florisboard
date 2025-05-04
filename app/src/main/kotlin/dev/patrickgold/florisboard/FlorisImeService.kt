@@ -49,10 +49,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -103,7 +102,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -123,13 +121,11 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectLatestIn
-import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.shape
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.snyggBorder
-import org.florisboard.lib.snygg.ui.snyggShadow
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -466,6 +462,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         flogInfo(LogTopic.IMS_EVENTS) { "Creating inline suggestions request" }
         val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
+        if (stylesBundle == null) {
+            flogWarning(LogTopic.IMS_EVENTS) { "Failed to retrieve inline suggestions style bundle" }
+            return null
+        }
         val spec = InlinePresentationSpec.Builder(
             InlineSuggestionUiSmallestSize,
             InlineSuggestionUiBiggestSize,
@@ -528,6 +528,7 @@ class FlorisImeService : LifecycleInputMethodService() {
      */
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
+        // TODO: setting this to false kinda helps with the nav bar color bug, but introduces padding issues...
         WindowCompat.setDecorFitsSystemWindows(w, true)
         ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
         val layoutHeight = if (isFullscreenUiMode) {
@@ -565,19 +566,18 @@ class FlorisImeService : LifecycleInputMethodService() {
             ProvideKeyboardRowBaseHeight {
                 CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
+                        // Do not apply system bar padding here yet, we want to draw it ourselves
                         Column(modifier = Modifier.fillMaxWidth()) {
                             if (!(isFullscreenUiMode && isExtractUiShown)) {
-                                Box(
+                                DevtoolsOverlay(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .weight(1f),
-                                ) {
-                                    DevtoolsOverlay(modifier = Modifier.fillMaxSize())
-                                }
+                                )
                             }
                             ImeUi()
+                            SystemUiIme()
                         }
-                        SystemUiIme()
                     }
                 }
             }
@@ -588,25 +588,22 @@ class FlorisImeService : LifecycleInputMethodService() {
     @Composable
     private fun ImeUi() {
         val state by keyboardManager.activeState.collectAsState()
-        val keyboardStyle = FlorisImeTheme.style.get(
-            element = FlorisImeUi.Keyboard,
-            mode = state.inputShiftState.value,
-        )
         val layoutDirection = LocalLayoutDirection.current
-        SideEffect {
-            if (keyboardManager.activeState.layoutDirection != layoutDirection) {
-                keyboardManager.activeState.layoutDirection = layoutDirection
-            }
+        LaunchedEffect(layoutDirection) {
+            keyboardManager.activeState.layoutDirection = layoutDirection
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-            SnyggSurface(
+            SnyggBox(
+                elementName = FlorisImeUi.Window.elementName,
+                attributes = mapOf(FlorisImeUi.Attr.ShiftState to state.inputShiftState.attrName()),
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .onGloballyPositioned { coords -> inputViewSize = coords.size }
+                    .onGloballyPositioned { coords -> inputViewSize = coords.size },
+                clickAndSemanticsModifier = Modifier
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
-                style = keyboardStyle,
+                supportsBackgroundImage = true,
             ) {
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {
@@ -618,9 +615,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        // Apply system bars padding here (we already drew our keyboard background)
                         .safeDrawingPadding()
-                        // FIXME: removing this fixes the Smartbar sizing but breaks one-handed-mode
-                        //.height(IntrinsicSize.Min)
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
@@ -750,45 +746,38 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         fun Content() {
-            val context = LocalContext.current
             ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
                 FlorisImeTheme {
-                    val layoutStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputLayout)
-                    val fieldStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputField)
-                    val actionStyle = FlorisImeTheme.style.get(FlorisImeUi.ExtractedLandscapeInputAction)
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    Box(
-                        modifier = Modifier
-                            .snyggBackground(context, layoutStyle, FlorisImeTheme.fallbackSurfaceColor()),
-                    ) {
-                        Row(
+                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
+                        SnyggRow(
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            val fieldColor =
-                                fieldStyle.foreground.solidColor(context, FlorisImeTheme.fallbackContentColor())
-                            AndroidView(
+                            SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
                                 modifier = Modifier
-                                    .padding(8.dp)
                                     .fillMaxHeight()
-                                    .weight(1f)
-                                    .snyggShadow(fieldStyle)
-                                    .snyggBorder(context, fieldStyle)
-                                    .snyggBackground(context, fieldStyle),
-                                factory = { extractEditText },
-                                update = { view ->
-                                    view.background = null
-                                    view.backgroundTintList = null
-                                    view.foregroundTintList = null
-                                    view.setTextColor(fieldColor.toArgb())
-                                    view.setHintTextColor(fieldColor.copy(fieldColor.alpha * 0.6f).toArgb())
-                                    view.setTextSize(
-                                        TypedValue.COMPLEX_UNIT_SP,
-                                        fieldStyle.fontSize.spSize(default = 16.sp).value,
-                                    )
-                                },
-                            )
-                            FlorisButton(
+                                    .weight(1f),
+                            ) {
+                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField.elementName)
+                                val foreground = fieldStyle.foreground()
+                                AndroidView(
+                                    factory = { extractEditText },
+                                    update = { view ->
+                                        view.background = null
+                                        view.backgroundTintList = null
+                                        view.foregroundTintList = null
+                                        view.setTextColor(foreground.toArgb())
+                                        view.setHintTextColor(foreground.copy(foreground.alpha * 0.6f).toArgb())
+                                        view.setTextSize(
+                                            TypedValue.COMPLEX_UNIT_SP,
+                                            fieldStyle.fontSize(default = 16.sp).value,
+                                        )
+                                    },
+                                )
+                            }
+                            SnyggButton(
+                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
                                 onClick = {
                                     if (activeEditorInfo.extractedActionId != 0) {
                                         currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
@@ -797,21 +786,13 @@ class FlorisImeService : LifecycleInputMethodService() {
                                     }
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                text = activeEditorInfo.extractedActionLabel
-                                    ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
-                                    ?: "ACTION",
-                                shape = actionStyle.shape.shape(),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = actionStyle.background.solidColor(
-                                        context,
-                                        FlorisImeTheme.fallbackContentColor()
-                                    ),
-                                    contentColor = actionStyle.foreground.solidColor(
-                                        context,
-                                        FlorisImeTheme.fallbackSurfaceColor()
-                                    ),
-                                ),
-                            )
+                            ) {
+                                SnyggText(
+                                    text = activeEditorInfo.extractedActionLabel
+                                        ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
+                                        ?: "ACTION",
+                                )
+                            }
                         }
                     }
                 }

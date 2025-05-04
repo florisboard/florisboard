@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 
+//TODO: Use JetPrefDropDownMenu instead
 @Composable
 fun <T : Any> FlorisDropdownMenu(
     items: List<T>,

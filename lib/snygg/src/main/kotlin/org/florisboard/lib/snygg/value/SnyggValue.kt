@@ -33,12 +33,11 @@ interface SnyggValue {
 }
 
 /**
- * Checks if any given Snygg value indicates that it should be inherited from the parent rule, either marked
- * explicitly or implicitly.
+ * Checks if any given Snygg value indicates that it should be inherited from the parent rule.
  */
 @Suppress("NOTHING_TO_INLINE")
 inline fun SnyggValue.isInherit(): Boolean {
-    return this is SnyggImplicitInheritValue || this is SnyggExplicitInheritValue
+    return this is SnyggInheritValue
 }
 
 /**
@@ -50,17 +49,33 @@ inline fun SnyggValue.isNotInherit(): Boolean {
 }
 
 /**
+ * Checks if any given Snygg value indicates that it is undefined.
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun SnyggValue.isUndefined(): Boolean {
+    return this is SnyggUndefinedValue
+}
+
+/**
+ * Convenience function which returns the opposite of SnyggValue.isUndefined(). See [isUndefined] for more info.
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun SnyggValue.isNotUndefined(): Boolean {
+    return !isUndefined()
+}
+
+/**
  * This value defines that a property value should be copied from the parent stylesheet.
  *
  * The inherit intent was defined explicitly by the creator of the stylesheet and thus should be kept internally in the
  * stylesheet rules. This value is kept in both ways during the serialization process and is shown in the UI for a
  * stylesheet editor.
  */
-object SnyggExplicitInheritValue : SnyggValue, SnyggValueEncoder {
+object SnyggInheritValue : SnyggValue, SnyggValueEncoder {
     const val Inherit = "inherit"
 
     override val spec = SnyggValueSpec {
-        keywords(keywords = listOf(Inherit))
+        keywords(id = Inherit, keywords = listOf(Inherit))
     }
 
     override fun defaultValue() = this
@@ -71,52 +86,84 @@ object SnyggExplicitInheritValue : SnyggValue, SnyggValueEncoder {
 
     override fun deserialize(v: String) = runCatching<SnyggValue> {
         check(v.trim() == Inherit)
-        return@runCatching SnyggExplicitInheritValue
+        return@runCatching SnyggInheritValue
     }
 
     override fun encoder() = this
 }
 
 /**
- * This value defines that a property value should be copied from the parent stylesheet.
+ * This value defines that a property value is undefined.
  *
- * The inherit intent was defined implicitly by the serialization process (when a required property was missing for a
+ * The undefined intent was defined implicitly by the serialization process (when a required property was missing for a
  * rule). This value is thus **not** meant to be serialized, the serialization of this value is indeed prohibited and
- * an attempt to serialize this value will result in a serialization failure. Additionally this value should be shown
- * as "Missing" in a stylesheet editor UI.
+ * an attempt to serialize this value will result in a serialization failure. Additionally, this value should be shown
+ * as "Undefined" in a stylesheet editor UI.
  */
-object SnyggImplicitInheritValue : SnyggValue, SnyggValueEncoder {
-    private const val ImplicitInherit = "implicit-inherit"
+object SnyggUndefinedValue : SnyggValue, SnyggValueEncoder {
+    private const val Undefined = "undefined"
 
     override val spec = SnyggValueSpec {
-        keywords(keywords = listOf(ImplicitInherit))
+        keywords(id = Undefined, keywords = listOf(Undefined))
     }
 
     override fun defaultValue() = this
 
     override fun serialize(v: SnyggValue) = runCatching<String> {
-        error("Implicit inherit is not meant to be serialized")
+        error("Undefined is not meant to be serialized")
     }
 
     override fun deserialize(v: String) = runCatching<SnyggValue> {
-        error("Implicit inherit is not meant to be deserialized")
+        error("Undefined is not meant to be deserialized")
     }
 
     override fun encoder() = this
 }
 
-val SnyggVarValueEncoders = listOfNotNull(
-    SnyggSolidColorValue,
-    SnyggMaterialYouLightColorValue,
-    SnyggMaterialYouDarkColorValue,
-    //SnyggImageRefValue,
-    SnyggRectangleShapeValue,
-    SnyggCircleShapeValue,
-    SnyggRoundedCornerDpShapeValue,
-    SnyggRoundedCornerPercentShapeValue,
-    SnyggCutCornerDpShapeValue,
-    SnyggCutCornerPercentShapeValue,
-    SnyggDpSizeValue,
-    SnyggSpSizeValue,
-    SnyggPercentageSizeValue,
-)
+/**
+ * A simple yes value (useful for boolean style value).
+ */
+object SnyggYesValue : SnyggValue, SnyggValueEncoder {
+    const val Yes = "yes"
+
+    override val spec = SnyggValueSpec {
+        keywords(id = Yes, keywords = listOf(Yes))
+    }
+
+    override fun defaultValue() = this
+
+    override fun serialize(v: SnyggValue) = runCatching<String> {
+        return@runCatching Yes
+    }
+
+    override fun deserialize(v: String) = runCatching<SnyggValue> {
+        check(v.trim() == Yes)
+        return@runCatching SnyggYesValue
+    }
+
+    override fun encoder() = this
+}
+
+/**
+ * A simple no value (useful for boolean style value).
+ */
+object SnyggNoValue : SnyggValue, SnyggValueEncoder {
+    const val No = "no"
+
+    override val spec = SnyggValueSpec {
+        keywords(id = No, keywords = listOf(No))
+    }
+
+    override fun defaultValue() = this
+
+    override fun serialize(v: SnyggValue) = runCatching<String> {
+        return@runCatching No
+    }
+
+    override fun deserialize(v: String) = runCatching<SnyggValue> {
+        check(v.trim() == No)
+        return@runCatching SnyggNoValue
+    }
+
+    override fun encoder() = this
+}

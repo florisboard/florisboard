@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -32,10 +31,9 @@ import androidx.compose.ui.platform.LocalDensity
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.keyboardManager
-import org.florisboard.lib.snygg.ui.snyggBackground
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.ui.SnyggRow
 
 internal val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
 
@@ -67,8 +65,6 @@ fun QuickActionsRow(
     val showOverflowAction = actionArrangement.stickyAction != null ||
         smartbarLayout != SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED || !sharedActionsExpanded
 
-    val rowStyle = FlorisImeTheme.style.get(elementName)
-
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
         val width = constraints.maxWidth.toDp()
         val height = constraints.maxHeight.toDp()
@@ -85,10 +81,9 @@ fun QuickActionsRow(
                 }.coerceAtLeast(0)
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .snyggBackground(context, rowStyle),
+        SnyggRow(
+            elementName = elementName,
+            modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {

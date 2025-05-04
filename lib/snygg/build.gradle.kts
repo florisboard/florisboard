@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 /*
  * Copyright (C) 2025 The FlorisBoard Contributors
  *
@@ -19,6 +21,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlinx.kover)
 }
 
 val projectMinSdk: String by project
@@ -45,13 +48,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            create("beta") {
-                isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-            }
+        }
+        create("beta") {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -60,7 +62,22 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf(
+            "-Xconsistent-data-class-copy-visibility",
+            "-Xwhen-guards",
+        )
     }
+}
+
+tasks.withType<Test> {
+    testLogging {
+        events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+    }
+    useJUnitPlatform()
+}
+
+kover {
+    useJacoco()
 }
 
 dependencies {
@@ -71,5 +88,25 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
     implementation(libs.kotlinx.serialization.json)
+
+    testImplementation(libs.kotlin.test.junit5)
 }
+
+tasks.register<JavaExec>("generateJsonSchema") {
+    dependsOn("build")
+    mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
+    val debugVariant = android.libraryVariants.first { it.name == "debug" }
+    classpath = files(
+        debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },
+    )
+    args = listOf("schemas/stylesheet.schema.json")
+    workingDir = projectDir
+    standardOutput = System.out
+}
+
+tasks["build"].finalizedBy("generateJsonSchema")

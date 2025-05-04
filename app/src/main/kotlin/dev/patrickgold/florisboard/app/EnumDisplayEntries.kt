@@ -18,8 +18,8 @@ package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
@@ -41,9 +41,9 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.SnyggLevel
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import org.florisboard.lib.kotlin.curlyFormat
 import kotlin.reflect.KClass
 
@@ -102,18 +102,24 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    DisplayColorsAs::class to DEFAULT to {
+    ColorRepresentation::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = DisplayColorsAs.HEX8,
-                label = stringRes(R.string.enum__display_colors_as__hex8),
+                key = ColorRepresentation.HEX,
+                label = stringRes(R.string.enum__color_representation__hex),
                 description = stringRes(R.string.general__example_given).curlyFormat("example" to "#4caf50ff"),
                 showDescriptionOnlyIfSelected = true,
             )
             entry(
-                key = DisplayColorsAs.RGBA,
-                label = stringRes(R.string.enum__display_colors_as__rgba),
-                description = stringRes(R.string.general__example_given).curlyFormat("example" to "rgba(76,175,80,1.0)"),
+                key = ColorRepresentation.RGB,
+                label = stringRes(R.string.enum__color_representation__rgb),
+                description = stringRes(R.string.general__example_given).curlyFormat("example" to "rgba(76, 175, 80, 1.0)"),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = ColorRepresentation.HSV,
+                label = stringRes(R.string.enum__color_representation__hsv),
+                description = stringRes(R.string.general__example_given).curlyFormat("example" to "hsva(122, 56, 68, 1.0)"),
                 showDescriptionOnlyIfSelected = true,
             )
         }

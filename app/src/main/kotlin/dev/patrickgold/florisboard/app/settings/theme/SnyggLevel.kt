@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg
+package dev.patrickgold.florisboard.app.settings.theme
 
 /**
  * SnyggLevel indicates if a rule property is intended to be edited by all users (BASIC) or only by advanced users

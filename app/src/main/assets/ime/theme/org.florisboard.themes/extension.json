@@ -2,10 +2,10 @@
   "$": "ime.extension.theme",
   "meta": {
     "id": "org.florisboard.themes",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "title": "FlorisBoard default themes",
     "description": "Default themes (both day and night) for the keyboard UI",
-    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "lm41 <lm41@lm41.xyz>" ],
     "license": "apache-2.0"
   },
   "themes": [
@@ -13,49 +13,37 @@
       "id": "floris_day",
       "label": "Floris Day",
       "authors": [ "patrickgold" ],
-      "isNight": false,
-      "isBorderless": false,
-      "isMaterialYouAware": false
+      "isNight": false
     },
     {
       "id": "floris_day_borderless",
       "label": "Floris Day (Borderless)",
       "authors": [ "patrickgold" ],
-      "isNight": false,
-      "isBorderless": true,
-      "isMaterialYouAware": false
+      "isNight": false
     },
     {
       "id": "floris_night",
       "label": "Floris Night",
       "authors": [ "patrickgold" ],
-      "isNight": true,
-      "isBorderless": false,
-      "isMaterialYouAware": false
+      "isNight": true
     },
     {
       "id": "floris_night_borderless",
       "label": "Floris Night (Borderless)",
       "authors": [ "patrickgold" ],
-      "isNight": true,
-      "isBorderless": true,
-      "isMaterialYouAware": false
+      "isNight": true
     },
     {
       "id": "floris_pure_night",
       "label": "Floris Pure Night",
       "authors": [ "serebit" ],
-      "isNight": true,
-      "isBorderless": false,
-      "isMaterialYouAware": false
+      "isNight": true
     },
     {
       "id": "floris_pure_night_borderless",
       "label": "Floris Pure Night (Borderless)",
       "authors": [ "serebit" ],
-      "isNight": true,
-      "isBorderless": true,
-      "isMaterialYouAware": false
+      "isNight": true
     }
   ]
 }

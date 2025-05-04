@@ -20,8 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -60,12 +60,11 @@ import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import kotlinx.serialization.encodeToString
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.color.DEFAULT_GREEN
-import org.florisboard.lib.snygg.SnyggLevel
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
@@ -739,9 +738,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         //    key = "theme__sunset_time",
         //    default = LocalTime.of(18, 0),
         //)
-        val editorDisplayColorsAs = enum(
-            key = "theme__editor_display_colors_as",
-            default = DisplayColorsAs.HEX8,
+        val editorColorRepresentation = enum(
+            key = "theme__editor_color_representation",
+            default = ColorRepresentation.HEX,
         )
         val editorDisplayKbdAfterDialogs = enum(
             key = "theme__editor_display_kbd_after_dialogs",
@@ -822,6 +821,19 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 )
                 val json = QuickActionJsonConfig.encodeToString(newArrangement)
                 entry.transform(rawValue = json)
+            }
+
+            // Migrate theme editor fine-tuning
+            // Keep migration rule until: 0.6 dev cycle
+            "theme__editor_display_colors_as" -> {
+                val colorRepresentation = when (entry.rawValue) {
+                    "RGBA" -> ColorRepresentation.RGB
+                    else -> ColorRepresentation.HEX
+                }
+                entry.transform(
+                    key = "theme__editor_color_representation",
+                    rawValue = colorRepresentation.name,
+                )
             }
 
 

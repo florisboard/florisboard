@@ -16,10 +16,7 @@
 
 package dev.patrickgold.florisboard.lib.compose
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -34,14 +31,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun FlorisButton(
@@ -163,41 +157,6 @@ fun FlorisIconButton(
                 imageVector = icon,
                 contentDescription = null,
             )
-        }
-    }
-}
-
-@Composable
-fun FlorisIconButtonWithInnerPadding(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    icon: ImageVector,
-    enabled: Boolean = true,
-    iconModifier: Modifier = Modifier,
-    iconColor: Color = Color.Unspecified,
-) {
-    IconButton(
-        modifier = modifier,
-        enabled = enabled,
-        onClick = onClick,
-    ) {
-        val contentAlpha = if (enabled) 1f else 0.14f
-        CompositionLocalProvider(
-            LocalContentColor provides iconColor,
-        ) {
-            Box(
-                modifier = iconModifier
-                    .padding(4.dp)
-                    .fillMaxHeight()
-                    .aspectRatio(1f),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    modifier = modifier.alpha(contentAlpha),
-                    imageVector = icon,
-                    contentDescription = null,
-                )
-            }
         }
     }
 }

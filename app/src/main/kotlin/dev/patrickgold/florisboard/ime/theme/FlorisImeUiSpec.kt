@@ -16,41 +16,42 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+/*
 import org.florisboard.lib.snygg.Snygg
 import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggPropertySetSpecBuilder
-import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.SnyggPropertySetSpecDeclBuilder
+import org.florisboard.lib.snygg.SnyggSpecDecl
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 
-fun SnyggPropertySetSpecBuilder.background() {
+fun SnyggPropertySetSpecDeclBuilder.background() {
     property(
         name = Snygg.Background,
         level = SnyggLevel.BASIC,
-        supportedValues(SnyggSolidColorValue, SnyggMaterialYouLightColorValue, SnyggMaterialYouDarkColorValue),
+        supportedValues(SnyggStaticColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.foreground() {
+fun SnyggPropertySetSpecDeclBuilder.foreground() {
     property(
         name = Snygg.Foreground,
         level = SnyggLevel.BASIC,
-        supportedValues(SnyggSolidColorValue, SnyggMaterialYouLightColorValue, SnyggMaterialYouDarkColorValue),
+        supportedValues(SnyggStaticColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.border() {
+fun SnyggPropertySetSpecDeclBuilder.border() {
     property(
         name = Snygg.BorderColor,
         level = SnyggLevel.ADVANCED,
-        supportedValues(SnyggSolidColorValue, SnyggMaterialYouLightColorValue, SnyggMaterialYouDarkColorValue),
+        supportedValues(SnyggStaticColorValue, SnyggDynamicColorLightColorValue, SnyggDynamicColorDarkColorValue),
     )
     property(
         name = Snygg.BorderWidth,
@@ -58,21 +59,21 @@ fun SnyggPropertySetSpecBuilder.border() {
         supportedValues(SnyggDpSizeValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.font() {
+fun SnyggPropertySetSpecDeclBuilder.font() {
     property(
         name = Snygg.FontSize,
         level = SnyggLevel.ADVANCED,
         supportedValues(SnyggSpSizeValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.shadow() {
+fun SnyggPropertySetSpecDeclBuilder.shadow() {
     property(
         name = Snygg.ShadowElevation,
         level = SnyggLevel.ADVANCED,
         supportedValues(SnyggDpSizeValue),
     )
 }
-fun SnyggPropertySetSpecBuilder.shape() {
+fun SnyggPropertySetSpecDeclBuilder.shape() {
     property(
         name = Snygg.Shape,
         level = SnyggLevel.ADVANCED,
@@ -87,7 +88,7 @@ fun SnyggPropertySetSpecBuilder.shape() {
     )
 }
 
-object FlorisImeUiSpec : SnyggSpec({
+object FlorisImeUiSpec : SnyggSpecDecl({
     element(FlorisImeUi.Keyboard) {
         background()
     }
@@ -276,3 +277,40 @@ object FlorisImeUiSpec : SnyggSpec({
         background()
     }
 })
+
+Snygg.init(
+            stylesheetSpec = FlorisImeUiSpec,
+            rulePreferredElementSorting = listOf(
+                FlorisImeUi.Keyboard,
+                FlorisImeUi.Key,
+                FlorisImeUi.KeyHint,
+                FlorisImeUi.KeyPopup,
+                FlorisImeUi.Smartbar,
+                FlorisImeUi.SmartbarSharedActionsRow,
+                FlorisImeUi.SmartbarSharedActionsToggle,
+                FlorisImeUi.SmartbarExtendedActionsRow,
+                FlorisImeUi.SmartbarExtendedActionsToggle,
+                FlorisImeUi.SmartbarActionKey,
+                FlorisImeUi.SmartbarActionTile,
+                FlorisImeUi.SmartbarActionsOverflow,
+                FlorisImeUi.SmartbarActionsOverflowCustomizeButton,
+                FlorisImeUi.SmartbarActionsEditor,
+                FlorisImeUi.SmartbarActionsEditorHeader,
+                FlorisImeUi.SmartbarActionsEditorSubheader,
+                FlorisImeUi.SmartbarCandidatesRow,
+                FlorisImeUi.SmartbarCandidateWord,
+                FlorisImeUi.SmartbarCandidateClip,
+                FlorisImeUi.SmartbarCandidateSpacer,
+            ),
+            rulePlaceholders = mapOf(
+                "c:delete" to KeyCode.DELETE,
+                "c:enter" to KeyCode.ENTER,
+                "c:shift" to KeyCode.SHIFT,
+                "c:space" to KeyCode.SPACE,
+                "sh:unshifted" to InputShiftState.UNSHIFTED.value,
+                "sh:shifted_manual" to InputShiftState.SHIFTED_MANUAL.value,
+                "sh:shifted_automatic" to InputShiftState.SHIFTED_AUTOMATIC.value,
+                "sh:caps_lock" to InputShiftState.CAPS_LOCK.value,
+            ),
+        )
+*/

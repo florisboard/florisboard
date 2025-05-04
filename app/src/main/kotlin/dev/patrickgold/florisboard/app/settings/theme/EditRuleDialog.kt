@@ -48,8 +48,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -59,7 +59,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -82,30 +81,33 @@ import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
-import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggRule
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldDefaults
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
-import org.florisboard.lib.kotlin.getKeyByValue
+import org.florisboard.lib.snygg.SnyggAnnotationRule
+import org.florisboard.lib.snygg.SnyggElementRule
+import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.NonNullSaver
 
 private val TransparentTextSelectionColors = TextSelectionColors(
     handleColor = Color.Transparent,
     backgroundColor = Color.Transparent,
 )
-internal val SnyggEmptyRuleForAdding = SnyggRule(element = "- select -")
+internal val SnyggEmptyRuleForAdding = SnyggElementRule(elementName = "--select--")
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -116,69 +118,69 @@ internal fun EditRuleDialog(
     onDeleteRule: (rule: SnyggRule) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val context = LocalContext.current
     val isAddRuleDialog = initRule == SnyggEmptyRuleForAdding
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var showAlreadyExistsError by rememberSaveable { mutableStateOf(false) }
 
-    val possibleElementNames = remember {
-        listOf(SnyggEmptyRuleForAdding.element) + FlorisImeUiSpec.elements.keys
+    val possibleRuleTemplates = remember {
+        buildList {
+            add(SnyggEmptyRuleForAdding)
+            add(SnyggAnnotationRule.Font(fontName = ""))
+            FlorisImeUi.elementNames.forEach { name ->
+                add(SnyggElementRule(name))
+            }
+        }
     }
-    val possibleElementLabels = possibleElementNames.map { translateElementName(it, level) ?: it }
-    var elementsExpanded by remember { mutableStateOf(false) }
+    val possibleRuleLabels = possibleRuleTemplates.map { rule ->
+        val elementName = when (rule) {
+            is SnyggElementRule -> rule.elementName
+            else -> rule.decl().name
+        }
+        context.translateElementName(elementName, level) ?: rule
+    }
     var elementsSelectedIndex by rememberSaveable {
-        val index = possibleElementNames.indexOf(initRule.element).coerceIn(possibleElementNames.indices)
+        val index = possibleRuleTemplates
+            .indexOfFirst {  rule ->
+                val elementName = when (rule) {
+                    is SnyggElementRule -> rule.elementName
+                    else -> rule.decl().name
+                }
+                val initElementName = when (initRule) {
+                    is SnyggElementRule -> initRule.elementName
+                    else -> initRule.decl().name
+                }
+                elementName == initElementName
+            }
+            .coerceIn(possibleRuleTemplates.indices)
         mutableIntStateOf(index)
     }
-
-    val codes = rememberSaveable(saver = IntListSaver) { initRule.codes.toMutableStateList() }
-    var editCodeDialogValue by rememberSaveable { mutableStateOf<Int?>(null) }
-    val groups = rememberSaveable(saver = IntListSaver) { initRule.groups.toMutableStateList() }
-    var shiftStateUnshifted by rememberSaveable {
-        mutableStateOf(initRule.shiftStates.contains(InputShiftState.UNSHIFTED.value))
+    var currentRule by rememberSaveable(elementsSelectedIndex, stateSaver = SnyggRule.NonNullSaver) {
+        mutableStateOf(
+            if (isAddRuleDialog) possibleRuleTemplates[elementsSelectedIndex] else initRule
+        )
     }
-    var shiftStateShiftedManual by rememberSaveable {
-        mutableStateOf(initRule.shiftStates.contains(InputShiftState.SHIFTED_MANUAL.value))
-    }
-    var shiftStateShiftedAutomatic by rememberSaveable {
-        mutableStateOf(initRule.shiftStates.contains(InputShiftState.SHIFTED_AUTOMATIC.value))
-    }
-    var shiftStateCapsLock by rememberSaveable {
-        mutableStateOf(initRule.shiftStates.contains(InputShiftState.CAPS_LOCK.value))
-    }
-    var pressedSelector by rememberSaveable { mutableStateOf(initRule.pressedSelector) }
-    var focusSelector by rememberSaveable { mutableStateOf(initRule.focusSelector) }
-    var disabledSelector by rememberSaveable { mutableStateOf(initRule.disabledSelector) }
 
     JetPrefAlertDialog(
-        title = stringRes(if (isAddRuleDialog) {
-            R.string.settings__theme_editor__add_rule
-        } else {
-            R.string.settings__theme_editor__edit_rule
-        }),
-        confirmLabel = stringRes(if (isAddRuleDialog) {
-            R.string.action__add
-        } else {
-            R.string.action__apply
-        }),
+        title = stringRes(
+            if (isAddRuleDialog) {
+                R.string.settings__theme_editor__add_rule
+            } else {
+                R.string.settings__theme_editor__edit_rule
+            }
+        ),
+        confirmLabel = stringRes(
+            if (isAddRuleDialog) {
+                R.string.action__add
+            } else {
+                R.string.action__apply
+            }
+        ),
         onConfirm = {
             if (isAddRuleDialog && elementsSelectedIndex == 0) {
                 showSelectAsError = true
             } else {
-                val newRule = SnyggRule(
-                    element = possibleElementNames[elementsSelectedIndex],
-                    codes = codes.toList(),
-                    groups = groups.toList(),
-                    shiftStates = buildList {
-                        if (shiftStateUnshifted) { add(InputShiftState.UNSHIFTED.value) }
-                        if (shiftStateShiftedManual) { add(InputShiftState.SHIFTED_MANUAL.value) }
-                        if (shiftStateShiftedAutomatic) { add(InputShiftState.SHIFTED_AUTOMATIC.value) }
-                        if (shiftStateCapsLock) { add(InputShiftState.CAPS_LOCK.value) }
-                    },
-                    pressedSelector = pressedSelector,
-                    focusSelector = focusSelector,
-                    disabledSelector = disabledSelector,
-                )
-                if (!onConfirmRule(initRule, newRule)) {
+                if (!onConfirmRule(initRule, currentRule)) {
                     showAlreadyExistsError = true
                 }
             }
@@ -202,154 +204,228 @@ internal fun EditRuleDialog(
                 )
             }
 
-            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_element)) {
-                FlorisDropdownMenu(
-                    items = possibleElementLabels,
-                    expanded = elementsExpanded,
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_name)) {
+                JetPrefDropdown(
+                    options = possibleRuleLabels,
+                    selectedOptionIndex = elementsSelectedIndex,
+                    onSelectOption = { elementsSelectedIndex = it },
                     enabled = isAddRuleDialog,
-                    selectedIndex = elementsSelectedIndex,
                     isError = showSelectAsError && elementsSelectedIndex == 0,
-                    onSelectItem = { elementsSelectedIndex = it },
-                    onExpandRequest = { elementsExpanded = true },
-                    onDismissRequest = { elementsExpanded = false },
                 )
             }
 
-            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
-                Row(modifier = Modifier.florisHorizontalScroll()) {
-                    FlorisChip(
-                        onClick = { pressedSelector = !pressedSelector },
-                        modifier = Modifier.padding(end = 4.dp),
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> SnyggRule.PRESSED_SELECTOR
-                            else -> stringRes(R.string.snygg__rule_selector__pressed)
+            (currentRule as? SnyggAnnotationRule.Font)?.apply {
+                DialogProperty(text = stringRes(R.string.snygg__rule_annotation__font_name)) {
+                    JetPrefTextField(
+                        modifier = Modifier,
+                        value = fontName,
+                        onValueChange = {
+                            currentRule = copy(fontName = it)
                         },
-                        selected = pressedSelector,
-                    )
-                    FlorisChip(
-                        onClick = { focusSelector = !focusSelector },
-                        modifier = Modifier.padding( end = 4.dp),
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> SnyggRule.FOCUS_SELECTOR
-                            else -> stringRes(R.string.snygg__rule_selector__focus)
-                        },
-                        selected = focusSelector,
-                    )
-                    FlorisChip(
-                        onClick = { disabledSelector = !disabledSelector },
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> SnyggRule.DISABLED_SELECTOR
-                            else -> stringRes(R.string.snygg__rule_selector__disabled)
-                        },
-                        selected = disabledSelector,
+                        singleLine = true,
                     )
                 }
             }
 
-            DialogProperty(
-                text = stringRes(R.string.settings__theme_editor__rule_codes),
-                trailingIconTitle = {
-                    FlorisIconButton(
-                        onClick = { editCodeDialogValue = NATIVE_NULLPTR.toInt() },
-                        modifier = Modifier.offset(x = 12.dp),
-                        icon = Icons.Default.Add,
-                    )
-                },
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    text = stringRes(if (codes.isEmpty()) {
-                        R.string.settings__theme_editor__no_codes_defined
+            // TODO: Move to toplevel @Composable function
+            (currentRule as? SnyggElementRule)?.apply {
+                if (elementName == SnyggEmptyRuleForAdding.elementName) {
+                    return@apply
+                }
+                fun updateCurrentRule(newSelector: SnyggSelector) {
+                    currentRule = if (selector == newSelector) {
+                        copy(selector = SnyggSelector.NONE)
                     } else {
-                        R.string.settings__theme_editor__codes_defined
-                    }),
-                    fontStyle = FontStyle.Italic,
-                )
-                FlowRow {
-                    for (code in codes) {
+                        copy(selector = newSelector)
+                    }
+                }
+                DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
+                    Row(modifier = Modifier.florisHorizontalScroll()) {
+                        //TODO: LazyRow
                         FlorisChip(
-                            onClick = { editCodeDialogValue = code },
-                            text = code.toString(),
-                            selected = editCodeDialogValue == code,
-                            shape = MaterialTheme.shapes.medium,
+                            onClick = { updateCurrentRule(SnyggSelector.PRESSED) },
+                            modifier = Modifier.padding(end = 4.dp),
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.PRESSED.id
+                                else -> stringRes(R.string.snygg__rule_selector__pressed)
+                            },
+                            selected = selector == SnyggSelector.PRESSED,
+                        )
+                        FlorisChip(
+                            onClick = { updateCurrentRule(SnyggSelector.FOCUS) },
+                            modifier = Modifier.padding( end = 4.dp),
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.FOCUS.id
+                                else -> stringRes(R.string.snygg__rule_selector__focus)
+                            },
+                            selected = selector == SnyggSelector.FOCUS,
+                        )
+                        FlorisChip(
+                            onClick = { updateCurrentRule(SnyggSelector.HOVER) },
+                            modifier = Modifier.padding( end = 4.dp),
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.HOVER.id
+                                else -> stringRes(R.string.snygg__rule_selector__hover)
+                            },
+                            selected = selector == SnyggSelector.HOVER,
+                        )
+                        FlorisChip(
+                            onClick = { updateCurrentRule(SnyggSelector.DISABLED) },
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> SnyggSelector.DISABLED.id
+                                else -> stringRes(R.string.snygg__rule_selector__disabled)
+                            },
+                            selected = selector == SnyggSelector.DISABLED,
+                        )
+                    }
+                }
+
+                val codes = remember(currentRule) {
+                    attributes[FlorisImeUi.Attr.Code] ?: emptyList()
+                }
+                var editCodeDialogValue by rememberSaveable { mutableStateOf<String?>(null) }
+                val initCodeValue = editCodeDialogValue
+                if (initCodeValue != null) {
+                    EditCodeValueDialog(
+                        codeValue = initCodeValue,
+                        checkExisting = { codes.contains(it) },
+                        onAdd = {
+                            currentRule = copy(
+                                attributes = attributes.including(FlorisImeUi.Attr.Code to it)
+                            )
+                        },
+                        onDelete = {
+                            currentRule = copy(
+                                attributes = attributes.excluding(FlorisImeUi.Attr.Code to it)
+                            )
+                        },
+                        onDismiss = { editCodeDialogValue = null },
+                    )
+                }
+                DialogProperty(
+                    text = stringRes(R.string.settings__theme_editor__rule_codes),
+                    trailingIconTitle = {
+                        FlorisIconButton(
+                            onClick = { editCodeDialogValue = KeyCode.UNSPECIFIED.toString() },
+                            modifier = Modifier.offset(x = 12.dp),
+                            icon = Icons.Default.Add,
+                        )
+                    },
+                ) {
+                    Text(
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        text = stringRes(
+                            if (codes.isEmpty()) {
+                                R.string.settings__theme_editor__no_codes_defined
+                            } else {
+                                R.string.settings__theme_editor__codes_defined
+                            }
+                        ),
+                        fontStyle = FontStyle.Italic,
+                    )
+                    FlowRow {
+                        for (code in codes) {
+                            FlorisChip(
+                                onClick = { editCodeDialogValue = code },
+                                text = code.toString(),
+                                selected = editCodeDialogValue == code,
+                                shape = MaterialTheme.shapes.medium,
+                            )
+                        }
+                    }
+                }
+
+                val shiftStateUnshifted = remember(currentRule) {
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.UNSHIFTED.attrName()) == true
+                }
+                val shiftStateShiftedManual = remember(currentRule) {
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_MANUAL.attrName()) == true
+                }
+                val shiftStateShiftedAutomatic = remember(currentRule) {
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_AUTOMATIC.attrName()) == true
+                }
+                val shiftStateCapsLock = remember(currentRule) {
+                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.CAPS_LOCK.attrName()) == true
+                }
+                DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        FlorisChip(
+                            onClick = {
+                                currentRule = copy(
+                                    attributes = attributes.toggling(
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.UNSHIFTED.attrName()
+                                    )
+                                )
+                            },
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> InputShiftState.UNSHIFTED.attrName()
+                                else -> stringRes(R.string.enum__input_shift_state__unshifted)
+                            },
+                            selected = shiftStateUnshifted,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                currentRule = copy(
+                                    attributes = attributes.toggling(
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_MANUAL.attrName()
+                                    )
+                                )
+                            },
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_MANUAL.attrName()
+                                else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
+                            },
+                            selected = shiftStateShiftedManual,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                currentRule = copy(
+                                    attributes = attributes.toggling(
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_AUTOMATIC.attrName()
+                                    )
+                                )
+                            },
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_AUTOMATIC.attrName()
+                                else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
+                            },
+                            selected = shiftStateShiftedAutomatic,
+                        )
+                        FlorisChip(
+                            onClick = {
+                                currentRule = copy(
+                                    attributes = attributes.toggling(
+                                        FlorisImeUi.Attr.ShiftState to InputShiftState.CAPS_LOCK.attrName()
+                                    )
+                                )
+                            },
+                            text = when (level) {
+                                SnyggLevel.DEVELOPER -> InputShiftState.CAPS_LOCK.attrName()
+                                else -> stringRes(R.string.enum__input_shift_state__caps_lock)
+                            },
+                            selected = shiftStateCapsLock,
                         )
                     }
                 }
             }
-
-            DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    FlorisChip(
-                        onClick = { shiftStateUnshifted = !shiftStateUnshifted },
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember {
-                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.UNSHIFTED.value)
-                            }
-                            else -> stringRes(R.string.enum__input_shift_state__unshifted)
-                        },
-                        selected = shiftStateUnshifted,
-                    )
-                    FlorisChip(
-                        onClick = { shiftStateShiftedManual = !shiftStateShiftedManual },
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember {
-                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.SHIFTED_MANUAL.value)
-                            }
-                            else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
-                        },
-                        selected = shiftStateShiftedManual,
-                    )
-                    FlorisChip(
-                        onClick = { shiftStateShiftedAutomatic = !shiftStateShiftedAutomatic },
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember {
-                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.SHIFTED_AUTOMATIC.value)
-                            }
-                            else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
-                        },
-                        selected = shiftStateShiftedAutomatic,
-                    )
-                    FlorisChip(
-                        onClick = { shiftStateCapsLock = !shiftStateCapsLock },
-                        text = when (level) {
-                            SnyggLevel.DEVELOPER -> remember {
-                                SnyggRule.Placeholders.getKeyByValue(InputShiftState.CAPS_LOCK.value)
-                            }
-                            else -> stringRes(R.string.enum__input_shift_state__caps_lock)
-                        },
-                        selected = shiftStateCapsLock,
-                    )
-                }
-            }
         }
-    }
-
-    val initCodeValue = editCodeDialogValue
-    if (initCodeValue != null) {
-        EditCodeValueDialog(
-            codeValue = initCodeValue,
-            checkExisting = { codes.contains(it) },
-            onAdd = { codes.add(it) },
-            onDelete = { codes.remove(it) },
-            onDismiss = { editCodeDialogValue = null },
-        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EditCodeValueDialog(
-    codeValue: Int,
-    checkExisting: (Int) -> Boolean,
-    onAdd: (Int) -> Unit,
-    onDelete: (Int) -> Unit,
+    codeValue: String,
+    checkExisting: (String) -> Boolean,
+    onAdd: (String) -> Unit,
+    onDelete: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
     var inputCodeString by rememberSaveable(codeValue) {
-        val str = if (codeValue == 0) "" else codeValue.toString()
+        val str = if (codeValue == KeyCode.UNSPECIFIED.toString()) "" else codeValue.toString()
         mutableStateOf(str)
     }
     val textKeyData = remember(inputCodeString) {
@@ -406,6 +482,7 @@ private fun EditCodeValueDialog(
                     inputCodeString = data.code.toString()
                     isRecordingKey = false
                 }
+
                 override fun onInputKeyRepeat(data: KeyData) = Unit
                 override fun onInputKeyCancel(data: KeyData) = Unit
             }
@@ -423,16 +500,20 @@ private fun EditCodeValueDialog(
     }
 
     JetPrefAlertDialog(
-        title = stringRes(if (codeValue == NATIVE_NULLPTR.toInt()) {
-            R.string.settings__theme_editor__add_code
-        } else {
-            R.string.settings__theme_editor__edit_code
-        }),
-        confirmLabel = stringRes(if (codeValue == NATIVE_NULLPTR.toInt()) {
-            R.string.action__add
-        } else {
-            R.string.action__apply
-        }),
+        title = stringRes(
+            if (codeValue == KeyCode.UNSPECIFIED.toString()) {
+                R.string.settings__theme_editor__add_code
+            } else {
+                R.string.settings__theme_editor__edit_code
+            }
+        ),
+        confirmLabel = stringRes(
+            if (codeValue == KeyCode.UNSPECIFIED.toString()) {
+                R.string.action__add
+            } else {
+                R.string.action__apply
+            }
+        ),
         onConfirm = {
             val code = inputCodeString.trim().toIntOrNull(radix = 10)
             when {
@@ -440,25 +521,28 @@ private fun EditCodeValueDialog(
                     errorId = R.string.settings__theme_editor__code_invalid
                     showError = true
                 }
-                code == codeValue -> {
+
+                code.toString() == codeValue -> {
                     onDismiss()
                 }
-                checkExisting(code) -> {
+
+                checkExisting(code.toString()) -> {
                     errorId = R.string.settings__theme_editor__code_already_exists
                     showError = true
                 }
+
                 else -> {
-                    if (codeValue != NATIVE_NULLPTR.toInt()) {
+                    if (codeValue != KeyCode.UNSPECIFIED.toString()) {
                         onDelete(codeValue)
                     }
-                    onAdd(code)
+                    onAdd(code.toString())
                     onDismiss()
                 }
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
-        neutralLabel = if (codeValue != NATIVE_NULLPTR.toInt()) {
+        neutralLabel = if (codeValue != KeyCode.UNSPECIFIED.toString()) {
             stringRes(R.string.action__delete)
         } else {
             null
@@ -505,7 +589,7 @@ private fun EditCodeValueDialog(
                     LocalTextSelectionColors.current
                 }
                 CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
-                    FlorisOutlinedTextField(
+                    JetPrefTextField(
                         modifier = Modifier
                             .focusRequester(focusRequester)
                             .weight(1f),
@@ -514,7 +598,7 @@ private fun EditCodeValueDialog(
                             inputCodeString = v
                             showError = false
                         },
-                        placeholder = when {
+                        placeholderText = when {
                             isRecordingKey -> {
                                 stringRes(R.string.settings__theme_editor__code_recording_placeholder)
                             }
@@ -527,21 +611,25 @@ private fun EditCodeValueDialog(
                         },
                         isError = showError,
                         singleLine = true,
-                        colors = if (isRecordingKey) {
-                            OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.Transparent,
-                                cursorColor = Color.Transparent,
+                        appearance = JetPrefTextFieldDefaults.filled(
+                            colors = if (isRecordingKey) {
+                                TextFieldDefaults.colors(
+                                    focusedTextColor = Color.Transparent,
+                                    cursorColor = Color.Transparent,
+                                )
+                            } else {
+                                TextFieldDefaults.colors()
+                            }
+                        ),
+                        trailingIcon = {
+                            FlorisIconButton(
+                                onClick = { requestStartRecording() },
+                                icon = Icons.Default.Pageview,
+                                iconColor = recordingKeyColor,
                             )
-                        } else {
-                            OutlinedTextFieldDefaults.colors()
-                        },
+                        }
                     )
                 }
-                FlorisIconButton(
-                    onClick = { requestStartRecording() },
-                    icon = Icons.Default.Pageview,
-                    iconColor = recordingKeyColor,
-                )
             }
             AnimatedVisibility(visible = showError) {
                 Text(
@@ -573,9 +661,12 @@ private fun TextKeyDataPreviewBox(
                 override val mode = KeyboardMode.NUMERIC_ADVANCED
                 override fun getKeyForPos(pointerX: Float, pointerY: Float) = error("not implemented")
                 override fun keys() = error("not implemented")
-                override fun layout(keyboardWidth: Float, keyboardHeight: Float, desiredKey: Key,
-                                    extendTouchBoundariesDownwards: Boolean) = error("not implemented")
+                override fun layout(
+                    keyboardWidth: Float, keyboardHeight: Float, desiredKey: Key,
+                    extendTouchBoundariesDownwards: Boolean,
+                ) = error("not implemented")
             }
+
             override fun context() = context
         }
     }
@@ -603,19 +694,18 @@ private fun TextKeyDataPreviewBox(
                 .align(Alignment.CenterVertically),
             contentAlignment = Alignment.Center,
         ) {
-            if (label != null) {
-                Text(
-                    text = label,
-                    fontSize = 16.sp,
-                    maxLines = 1,
-                    softWrap = false,
-                )
-            }
             if (icon != null) {
                 Icon(
                     modifier = Modifier.requiredSize(24.dp),
                     imageVector = icon,
                     contentDescription = null,
+                )
+            } else if (label != null) {
+                Text(
+                    text = label,
+                    fontSize = 16.sp,
+                    maxLines = 1,
+                    softWrap = false,
                 )
             }
         }

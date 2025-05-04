@@ -17,22 +17,31 @@
 package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.automirrored.filled.ManageSearch
+import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,6 +55,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
@@ -55,56 +66,75 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ext.FONTS
+import dev.patrickgold.florisboard.app.ext.IMAGES
 import dev.patrickgold.florisboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.DpSizeSaver
 import dev.patrickgold.florisboard.lib.compose.FlorisChip
-import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
+import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggPropertySetSpec
-import org.florisboard.lib.snygg.value.MaterialYouColor
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
+import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
+import org.florisboard.lib.color.ColorPalette
+import org.florisboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.toStringWithoutDotZero
+import org.florisboard.lib.snygg.SnyggAnnotationRule
+import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggImplicitInheritValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouLightColorValue
-import org.florisboard.lib.snygg.value.SnyggMaterialYouValue
+import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggEnumLikeValueEncoder
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
+import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggTextAlignValue
+import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
+import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
-import org.florisboard.lib.snygg.value.SnyggVarValueEncoders
-import dev.patrickgold.florisboard.lib.stripUnicodeCtrlChars
-import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
-import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
-import org.florisboard.lib.kotlin.curlyFormat
-import org.florisboard.lib.kotlin.toStringWithoutDotZero
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
-    name = "- select -",
-    value = SnyggImplicitInheritValue,
+    rule = SnyggEmptyRuleForAdding,
+    name = "--select--",
+    value = SnyggUndefinedValue,
 )
 
 data class PropertyInfo(
+    val rule: SnyggRule,
     val name: String,
     val value: SnyggValue,
 )
@@ -128,24 +158,42 @@ private enum class ShapeCorner {
     }
 }
 
+private enum class PaddingValue {
+    TOP,
+    BOTTOM,
+    START,
+    END;
+
+    @Composable
+    fun label(): String {
+        return when (this) {
+            TOP -> "Top"
+            BOTTOM -> "Bottom"
+            START -> "Start"
+            END -> "End"
+        }
+    }
+}
+
 @Composable
 internal fun EditPropertyDialog(
-    propertySetSpec: SnyggPropertySetSpec?,
     initProperty: PropertyInfo,
     level: SnyggLevel,
-    displayColorsAs: DisplayColorsAs,
+    colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
+    fontNames: List<String>,
+    workspace: CacheManager.ExtEditorWorkspace<*>,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val isAddPropertyDialog = initProperty == SnyggEmptyPropertyInfoForAdding
+    val isAddPropertyDialog = initProperty.name == SnyggEmptyPropertyInfoForAdding.name
     var showSelectAsError by rememberSaveable { mutableStateOf(false) }
     var showAlreadyExistsError by rememberSaveable { mutableStateOf(false) }
 
     var propertyName by rememberSaveable {
         mutableStateOf(
-            if (isAddPropertyDialog && propertySetSpec == null) {
+            if (isAddPropertyDialog) {
                 ""
             } else {
                 initProperty.name
@@ -153,10 +201,12 @@ internal fun EditPropertyDialog(
         )
     }
     val propertyNameValidation = rememberValidationResult(ExtensionValidation.ThemeComponentVariableName, propertyName)
+
+    val encoders = remember(initProperty.rule, propertyName) { SnyggSpec.encodersOf(initProperty.rule, propertyName) }
     var propertyValueEncoder by remember {
         mutableStateOf(
-            if (isAddPropertyDialog && propertySetSpec == null) {
-                SnyggImplicitInheritValue
+            if (isAddPropertyDialog && encoders == null) {
+                SnyggUndefinedValue
             } else {
                 initProperty.value.encoder()
             }
@@ -164,8 +214,8 @@ internal fun EditPropertyDialog(
     }
     var propertyValue by remember {
         mutableStateOf(
-            if (isAddPropertyDialog && propertySetSpec == null) {
-                SnyggImplicitInheritValue
+            if (isAddPropertyDialog && encoders == null) {
+                SnyggUndefinedValue
             } else {
                 initProperty.value
             }
@@ -173,16 +223,17 @@ internal fun EditPropertyDialog(
     }
 
     fun isPropertyNameValid(): Boolean {
-        return propertyNameValidation.isValid() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+        return when (initProperty.rule) {
+            is SnyggAnnotationRule.Defines -> {
+                propertyNameValidation.isValid() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+            }
+
+            else -> propertyName.isNotEmpty() && propertyName != SnyggEmptyPropertyInfoForAdding.name
+        }
     }
 
     fun isPropertyValueValid(): Boolean {
-        return when (val value = propertyValue) {
-            is SnyggImplicitInheritValue -> false
-            is SnyggDefinedVarValue -> value.key.isNotBlank()
-            is SnyggSpSizeValue -> value.sp.isSpecified && value.sp.value >= 1f
-            else -> true
-        }
+        return propertyValue.let { it.encoder().serialize(it).isSuccess }
     }
 
     JetPrefAlertDialog(
@@ -232,12 +283,13 @@ internal fun EditPropertyDialog(
 
             DialogProperty(text = stringRes(R.string.settings__theme_editor__property_name)) {
                 PropertyNameInput(
-                    propertySetSpec = propertySetSpec,
+                    rule = initProperty.rule,
                     name = propertyName,
                     nameValidation = propertyNameValidation,
                     onNameChange = { name ->
-                        if (propertySetSpec != null) {
-                            propertyValueEncoder = SnyggImplicitInheritValue
+                        if (encoders != null) {
+                            propertyValueEncoder = SnyggUndefinedValue
+                            propertyValue = SnyggUndefinedValue
                         }
                         propertyName = name
                     },
@@ -249,25 +301,26 @@ internal fun EditPropertyDialog(
 
             DialogProperty(text = stringRes(R.string.settings__theme_editor__property_value)) {
                 PropertyValueEncoderDropdown(
-                    supportedEncoders = remember(propertyName) {
-                        propertySetSpec?.propertySpec(propertyName)?.encoders ?: SnyggVarValueEncoders
-                    },
+                    supportedEncoders = encoders.orEmpty(),
                     encoder = propertyValueEncoder,
                     onEncoderChange = { encoder ->
                         propertyValueEncoder = encoder
                         propertyValue = encoder.defaultValue()
                     },
                     enabled = isPropertyNameValid(),
-                    isError = showSelectAsError && propertyValueEncoder == SnyggImplicitInheritValue,
+                    isError = showSelectAsError && propertyValueEncoder == SnyggUndefinedValue,
                 )
 
                 PropertyValueEditor(
+                    modifier = Modifier.padding(top = 8.dp),
                     value = propertyValue,
                     onValueChange = { propertyValue = it },
                     level = level,
-                    displayColorsAs = displayColorsAs,
+                    colorRepresentation = colorRepresentation,
                     definedVariables = definedVariables,
-                    isError = showSelectAsError && !isPropertyValueValid(),
+                    fontNames = fontNames,
+                    workspace = workspace,
+                    isError = !isPropertyValueValid(),
                 )
             }
         }
@@ -276,7 +329,7 @@ internal fun EditPropertyDialog(
 
 @Composable
 private fun PropertyNameInput(
-    propertySetSpec: SnyggPropertySetSpec?,
+    rule: SnyggRule,
     name: String,
     nameValidation: ValidationResult,
     onNameChange: (String) -> Unit,
@@ -284,70 +337,68 @@ private fun PropertyNameInput(
     isAddPropertyDialog: Boolean,
     showSelectAsError: Boolean,
 ) {
-    if (propertySetSpec != null) {
-        val possiblePropertyNames = remember(propertySetSpec) {
-            listOf(SnyggEmptyPropertyInfoForAdding.name) + propertySetSpec.supportedProperties.map { it.name }
+    val context = LocalContext.current
+    if (rule !is SnyggAnnotationRule.Defines) {
+        val possiblePropertyNames = buildList {
+            add(SnyggEmptyPropertyInfoForAdding.name)
+            addAll(SnyggSpec.propertiesOf(rule))
         }
-        val possiblePropertyLabels = possiblePropertyNames.map { translatePropertyName(it, level) }
-        var propertiesExpanded by remember { mutableStateOf(false) }
+        val possiblePropertyLabels = possiblePropertyNames.map { context.translatePropertyName(it, level) }
         val propertiesSelectedIndex = remember(name) {
             possiblePropertyNames.indexOf(name).coerceIn(possiblePropertyNames.indices)
         }
-        FlorisDropdownMenu(
-            items = possiblePropertyLabels,
-            expanded = propertiesExpanded,
-            enabled = isAddPropertyDialog,
-            selectedIndex = propertiesSelectedIndex,
-            isError = showSelectAsError && propertiesSelectedIndex == 0,
-            onSelectItem = { index ->
+        JetPrefDropdown(
+            options = possiblePropertyLabels,
+            selectedOptionIndex = propertiesSelectedIndex,
+            onSelectOption = { index ->
                 onNameChange(possiblePropertyNames[index])
             },
-            onExpandRequest = { propertiesExpanded = true },
-            onDismissRequest = { propertiesExpanded = false },
+            enabled = isAddPropertyDialog,
+            isError = showSelectAsError && propertiesSelectedIndex == 0,
         )
     } else {
         val focusManager = LocalFocusManager.current
-        FlorisOutlinedTextField(
+        JetPrefTextField(
             value = name,
             onValueChange = onNameChange,
             enabled = isAddPropertyDialog,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             singleLine = true,
-            showValidationHint = isAddPropertyDialog,
-            showValidationError = showSelectAsError,
-            validationResult = nameValidation,
+            isError = showSelectAsError
         )
+        Validation(
+            showValidationErrors = isAddPropertyDialog && showSelectAsError,
+            validationResult = nameValidation
+        )
+
     }
 }
 
 @Composable
 private fun PropertyValueEncoderDropdown(
-    supportedEncoders: List<SnyggValueEncoder>,
+    supportedEncoders: Set<SnyggValueEncoder>,
     encoder: SnyggValueEncoder,
     onEncoderChange: (SnyggValueEncoder) -> Unit,
     enabled: Boolean = true,
     isError: Boolean = false,
 ) {
     val encoders = remember(supportedEncoders) {
-        listOf(SnyggImplicitInheritValue) + supportedEncoders
+        listOf(SnyggUndefinedValue) + supportedEncoders
     }
-    var expanded by remember { mutableStateOf(false) }
     val selectedIndex = remember(encoder) {
         encoders.indexOf(encoder).coerceIn(encoders.indices)
     }
-    FlorisDropdownMenu(
-        items = encoders,
-        labelProvider = { translatePropertyValueEncoderName(it) },
-        expanded = expanded,
-        enabled = enabled,
-        selectedIndex = selectedIndex,
-        isError = isError,
-        onSelectItem = { index ->
+    val context = LocalContext.current
+    JetPrefDropdown(
+        options = encoders,
+        selectedOptionIndex = selectedIndex,
+        onSelectOption = { index ->
             onEncoderChange(encoders[index])
         },
-        onExpandRequest = { expanded = true },
-        onDismissRequest = { expanded = false },
+        enabled = enabled,
+        isError = isError,
+        optionsLabelProvider = { context.translatePropertyValueEncoderName(it) },
     )
 }
 
@@ -357,37 +408,34 @@ private fun PropertyValueEditor(
     value: SnyggValue,
     onValueChange: (SnyggValue) -> Unit,
     level: SnyggLevel,
-    displayColorsAs: DisplayColorsAs,
+    colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
+    fontNames: List<String>,
+    workspace: CacheManager.ExtEditorWorkspace<*>,
+    modifier: Modifier = Modifier,
     isError: Boolean = false,
 ) {
+    val context = LocalContext.current
     when (value) {
         is SnyggDefinedVarValue -> {
             val variableKeys = remember(definedVariables) {
                 listOf("") + definedVariables.keys.toList()
             }
-            val selectedIndex by remember(variableKeys, value.key) {
-                mutableIntStateOf(variableKeys.indexOf(value.key).coerceIn(variableKeys.indices))
+            val selectedIndex = remember(variableKeys, value.key) {
+                variableKeys.indexOf(value.key).coerceIn(variableKeys.indices)
             }
-            var expanded by remember { mutableStateOf(false) }
-            Row(
-                modifier = Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                FlorisDropdownMenu(
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefDropdown(
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .weight(1f),
-                    items = variableKeys,
-                    labelProvider = { translatePropertyName(it, level) },
-                    expanded = expanded,
-                    selectedIndex = selectedIndex,
+                    options = variableKeys,
+                    optionsLabelProvider = { context.translatePropertyName(it, level) },
+                    selectedOptionIndex = selectedIndex,
                     isError = isError,
-                    onSelectItem = { index ->
+                    onSelectOption = { index ->
                         onValueChange(SnyggDefinedVarValue(variableKeys[index]))
                     },
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
                 )
                 SnyggValueIcon(
                     value = value,
@@ -396,99 +444,72 @@ private fun PropertyValueEditor(
             }
         }
 
-        is SnyggSolidColorValue -> {
+        is SnyggStaticColorValue -> {
             val colorPickerState = rememberJetPrefColorPickerState(initColor = value.color)
-            val colorPickerStr = translatePropertyValue(value, level, displayColorsAs)
-            var showEditColorStrDialog by rememberSaveable { mutableStateOf(false) }
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                Column(modifier = Modifier.padding(top = 8.dp)) {
-                    Row(
-                        modifier = Modifier
-                            .rippleClickable {
-                                showEditColorStrDialog = true
-                            }
-                            .padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(end = 12.dp)
-                                .weight(1f),
-                            text = colorPickerStr,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontFamily = FontFamily.Monospace,
-                        )
-                        SnyggValueIcon(
-                            value = value,
-                            definedVariables = definedVariables,
-                        )
-                    }
-                    JetPrefColorPicker(
-                        onColorChange = { onValueChange(SnyggSolidColorValue(it)) },
-                        state = colorPickerState,
-                    )
+                JetPrefColorPicker(
+                    modifier = Modifier.padding(top = 8.dp),
+                    onColorChange = { onValueChange(SnyggStaticColorValue(it)) },
+                    initialRepresentation = colorRepresentation,
+                    state = colorPickerState,
+                )
+            }
+        }
+
+        is SnyggDynamicColorValue -> {
+            val onSelectItem: (Int) -> Unit = when (value) {
+                is SnyggDynamicDarkColorValue -> { index ->
+                    onValueChange(SnyggDynamicDarkColorValue(ColorPalette.colorNames[index]))
+                }
+
+                is SnyggDynamicLightColorValue -> { index ->
+                    onValueChange(SnyggDynamicLightColorValue(ColorPalette.colorNames[index]))
                 }
             }
-            if (showEditColorStrDialog) {
-                var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-                var showSyntaxHelp by rememberSaveable { mutableStateOf(false) }
-                var colorStr by rememberSaveable { mutableStateOf(colorPickerStr.stripUnicodeCtrlChars()) }
-                val colorStrValidation = rememberValidationResult(ExtensionValidation.SnyggSolidColorValue, colorStr)
-                JetPrefAlertDialog(
-                    title = stringRes(R.string.settings__theme_editor__property_value_color_dialog_title),
-                    confirmLabel = stringRes(R.string.action__apply),
-                    onConfirm = {
-                        if (colorStrValidation.isInvalid()) {
-                            showValidationErrors = true
-                        } else {
-                            val newValue = SnyggSolidColorValue.deserialize(colorStr.trim()).getOrThrow()
-                            onValueChange(newValue)
-                            colorPickerState.setColor((newValue as SnyggSolidColorValue).color)
-                            showEditColorStrDialog = false
-                        }
-                    },
-                    dismissLabel = stringRes(R.string.action__cancel),
-                    onDismiss = {
-                        showEditColorStrDialog = false
-                    },
-                    trailingIconTitle = {
-                        FlorisIconButton(
-                            onClick = { showSyntaxHelp = !showSyntaxHelp },
-                            modifier = Modifier.offset(x = 12.dp),
-                            icon = Icons.AutoMirrored.Filled.HelpOutline,
-                        )
-                    },
-                ) {
-                    Column {
-                        AnimatedVisibility(visible = showSyntaxHelp) {
-                            Column(modifier = Modifier.padding(bottom = 16.dp)) {
-                                Text(text = "Supported color string syntaxes:")
-                                Text(
-                                    text = """
-                                        #RRGGBBAA
-                                         -> all in 00h..FFh
-                                        #RRGGBB
-                                         -> all in 00h..FFh
-                                        rgba(r,g,b,a)
-                                         -> r,g,b in 0..255
-                                         -> a in 0.0..1.0
-                                        rgb(r,g,b)
-                                         -> r,g,b in 0..255
-                                    """.trimIndent(),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontFamily = FontFamily.Monospace,
-                                )
-                            }
-                        }
-                        FlorisOutlinedTextField(
-                            value = colorStr,
-                            onValueChange = { colorStr = it },
-                            showValidationError = showValidationErrors,
-                            validationResult = colorStrValidation,
-                        )
-                    }
-                }
+
+            val selectedIndex = remember(value.colorName) {
+                ColorPalette.colorNames.indexOf(value.colorName).coerceIn(ColorPalette.colorNames.indices)
             }
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefDropdown(
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .weight(1f),
+                    options = ColorPalette.colorNames,
+                    selectedOptionIndex = selectedIndex,
+                    onSelectOption = onSelectItem,
+                    isError = isError,
+                    optionsLabelProvider = { context.translatePropertyName(it, level) },
+                )
+                SnyggValueIcon(
+                    value = value,
+                    definedVariables = definedVariables,
+                )
+            }
+        }
+
+        is SnyggGenericFontFamilyValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggCustomFontFamilyValue -> {
+            CustomFontFamilyValueEditor(value, onValueChange, fontNames, isError, modifier)
+        }
+
+        is SnyggFontStyleValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggFontWeightValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggPaddingValue -> {
+            PaddingValueEditor(value, onValueChange, modifier)
+        }
+
+        is SnyggShapeValue -> {
+            ShapeValueEditor(value, onValueChange, modifier)
         }
 
         is SnyggDpSizeValue -> {
@@ -496,11 +517,8 @@ private fun PropertyValueEditor(
                 val dp = value.dp.takeUnless { it.isUnspecified } ?: SnyggDpSizeValue.defaultValue().dp
                 mutableStateOf(dp.value.toStringWithoutDotZero())
             }
-            Row(
-                modifier = Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                FlorisOutlinedTextField(
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefTextField(
                     modifier = Modifier.weight(1f),
                     value = sizeStr,
                     onValueChange = { value ->
@@ -518,57 +536,13 @@ private fun PropertyValueEditor(
             }
         }
 
-        is SnyggMaterialYouValue -> {
-            val onSelectItem: (Int) -> Unit = when (value) {
-                is SnyggMaterialYouDarkColorValue -> { index ->
-                    onValueChange(SnyggMaterialYouDarkColorValue(MaterialYouColor.colorNames[index]))
-                }
-
-                is SnyggMaterialYouLightColorValue -> { index ->
-                    onValueChange(SnyggMaterialYouLightColorValue(MaterialYouColor.colorNames[index]))
-                }
-            }
-
-            val selectedIndex by remember(value.colorName) {
-                mutableIntStateOf(
-                    MaterialYouColor.colorNames.indexOf(value.colorName).coerceIn(MaterialYouColor.colorNames.indices)
-                )
-            }
-            var expanded by remember { mutableStateOf(false) }
-            Row(
-                modifier = Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                FlorisDropdownMenu(
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .weight(1f),
-                    items = MaterialYouColor.colorNames,
-                    labelProvider = { translatePropertyName(it, level) },
-                    expanded = expanded,
-                    selectedIndex = selectedIndex,
-                    isError = isError,
-                    onSelectItem = onSelectItem,
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
-                )
-                SnyggValueIcon(
-                    value = value,
-                    definedVariables = definedVariables,
-                )
-            }
-        }
-
         is SnyggSpSizeValue -> {
             var sizeStr by remember {
                 val sp = value.sp.takeUnless { it.isUnspecified } ?: SnyggSpSizeValue.defaultValue().sp
                 mutableStateOf(sp.value.toStringWithoutDotZero())
             }
-            Row(
-                modifier = Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                FlorisOutlinedTextField(
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefTextField(
                     modifier = Modifier.weight(1f),
                     value = sizeStr,
                     onValueChange = { value ->
@@ -586,364 +560,661 @@ private fun PropertyValueEditor(
             }
         }
 
-        is SnyggShapeValue -> when (value) {
-            is SnyggDpShapeValue -> {
-                var showDialogInitDp by rememberSaveable(stateSaver = DpSizeSaver) {
-                    mutableStateOf(0.dp)
-                }
-                var showDialogForCorner by rememberSaveable {
-                    mutableStateOf<ShapeCorner?>(null)
-                }
-                var topStart by rememberSaveable(stateSaver = DpSizeSaver) {
-                    mutableStateOf(
-                        when (value) {
-                            is SnyggCutCornerDpShapeValue -> value.topStart
-                            is SnyggRoundedCornerDpShapeValue -> value.topStart
-                        }
-                    )
-                }
-                var topEnd by rememberSaveable(stateSaver = DpSizeSaver) {
-                    mutableStateOf(
-                        when (value) {
-                            is SnyggCutCornerDpShapeValue -> value.topEnd
-                            is SnyggRoundedCornerDpShapeValue -> value.topEnd
-                        }
-                    )
-                }
-                var bottomEnd by rememberSaveable(stateSaver = DpSizeSaver) {
-                    mutableStateOf(
-                        when (value) {
-                            is SnyggCutCornerDpShapeValue -> value.bottomEnd
-                            is SnyggRoundedCornerDpShapeValue -> value.bottomEnd
-                        }
-                    )
-                }
-                var bottomStart by rememberSaveable(stateSaver = DpSizeSaver) {
-                    mutableStateOf(
-                        when (value) {
-                            is SnyggCutCornerDpShapeValue -> value.bottomStart
-                            is SnyggRoundedCornerDpShapeValue -> value.bottomStart
-                        }
-                    )
-                }
-                val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
-                    when (value) {
-                        is SnyggCutCornerDpShapeValue -> {
-                            CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
-                        }
+        is SnyggPercentageSizeValue -> {
+            var sizeStr by remember {
+                mutableStateOf(value.percentage.toString())
+            }
+            Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+                JetPrefTextField(
+                    modifier = Modifier.weight(1f),
+                    value = sizeStr,
+                    onValueChange = { value ->
+                        sizeStr = value
+                        val size = sizeStr.toFloatOrNull()?.let { SnyggPercentageSizeValue(it) }
+                        onValueChange(size ?: SnyggPercentageSizeValue(0f))
+                    },
+                    isError = value.percentage < 0f || value.percentage > 1f,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "%",
+                    fontFamily = FontFamily.Monospace,
+                )
+            }
+        }
 
-                        is SnyggRoundedCornerDpShapeValue -> {
-                            RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
-                        }
-                    }
-                }
-                LaunchedEffect(shape) {
+        is SnyggContentScaleValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggTextAlignValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggTextDecorationLineValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggTextMaxLinesValue -> {
+            var inputStr by rememberSaveable {
+                mutableStateOf(value.encoder().serialize(value).getOrDefault("???"))
+            }
+            JetPrefTextField(
+                value = inputStr,
+                onValueChange = { newInputStr ->
+                    inputStr = newInputStr
                     onValueChange(
-                        when (value) {
-                            is SnyggCutCornerDpShapeValue -> {
-                                SnyggCutCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-                            }
+                        value.encoder().deserialize(newInputStr)
+                            .getOrDefault(SnyggTextMaxLinesValue(-1))
+                    )
+                },
+                modifier = modifier,
+                isError = isError,
+            )
+        }
 
-                            is SnyggRoundedCornerDpShapeValue -> {
-                                SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-                            }
-                        }
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround,
-                ) {
-                    Column {
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitDp = topStart
-                                showDialogForCorner = ShapeCorner.TOP_START
-                            },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topStart.value.toStringWithoutDotZero()),
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitDp = bottomStart
-                                showDialogForCorner = ShapeCorner.BOTTOM_START
-                            },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomStart.value.toStringWithoutDotZero()),
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .requiredSize(40.dp)
-                            .border(1.dp, MaterialTheme.colorScheme.onBackground, shape),
-                    )
-                    Column {
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitDp = topEnd
-                                showDialogForCorner = ShapeCorner.TOP_END
-                            },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topEnd.value.toStringWithoutDotZero()),
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitDp = bottomEnd
-                                showDialogForCorner = ShapeCorner.BOTTOM_END
-                            },
-                            text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomEnd.value.toStringWithoutDotZero()),
-                            shape = MaterialTheme.shapes.medium,
-                        )
+        is SnyggTextOverflowValue -> {
+            EnumLikeValueEditor(value.encoder(), value, onValueChange, modifier)
+        }
+
+        is SnyggUriValue -> {
+            var inputStr by rememberSaveable {
+                mutableStateOf(value.uri)
+            }
+            Column(modifier) {
+                val workspaceFiles = remember {
+                    buildList {
+                        addAll(workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().asList())
+                        addAll(workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().asList())
                     }
                 }
-                val dialogForCorner = showDialogForCorner
-                if (dialogForCorner != null) {
-                    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-                    var size by rememberSaveable {
-                        mutableStateOf(showDialogInitDp.value.toStringWithoutDotZero())
-                    }
-                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
+                var showSelectFileDialog by rememberSaveable { mutableStateOf(false) }
+                if (showSelectFileDialog) {
                     JetPrefAlertDialog(
-                        title = dialogForCorner.label(),
-                        confirmLabel = stringRes(R.string.action__apply),
-                        onConfirm = {
-                            if (sizeValidation.isInvalid()) {
-                                showValidationErrors = true
-                            } else {
-                                val sizeDp = size.toFloat().dp
-                                when (dialogForCorner) {
-                                    ShapeCorner.TOP_START -> topStart = sizeDp
-                                    ShapeCorner.TOP_END -> topEnd = sizeDp
-                                    ShapeCorner.BOTTOM_END -> bottomEnd = sizeDp
-                                    ShapeCorner.BOTTOM_START -> bottomStart = sizeDp
-                                }
-                                showDialogForCorner = null
-                            }
-                        },
+                        title = "Select file",
                         dismissLabel = stringRes(R.string.action__cancel),
                         onDismiss = {
-                            showDialogForCorner = null
+                            showSelectFileDialog = false
                         },
+                        contentPadding = PaddingValues(horizontal = 8.dp),
                     ) {
                         Column {
-                            FlorisOutlinedTextField(
-                                value = size,
-                                onValueChange = { size = it },
-                                showValidationError = showValidationErrors,
-                                validationResult = sizeValidation,
-                            )
-                            FlorisTextButton(
-                                onClick = {
-                                    if (sizeValidation.isInvalid()) {
-                                        showValidationErrors = true
-                                    } else {
-                                        val sizeDp = size.toFloat().dp
-                                        topStart = sizeDp
-                                        topEnd = sizeDp
-                                        bottomEnd = sizeDp
-                                        bottomStart = sizeDp
-                                        showDialogForCorner = null
-                                    }
-                                },
-                                modifier = Modifier.align(Alignment.End),
-                                text = stringRes(R.string.settings__theme_editor__property_value_shape_apply_for_all_corners),
-                            )
-                        }
-                    }
-                }
-            }
-
-            is SnyggPercentShapeValue -> {
-                var showDialogInitPercentage by rememberSaveable {
-                    mutableIntStateOf(0)
-                }
-                var showDialogForCorner by rememberSaveable {
-                    mutableStateOf<ShapeCorner?>(null)
-                }
-                var topStart by rememberSaveable {
-                    mutableIntStateOf(
-                        when (value) {
-                            is SnyggCutCornerPercentShapeValue -> value.topStart
-                            is SnyggRoundedCornerPercentShapeValue -> value.topStart
-                        }
-                    )
-                }
-                var topEnd by rememberSaveable {
-                    mutableIntStateOf(
-                        when (value) {
-                            is SnyggCutCornerPercentShapeValue -> value.topEnd
-                            is SnyggRoundedCornerPercentShapeValue -> value.topEnd
-                        }
-                    )
-                }
-                var bottomEnd by rememberSaveable {
-                    mutableIntStateOf(
-                        when (value) {
-                            is SnyggCutCornerPercentShapeValue -> value.bottomEnd
-                            is SnyggRoundedCornerPercentShapeValue -> value.bottomEnd
-                        }
-                    )
-                }
-                var bottomStart by rememberSaveable {
-                    mutableIntStateOf(
-                        when (value) {
-                            is SnyggCutCornerPercentShapeValue -> value.bottomStart
-                            is SnyggRoundedCornerPercentShapeValue -> value.bottomStart
-                        }
-                    )
-                }
-                val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
-                    when (value) {
-                        is SnyggCutCornerPercentShapeValue -> {
-                            CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
-                        }
-
-                        is SnyggRoundedCornerPercentShapeValue -> {
-                            RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
-                        }
-                    }
-                }
-                LaunchedEffect(shape) {
-                    onValueChange(
-                        when (value) {
-                            is SnyggCutCornerPercentShapeValue -> {
-                                SnyggCutCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
-                            }
-
-                            is SnyggRoundedCornerPercentShapeValue -> {
-                                SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+                            workspaceFiles.forEach { file ->
+                                JetPrefListItem(
+                                    modifier = Modifier.clickable {
+                                        val relPath = file.path.removePrefix(workspace.extDir.path)
+                                        inputStr = "flex:$relPath"
+                                        onValueChange(SnyggUriValue(inputStr))
+                                        showSelectFileDialog = false
+                                    },
+                                    text = file.name,
+                                    colors = ListItemDefaults.colors(
+                                        containerColor = AlertDialogDefaults.containerColor
+                                    )
+                                )
                             }
                         }
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround,
-                ) {
-                    Column {
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitPercentage = topStart
-                                showDialogForCorner = ShapeCorner.TOP_START
-                            },
-                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topStart),
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitPercentage = bottomStart
-                                showDialogForCorner = ShapeCorner.BOTTOM_START
-                            },
-                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to bottomStart),
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .requiredSize(40.dp)
-                            .border(1.dp, MaterialTheme.colorScheme.onBackground, shape),
-                    )
-                    Column {
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitPercentage = topEnd
-                                showDialogForCorner = ShapeCorner.TOP_END
-                            },
-                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topEnd),
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                showDialogInitPercentage = bottomEnd
-                                showDialogForCorner = ShapeCorner.BOTTOM_END
-                            },
-                            text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to bottomEnd),
-                            shape = MaterialTheme.shapes.medium,
-                        )
                     }
                 }
-                val dialogForCorner = showDialogForCorner
-                if (dialogForCorner != null) {
-                    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-                    var size by rememberSaveable {
-                        mutableStateOf(showDialogInitPercentage.toString())
-                    }
-                    val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentShapeValue, size)
-                    JetPrefAlertDialog(
-                        title = dialogForCorner.label(),
-                        confirmLabel = stringRes(R.string.action__apply),
-                        onConfirm = {
-                            if (sizeValidation.isInvalid()) {
-                                showValidationErrors = true
-                            } else {
-                                val sizePercentage = size.toInt()
-                                when (showDialogForCorner) {
-                                    ShapeCorner.TOP_START -> topStart = sizePercentage
-                                    ShapeCorner.TOP_END -> topEnd = sizePercentage
-                                    ShapeCorner.BOTTOM_END -> bottomEnd = sizePercentage
-                                    ShapeCorner.BOTTOM_START -> bottomStart = sizePercentage
-                                    else -> {}
-                                }
-                                showDialogForCorner = null
-                            }
-                        },
-                        dismissLabel = stringRes(R.string.action__cancel),
-                        onDismiss = {
-                            showDialogForCorner = null
-                        },
-                    ) {
-                        Column {
-                            FlorisOutlinedTextField(
-                                value = size,
-                                onValueChange = { size = it },
-                                showValidationError = showValidationErrors,
-                                validationResult = sizeValidation,
-                            )
-                            FlorisTextButton(
-                                onClick = {
-                                    if (sizeValidation.isInvalid()) {
-                                        showValidationErrors = true
-                                    } else {
-                                        val sizePercentage = size.toInt()
-                                        topStart = sizePercentage
-                                        topEnd = sizePercentage
-                                        bottomEnd = sizePercentage
-                                        bottomStart = sizePercentage
-                                        showDialogForCorner = null
-                                    }
-                                },
-                                modifier = Modifier.align(Alignment.End),
-                                text = stringRes(R.string.settings__theme_editor__property_value_shape_apply_for_all_corners),
-                            )
-                        }
-                    }
-                }
-            }
-
-            else -> {
-                Row(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .requiredSize(40.dp)
-                            .border(1.dp, MaterialTheme.colorScheme.onBackground, value.shape),
-                    )
-                }
+                JetPrefTextField(
+                    value = inputStr,
+                    onValueChange = {},
+                    isError = isError,
+                    enabled = false,
+                    trailingIcon = {
+                        FlorisIconButton(
+                            onClick = { showSelectFileDialog = true },
+                            icon = Icons.AutoMirrored.Filled.ManageSearch,
+                        )
+                    },
+                )
             }
         }
 
         else -> {
             // Render nothing
+        }
+    }
+}
+
+@Composable
+private fun <T> EnumLikeValueEditor(
+    encoder: SnyggEnumLikeValueEncoder<T>,
+    value: SnyggValue,
+    onValueChange: (SnyggValue) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val options = remember(encoder.serializationId) { encoder.serializationMapping.keys.toList() }
+    val selectedIndex = remember(value) {
+        encoder.serializationMapping.values.indexOf(encoder.destruct(value))
+    }
+
+    JetPrefDropdown(
+        modifier = modifier,
+        options = options,
+        selectedOptionIndex = selectedIndex,
+        onSelectOption = { index ->
+            val innerValue = encoder.serializationMapping.values.elementAt(index)
+            val value = encoder.construct(innerValue)
+            onValueChange(value)
+        },
+    )
+}
+
+@Composable
+private fun CustomFontFamilyValueEditor(
+    value: SnyggCustomFontFamilyValue,
+    onValueChange: (SnyggValue) -> Unit,
+    fontNames: List<String>,
+    isError: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val options = remember(fontNames) {
+        listOf("-select-") + fontNames
+    }
+    val selectedIndex = remember(value) {
+        val index = fontNames.indexOf(value.fontName)
+        if (index == -1) {
+            0
+        } else {
+            index + 1
+        }
+    }
+
+    JetPrefDropdown(
+        modifier = modifier,
+        options = options,
+        selectedOptionIndex = selectedIndex,
+        onSelectOption = { index ->
+            if (index == 0) {
+                val value = SnyggCustomFontFamilyValue("```")
+                onValueChange(value)
+            } else {
+                val fontName = fontNames.elementAt(index - 1)
+                val value = SnyggCustomFontFamilyValue(fontName)
+                onValueChange(value)
+            }
+        },
+        isError = isError,
+    )
+}
+
+@Composable
+private fun PaddingValueEditor(
+    value: SnyggPaddingValue,
+    onValueChange: (SnyggValue) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val layoutDirection = LocalLayoutDirection.current
+    val paddingValue = value.values
+    var showDialogInitDp by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(0.dp)
+    }
+    var showDialogForPaddingValue by rememberSaveable {
+        mutableStateOf<PaddingValue?>(null)
+    }
+    var start by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateStartPadding(layoutDirection))
+    }
+    var end by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateEndPadding(layoutDirection))
+    }
+    var top by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateTopPadding())
+    }
+    var bottom by rememberSaveable(stateSaver = DpSizeSaver) {
+        mutableStateOf(paddingValue.calculateBottomPadding())
+    }
+    val paddingValues = remember(start, end, top, bottom) {
+        PaddingValues(start, top, end, bottom)
+    }
+
+    LaunchedEffect(paddingValues) {
+        onValueChange(
+            SnyggPaddingValue(paddingValues)
+        )
+    }
+
+    @Composable
+    fun DpChip(
+        onClick: () -> Unit,
+        text: String,
+        alignment: Alignment,
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = alignment,
+        ) {
+            FlorisChip(
+                onClick = onClick,
+                text = text,
+                shape = MaterialTheme.shapes.medium,
+            )
+        }
+    }
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f)) {
+            DpChip(
+                onClick = {
+                    showDialogInitDp = start
+                    showDialogForPaddingValue = PaddingValue.START
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to start.value.toStringWithoutDotZero()),
+                alignment = Alignment.CenterEnd,
+            )
+        }
+        Spacer(Modifier.width(8.dp))
+        Column(Modifier.weight(1f)) {
+            DpChip(
+                onClick = {
+                    showDialogInitDp = top
+                    showDialogForPaddingValue = PaddingValue.TOP
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to top.value.toStringWithoutDotZero()),
+                alignment = Alignment.Center,
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .clip(MaterialTheme.shapes.small)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(paddingValues)
+                    .background(MaterialTheme.colorScheme.inversePrimary),
+            )
+            DpChip(
+                onClick = {
+                    showDialogInitDp = bottom
+                    showDialogForPaddingValue = PaddingValue.BOTTOM
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottom.value.toStringWithoutDotZero()),
+                alignment = Alignment.Center,
+            )
+        }
+        Spacer(Modifier.width(8.dp))
+        Column(Modifier.weight(1f)) {
+            DpChip(
+                onClick = {
+                    showDialogInitDp = end
+                    showDialogForPaddingValue = PaddingValue.END
+                },
+                text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to end.value.toStringWithoutDotZero()),
+                alignment = Alignment.CenterStart,
+            )
+        }
+    }
+
+    val dialogForPaddingValue = showDialogForPaddingValue
+    if (dialogForPaddingValue != null) {
+        var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+        var size by rememberSaveable {
+            mutableStateOf(showDialogInitDp.value.toStringWithoutDotZero())
+        }
+        val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
+        JetPrefAlertDialog(
+            title = dialogForPaddingValue.label(),
+            confirmLabel = stringRes(R.string.action__apply),
+            onConfirm = {
+                if (sizeValidation.isInvalid()) {
+                    showValidationErrors = true
+                } else {
+                    val sizeDp = size.toFloat().dp
+                    when (dialogForPaddingValue) {
+                        PaddingValue.TOP -> top = sizeDp
+                        PaddingValue.BOTTOM -> bottom = sizeDp
+                        PaddingValue.START -> start = sizeDp
+                        PaddingValue.END -> end = sizeDp
+                    }
+                    showDialogForPaddingValue = null
+                }
+            },
+            dismissLabel = stringRes(R.string.action__cancel),
+            onDismiss = {
+                showDialogForPaddingValue = null
+            },
+        ) {
+            Column {
+                JetPrefTextField(
+                    value = size,
+                    onValueChange = { size = it },
+                )
+                Validation(showValidationErrors, sizeValidation)
+                FlorisTextButton(
+                    onClick = {
+                        if (sizeValidation.isInvalid()) {
+                            showValidationErrors = true
+                        } else {
+                            val sizeDp = size.toFloat().dp
+                            top = sizeDp
+                            bottom = sizeDp
+                            start = sizeDp
+                            end = sizeDp
+                            showDialogForPaddingValue = null
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.End),
+                    text = "Apply for all",
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ShapeValueEditor(
+    value: SnyggShapeValue,
+    onValueChange: (SnyggValue) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    when (value) {
+        is SnyggDpShapeValue -> {
+            var showDialogInitDp by rememberSaveable(stateSaver = DpSizeSaver) {
+                mutableStateOf(0.dp)
+            }
+            var showDialogForCorner by rememberSaveable {
+                mutableStateOf<ShapeCorner?>(null)
+            }
+            var topStart by rememberSaveable(stateSaver = DpSizeSaver) {
+                mutableStateOf(value.topStart)
+            }
+            var topEnd by rememberSaveable(stateSaver = DpSizeSaver) {
+                mutableStateOf(value.topEnd)
+            }
+            var bottomEnd by rememberSaveable(stateSaver = DpSizeSaver) {
+                mutableStateOf(value.bottomEnd)
+            }
+            var bottomStart by rememberSaveable(stateSaver = DpSizeSaver) {
+                mutableStateOf(value.bottomStart)
+            }
+            val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
+                when (value) {
+                    is SnyggCutCornerDpShapeValue -> {
+                        CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                    }
+
+                    is SnyggRoundedCornerDpShapeValue -> {
+                        RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                    }
+                }
+            }
+            LaunchedEffect(shape) {
+                onValueChange(
+                    when (value) {
+                        is SnyggCutCornerDpShapeValue -> {
+                            SnyggCutCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+
+                        is SnyggRoundedCornerDpShapeValue -> {
+                            SnyggRoundedCornerDpShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                    }
+                )
+            }
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                Column {
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitDp = topStart
+                            showDialogForCorner = ShapeCorner.TOP_START
+                        },
+                        text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topStart.value.toStringWithoutDotZero()),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitDp = bottomStart
+                            showDialogForCorner = ShapeCorner.BOTTOM_START
+                        },
+                        text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomStart.value.toStringWithoutDotZero()),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .requiredSize(40.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.onBackground, shape),
+                )
+                Column {
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitDp = topEnd
+                            showDialogForCorner = ShapeCorner.TOP_END
+                        },
+                        text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topEnd.value.toStringWithoutDotZero()),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitDp = bottomEnd
+                            showDialogForCorner = ShapeCorner.BOTTOM_END
+                        },
+                        text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to bottomEnd.value.toStringWithoutDotZero()),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                }
+            }
+            val dialogForCorner = showDialogForCorner
+            if (dialogForCorner != null) {
+                var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+                var size by rememberSaveable {
+                    mutableStateOf(showDialogInitDp.value.toStringWithoutDotZero())
+                }
+                val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggDpShapeValue, size)
+                JetPrefAlertDialog(
+                    title = dialogForCorner.label(),
+                    confirmLabel = stringRes(R.string.action__apply),
+                    onConfirm = {
+                        if (sizeValidation.isInvalid()) {
+                            showValidationErrors = true
+                        } else {
+                            val sizeDp = size.toFloat().dp
+                            when (dialogForCorner) {
+                                ShapeCorner.TOP_START -> topStart = sizeDp
+                                ShapeCorner.TOP_END -> topEnd = sizeDp
+                                ShapeCorner.BOTTOM_END -> bottomEnd = sizeDp
+                                ShapeCorner.BOTTOM_START -> bottomStart = sizeDp
+                            }
+                            showDialogForCorner = null
+                        }
+                    },
+                    dismissLabel = stringRes(R.string.action__cancel),
+                    onDismiss = {
+                        showDialogForCorner = null
+                    },
+                ) {
+                    Column {
+                        JetPrefTextField(
+                            value = size,
+                            onValueChange = { size = it },
+                        )
+                        Validation(showValidationErrors, sizeValidation)
+                        FlorisTextButton(
+                            onClick = {
+                                if (sizeValidation.isInvalid()) {
+                                    showValidationErrors = true
+                                } else {
+                                    val sizeDp = size.toFloat().dp
+                                    topStart = sizeDp
+                                    topEnd = sizeDp
+                                    bottomEnd = sizeDp
+                                    bottomStart = sizeDp
+                                    showDialogForCorner = null
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.End),
+                            text = stringRes(R.string.settings__theme_editor__property_value_shape_apply_for_all_corners),
+                        )
+                    }
+                }
+            }
+        }
+
+        is SnyggPercentShapeValue -> {
+            var showDialogInitPercentage by rememberSaveable {
+                mutableIntStateOf(0)
+            }
+            var showDialogForCorner by rememberSaveable {
+                mutableStateOf<ShapeCorner?>(null)
+            }
+            var topStart by rememberSaveable {
+                mutableIntStateOf(value.topStart)
+            }
+            var topEnd by rememberSaveable {
+                mutableIntStateOf(value.topEnd)
+            }
+            var bottomEnd by rememberSaveable {
+                mutableIntStateOf(value.bottomEnd)
+            }
+            var bottomStart by rememberSaveable {
+                mutableIntStateOf(value.bottomStart)
+            }
+            val shape = remember(topStart, topEnd, bottomEnd, bottomStart) {
+                when (value) {
+                    is SnyggCutCornerPercentShapeValue -> {
+                        CutCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                    }
+
+                    is SnyggRoundedCornerPercentShapeValue -> {
+                        RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
+                    }
+                }
+            }
+            LaunchedEffect(shape) {
+                onValueChange(
+                    when (value) {
+                        is SnyggCutCornerPercentShapeValue -> {
+                            SnyggCutCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+
+                        is SnyggRoundedCornerPercentShapeValue -> {
+                            SnyggRoundedCornerPercentShapeValue(topStart, topEnd, bottomEnd, bottomStart)
+                        }
+                    }
+                )
+            }
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                Column {
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitPercentage = topStart
+                            showDialogForCorner = ShapeCorner.TOP_START
+                        },
+                        text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topStart),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitPercentage = bottomStart
+                            showDialogForCorner = ShapeCorner.BOTTOM_START
+                        },
+                        text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to bottomStart),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .requiredSize(40.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.onBackground, shape),
+                )
+                Column {
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitPercentage = topEnd
+                            showDialogForCorner = ShapeCorner.TOP_END
+                        },
+                        text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topEnd),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                    FlorisChip(
+                        onClick = {
+                            showDialogInitPercentage = bottomEnd
+                            showDialogForCorner = ShapeCorner.BOTTOM_END
+                        },
+                        text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to bottomEnd),
+                        shape = MaterialTheme.shapes.medium,
+                    )
+                }
+            }
+            val dialogForCorner = showDialogForCorner
+            if (dialogForCorner != null) {
+                var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+                var size by rememberSaveable {
+                    mutableStateOf(showDialogInitPercentage.toString())
+                }
+                val sizeValidation = rememberValidationResult(ExtensionValidation.SnyggPercentShapeValue, size)
+                JetPrefAlertDialog(
+                    title = dialogForCorner.label(),
+                    confirmLabel = stringRes(R.string.action__apply),
+                    onConfirm = {
+                        if (sizeValidation.isInvalid()) {
+                            showValidationErrors = true
+                        } else {
+                            val sizePercentage = size.toInt()
+                            when (showDialogForCorner) {
+                                ShapeCorner.TOP_START -> topStart = sizePercentage
+                                ShapeCorner.TOP_END -> topEnd = sizePercentage
+                                ShapeCorner.BOTTOM_END -> bottomEnd = sizePercentage
+                                ShapeCorner.BOTTOM_START -> bottomStart = sizePercentage
+                                else -> {}
+                            }
+                            showDialogForCorner = null
+                        }
+                    },
+                    dismissLabel = stringRes(R.string.action__cancel),
+                    onDismiss = {
+                        showDialogForCorner = null
+                    },
+                ) {
+                    Column {
+                        JetPrefTextField(
+                            value = size,
+                            onValueChange = { size = it },
+                        )
+                        Validation(showValidationErrors, sizeValidation)
+                        FlorisTextButton(
+                            onClick = {
+                                if (sizeValidation.isInvalid()) {
+                                    showValidationErrors = true
+                                } else {
+                                    val sizePercentage = size.toInt()
+                                    topStart = sizePercentage
+                                    topEnd = sizePercentage
+                                    bottomEnd = sizePercentage
+                                    bottomStart = sizePercentage
+                                    showDialogForCorner = null
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.End),
+                            text = stringRes(R.string.settings__theme_editor__property_value_shape_apply_for_all_corners),
+                        )
+                    }
+                }
+            }
+        }
+
+        else -> {
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .requiredSize(40.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.onBackground, value.shape),
+                )
+            }
         }
     }
 }

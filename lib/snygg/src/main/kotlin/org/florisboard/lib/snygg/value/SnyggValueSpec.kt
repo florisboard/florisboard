@@ -16,177 +16,219 @@
 
 package org.florisboard.lib.snygg.value
 
-import org.florisboard.lib.kotlin.toStringWithoutDotZero
+import androidx.annotation.CallSuper
+import org.florisboard.lib.kotlin.curlyFormat
+
+private val AngledGroupNameRegex = """<[a-zA-Z0-9]+>""".toRegex()
+private val WhitespaceRegex = """\s*""".toRegex()
 
 interface SnyggValueSpec {
     val id: String?
 
-    fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap
+    val parsePattern: Regex
 
-    fun pack(srcMap: SnyggIdToValueMap): String
+    val packTemplate: String
+
+    @CallSuper
+    fun parse(str: String, dstMap: SnyggIdToValueMap) {
+        val match = parsePattern.matchEntire(str)
+        checkNotNull(match) { "$str does not match pattern $parsePattern" }
+        val groupNames = AngledGroupNameRegex.findAll(parsePattern.toString()).map { angleGroup ->
+            angleGroup.value.substring(1, angleGroup.value.length - 1)
+        }
+        for (groupName in groupNames) {
+            match.groups[groupName]?.let { group ->
+                dstMap.add(groupName to group.value)
+            }
+        }
+    }
+
+    @CallSuper
+    fun pack(srcMap: SnyggIdToValueMap): String {
+        val raw = packTemplate.curlyFormat { arg ->
+            srcMap[arg] ?: error("$arg not provided in mapping")
+        }
+        check(parsePattern.matchEntire(raw) != null) { "cannot serialize" }
+        return raw
+    }
 }
 
 fun SnyggValueSpec(block: SnyggValueSpecBuilder.() -> SnyggValueSpec): SnyggValueSpec {
     return block(SnyggValueSpecBuilder.Instance)
 }
 
-data class SnyggNumberValueSpec<T : Comparable<T>>(
-    override val id: String?,
+private inline fun buildPattern(builderAction: StringBuilder.() -> Unit): Regex {
+    return buildString {
+        append(WhitespaceRegex)
+        builderAction()
+        append(WhitespaceRegex)
+    }.replace("$WhitespaceRegex$WhitespaceRegex", WhitespaceRegex.toString()).toRegex()
+}
+
+data class SnyggIntValueSpec(
+    override val id: String,
     val prefix: String?,
     val suffix: String?,
     val unit: String?,
-    val min: T? = null,
-    val max: T? = null,
-    val namedNumbers: List<Pair<String, T>>,
-    val strToNumber: (String) -> T,
+    val numberPattern: Regex?,
 ) : SnyggValueSpec {
-
-    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
-        checkNotNull(id)
-        var valStr = str.trim()
-        val namedValue = namedNumbers.find { it.first == valStr }
-        if (namedValue != null) {
-            return SnyggIdToValueMap.new(id to namedValue.second)
-        }
-        if (prefix != null) {
-            check(valStr.startsWith(prefix))
-            valStr = valStr.removePrefix(prefix)
-        }
-        if (unit != null) {
-            check(valStr.endsWith(unit))
-            valStr = valStr.removeSuffix(unit)
-        }
-        if (suffix != null) {
-            check(valStr.endsWith(suffix))
-            valStr = valStr.removeSuffix(suffix)
-        }
-        val number = strToNumber(valStr.trim())
-        check(number.coerceIn(min, max) == number)
-        dstMap.add(id to number)
-        return dstMap
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap): String {
-        checkNotNull(id)
-        val value = srcMap.getOrThrow<T>(id)
-        val namedValue = namedNumbers.find { it.second == value }
-        if (namedValue != null) {
-            return namedValue.first
+    override val parsePattern = buildPattern {
+        if (prefix != null) {
+            append(prefix)
         }
-        check(value.coerceIn(min, max) == value)
-        return buildString {
-            prefix?.let { append(it) }
-            append((value as Number).toStringWithoutDotZero())
-            suffix?.let { append(it) }
-            unit?.let { append(it) }
+        val numberPatternStr = numberPattern?.toString() ?: "0|[+-]?[1-9][0-9]*"
+        append("(?<$id>$numberPatternStr)")
+        if (suffix != null) {
+            append(suffix)
+        }
+        if (unit != null) {
+            append(unit)
+        }
+    }
+
+    override val packTemplate = buildString {
+        if (prefix != null) {
+            append(prefix)
+        }
+        append("{$id}")
+        if (suffix != null) {
+            append(suffix)
+        }
+        if (unit != null) {
+            append(unit)
+        }
+    }
+}
+
+data class SnyggFloatValueSpec(
+    override val id: String,
+    val prefix: String?,
+    val suffix: String?,
+    val unit: String?,
+    val numberPattern: Regex?,
+) : SnyggValueSpec {
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
+    }
+
+    override val parsePattern = buildPattern {
+        if (prefix != null) {
+            append(prefix)
+        }
+        val numberPatternStr = numberPattern ?: "(?:0|[1-9][0-9]*)(?:[.][0-9]*)?"
+        append("(?<$id>$numberPatternStr)")
+        if (suffix != null) {
+            append(suffix)
+        }
+        if (unit != null) {
+            append(unit)
+        }
+    }
+
+    override val packTemplate = buildString {
+        if (prefix != null) {
+            append(prefix)
+        }
+        append("{$id}")
+        if (suffix != null) {
+            append(suffix)
+        }
+        if (unit != null) {
+            append(unit)
         }
     }
 }
 
 data class SnyggKeywordValueSpec(
-    override val id: String?,
+    override val id: String,
     val keywords: List<String>,
 ) : SnyggValueSpec {
-
-    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
-        checkNotNull(id)
-        val valStr = str.trim()
-        check(valStr in keywords)
-        dstMap.add(id to valStr)
-        return dstMap
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap): String {
-        checkNotNull(id)
-        val value = srcMap.getOrThrow<String>(id)
-        check(value in keywords)
-        return value
+    override val parsePattern = buildPattern {
+        append("(?<$id>")
+        append(keywords.joinToString("|"))
+        append(")")
+    }
+
+    override val packTemplate = buildString {
+        append("{$id}")
     }
 }
 
 data class SnyggStringValueSpec(
-    override val id: String?,
-    val regex: Regex,
+    override val id: String,
+    private val pattern: Regex,
 ) : SnyggValueSpec {
-
-    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
-        checkNotNull(id)
-        val valStr = str.trim()
-        check(valStr matches regex) { "String \"$valStr\" does not match regex $regex" }
-        dstMap.add(id to valStr)
-        return dstMap
+    init {
+        require(id.isNotBlank()) { "id cannot be blank" }
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap): String {
-        checkNotNull(id)
-        val value = srcMap.getOrThrow<String>(id)
-        check(value matches regex) { "String \"$value\" does not match regex $regex" }
-        return value
+    override val parsePattern = buildPattern {
+        append("(?<$id>")
+        append(pattern)
+        append(")")
+    }
+
+    override val packTemplate = buildString {
+        append("{$id}")
     }
 }
 
 data class SnyggFunctionValueSpec(
-    override val id: String?,
     val name: String,
     val innerSpec: SnyggValueSpec,
 ) : SnyggValueSpec {
+    override val id = null
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
-        var valStr = str.trim()
-        check(valStr.startsWith(name)) { "Incorrect function name" }
-        valStr = valStr.removePrefix(name).trim()
-        check(valStr.startsWith('(') && valStr.endsWith(')'))
-        valStr = valStr.substring(1, valStr.length - 1)
-        return innerSpec.parse(valStr, dstMap)
+    override val parsePattern = buildPattern {
+        append(name)
+        append("[(]")
+        append(innerSpec.parsePattern)
+        append("[)]")
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap): String {
-        val innerStr = innerSpec.pack(srcMap)
-        return "$name($innerStr)"
+    override val packTemplate = buildString {
+        append(name)
+        append("(")
+        append(innerSpec.packTemplate)
+        append(")")
     }
 }
 
 data class SnyggListValueSpec(
-    override val id: String?,
     val separator: String,
     val valueSpecs: List<SnyggValueSpec>,
 ) : SnyggValueSpec {
+    override val id = null
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
-        val valStr = str.trim()
-        val values = valStr.split(separator)
-        check(values.size == valueSpecs.size)
-        for ((n, value) in values.withIndex()) {
-            val valueSpec = valueSpecs[n]
-            valueSpec.parse(value.trim(), dstMap)
+    override val parsePattern = buildPattern {
+        for ((index, valueSpec) in valueSpecs.withIndex()) {
+            if (index != 0) append(separator)
+            append(valueSpec.parsePattern)
         }
-        return dstMap
     }
 
-    override fun pack(srcMap: SnyggIdToValueMap): String {
-        return buildString {
-            for ((n, valueSpec) in valueSpecs.withIndex()) {
-                append(valueSpec.pack(srcMap))
-                if (n < valueSpecs.size - 1) {
-                    append(separator)
-                }
-            }
+    override val packTemplate = buildString {
+        for ((index, valueSpec) in valueSpecs.withIndex()) {
+            if (index != 0) append(separator)
+            append(valueSpec.packTemplate)
         }
     }
 }
 
-data class SnyggNothingValueSpec(
-    override val id: String?,
-) : SnyggValueSpec {
+object SnyggNothingValueSpec : SnyggValueSpec {
+    override val id = null
 
-    override fun parse(str: String, dstMap: SnyggIdToValueMap): SnyggIdToValueMap {
-        check(str.isBlank())
-        return dstMap
-    }
+    override val parsePattern = buildPattern {}
 
-    override fun pack(srcMap: SnyggIdToValueMap): String {
-        return ""
-    }
+    override val packTemplate = buildString {}
 }
 
 class SnyggValueFormatListBuilder {
@@ -207,7 +249,6 @@ class SnyggValueSpecBuilder {
     inline fun spacedList(
         valueFormatsBlock: SnyggValueFormatListBuilder.() -> Unit,
     ) = SnyggListValueSpec(
-        id = null,
         separator = " ",
         valueSpecs = SnyggValueFormatListBuilder().let { valueFormatsBlock(it); it.build() },
     )
@@ -215,7 +256,6 @@ class SnyggValueSpecBuilder {
     inline fun commaList(
         valueFormatsBlock: SnyggValueFormatListBuilder.() -> Unit,
     ) = SnyggListValueSpec(
-        id = null,
         separator = ",",
         valueSpecs = SnyggValueFormatListBuilder().let { valueFormatsBlock(it); it.build() },
     )
@@ -223,47 +263,41 @@ class SnyggValueSpecBuilder {
     inline fun function(
         name: String,
         innerSpecBuilder: SnyggValueSpecBuilder.() -> SnyggValueSpec,
-    ) = SnyggFunctionValueSpec(id = null, name, innerSpecBuilder(Instance))
+    ) = SnyggFunctionValueSpec(name, innerSpecBuilder(Instance))
 
     fun keywords(
-        id: String? = null,
+        id: String,
         keywords: List<String>,
     ) = SnyggKeywordValueSpec(id, keywords)
 
     fun string(
-        id: String? = null,
+        id: String,
         regex: Regex,
     ) = SnyggStringValueSpec(id, regex)
 
     fun int(
-        id: String? = null,
+        id: String,
         prefix: String? = null,
         suffix: String? = null,
         unit: String? = null,
-        min: Int? = null,
-        max: Int? = null,
-        namedNumbers: List<Pair<String, Int>> = listOf(),
-    ) = SnyggNumberValueSpec(id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toInt() })
+        numberPattern: Regex? = null,
+    ) = SnyggIntValueSpec(id, prefix, suffix, unit, numberPattern)
 
     fun float(
-        id: String? = null,
+        id: String,
         prefix: String? = null,
         suffix: String? = null,
         unit: String? = null,
-        min: Float? = null,
-        max: Float? = null,
-        namedNumbers: List<Pair<String, Float>> = listOf(),
-    ) = SnyggNumberValueSpec(id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toFloat() })
+        numberPattern: Regex? = null,
+    ) = SnyggFloatValueSpec(id, prefix, suffix, unit, numberPattern)
 
     fun percentageInt(
-        id: String? = null,
-        namedNumbers: List<Pair<String, Int>> = listOf(),
-    ) = int(id, unit = "%", min = 0, max = 100, namedNumbers = namedNumbers)
+        id: String,
+    ) = int(id, unit = "%", numberPattern = """100|[1-9]?[0-9]""".toRegex())
 
     fun percentageFloat(
-        id: String? = null,
-        namedNumbers: List<Pair<String, Float>> = listOf(),
-    ) = float(id, unit = "%", min = 0.0f, max = 100.0f, namedNumbers = namedNumbers)
+        id: String,
+    ) = float(id, unit = "%", numberPattern = """100(?:[.]0*)?|[1-9]?[0-9](?:[.][0-9]*)?""".toRegex())
 
-    fun nothing() = SnyggNothingValueSpec(null)
+    fun nothing() = SnyggNothingValueSpec
 }

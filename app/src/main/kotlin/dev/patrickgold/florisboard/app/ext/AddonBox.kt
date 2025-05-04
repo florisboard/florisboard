@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Input
 import androidx.compose.material.icons.filled.Shop
 import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +30,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -40,6 +43,41 @@ import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import org.florisboard.lib.kotlin.curlyFormat
+
+@Composable
+fun ImportExtensionBox(navController: NavController) {
+    val context = LocalContext.current
+    FlorisOutlinedBox(
+        modifier = Modifier.defaultFlorisOutlinedBox(),
+    ) {
+        Text(
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
+            text = stringRes(id = R.string.ext__home__info),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 6.dp),
+        ) {
+            FlorisTextButton(
+                onClick = {
+                    context.launchUrl("https://${BuildConfig.FLADDONS_STORE_URL}/")
+                },
+                icon = Icons.Default.Shop,
+                text = stringRes(id = R.string.ext__home__visit_store),
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            FlorisTextButton(
+                onClick = {
+                    navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, null))
+                },
+                icon = Icons.AutoMirrored.Filled.Input,
+                text = stringRes(R.string.action__import),
+            )
+        }
+    }
+}
 
 @Composable
 fun UpdateBox(extensionIndex: List<Extension>) {

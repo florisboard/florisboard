@@ -17,14 +17,16 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.absoluteOffset
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -55,7 +57,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -78,7 +79,6 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisRect
@@ -95,13 +95,15 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
 import org.florisboard.lib.android.isOrientationLandscape
-import org.florisboard.lib.snygg.ui.SnyggSurface
-import org.florisboard.lib.snygg.ui.snyggBackground
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.ui.spSize
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.abs
 import kotlin.math.sqrt
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextKeyboardLayout(
@@ -119,8 +121,8 @@ fun TextKeyboardLayout(
     val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
         evaluator.state.keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
-    val glideTrailColor = FlorisImeTheme.style.get(element = FlorisImeUi.GlideTrail)
-        .foreground.solidColor(context, default = Color.Green)
+    val glideTrailStyle = rememberSnyggThemeQuery(FlorisImeUi.GlideTrail.elementName)
+    val glideTrailColor = glideTrailStyle.foreground(default = Color.Green)
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
@@ -295,7 +297,7 @@ fun TextKeyboardLayout(
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, evaluator, fontSizeMultiplier,
+                textKey, evaluator,
                 debugShowTouchBoundaries,
             )
         }
@@ -316,49 +318,29 @@ fun TextKeyboardLayout(
 private fun TextKeyButton(
     key: TextKey,
     evaluator: ComputingEvaluator,
-    fontSizeMultiplier: Float,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
-    val context = LocalContext.current
-
-    val keyStyle = FlorisImeTheme.style.get(
-        element = FlorisImeUi.Key,
-        code = key.computedData.code,
-        mode = evaluator.state.inputShiftState.value,
-        isPressed = key.isPressed && key.isEnabled,
-        isDisabled = !key.isEnabled,
+    evaluator.keyboard.mode
+    val attributes = mapOf(
+        FlorisImeUi.Attr.Code to key.computedData.code,
+        FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.attrName(),
+        FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.attrName(),
     )
-    val fontSize = keyStyle.fontSize.spSize() safeTimes fontSizeMultiplier safeTimes when (key.computedData.code) {
-        KeyCode.VIEW_CHARACTERS,
-        KeyCode.VIEW_SYMBOLS,
-        KeyCode.VIEW_SYMBOLS2 -> 0.80f
-        KeyCode.VIEW_NUMERIC,
-        KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
-        else -> 1.0f
+    val selector = when {
+        !key.isEnabled -> SnyggSelector.DISABLED
+        key.isPressed -> SnyggSelector.PRESSED
+        else -> SnyggSelector.NONE
     }
     val size = key.visibleBounds.size.toDpSize()
-    Box(
+    SnyggBox(
+        FlorisImeUi.Key.elementName,
+        attributes = attributes,
+        selector = selector,
         modifier = Modifier
             .requiredSize(size)
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
     ) {
-        // TODO: maybe make this customizable through a size property for keyStyle
-        val isReducedHeight = key.computedData.let { it.code == KeyCode.ENTER || it.code == KeyCode.SPACE }
-        SnyggSurface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .run {
-                    if (isReducedHeight && FlorisImeTheme.config.isBorderless) {
-                        this.padding(vertical = size.height * 0.15f)
-                    } else {
-                        this
-                    }
-                }
-                .fillMaxHeight(),
-            style = keyStyle,
-            clip = false,
-        ) { }
-        val isTelpadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
+        val isTelPadKey = key.computedData.type == KeyType.NUMERIC && evaluator.keyboard.mode == KeyboardMode.PHONE
         key.label?.let { label ->
             var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
@@ -370,52 +352,29 @@ private fun TextKeyButton(
                     SpaceBarMode.SPACE_BAR_KEY -> customLabel = "␣"
                 }
             }
-            Text(
+            SnyggText(
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(if (isTelpadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
+                    .align(if (isTelPadKey) BiasAlignment(-0.5f, 0f) else Alignment.Center),
                 text = customLabel,
-                color = keyStyle.foreground.solidColor(context),
-                fontSize = fontSize,
-                maxLines = if (key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED) 2 else 1,
-                softWrap = key.computedData.code == KeyCode.VIEW_NUMERIC_ADVANCED,
-                overflow = when (key.computedData.code) {
-                    KeyCode.SPACE -> TextOverflow.Ellipsis
-                    else -> TextOverflow.Visible
-                },
             )
         }
         key.hintedLabel?.let { hintedLabel ->
-            val keyHintStyle = FlorisImeTheme.style.get(
-                element = FlorisImeUi.KeyHint,
-                code = key.computedHintData.code,
-                mode = evaluator.state.inputShiftState.value,
-                isPressed = key.isPressed,
-            )
-            val hintFontSize = keyHintStyle.fontSize.spSize() safeTimes fontSizeMultiplier
-            Text(
+            SnyggText(
+                elementName = FlorisImeUi.KeyHint.elementName,
+                attributes = attributes,
+                selector = selector,
                 modifier = Modifier
                     .wrapContentSize()
-                    .align(if (isTelpadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd)
-                    .snyggBackground(context, keyHintStyle)
-                    .padding(horizontal = (key.visibleBounds.width / 12f).toDp()),
+                    .align(if (isTelPadKey) BiasAlignment(0.5f, 0f) else Alignment.TopEnd),
                 text = hintedLabel,
-                color = keyHintStyle.foreground.solidColor(context),
-                fontFamily = FontFamily.Monospace,
-                fontSize = hintFontSize,
-                maxLines = 1,
-                softWrap = false,
-                overflow = TextOverflow.Visible,
             )
         }
         key.foregroundImageVector?.let { imageVector ->
-            Icon(
-                modifier = Modifier
-                    .requiredSize(fontSize.toDp() * 1.1f)
-                    .align(Alignment.Center),
+            SnyggIcon(
+                modifier = Modifier.align(Alignment.Center),
                 imageVector = imageVector,
                 contentDescription = null,
-                tint = keyStyle.foreground.solidColor(context),
             )
         }
     }

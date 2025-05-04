@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.theme
+package org.florisboard.lib.kotlin
 
-/**
- * DisplayColorsAs indicates how color strings should be visually presented to the user.
- */
-enum class DisplayColorsAs {
-    HEX8,
-    RGBA;
+import kotlin.reflect.KClass
+
+fun KClass<*>.simpleNameOrEnclosing(): String? {
+    return if (this.simpleName == "Companion") {
+        // Companion object => get the enclosing class
+        this.java.enclosingClass.simpleName
+    } else {
+        // Normal object => directly get class
+        this.simpleName
+    }
 }

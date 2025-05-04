@@ -28,6 +28,12 @@ inline fun extCoreTheme(id: String) = ExtensionComponentName(
     componentId = id,
 )
 
+@Suppress("NOTHING_TO_INLINE")
+inline fun extPreviewTheme(id: String) = ExtensionComponentName(
+    extensionId = "local.themes.preview",
+    componentId = id,
+)
+
 interface ThemeExtensionComponent : ExtensionComponent {
     companion object {
         fun defaultStylesheetPath(id: String): String {
@@ -39,8 +45,6 @@ interface ThemeExtensionComponent : ExtensionComponent {
     override val label: String
     override val authors: List<String>
     val isNightTheme: Boolean
-    val isBorderless: Boolean
-    val isMaterialYouAware: Boolean
     val stylesheetPath: String?
 
     fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
@@ -53,14 +57,12 @@ data class ThemeExtensionComponentImpl(
     override val authors: List<String>,
     @SerialName("isNight")
     override val isNightTheme: Boolean = true,
-    override val isBorderless: Boolean = false,
-    override val isMaterialYouAware: Boolean = false,
     @SerialName("stylesheet")
     override val stylesheetPath: String? = null,
 ) : ThemeExtensionComponent {
 
     fun edit() = ThemeExtensionComponentEditor(
-        id, label, authors, isNightTheme, isBorderless, isMaterialYouAware, stylesheetPath ?: "",
+        id, label, authors, isNightTheme, stylesheetPath ?: "",
     )
 }
 
@@ -69,8 +71,6 @@ class ThemeExtensionComponentEditor(
     override var label: String = "",
     override var authors: List<String> = emptyList(),
     override var isNightTheme: Boolean = true,
-    override var isBorderless: Boolean = false,
-    override var isMaterialYouAware: Boolean = false,
     override var stylesheetPath: String = "",
 ) : ThemeExtensionComponent {
 
@@ -83,8 +83,6 @@ class ThemeExtensionComponentEditor(
             label = label.trim(),
             authors = authors.filterNot { it.isBlank() },
             isNightTheme = isNightTheme,
-            isBorderless = isBorderless,
-            isMaterialYouAware = isMaterialYouAware,
             stylesheetPath = stylesheetPath.takeUnless { it.isBlank() },
         )
         check(id.isNotBlank()) { "Theme component ID cannot be blank" }

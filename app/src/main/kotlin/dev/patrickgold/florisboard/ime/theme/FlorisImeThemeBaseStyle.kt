@@ -16,182 +16,291 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
 
-val FlorisImeThemeBaseStyle = SnyggStylesheet {
+val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     defines {
-        "primary" to rgbaColor(76, 175, 80)
-        "primaryVariant" to rgbaColor(56, 142, 60)
-        "secondary" to rgbaColor(245, 124, 0)
-        "secondaryVariant" to rgbaColor(230, 81, 0)
-        "background" to rgbaColor(33, 33, 33)
-        "surface" to rgbaColor(66, 66, 66)
-        "surfaceVariant" to rgbaColor(97, 97, 97)
+        "--primary" to rgbaColor(76, 175, 80)
+        "--primary-variant" to rgbaColor(56, 142, 60)
+        "--secondary" to rgbaColor(245, 124, 0)
+        "--secondary-variant" to rgbaColor(230, 81, 0)
+        "--background" to rgbaColor(33, 33, 33)
+        "--surface" to rgbaColor(66, 66, 66)
+        "--surface-variant" to rgbaColor(97, 97, 97)
 
-        "onBackground" to rgbaColor(255, 255, 255)
-        "onSurface" to rgbaColor(255, 255, 255)
+        "--on-primary" to rgbaColor(240, 240, 240)
+        "--on-background" to rgbaColor(255, 255, 255)
+        "--on-background-disabled" to rgbaColor(80, 80, 80)
+        "--on-surface" to rgbaColor(255, 255, 255)
+
+        "--shape" to roundedCornerShape(8.dp)
+        "--shape-variant" to roundedCornerShape(12.dp)
     }
 
-    FlorisImeUi.Keyboard {
-        background = `var`("background")
+    FlorisImeUi.Window.elementName {
+        background = `var`("--background")
+        foreground = `var`("--on-background")
     }
-    FlorisImeUi.Key {
-        background = `var`("surface")
-        foreground = `var`("onSurface")
-        fontSize = size(22.sp)
+
+    FlorisImeUi.Key.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(22.sp)
         shadowElevation = size(2.dp)
-        shape = roundedCornerShape(20)
+        shape = `var`("--shape")
+        textMaxLines = textMaxLines(1)
     }
-    FlorisImeUi.Key(pressedSelector = true) {
-        background = `var`("surfaceVariant")
-        foreground = `var`("onSurface")
+    FlorisImeUi.Key.elementName(selector = SnyggSelector.PRESSED) {
+        background = `var`("--surface-variant")
+        foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
-        background = `var`("primary")
-        foreground = `var`("onSurface")
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER)) {
+        background = `var`("--primary")
+        foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key(codes = listOf(KeyCode.ENTER), pressedSelector = true) {
-        background = `var`("primaryVariant")
-        foreground = `var`("onSurface")
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
+        background = `var`("--primary-variant")
+        foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key(
-        codes = listOf(KeyCode.SHIFT),
-        modes = listOf(InputShiftState.CAPS_LOCK.value),
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(12.sp)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
+        KeyCode.VIEW_CHARACTERS,
+        KeyCode.VIEW_SYMBOLS,
+        KeyCode.VIEW_SYMBOLS2,
+    )) {
+        fontSize = fontSize(18.sp)
+    }
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
+        KeyCode.VIEW_NUMERIC,
+        KeyCode.VIEW_NUMERIC_ADVANCED,
+    )) {
+        fontSize = fontSize(12.sp)
+    }
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.VIEW_NUMERIC_ADVANCED)) {
+        textMaxLines = textMaxLines(2)
+    }
+    FlorisImeUi.Key.elementName(
+        FlorisImeUi.Attr.Code to listOf(KeyCode.SHIFT),
+        FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.attrName()),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }
-    FlorisImeUi.Key(codes = listOf(KeyCode.SPACE)) {
-        background = `var`("surface")
-        foreground = rgbaColor(144, 144, 144)
-        fontSize = size(12.sp)
-    }
-    FlorisImeUi.KeyHint {
+    FlorisImeUi.KeyHint.elementName {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(184, 184, 184)
-        fontSize = size(12.sp)
+        foreground = `var`("--on-surface-variant")
+        fontFamily = genericFontFamily(FontFamily.Monospace)
+        fontSize = fontSize(12.sp)
+        padding = padding(0.dp, 1.dp, 1.dp, 0.dp)
+        textMaxLines = textMaxLines(1)
     }
-    FlorisImeUi.KeyPopup {
+    FlorisImeUi.KeyPopupBox.elementName {
         background = rgbaColor(117, 117, 117)
-        foreground = `var`("onSurface")
-        fontSize = size(22.sp)
-        shape = roundedCornerShape(20)
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(22.sp)
+        shape = `var`("--shape")
+        shadowElevation = size(2.dp)
     }
-    FlorisImeUi.KeyPopup(focusSelector = true) {
+    FlorisImeUi.KeyPopupElement.elementName(selector = SnyggSelector.FOCUS) {
         background = rgbaColor(189, 189, 189)
-        foreground = `var`("onSurface")
-        fontSize = size(22.sp)
-        shape = roundedCornerShape(20)
+        shape = `var`("--shape")
+    }
+    FlorisImeUi.KeyPopupExtendedIndicator.elementName {
+        fontSize = fontSize(16.sp)
     }
 
-    FlorisImeUi.ClipboardHeader {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = `var`("onSurface")
-        fontSize = size(16.sp)
+    FlorisImeUi.Smartbar.elementName {
+        fontSize = fontSize(18.sp)
     }
-    FlorisImeUi.ClipboardItem {
-        background = `var`("surface")
-        foreground = `var`("onSurface")
-        fontSize = size(14.sp)
-        shape = roundedCornerShape(12.dp)
-    }
-    FlorisImeUi.ClipboardItemPopup {
-        background = rgbaColor(117, 117, 117)
-        foreground = `var`("onSurface")
-        fontSize = size(14.sp)
-        shape = roundedCornerShape(12.dp)
-    }
-    FlorisImeUi.ClipboardEnableHistoryButton {
-        background = `var`("primary")
-        foreground = rgbaColor(0, 0, 0)
-        shape = roundedCornerShape(12.dp)
-    }
-
-    FlorisImeUi.EmojiKey {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = `var`("onBackground")
-        fontSize = size(22.sp)
-        shape = roundedCornerShape(20)
-    }
-    FlorisImeUi.EmojiKey(pressedSelector = true) {
-        background = `var`("surface")
-        foreground = `var`("onSurface")
-    }
-
-    FlorisImeUi.GlideTrail {
-        foreground = `var`("primary")
-    }
-
-    FlorisImeUi.IncognitoModeIndicator {
-        foreground = rgbaColor(255, 255, 255, 0.067f)
-    }
-
-    FlorisImeUi.OneHandedPanel {
-        background = rgbaColor(27, 94, 32)
-        foreground = rgbaColor(238, 238, 238)
-    }
-
-    FlorisImeUi.Smartbar {
+    FlorisImeUi.SmartbarSharedActionsRow.elementName {
         background = rgbaColor(0, 0, 0, 0f)
     }
-    FlorisImeUi.SmartbarSharedActionsRow {
-        background = rgbaColor(0, 0, 0, 0f)
-    }
-    FlorisImeUi.SmartbarSharedActionsToggle {
-        background = `var`("surface")
-        foreground = `var`("onSurface")
+    FlorisImeUi.SmartbarSharedActionsToggle.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
         shape = circleShape()
     }
-    FlorisImeUi.SmartbarExtendedActionsRow {
+    FlorisImeUi.SmartbarExtendedActionsRow.elementName {
         background = rgbaColor(0, 0, 0, 0f)
     }
-    FlorisImeUi.SmartbarExtendedActionsToggle {
+    FlorisImeUi.SmartbarExtendedActionsToggle.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(144, 144, 144)
         shape = circleShape()
     }
-    FlorisImeUi.SmartbarActionKey {
+    FlorisImeUi.SmartbarActionKey.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        fontSize = size(18.sp)
+        shape = `var`("--shape")
+        clip = yes()
+    }
+    FlorisImeUi.SmartbarActionKey.elementName(selector = SnyggSelector.DISABLED) {
+        foreground = `var`("--on-background-disabled")
+    }
+    FlorisImeUi.SmartbarActionTile.elementName {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = `var`("--on-background")
+        margin = padding(4.dp)
         shape = roundedCornerShape(20)
+        clip = yes()
+        textMaxLines = textMaxLines(2)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.SmartbarActionKey(pressedSelector = true) {
-        background = `var`("surface")
-        foreground = rgbaColor(220, 220, 220)
+    FlorisImeUi.SmartbarActionTile.elementName(selector = SnyggSelector.DISABLED) {
+        foreground = `var`("--on-background-disabled")
     }
-    FlorisImeUi.SmartbarActionKey(disabledSelector = true) {
+    FlorisImeUi.SmartbarActionsOverflowCustomizeButton.elementName {
+        background = `var`("--primary")
+        foreground = `var`("--on-primary")
+        shape = roundedCornerShape(24.dp)
+    }
+
+    FlorisImeUi.SmartbarActionsEditor.elementName {
+        background = `var`("--background")
+        foreground = `var`("--on-background")
+        shape = roundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp)
+        clip = yes()
+    }
+    FlorisImeUi.SmartbarActionsEditorHeader.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(16.sp)
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SmartbarActionsEditorSubheader.elementName {
+        foreground = `var`("--secondary")
+        fontSize = fontSize(16.sp)
+        fontWeight = fontWeight(FontWeight.Bold)
+        padding = padding(12.dp, 16.dp, 12.dp, 8.dp)
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SmartbarActionsEditorTileGrid.elementName {
+        margin = padding(4.dp, 0.dp)
+    }
+    FlorisImeUi.SmartbarActionsEditorTile.elementName {
+        margin = padding(4.dp)
+        padding = padding(8.dp)
+        textAlign = textAlign(TextAlign.Center)
+        textMaxLines = textMaxLines(2)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.NOOP)) {
+        foreground = `var`("--on-background-disabled")
+    }
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.DRAG_MARKER)) {
+        foreground = rgbaColor(255, 0, 0)
+    }
+
+    FlorisImeUi.SmartbarCandidateWord.elementName {
         background = rgbaColor(0, 0, 0, 0f)
-        foreground = `var`("surface")
-    }
-    FlorisImeUi.SmartbarCandidateWord {
-        background = rgbaColor(0, 0, 0, 0f)
-        foreground = rgbaColor(220, 220, 220)
-        fontSize = size(14.sp)
+        foreground = `var`("--on-background")
+        fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
+        padding = padding(8.dp, 0.dp)
         shape = rectangleShape()
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.SmartbarCandidateWord(pressedSelector = true) {
-        background = `var`("surface")
-        foreground = rgbaColor(220, 220, 220)
+    FlorisImeUi.SmartbarCandidateWord.elementName(selector = SnyggSelector.PRESSED) {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
     }
-    FlorisImeUi.SmartbarCandidateClip {
+    FlorisImeUi.SmartbarCandidateClip.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
-        fontSize = size(14.sp)
+        fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
+        padding = padding(8.dp, 0.dp)
         shape = roundedCornerShape(8)
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.SmartbarCandidateClip(pressedSelector = true) {
-        background = `var`("surface")
-        foreground = rgbaColor(220, 220, 220)
+    FlorisImeUi.SmartbarCandidateClip.elementName(selector = SnyggSelector.PRESSED) {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
     }
-    FlorisImeUi.SmartbarCandidateSpacer {
+    FlorisImeUi.SmartbarCandidateSpacer.elementName {
         foreground = rgbaColor(255, 255, 255, 0.25f)
     }
 
-    FlorisImeUi.SystemNavBar {
-        background = `var`("background")
+    FlorisImeUi.ClipboardHeader.elementName {
+        foreground = `var`("--on-background")
+        fontSize = fontSize(16.sp)
+    }
+    FlorisImeUi.ClipboardSubheader.elementName {
+        fontSize = fontSize(14.sp)
+        margin = padding(6.dp)
+    }
+    FlorisImeUi.ClipboardContent.elementName {
+        padding = padding(10.dp)
+    }
+    FlorisImeUi.ClipboardItem.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
+        padding = padding(12.dp, 8.dp)
+        shape = `var`("--shape-variant")
+        clip = yes()
+        shadowElevation = size(2.dp)
+    }
+    FlorisImeUi.ClipboardItemPopup.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        margin = padding(4.dp)
+        shape = `var`("--shape-variant")
+        clip = yes()
+        shadowElevation = size(2.dp)
+    }
+    FlorisImeUi.ClipboardItemPopupAction.elementName {
+        fontSize = fontSize(16.sp)
+        padding = padding(12.dp)
+    }
+    FlorisImeUi.ClipboardItemPopupActionText.elementName {
+        margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
+    }
+    FlorisImeUi.ClipboardHistoryDisabledButton.elementName {
+        background = `var`("--primary")
+        foreground = `var`("--on-primary")
+        shape = roundedCornerShape(24.dp)
+    }
+
+    FlorisImeUi.MediaEmojiKey.elementName {
+        background = rgbaColor(0, 0, 0, 0f)
+        foreground = `var`("--on-background")
+        fontSize = fontSize(22.sp)
+        shape = `var`("--shape")
+    }
+    FlorisImeUi.MediaEmojiKey.elementName(selector = SnyggSelector.PRESSED) {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+    }
+
+    FlorisImeUi.GlideTrail.elementName {
+        foreground = `var`("--primary")
+    }
+
+    FlorisImeUi.IncognitoModeIndicator.elementName {
+        foreground = rgbaColor(255, 255, 255, 0.067f)
+    }
+
+    FlorisImeUi.OneHandedPanel.elementName {
+        background = rgbaColor(27, 94, 32)
+        foreground = rgbaColor(238, 238, 238)
     }
 }
