@@ -59,49 +59,10 @@ internal fun Context.translateElementName(rule: SnyggElementRule, level: SnyggLe
     return translateElementName(rule.elementName, level) ?: rule.elementName
 }
 
-private val ElementNameMap = mapOf(
-    "defines" to R.string.snygg__rule_annotation__defines,
-    "font" to R.string.snygg__rule_annotation__font,
-    FlorisImeUi.Keyboard.elementName to R.string.snygg__rule_element__keyboard,
-    FlorisImeUi.Key.elementName to R.string.snygg__rule_element__key,
-    FlorisImeUi.KeyHint.elementName to R.string.snygg__rule_element__key_hint,
-    FlorisImeUi.KeyPopupBox.elementName to R.string.snygg__rule_element__key_popup_box,
-    FlorisImeUi.KeyPopupElement.elementName to R.string.snygg__rule_element__key_popup_element,
-    FlorisImeUi.KeyPopupExtendedIndicator.elementName to R.string.snygg__rule_element__key_popup_extended_indicator,
-    FlorisImeUi.ClipboardHeader.elementName to R.string.snygg__rule_element__clipboard_header,
-    FlorisImeUi.ClipboardItem.elementName to R.string.snygg__rule_element__clipboard_item,
-    FlorisImeUi.ClipboardItemPopup.elementName to R.string.snygg__rule_element__clipboard_item_popup,
-    FlorisImeUi.MediaEmojiKey.elementName to R.string.snygg__rule_element__emoji_key,
-    FlorisImeUi.MediaEmojiKeyPopupBox.elementName to R.string.snygg__rule_element__emoji_key_popup,
-    FlorisImeUi.MediaEmojiTab.elementName to R.string.snygg__rule_element__emoji_key_tab,
-    FlorisImeUi.ExtractedLandscapeInputLayout.elementName to R.string.snygg__rule_element__extracted_landscape_input_layout,
-    FlorisImeUi.ExtractedLandscapeInputField.elementName to R.string.snygg__rule_element__extracted_landscape_input_field,
-    FlorisImeUi.ExtractedLandscapeInputAction.elementName to R.string.snygg__rule_element__extracted_landscape_input_action,
-    FlorisImeUi.GlideTrail.elementName to R.string.snygg__rule_element__glide_trail,
-    FlorisImeUi.IncognitoModeIndicator.elementName to R.string.snygg__rule_element__incognito_mode_indicator,
-    FlorisImeUi.OneHandedPanel.elementName to R.string.snygg__rule_element__one_handed_panel,
-    FlorisImeUi.Smartbar.elementName to R.string.snygg__rule_element__smartbar,
-    FlorisImeUi.SmartbarSharedActionsRow.elementName to R.string.snygg__rule_element__smartbar_shared_actions_row,
-    FlorisImeUi.SmartbarSharedActionsToggle.elementName to R.string.snygg__rule_element__smartbar_shared_actions_toggle,
-    FlorisImeUi.SmartbarExtendedActionsRow.elementName to R.string.snygg__rule_element__smartbar_extended_actions_row,
-    FlorisImeUi.SmartbarExtendedActionsToggle.elementName to R.string.snygg__rule_element__smartbar_extended_actions_toggle,
-    FlorisImeUi.SmartbarActionKey.elementName to R.string.snygg__rule_element__smartbar_action_key,
-    FlorisImeUi.SmartbarActionTile.elementName to R.string.snygg__rule_element__smartbar_action_tile,
-    FlorisImeUi.SmartbarActionsOverflow.elementName to R.string.snygg__rule_element__smartbar_actions_overflow,
-    FlorisImeUi.SmartbarActionsOverflowCustomizeButton.elementName to R.string.snygg__rule_element__smartbar_actions_overflow_customize_button,
-    FlorisImeUi.SmartbarActionsEditor.elementName to R.string.snygg__rule_element__smartbar_actions_editor,
-    FlorisImeUi.SmartbarActionsEditorHeader.elementName to R.string.snygg__rule_element__smartbar_actions_editor_header,
-    FlorisImeUi.SmartbarActionsEditorSubheader.elementName to R.string.snygg__rule_element__smartbar_actions_editor_subheader,
-    FlorisImeUi.SmartbarCandidatesRow.elementName to R.string.snygg__rule_element__smartbar_candidates_row,
-    FlorisImeUi.SmartbarCandidateWord.elementName to R.string.snygg__rule_element__smartbar_candidate_word,
-    FlorisImeUi.SmartbarCandidateClip.elementName to R.string.snygg__rule_element__smartbar_candidate_clip,
-    FlorisImeUi.SmartbarCandidateSpacer.elementName to R.string.snygg__rule_element__smartbar_candidate_spacer,
-)
-
 internal fun Context.translateElementName(element: String, level: SnyggLevel): String? {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
-        else -> ElementNameMap[element]?.let { getString(it) }
+        else -> FlorisImeUi.elementNamesToTranslation[element]?.let { getString(it) }
     }
 }
 

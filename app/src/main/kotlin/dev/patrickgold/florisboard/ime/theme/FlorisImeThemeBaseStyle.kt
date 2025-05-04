@@ -46,7 +46,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         "--shape-variant" to roundedCornerShape(12.dp)
     }
 
-    FlorisImeUi.Keyboard.elementName {
+    FlorisImeUi.Window.elementName {
         background = `var`("--background")
         foreground = `var`("--on-background")
     }

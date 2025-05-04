@@ -696,10 +696,10 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                     ).also { it.stylesheetEditor = c.stylesheetEditor }
                                 }
                                 if (componentEditor.stylesheetEditor != null) {
-                                    val stylesheet = componentEditor.stylesheetEditor!!.build()
                                     val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                     stylesheetFile.parentFile?.mkdirs()
-                                    stylesheetFile.writeJson(stylesheet)
+                                    val stylesheet = componentEditor.stylesheetEditor!!.build().toJson(PrettyPrintConfig).getOrThrow()
+                                    stylesheetFile.writeText(stylesheet)
                                     componentEditor.stylesheetEditor = null
                                 } else {
                                     val srcStylesheetFile = workspace.extDir.subFile(component.stylesheetPath())

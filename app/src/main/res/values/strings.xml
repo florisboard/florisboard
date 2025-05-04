@@ -209,30 +209,68 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Stylesheet error</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} can try to leniently load the stylesheet and add missing schemas, rules, or remove invalid rules, properties, or values. Do you want {app_name} to apply these changes?</string>
 
     <string name="snygg__rule_annotation__defines">Variables</string>
     <string name="snygg__rule_annotation__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
     <string name="snygg__rule_annotation__font">Font</string>
     <string name="snygg__rule_annotation__font_name">Font name</string>
 
-    <string name="snygg__rule_element__keyboard">Keyboard window</string>
+    <string name="snygg__rule_element__root">Root</string>
+    <string name="snygg__rule_element__window">Window</string>
+
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>
     <string name="snygg__rule_element__key_popup_box">Key popup box</string>
     <string name="snygg__rule_element__key_popup_element">Key popup element</string>
     <string name="snygg__rule_element__key_popup_extended_indicator">Key popup extended indicator</string>
+
     <string name="snygg__rule_element__clipboard_header">Clipboard header</string>
+    <string name="snygg__rule_element__clipboard_header_button">Clipboard header button</string>
+    <string name="snygg__rule_element__clipboard_header_text">Clipboard header text</string>
+    <string name="snygg__rule_element__clipboard_subheader">Clipboard subheader</string>
+    <string name="snygg__rule_element__clipboard_content">Clipboard content</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
-    <string name="snygg__rule_element__emoji_key">Emoji key</string>
-    <string name="snygg__rule_element__emoji_key_popup">Emoji key popup</string>
-    <string name="snygg__rule_element__emoji_key_tab">Emoji tab</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action">Clipboard item popup action</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Clipboard item popup icon</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_text">Clipboard item popup text</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Clipboard clear all dialog</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Clipboard clear all dialog message</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Clipboard clear all dialog buttons</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Clipboard clear all dialog button</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Clipboard history disabled title</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Clipboard history disabled message</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Clipboard history disabled button</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Clipboard history locked title</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Clipboard history locked message</string>
+
     <string name="snygg__rule_element__extracted_landscape_input_layout">Landscape input layout</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Landscape input field</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Landscape input action</string>
+
     <string name="snygg__rule_element__glide_trail">Glide trail</string>
+
     <string name="snygg__rule_element__incognito_mode_indicator">Incognito mode indicator</string>
+
+    <string name="snygg__rule_element__inline_autofill_chip">Inline autofill chip</string>
+
+    <string name="snygg__rule_element__media">Media</string>
+
+    <string name="snygg__rule_element__media_emoji_subheader">Media emoji subheader</string>
+    <string name="snygg__rule_element__media_emoji_key">Media emoji key</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Media emoji key popup box</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Media emoji key popup element</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Media emoji key popup box</string>
+    <string name="snygg__rule_element__media_emoji_tab">Media emoji tab</string>
+
+    <string name="snygg__rule_element__media_bottom_row">Media bottom row</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Media bottom row button</string>
+
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
+    <string name="snygg__rule_element__one_handed_panel_button">One-handed panel button</string>
+
     <string name="snygg__rule_element__smartbar">Smartbar</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Smartbar shared actions row</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Smartbar shared actions toggle</string>
@@ -242,13 +280,22 @@
     <string name="snygg__rule_element__smartbar_action_tile">Smartbar action tile</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Smartbar actions overflow</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Smartbar actions overflow customize button</string>
+
     <string name="snygg__rule_element__smartbar_actions_editor">Smartbar actions editor</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Smartbar actions editor header</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Smartbar actions editor header button</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Smartbar actions editor subheader</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Smartbar actions editor tile grid</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Smartbar actions editor tile</string>
+
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar candidates row</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
+
+    <string name="snygg__rule_element__subtype_panel">Subtype panel</string>
+    <string name="snygg__rule_element__subtype_panel_header">Subtype panel header</string>
+
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
     <string name="snygg__rule_selector__hover">Hover</string>

@@ -16,85 +16,279 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-enum class FlorisImeUi(val elementName: String) {
-    Root("root"),
+import dev.patrickgold.florisboard.R
 
-    Keyboard("keyboard"),
-    Key("key"),
-    KeyHint("key-hint"),
-    KeyPopupBox("key-popup-box"),
-    KeyPopupElement("key-popup-element"),
-    KeyPopupExtendedIndicator("key-popup-extended-indicator"),
+enum class FlorisImeUi(val elementName: String, val resId: Int?) {
+    Root(
+        elementName = "root",
+        resId = R.string.snygg__rule_element__root,
+    ),
+    Window(
+        elementName = "window",
+        resId = R.string.snygg__rule_element__window,
+    ),
 
-    ClipboardHeader("clipboard-header"),
-    ClipboardHeaderButton("clipboard-header-button"),
-    ClipboardHeaderText("clipboard-header-text"),
-    ClipboardSubheader("clipboard-subheader"),
-    ClipboardContent("clipboard-content"),
-    ClipboardItem("clipboard-item"),
-    ClipboardItemPopup("clipboard-item-popup"),
-    ClipboardItemPopupAction("clipboard-item-popup-action"),
-    ClipboardItemPopupActionIcon("clipboard-item-popup-action-icon"),
-    ClipboardItemPopupActionText("clipboard-item-popup-action-text"),
-    ClipboardClearAllDialog("clipboard-clear-all-dialog"),
-    ClipboardClearAllDialogMessage("clipboard-clear-all-dialog-message"),
-    ClipboardClearAllDialogButtons("clipboard-clear-all-dialog-buttons"),
-    ClipboardClearAllDialogButton("clipboard-clear-all-dialog-button"),
-    ClipboardHistoryDisabledTitle("clipboard-history-disabled-title"),
-    ClipboardHistoryDisabledMessage("clipboard-history-disabled-message"),
-    ClipboardHistoryDisabledButton("clipboard-history-disabled-button"),
-    ClipboardHistoryLockedTitle("clipboard-history-locked-title"),
-    ClipboardHistoryLockedMessage("clipboard-history-locked-message"),
+    Key(
+        elementName = "key",
+        resId = R.string.snygg__rule_element__key,
+    ),
+    KeyHint(
+        elementName = "key-hint",
+        resId = R.string.snygg__rule_element__key_hint,
+    ),
+    KeyPopupBox(
+        elementName = "key-popup-box",
+        resId = R.string.snygg__rule_element__key_popup_box,
+    ),
+    KeyPopupElement(
+        elementName = "key-popup-element",
+        resId = R.string.snygg__rule_element__key_popup_element,
+    ),
+    KeyPopupExtendedIndicator(
+        elementName = "key-popup-extended-indicator",
+        resId = R.string.snygg__rule_element__key_popup_extended_indicator,
+    ),
 
-    ExtractedLandscapeInputLayout("extracted-landscape-input-layout"),
-    ExtractedLandscapeInputField("extracted-landscape-input-field"),
-    ExtractedLandscapeInputAction("extracted-landscape-input-action"),
+    ClipboardHeader(
+        elementName = "clipboard-header",
+        resId = R.string.snygg__rule_element__clipboard_header,
+    ),
+    ClipboardHeaderButton(
+        elementName = "clipboard-header-button",
+        resId = R.string.snygg__rule_element__clipboard_header_button,
+    ),
+    ClipboardHeaderText(
+        elementName = "clipboard-header-text",
+        resId = R.string.snygg__rule_element__clipboard_header_text,
+    ),
+    ClipboardSubheader(
+        elementName = "clipboard-subheader",
+        resId = R.string.snygg__rule_element__clipboard_subheader,
+    ),
+    ClipboardContent(
+        elementName = "clipboard-content",
+        resId = R.string.snygg__rule_element__clipboard_content,
+    ),
+    ClipboardItem(
+        elementName = "clipboard-item",
+        resId = R.string.snygg__rule_element__clipboard_item,
+    ),
+    ClipboardItemPopup(
+        elementName = "clipboard-item-popup",
+        resId = R.string.snygg__rule_element__clipboard_item_popup,
+    ),
+    ClipboardItemPopupAction(
+        elementName = "clipboard-item-popup-action",
+        resId = R.string.snygg__rule_element__clipboard_item_popup_action,
+    ),
+    ClipboardItemPopupActionIcon(
+        elementName = "clipboard-item-popup-action-icon",
+        resId = R.string.snygg__rule_element__clipboard_item_popup_action_icon,
+    ),
+    ClipboardItemPopupActionText(
+        elementName = "clipboard-item-popup-action-text",
+        resId = R.string.snygg__rule_element__clipboard_item_popup_action_text,
+    ),
+    ClipboardClearAllDialog(
+        elementName = "clipboard-clear-all-dialog",
+        resId = R.string.snygg__rule_element__clipboard_clear_all_dialog,
+    ),
+    ClipboardClearAllDialogMessage(
+        elementName = "clipboard-clear-all-dialog-message",
+        resId = R.string.snygg__rule_element__clipboard_clear_all_dialog_message,
+    ),
+    ClipboardClearAllDialogButtons(
+        elementName = "clipboard-clear-all-dialog-buttons",
+        resId = R.string.snygg__rule_element__clipboard_clear_all_dialog_buttons,
+    ),
+    ClipboardClearAllDialogButton(
+        elementName = "clipboard-clear-all-dialog-button",
+        resId = R.string.snygg__rule_element__clipboard_clear_all_dialog_button,
+    ),
+    ClipboardHistoryDisabledTitle(
+        elementName = "clipboard-history-disabled-title",
+        resId = R.string.snygg__rule_element__clipboard_history_disabled_title,
+    ),
+    ClipboardHistoryDisabledMessage(
+        elementName = "clipboard-history-disabled-message",
+        resId = R.string.snygg__rule_element__clipboard_history_disabled_message,
+    ),
+    ClipboardHistoryDisabledButton(
+        elementName = "clipboard-history-disabled-button",
+        resId = R.string.snygg__rule_element__clipboard_history_disabled_button,
+    ),
+    ClipboardHistoryLockedTitle(
+        elementName = "clipboard-history-locked-title",
+        resId = R.string.snygg__rule_element__clipboard_history_locked_title,
+    ),
+    ClipboardHistoryLockedMessage(
+        elementName = "clipboard-history-locked-message",
+        resId = R.string.snygg__rule_element__clipboard_history_locked_message,
+    ),
 
-    GlideTrail("glide-trail"),
+    ExtractedLandscapeInputLayout(
+        elementName = "extracted-landscape-input-layout",
+        resId = R.string.snygg__rule_element__extracted_landscape_input_layout,
+    ),
+    ExtractedLandscapeInputField(
+        elementName = "extracted-landscape-input-field",
+        resId = R.string.snygg__rule_element__extracted_landscape_input_field,
+    ),
+    ExtractedLandscapeInputAction(
+        elementName = "extracted-landscape-input-action",
+        resId = R.string.snygg__rule_element__extracted_landscape_input_action,
+    ),
 
-    IncognitoModeIndicator("incognito-mode-indicator"),
+    GlideTrail(
+        elementName = "glide-trail",
+        resId = R.string.snygg__rule_element__glide_trail,
+    ),
 
-    InlineAutofillChip("inline-autofill-chip"),
+    IncognitoModeIndicator(
+        elementName = "incognito-mode-indicator",
+        resId = R.string.snygg__rule_element__incognito_mode_indicator,
+    ),
 
-    Media("media"),
+    InlineAutofillChip(
+        elementName = "inline-autofill-chip",
+        resId = R.string.snygg__rule_element__inline_autofill_chip,
+    ),
 
-    MediaEmojiSubheader("media-emoji-subheader"),
-    MediaEmojiKey("media-emoji-key"),
-    MediaEmojiKeyPopupBox("media-emoji-key-popup-box"),
-    MediaEmojiKeyPopupElement("media-emoji-key-popup-element"),
-    MediaEmojiKeyPopupExtendedIndicator("media-emoji-key-popup-extended-indicator"),
-    MediaEmojiTab("media-emoji-tab"),
+    Media(
+        elementName = "media",
+        resId = R.string.snygg__rule_element__media,
+    ),
 
-    MediaBottomRow("media-bottom-row"),
-    MediaBottomRowButton("media-bottom-row-button"),
+    MediaEmojiSubheader(
+        elementName = "media-emoji-subheader",
+        resId = R.string.snygg__rule_element__media_emoji_subheader,
+    ),
+    MediaEmojiKey(
+        elementName = "media-emoji-key",
+        resId = R.string.snygg__rule_element__media_emoji_key,
+    ),
+    MediaEmojiKeyPopupBox(
+        elementName = "media-emoji-key-popup-box",
+        resId = R.string.snygg__rule_element__media_emoji_key_popup_box,
+    ),
+    MediaEmojiKeyPopupElement(
+        elementName = "media-emoji-key-popup-element",
+        resId = R.string.snygg__rule_element__media_emoji_key_popup_element,
+    ),
+    MediaEmojiKeyPopupExtendedIndicator(
+        elementName = "media-emoji-key-popup-extended-indicator",
+        resId = R.string.snygg__rule_element__media_emoji_key_popup_extended_indicator,
+    ),
+    MediaEmojiTab(
+        elementName = "media-emoji-tab",
+        resId = R.string.snygg__rule_element__media_emoji_tab,
+    ),
 
-    OneHandedPanel("one-handed-panel"),
-    OneHandedPanelButton("one-handed-panel-button"),
+    MediaBottomRow(
+        elementName = "media-bottom-row",
+        resId = R.string.snygg__rule_element__media_bottom_row,
+    ),
+    MediaBottomRowButton(
+        elementName = "media-bottom-row-button",
+        resId = R.string.snygg__rule_element__media_bottom_row_button,
+    ),
 
-    Smartbar("smartbar"),
-    SmartbarSharedActionsRow("smartbar-shared-actions-row"),
-    SmartbarSharedActionsToggle("smartbar-shared-actions-toggle"),
-    SmartbarExtendedActionsRow("smartbar-extended-actions-row"),
-    SmartbarExtendedActionsToggle("smartbar-extended-actions-toggle"),
-    SmartbarActionKey("smartbar-action-key"),
-    SmartbarActionTile("smartbar-action-tile"),
-    SmartbarActionsOverflow("smartbar-actions-overflow"),
-    SmartbarActionsOverflowCustomizeButton("smartbar-actions-overflow-customize-button"),
+    OneHandedPanel(
+        elementName = "one-handed-panel",
+        resId = R.string.snygg__rule_element__one_handed_panel,
+    ),
+    OneHandedPanelButton(
+        elementName = "one-handed-panel-button",
+        resId = R.string.snygg__rule_element__one_handed_panel_button,
+    ),
 
-    SmartbarActionsEditor("smartbar-actions-editor"),
-    SmartbarActionsEditorHeader("smartbar-actions-editor-header"),
-    SmartbarActionsEditorHeaderButton("smartbar-actions-editor-header-button"),
-    SmartbarActionsEditorSubheader("smartbar-actions-editor-subheader"),
-    SmartbarActionsEditorTileGrid("smartbar-actions-editor-tile-grid"),
-    SmartbarActionsEditorTile("smartbar-actions-editor-tile"),
+    Smartbar(
+        elementName = "smartbar",
+        resId = R.string.snygg__rule_element__smartbar,
+    ),
+    SmartbarSharedActionsRow(
+        elementName = "smartbar-shared-actions-row",
+        resId = R.string.snygg__rule_element__smartbar_shared_actions_row,
+    ),
+    SmartbarSharedActionsToggle(
+        elementName = "smartbar-shared-actions-toggle",
+        resId = R.string.snygg__rule_element__smartbar_shared_actions_toggle,
+    ),
+    SmartbarExtendedActionsRow(
+        elementName = "smartbar-extended-actions-row",
+        resId = R.string.snygg__rule_element__smartbar_extended_actions_row,
+    ),
+    SmartbarExtendedActionsToggle(
+        elementName = "smartbar-extended-actions-toggle",
+        resId = R.string.snygg__rule_element__smartbar_extended_actions_toggle,
+    ),
+    SmartbarActionKey(
+        elementName = "smartbar-action-key",
+        resId = R.string.snygg__rule_element__smartbar_action_key,
+    ),
+    SmartbarActionTile(
+        elementName = "smartbar-action-tile",
+        resId = R.string.snygg__rule_element__smartbar_action_tile,
+    ),
+    SmartbarActionsOverflow(
+        elementName = "smartbar-actions-overflow",
+        resId = R.string.snygg__rule_element__smartbar_actions_overflow,
+    ),
+    SmartbarActionsOverflowCustomizeButton(
+        elementName = "smartbar-actions-overflow-customize-button",
+        resId = R.string.snygg__rule_element__smartbar_actions_overflow_customize_button,
+    ),
 
-    SmartbarCandidatesRow("smartbar-candidates-row"),
-    SmartbarCandidateWord("smartbar-candidate-word"),
-    SmartbarCandidateClip("smartbar-candidate-clip"),
-    SmartbarCandidateSpacer("smartbar-candidate-spacer"),
+    SmartbarActionsEditor(
+        elementName = "smartbar-actions-editor",
+        resId = R.string.snygg__rule_element__smartbar_actions_editor,
+    ),
+    SmartbarActionsEditorHeader(
+        elementName = "smartbar-actions-editor-header",
+        resId = R.string.snygg__rule_element__smartbar_actions_editor_header,
+    ),
+    SmartbarActionsEditorHeaderButton(
+        elementName = "smartbar-actions-editor-header-button",
+        resId = R.string.snygg__rule_element__smartbar_actions_editor_header_button,
+    ),
+    SmartbarActionsEditorSubheader(
+        elementName = "smartbar-actions-editor-subheader",
+        resId = R.string.snygg__rule_element__smartbar_actions_editor_subheader,
+    ),
+    SmartbarActionsEditorTileGrid(
+        elementName = "smartbar-actions-editor-tile-grid",
+        resId = R.string.snygg__rule_element__smartbar_actions_editor_tile_grid,
+    ),
+    SmartbarActionsEditorTile(
+        elementName = "smartbar-actions-editor-tile",
+        resId = R.string.snygg__rule_element__smartbar_actions_editor_tile,
+    ),
 
-    SubtypePanel("subtype-panel"),
-    SubtypePanelHeader("subtype-panel-header");
+    SmartbarCandidatesRow(
+        elementName = "smartbar-candidates-row",
+        resId = R.string.snygg__rule_element__smartbar_candidates_row,
+    ),
+    SmartbarCandidateWord(
+        elementName = "smartbar-candidate-word",
+        resId = R.string.snygg__rule_element__smartbar_candidate_word,
+    ),
+    SmartbarCandidateClip(
+        elementName = "smartbar-candidate-clip",
+        resId = R.string.snygg__rule_element__smartbar_candidate_clip,
+    ),
+    SmartbarCandidateSpacer(
+        elementName = "smartbar-candidate-spacer",
+        resId = R.string.snygg__rule_element__smartbar_candidate_spacer,
+    ),
+
+    SubtypePanel(
+        elementName = "subtype-panel",
+        resId = R.string.snygg__rule_element__subtype_panel,
+    ),
+    SubtypePanelHeader(
+        elementName = "subtype-panel-header",
+        resId = R.string.snygg__rule_element__subtype_panel_header,
+    );
 
     companion object {
         val elementNames by lazy { entries.map { it.elementName } }
@@ -104,6 +298,17 @@ enum class FlorisImeUi(val elementName: String) {
             buildMap {
                 enumEntries.forEach { entry ->
                     put(entry.elementName, entry.ordinal)
+                }
+            }
+        }
+
+        val elementNamesToTranslation by lazy {
+            val enumEntries = entries
+            buildMap {
+                put("defines", R.string.snygg__rule_annotation__defines)
+                put("font", R.string.snygg__rule_annotation__font)
+                enumEntries.forEach { entry ->
+                    put(entry.elementName, entry.resId)
                 }
             }
         }

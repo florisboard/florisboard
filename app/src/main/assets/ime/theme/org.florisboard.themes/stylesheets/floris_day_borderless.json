@@ -30,7 +30,7 @@
     "--shape-variant": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
   },
 
-  "keyboard": {
+  "window": {
     "background": "var(--background)",
     "foreground": "var(--on-background)",
     "clip": "no"

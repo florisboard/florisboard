@@ -158,7 +158,7 @@ fun ThemeEditorScreen(
     }
     var stylesheetEditorFailure by remember { mutableStateOf<Throwable?>(null) }
     val stylesheetEditor = remember(stylesheetLoadingStrategy) {
-        run {
+        editor.stylesheetEditor ?: run {
             stylesheetEditorFailure = null
             val stylesheetPath = editor.stylesheetPath()
             editor.stylesheetPathOnLoad = stylesheetPath
@@ -254,18 +254,28 @@ fun ThemeEditorScreen(
     content {
         stylesheetEditorFailure?.let { failure ->
             JetPrefAlertDialog(
-                title = "HEHEHEHA GRRRR",
-                confirmLabel = "OK",
+                title = stringRes(R.string.settings__theme_editor__stylesheet_error_title),
+                confirmLabel = stringRes(R.string.action__yes),
                 onConfirm = {
+                    editor.stylesheetEditor = null
                     stylesheetLoadingStrategy = StylesheetLoadingStrategy.TRY_LOAD_OR_PARSE_LENIENT
                 },
-                dismissLabel = "Nein, du kek",
+                dismissLabel = stringRes(R.string.action__no),
                 onDismiss = {
+                    editor.stylesheetEditor = null
                     stylesheetLoadingStrategy = StylesheetLoadingStrategy.TRY_LOAD_OR_EMPTY
                 },
             ) {
-                Text(failure.message ?: "Invalid")
-                Text("Go fuck yourself")
+                Column {
+                    Text(
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        text = failure.message.toString(),
+                        fontStyle = FontStyle.Italic,
+                    )
+                    Text(
+                        text = stringRes(R.string.settings__theme_editor__stylesheet_error_description),
+                    )
+                }
             }
         }
 
@@ -419,7 +429,9 @@ fun ThemeEditorScreen(
                                     key(propertySet.uuid) {
                                         FlorisOutlinedBox(Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
                                             Row {
-                                                Text("Source set", Modifier.padding(start = 16.dp).align(Alignment.CenterVertically))
+                                                Text("Source set", Modifier
+                                                    .padding(start = 16.dp)
+                                                    .align(Alignment.CenterVertically))
                                                 Spacer(Modifier.weight(1f))
                                                 FlorisIconButton(
                                                     onClick = {

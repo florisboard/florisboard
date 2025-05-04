@@ -359,13 +359,13 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
     val prefs by florisPreferenceModel()
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val secondaryRowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarExtendedActionsRow.elementName)
-    val keyboardStyle = rememberSnyggThemeQuery(FlorisImeUi.Keyboard.elementName)
+    val windowStyle = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
     val background = secondaryRowStyle.background().let { color ->
         if (extendedActionsPlacement == ExtendedActionsPlacement.OVERLAY_APP_UI) {
             if (color.isUnspecified || color.alpha == 0f) {
-                keyboardStyle.background(default = Color.Black)
+                windowStyle.background(default = Color.Black)
             } else {
                 color
             }
