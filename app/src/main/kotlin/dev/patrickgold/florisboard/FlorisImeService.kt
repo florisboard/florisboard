@@ -49,7 +49,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -621,9 +620,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                    println("oneHandedMode: $oneHandedMode")
                     val oneHandedModeEnabled by prefs.keyboard.oneHandedModeEnabled.observeAsState()
-                    println("oneHandedModeEnabled: $oneHandedModeEnabled")
                     val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
                     val keyboardWeight = when {
                         !oneHandedModeEnabled || configuration.isOrientationLandscape() -> 1f
