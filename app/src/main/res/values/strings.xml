@@ -76,6 +76,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Open clipboard history</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
+    <string name="quick_action__language_switch" maxLength="12">Switch language</string>
+    <string name="quick_action__language_switch__tooltip">Perform language switch</string>
     <string name="quick_action__settings" maxLength="12">Settings</string>
     <string name="quick_action__settings__tooltip">Open settings</string>
     <string name="quick_action__undo" maxLength="12">Undo</string>
