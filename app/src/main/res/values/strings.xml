@@ -208,6 +208,8 @@
     <string name="settings__theme_editor__property_value">Property value</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Apply for all corners</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Edit color string</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Select file</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">No files have been added to this extension yet. Please use the "{action_title}" action in the previous screen to import files.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
@@ -764,6 +766,8 @@
     <string name="ext__editor__metadata__message_invalid">The meta data for this extension is not valid, please check the meta data editor for details!</string>
     <string name="ext__editor__dependencies__title">Manage dependencies</string>
     <string name="ext__editor__files__title">Manage archive files</string>
+    <string name="ext__editor__files__type_fonts">Fonts</string>
+    <string name="ext__editor__files__type_images">Images</string>
     <string name="ext__editor__create_component__title">Create component</string>
     <string name="ext__editor__create_component__title_theme">Create theme</string>
     <string name="ext__editor__create_component__from_empty">Empty</string>
@@ -838,7 +842,11 @@
     <string name="action__discard_confirm_message">Are you sure you want to discard your unsaved changes? This action can not be undone once executed.</string>
     <string name="action__edit">Edit</string>
     <string name="action__export">Export</string>
+    <string name="action__export_file">Import file</string>
+    <string name="action__export_files">Import files</string>
     <string name="action__import">Import</string>
+    <string name="action__import_file">Import file</string>
+    <string name="action__import_files">Import files</string>
     <string name="action__no">No</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Restore</string>
@@ -862,6 +870,8 @@
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
     <string name="general__unlimited">Unlimited</string>
+    <string name="general__file_name">File name</string>
+    <string name="general__properties">Properties</string>
 
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>

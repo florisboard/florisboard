@@ -41,6 +41,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ManageSearch
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -60,8 +61,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
@@ -78,6 +81,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
 import dev.patrickgold.florisboard.lib.compose.Validation
+import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
@@ -126,6 +130,7 @@ import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggValueEncoder
+import java.io.File
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     rule = SnyggEmptyRuleForAdding,
@@ -622,35 +627,67 @@ private fun PropertyValueEditor(
                 mutableStateOf(value.uri)
             }
             Column(modifier) {
-                val workspaceFiles = remember {
-                    buildList {
-                        addAll(workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().asList())
-                        addAll(workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().asList())
-                    }
+                val fontFiles = remember {
+                    workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().asList()
+                }
+                val imageFiles = remember {
+                    workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().asList()
                 }
                 var showSelectFileDialog by rememberSaveable { mutableStateOf(false) }
                 if (showSelectFileDialog) {
+                    @Composable
+                    fun ClickableFilesWithHeading(title: String, files: List<File>) {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = title,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
+                            colors = ListItemDefaults.colors(
+                                containerColor = AlertDialogDefaults.containerColor
+                            ),
+                        )
+                        files.forEach { file ->
+                            JetPrefListItem(
+                                modifier = Modifier.clickable {
+                                    val relPath = file.path.removePrefix(workspace.extDir.path)
+                                    inputStr = "flex:$relPath"
+                                    onValueChange(SnyggUriValue(inputStr))
+                                    showSelectFileDialog = false
+                                },
+                                text = file.name,
+                                colors = ListItemDefaults.colors(
+                                    containerColor = AlertDialogDefaults.containerColor
+                                ),
+                            )
+                        }
+                    }
                     JetPrefAlertDialog(
-                        title = "Select file",
+                        title = stringRes(R.string.settings__theme_editor__file_selector_dialog_title),
                         dismissLabel = stringRes(R.string.action__cancel),
                         onDismiss = {
                             showSelectFileDialog = false
                         },
                         contentPadding = PaddingValues(horizontal = 8.dp),
+                        scrollModifier = Modifier.florisVerticalScroll(),
                     ) {
                         Column {
-                            workspaceFiles.forEach { file ->
-                                JetPrefListItem(
-                                    modifier = Modifier.clickable {
-                                        val relPath = file.path.removePrefix(workspace.extDir.path)
-                                        inputStr = "flex:$relPath"
-                                        onValueChange(SnyggUriValue(inputStr))
-                                        showSelectFileDialog = false
-                                    },
-                                    text = file.name,
-                                    colors = ListItemDefaults.colors(
-                                        containerColor = AlertDialogDefaults.containerColor
-                                    )
+                            if (fontFiles.isNotEmpty()) {
+                                ClickableFilesWithHeading(stringRes(R.string.ext__editor__files__type_fonts), fontFiles)
+                            }
+                            if (imageFiles.isNotEmpty()) {
+                                ClickableFilesWithHeading(stringRes(R.string.ext__editor__files__type_images), imageFiles)
+                            }
+                            if (fontFiles.isEmpty() && imageFiles.isEmpty()) {
+                                Text(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    text = stringRes(R.string.settings__theme_editor__file_selector_no_files_text,
+                                        "action_title" to stringRes(R.string.ext__editor__files__title)),
+                                    style = MaterialTheme.typography.bodySmall,
                                 )
                             }
                         }

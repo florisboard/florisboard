@@ -180,7 +180,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
             dialogFile?.let { file ->
                 var fileNameInput by rememberSaveable { mutableStateOf(file.name) }
                 JetPrefAlertDialog(
-                    title = "Rename or remove",
+                    title = stringRes(R.string.general__properties),
                     confirmLabel = stringRes(R.string.action__apply),
                     dismissLabel = stringRes(R.string.action__cancel),
                     neutralLabel = stringRes(R.string.action__delete),
@@ -189,7 +189,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                         if (file.delete()) {
                             context.showShortToast("Successfully deleted")
                         } else {
-                            context.showShortToast("Failed to remove")
+                            context.showShortToast("Failed to delete")
                         }
                         dialogFile = null
                         version++
@@ -218,6 +218,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                     },
                 ) {
                     JetPrefTextField(
+                        labelText = stringRes(R.string.general__file_name),
                         value = fileNameInput,
                         onValueChange = { fileNameInput = it },
                         singleLine = true,
@@ -227,7 +228,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         }
 
         FileList(
-            title = FONTS.replaceFirstChar { it.uppercase() },
+            title = stringRes(R.string.ext__editor__files__type_fonts),
             icon = Icons.Default.TextFields,
             files = fontFiles,
         ) {
@@ -236,7 +237,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         }
 
         FileList(
-            title = IMAGES.replaceFirstChar { it.uppercase() },
+            title = stringRes(R.string.ext__editor__files__type_images),
             icon = Icons.Default.Photo,
             files = imageFiles,
         ) {
@@ -249,7 +250,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         if (dest != null && result != null) {
             var fileNameInput by rememberSaveable { mutableStateOf(result.second) }
             JetPrefAlertDialog(
-                title = "Import ${dest.substring(0, dest.length - 1)}",
+                title = stringRes(R.string.action__import_file),
                 confirmLabel = stringRes(R.string.action__add),
                 onConfirm = {
                     val fileName = fileNameInput.trim()
