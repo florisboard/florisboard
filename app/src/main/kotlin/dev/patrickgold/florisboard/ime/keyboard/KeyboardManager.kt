@@ -63,6 +63,7 @@ import dev.patrickgold.florisboard.lib.uppercase
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -77,7 +78,6 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
-import java.lang.ref.WeakReference
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
@@ -972,6 +972,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.TOGGLE_INCOGNITO_MODE -> when (prefs.suggestion.incognitoMode.get()) {
                     IncognitoMode.FORCE_OFF, IncognitoMode.FORCE_ON -> false
                     IncognitoMode.DYNAMIC_ON_OFF -> !editorInfo.imeOptions.flagNoPersonalizedLearning
+                }
+                KeyCode.LANGUAGE_SWITCH -> {
+                    subtypeManager.subtypes.size > 1
                 }
                 else -> true
             }
