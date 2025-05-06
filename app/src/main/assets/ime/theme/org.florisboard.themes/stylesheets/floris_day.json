@@ -316,6 +316,11 @@
     "foreground": "var(--incognito-icon-color)"
   },
 
+  "inline-autofill-chip": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
+
   "media-emoji-subheader": {
     "font-weight": "bold",
     "margin": "4dp"
