@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otwórz historię schowka</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emotki</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Otwórz panel emoji</string>
+    <string name="quick_action__language_switch" maxLength="12">Zmień język</string>
+    <string name="quick_action__language_switch__tooltip">Przełączanie języka</string>
     <string name="quick_action__settings" maxLength="12">Ustawienia</string>
     <string name="quick_action__settings__tooltip">Otwórz ustawienia</string>
     <string name="quick_action__undo" maxLength="12">Cofnij</string>
@@ -153,6 +155,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Czas zachodu słońca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tryb dzienny</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tryb nocny</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Kolor akcentujący (motywy Material you)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Wbudowane w aplikację FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Pamięć wewnętrzna</string>
@@ -161,11 +165,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Wybierz motyw nocny</string>
     <string name="settings__theme_editor__fine_tune__title">Dostosuj edytor</string>
     <string name="settings__theme_editor__fine_tune__level">Edytuj poziom</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Reprezentacja kolorów</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Pokaż klawiaturę po dialogach</string>
     <string name="settings__theme_editor__add_rule">Dodaj regułę</string>
     <string name="settings__theme_editor__edit_rule">Edytuj regułę</string>
     <string name="settings__theme_editor__no_rules_defined">Ten arkusz stylów nie ma żadnych zdefiniowanych reguł. Dodaj regułę, aby rozpocząć dostosowywanie tego arkusza stylów.</string>
     <string name="settings__theme_editor__rule_already_exists">Ta reguła arkusza stylów jest już zdefiniowana.</string>
+    <string name="settings__theme_editor__rule_name">Element / Adnotacja</string>
     <string name="settings__theme_editor__rule_codes">Docelowe kody przycisków</string>
     <string name="settings__theme_editor__rule_groups">Grupy</string>
     <string name="settings__theme_editor__rule_shift_states">Stany przycisku Shift</string>
@@ -190,20 +196,60 @@
     <string name="settings__theme_editor__property_value">Wartość właściwości</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Zastosuj do wszystkich kątów</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Edytuj nazwy kolorów</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Wybierz plik</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Żadne pliki nie zostały jeszcze dodane do tego rozszerzenia. Użyj akcji „{action_title}” na poprzednim ekranie, aby zaimportować pliki.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Jest nocnym motywem</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Jest bezramkowy</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Ścieżka arkusza stylów</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Błąd arkusza stylów</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} może próbować pobłażliwie załadować arkusz stylów i dodać brakujące schematy, reguły lub usunąć nieprawidłowe reguły, właściwości lub wartości. Czy potwierdzasz zastosowanie zmian przez {app_name}?</string>
+    <string name="snygg__rule_annotation__defines">Zmienne</string>
+    <string name="snygg__rule_annotation__defines_description">Zdefiniuj zmienne w tej regule, aby ponownie użyć popularnych kolorów lub rozmiarów w arkuszu stylów.</string>
+    <string name="snygg__rule_annotation__font">Czcionka</string>
+    <string name="snygg__rule_annotation__font_name">Nazwa czcionki</string>
+    <string name="snygg__rule_element__root">Katalog główny</string>
+    <string name="snygg__rule_element__window">Okno</string>
     <string name="snygg__rule_element__key">Klawisz</string>
     <string name="snygg__rule_element__key_hint">Klucz podpowiedzi</string>
+    <string name="snygg__rule_element__key_popup_box">Wyskakujące okienko klucza</string>
+    <string name="snygg__rule_element__key_popup_element">Wyskakujący kluczowy element</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Rozszerzony wskaźnik wyskakującego klawisza</string>
     <string name="snygg__rule_element__clipboard_header">Nagłówek schowka</string>
+    <string name="snygg__rule_element__clipboard_header_button">Przycisk nagłówka schowka</string>
+    <string name="snygg__rule_element__clipboard_header_text">Tekst nagłówka schowka</string>
+    <string name="snygg__rule_element__clipboard_subheader">Podtytuł schowka</string>
+    <string name="snygg__rule_element__clipboard_content">Zawartość schowka</string>
     <string name="snygg__rule_element__clipboard_item">Element schowka</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action">Wyskakujące działanie elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Wyskakująca ikona elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_text">Wyskakujący tekst elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Okno dialogowe wyczyść wszystko w schowku</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Komunikat dialogowy wyczyść wszystko w schowku</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Wyczyść wszystkie przyciski dialogowe w schowku</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Przycisk wyczyść wszystko w schowku</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Wyłączony tytuł historii schowka</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Komunikat o wyłączeniu historii schowka</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Przycisk wyłączenia historii schowka</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Zablokowany tytuł historii schowka</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Komunikat o zablokowaniu historii schowka</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Poziomy układ wprowadzania</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Poziome pole wprowadzania</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Akcja wprowadzania w trybie poziomym</string>
     <string name="snygg__rule_element__glide_trail">Ślad ślizgu</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Przycisk trybu Incognito</string>
+    <string name="snygg__rule_element__inline_autofill_chip">Wbudowany układ autouzupełniania</string>
+    <string name="snygg__rule_element__media">Multimedia</string>
+    <string name="snygg__rule_element__media_emoji_subheader">Podtytuł emoji multimediów</string>
+    <string name="snygg__rule_element__media_emoji_key">Klucz emoji multimediów</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Wyskakujące okienko klucza emoji multimediów</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Wyskakujący element klucza emoji multimediów</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Wyskakujące okienko klucza emoji multimediów</string>
+    <string name="snygg__rule_element__media_emoji_tab">Karta emoji multimediów</string>
+    <string name="snygg__rule_element__media_bottom_row">Multimedia w dolnym rzędzie</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Przycisk dolnego rzędu multimediów</string>
     <string name="snygg__rule_element__one_handed_panel">Panel jednoręczny</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Przycisk panelu obsługiwany jedną ręką</string>
     <string name="snygg__rule_element__smartbar">Inteligentny pasek</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Wiersz działań współdzielonych inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Przełącznik współdzielonych działań inteligentnego paska</string>
@@ -215,16 +261,24 @@
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Dostosuj przycisk przepełnienia działań Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Edytor działań Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Nagłówek edytora działań Inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Przycisk nagłówka edytora akcji inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Podtytuł edytora działań Inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Siatka kafelków edytora akcji inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Kafelek edytora akcji inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Wiersz kandydatów Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Sugestia słowa inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Sugestia schowka inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Sugestia odstępu inteligentnego paska</string>
+    <string name="snygg__rule_element__subtype_panel">Podtyp panelu</string>
+    <string name="snygg__rule_element__subtype_panel_header">Podtyp nagłówka panelu</string>
     <string name="snygg__rule_selector__pressed">Naciśnięty</string>
     <string name="snygg__rule_selector__focus">Skupiony</string>
+    <string name="snygg__rule_selector__hover">Najechanie</string>
     <string name="snygg__rule_selector__disabled">Wyłączony</string>
     <string name="snygg__property_name__background">Tło</string>
     <string name="snygg__property_name__foreground">Pierwszy plan</string>
+    <string name="snygg__property_name__background_image">Obraz tła</string>
+    <string name="snygg__property_name__content_scale">Skala zawartości</string>
     <string name="snygg__property_name__border_color">Kolor obramowania</string>
     <string name="snygg__property_name__border_style">Styl ramki</string>
     <string name="snygg__property_name__border_width">Szerokość obramowania</string>
@@ -232,8 +286,19 @@
     <string name="snygg__property_name__font_size">Rozmiar czcionki</string>
     <string name="snygg__property_name__font_style">Styl czcionki</string>
     <string name="snygg__property_name__font_weight">Grubość czcionki</string>
+    <string name="snygg__property_name__letter_spacing">Odstępy między literami</string>
+    <string name="snygg__property_name__line_height">Wysokość linii</string>
+    <string name="snygg__property_name__margin">Margines</string>
+    <string name="snygg__property_name__padding">Odstęp</string>
+    <string name="snygg__property_name__shadow_color">Kolor cienia</string>
     <string name="snygg__property_name__shadow_elevation">Podwyższenie cienia</string>
     <string name="snygg__property_name__shape">Kształt</string>
+    <string name="snygg__property_name__clip">Spinacz</string>
+    <string name="snygg__property_name__src">Źródło</string>
+    <string name="snygg__property_name__text_align">Wyrównanie tekstu</string>
+    <string name="snygg__property_name__text_decoration_line">Linia dekoracji tekstu</string>
+    <string name="snygg__property_name__text_max_lines">Maksymalna ilość linii tekstu</string>
+    <string name="snygg__property_name__text_overflow">Nadmiar tekstu</string>
     <string name="snygg__property_name__var_primary">Kolor podstawowy</string>
     <string name="snygg__property_name__var_primary_variant">Kolor podstawowy (wariant)</string>
     <string name="snygg__property_name__var_secondary">Kolor dodatkowy</string>
@@ -250,9 +315,16 @@
     <string name="snygg__property_name__var_shape_variant">Wspólny kształt (wariant)</string>
     <string name="snygg__property_value__explicit_inherit">Odziedzicz</string>
     <string name="snygg__property_value__defined_var">Odniesienie do zmiennej</string>
+    <string name="snygg__property_value__yes">Tak</string>
+    <string name="snygg__property_value__no">Nie</string>
     <string name="snygg__property_value__solid_color">Jednolity kolor</string>
     <string name="snygg__property_value__material_you_light_color">Material You kolor (Jasny)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You kolor (Ciemny)</string>
+    <string name="snygg__property_value__font_family_generic">Rodzina czcionek (ogólna)</string>
+    <string name="snygg__property_value__font_family_custom">Rodzina czcionek (własna)</string>
+    <string name="snygg__property_value__font_style">Styl czcionki</string>
+    <string name="snygg__property_value__font_weight">Grubość czcionki</string>
+    <string name="snygg__property_value__padding">Wypełnienie lub margines</string>
     <string name="snygg__property_value__rectangle_shape">Kształt prostokąta</string>
     <string name="snygg__property_value__circle_shape">Kształt koła</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Kształt ze ściętymi kątami (dp)</string>
@@ -262,6 +334,12 @@
     <string name="snygg__property_value__dp_size">Rozmiar (dp)</string>
     <string name="snygg__property_value__sp_size">Rozmiar (sp)</string>
     <string name="snygg__property_value__percentage_size">Rozmiar (%)</string>
+    <string name="snygg__property_value__content_scale">Skala zawartości</string>
+    <string name="snygg__property_value__text_align">Wyrównanie tekstu</string>
+    <string name="snygg__property_value__text_decoration_line">Linia dekoracji tekstu</string>
+    <string name="snygg__property_value__text_max_lines">Maksymalna ilość linii tekstu</string>
+    <string name="snygg__property_value__text_overflow">Nadmiar tekstu</string>
+    <string name="snygg__property_value__uri">Odnośnik URI</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Dźwięki &amp; Wibracje</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Dźwięki</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Włącz feedback audio</string>
@@ -630,6 +708,8 @@
     <string name="ext__editor__metadata__message_invalid">Metadane do tego rozszerzenia są nieprawidłowe, sprawdź metadane po detale!</string>
     <string name="ext__editor__dependencies__title">Zarządzaj zależnościami</string>
     <string name="ext__editor__files__title">Zarządzaj plikami archiwalnymi</string>
+    <string name="ext__editor__files__type_fonts">Czcionki</string>
+    <string name="ext__editor__files__type_images">Obrazy</string>
     <string name="ext__editor__create_component__title">Utwórz komponent</string>
     <string name="ext__editor__create_component__title_theme">Utwórz motyw</string>
     <string name="ext__editor__create_component__from_empty">Pusty</string>
@@ -703,7 +783,11 @@
     <string name="action__discard_confirm_message">Czy na pewno chcesz odrzucić twoje niezapisane zmiany? Tej akcji nie można cofnąć po jej wykonaniu.</string>
     <string name="action__edit">Edytuj</string>
     <string name="action__export">Eksportuj</string>
+    <string name="action__export_file">Importuj plik</string>
+    <string name="action__export_files">Importuj pliki</string>
     <string name="action__import">Importuj</string>
+    <string name="action__import_file">Importuj plik</string>
+    <string name="action__import_files">Importuj pliki</string>
     <string name="action__no">Nie</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Przywracanie</string>
@@ -725,6 +809,8 @@
     <string name="general__no_browser_app_found_for_url">Nie znaleziono aplikacji do obsługi URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; wybierz &#45;</string>
     <string name="general__unlimited">Nielimitowany</string>
+    <string name="general__file_name">Nazwa pliku</string>
+    <string name="general__properties">Właściwości</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portret</string>
     <string name="screen_orientation__landscape">Orientacja pozioma</string>
@@ -743,6 +829,9 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Szerokość dynamiczna i przewijalna</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Włącz Capslock poprzez dwukrotne dotknięcie Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Zmieniaj na pisanie wielkimi literami po każdym dotknięciu klawisza Shift</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">Szesnastkowy</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Czerwony Zielony Niebieski</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">Barwa Nasycenie</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Zawsze pokazuj</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Zawsze pokazuj klawiaturę po zamknięciu dowolnego okna edytora</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nigdy nie pokazuj</string>

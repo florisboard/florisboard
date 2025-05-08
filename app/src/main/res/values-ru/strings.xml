@@ -153,6 +153,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Время заката</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневная тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Ночная тема</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Цвет акцента (для тем Material you)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Установленные темы</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Наборы приложений FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Внутреннее хранилище</string>
@@ -193,6 +195,9 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
+    <string name="snygg__rule_annotation__defines">Переменные</string>
+    <string name="snygg__rule_annotation__font">Шрифт</string>
+    <string name="snygg__rule_annotation__font_name">Название шрифта</string>
     <string name="snygg__rule_element__key">Кнопка</string>
     <string name="snygg__rule_element__key_hint">Подсказка кнопки</string>
     <string name="snygg__rule_element__clipboard_header">Заголовок буфера обмена</string>

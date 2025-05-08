@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir historial del portapapeles</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Abrir el panel de emojis</string>
+    <string name="quick_action__language_switch" maxLength="12">Mudar idioma</string>
+    <string name="quick_action__language_switch__tooltip">Realizar el cambio del idioma</string>
     <string name="quick_action__settings" maxLength="12">Ajustes</string>
     <string name="quick_action__settings__tooltip">Abrir ajustes</string>
     <string name="quick_action__undo" maxLength="12">Deshacer</string>
@@ -153,6 +155,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora de puesta de sol</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema claro</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema oscuro</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Color del énfasis (Temas Material You)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestionar temas instalados</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Recursos de aplicación de FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamiento interno</string>
@@ -161,11 +165,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Elegir tema oscuro</string>
     <string name="settings__theme_editor__fine_tune__title">Editor de ajuste fino</string>
     <string name="settings__theme_editor__fine_tune__level">Nivel de edición</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Representación de los colores</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostrar teclado después de diálogos</string>
     <string name="settings__theme_editor__add_rule">Añadir regla</string>
     <string name="settings__theme_editor__edit_rule">Editar regla</string>
     <string name="settings__theme_editor__no_rules_defined">Esta hoja de estilo no tiene reglas definidas. Agregue una regla para comenzar a personalizar esta hoja de estilo.</string>
     <string name="settings__theme_editor__rule_already_exists">Esta regla de hoja de estilo ya está definida.</string>
+    <string name="settings__theme_editor__rule_name">Elemento / Nota</string>
     <string name="settings__theme_editor__rule_codes">Códigos de clave destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
     <string name="settings__theme_editor__rule_shift_states">Cambiar estados</string>
@@ -190,9 +196,18 @@
     <string name="settings__theme_editor__property_value">Valor de propiedad</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Aplicar para todas las esquinas</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Editar cadena de colores</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Seleccionar archivo</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Aún no se han añadido archivos a esta extensión. Utilice la acción \"{action_title}\" de la pantalla anterior para importar archivos.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Es tema oscuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Es sin borde</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Ruta de la hoja de estilo</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Error en la hoja de estilos</string>
+    <string name="snygg__rule_annotation__defines">Variables</string>
+    <string name="snygg__rule_annotation__defines_description">Defina variables dentro de esta regla para reutilizar colores o tamaños comunes en su hoja de estilo.</string>
+    <string name="snygg__rule_annotation__font">Fuente</string>
+    <string name="snygg__rule_annotation__font_name">Nombre de la fuente</string>
+    <string name="snygg__rule_element__root">Root</string>
+    <string name="snygg__rule_element__window">Ventana</string>
     <string name="snygg__rule_element__key">Tecla</string>
     <string name="snygg__rule_element__key_hint">Tecla sugerida</string>
     <string name="snygg__rule_element__clipboard_header">Encabezado del portapapeles</string>
@@ -629,6 +644,8 @@
     <string name="ext__editor__metadata__message_invalid">Los metadatos para esta extensión no son válidos, ¡por favor verifique el editor de metadatos para más detalles!</string>
     <string name="ext__editor__dependencies__title">Administrar dependencias</string>
     <string name="ext__editor__files__title">Administrar ficheros de archivos</string>
+    <string name="ext__editor__files__type_fonts">Tipo de letra</string>
+    <string name="ext__editor__files__type_images">Imágenes</string>
     <string name="ext__editor__create_component__title">Crear componente</string>
     <string name="ext__editor__create_component__title_theme">Crear tema</string>
     <string name="ext__editor__create_component__from_empty">Vacío</string>
@@ -702,7 +719,11 @@
     <string name="action__discard_confirm_message">¿Está seguro de que desea descartar los cambios no guardados? Esta acción no se puede deshacer una vez ejecutada.</string>
     <string name="action__edit">Editar</string>
     <string name="action__export">Exportar</string>
+    <string name="action__export_file">Importar archivo</string>
+    <string name="action__export_files">Importar archivos</string>
     <string name="action__import">Importar</string>
+    <string name="action__import_file">Importar archivo</string>
+    <string name="action__import_files">Importar archivos</string>
     <string name="action__no">No</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Restaurar</string>
@@ -724,6 +745,8 @@
     <string name="general__no_browser_app_found_for_url">No se ha encontrado ninguna aplicación de navegador para manejar la URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; seleccionar &#45;</string>
     <string name="general__unlimited">Sin límite</string>
+    <string name="general__file_name">Nombre del archivo</string>
+    <string name="general__properties">Propiedades</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Retrato</string>
     <string name="screen_orientation__landscape">Paisaje</string>

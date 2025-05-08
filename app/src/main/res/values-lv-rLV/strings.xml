@@ -71,6 +71,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Atvērt starpliktuves vēsturi</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emocijzīmes</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Atvērt emocijzīmju izvēlni</string>
+    <string name="quick_action__language_switch" maxLength="12">Mainīt val.</string>
+    <string name="quick_action__language_switch__tooltip">Veikt valodas nomainīšanu</string>
     <string name="quick_action__settings" maxLength="12">Iestatījumi</string>
     <string name="quick_action__settings__tooltip">Atvērt iestatījumus</string>
     <string name="quick_action__undo" maxLength="12">Atsaukt</string>
@@ -150,6 +152,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Saulrieta laikā</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dienas izskats</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nakts izskats</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Uzsvara krāsa (Material You izskati)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
@@ -158,11 +162,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Atlasīt nakts izskatu</string>
     <string name="settings__theme_editor__fine_tune__title">Smalkas pielāgošanas redaktors</string>
     <string name="settings__theme_editor__fine_tune__level">Labošanas līmenis</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Krāsu atveidojums</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Parādīt tastatūru pēc ziņojumlodziņiem</string>
     <string name="settings__theme_editor__add_rule">Pievienot nosacījumu</string>
     <string name="settings__theme_editor__edit_rule">Labot nosacījumu</string>
     <string name="settings__theme_editor__no_rules_defined">Šī stila lapa nesatur nosacījumus. Lai to pielāgotu, jāpievieno kāds nosacījums.</string>
     <string name="settings__theme_editor__rule_already_exists">Šis stila lapas nosacījums jau ir noteikts.</string>
+    <string name="settings__theme_editor__rule_name">Elements / Anotācija</string>
     <string name="settings__theme_editor__rule_codes">Mērķa taustiņu kodi</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
     <string name="settings__theme_editor__rule_shift_states">Pārslēgšanās taustiņa stāvokļi</string>
@@ -187,14 +193,34 @@
     <string name="settings__theme_editor__property_value">Īpašības vērtība</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Pielietot visiem stūriem</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Labot krāsas virkni</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Atlasīt datni</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Šim paplašinājumam vēl nav pievienota neviena datne. Lūgums iepriekšējā skatā izmantot darbību \"{action_title}\", lai ievietotu datnes.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Ir nakts izskats</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Ir bezapmales</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stilu lapas ceļš</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Stila lapas kļūda</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} var mēģināt saudzīgi ielādēt stila lapu un pievienot trūkstošās shēmas, kārtulas vai noņemt nederīgās kārtulas, īpašības vai vērtības. Vai ļaut {app_name} pielietot šīs izmaiņas?</string>
+    <string name="snygg__rule_annotation__defines">Mainīgie</string>
+    <string name="snygg__rule_annotation__defines_description">Šajā kārtulā var izveidot mainīgos, lai stila lapā atkārtoti izmantotu kopējas krāsas vai izmērus.</string>
+    <string name="snygg__rule_annotation__font">Fonts</string>
+    <string name="snygg__rule_annotation__font_name">Fonta nosaukums</string>
+    <string name="snygg__rule_element__root">Pamatmape</string>
+    <string name="snygg__rule_element__window">Logs</string>
     <string name="snygg__rule_element__key">Taustiņš</string>
     <string name="snygg__rule_element__key_hint">Taustiņa norāde</string>
+    <string name="snygg__rule_element__key_popup_box">Taustiņu uznirstošā lodziņa rāmis</string>
+    <string name="snygg__rule_element__key_popup_element">Taustiņu uznirstošā lodziņa elements</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Taustiņu uznirstošā lodziņa paplašinātais rādītājs</string>
     <string name="snygg__rule_element__clipboard_header">Starpliktuves galvene</string>
+    <string name="snygg__rule_element__clipboard_header_button">Starpliktuves galvenes poga</string>
+    <string name="snygg__rule_element__clipboard_header_text">Starpliktuves galvenes teksts</string>
+    <string name="snygg__rule_element__clipboard_subheader">Starpliktuves apakšvirsraksts</string>
+    <string name="snygg__rule_element__clipboard_content">Starpliktuves saturs</string>
     <string name="snygg__rule_element__clipboard_item">Starpliktuves vienums</string>
     <string name="snygg__rule_element__clipboard_item_popup">Starpliktuves vienuma uznirstošais lodziņš</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action">Starpliktuves vienuma uznirstošā lodziņa darbība</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Starpliktuves vienuma uznirstošā lodziņa ikona</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_text">Starpliktuves vienuma uznirstošā lodziņa teksts</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Līmeniskās ievades izkārtojums</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Līmeniskās ievades lauks</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Līmeniskās ievades darbība</string>
@@ -627,6 +653,8 @@
     <string name="ext__editor__metadata__message_invalid">Šī paplašinājuma metadati ir nederīgi. Lūgums skatīt izklāstu metadatu labotājā.</string>
     <string name="ext__editor__dependencies__title">Pārvaldīt atkarības</string>
     <string name="ext__editor__files__title">Pārvaldīt arhīva datnes</string>
+    <string name="ext__editor__files__type_fonts">Fonti</string>
+    <string name="ext__editor__files__type_images">Attēli</string>
     <string name="ext__editor__create_component__title">Izveidot sastāvdaļu</string>
     <string name="ext__editor__create_component__title_theme">Izveidot izskatu</string>
     <string name="ext__editor__create_component__from_empty">Tukšs</string>
@@ -700,7 +728,11 @@
     <string name="action__discard_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
     <string name="action__edit">Labot</string>
     <string name="action__export">Izdot</string>
+    <string name="action__export_file">Ievietot datni</string>
+    <string name="action__export_files">Ievietot datnes</string>
     <string name="action__import">Iekļaut</string>
+    <string name="action__import_file">Ievietot datni</string>
+    <string name="action__import_files">Ievietot datnes</string>
     <string name="action__no">Nē</string>
     <string name="action__ok">Labi</string>
     <string name="action__restore">Atjaunot</string>
@@ -722,6 +754,8 @@
     <string name="general__no_browser_app_found_for_url">Netika atrasta neviena pārlūka lietotne URL {url} atvēršanai</string>
     <string name="general__select_dropdown_value_placeholder">&#45; atlasīt &#45;</string>
     <string name="general__unlimited">Neierobežots</string>
+    <string name="general__file_name">Datnes nosaukums</string>
+    <string name="general__properties">Īpašības</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrets</string>
     <string name="screen_orientation__landscape">Līmeniski</string>

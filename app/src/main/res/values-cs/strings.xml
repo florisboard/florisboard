@@ -72,6 +72,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otevřít historii schránky</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emotikony</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Otevřít panel emotikonů</string>
+    <string name="quick_action__language_switch__tooltip">Provést přepnutí jazyku</string>
     <string name="quick_action__settings" maxLength="12">Nastavení</string>
     <string name="quick_action__settings__tooltip">Otevřít nastavení</string>
     <string name="quick_action__undo" maxLength="12">Vrátit zpět</string>
@@ -153,6 +154,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noční motiv</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Dynamická barva (motivy Material You)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovat nainstalované motivy</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Podklady aplikace FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
@@ -161,11 +164,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Vyberte noční motiv</string>
     <string name="settings__theme_editor__fine_tune__title">Jemné doladění editoru</string>
     <string name="settings__theme_editor__fine_tune__level">Úprava úrovně</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Zobrazení barev</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zobrazit klávesnici po dialozích</string>
     <string name="settings__theme_editor__add_rule">Přidat pravidlo</string>
     <string name="settings__theme_editor__edit_rule">Upravit pravidlo</string>
     <string name="settings__theme_editor__no_rules_defined">Tato tabulka stylů nemá definována žádná pravidla. Přidejte pravidlo, abyste mohli začít přizpůsobovat tuto tabulku.</string>
     <string name="settings__theme_editor__rule_already_exists">Pravidlo této tabulky stylů je již definováno.</string>
+    <string name="settings__theme_editor__rule_name">Prvek / anotace</string>
     <string name="settings__theme_editor__rule_codes">Kódy cílových kláves</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
     <string name="settings__theme_editor__rule_shift_states">Stavy shiftu</string>
@@ -190,20 +195,60 @@
     <string name="settings__theme_editor__property_value">Hodnota vlastnosti</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Použít pro všechny rohy</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Upravit řetězec barvy</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Vybrat soubor</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Do tohoto rozšíření zatím nebyly vybrány žádné soubory. Pro importování souborů prosím použijte akci „{action_title}“ na předchozí obrazovce.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Cesta tabulky stylů</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Chyba stylů</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} se přesto může pokusit načíst soubor stylů a přidat chybějící schémata, pravidla nebo odstranit neplatná pravidla, vlastnosti nebo hodnoty. Chcete, aby aplikace {app_name} tyto změny použila?</string>
+    <string name="snygg__rule_annotation__defines">Proměnné</string>
+    <string name="snygg__rule_annotation__defines_description">Pomocí tohoto pravidla definujte proměnné pro opětovné použití běžných barev nebo velikostí ve vaší tabulce stylů.</string>
+    <string name="snygg__rule_annotation__font">Písmo</string>
+    <string name="snygg__rule_annotation__font_name">Název písma</string>
+    <string name="snygg__rule_element__root">Kořen</string>
+    <string name="snygg__rule_element__window">Okno</string>
     <string name="snygg__rule_element__key">Klávesa</string>
     <string name="snygg__rule_element__key_hint">Nápovědy klávesy</string>
+    <string name="snygg__rule_element__key_popup_box">Box vyskakovací klávesy</string>
+    <string name="snygg__rule_element__key_popup_element">Prvek vyskakovací klávesy</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Rozšířený indikátor vyskakovací klávesy</string>
     <string name="snygg__rule_element__clipboard_header">Záhlaví schránky</string>
+    <string name="snygg__rule_element__clipboard_header_button">Tlačítko záhlaví schránky</string>
+    <string name="snygg__rule_element__clipboard_header_text">Text záhlaví schránky</string>
+    <string name="snygg__rule_element__clipboard_subheader">Podzáhlaví schránky</string>
+    <string name="snygg__rule_element__clipboard_content">Obsah schránky</string>
     <string name="snygg__rule_element__clipboard_item">Položka schránky</string>
     <string name="snygg__rule_element__clipboard_item_popup">Vyskakovací nabídka položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action">Akce vyskakovacího dialogu položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Ikona vyskakovacího dialogu položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_text">Text vyskakovacího dialogu položky schránky</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Dialog vymazání všeho ze schránky</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Zpráva dialogu vymazání všeho ze schránky</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Tlačítka dialogu vymazání všeho ze schránky</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Tlačítko dialogu vymazání všeho ze schránky</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Nadpis zakázané historie schránky</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Zpráva zakázané historie schránky</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Tlačítko zakázané historie schránky</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Nadpis uzamčené historie schránky</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Zpráva uzamčené historie schránky</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Rozložení vstupu na šířku</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Pole vstupu na šířku</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Akce vstupu na šířku</string>
     <string name="snygg__rule_element__glide_trail">Stopa tahu</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Indikátor anonymního režimu</string>
+    <string name="snygg__rule_element__inline_autofill_chip">Pilulka automatického vyplnění na řádku</string>
+    <string name="snygg__rule_element__media">Média</string>
+    <string name="snygg__rule_element__media_emoji_subheader">Podzáhlaví médií emotikonů</string>
+    <string name="snygg__rule_element__media_emoji_key">Klávesa médií emotikonů</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Box vyskakovací klávesy médií emotikonů</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Prvek vyskakovací klávesy médií emotikonů</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Box vyskakovací klávesy médií emotikonů</string>
+    <string name="snygg__rule_element__media_emoji_tab">Karta médií emotikonů</string>
+    <string name="snygg__rule_element__media_bottom_row">Spodní řádek médií</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Tlačítko spodního řádku médií</string>
     <string name="snygg__rule_element__one_handed_panel">Režim jedné ruky</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Tlačítko panelu režimu jedné ruky</string>
     <string name="snygg__rule_element__smartbar">Chytrá lišta</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Řádek sdílených akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Přepínač sdílených akcí chytré lišty</string>
@@ -215,16 +260,24 @@
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Tlačítko přizpůsobení přetečení akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Editor akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Záhlaví editoru akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Tlačítko záhlaví editoru akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Podzáhlaví editoru akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Mřížka dlaždic editoru akcí chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Dlaždice editoru akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Řádek navrhnutých slov chytré lišty</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutá položka v chytré liště</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
+    <string name="snygg__rule_element__subtype_panel">Panel podtypu</string>
+    <string name="snygg__rule_element__subtype_panel_header">Záhlaví panelu podtypu</string>
     <string name="snygg__rule_selector__pressed">Stisknuto</string>
     <string name="snygg__rule_selector__focus">Zaměřeno</string>
+    <string name="snygg__rule_selector__hover">Přejetí</string>
     <string name="snygg__rule_selector__disabled">Zakázáno</string>
     <string name="snygg__property_name__background">Pozadí</string>
     <string name="snygg__property_name__foreground">Popředí</string>
+    <string name="snygg__property_name__background_image">Obrázek na pozadí</string>
+    <string name="snygg__property_name__content_scale">Škálování obashu</string>
     <string name="snygg__property_name__border_color">Barva okraje</string>
     <string name="snygg__property_name__border_style">Styl okraje</string>
     <string name="snygg__property_name__border_width">Šířka okraje</string>
@@ -232,8 +285,16 @@
     <string name="snygg__property_name__font_size">Velikost písma</string>
     <string name="snygg__property_name__font_style">Styl písma</string>
     <string name="snygg__property_name__font_weight">Tloušťka písma</string>
+    <string name="snygg__property_name__letter_spacing">Mezery mezi písmeny</string>
+    <string name="snygg__property_name__line_height">Výška řádku</string>
+    <string name="snygg__property_name__margin">Odskočení</string>
+    <string name="snygg__property_name__padding">Odsazení</string>
+    <string name="snygg__property_name__shadow_color">Barva stínu</string>
     <string name="snygg__property_name__shadow_elevation">Výška stínu</string>
     <string name="snygg__property_name__shape">Tvar</string>
+    <string name="snygg__property_name__clip">Oříznutí</string>
+    <string name="snygg__property_name__src">Zdroj</string>
+    <string name="snygg__property_name__text_align">Zarovnání textu</string>
     <string name="snygg__property_name__var_primary">Hlavní barva</string>
     <string name="snygg__property_name__var_primary_variant">Hlavní barva (varianta)</string>
     <string name="snygg__property_name__var_secondary">Sekundární barva</string>

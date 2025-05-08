@@ -153,6 +153,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Heure de coucher du soleil</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Thème clair</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Thème sombre</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Couleur accentuée (Thèmes Material you)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gérer les thèmes installés</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Ressources de l’application FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Stockage interne</string>
@@ -161,11 +163,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Sélectionner le thème sombre</string>
     <string name="settings__theme_editor__fine_tune__title">Éditeur de réglage fin</string>
     <string name="settings__theme_editor__fine_tune__level">Modifier le niveau</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Représentation des couleurs</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Afficher le clavier après les boîtes de dialogue</string>
     <string name="settings__theme_editor__add_rule">Ajouter une règle</string>
     <string name="settings__theme_editor__edit_rule">Modifier la règle</string>
     <string name="settings__theme_editor__no_rules_defined">Cette feuille de style n\'a pas de règles définies. Ajoutez une règle pour commencer à personnaliser cette feuille de style.</string>
     <string name="settings__theme_editor__rule_already_exists">Cette règle de feuille de style est déjà définie.</string>
+    <string name="settings__theme_editor__rule_name">Élément / Annotation</string>
     <string name="settings__theme_editor__rule_codes">Codes de touche de la cible</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
     <string name="settings__theme_editor__rule_shift_states">États de décalage</string>
@@ -193,9 +197,18 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Est le thème sombre</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Est sans bordures</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Chemin vers la feuille de style</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Erreur de feuille de style</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} peut essayer de charger la feuille de style et ajouter des schémas ou des règles manquants, ou supprimer des règles, des propriétés ou des valeurs invalides. Voulez-vous que {app_name} applique ces changements ?</string>
+    <string name="snygg__rule_annotation__defines">Variables</string>
+    <string name="snygg__rule_annotation__defines_description">Définit des variables dans cette règle pour réutiliser des couleurs ou des tailles communes dans votre feuille de style.</string>
+    <string name="snygg__rule_annotation__font">Police</string>
+    <string name="snygg__rule_annotation__font_name">Nom de la police</string>
+    <string name="snygg__rule_element__root">Racine</string>
+    <string name="snygg__rule_element__window">Fenêtre</string>
     <string name="snygg__rule_element__key">Touche</string>
     <string name="snygg__rule_element__key_hint">Indice de touche</string>
     <string name="snygg__rule_element__clipboard_header">En-tête du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_content">Contenu du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item">Élément du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up d\'élément du presse-papiers</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposition en mode paysage</string>
@@ -203,7 +216,9 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Action d\'entrée en mode paysage</string>
     <string name="snygg__rule_element__glide_trail">Indicateur de glissement</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Indicateur du mode \"Incognito\"</string>
+    <string name="snygg__rule_element__media">Média</string>
     <string name="snygg__rule_element__one_handed_panel">Panneau à une main</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Bouton du panneau à une main</string>
     <string name="snygg__rule_element__smartbar">Smartbar</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Rangée d\'actions partagées de la Smartbar</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Actions partagées de la Smartbar</string>
@@ -220,11 +235,15 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Mot candidat de la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Suggestion du presse-papier dans la Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Espacement des suggestions dans la Smartbar</string>
+    <string name="snygg__rule_element__subtype_panel_header">Sous-type d\'en-tête de panneau</string>
     <string name="snygg__rule_selector__pressed">Appuyé</string>
     <string name="snygg__rule_selector__focus">Focalisé</string>
+    <string name="snygg__rule_selector__hover">Survolé</string>
     <string name="snygg__rule_selector__disabled">Désactivé</string>
     <string name="snygg__property_name__background">Arrière-plan</string>
     <string name="snygg__property_name__foreground">Premier plan</string>
+    <string name="snygg__property_name__background_image">Image d\'arrière-plan</string>
+    <string name="snygg__property_name__content_scale">Échelle de contenu</string>
     <string name="snygg__property_name__border_color">Couleur de la bordure</string>
     <string name="snygg__property_name__border_style">Style de la bordure</string>
     <string name="snygg__property_name__border_width">Largeur de la bordure</string>
@@ -234,6 +253,7 @@
     <string name="snygg__property_name__font_weight">Taille de police</string>
     <string name="snygg__property_name__shadow_elevation">Élévation de l\'ombre</string>
     <string name="snygg__property_name__shape">Forme</string>
+    <string name="snygg__property_name__text_align">Alignement du texte</string>
     <string name="snygg__property_name__var_primary">Couleur primaire</string>
     <string name="snygg__property_name__var_primary_variant">Couleur primaire (variante)</string>
     <string name="snygg__property_name__var_secondary">Couleur secondaire</string>
@@ -250,6 +270,8 @@
     <string name="snygg__property_name__var_shape_variant">Forme commune (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Hériter</string>
     <string name="snygg__property_value__defined_var">Référence Var</string>
+    <string name="snygg__property_value__yes">Oui</string>
+    <string name="snygg__property_value__no">Non</string>
     <string name="snygg__property_value__solid_color">Couleur unie</string>
     <string name="snygg__property_value__material_you_light_color">Couleur Material You (clair)</string>
     <string name="snygg__property_value__material_you_dark_color">Couleur Material You (sombre)</string>

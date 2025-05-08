@@ -153,6 +153,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Време на залез</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневна тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нощна тема</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Допълнителен цвят (за теми на Material You)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи на FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Вътрешно хранилище</string>
@@ -161,11 +162,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Избор на нощна тема</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки на редактора</string>
     <string name="settings__theme_editor__fine_tune__level">Режим</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Цветовъзпроизвеждане</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Видима клавиатура след диалог</string>
     <string name="settings__theme_editor__add_rule">Добавяне на правило</string>
     <string name="settings__theme_editor__edit_rule">Променяне на правило</string>
     <string name="settings__theme_editor__no_rules_defined">Стиловият лист няма правила. За да промените стиловете добавете правила.</string>
     <string name="settings__theme_editor__rule_already_exists">Вече има такова правило.</string>
+    <string name="settings__theme_editor__rule_name">Елемент / бележка</string>
     <string name="settings__theme_editor__rule_codes">Целеви кодове</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
     <string name="settings__theme_editor__rule_shift_states">Състояние на Shift</string>
@@ -193,8 +196,18 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Нощна тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Грешка в стила</string>
+    <string name="snygg__rule_annotation__defines">Променливи</string>
+    <string name="snygg__rule_annotation__defines_description">Създайте променливи в това правило, за да използвате общи цветове или размери в стиловия лист.</string>
+    <string name="snygg__rule_annotation__font">Шрифт</string>
+    <string name="snygg__rule_annotation__font_name">Име на шрифт</string>
+    <string name="snygg__rule_element__root">Коренов възел</string>
+    <string name="snygg__rule_element__window">Прозорец</string>
     <string name="snygg__rule_element__key">Клавиш</string>
     <string name="snygg__rule_element__key_hint">Горен индекс на клавиш</string>
+    <string name="snygg__rule_element__key_popup_box">Кутия на подсказка на клавиш</string>
+    <string name="snygg__rule_element__key_popup_element">Елемент на подсказка на клавиш</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Разширен индикатор на подсказка</string>
     <string name="snygg__rule_element__clipboard_header">Заглавка на междинната памет</string>
     <string name="snygg__rule_element__clipboard_item">Елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_popup">Подсказка на елемент от междинната памет</string>

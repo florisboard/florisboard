@@ -112,6 +112,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard לא הוגדר כמקלדת ברירת המחדל. לחיצה כאן תאפשר לפתור תקלה זו.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">שפות &amp; פריסות</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">הציגו שם שפה ב</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">הצגת תוויות מקלדת בשפת תת-סוג</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">תת-סוג</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">הוסף תת-סוג</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">נהל ערכות שפה מותקנות</string>
@@ -152,6 +153,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">זמן שקיעה</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">ערכת נושא למצב יום</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">ערכת נושא למצב לילה</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        צבע עיצוב (Material you themes)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">נהל ערכות נושא מותקנות</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">נכסי אפליקצית FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">אחסון פנימי</string>
@@ -160,12 +163,24 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">בחר ערכת נושא לילית</string>
     <string name="settings__theme_editor__fine_tune__title">כיוונון העורך</string>
     <string name="settings__theme_editor__fine_tune__level">רמת עריכה</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">ייצוג צבעים</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">הצגת מקלדת אחרי החלוניות</string>
     <string name="settings__theme_editor__add_rule">הוספת כלל</string>
     <string name="settings__theme_editor__edit_rule">עריכת כלל</string>
     <string name="settings__theme_editor__no_rules_defined">לגיליון סגנונות זה אין כללים מוגדרים. הוסף כלל כדי להתחיל בהתאמה אישית של גיליון הסגנונות הזה.</string>
     <string name="settings__theme_editor__rule_already_exists">כלל גיליון סגנונות זה כבר מוגדר.</string>
+    <string name="settings__theme_editor__rule_name">אלמנט / ביאור</string>
+    <string name="settings__theme_editor__rule_codes">קודי מפתח יעד</string>
     <string name="settings__theme_editor__rule_groups">קבוצות</string>
+    <string name="settings__theme_editor__rule_shift_states">מצבי שינוי</string>
+    <string name="settings__theme_editor__rule_selectors">כלי בחירה</string>
+    <string name="settings__theme_editor__add_code">הוסף קוד מפתח</string>
+    <string name="settings__theme_editor__edit_code">ערוך מפתח קוד</string>
+    <string name="settings__theme_editor__no_codes_defined">החל כלל על כל רכיבי היעד.</string>
+    <string name="settings__theme_editor__codes_defined">החל כלל רק על רכיבי יעד עם קודי המפתח הבאים:</string>
+    <string name="settings__theme_editor__code_already_exists">מפתח זה כבר מוגדר.</string>
+    <string name="settings__theme_editor__code_placeholder">קוד</string>
+    <string name="settings__theme_editor__code_recording_help_text">כדי למצוא קוד של מקש, השתמשו בכפתור שליד שדה הזנת הקוד. לאחר הפעלתו, הוא ירשום את לחיצת המקש הבאה ויכניס את הקוד לשדה הקלט.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">מקלדת</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>
