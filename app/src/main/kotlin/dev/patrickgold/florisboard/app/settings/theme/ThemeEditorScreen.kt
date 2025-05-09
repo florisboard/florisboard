@@ -186,7 +186,7 @@ fun ThemeEditorScreen(
         }.also { editor.stylesheetEditor = it }
     }
 
-    val definedVariables = remember(stylesheetEditor.rules) {
+    val definedVariables = remember(stylesheetEditor.rules, workspace.version) {
         stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
             if (rule is SnyggAnnotationRule.Defines && propertySet is SnyggSinglePropertySetEditor) {
                 propertySet.properties
@@ -196,7 +196,7 @@ fun ThemeEditorScreen(
         } ?: emptyMap()
     }
 
-    val fontNames = remember(stylesheetEditor.rules) {
+    val fontNames = remember(stylesheetEditor.rules, workspace.version) {
         stylesheetEditor.rules.mapNotNull { (rule, _) ->
             if (rule is SnyggAnnotationRule.Font) {
                 rule.fontName
