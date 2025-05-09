@@ -824,7 +824,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH))
                     )
                 }
-                val json = QuickActionJsonConfig.encodeToString(newArrangement)
+                val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
                 entry.transform(rawValue = json)
             }
 

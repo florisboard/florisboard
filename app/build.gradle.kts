@@ -207,6 +207,7 @@ dependencies {
     implementation(project(":lib:native"))
     implementation(project(":lib:snygg"))
 
+    testImplementation(libs.kotlin.test.junit5)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
