@@ -1,0 +1,101 @@
+{
+    "all": {
+        "a": {
+            "label": "a",
+            "relevant": [
+                { "$": "auto_text_key", "code": 603, "label": "ɛ" }
+            ]
+        },
+        "z": {
+            "label": "z",
+            "relevant": [
+                { "$": "auto_text_key", "code": 7827, "label": "ẓ" }
+            ]
+        },
+        "e": { "label": "e" },
+        "r": {
+            "label": "r",
+            "relevant": [
+                { "$": "auto_text_key", "code": 7771, "label": "ṛ" }
+            ]
+        },
+        "t": {
+            "label": "t",
+            "relevant": [
+                { "$": "auto_text_key", "code": 7789, "label": "ṭ" }
+            ]
+        },
+        "y": { "label": "y" },
+        "u": {
+            "label": "u",
+            "relevant": [
+                { "$": "auto_text_key", "code": 111, "label": "o" }
+            ]
+        },
+        "i": { "label": "i" },
+        "ɛ": { "label": "ɛ" },
+        "ɣ": { "label": "ɣ" },
+
+        "q": { "label": "q" },
+        "s": {
+            "label": "s",
+            "relevant": [
+                { "$": "auto_text_key", "code": 7779, "label": "ṣ" }
+            ]
+        },
+        "d": {
+            "label": "d",
+            "relevant": [
+                { "$": "auto_text_key", "code": 7693, "label": "ḍ" }
+            ]
+        },
+        "f": { "label": "f" },
+        "g": {
+            "label": "g",
+            "relevant": [
+                { "$": "auto_text_key", "code": 487, "label": "ǧ" },
+                { "$": "auto_text_key", "code": 611, "label": "ɣ" }
+            ]
+        },
+        "h": {
+            "label": "h",
+            "relevant": [
+                { "$": "auto_text_key", "code": 7717, "label": "ḥ" }
+            ]
+        },
+        "j": { "label": "j" },
+        "k": { "label": "k" },
+        "l": { "label": "l" },
+        "m": { "label": "m" },
+
+        "w": { "label": "w" },
+        "x": { "label": "x" },
+        "c": {
+            "label": "c",
+            "relevant": [
+                { "$": "auto_text_key", "code": 269, "label": "č" }
+            ]
+        },
+        "v": { "label": "v" },
+        "b": {
+            "label": "b",
+            "relevant": [
+                { "$": "auto_text_key", "code": 112, "label": "p" },
+                { "$": "auto_text_key", "code": 118, "label": "v" }
+            ]
+        },
+        "n": { "label": "n" }
+    },
+    "uri": {
+        "~right": {
+            "main": { "code": -255, "label": ".dz" },
+            "relevant": [
+                { "code": -255, "label": ".com" },
+                { "code": -255, "label": ".gov.dz" },
+                { "code": -255, "label": ".fr" },
+                { "code": -255, "label": ".org" },
+                { "code": -255, "label": ".net" }
+            ]
+        }
+    }
+}
