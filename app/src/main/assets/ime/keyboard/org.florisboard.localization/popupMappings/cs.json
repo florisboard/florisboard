@@ -25,7 +25,8 @@
     "u": {
       "relevant": [
         { "$": "auto_text_key", "code":  367, "label": "ů" },
-        { "$": "auto_text_key", "code":  250, "label": "ú" }
+        { "$": "auto_text_key", "code":  250, "label": "ú" },
+        { "$": "auto_text_key", "code":  252, "label": "ü" }
       ]
     },
     "i": {
@@ -36,12 +37,14 @@
     "o": {
       "relevant": [
         { "$": "auto_text_key", "code":  243, "label": "ó" },
-        { "$": "auto_text_key", "code":  244, "label": "ô" }
+        { "$": "auto_text_key", "code":  244, "label": "ô" },
+        { "$": "auto_text_key", "code":  246, "label": "ö" }
       ]
     },
     "a": {
       "relevant": [
-        { "$": "auto_text_key", "code":  225, "label": "á" }
+        { "$": "auto_text_key", "code":  225, "label": "á" },
+        { "$": "auto_text_key", "code":  228, "label": "ä" }
       ]
     },
     "s": {
