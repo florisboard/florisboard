@@ -33,7 +33,13 @@ val projectBuildToolsVersion: String by project
 val projectNdkVersion: String by project
 val projectVersionCode: String by project
 val projectVersionName: String by project
-val projectVersionNameSuffix = projectVersionName.substringAfter("-", "")
+val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { suffix ->
+    if (suffix.isNotEmpty()) {
+        "-$suffix"
+    } else {
+        suffix
+    }
+}
 
 android {
     namespace = "dev.patrickgold.florisboard"
