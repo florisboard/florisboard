@@ -20,7 +20,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.plus
@@ -49,6 +48,20 @@ data class QuickActionArrangement(
 ) {
     operator fun contains(action: QuickAction): Boolean {
         return stickyAction == action || dynamicActions.contains(action) || hiddenActions.contains(action)
+    }
+
+    fun distinct(): QuickActionArrangement {
+        val distinctSet = mutableSetOf<QuickAction>()
+        if (stickyAction != null) {
+            distinctSet.add(stickyAction)
+        }
+        val distinctDynamicActions = dynamicActions.filter { distinctSet.add(it) }
+        val distinctHiddenActions = hiddenActions.filter { distinctSet.add(it) }
+        return QuickActionArrangement(
+            stickyAction = stickyAction,
+            dynamicActions = distinctDynamicActions,
+            hiddenActions = distinctHiddenActions,
+        )
     }
 
     companion object {
