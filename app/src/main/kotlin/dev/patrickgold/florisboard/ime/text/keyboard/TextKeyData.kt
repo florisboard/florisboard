@@ -44,7 +44,7 @@ import kotlinx.serialization.Transient
  */
 @Serializable
 @SerialName("text_key")
-class TextKeyData(
+data class TextKeyData(
     override val type: KeyType = KeyType.CHARACTER,
     override val code: Int = KeyCode.UNSPECIFIED,
     override val label: String = "",
