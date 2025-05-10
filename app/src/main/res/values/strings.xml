@@ -266,7 +266,7 @@
     <string name="snygg__rule_element__media_emoji_key">Media emoji key</string>
     <string name="snygg__rule_element__media_emoji_key_popup_box">Media emoji key popup box</string>
     <string name="snygg__rule_element__media_emoji_key_popup_element">Media emoji key popup element</string>
-    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Media emoji key popup box</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Media emoji key popup extended indicator</string>
     <string name="snygg__rule_element__media_emoji_tab">Media emoji tab</string>
 
     <string name="snygg__rule_element__media_bottom_row">Media bottom row</string>
