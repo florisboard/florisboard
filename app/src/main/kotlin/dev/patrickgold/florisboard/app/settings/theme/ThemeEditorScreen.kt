@@ -730,7 +730,6 @@ private fun SnyggRuleRow(
             style = MaterialTheme.typography.bodyMedium,
             color = LocalContentColor.current.copy(alpha = 0.56f),
             fontFamily = FontFamily.Monospace,
-            maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
     }
@@ -750,7 +749,7 @@ private fun SnyggRuleRow(
                     text = context.translateElementName(rule, level),
                     style = MaterialTheme.typography.bodyMedium,
                     fontFamily = FontFamily.Monospace,
-                    maxLines = 1,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Row(modifier = Modifier.fillMaxWidth()) {
