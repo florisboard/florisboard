@@ -80,7 +80,6 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                 ) {
                     SnyggListItem(
                         elementName = FlorisImeUi.SubtypePanelListItem.elementName,
-                        modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             subtypeManager.switchToSubtypeById(it.id)
                             keyboardManager.activeState.isSubtypeSelectionVisible = false

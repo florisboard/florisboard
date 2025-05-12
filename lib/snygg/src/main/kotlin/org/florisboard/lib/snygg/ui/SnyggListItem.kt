@@ -22,15 +22,15 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,8 +56,6 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  * @param enabled If the clickable action is enabled or not. False will set the DISABLED selector for style querying.
  *
  * @since 0.5.0-alpha03
- *
- * @see androidx.compose.material3.ListItem
  */
 @Composable
 fun SnyggListItem(
@@ -98,6 +96,7 @@ fun SnyggListItem(
             elementName = "$elementName-text",
             attributes = attributes,
             selector = selector,
+            modifier = Modifier.fillMaxWidth(),
             text = text,
         )
         if (trailingImageVector != null) {
@@ -130,26 +129,34 @@ private fun SimpleSnyggListItem() {
             fontSize = fontSize(24.sp)
             padding = padding(0.dp, 0.dp, 16.dp, 0.dp)
         }
+        "preview-list-item"("layout" to listOf("center")) {
+            textAlign = textAlign(TextAlign.Center)
+        }
+        "preview-list-item"("layout" to listOf("long")) {
+            textMaxLines = textMaxLines(1)
+            textOverflow = textOverflow(TextOverflow.Ellipsis)
+        }
     }
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
         SnyggColumn("preview") {
-            Text("Snygg list item:")
             SnyggListItem("preview-list-item",
-                modifier = Modifier.fillMaxWidth(),
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},
                 text = "hello",
             )
-            Text("vs Material3 list item:")
-            ListItem(
-                leadingContent = {
-                    Icon(Icons.Default.Search, null)
-                },
-                headlineContent = {
-                    Text("hello")
-                },
+            SnyggListItem("preview-list-item",
+                mapOf("layout" to "center"),
+                leadingImageVector = Icons.Default.Search,
+                onClick = {},
+                text = "hello",
+            )
+            SnyggListItem("preview-list-item",
+                mapOf("layout" to "long"),
+                leadingImageVector = Icons.Default.Search,
+                onClick = {},
+                text = "hello world this is a very long list item text label",
             )
         }
     }

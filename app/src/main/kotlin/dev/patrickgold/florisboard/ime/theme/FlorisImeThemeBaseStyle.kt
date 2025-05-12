@@ -331,4 +331,8 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(24.sp)
         padding = padding(0.dp, 0.dp, 16.dp, 0.dp)
     }
+    FlorisImeUi.SubtypePanelListItemText.elementName {
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
 }
