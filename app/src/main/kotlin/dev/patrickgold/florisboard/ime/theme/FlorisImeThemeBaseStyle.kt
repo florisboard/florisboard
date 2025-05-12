@@ -308,4 +308,31 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)
     }
+
+    FlorisImeUi.SubtypePanel.elementName {
+        background = `var`("--background")
+        foreground = `var`("--on-background")
+        shape = roundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp)
+    }
+    FlorisImeUi.SubtypePanelHeader.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(18.sp)
+        padding = padding(12.dp)
+        textAlign = textAlign(TextAlign.Center)
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
+    FlorisImeUi.SubtypePanelListItem.elementName {
+        fontSize = fontSize(16.sp)
+        padding = padding(16.dp)
+    }
+    FlorisImeUi.SubtypePanelListItemIconLeading.elementName {
+        fontSize = fontSize(24.sp)
+        padding = padding(0.dp, 0.dp, 16.dp, 0.dp)
+    }
+    FlorisImeUi.SubtypePanelListItemText.elementName {
+        textMaxLines = textMaxLines(1)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
+    }
 }

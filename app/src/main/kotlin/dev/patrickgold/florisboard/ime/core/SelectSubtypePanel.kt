@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.core
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,8 +25,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RadioButtonChecked
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,11 +35,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggListItem
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
@@ -71,7 +68,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             )
         }
 
-        Box {
+        SnyggBox(FlorisImeUi.SubtypePanelList.elementName) {
             LazyColumn(
                 state = listState,
             ) {
@@ -81,22 +78,17 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                         it.id
                     }
                 ) {
-                    JetPrefListItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .rippleClickable {
-                                subtypeManager.switchToSubtypeById(it.id)
-                                keyboardManager.activeState.isSubtypeSelectionVisible = false
-                            },
-                        icon = {
-                            if (currentlySelected == it.id) {
-                                Icon(Icons.Default.RadioButtonChecked, null)
-                            } else {
-                                Icon(Icons.Default.RadioButtonUnchecked, null)
-                            }
+                    SnyggListItem(
+                        elementName = FlorisImeUi.SubtypePanelListItem.elementName,
+                        onClick = {
+                            subtypeManager.switchToSubtypeById(it.id)
+                            keyboardManager.activeState.isSubtypeSelectionVisible = false
+                        },
+                        leadingImageVector = when {
+                            currentlySelected == it.id -> Icons.Default.RadioButtonChecked
+                            else -> Icons.Default.RadioButtonUnchecked
                         },
                         text = it.primaryLocale.displayName(),
-                        colors = ListItemDefaults.colors(),
                     )
                 }
             }

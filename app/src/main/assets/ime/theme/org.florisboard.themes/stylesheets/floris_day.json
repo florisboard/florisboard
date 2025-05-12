@@ -378,5 +378,17 @@
     "text-align": "center",
     "text-max-lines": "1",
     "text-overflow": "ellipsis"
+  },
+  "subtype-panel-list-item": {
+    "font-size": "16sp",
+    "padding": "16dp"
+  },
+  "subtype-panel-list-item-icon-leading": {
+    "font-size": "24sp",
+    "padding": "0dp 0dp 16dp 0dp"
+  },
+  "subtype-panel-list-item-text": {
+    "text-max-lines": "1",
+    "text-overflow": "ellipsis"
   }
 }
