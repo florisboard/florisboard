@@ -33,8 +33,7 @@
 
   "window": {
     "background": "var(--background)",
-    "foreground": "var(--on-background)",
-    "clip": "no"
+    "foreground": "var(--on-background)"
   },
 
   "key": {

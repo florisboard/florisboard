@@ -50,7 +50,6 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.Window.elementName {
         background = `var`("--background")
         foreground = `var`("--on-background")
-        clip = no()
     }
 
     FlorisImeUi.Key.elementName {
@@ -276,7 +275,6 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         margin = padding(4.dp)
         padding = padding(12.dp, 8.dp)
         shape = `var`("--shape-variant")
-        clip = yes()
         shadowElevation = size(2.dp)
     }
     FlorisImeUi.ClipboardItemPopup.elementName {
@@ -284,7 +282,6 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         foreground = `var`("--on-surface")
         margin = padding(4.dp)
         shape = `var`("--shape-variant")
-        clip = yes()
         shadowElevation = size(2.dp)
     }
     FlorisImeUi.ClipboardItemPopupAction.elementName {
