@@ -288,6 +288,22 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     SubtypePanelHeader(
         elementName = "subtype-panel-header",
         resId = R.string.snygg__rule_element__subtype_panel_header,
+    ),
+    SubtypePanelList(
+        elementName = "subtype-panel-list",
+        resId = R.string.snygg__rule_element__subtype_panel_list,
+    ),
+    SubtypePanelListItem(
+        elementName = "subtype-panel-list-item",
+        resId = R.string.snygg__rule_element__subtype_panel_list_item,
+    ),
+    SubtypePanelListItemIconLeading(
+        elementName = "subtype-panel-list-item-icon-leading",
+        resId = R.string.snygg__rule_element__subtype_panel_list_item_icon_leading,
+    ),
+    SubtypePanelListItemText(
+        elementName = "subtype-panel-list-item-text",
+        resId = R.string.snygg__rule_element__subtype_panel_list_item_text,
     );
 
     companion object {

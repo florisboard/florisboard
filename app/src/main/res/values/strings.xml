@@ -299,6 +299,10 @@
 
     <string name="snygg__rule_element__subtype_panel">Subtype panel</string>
     <string name="snygg__rule_element__subtype_panel_header">Subtype panel header</string>
+    <string name="snygg__rule_element__subtype_panel_list">Subtype panel list</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Subtype panel list item</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Subtype panel list item icon (leading)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Subtype panel list item text</string>
 
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
