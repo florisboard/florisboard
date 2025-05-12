@@ -281,9 +281,25 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "smartbar-candidate-word",
         resId = R.string.snygg__rule_element__smartbar_candidate_word,
     ),
+    SmartbarCandidateWordText(
+        elementName = "smartbar-candidate-word-text",
+        resId = R.string.snygg__rule_element__smartbar_candidate_word_text,
+    ),
+    SmartbarCandidateWordSecondaryText(
+        elementName = "smartbar-candidate-word-secondary-text",
+        resId = R.string.snygg__rule_element__smartbar_candidate_word_secondary_text,
+    ),
     SmartbarCandidateClip(
         elementName = "smartbar-candidate-clip",
         resId = R.string.snygg__rule_element__smartbar_candidate_clip,
+    ),
+    SmartbarCandidateClipIcon(
+        elementName = "smartbar-candidate-clip-icon",
+        resId = R.string.snygg__rule_element__smartbar_candidate_clip_icon,
+    ),
+    SmartbarCandidateClipText(
+        elementName = "smartbar-candidate-clip-text",
+        resId = R.string.snygg__rule_element__smartbar_candidate_clip_text,
     ),
     SmartbarCandidateSpacer(
         elementName = "smartbar-candidate-spacer",

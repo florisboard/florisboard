@@ -212,6 +212,10 @@
     "background": "var(--surface)",
     "foreground": "var(--on-background)"
   },
+  "smartbar-candidate-word-secondary-text": {
+    "font-size": "8sp",
+    "margin": "0dp 2dp 0dp 0dp"
+  },
   "smartbar-candidate-clip": {
     "background": "transparent",
     "foreground": "var(--on-background)",
@@ -225,6 +229,9 @@
   "smartbar-candidate-clip:pressed": {
     "background": "var(--surface)",
     "foreground": "var(--on-background)"
+  },
+  "smartbar-candidate-clip-icon": {
+    "margin": "0dp 0dp 4dp 0dp"
   },
   "smartbar-candidate-spacer": {
     "foreground": "var(--surface)"

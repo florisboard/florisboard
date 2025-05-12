@@ -232,6 +232,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }
+    FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName {
+        fontSize = fontSize(8.sp)
+        margin = padding(0.dp, 2.dp, 0.dp, 0.dp)
+    }
     FlorisImeUi.SmartbarCandidateClip.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
@@ -245,6 +249,9 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarCandidateClip.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
+    }
+    FlorisImeUi.SmartbarCandidateClipIcon.elementName {
+        margin = padding(0.dp, 0.dp, 4.dp, 0.dp)
     }
     FlorisImeUi.SmartbarCandidateSpacer.elementName {
         foreground = rgbaColor(255, 255, 255, 0.25f)

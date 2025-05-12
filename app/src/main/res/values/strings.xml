@@ -297,7 +297,11 @@
 
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar candidates row</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Smartbar candidate word text</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Smartbar candidate word secondary text</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Smartbar candidate clip icon</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Smartbar candidate clip text</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
 
     <string name="snygg__rule_element__subtype_panel">Subtype panel</string>
