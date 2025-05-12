@@ -6,6 +6,7 @@
     "--secondary": "#f57c00",
     "--secondary-variant": "#e65100",
     "--background": "#212121",
+    "--background-variant": "#313131",
     "--surface": "#424242",
     "--surface-variant": "#616161",
     "--popup-surface": "#757575",
@@ -114,23 +115,34 @@
   "smartbar-action-key:disabled": {
     "foreground": "var(--on-background-disabled)"
   },
+
+  "smartbar-actions-overflow": {
+    "margin": "4dp"
+  },
+  "smartbar-actions-overflow-customize-button": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)",
+    "font-size": "14sp",
+    "margin": "0dp 8dp 0dp 0dp",
+    "shape": "rounded-corner(24dp, 24dp, 24dp, 24dp)"
+  },
   "smartbar-action-tile": {
-    "background": "transparent",
+    "background": "var(--background-variant)",
     "foreground": "var(--on-background)",
     "font-size": "14sp",
-    "shape": "var(--shape)",
-    "text-max-lines": "2",
+    "margin": "4dp",
+    "padding": "4dp",
+    "shape": "rounded-corner(20%, 20%, 20%, 20%)",
     "text-align": "center",
+    "text-max-lines": "2",
     "text-overflow": "ellipsis"
   },
   "smartbar-action-tile:disabled": {
     "foreground": "var(--on-background-disabled)"
   },
-  "smartbar-actions-overflow-customize-button": {
-    "background": "var(--surface)",
-    "foreground": "var(--on-surface)",
-    "font-size": "14sp",
-    "shape": "circle()"
+  "smartbar-action-tile-icon": {
+    "font-size": "24sp",
+    "margin": "0dp 0dp 0dp 8dp"
   },
 
   "smartbar-actions-editor": {

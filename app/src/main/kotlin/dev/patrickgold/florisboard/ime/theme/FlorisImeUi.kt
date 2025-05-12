@@ -226,9 +226,18 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "smartbar-action-key",
         resId = R.string.snygg__rule_element__smartbar_action_key,
     ),
+
     SmartbarActionTile(
         elementName = "smartbar-action-tile",
         resId = R.string.snygg__rule_element__smartbar_action_tile,
+    ),
+    SmartbarActionTileIcon(
+        elementName = "smartbar-action-tile-icon",
+        resId = R.string.snygg__rule_element__smartbar_action_tile_icon,
+    ),
+    SmartbarActionTileText(
+        elementName = "smartbar-action-tile-text",
+        resId = R.string.snygg__rule_element__smartbar_action_tile_text,
     ),
     SmartbarActionsOverflow(
         elementName = "smartbar-actions-overflow",

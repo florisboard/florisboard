@@ -281,7 +281,10 @@
     <string name="snygg__rule_element__smartbar_extended_actions_row">Smartbar extended actions row</string>
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Smartbar extended actions toggle</string>
     <string name="snygg__rule_element__smartbar_action_key">Smartbar action key</string>
+
     <string name="snygg__rule_element__smartbar_action_tile">Smartbar action tile</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Smartbar action tile icon</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Smartbar action tile text</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Smartbar actions overflow</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Smartbar actions overflow customize button</string>
 
