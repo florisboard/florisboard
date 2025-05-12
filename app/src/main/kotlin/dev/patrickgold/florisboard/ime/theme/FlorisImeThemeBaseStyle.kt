@@ -137,6 +137,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     FlorisImeUi.SmartbarExtendedActionsToggle.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(144, 144, 144)
+        margin = padding(6.dp)
         shape = circleShape()
     }
     FlorisImeUi.SmartbarActionKey.elementName {

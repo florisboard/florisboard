@@ -66,6 +66,8 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -98,24 +100,25 @@ fun Smartbar() {
     ) {
         when (extendedActionsPlacement) {
             ExtendedActionsPlacement.ABOVE_CANDIDATES -> {
-                Column {
+                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
                     SmartbarSecondaryRow()
                     SmartbarMainRow()
                 }
             }
 
             ExtendedActionsPlacement.BELOW_CANDIDATES -> {
-                Column {
+                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
                     SmartbarMainRow()
                     SmartbarSecondaryRow()
                 }
             }
 
             ExtendedActionsPlacement.OVERLAY_APP_UI -> {
-                Box(
+                SnyggBox(FlorisImeUi.Smartbar.elementName,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(FlorisImeSizing.smartbarHeight),
+                    allowClip = false,
                 ) {
                     Box(
                         modifier = Modifier
@@ -243,6 +246,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 }
                 prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
             },
+            modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
         ) {
             val transition = updateTransition(extendedActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
             val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
@@ -305,7 +309,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     }
 
     SnyggRow(
-        FlorisImeUi.Smartbar.elementName,
         modifier = modifier
             .fillMaxWidth()
             .height(FlorisImeSizing.smartbarHeight),

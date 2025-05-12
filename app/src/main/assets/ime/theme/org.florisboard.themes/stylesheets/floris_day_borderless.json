@@ -113,6 +113,7 @@
   "smartbar-extended-actions-toggle": {
     "background": "transparent",
     "foreground": "var(--on-surface-variant)",
+    "margin": "6dp",
     "shape": "circle()"
   },
   "smartbar-action-key": {

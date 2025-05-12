@@ -94,6 +94,7 @@
   "key-popup-extended-indicator": {
     "font-size": "16sp"
   },
+
   "smartbar": {
     "font-size": "18sp"
   },
@@ -107,6 +108,7 @@
   "smartbar-extended-actions-toggle": {
     "background": "transparent",
     "foreground": "var(--on-surface-variant)",
+    "margin": "6dp",
     "shape": "circle()"
   },
   "smartbar-action-key": {
