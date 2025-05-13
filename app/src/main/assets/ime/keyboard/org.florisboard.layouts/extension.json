@@ -18,6 +18,13 @@
         "modifier": "org.florisboard.layouts:arabic"
       },
       {
+        "id": "armenian_alt_phonetic",
+        "label": "Armenian Alt Phonetic",
+        "authors": [ "MikayelB" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian_alt_phonetic"
+      },
+      {
         "id": "western_armenian",
         "label": "Armenian (Western)",
         "authors": [ "PJTSearch" ],
