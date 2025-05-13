@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -152,10 +153,13 @@ private fun CandidateItem(
     } else {
         FlorisImeUi.SmartbarCandidateWord
     }.elementName
+    val attributes = mapOf("auto-commit" to if (candidate.isEligibleForAutoCommit) 1 else 0)
+    val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
 
     SnyggRow(
         elementName = elementName,
-        selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE,
+        attributes = attributes,
+        selector = selector,
         modifier = modifier
             .pointerInput(Unit) {
                 awaitEachGesture {
@@ -184,7 +188,13 @@ private fun CandidateItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (candidate.icon != null) {
-            SnyggIcon(imageVector = candidate.icon!!)
+            SnyggBox(
+                elementName = "$elementName-icon",
+                attributes = attributes,
+                selector = selector,
+            ) {
+                SnyggIcon(imageVector = candidate.icon!!)
+            }
         }
         SnyggColumn(
             modifier = if (displayMode == CandidatesDisplayMode.CLASSIC) Modifier.weight(1f) else Modifier,
@@ -192,14 +202,16 @@ private fun CandidateItem(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SnyggText(
-                elementName = null,
-                attributes = mapOf("auto-commit" to if (candidate.isEligibleForAutoCommit) 1 else 0),
+                elementName = "$elementName-text",
+                attributes = attributes,
+                selector = selector,
                 text = candidate.text.toString(),
             )
             if (candidate.secondaryText != null) {
                 SnyggText(
-                    elementName = null,
-                    attributes = mapOf("auto-commit" to if (candidate.isEligibleForAutoCommit) 1 else 0),
+                    elementName = "$elementName-secondary-text",
+                    attributes = attributes,
+                    selector = selector,
                     text = candidate.secondaryText!!.toString(),
                 )
             }

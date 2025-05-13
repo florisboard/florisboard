@@ -24,10 +24,8 @@ import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -39,7 +37,6 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.compose.tooltip.PlainTooltip
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
 import dev.patrickgold.florisboard.ime.keyboard.computeLabel
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -73,6 +70,7 @@ fun QuickActionButton(
         QuickActionBarType.INTERACTIVE_TILE -> FlorisImeUi.SmartbarActionTile
         QuickActionBarType.EDITOR_TILE -> FlorisImeUi.SmartbarActionsEditorTile
     }.elementName
+    val attributes = mapOf(FlorisImeUi.Attr.Code to action.keyData().code)
     val selector = when {
         isPressed -> SnyggSelector.PRESSED
         !isEnabled -> SnyggSelector.DISABLED
@@ -92,7 +90,7 @@ fun QuickActionButton(
     PlainTooltip(action.computeTooltip(evaluator), enabled = type == QuickActionBarType.INTERACTIVE_BUTTON) {
         SnyggBox(
             elementName = elementName,
-            attributes = mapOf(FlorisImeUi.Attr.Code to action.keyData().code),
+            attributes = attributes,
             selector = selector,
             modifier = modifier,
             clickAndSemanticsModifier = Modifier
@@ -123,33 +121,45 @@ fun QuickActionButton(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Render foreground
-                Box(
-                    modifier = Modifier.size(FlorisImeSizing.smartbarHeight * 0.5f),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    when (action) {
-                        is QuickAction.InsertKey -> {
-                            val (imageVector, label) = remember(action, evaluator) {
-                                evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
-                            }
-                            if (imageVector != null) {
-                                SnyggIcon(imageVector = imageVector)
-                            } else if (label != null) {
-                                SnyggText(text = label)
-                            }
+                when (action) {
+                    is QuickAction.InsertKey -> {
+                        val (imageVector, label) = remember(action, evaluator) {
+                            evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
                         }
-
-                        is QuickAction.InsertText -> {
+                        if (imageVector != null) {
+                            SnyggBox(
+                                elementName = "$elementName-icon",
+                                attributes = attributes,
+                                selector = selector,
+                            ) {
+                                SnyggIcon(imageVector = imageVector)
+                            }
+                        } else if (label != null) {
                             SnyggText(
-                                text = action.data.firstOrNull().toString().ifBlank { "?" },
+                                elementName = "$elementName-text",
+                                attributes = attributes,
+                                selector = selector,
+                                text = label,
                             )
                         }
+                    }
+
+                    is QuickAction.InsertText -> {
+                        SnyggText(
+                            elementName = "$elementName-text",
+                            attributes = attributes,
+                            selector = selector,
+                            text = action.data.firstOrNull().toString().ifBlank { "?" },
+                        )
                     }
                 }
 
                 // Render additional info if this is a tile
                 if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                     SnyggText(
+                        elementName = "$elementName-text",
+                        attributes = attributes,
+                        selector = selector,
                         text = action.computeDisplayName(evaluator = evaluator),
                     )
                 }

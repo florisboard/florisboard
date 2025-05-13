@@ -604,6 +604,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
                 supportsBackgroundImage = true,
+                allowClip = false,
             ) {
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {
