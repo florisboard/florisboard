@@ -64,7 +64,6 @@ import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.SnyggYesValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
     compositionLocalOf {
@@ -77,6 +76,11 @@ internal val LocalSnyggDynamicLightColorScheme: ProvidableCompositionLocal<Color
     }
 
 internal val LocalSnyggDynamicDarkColorScheme: ProvidableCompositionLocal<ColorScheme> =
+    compositionLocalOf {
+        error("ProvideSnyggTheme not called.")
+    }
+
+internal val LocalSnyggFontSizeMultiplier: ProvidableCompositionLocal<Float> =
     compositionLocalOf {
         error("ProvideSnyggTheme not called.")
     }
@@ -143,6 +147,7 @@ fun rememberSnyggTheme(
 fun ProvideSnyggTheme(
     snyggTheme: SnyggTheme,
     dynamicAccentColor: Color = Color.Unspecified,
+    fontSizeMultiplier: Float = 1.0f,
     assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
     content: @Composable () -> Unit,
 ) {
@@ -174,6 +179,7 @@ fun ProvideSnyggTheme(
         LocalSnyggTheme provides snyggTheme,
         LocalSnyggDynamicLightColorScheme provides lightScheme,
         LocalSnyggDynamicDarkColorScheme provides darkScheme,
+        LocalSnyggFontSizeMultiplier provides fontSizeMultiplier,
         LocalSnyggAssetResolver provides assetResolver,
         LocalSnyggPreloadedCustomFontFamilies provides customFontFamilies,
         LocalSnyggParentStyle provides initParentStyle,
@@ -244,7 +250,8 @@ internal fun SnyggTheme.rememberQuery(
     val parentStyle = LocalSnyggParentStyle.current
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
-    return remember(elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme) {
+    val fontSizeMultiplier = LocalSnyggFontSizeMultiplier.current
+    return remember(elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme, fontSizeMultiplier) {
         query(
             elementName = elementName ?: "",
             attributes,
@@ -252,6 +259,7 @@ internal fun SnyggTheme.rememberQuery(
             parentStyle,
             dynamicLightColorScheme,
             dynamicDarkColorScheme,
+            fontSizeMultiplier,
         )
     }
 }

@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.isSpecified
 import org.florisboard.lib.snygg.value.RgbaColor
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -86,12 +87,26 @@ class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = nu
         }
     }
 
-    internal fun applyAll(thisStyle: SnyggSinglePropertySet, parentStyle: SnyggSinglePropertySet) {
+    internal fun applyAll(
+        thisStyle: SnyggSinglePropertySet,
+        parentStyle: SnyggSinglePropertySet,
+        fontSizeMultiplier: Float,
+    ) {
         for ((property, value) in thisStyle.properties) {
             when {
                 value.isUndefined() -> setProperty(property, null)
                 value.isInherit() -> setProperty(property, parentStyle.properties[property])
-                else -> setProperty(property, value)
+                else -> {
+                    val transformedValue = when (value) {
+                        is SnyggSpSizeValue if value.sp.isSpecified -> {
+                            SnyggSpSizeValue(value.sp * fontSizeMultiplier)
+                        }
+                        else -> {
+                            value
+                        }
+                    }
+                    setProperty(property, transformedValue)
+                }
             }
         }
         inheritImplicitly(parentStyle)
