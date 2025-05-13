@@ -81,7 +81,6 @@ class PopupUiController(
 
     private var activeElementIndex by mutableIntStateOf(-1)
     var evaluator: ComputingEvaluator = DefaultComputingEvaluator
-    var fontSizeMultiplier: Float = 1.0f
     var keyHintConfiguration: KeyHintConfiguration = KeyHintConfiguration.HINTS_DISABLED
 
     /** Is true if the preview popup is visible to the user, else false */

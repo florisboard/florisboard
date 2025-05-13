@@ -58,6 +58,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
         FlorisAssetResolver(context, activeThemeInfo)
     }
     val snyggTheme = rememberSnyggTheme(activeStyle, assetResolver)
+    val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
 
     MaterialTheme {
         CompositionLocalProvider(
@@ -67,6 +68,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
             ProvideSnyggTheme(
                 snyggTheme = snyggTheme,
                 dynamicAccentColor = accentColor,
+                fontSizeMultiplier = fontSizeMultiplier,
                 assetResolver = assetResolver,
                 content = content,
             )
