@@ -78,6 +78,7 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
+import java.util.concurrent.atomic.AtomicInteger
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
@@ -100,7 +101,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private var lastToastReference = WeakReference<Toast>(null)
 
     private val activeEvaluatorGuard = Mutex(locked = false)
-    private var activeEvaluatorVersion: Int = 1
+    private var activeEvaluatorVersion = AtomicInteger(0)
     private val _activeEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
     val activeEvaluator get() = _activeEvaluator.asStateFlow()
     private val _activeSmartbarEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
@@ -191,7 +192,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 ).await()
             }
             val computingEvaluator = ComputingEvaluatorImpl(
-                version = activeEvaluatorVersion++,
+                version = activeEvaluatorVersion.getAndAdd(1),
                 keyboard = computedKeyboard,
                 editorInfo = editorInfo,
                 state = state,
@@ -1023,7 +1024,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
         fun asSmartbarQuickActionsEvaluator(): ComputingEvaluatorImpl {
             return ComputingEvaluatorImpl(
-                version = activeEvaluatorVersion,
+                version = version,
                 keyboard = SmartbarQuickActionsKeyboard,
                 editorInfo = editorInfo,
                 state = state,
