@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredHeight
@@ -31,6 +30,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -41,11 +41,13 @@ import org.florisboard.lib.snygg.ui.SnyggText
 @Composable
 fun PopupBaseBox(
     modifier: Modifier = Modifier,
+    attributes: SnyggQueryAttributes,
     key: Key,
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
     SnyggBox(
         elementName = FlorisImeUi.KeyPopupBox.elementName,
+        attributes = attributes,
         modifier = modifier,
     ) {
         key.label?.let { label ->
@@ -64,6 +66,7 @@ fun PopupBaseBox(
         if (shouldIndicateExtendedPopups) {
             SnyggIcon(
                 elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
+                attributes = attributes,
                 modifier = Modifier.align(Alignment.CenterEnd),
                 imageVector = Icons.Default.MoreHoriz,
             )
@@ -74,13 +77,14 @@ fun PopupBaseBox(
 @Composable
 fun PopupExtBox(
     modifier: Modifier = Modifier,
+    attributes: SnyggQueryAttributes,
     elements: List<List<PopupUiController.Element>>,
     elemArrangement: Arrangement.Horizontal,
     elemWidth: Dp,
     elemHeight: Dp,
     activeElementIndex: Int,
 ): Unit = with(LocalDensity.current) {
-    SnyggColumn(FlorisImeUi.KeyPopupBox.elementName, modifier = modifier) {
+    SnyggColumn(FlorisImeUi.KeyPopupBox.elementName, attributes, modifier = modifier) {
         for (row in elements.asReversed()) {
             SnyggRow(
                 modifier = Modifier
@@ -96,6 +100,7 @@ fun PopupExtBox(
                     }
                     SnyggBox(
                         elementName = FlorisImeUi.KeyPopupElement.elementName,
+                        attributes = attributes,
                         selector = selector,
                         modifier = Modifier.size(elemWidth, elemHeight),
                     ) {
