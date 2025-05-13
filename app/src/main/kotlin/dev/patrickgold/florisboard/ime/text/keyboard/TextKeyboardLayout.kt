@@ -288,7 +288,7 @@ fun TextKeyboardLayout(
         val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
-                textKey, evaluator,
+                textKey, evaluator, desiredKey,
                 debugShowTouchBoundaries,
             )
         }
@@ -309,9 +309,9 @@ fun TextKeyboardLayout(
 private fun TextKeyButton(
     key: TextKey,
     evaluator: ComputingEvaluator,
+    desiredKey: TextKey,
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
-    evaluator.keyboard.mode
     val attributes = mapOf(
         FlorisImeUi.Attr.Code to key.computedData.code,
         FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.attrName(),
@@ -322,7 +322,9 @@ private fun TextKeyButton(
         key.isPressed -> SnyggSelector.PRESSED
         else -> SnyggSelector.NONE
     }
-    val size = key.visibleBounds.size.toDpSize()
+    val size = remember(key, desiredKey) {
+        key.visibleBounds.size.toDpSize()
+    }
     SnyggBox(
         FlorisImeUi.Key.elementName,
         attributes = attributes,

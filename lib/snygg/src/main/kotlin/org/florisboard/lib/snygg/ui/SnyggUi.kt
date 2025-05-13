@@ -251,7 +251,7 @@ internal fun SnyggTheme.rememberQuery(
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
     val fontSizeMultiplier = LocalSnyggFontSizeMultiplier.current
-    return remember(elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme, fontSizeMultiplier) {
+    return remember(this, elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme, fontSizeMultiplier) {
         query(
             elementName = elementName ?: "",
             attributes,

@@ -18,6 +18,7 @@ package org.florisboard.lib.color
 
 import android.content.Context
 import androidx.compose.material3.ColorScheme
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import org.florisboard.lib.android.AndroidVersion
@@ -64,9 +65,9 @@ import org.florisboard.lib.color.schemes.yellowLightScheme
 
 val DEFAULT_GREEN = Color(0xFF4CAF50)
 
+@Immutable
 data class ColorMappings(val light: ColorScheme, val dark: ColorScheme) {
     companion object {
-
         val default = ColorMappings(florisDefaultKeyboardLightScheme, florisDefaultKeyboardDarkScheme)
         private val red = ColorMappings(redLightScheme, redDarkScheme)
         private val pink = ColorMappings(pinkLightScheme, pinkDarkScheme)
