@@ -588,6 +588,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     @Composable
     private fun ImeUi() {
         val state by keyboardManager.activeState.collectAsState()
+        val attributes = mapOf(
+            FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
+            FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
+        )
         val layoutDirection = LocalLayoutDirection.current
         LaunchedEffect(layoutDirection) {
             keyboardManager.activeState.layoutDirection = layoutDirection
@@ -595,7 +599,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggBox(
                 elementName = FlorisImeUi.Window.elementName,
-                attributes = mapOf(FlorisImeUi.Attr.ShiftState to state.inputShiftState.attrName()),
+                attributes = attributes,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()

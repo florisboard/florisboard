@@ -69,6 +69,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
@@ -98,10 +99,12 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.snygg.SnyggAnnotationRule
+import org.florisboard.lib.snygg.SnyggAttributes
 import org.florisboard.lib.snygg.SnyggElementRule
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.NonNullSaver
+import kotlin.reflect.KClass
 
 private val TransparentTextSelectionColors = TextSelectionColors(
     handleColor = Color.Transparent,
@@ -240,11 +243,13 @@ internal fun EditRuleDialog(
                     }
                 }
                 DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
-                    Row(modifier = Modifier.florisHorizontalScroll()) {
-                        //TODO: LazyRow
+                    Row(
+                        modifier = Modifier.florisHorizontalScroll(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        // TODO: avoid code duplication
                         FlorisChip(
                             onClick = { updateCurrentRule(SnyggSelector.PRESSED) },
-                            modifier = Modifier.padding(end = 4.dp),
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.PRESSED.id
                                 else -> stringRes(R.string.snygg__rule_selector__pressed)
@@ -253,7 +258,6 @@ internal fun EditRuleDialog(
                         )
                         FlorisChip(
                             onClick = { updateCurrentRule(SnyggSelector.FOCUS) },
-                            modifier = Modifier.padding( end = 4.dp),
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.FOCUS.id
                                 else -> stringRes(R.string.snygg__rule_selector__focus)
@@ -262,7 +266,6 @@ internal fun EditRuleDialog(
                         )
                         FlorisChip(
                             onClick = { updateCurrentRule(SnyggSelector.HOVER) },
-                            modifier = Modifier.padding( end = 4.dp),
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.HOVER.id
                                 else -> stringRes(R.string.snygg__rule_selector__hover)
@@ -312,22 +315,17 @@ internal fun EditRuleDialog(
                         )
                     },
                 ) {
-                    Text(
-                        modifier = Modifier.padding(vertical = 4.dp),
-                        text = stringRes(
-                            if (codes.isEmpty()) {
-                                R.string.settings__theme_editor__no_codes_defined
-                            } else {
-                                R.string.settings__theme_editor__codes_defined
-                            }
-                        ),
-                        fontStyle = FontStyle.Italic,
-                    )
-                    FlowRow {
+                    if (codes.isEmpty()) {
+                        Text(
+                            text = stringRes(R.string.settings__theme_editor__no_codes_defined),
+                            fontStyle = FontStyle.Italic,
+                        )
+                    }
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         for (code in codes) {
                             FlorisChip(
                                 onClick = { editCodeDialogValue = code },
-                                text = code.toString(),
+                                text = code,
                                 selected = editCodeDialogValue == code,
                                 shape = MaterialTheme.shapes.medium,
                             )
@@ -335,78 +333,23 @@ internal fun EditRuleDialog(
                     }
                 }
 
-                val shiftStateUnshifted = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.UNSHIFTED.attrName()) == true
-                }
-                val shiftStateShiftedManual = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_MANUAL.attrName()) == true
-                }
-                val shiftStateShiftedAutomatic = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.SHIFTED_AUTOMATIC.attrName()) == true
-                }
-                val shiftStateCapsLock = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.ShiftState]?.contains(InputShiftState.CAPS_LOCK.attrName()) == true
-                }
-                DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_shift_states)) {
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        FlorisChip(
-                            onClick = {
-                                currentRule = copy(
-                                    attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.UNSHIFTED.attrName()
-                                    )
-                                )
-                            },
-                            text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.UNSHIFTED.attrName()
-                                else -> stringRes(R.string.enum__input_shift_state__unshifted)
-                            },
-                            selected = shiftStateUnshifted,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                currentRule = copy(
-                                    attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_MANUAL.attrName()
-                                    )
-                                )
-                            },
-                            text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_MANUAL.attrName()
-                                else -> stringRes(R.string.enum__input_shift_state__shifted_manual)
-                            },
-                            selected = shiftStateShiftedManual,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                currentRule = copy(
-                                    attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.SHIFTED_AUTOMATIC.attrName()
-                                    )
-                                )
-                            },
-                            text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.SHIFTED_AUTOMATIC.attrName()
-                                else -> stringRes(R.string.enum__input_shift_state__shifted_automatic)
-                            },
-                            selected = shiftStateShiftedAutomatic,
-                        )
-                        FlorisChip(
-                            onClick = {
-                                currentRule = copy(
-                                    attributes = attributes.toggling(
-                                        FlorisImeUi.Attr.ShiftState to InputShiftState.CAPS_LOCK.attrName()
-                                    )
-                                )
-                            },
-                            text = when (level) {
-                                SnyggLevel.DEVELOPER -> InputShiftState.CAPS_LOCK.attrName()
-                                else -> stringRes(R.string.enum__input_shift_state__caps_lock)
-                            },
-                            selected = shiftStateCapsLock,
-                        )
-                    }
-                }
+                EnumLikeAttributeBox(
+                    text = stringRes(R.string.settings__theme_editor__rule_modes),
+                    enumClass = KeyboardMode::class,
+                    attribute = FlorisImeUi.Attr.Mode,
+                    attributes = attributes,
+                    setAttributes = { currentRule = copy(attributes = it) },
+                    level = level,
+                )
+
+                EnumLikeAttributeBox(
+                    text = stringRes(R.string.settings__theme_editor__rule_shift_states),
+                    enumClass = InputShiftState::class,
+                    attribute = FlorisImeUi.Attr.ShiftState,
+                    attributes = attributes,
+                    setAttributes = { currentRule = copy(attributes = it) },
+                    level = level,
+                )
             }
         }
     }
@@ -712,6 +655,82 @@ private fun TextKeyDataPreviewBox(
         Column(modifier = Modifier.weight(1f)) {
             Text(text = displayName)
             Text(text = data.type.toString())
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun <V : Any> EnumLikeAttributeBox(
+    text: String,
+    enumClass: KClass<V>,
+    attribute: String,
+    attributes: SnyggAttributes,
+    setAttributes: (SnyggAttributes) -> Unit,
+    level: SnyggLevel,
+) {
+    val allEntries = enumDisplayEntriesOf(enumClass)
+    val (alreadyAddedEntries, notYetAddedEntries) = remember(attributes, attribute) {
+        allEntries.partition { entry ->
+            attributes[attribute]?.contains(entry.key.toString()) == true
+        }
+    }
+    var showAddDialog by remember { mutableStateOf(false) }
+
+    DialogProperty(
+        text = text,
+        trailingIconTitle = {
+            FlorisIconButton(
+                onClick = { showAddDialog = true },
+                modifier = Modifier.offset(x = 12.dp),
+                icon = Icons.Default.Add,
+            )
+        },
+    ) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            for (entry in alreadyAddedEntries) {
+                FlorisChip(
+                    onClick = {
+                        setAttributes(attributes.excluding(attribute to entry.key.toString()))
+                    },
+                    text = entry.label,
+                )
+            }
+            if (alreadyAddedEntries.isEmpty()) {
+                Text(
+                    text = stringRes(R.string.settings__theme_editor__no_codes_defined),
+                    fontStyle = FontStyle.Italic,
+                )
+            }
+        }
+    }
+
+    if (showAddDialog) {
+        JetPrefAlertDialog(
+            title = stringRes(R.string.action__add),
+            dismissLabel = stringRes(R.string.action__cancel),
+            onDismiss = { showAddDialog = false },
+        ) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                for (entry in notYetAddedEntries) {
+                    FlorisChip(
+                        onClick = {
+                            setAttributes(attributes.including(attribute to entry.key.toString()))
+                            showAddDialog = false
+                        },
+                        text = when (level) {
+                            SnyggLevel.DEVELOPER -> entry.key.toString()
+                            else -> entry.label
+                        },
+                    )
+                }
+            }
+            if (notYetAddedEntries.isEmpty()) {
+                Text(
+                    text = stringRes(R.string.settings__theme_editor__no_enum_value_to_add_anymore),
+                    fontStyle = FontStyle.Italic,
+                )
+            }
         }
     }
 }

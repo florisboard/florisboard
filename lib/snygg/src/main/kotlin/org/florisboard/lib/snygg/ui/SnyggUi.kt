@@ -149,6 +149,7 @@ fun ProvideSnyggTheme(
     dynamicAccentColor: Color = Color.Unspecified,
     fontSizeMultiplier: Float = 1.0f,
     assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
+    rootAttributes: SnyggQueryAttributes = emptyMap(),
     content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
@@ -184,7 +185,7 @@ fun ProvideSnyggTheme(
         LocalSnyggPreloadedCustomFontFamilies provides customFontFamilies,
         LocalSnyggParentStyle provides initParentStyle,
     ) {
-        ProvideSnyggStyle("root", SnyggAttributes.of(), SnyggSelector.NONE) {
+        ProvideSnyggStyle("root", rootAttributes, SnyggSelector.NONE) {
             content()
         }
     }

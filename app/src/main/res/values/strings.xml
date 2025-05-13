@@ -186,12 +186,13 @@
     <string name="settings__theme_editor__rule_name">Element / Annotation</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift states</string>
+    <string name="settings__theme_editor__rule_modes">Target modes (layers)</string>
+    <string name="settings__theme_editor__rule_shift_states">Target shift states</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add key code</string>
     <string name="settings__theme_editor__edit_code">Edit key code</string>
     <string name="settings__theme_editor__no_codes_defined">Apply rule to all target elements.</string>
-    <string name="settings__theme_editor__codes_defined">Apply rule only to target elements with following key codes:</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">All possible values have been added.</string>
     <string name="settings__theme_editor__code_already_exists">This key code is already defined.</string>
     <string name="settings__theme_editor__code_invalid">This key code is not valid. Ensure that the key code is within the range of {c_min} to {c_max} for characters or {i_min} to {i_max} for internal special keys.</string>
     <string name="settings__theme_editor__code_help_text">Alternatively the following links will help you to find the corresponding key code:</string>
@@ -991,6 +992,14 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shifted (manual)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shifted (automatic)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
+
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Characters</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbols</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbols 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Numeric</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Numeric advanced</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Phone</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Phone 2</string>
 
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
