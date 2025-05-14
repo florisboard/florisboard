@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.FlorisRect
 import dev.patrickgold.florisboard.lib.toIntOffset
 
@@ -447,11 +448,16 @@ class PopupUiController(
 
     @Composable
     fun RenderPopups(): Unit = with(LocalDensity.current) {
+        val attributes = mapOf(
+            FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
+            FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
+        )
         baseRenderInfo?.let { renderInfo ->
             PopupBaseBox(
                 modifier = Modifier
                     .requiredSize(renderInfo.bounds.size.toDpSize())
                     .absoluteOffset { renderInfo.bounds.topLeft.toIntOffset() },
+                attributes = attributes,
                 key = renderInfo.key,
                 shouldIndicateExtendedPopups = renderInfo.shouldIndicateExtendedPopups && extRenderInfo == null,
             )
@@ -464,6 +470,7 @@ class PopupUiController(
                 modifier = Modifier
                     .requiredSize(renderInfo.bounds.size.toDpSize())
                     .absoluteOffset { renderInfo.bounds.topLeft.toIntOffset() },
+                attributes = attributes,
                 elements = renderInfo.elements,
                 elemArrangement = if (renderInfo.anchorLeft) {
                     Arrangement.Start

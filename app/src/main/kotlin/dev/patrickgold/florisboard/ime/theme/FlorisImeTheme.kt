@@ -21,15 +21,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.SnyggAttributes
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.ProvideSnyggTheme
 import org.florisboard.lib.snygg.ui.rememberSnyggTheme
 
@@ -45,6 +49,7 @@ object FlorisImeTheme {
 @Composable
 fun FlorisImeTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
 
     val prefs by florisPreferenceModel()
@@ -60,6 +65,12 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val snyggTheme = rememberSnyggTheme(activeStyle, assetResolver)
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
 
+    val state by keyboardManager.activeState.collectAsState()
+    val attributes = mapOf(
+        FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
+        FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
+    )
+
     MaterialTheme {
         CompositionLocalProvider(
             LocalConfig provides activeConfig,
@@ -70,6 +81,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
                 dynamicAccentColor = accentColor,
                 fontSizeMultiplier = fontSizeMultiplier,
                 assetResolver = assetResolver,
+                rootAttributes = attributes,
                 content = content,
             )
         }
