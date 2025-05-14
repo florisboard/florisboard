@@ -817,6 +817,13 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                         } else {
                             action
                         }
+                    },
+                    hiddenActions = arrangement.hiddenActions.map { action ->
+                        if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
+                            action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                        } else {
+                            action
+                        }
                     }
                 )
                 if (QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH) !in newArrangement) {
