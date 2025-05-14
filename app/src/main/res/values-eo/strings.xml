@@ -164,7 +164,6 @@
     <string name="settings__theme_editor__no_rules_defined">Tiu stilfolio havas neniun regulon difinitan. Aldonu regulon por komenci agordi tiu stilfolio.</string>
     <string name="settings__theme_editor__rule_already_exists">Tiu stilfolia regulo estas jam difinita.</string>
     <string name="settings__theme_editor__rule_groups">Grupoj</string>
-    <string name="settings__theme_editor__rule_shift_states">Usklaj statoj</string>
     <string name="settings__theme_editor__add_code">Aldoni klavaran kodon</string>
     <string name="settings__theme_editor__edit_code">Redakti klavaran kodon</string>
     <string name="settings__theme_editor__code_already_exists">Tiu klavaran kodon estas jam difinita.</string>

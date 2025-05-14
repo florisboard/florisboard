@@ -168,12 +168,10 @@
     <string name="settings__theme_editor__rule_already_exists">Deze stylesheet regel is al gedefinieerd.</string>
     <string name="settings__theme_editor__rule_codes">Doelwit sleutelcode</string>
     <string name="settings__theme_editor__rule_groups">Groepen</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift staten</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Sleutelcode toevoegen</string>
     <string name="settings__theme_editor__edit_code">Sleutelcode bewerken</string>
     <string name="settings__theme_editor__no_codes_defined">Regel toepassen op alle doelwit elementen.</string>
-    <string name="settings__theme_editor__codes_defined">Pas regel alleen toe op doelelementen met de volgende sleutelcodes:</string>
     <string name="settings__theme_editor__code_already_exists">Deze sleutelcode is al gedefinieerd.</string>
     <string name="settings__theme_editor__code_invalid">Deze sleutelcode is niet geldig. Zorg ervoor dat de sleutelcode binnen het bereik van {c_min} tot {c_max} voor tekens of {i_min} tot {i_max} voor interne speciale sleutels valt.</string>
     <string name="settings__theme_editor__code_help_text">Als alternatief helpen de volgende links u om de bijbehorende sleutelcode te vinden:</string>

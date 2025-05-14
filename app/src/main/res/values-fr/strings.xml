@@ -172,12 +172,10 @@
     <string name="settings__theme_editor__rule_name">Élément / Annotation</string>
     <string name="settings__theme_editor__rule_codes">Codes de touche de la cible</string>
     <string name="settings__theme_editor__rule_groups">Groupes</string>
-    <string name="settings__theme_editor__rule_shift_states">États de décalage</string>
     <string name="settings__theme_editor__rule_selectors">Sélecteurs</string>
     <string name="settings__theme_editor__add_code">Ajouter un code de touche</string>
     <string name="settings__theme_editor__edit_code">Modifier le code de touche</string>
     <string name="settings__theme_editor__no_codes_defined">Appliquer la règle à tous les éléments cibles.</string>
-    <string name="settings__theme_editor__codes_defined">Appliquer la règle uniquement aux éléments cibles avec les codes de touche suivants :</string>
     <string name="settings__theme_editor__code_already_exists">Ce code de touche est déjà défini.</string>
     <string name="settings__theme_editor__code_invalid">Ce code de touche n\'est pas valide. Assurez-vous que le code de touche est dans la plage de {c_min} à {c_max} pour les caractères ou de {i_min} à {i_max} pour les touches spéciales internes.</string>
     <string name="settings__theme_editor__code_help_text">Sinon, les liens suivants vous aideront à trouver le code de touche correspondant :</string>

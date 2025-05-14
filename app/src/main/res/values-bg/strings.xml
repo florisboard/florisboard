@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Хронология на междинната памет</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Емоции</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Отваря панела с емоции</string>
+    <string name="quick_action__language_switch" maxLength="12">Превкл. език</string>
+    <string name="quick_action__language_switch__tooltip">Изпълнява превключване на езика</string>
     <string name="quick_action__settings" maxLength="12">Настройки</string>
     <string name="quick_action__settings__tooltip">Отваря настройките</string>
     <string name="quick_action__undo" maxLength="12">Отменяне</string>
@@ -171,12 +173,10 @@
     <string name="settings__theme_editor__rule_name">Елемент / бележка</string>
     <string name="settings__theme_editor__rule_codes">Целеви кодове</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
-    <string name="settings__theme_editor__rule_shift_states">Състояние на Shift</string>
     <string name="settings__theme_editor__rule_selectors">Селектор</string>
     <string name="settings__theme_editor__add_code">Добавяне на код</string>
     <string name="settings__theme_editor__edit_code">Промяна на код</string>
     <string name="settings__theme_editor__no_codes_defined">Правилото се прилага към всички целеви елементи.</string>
-    <string name="settings__theme_editor__codes_defined">Правилото се прилага само към целевите елементи със следните кодове:</string>
     <string name="settings__theme_editor__code_already_exists">Кодът вече е дефиниран.</string>
     <string name="settings__theme_editor__code_invalid">Кодът не е валиден. Уверете се че стойността му е между {c_min} и {c_max} за букви и между {i_min} и {i_max} за вградените спициални клавиши.</string>
     <string name="settings__theme_editor__code_help_text">Следните препратки ще са ви от полза при намиране на кода на клавиш:</string>
@@ -193,10 +193,13 @@
     <string name="settings__theme_editor__property_value">Стойност на свойство</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Прилагане към всички ъгли</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Промяна на низа на цвета</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Избиране на файл</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Към добавката все още няма файлове. За да внесете файлове използвайте действието „{action_title}“ на предния екран.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Нощна тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
     <string name="settings__theme_editor__stylesheet_error_title">Грешка в стила</string>
+    <string name="settings__theme_editor__stylesheet_error_description">Приложението {app_name} може надоверие да зареди стиловете и да добави липсващите схеми и правила или да премахне неправилните правила, свойства и стойности. Желаете ли приложението {app_name} да приложи тези промени?</string>
     <string name="snygg__rule_annotation__defines">Променливи</string>
     <string name="snygg__rule_annotation__defines_description">Създайте променливи в това правило, за да използвате общи цветове или размери в стиловия лист.</string>
     <string name="snygg__rule_annotation__font">Шрифт</string>
@@ -209,14 +212,39 @@
     <string name="snygg__rule_element__key_popup_element">Елемент на подсказка на клавиш</string>
     <string name="snygg__rule_element__key_popup_extended_indicator">Разширен индикатор на подсказка</string>
     <string name="snygg__rule_element__clipboard_header">Заглавка на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_header_button">Бутон в заглавката на межд. памет</string>
+    <string name="snygg__rule_element__clipboard_header_text">Текст в заглавката на межд. памет</string>
+    <string name="snygg__rule_element__clipboard_subheader">Подзаглавие на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_content">Съдържание на междинната памет</string>
     <string name="snygg__rule_element__clipboard_item">Елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_popup">Подсказка на елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action">Подсказка с действие на елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Пиктограма с действие на елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_text">Текст на действие на елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Диалог за изчистване на елементите от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Съобщение в диалога за изчистване на елементите от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Бутони в диалога за изчистване на елементите от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Бутон в диалога за изчистване на елементите от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Заглавие при изключена история на межд. памет</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Съобщение при изключена история на межд. памет</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Бутон при изключена история на межд. памет</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Заглавие при заключена история на межд. памет</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Съобщение при заключена история на межд. памет</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Пейзажен изглед за въвеждане</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Пейзажно поле за въвеждане</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие на пейзажно поле за въвеждане</string>
     <string name="snygg__rule_element__glide_trail">Следа от плъзгане</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Индикатор за режим инкогнито</string>
+    <string name="snygg__rule_element__media">Медия</string>
+    <string name="snygg__rule_element__media_emoji_subheader">Подзаглавие на медийна емоция</string>
+    <string name="snygg__rule_element__media_emoji_key">Клавиш на медийна емоция</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Кутия на подсказка на клавиш на медийна емоция</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Елемент на подсказка на клавиш на медийна емоция</string>
+    <string name="snygg__rule_element__media_emoji_tab">Раздел с медийни емоции</string>
+    <string name="snygg__rule_element__media_bottom_row">Долен ред на медия</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Бутон на долен ред на медия</string>
     <string name="snygg__rule_element__one_handed_panel">Панел за работа с една ръка</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Бутон на панела за една ръка</string>
     <string name="snygg__rule_element__smartbar">Интелигентна лента</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Интелигентна лента, ред с действия</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Интелигентна лента, клавиш за превкл. на действията</string>
@@ -228,11 +256,16 @@
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Интелигентна лента, панел, бутон за настройка</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Интелигентна лента, редактор на действията</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Интелигентна лента, редактор на действията, заглавие</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Интелигентна лента, редактор на действия, бутон в заглавката</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Интелигентна лента, редактор на действията, подзаглавие</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Интелигентна лента, ред с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Интелигентна лента, кандидат за дума</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Интелигентна лента, контейнер с кандидати</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Интелигентна лента, разделител на кандидати</string>
+    <string name="snygg__rule_element__subtype_panel_list">Панел на списъка с подвидове</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Елемент на панела със списъка с подвидове</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Пиктограма на елемент на панела със списъка с подвидове (водеща)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Текст на елемент на панела със списъка с подвидове</string>
     <string name="snygg__rule_selector__pressed">Натиснат</string>
     <string name="snygg__rule_selector__focus">На фокус</string>
     <string name="snygg__rule_selector__disabled">Изключен</string>
@@ -591,6 +624,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Показват се иначе невидимите манипулатори в екраните за влачене и пускане, за отстраняване на дефекти</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Изтриване на данните от речника към приложението</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Премахват се всички думи от таблицата с речника</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Нулиране на действията на интелигентната лента</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Нулиране на бързите действия на интелигентната лента до подразбираната подредба</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Бързите действия на интелигентната лента са нулирани</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Нулиране на „{flag_name}“</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">За отстраняване на дефекти в първоначалния екран</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Изпробване на доклада на грешка</string>
@@ -639,6 +675,8 @@
     <string name="ext__editor__metadata__message_invalid">Описателните данни на резширението са недействителни. Проверете редактора за описателни данни за подробности!</string>
     <string name="ext__editor__dependencies__title">Управление на зависимости</string>
     <string name="ext__editor__files__title">Управление на архиви</string>
+    <string name="ext__editor__files__type_fonts">Шрифтове</string>
+    <string name="ext__editor__files__type_images">Изображения</string>
     <string name="ext__editor__create_component__title">Създаване на компонент</string>
     <string name="ext__editor__create_component__title_theme">Създаване на тема</string>
     <string name="ext__editor__create_component__from_empty">Празна</string>
@@ -712,7 +750,11 @@
     <string name="action__discard_confirm_message">Наистина ли искате да отхвърлите незапазените промени? Веднъж изпълнено действието не може да бъде отменено.</string>
     <string name="action__edit">Променяне</string>
     <string name="action__export">Изнасяне</string>
+    <string name="action__export_file">Внасяне на файл</string>
+    <string name="action__export_files">Внасяне на файлове</string>
     <string name="action__import">Внасяне</string>
+    <string name="action__import_file">Внасяне на файл</string>
+    <string name="action__import_files">Внасяне на файлове</string>
     <string name="action__no">Не</string>
     <string name="action__ok">Добре</string>
     <string name="action__restore">Възстановяване</string>
@@ -734,6 +776,8 @@
     <string name="general__no_browser_app_found_for_url">Не е намерено приложение, което да отвори адреса {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; изберете &#45;</string>
     <string name="general__unlimited">Неограничено</string>
+    <string name="general__file_name">Име на файла</string>
+    <string name="general__properties">Свойства</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портрет</string>
     <string name="screen_orientation__landscape">Пейзаж</string>

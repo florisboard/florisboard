@@ -174,12 +174,10 @@
     <string name="settings__theme_editor__rule_name">Elemento / Nota</string>
     <string name="settings__theme_editor__rule_codes">Códigos de clave destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_shift_states">Cambiar estados</string>
     <string name="settings__theme_editor__rule_selectors">Selectores</string>
     <string name="settings__theme_editor__add_code">Añadir código clave</string>
     <string name="settings__theme_editor__edit_code">Editar código clave</string>
     <string name="settings__theme_editor__no_codes_defined">Aplicar la regla a todos los elementos de destino.</string>
-    <string name="settings__theme_editor__codes_defined">Aplicar regla solo para desviar los elementos con los siguientes códigos clave:</string>
     <string name="settings__theme_editor__code_already_exists">Este código clave ya está definido.</string>
     <string name="settings__theme_editor__code_invalid">Este código clave no es válido. Asegúrese de que el código clave esté dentro del rango de {c_min} a {c_max} para los caracteres o {i_min} a {i_max} para las teclas especiales internas.</string>
     <string name="settings__theme_editor__code_help_text">Alternativamente, los siguientes enlaces lo ayudarán a encontrar el código clave correspondiente:</string>
@@ -247,6 +245,8 @@
     <string name="snygg__property_name__font_size">Tamaño de fuente</string>
     <string name="snygg__property_name__font_style">Estilo de fuente</string>
     <string name="snygg__property_name__font_weight">Ancho de fuente</string>
+    <string name="snygg__property_name__line_height">Altura de la línea</string>
+    <string name="snygg__property_name__margin">Margen</string>
     <string name="snygg__property_name__shadow_elevation">Elevación de sombra</string>
     <string name="snygg__property_name__shape">Forma</string>
     <string name="snygg__property_name__var_primary">Color principal</string>
@@ -596,6 +596,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Renderiza los ayudantes, que de otro modo serían invisibles, en las pantallas de arrastrar &amp; soltar para la depuración</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Borrar base de datos del diccionario interno</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Borrar todas las palabras de la tabla de base de datos del diccionario</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Restablecer acciones rápidas de la Smartbar</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Restablecer la disposición por defecto de las acciones rápidas de la Smartbar</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Las acciones rápidas de la Smartbar se restablecieron correctamente a su valor predeterminado</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Restablecer flag \"{flag_name}\"</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Acción de depuración para mostrar nuevamente la pantalla de configuración</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Probar pantalla de reporte de fallos</string>

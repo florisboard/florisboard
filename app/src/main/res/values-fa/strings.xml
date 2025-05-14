@@ -121,7 +121,6 @@
     <string name="settings__theme_editor__add_code">افزودن کد کلید</string>
     <string name="settings__theme_editor__edit_code">ویرایش کد کلید</string>
     <string name="settings__theme_editor__no_codes_defined">قانون را برای تمام مؤلفه ها اعمال کن.</string>
-    <string name="settings__theme_editor__codes_defined">قانون را فقط برای مؤلفه های همراه با این کد کلیدها اعمال کن:</string>
     <string name="settings__theme_editor__code_already_exists">این کد کلید از قبل تعریف شده است.</string>
     <string name="settings__theme_editor__code_invalid">این کد کلید صحیح نیست. مطمئن شوید که کد کلید برای کاراکتر ها بین {c_min} تا {c_max} یا برای کلیدهای ویژه داخلی بین {i_min} تا {i_max} هست.</string>
     <string name="settings__theme_editor__code_help_text">در ضمن لینک های زیر به شما برای یافتن کد کلید متناظر کمک خواهند کرد:</string>

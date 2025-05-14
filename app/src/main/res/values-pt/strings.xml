@@ -90,12 +90,10 @@
     <string name="settings__theme_editor__rule_already_exists">Esta regra de folha de estilos já está definida.</string>
     <string name="settings__theme_editor__rule_codes">Códigos-chave alvo</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_shift_states">Estados de troca</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
     <string name="settings__theme_editor__add_code">Adicionar código-chave</string>
     <string name="settings__theme_editor__edit_code">Editar código-chave</string>
     <string name="settings__theme_editor__no_codes_defined">Aplicar regra a todos os elementos alvo.</string>
-    <string name="settings__theme_editor__codes_defined">Aplicar regra apenas a elementos alvo com os seguintes códigos-chave:</string>
     <string name="settings__theme_editor__code_already_exists">Este código já está definido.</string>
     <string name="settings__theme_editor__code_invalid">Este código-chave não é válido. Assegure-se que o código-chave está entre o alcance de {c_min} a {c_max} para carateres ou {i_min} a {i_max} para teclas internas especiais.</string>
     <string name="settings__theme_editor__code_placeholder">Código</string>

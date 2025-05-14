@@ -167,12 +167,10 @@
     <string name="settings__theme_editor__rule_already_exists">تم تعريف قاعدة ورقة الأنماط هذه بالفعل.</string>
     <string name="settings__theme_editor__rule_codes">رموز المفتاح المستهدف</string>
     <string name="settings__theme_editor__rule_groups">مجموعات</string>
-    <string name="settings__theme_editor__rule_shift_states">حالة زر shift</string>
     <string name="settings__theme_editor__rule_selectors">محددات</string>
     <string name="settings__theme_editor__add_code">إضافة رموز المفتاح</string>
     <string name="settings__theme_editor__edit_code">تعديل رمز المفتاح</string>
     <string name="settings__theme_editor__no_codes_defined">تطبيق القاعدة على جميع العناصر المستهدفة.</string>
-    <string name="settings__theme_editor__codes_defined">تطبيق القاعدة فقط على العناصر المستهدفة ذات الرموز الرئيسية التالية:</string>
     <string name="settings__theme_editor__code_already_exists">تم تعريف رمز المفتاح هذا بالفعل.</string>
     <string name="settings__theme_editor__code_invalid">رمز المفتاح هذا غير صالح. تأكد من أن رمز المفتاح يقع في نطاق {c_min} إلى {c_max} للأحرف أو {i_min} إلى {i_max} للمفاتيح الخاصة الداخلية.</string>
     <string name="settings__theme_editor__code_help_text">بدلاً من ذلك ، ستساعدك الروابط التالية في العثور على رمز المفتاح المقابل:</string>

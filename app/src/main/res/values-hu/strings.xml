@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Vágólap-előzmények megnyitása</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emodzsi</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Emodzsi panel megnyitása</string>
+    <string name="quick_action__language_switch" maxLength="12">Nyelv</string>
+    <string name="quick_action__language_switch__tooltip">Nyelvváltás végrehajtása</string>
     <string name="quick_action__settings" maxLength="12">Beállítások</string>
     <string name="quick_action__settings__tooltip">Beállítások megnyitása</string>
     <string name="quick_action__undo" maxLength="12">Visszavonás</string>
@@ -153,6 +155,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Napnyugta ideje</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Nappali téma</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Éjszakai téma</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Kiemelőszín (Material You témák)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Telepített témák kezelése</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard alkalmazásadatok</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Belső tárhely</string>
@@ -161,19 +165,19 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Éjszakai téma kiválasztása</string>
     <string name="settings__theme_editor__fine_tune__title">Finomhangoló szerkesztő</string>
     <string name="settings__theme_editor__fine_tune__level">Szerkesztői szint</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Színes ábrázolás</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Billentyűzet megjelenítése párbeszédpanelek után</string>
     <string name="settings__theme_editor__add_rule">Szabály hozzáadása</string>
     <string name="settings__theme_editor__edit_rule">Szabály szerkesztése</string>
     <string name="settings__theme_editor__no_rules_defined">A stíluslapnak nincsenek megadott szabályai. Adjon hozzá egy új szabályt a stíluslap testreszabásához.</string>
     <string name="settings__theme_editor__rule_already_exists">Ez a stíluslapszabály már korábban meg lett adva.</string>
+    <string name="settings__theme_editor__rule_name">Elem / Magyarázat</string>
     <string name="settings__theme_editor__rule_codes">Célbillentyűkódok</string>
     <string name="settings__theme_editor__rule_groups">Csoportok</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift állapotok</string>
     <string name="settings__theme_editor__rule_selectors">Választók</string>
     <string name="settings__theme_editor__add_code">Billentyűkód hozzáadása</string>
     <string name="settings__theme_editor__edit_code">Billentyűkód szerkesztése</string>
     <string name="settings__theme_editor__no_codes_defined">Szabály alkalmazása az összes célelemre.</string>
-    <string name="settings__theme_editor__codes_defined">Szabály alkalmazása csak a következő billentyűkódokkal rendelkező elemekre:</string>
     <string name="settings__theme_editor__code_already_exists">Ez a billentyűkód már meg lett adva.</string>
     <string name="settings__theme_editor__code_invalid">Ez a billentyűkód nem érvényes. Győződjön meg róla, hogy az érték {c_min} és {c_max} között van, vagy {i_min} és {i_max} között a belső speciális billentyűk esetében.</string>
     <string name="settings__theme_editor__code_help_text">Esetlegesen az alábbi linkek segíteni fognak a megfelelő billentyűkód megtalálásában:</string>
@@ -190,20 +194,59 @@
     <string name="settings__theme_editor__property_value">Tulajdonság értéke</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Alkalmazás az összes sarokra</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Szín sor szerkesztése</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Fájl kiválasztása</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Ehhez a kiterjesztéshez még nem adtak hozzá fájlokat. Használja a(z) „{action_title}” műveletet az előző képernyőn a fájlok importálásához.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Éjszakai téma</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Szegély nélküli</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stíluslap útvonala</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Stíluslaphiba</string>
+    <string name="settings__theme_editor__stylesheet_error_description">A(z) {app_name} megpróbálhatja elnézően betölteni a stíluslapot, és hozzáadhatja a hiányzó sémákat, szabályokat, vagy eltávolíthatja az érvénytelen szabályokat, tulajdonságokat vagy értékeket. Szeretné, ha a(z) {app_name} alkalmazná ezeket a módosításokat?</string>
+    <string name="snygg__rule_annotation__defines">Változók</string>
+    <string name="snygg__rule_annotation__defines_description">Határozzon meg változókat ebben a szabályban, hogy újra felhasználhassa a közös színeket vagy méreteket a stíluslapon.</string>
+    <string name="snygg__rule_annotation__font">Betűtípus</string>
+    <string name="snygg__rule_annotation__font_name">Betűtípus neve</string>
+    <string name="snygg__rule_element__root">Root</string>
+    <string name="snygg__rule_element__window">Ablak</string>
     <string name="snygg__rule_element__key">Billentyű</string>
     <string name="snygg__rule_element__key_hint">Billentyű eszköztippje</string>
+    <string name="snygg__rule_element__key_popup_box">Felugró ablak billentyű</string>
+    <string name="snygg__rule_element__key_popup_element">Felugró elem billentyű</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Felugró részletes jelző billentyű</string>
     <string name="snygg__rule_element__clipboard_header">Vágólapfejléc</string>
+    <string name="snygg__rule_element__clipboard_header_button">Vágólapfejlécgomb</string>
+    <string name="snygg__rule_element__clipboard_header_text">Vágólapfejlécszöveg</string>
+    <string name="snygg__rule_element__clipboard_subheader">Vágólap alfejléc</string>
+    <string name="snygg__rule_element__clipboard_content">Vágólap tartalma</string>
     <string name="snygg__rule_element__clipboard_item">Vágólapelem</string>
     <string name="snygg__rule_element__clipboard_item_popup">Felugró vágólapelem</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action">Vágólapelem felugró művelet</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Vágólapelem felugró ikon</string>
+    <string name="snygg__rule_element__clipboard_item_popup_action_text">Vágólapelem felugró szöveg</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Vágólap összes párbeszéd törlése</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Vágólap összes párbeszédüzenet törlése</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Vágólap összes párbeszédgomb törlése</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Vágólap összes párbeszédgomb törlése</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Vágólapelőzmények letiltott címe</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Vágólapelőzmények letiltott üzenete</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Vágólapelőzmények letiltott gombja</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Vágólapelőzmények lezárt címe</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Vágólapelőzmények lezárt üzenete</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Fekvő bemenetelrendezés</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Fekvő bemeneti mező</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Fekvő bemeneti művelet</string>
     <string name="snygg__rule_element__glide_trail">Csúsztatási nyomvonal</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Inkognitó mód jelzője</string>
+    <string name="snygg__rule_element__inline_autofill_chip">Beágyazott automatikus kitöltés chip</string>
+    <string name="snygg__rule_element__media">Média</string>
+    <string name="snygg__rule_element__media_emoji_subheader">Médiaemodzsi-alfejléc</string>
+    <string name="snygg__rule_element__media_emoji_key">Médiaemodzsi billentyű</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Médiaemodzsi felugró ablak billentyű</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Médiaemodzsi felugró ablak elem</string>
+    <string name="snygg__rule_element__media_emoji_tab">Médiaemodzsi-lap</string>
+    <string name="snygg__rule_element__media_bottom_row">Média alsó sor</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Média alsó sor gomb</string>
     <string name="snygg__rule_element__one_handed_panel">Egykezes panel</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Egykezes panelgomb</string>
     <string name="snygg__rule_element__smartbar">Okossáv</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Okossáv megosztott műveleteinek sora</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Okossáv megosztott műveletei be/ki</string>
@@ -215,16 +258,24 @@
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Okossáv túlfolyó műveleteinek testreszabó gombja</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Okossáv művelet szerkesztő</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Okossáv műveletek szerkesztő fejléce</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Okossáv műveletek szerkesztőfejléc-gomb</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Okossáv műveletek szerkesztő alfejléce</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Okossáv műveletek szerkesztőcsempe-rács</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Okossáv műveletek szerkesztőcsempe</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Okossáv javaslat sor</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Okossáv javaslat szó</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Okossáv javaslat vágólapról</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Okossáv javaslat elválasztó</string>
+    <string name="snygg__rule_element__subtype_panel">Altípuspanel</string>
+    <string name="snygg__rule_element__subtype_panel_header">Altípuspanel-fejléc</string>
     <string name="snygg__rule_selector__pressed">Lenyomott</string>
     <string name="snygg__rule_selector__focus">Fókuszált</string>
+    <string name="snygg__rule_selector__hover">Rámutatás</string>
     <string name="snygg__rule_selector__disabled">Letiltott</string>
     <string name="snygg__property_name__background">Háttér</string>
     <string name="snygg__property_name__foreground">Előtér</string>
+    <string name="snygg__property_name__background_image">Háttérkép</string>
+    <string name="snygg__property_name__content_scale">Tartalomméretezés</string>
     <string name="snygg__property_name__border_color">Szegélyszín</string>
     <string name="snygg__property_name__border_style">Szegélystílus</string>
     <string name="snygg__property_name__border_width">Szegélyszélesség</string>
@@ -232,8 +283,19 @@
     <string name="snygg__property_name__font_size">Betűméret</string>
     <string name="snygg__property_name__font_style">Betűstílus</string>
     <string name="snygg__property_name__font_weight">Betűvastagság</string>
+    <string name="snygg__property_name__letter_spacing">Betűtérköz</string>
+    <string name="snygg__property_name__line_height">Sormagasság</string>
+    <string name="snygg__property_name__margin">Margó</string>
+    <string name="snygg__property_name__padding">Kitöltés</string>
+    <string name="snygg__property_name__shadow_color">Árnyék színe</string>
     <string name="snygg__property_name__shadow_elevation">Árnyék kiemelés</string>
     <string name="snygg__property_name__shape">Forma</string>
+    <string name="snygg__property_name__clip">Klip</string>
+    <string name="snygg__property_name__src">Forrás</string>
+    <string name="snygg__property_name__text_align">Szöveg igazítása</string>
+    <string name="snygg__property_name__text_decoration_line">Szövegdíszítő sor</string>
+    <string name="snygg__property_name__text_max_lines">Maximális szövegsor</string>
+    <string name="snygg__property_name__text_overflow">Szövegtúlcsordulás</string>
     <string name="snygg__property_name__var_primary">Elsődleges szín</string>
     <string name="snygg__property_name__var_primary_variant">Elsődleges szín (változat)</string>
     <string name="snygg__property_name__var_secondary">Másodlagos szín</string>
@@ -250,9 +312,16 @@
     <string name="snygg__property_name__var_shape_variant">Közös forma (változat)</string>
     <string name="snygg__property_value__explicit_inherit">Örökölt</string>
     <string name="snygg__property_value__defined_var">Változóhivatkozás</string>
+    <string name="snygg__property_value__yes">Igen</string>
+    <string name="snygg__property_value__no">Nem</string>
     <string name="snygg__property_value__solid_color">Egyszínű</string>
     <string name="snygg__property_value__material_you_light_color">Material You szín (világos)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You szín (sötét)</string>
+    <string name="snygg__property_value__font_family_generic">Betűtípus (általános)</string>
+    <string name="snygg__property_value__font_family_custom">Betűtípus (egyéni)</string>
+    <string name="snygg__property_value__font_style">Betűstílus</string>
+    <string name="snygg__property_value__font_weight">Betűméret</string>
+    <string name="snygg__property_value__padding">Kitöltés vagy szegély</string>
     <string name="snygg__property_value__rectangle_shape">Téglalap forma</string>
     <string name="snygg__property_value__circle_shape">Kör alak</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Levágott sarok (dp)</string>
@@ -262,6 +331,12 @@
     <string name="snygg__property_value__dp_size">Méret (dp)</string>
     <string name="snygg__property_value__sp_size">Méret (dp)</string>
     <string name="snygg__property_value__percentage_size">Méret (%)</string>
+    <string name="snygg__property_value__content_scale">Tartalomméretezés</string>
+    <string name="snygg__property_value__text_align">Szöveg igazítása</string>
+    <string name="snygg__property_value__text_decoration_line">Szövegdíszítő sor</string>
+    <string name="snygg__property_value__text_max_lines">Maximális szövegsor</string>
+    <string name="snygg__property_value__text_overflow">Szövegtúlcsordulás</string>
+    <string name="snygg__property_value__uri">URI-hivatkozás</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Hangok és rezgés</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Hangvisszajelzés / hangok</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Hangvisszajelzés engedélyezése</string>
@@ -583,6 +658,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Debug célból az amúgy láthatatlan segítség megjelenítése a húzd is vidd ablakoknál</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Belső felhasználói szótáradatbázis ürítése</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Kiürít minden szót a szótár adatbázistáblájából</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Az okossáv gyorsműveletei visszaállítása</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Az okossáv gyorsműveletei visszaállítása az alapértelmezésre</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Az okossáv gyorsműveletei sikeresen vissza lettek állítva az alapértelmezésre</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">{flag_name} zászló visszaállítása</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Hibakeresési művelet a beállítás varázsló újbóli megjelenítéséhez</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Összeomlásjelentő képernyő tesztelése</string>
@@ -631,6 +709,8 @@
     <string name="ext__editor__metadata__message_invalid">A metaadatok ehhez a kiterjesztéshez érvénytelenek, kérjük nézze meg a metaadat-szerkesztőt a részletekért!</string>
     <string name="ext__editor__dependencies__title">Függőségek kezelése</string>
     <string name="ext__editor__files__title">Archívumfájlok kezelése</string>
+    <string name="ext__editor__files__type_fonts">Betűtípusok</string>
+    <string name="ext__editor__files__type_images">Képek</string>
     <string name="ext__editor__create_component__title">Komponens létrehozása</string>
     <string name="ext__editor__create_component__title_theme">Téma létrehozása</string>
     <string name="ext__editor__create_component__from_empty">Üres</string>
@@ -704,7 +784,11 @@
     <string name="action__discard_confirm_message">Biztosan el szeretné vetni a mentetlen változtatásokat? Ezt a műveletet nem lehet visszavonni.</string>
     <string name="action__edit">Szerkesztés</string>
     <string name="action__export">Exportálás</string>
+    <string name="action__export_file">Fájl importálása</string>
+    <string name="action__export_files">Fájlok importálása</string>
     <string name="action__import">Importálás</string>
+    <string name="action__import_file">Fájl importálása</string>
+    <string name="action__import_files">Fájlok importálása</string>
     <string name="action__no">Nem</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Helyreállítás</string>
@@ -726,6 +810,8 @@
     <string name="general__no_browser_app_found_for_url">Nem található böngészőalkalmazás az URL kezeléséhez: {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45;, &#45; kiválasztása</string>
     <string name="general__unlimited">Korlátlan</string>
+    <string name="general__file_name">Fájl neve</string>
+    <string name="general__properties">Tulajdonságok</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Álló</string>
     <string name="screen_orientation__landscape">Fekvő</string>
@@ -744,6 +830,9 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamikus szélesség és görgethető</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Capslock engedélyezése a shift dupla lenyomásával</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">A shift billentyű minden egyes lenyomásakor átvált a következő nagybetűsítési lépésre</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimális</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Piros Zöld Kék</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">Árnyalattelítettség értéke</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Megjelenítés mindig</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Mindig mutassa a billentyűzetet a szerkesztő panel bezárása után</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Ne jelenjen meg</string>

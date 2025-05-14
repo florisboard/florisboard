@@ -160,12 +160,10 @@
     <string name="settings__theme_editor__rule_already_exists">Bu biçem sayfası kuralı halihazırda atanmış.</string>
     <string name="settings__theme_editor__rule_codes">Hedef anahtar kodları</string>
     <string name="settings__theme_editor__rule_groups">Gruplar</string>
-    <string name="settings__theme_editor__rule_shift_states">Durumları değiştir</string>
     <string name="settings__theme_editor__rule_selectors">Seçiciler</string>
     <string name="settings__theme_editor__add_code">Tuş kodu ekle</string>
     <string name="settings__theme_editor__edit_code">Tuş kodunu düzenle</string>
     <string name="settings__theme_editor__no_codes_defined">Kuralı tüm hedef elemanlara uygula.</string>
-    <string name="settings__theme_editor__codes_defined">Kuralı bu tuş koduna sahip tüm elemanlara uygula:</string>
     <string name="settings__theme_editor__code_already_exists">Bu tuş kodu halihazırda atanmış.</string>
     <string name="settings__theme_editor__code_invalid">Bu anahtar kodu geçerli değil. Anahtar kodunun karakterler için {c_min} ila {c_max} veya dahili özel anahtarlar için {i_min} ila {i_max} aralığında olduğundan emin ol.</string>
     <string name="settings__theme_editor__code_help_text">Alternatif olarak aşağıdaki bağlantılar ilgili anahtar kodunu bulmana yardımcı olacaktır:</string>

@@ -140,12 +140,10 @@
     <string name="settings__theme_editor__rule_already_exists">ئەم یاسای پەڕەی ستایڵ پێشتر پێناسە کراوە.</string>
     <string name="settings__theme_editor__rule_codes">سەرچاوەی کۆدی مەبەست</string>
     <string name="settings__theme_editor__rule_groups">گرووپ</string>
-    <string name="settings__theme_editor__rule_shift_states">دۆخی شێفت</string>
     <string name="settings__theme_editor__rule_selectors">هەڵبژاردن</string>
     <string name="settings__theme_editor__add_code">زیادکردنی کۆدی دوگمە</string>
     <string name="settings__theme_editor__edit_code">دەستکاریکردنی کۆد</string>
     <string name="settings__theme_editor__no_codes_defined">جێبەجێکردن بۆ سەرجەم بەشەکان</string>
-    <string name="settings__theme_editor__codes_defined">جێبەجێ کردنی یاسا تەنها بۆ ئامانج توخمەکان لەگەڵ کۆدەکانی کلیلی خوارەوە:</string>
     <string name="settings__theme_editor__code_already_exists">ئەم دوگمەیە پێشتر زیادکراوە</string>
     <string name="settings__theme_editor__code_invalid">ئەم کۆدە کلیلە دروست نیە، دڵنیابە لەوەی کە کۆدی کلیلەکە لەناو مەودای {c_min} بۆ {c_max} بۆ پیتەکان یان {i_min} بۆ {i_max} بۆ کلیلە تایبەتەکان.</string>
     <string name="settings__theme_editor__code_help_text">ئەم لینکانەی خوارەوە یارمەتیت ئەدەن بۆ دۆزینەوەی کۆدی کلیلی هاوتا:</string>

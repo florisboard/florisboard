@@ -171,12 +171,10 @@
     <string name="settings__theme_editor__rule_name">Elements / Anotācija</string>
     <string name="settings__theme_editor__rule_codes">Mērķa taustiņu kodi</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
-    <string name="settings__theme_editor__rule_shift_states">Pārslēgšanās taustiņa stāvokļi</string>
     <string name="settings__theme_editor__rule_selectors">Atlasītāji</string>
     <string name="settings__theme_editor__add_code">Pievienot taustiņa kodu</string>
     <string name="settings__theme_editor__edit_code">Labot taustiņa kodu</string>
     <string name="settings__theme_editor__no_codes_defined">Pielietot nosacījumu visām mērķa daļām.</string>
-    <string name="settings__theme_editor__codes_defined">Pielietot nosacījumu tikai mērķa daļām ar šiem taustiņu kodiem:</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
     <string name="settings__theme_editor__code_help_text">Vai arī šīs saites palīdzēs atrast atbilstošo taustiņa kodu:</string>
@@ -226,6 +224,7 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Līmeniskās ievades darbība</string>
     <string name="snygg__rule_element__glide_trail">Slīdēšanas pēdas</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Slepenības rādītājs</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Informācijas nesēju emocijzīmju taustiņa uznirstošā lodziņa paplašinātais rādītājs</string>
     <string name="snygg__rule_element__one_handed_panel">Vienrocīgs panelis</string>
     <string name="snygg__rule_element__smartbar">Viedjosla</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Viedjoslas kopīgoto darbību rinda</string>
@@ -243,6 +242,10 @@
     <string name="snygg__rule_element__smartbar_candidate_word">Viedjoslas ieteikumu vārds</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>
+    <string name="snygg__rule_element__subtype_panel_list">Apakšveida paneļu saraksts</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Apakšveida paneļu saraksta vienums</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Apakšveida paneļu saraksta vienuma ikona (galvenā)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Apakšveida paneļu saraksta vienuma teksts</string>
     <string name="snygg__rule_selector__pressed">Nospiests</string>
     <string name="snygg__rule_selector__focus">Fokusēts</string>
     <string name="snygg__rule_selector__disabled">Atspējots</string>
@@ -605,6 +608,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Atkļūdošanai attēlot citādi neredzamos palīgus vilkšanas un nomešanas skatos</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Atiestatīt viedjoslas ātrās darbības</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Atiestatīt viedjoslas ātrās darbības uz noklusējuma izkārtojumu</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Viedjoslas ātrās darbības sekmīgi atiestatītas uz noklusējumu</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atiestatīt iezīmi \"{flag_name}\"</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Atkļūdošanas darbība uzstādīšanas ekrāna atkārtotai parādīšanai</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Pārbaudes avārijas ziņošanas skats</string>

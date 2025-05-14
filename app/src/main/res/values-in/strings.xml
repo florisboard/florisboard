@@ -165,12 +165,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme_editor__rule_already_exists">Aturan lembar gaya ini telah didefinisikan.</string>
     <string name="settings__theme_editor__rule_codes">Kode target tombol</string>
     <string name="settings__theme_editor__rule_groups">Grup</string>
-    <string name="settings__theme_editor__rule_shift_states">Keadaan shift</string>
     <string name="settings__theme_editor__rule_selectors">Pemilih</string>
     <string name="settings__theme_editor__add_code">Tambahkan kode tombol</string>
     <string name="settings__theme_editor__edit_code">Edit kode tombol</string>
     <string name="settings__theme_editor__no_codes_defined">Tetapkan aturan ke semua elemen target.</string>
-    <string name="settings__theme_editor__codes_defined">Tetapkan aturan saja ke element target dengan kode tombol berikut:</string>
     <string name="settings__theme_editor__code_already_exists">Kode tombol ini telah didefinisikan.</string>
     <string name="settings__theme_editor__code_invalid">Kode tombol ini tidak valid. Pastikan bahwa kode kunci dalam jangkauan dari {c_min} sampai {c_max} untuk karakter atau {i_min} sampai {i_max} untuk tombol internal spesial.</string>
     <string name="settings__theme_editor__code_help_text">Secara alternatif tautan berikut ini akan membantu Anda menemukan kode tombol yang sesuai:</string>

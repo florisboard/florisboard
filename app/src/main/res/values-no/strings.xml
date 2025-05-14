@@ -141,7 +141,6 @@
     <string name="settings__theme_editor__add_code">Legg til tastekode</string>
     <string name="settings__theme_editor__edit_code">Rediger tastekode</string>
     <string name="settings__theme_editor__no_codes_defined">Bruk regelen på alle målelementer.</string>
-    <string name="settings__theme_editor__codes_defined">Bruk kun regelen på målelementer med følgende tastekoder:</string>
     <string name="settings__theme_editor__code_already_exists">Denne tastekoden er allerede definert.</string>
     <string name="settings__theme_editor__code_invalid">Denne tastekoden er ugyldig. Sjekk at verdien er minst {c_min} og maks {c_max} for tegn eller minst {i_min} og maks {i_max} for interne spesialtaster.</string>
     <string name="settings__theme_editor__code_help_text">Alternativt vil de følgende lenkene hjelp deg å finne den tilsvarende tastekoden:</string>

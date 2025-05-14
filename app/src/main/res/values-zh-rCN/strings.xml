@@ -168,12 +168,10 @@
     <string name="settings__theme_editor__rule_already_exists">此样式表规则已定义。</string>
     <string name="settings__theme_editor__rule_codes">目标键码</string>
     <string name="settings__theme_editor__rule_groups">规则组</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift 键状态</string>
     <string name="settings__theme_editor__rule_selectors">选择器</string>
     <string name="settings__theme_editor__add_code">添加键码</string>
     <string name="settings__theme_editor__edit_code">编辑键码</string>
     <string name="settings__theme_editor__no_codes_defined">将规则应用于所有目标元件。</string>
-    <string name="settings__theme_editor__codes_defined">仅将规则应用于具有以下键码的目标元件：</string>
     <string name="settings__theme_editor__code_already_exists">此键码已定义。</string>
     <string name="settings__theme_editor__code_invalid">此键码无效。请确保键码在 {c_min} 到 {c_max} 范围内，如果是内部特殊键，在 {i_min} 到 {i_max} 范围内。</string>
     <string name="settings__theme_editor__code_help_text">或者，以下链接将帮助您找到相应的键码：</string>

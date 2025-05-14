@@ -158,11 +158,9 @@
     <string name="settings__theme_editor__rule_already_exists">이 스타일시트 규칙은 이미 지정되어 있습니다.</string>
     <string name="settings__theme_editor__rule_codes">대상 키 코드</string>
     <string name="settings__theme_editor__rule_groups">그룹</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift 상태</string>
     <string name="settings__theme_editor__add_code">키 코드 추가</string>
     <string name="settings__theme_editor__edit_code">키 코드 편집</string>
     <string name="settings__theme_editor__no_codes_defined">모든 대상 요소에 규칙을 적용합니다.</string>
-    <string name="settings__theme_editor__codes_defined">다음 키 코드와 일치하는 대상 요소에만 규칙을 적용합니다:</string>
     <string name="settings__theme_editor__code_already_exists">이 키 코드는 이미 지정되어 있습니다.</string>
     <string name="settings__theme_editor__code_invalid">키 코드가 잘못되었습니다. 문자는 {c_min}에서 {c_max} 사이, 내부 특수 키는 {i_min}에서 {i_max} 사이의 키 코드를 사용합니다.</string>
     <string name="settings__theme_editor__code_placeholder">코드</string>

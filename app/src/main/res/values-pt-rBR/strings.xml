@@ -166,12 +166,10 @@
     <string name="settings__theme_editor__rule_already_exists">Esta regra de folha de estilo já está definida.</string>
     <string name="settings__theme_editor__rule_codes">Códigos de teclas de destino</string>
     <string name="settings__theme_editor__rule_groups">Grupos</string>
-    <string name="settings__theme_editor__rule_shift_states">Alterar estados</string>
     <string name="settings__theme_editor__rule_selectors">Seletores</string>
     <string name="settings__theme_editor__add_code">Adicionar código de tecla</string>
     <string name="settings__theme_editor__edit_code">Editar código de tecla</string>
     <string name="settings__theme_editor__no_codes_defined">Aplicar regra a todos os elementos de destino.</string>
-    <string name="settings__theme_editor__codes_defined">Aplicar regra apenas aos elementos de destino com os seguintes códigos de tecla:</string>
     <string name="settings__theme_editor__code_already_exists">Este código de tecla já está definido.</string>
     <string name="settings__theme_editor__code_invalid">Este código de tecla não é válido. Certifique-se de que o código da tecla esteja dentro do intervalo de {c_min} até {c_max} para caracteres ou {i_min} até {i_max} para teclas especiais internas.</string>
     <string name="settings__theme_editor__code_help_text">Como alternativa, os links a seguir ajudarão você a encontrar o código de tecla correspondente:</string>

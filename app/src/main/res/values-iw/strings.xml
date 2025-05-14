@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">אפשר היסטוריה של הלוח</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">אמוג\'י</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">לפתוח אימוג\'י לוח</string>
+    <string name="quick_action__language_switch" maxLength="12">החלף שפה</string>
+    <string name="quick_action__language_switch__tooltip">בצע החלפת שפה</string>
     <string name="quick_action__settings" maxLength="12">הגדרות</string>
     <string name="quick_action__settings__tooltip">לפתוח הגדרות</string>
     <string name="quick_action__undo" maxLength="12">בטל</string>
@@ -172,15 +174,20 @@
     <string name="settings__theme_editor__rule_name">אלמנט / ביאור</string>
     <string name="settings__theme_editor__rule_codes">קודי מפתח יעד</string>
     <string name="settings__theme_editor__rule_groups">קבוצות</string>
-    <string name="settings__theme_editor__rule_shift_states">מצבי שינוי</string>
     <string name="settings__theme_editor__rule_selectors">כלי בחירה</string>
     <string name="settings__theme_editor__add_code">הוסף קוד מפתח</string>
     <string name="settings__theme_editor__edit_code">ערוך מפתח קוד</string>
     <string name="settings__theme_editor__no_codes_defined">החל כלל על כל רכיבי היעד.</string>
-    <string name="settings__theme_editor__codes_defined">החל כלל רק על רכיבי יעד עם קודי המפתח הבאים:</string>
     <string name="settings__theme_editor__code_already_exists">מפתח זה כבר מוגדר.</string>
+    <string name="settings__theme_editor__code_invalid">קוד מפתח זה אינו תקף. ודא שקוד המפתח נמצא בטווח של {c_min} עד {c_max} עבור תווים או {i_min} עד {i_max} עבור מפתחות מיוחדים פנימיים.</string>
     <string name="settings__theme_editor__code_placeholder">קוד</string>
     <string name="settings__theme_editor__code_recording_help_text">כדי למצוא קוד של מקש, השתמשו בכפתור שליד שדה הזנת הקוד. לאחר הפעלתו, הוא ירשום את לחיצת המקש הבאה ויכניס את הקוד לשדה הקלט.</string>
+    <string name="settings__theme_editor__add_property">הוסף מאפיין</string>
+    <string name="settings__theme_editor__edit_property">עריכת מאפיין</string>
+    <string name="settings__theme_editor__property_already_exists">מאפיין עם שם זה כבר קיים בכללים הנוכחים.</string>
+    <string name="settings__theme_editor__property_name">שם מאפיין</string>
+    <string name="settings__theme_editor__property_value">ערך מאפיין</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">בחר קובץ</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">מקלדת</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>

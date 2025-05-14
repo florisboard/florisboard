@@ -88,12 +88,10 @@
     <string name="settings__theme_editor__rule_already_exists">Ovo pravilo stilskog obrasca je već definirano.</string>
     <string name="settings__theme_editor__rule_codes">Ciljani kod pločice</string>
     <string name="settings__theme_editor__rule_groups">Grupe</string>
-    <string name="settings__theme_editor__rule_shift_states">Promijenite stanja</string>
     <string name="settings__theme_editor__rule_selectors">Odrednice</string>
     <string name="settings__theme_editor__add_code">Dodaj pločice</string>
     <string name="settings__theme_editor__edit_code">Uredi pločice</string>
     <string name="settings__theme_editor__no_codes_defined">Primjeni pravilo na sve ciljane elemente.</string>
-    <string name="settings__theme_editor__codes_defined">Primjeni pravilo na ciljane elemente koji sadrže sljedeće pločice:</string>
     <string name="settings__theme_editor__code_already_exists">Ova pločica je već definirana.</string>
     <string name="settings__theme_editor__code_invalid">Ova pločica nije valjana. Pobrinite se da je pločica u rangu od {c_min} to {c_max} za karaktere ili {i_min} do {i_max} za posebne nutarnje pločice.</string>
     <string name="settings__theme_editor__code_help_text">Ovi linkovi će vam pomoći da pronađete važeći kod za pločicu:</string>

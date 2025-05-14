@@ -174,12 +174,10 @@
     <string name="settings__theme_editor__rule_name">Element / Adnotacja</string>
     <string name="settings__theme_editor__rule_codes">Docelowe kody przycisków</string>
     <string name="settings__theme_editor__rule_groups">Grupy</string>
-    <string name="settings__theme_editor__rule_shift_states">Stany przycisku Shift</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__add_code">Dodaj kod przycisku</string>
     <string name="settings__theme_editor__edit_code">Edytuj kod przycisku</string>
     <string name="settings__theme_editor__no_codes_defined">Zastosuj reguły do wszystkich elementów docelowych.</string>
-    <string name="settings__theme_editor__codes_defined">Zastosuj reguły do elementów docelowych z następującymi kodami przycisków:</string>
     <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
     <string name="settings__theme_editor__code_invalid">Ten kod jest nieprawidłowy. Upewnij się, że kod mieści się w zakresie od {c_min} do {c_max} dla znaków lub od {i_min} do {i_max} dla wewnętrznych kluczy specjalnych.</string>
     <string name="settings__theme_editor__code_help_text">Alternatywnie, poniższe linki pomogą Ci znaleźć odpowiedni kod:</string>
@@ -244,7 +242,7 @@
     <string name="snygg__rule_element__media_emoji_key">Klucz emoji multimediów</string>
     <string name="snygg__rule_element__media_emoji_key_popup_box">Wyskakujące okienko klucza emoji multimediów</string>
     <string name="snygg__rule_element__media_emoji_key_popup_element">Wyskakujący element klucza emoji multimediów</string>
-    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Wyskakujące okienko klucza emoji multimediów</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Rozszerzony wskaźnik wyskakującego klawisza emoji multimediów</string>
     <string name="snygg__rule_element__media_emoji_tab">Karta emoji multimediów</string>
     <string name="snygg__rule_element__media_bottom_row">Multimedia w dolnym rzędzie</string>
     <string name="snygg__rule_element__media_bottom_row_button">Przycisk dolnego rzędu multimediów</string>
@@ -271,6 +269,10 @@
     <string name="snygg__rule_element__smartbar_candidate_spacer">Sugestia odstępu inteligentnego paska</string>
     <string name="snygg__rule_element__subtype_panel">Podtyp panelu</string>
     <string name="snygg__rule_element__subtype_panel_header">Podtyp nagłówka panelu</string>
+    <string name="snygg__rule_element__subtype_panel_list">Lista paneli podtypów</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Element listy panelu podtypu</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Ikona elementu listy panelu podtypu (wiodąca)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Tekst elementu listy panelu podtypu</string>
     <string name="snygg__rule_selector__pressed">Naciśnięty</string>
     <string name="snygg__rule_selector__focus">Skupiony</string>
     <string name="snygg__rule_selector__hover">Najechanie</string>
@@ -660,6 +662,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Renderowanie niewidocznych pomocników na ekranach przeciągania i upuszczania dla debugowania</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Wyczyść wewnętrzną bazę danych słowników użytkownika</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Usuwa wszystkie słowa z tabeli bazy danych słownika</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Zresetuj szybkie akcje inteligentnego paska</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Przywróć domyślne akcje inteligentnemu paskowi</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Pomyślnie zresetowano szybkie akcje inteligentnego paska do wartości domyślnych</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Zresetuj flagę \"{flag_name}\"</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Akcja debugowania, aby ponownie wyświetlić ekran konfiguracji</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Testuj ekran raportu awarii</string>

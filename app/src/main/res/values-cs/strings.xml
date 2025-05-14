@@ -173,12 +173,10 @@
     <string name="settings__theme_editor__rule_name">Prvek / anotace</string>
     <string name="settings__theme_editor__rule_codes">Kódy cílových kláves</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
-    <string name="settings__theme_editor__rule_shift_states">Stavy shiftu</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__add_code">Přidat kód klávesy</string>
     <string name="settings__theme_editor__edit_code">Upravit kód klávesy</string>
     <string name="settings__theme_editor__no_codes_defined">Použít pravidlo na všechny prvky.</string>
-    <string name="settings__theme_editor__codes_defined">Použít pravidlo pouze na cílové prvky s následujícími kódy kláves:</string>
     <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
     <string name="settings__theme_editor__code_invalid">Tento kód klávesy není platný. Ujistěte se, že kód klávesy je v rozmezí od {c_min} do {c_max} pro znaky nebo od {i_min} do {i_max} pro interní speciální klávesy.</string>
     <string name="settings__theme_editor__code_help_text">Případně použijte následující odkazy, které vám pomohou zjistit odpovídající kód klávesy:</string>
@@ -243,7 +241,7 @@
     <string name="snygg__rule_element__media_emoji_key">Klávesa médií emotikonů</string>
     <string name="snygg__rule_element__media_emoji_key_popup_box">Box vyskakovací klávesy médií emotikonů</string>
     <string name="snygg__rule_element__media_emoji_key_popup_element">Prvek vyskakovací klávesy médií emotikonů</string>
-    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Box vyskakovací klávesy médií emotikonů</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Rozšířený indikátor vyskakovací klávesy médií emotikonů</string>
     <string name="snygg__rule_element__media_emoji_tab">Karta médií emotikonů</string>
     <string name="snygg__rule_element__media_bottom_row">Spodní řádek médií</string>
     <string name="snygg__rule_element__media_bottom_row_button">Tlačítko spodního řádku médií</string>
@@ -270,6 +268,10 @@
     <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
     <string name="snygg__rule_element__subtype_panel">Panel podtypu</string>
     <string name="snygg__rule_element__subtype_panel_header">Záhlaví panelu podtypu</string>
+    <string name="snygg__rule_element__subtype_panel_list">Seznam panelu podtypů</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Položka seznamu panelu podtypů</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Ikona položky seznamu panelu podtypů (první)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Text položky seznamu panelu podtypů</string>
     <string name="snygg__rule_selector__pressed">Stisknuto</string>
     <string name="snygg__rule_selector__focus">Zaměřeno</string>
     <string name="snygg__rule_selector__hover">Přejetí</string>
@@ -295,6 +297,9 @@
     <string name="snygg__property_name__clip">Oříznutí</string>
     <string name="snygg__property_name__src">Zdroj</string>
     <string name="snygg__property_name__text_align">Zarovnání textu</string>
+    <string name="snygg__property_name__text_decoration_line">Linka dekorace textu</string>
+    <string name="snygg__property_name__text_max_lines">Maximální počet linek textu</string>
+    <string name="snygg__property_name__text_overflow">Přetékání textu</string>
     <string name="snygg__property_name__var_primary">Hlavní barva</string>
     <string name="snygg__property_name__var_primary_variant">Hlavní barva (varianta)</string>
     <string name="snygg__property_name__var_secondary">Sekundární barva</string>
@@ -311,9 +316,16 @@
     <string name="snygg__property_name__var_shape_variant">Běžný tvar (varianta)</string>
     <string name="snygg__property_value__explicit_inherit">Zdědit</string>
     <string name="snygg__property_value__defined_var">Odkaz na proměnnou</string>
+    <string name="snygg__property_value__yes">Ano</string>
+    <string name="snygg__property_value__no">Ne</string>
     <string name="snygg__property_value__solid_color">Pevná barva</string>
     <string name="snygg__property_value__material_you_light_color">Barva Material You (světlá)</string>
     <string name="snygg__property_value__material_you_dark_color">Barva Material You (tmavá)</string>
+    <string name="snygg__property_value__font_family_generic">Rodina písem (obecná)</string>
+    <string name="snygg__property_value__font_family_custom">Rodina písem (vlastní)</string>
+    <string name="snygg__property_value__font_style">Styl písma</string>
+    <string name="snygg__property_value__font_weight">Tloušťka písma</string>
+    <string name="snygg__property_value__padding">Odsazení nebo velikost okraje</string>
     <string name="snygg__property_value__rectangle_shape">Obdélníkový tvar</string>
     <string name="snygg__property_value__circle_shape">Kruhový tvar</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Tvar ořezaného rohu (dp)</string>
@@ -323,6 +335,12 @@
     <string name="snygg__property_value__dp_size">Velikost (dp)</string>
     <string name="snygg__property_value__sp_size">Velikost (sp)</string>
     <string name="snygg__property_value__percentage_size">Velikost (%)</string>
+    <string name="snygg__property_value__content_scale">Škálování obashu</string>
+    <string name="snygg__property_value__text_align">Zarovnání textu</string>
+    <string name="snygg__property_value__text_decoration_line">Linka dekorace textu</string>
+    <string name="snygg__property_value__text_max_lines">Maximální počet linek textu</string>
+    <string name="snygg__property_value__text_overflow">Přetékání textu</string>
+    <string name="snygg__property_value__uri">Reference URI</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Zvuky a vibrace</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Zvuková odezva / zvuky</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Povolit zvukovou odezvu</string>
@@ -643,6 +661,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Vykreslit jinak neviditelné pomocíky v obrazovkách se systémem drag&amp;drop pro ladění</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Vymazat interní databázi uživatelského slovníku</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Vymaže všechna slova z tabulky databáze slovníku</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Resetovat rychlé akce chytré lišty</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Resetovat rychlé akce chytré lišty na výchozí uspořádání</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Rychlé akce chytré lišty úspěšně resetovány na výchozí nastavení</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Resetovat vlajku \"{flag_name}\"</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Akce ladění pro opětovné ukázání obrazovky prvního nastavení</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Testovací obrazovka hlášení pádu</string>
@@ -691,6 +712,8 @@
     <string name="ext__editor__metadata__message_invalid">Metadata tohoto rozšíření nejsou platná, zkontrolujte prosím editor metadat pro podrobnosti!</string>
     <string name="ext__editor__dependencies__title">Spravovat závislosti</string>
     <string name="ext__editor__files__title">Spravovat soubory archivu</string>
+    <string name="ext__editor__files__type_fonts">Písma</string>
+    <string name="ext__editor__files__type_images">Obrázky</string>
     <string name="ext__editor__create_component__title">Vytvořit komponentu</string>
     <string name="ext__editor__create_component__title_theme">Vytvořit téma</string>
     <string name="ext__editor__create_component__from_empty">Prázdné</string>
@@ -764,7 +787,11 @@
     <string name="action__discard_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>
     <string name="action__edit">Upravit</string>
     <string name="action__export">Exportovat</string>
+    <string name="action__export_file">Importovat soubor</string>
+    <string name="action__export_files">Importovat soubory</string>
     <string name="action__import">Importovat</string>
+    <string name="action__import_file">Importovat soubor</string>
+    <string name="action__import_files">Importovat soubory</string>
     <string name="action__no">Ne</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Obnovit</string>
@@ -786,6 +813,8 @@
     <string name="general__no_browser_app_found_for_url">Nenalezen žádný prohlížeč pro zobrazení URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; vybrat &#45;</string>
     <string name="general__unlimited">Neomezené</string>
+    <string name="general__file_name">Název souboru</string>
+    <string name="general__properties">Vlastnosti</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Na výšku</string>
     <string name="screen_orientation__landscape">Na šířku</string>
@@ -804,6 +833,9 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamická šířka a skrolovatelné</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Zapnout Caps Lock při dvojitém klepnutí na Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Přepnout na další krok kapitalizace při každém stisknutí klávesy Shift</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimální</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Červená Zelená Modrá</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">Odstín Sytost Hodnota</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Vždy zobrazit</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Vždy zobrazit klávesnici po zavření jakéhokoli dialogu editoru</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Nikdy nezobrazovat</string>

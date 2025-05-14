@@ -167,12 +167,10 @@
     <string name="settings__theme_editor__rule_already_exists">Questa regola del file di stile è già definita.</string>
     <string name="settings__theme_editor__rule_codes">Codici tasto di destinazione</string>
     <string name="settings__theme_editor__rule_groups">Gruppi</string>
-    <string name="settings__theme_editor__rule_shift_states">Stati Maiusc</string>
     <string name="settings__theme_editor__rule_selectors">Selettori</string>
     <string name="settings__theme_editor__add_code">Aggiungi codice tasto</string>
     <string name="settings__theme_editor__edit_code">Modifica codice tasto</string>
     <string name="settings__theme_editor__no_codes_defined">Applica la regola a tutti gli elementi di destinazione.</string>
-    <string name="settings__theme_editor__codes_defined">Applica la regola solo agli elementi di destinazione con i seguenti codici tasto:</string>
     <string name="settings__theme_editor__code_already_exists">Questo codice di tasto è già definito.</string>
     <string name="settings__theme_editor__code_invalid">Questo codice di tasto non è valido. Assicurarsi che il codice di tasto sia compreso nell\'intervallo da {c_min} a {c_max} per i caratteri o da {i_min} a {i_max} per tasti speciali interni.</string>
     <string name="settings__theme_editor__code_help_text">In alternativa, i seguenti link ti aiuteranno a trovare il codice di tasto corrispondente:</string>

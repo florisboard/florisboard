@@ -167,12 +167,10 @@
     <string name="settings__theme_editor__rule_already_exists">Це правило таблиці стилів уже визначено.</string>
     <string name="settings__theme_editor__rule_codes">Цільові коди клавіш</string>
     <string name="settings__theme_editor__rule_groups">Групи</string>
-    <string name="settings__theme_editor__rule_shift_states">Зсув</string>
     <string name="settings__theme_editor__rule_selectors">Перемикачі</string>
     <string name="settings__theme_editor__add_code">Додати код клавіш</string>
     <string name="settings__theme_editor__edit_code">Змінити код клавіш</string>
     <string name="settings__theme_editor__no_codes_defined">Застосувати правило до всіх цільових елементів.</string>
-    <string name="settings__theme_editor__codes_defined">Застосовувати правило лише до цільових елементів із такими ключовими кодами:</string>
     <string name="settings__theme_editor__code_already_exists">Цей код клавіші вже використовується.</string>
     <string name="settings__theme_editor__code_invalid">Цей код клавіші недійсний. Переконайтеся, що код клавіші знаходиться в діапазоні від {c_min} до {c_max} для символів або від {i_min} до {i_max} для внутрішніх спеціальних клавіш.</string>
     <string name="settings__theme_editor__code_help_text">Крім того, наступні посилання допоможуть вам знайти відповідний код клавіші:</string>
