@@ -819,7 +819,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             
                 val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
                 var newArrangement = arrangement.copy(
-                    stickyAction = migrateAction(arrangement.stickyAction),
+                    stickyAction = arrangement.stickyAction?.let{ migrateAction(it) },
                     dynamicActions = arrangement.dynamicActions.map { migrateAction(it) },
                     hiddenActions = arrangement.hiddenActions.map { migrateAction(it) },
                 )
