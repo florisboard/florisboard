@@ -809,15 +809,19 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 }
             }
             "smartbar__action_arrangement" -> {
+                fun migrateAction(action: QuickAction): QuickAction {
+                    return if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
+                        action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                    } else {
+                        action
+                    }
+                }
+            
                 val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
                 var newArrangement = arrangement.copy(
-                    dynamicActions = arrangement.dynamicActions.map { action ->
-                        if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
-                            action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
-                        } else {
-                            action
-                        }
-                    }
+                    stickyAction = arrangement.stickyAction?.let{ migrateAction(it) },
+                    dynamicActions = arrangement.dynamicActions.map { migrateAction(it) },
+                    hiddenActions = arrangement.hiddenActions.map { migrateAction(it) },
                 )
                 if (QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH) !in newArrangement) {
                     newArrangement = newArrangement.copy(
