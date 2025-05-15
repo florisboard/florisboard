@@ -809,7 +809,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 }
             }
             "smartbar__action_arrangement" -> {
-                fun migrateAction(action: QuickAction): QuickAction
+                fun migrateAction(action: QuickAction): QuickAction {
                     return if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
                         action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
                     } else {
