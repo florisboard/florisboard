@@ -1,4 +1,4 @@
-name: Feature request / Suggestion
+name: ✨ Feature request
 description: Suggest an idea for this project
 labels:
   - "proposal"
@@ -13,6 +13,17 @@ body:
         • If you have multiple ideas which are not directly connected to other, file a new issue for each idea. This makes it easier to implement your proposals.
         • Describe your idea in a short but concise way.
         • If you have any examples, e.g. screenshots or other keyboards have the proposed feature implemented, feel free to post them after your description.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I made sure that there are *no existing issues* - [open](https://github.com/florisboard/florisboard/issues) or [closed](https://github.com/florisboard/florisboard/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
+          required: true
+        - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
+          required: true
+        - label: "I have taken the time to fill in all the required details. I understand that the bug report will be dismissed otherwise."
+          required: true
   - type: textarea
     id: feature
     attributes:
