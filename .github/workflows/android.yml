@@ -3,7 +3,7 @@ name: FlorisBoard CI
 on:
   push:
     branches: [ main ]
-    paths-ignore: &ignored_paths
+    paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
       - ".github/FUNDING.yml"
       - ".editorconfig"
@@ -15,7 +15,6 @@ on:
       - "ROADMAP.md"
   pull_request:
     branches: [ main ]
-    paths-ignore: *ignored_paths
 
 jobs:
   build:
