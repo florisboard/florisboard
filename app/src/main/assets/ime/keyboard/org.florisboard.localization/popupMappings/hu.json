@@ -10,9 +10,9 @@
       "main": { "$": "auto_text_key" ,"code" : 237, "label": "í" }
     },
     "o": {
-      "main": { "$": "auto_text_key", "code" : 246, "label": "ö" },
+      "main": { "$": "auto_text_key", "code" : 243, "label": "ó" },
       "relevant": [
-        { "$": "auto_text_key", "code" : 243, "label": "ó" },
+        { "$": "auto_text_key", "code" : 246, "label": "ö" },
         { "$": "auto_text_key", "code" : 337, "label": "ő" }
       ]
     },
@@ -22,9 +22,9 @@
       ]
     },
     "u": {
-      "main": { "$": "auto_text_key", "code" : 252, "label": "ü" },
+      "main": { "$": "auto_text_key", "code" : 250, "label": "ú" },
       "relevant": [
-        { "$": "auto_text_key", "code" : 250, "label": "ú" },
+        { "$": "auto_text_key", "code" : 252, "label": "ü" },
         { "$": "auto_text_key", "code" : 369, "label": "ű" }
       ]
     },
