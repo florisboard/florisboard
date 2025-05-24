@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
@@ -57,6 +58,7 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -87,6 +89,23 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__history_enabled",
             default = false,
         )
+        val numHistoryGridColumnsPortrait = int(
+            key = "clipboard__num_history_grid_columns_portrait",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        val numHistoryGridColumnsLandscape = int(
+            key = "clipboard__num_history_grid_columns_landscape",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        @Composable
+        fun numHistoryGridColumns(): PreferenceData<Int> {
+            val configuration = LocalConfiguration.current
+            return if (configuration.isOrientationPortrait()) {
+                numHistoryGridColumnsPortrait
+            } else {
+                numHistoryGridColumnsLandscape
+            }
+        }
         val cleanUpOld = boolean(
             key = "clipboard__clean_up_old",
             default = false,
@@ -816,7 +835,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                         action
                     }
                 }
-            
+
                 val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
                 var newArrangement = arrangement.copy(
                     stickyAction = arrangement.stickyAction?.let{ migrateAction(it) },
