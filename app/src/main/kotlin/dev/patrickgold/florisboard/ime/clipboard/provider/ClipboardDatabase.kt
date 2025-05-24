@@ -260,7 +260,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
 
     fun stringRepresentation(): String {
         return when {
-            text != null -> text.take(500)
+            text != null -> text
             uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }
