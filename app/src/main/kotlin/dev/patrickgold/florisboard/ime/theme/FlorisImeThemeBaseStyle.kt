@@ -276,19 +276,30 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         padding = padding(12.dp, 8.dp)
         shape = `var`("--shape-variant")
         shadowElevation = size(2.dp)
+        textMaxLines = textMaxLines(10)
+        textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
     FlorisImeUi.ClipboardItemPopup.elementName {
+        background = `var`("--surface")
+        foreground = `var`("--on-surface")
+        fontSize = fontSize(14.sp)
+        margin = padding(4.dp)
+        padding = padding(12.dp, 8.dp)
+        shape = `var`("--shape-variant")
+        shadowElevation = size(2.dp)
+    }
+    FlorisImeUi.ClipboardItemActions.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         margin = padding(4.dp)
         shape = `var`("--shape-variant")
         shadowElevation = size(2.dp)
     }
-    FlorisImeUi.ClipboardItemPopupAction.elementName {
+    FlorisImeUi.ClipboardItemAction.elementName {
         fontSize = fontSize(16.sp)
         padding = padding(12.dp)
     }
-    FlorisImeUi.ClipboardItemPopupActionText.elementName {
+    FlorisImeUi.ClipboardItemActionText.elementName {
         margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
     }
     FlorisImeUi.ClipboardHistoryDisabledButton.elementName {

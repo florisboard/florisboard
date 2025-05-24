@@ -205,11 +205,12 @@ fun ClipboardInputLayout(
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     fun ClipItemView(
+        elementName: String,
         item: ClipboardItem,
         contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
-        SnyggBox(FlorisImeUi.ClipboardItem.elementName,
+        SnyggBox(elementName,
             modifier = modifier.fillMaxWidth(),
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -329,7 +330,11 @@ fun ClipboardInputLayout(
                         ClipCategoryTitle(text = stringRes(title))
                     }
                     items(items) { item ->
-                        ClipItemView(item, contentScrollInsteadOfClip = false)
+                        ClipItemView(
+                            elementName = FlorisImeUi.ClipboardItem.elementName,
+                            item = item,
+                            contentScrollInsteadOfClip = false,
+                        )
                     }
                 }
             }
@@ -368,11 +373,12 @@ fun ClipboardInputLayout(
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     ClipItemView(
+                        elementName = FlorisImeUi.ClipboardItemPopup.elementName,
                         modifier = Modifier.widthIn(max = ItemWidth),
                         item = popupItem!!,
                         contentScrollInsteadOfClip = true,
                     )
-                    SnyggColumn(FlorisImeUi.ClipboardItemPopup.elementName) {
+                    SnyggColumn(FlorisImeUi.ClipboardItemActions.elementName) {
                         PopupAction(
                             iconId = R.drawable.ic_pin,
                             text = stringRes(if (popupItem!!.isPinned) {
@@ -599,14 +605,14 @@ private fun PopupAction(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    SnyggRow(FlorisImeUi.ClipboardItemPopupAction.elementName,
+    SnyggRow(FlorisImeUi.ClipboardItemAction.elementName,
         modifier = modifier.rippleClickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SnyggIcon(FlorisImeUi.ClipboardItemPopupActionIcon.elementName,
+        SnyggIcon(FlorisImeUi.ClipboardItemActionIcon.elementName,
             painter = painterResource(iconId),
         )
-        SnyggText(FlorisImeUi.ClipboardItemPopupActionText.elementName,
+        SnyggText(FlorisImeUi.ClipboardItemActionText.elementName,
             modifier = Modifier.weight(1f),
             text = text,
         )

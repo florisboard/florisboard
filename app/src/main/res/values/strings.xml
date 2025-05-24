@@ -238,9 +238,10 @@
     <string name="snygg__rule_element__clipboard_content">Clipboard content</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Clipboard item popup action</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Clipboard item popup icon</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Clipboard item popup text</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Clipboard item actions</string>
+    <string name="snygg__rule_element__clipboard_item_action">Clipboard item action</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Clipboard item action icon</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Clipboard item action text</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog">Clipboard clear all dialog</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Clipboard clear all dialog message</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Clipboard clear all dialog buttons</string>
