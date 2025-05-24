@@ -13,17 +13,6 @@ body:
         • Describe the bug in a short but concise way.
         • If you have a screenshot or screen recording of the bug, link them at the end of this issue.
         • Also make sure to fill out the environment information. This info is valuable when trying to fix your described bug.
-  - type: checkboxes
-    id: checklist
-    attributes:
-      label: "Checklist"
-      options:
-        - label: "I made sure that there are *no existing issues* - [open](https://github.com/florisboard/florisboard/issues) or [closed](https://github.com/florisboard/florisboard/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
-          required: true
-        - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
-          required: true
-        - label: "I have taken the time to fill in all the required details. I understand that the bug report will be dismissed otherwise."
-          required: true
   - type: textarea
     id: description
     attributes:
@@ -73,3 +62,14 @@ body:
       placeholder: e.g. 10, Stock
     validations:
       required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I made sure that there are *no existing issues* - [open](https://github.com/florisboard/florisboard/issues) or [closed](https://github.com/florisboard/florisboard/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
+          required: true
+        - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
+          required: true
+        - label: "I have taken the time to fill in all the required details. I understand that the bug report will be dismissed otherwise."
+          required: true

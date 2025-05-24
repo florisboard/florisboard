@@ -13,6 +13,13 @@ body:
         • If you have multiple ideas which are not directly connected to other, file a new issue for each idea. This makes it easier to implement your proposals.
         • Describe your idea in a short but concise way.
         • If you have any examples, e.g. screenshots or other keyboards have the proposed feature implemented, feel free to post them after your description.
+  - type: textarea
+    id: feature
+    attributes:
+      label: Feature idea
+      description: Please explain your idea in a precise way.
+    validations:
+      required: true
   - type: checkboxes
     id: checklist
     attributes:
@@ -22,12 +29,5 @@ body:
           required: true
         - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
           required: true
-        - label: "I have taken the time to fill in all the required details. I understand that the bug report will be dismissed otherwise."
+        - label: "I have taken the time to fill in all the required details. I understand that the feature request will be dismissed otherwise."
           required: true
-  - type: textarea
-    id: feature
-    attributes:
-      label: Feature idea
-      description: Please explain your idea in a precise way.
-    validations:
-      required: true

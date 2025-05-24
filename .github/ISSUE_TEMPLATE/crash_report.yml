@@ -11,17 +11,6 @@ body:
         • Please search existing bug/crash reports to avoid creating duplicates.
         • Give your crash report a good name (no generics like "Error" or "Crash"), so others can easily identify the topic of your issue.
         • Describe what you were doing what could've led to the crash and whether the crash is random or reproducible.
-  - type: checkboxes
-    id: checklist
-    attributes:
-      label: "Checklist"
-      options:
-        - label: "I made sure that there are *no existing issues* - [open](https://github.com/florisboard/florisboard/issues) or [closed](https://github.com/florisboard/florisboard/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
-          required: true
-        - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
-          required: true
-        - label: "I have taken the time to fill in all the required details. I understand that the bug report will be dismissed otherwise."
-          required: true
   - type: textarea
     id: description
     attributes:
@@ -47,3 +36,14 @@ body:
       description: Paste the generated crash log below
     validations:
       required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I made sure that there are *no existing issues* - [open](https://github.com/florisboard/florisboard/issues) or [closed](https://github.com/florisboard/florisboard/issues?q=is%3Aissue+is%3Aclosed) - which I could contribute my information to."
+          required: true
+        - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
+          required: true
+        - label: "I have taken the time to fill in all the required details. I understand that the crash report will be dismissed otherwise."
+          required: true
