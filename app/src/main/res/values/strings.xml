@@ -238,9 +238,10 @@
     <string name="snygg__rule_element__clipboard_content">Clipboard content</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Clipboard item popup action</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Clipboard item popup icon</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Clipboard item popup text</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Clipboard item actions</string>
+    <string name="snygg__rule_element__clipboard_item_action">Clipboard item action</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Clipboard item action icon</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Clipboard item action text</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog">Clipboard clear all dialog</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Clipboard clear all dialog message</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Clipboard clear all dialog buttons</string>
@@ -690,6 +691,7 @@
     <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Number of grid columns</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>
@@ -887,6 +889,7 @@
     <string name="general__unlimited">Unlimited</string>
     <string name="general__file_name">File name</string>
     <string name="general__properties">Properties</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Auto</string>
 
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>

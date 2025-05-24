@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.app.settings.clipboard
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.pluralsRes
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -74,6 +75,24 @@ fun ClipboardScreen() = FlorisScreen {
                 prefs.clipboard.historyEnabled,
                 title = stringRes(R.string.pref__clipboard__enable_clipboard_history__label),
                 summary = stringRes(R.string.pref__clipboard__enable_clipboard_history__summary),
+            )
+            DialogSliderPreference(
+                primaryPref = prefs.clipboard.numHistoryGridColumnsPortrait,
+                secondaryPref = prefs.clipboard.numHistoryGridColumnsLandscape,
+                title = stringRes(R.string.pref__clipboard__num_history_grid_columns__label),
+                primaryLabel = stringRes(R.string.screen_orientation__portrait),
+                secondaryLabel = stringRes(R.string.screen_orientation__landscape),
+                valueLabel = { numGridColumns ->
+                    if (numGridColumns == CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO) {
+                        stringRes(R.string.general__auto)
+                    } else {
+                        numGridColumns.toString()
+                    }
+                },
+                min = 0,
+                max = 10,
+                stepIncrement = 1,
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.clipboard.cleanUpOld,

@@ -23,6 +23,7 @@ import android.media.ThumbnailUtils
 import android.provider.MediaStore
 import android.util.Size
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -41,6 +42,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -80,12 +86,12 @@ import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.FlorisStaggeredVerticalGrid
 import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.android.AndroidKeyguardManager
@@ -102,6 +108,8 @@ import org.florisboard.lib.snygg.ui.SnyggText
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
+
+const val CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO: Int = 0
 
 @Composable
 fun ClipboardInputLayout(
@@ -197,11 +205,12 @@ fun ClipboardInputLayout(
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     fun ClipItemView(
+        elementName: String,
         item: ClipboardItem,
         contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
-        SnyggBox(FlorisImeUi.ClipboardItem.elementName,
+        SnyggBox(elementName,
             modifier = modifier.fillMaxWidth(),
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -302,43 +311,57 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
         ) {
             val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
-            SnyggColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .alpha(historyAlpha)
-                    .florisVerticalScroll(),
+            val staggeredGridCells by prefs.clipboard.numHistoryGridColumns()
+                .observeAsTransformingState { numGridColumns ->
+                    if (numGridColumns == CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO) {
+                        StaggeredGridCells.Adaptive(160.dp)
+                    } else {
+                        StaggeredGridCells.Fixed(numGridColumns)
+                    }
+                }
+
+            fun LazyStaggeredGridScope.clipboardItems(
+                items: List<ClipboardItem>,
+                key: String,
+                @StringRes title: Int,
             ) {
-                if (history.pinned.isNotEmpty()) {
-                    ClipCategoryTitle(
-                        text = stringRes(R.string.clipboard__group_pinned),
-                    )
-                    FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
-                        for (item in history.pinned) {
-                            ClipItemView(item, contentScrollInsteadOfClip = false)
-                        }
+                if (items.isNotEmpty()) {
+                    item(key, span = StaggeredGridItemSpan.FullLine) {
+                        ClipCategoryTitle(text = stringRes(title))
                     }
-                }
-                if (history.recent.isNotEmpty()) {
-                    ClipCategoryTitle(
-                        text = stringRes(R.string.clipboard__group_recent),
-                    )
-                    FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
-                        for (item in history.recent) {
-                            ClipItemView(item, contentScrollInsteadOfClip = false)
-                        }
-                    }
-                }
-                if (history.other.isNotEmpty()) {
-                    ClipCategoryTitle(
-                        text = stringRes(R.string.clipboard__group_other),
-                    )
-                    FlorisStaggeredVerticalGrid(maxColumnWidth = ItemWidth) {
-                        for (item in history.other) {
-                            ClipItemView(item, contentScrollInsteadOfClip = false)
-                        }
+                    items(items) { item ->
+                        ClipItemView(
+                            elementName = FlorisImeUi.ClipboardItem.elementName,
+                            item = item,
+                            contentScrollInsteadOfClip = false,
+                        )
                     }
                 }
             }
+
+            LazyVerticalStaggeredGrid(
+                modifier = Modifier
+                    .matchParentSize()
+                    .alpha(historyAlpha),
+                columns = staggeredGridCells,
+            ) {
+                clipboardItems(
+                    items = history.pinned,
+                    key = "pinned-header",
+                    title = R.string.clipboard__group_pinned,
+                )
+                clipboardItems(
+                    items = history.recent,
+                    key = "recent-header",
+                    title = R.string.clipboard__group_recent,
+                )
+                clipboardItems(
+                    items = history.other,
+                    key = "other-header",
+                    title = R.string.clipboard__group_other,
+                )
+            }
+
             if (popupItem != null) {
                 SnyggRow(
                     modifier = Modifier
@@ -350,11 +373,12 @@ fun ClipboardInputLayout(
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     ClipItemView(
+                        elementName = FlorisImeUi.ClipboardItemPopup.elementName,
                         modifier = Modifier.widthIn(max = ItemWidth),
                         item = popupItem!!,
                         contentScrollInsteadOfClip = true,
                     )
-                    SnyggColumn(FlorisImeUi.ClipboardItemPopup.elementName) {
+                    SnyggColumn(FlorisImeUi.ClipboardItemActions.elementName) {
                         PopupAction(
                             iconId = R.drawable.ic_pin,
                             text = stringRes(if (popupItem!!.isPinned) {
@@ -387,6 +411,7 @@ fun ClipboardInputLayout(
                     }
                 }
             }
+
             if (showClearAllHistory) {
                 SnyggRow(
                     modifier = Modifier
@@ -580,14 +605,14 @@ private fun PopupAction(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    SnyggRow(FlorisImeUi.ClipboardItemPopupAction.elementName,
+    SnyggRow(FlorisImeUi.ClipboardItemAction.elementName,
         modifier = modifier.rippleClickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SnyggIcon(FlorisImeUi.ClipboardItemPopupActionIcon.elementName,
+        SnyggIcon(FlorisImeUi.ClipboardItemActionIcon.elementName,
             painter = painterResource(iconId),
         )
-        SnyggText(FlorisImeUi.ClipboardItemPopupActionText.elementName,
+        SnyggText(FlorisImeUi.ClipboardItemActionText.elementName,
             modifier = Modifier.weight(1f),
             text = text,
         )

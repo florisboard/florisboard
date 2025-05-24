@@ -267,17 +267,27 @@
     "margin": "4dp",
     "padding": "12dp 8dp",
     "shape": "var(--shape-variant)",
-    "shadow-elevation": "2dp"
+    "shadow-elevation": "2dp",
+    "text-max-lines": "10",
+    "text-overflow": "ellipsis"
   },
   "clipboard-item-popup": {
-    "background": "var(--surface-variant)",
+    "background": "var(--surface)",
     "foreground": "var(--on-surface)",
+    "font-size": "14sp",
     "margin": "4dp",
     "padding": "12dp 8dp",
     "shape": "var(--shape-variant)",
     "shadow-elevation": "2dp"
   },
-  "clipboard-item-popup-action": {
+  "clipboard-item-actions": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "margin": "4dp",
+    "shape": "var(--shape-variant)",
+    "shadow-elevation": "2dp"
+  },
+  "clipboard-item-action": {
     "font-size": "16sp",
     "padding": "12dp"
   },

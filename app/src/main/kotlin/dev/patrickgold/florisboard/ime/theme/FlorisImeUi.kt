@@ -77,17 +77,21 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "clipboard-item-popup",
         resId = R.string.snygg__rule_element__clipboard_item_popup,
     ),
-    ClipboardItemPopupAction(
-        elementName = "clipboard-item-popup-action",
-        resId = R.string.snygg__rule_element__clipboard_item_popup_action,
+    ClipboardItemActions(
+        elementName = "clipboard-item-actions",
+        resId = R.string.snygg__rule_element__clipboard_item_actions,
     ),
-    ClipboardItemPopupActionIcon(
-        elementName = "clipboard-item-popup-action-icon",
-        resId = R.string.snygg__rule_element__clipboard_item_popup_action_icon,
+    ClipboardItemAction(
+        elementName = "clipboard-item-action",
+        resId = R.string.snygg__rule_element__clipboard_item_action,
     ),
-    ClipboardItemPopupActionText(
-        elementName = "clipboard-item-popup-action-text",
-        resId = R.string.snygg__rule_element__clipboard_item_popup_action_text,
+    ClipboardItemActionIcon(
+        elementName = "clipboard-item-action-icon",
+        resId = R.string.snygg__rule_element__clipboard_item_action_icon,
+    ),
+    ClipboardItemActionText(
+        elementName = "clipboard-item-action-text",
+        resId = R.string.snygg__rule_element__clipboard_item_action_text,
     ),
     ClipboardClearAllDialog(
         elementName = "clipboard-clear-all-dialog",
