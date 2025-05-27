@@ -28,7 +28,8 @@
     "--on-surface-variant": "#5f5f5f",
 
     "--shape": "rounded-corner(8dp, 8dp, 8dp, 8dp)",
-    "--shape-variant": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
+    "--shape-variant": "rounded-corner(12dp, 12dp, 12dp, 12dp)",
+    "--shape-chip": "rounded-corner(50%, 50%, 50%, 50%)"
   },
 
   "window": {
@@ -248,10 +249,33 @@
   },
   "clipboard-subheader": {
     "font-size": "14sp",
-    "margin": "6dp"
+    "margin": "6dp 10dp 6dp 6dp"
   },
   "clipboard-content": {
-    "padding": "10dp"
+    "padding": "10dp 0dp"
+  },
+  "clipboard-filter-row": {
+    "background": "var(--background-variant)",
+    "foreground": "var(--on-background)",
+    "padding": "0dp 0dp 4dp 0dp",
+    "shape": "var(--shape-variant)"
+  },
+  "clipboard-filter-chip": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "margin": "4dp 4dp 0dp 4dp",
+    "padding": "8dp 4dp",
+    "shape": "var(--shape-chip)"
+  },
+  "clipboard-filter-chip[state=`active`]": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)"
+  },
+  "clipboard-filter-chip-text": {
+    "margin": "4dp 0dp 0dp 0dp"
+  },
+  "clipboard-grid": {
+    "shape": "var(--shape-variant)"
   },
   "clipboard-item": {
     "background": "var(--surface)",
@@ -283,6 +307,9 @@
   "clipboard-item-action": {
     "font-size": "16sp",
     "padding": "12dp"
+  },
+  "clipboard-item-action-text": {
+    "margin": "4dp 0dp 0dp 0dp"
   },
   "clipboard-clear-all-dialog": {
     "background": "var(--surface)",

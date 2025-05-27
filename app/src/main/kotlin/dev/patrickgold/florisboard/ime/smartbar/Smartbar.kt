@@ -73,10 +73,10 @@ import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
-private const val AnimationDuration = 200
+const val AnimationDuration = 200
 
-private val VerticalEnterTransition = EnterTransition.verticalTween(AnimationDuration)
-private val VerticalExitTransition = ExitTransition.verticalTween(AnimationDuration)
+val VerticalEnterTransition = EnterTransition.verticalTween(AnimationDuration)
+val VerticalExitTransition = ExitTransition.verticalTween(AnimationDuration)
 
 private val HorizontalEnterTransition = EnterTransition.horizontalTween(AnimationDuration)
 private val HorizontalExitTransition = ExitTransition.horizontalTween(AnimationDuration)

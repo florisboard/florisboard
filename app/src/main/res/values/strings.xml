@@ -236,6 +236,11 @@
     <string name="snygg__rule_element__clipboard_header_text">Clipboard header text</string>
     <string name="snygg__rule_element__clipboard_subheader">Clipboard subheader</string>
     <string name="snygg__rule_element__clipboard_content">Clipboard content</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Clipboard filter row</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Clipboard filter chip</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Clipboard filter chip icon</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Clipboard filter chip text</string>
+    <string name="snygg__rule_element__clipboard_grid">Clipboard grid</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
     <string name="snygg__rule_element__clipboard_item_actions">Clipboard item actions</string>
@@ -680,7 +685,7 @@
     <string name="clipboard__cleared_primary_clip">Cleared primary clip</string>
     <string name="clipboard__cleared_history">Cleared history</string>
     <string name="clipboard__cleared_full_history">Cleared full history</string>
-    <string name="clipboard__confirm_clear_history__message">Are you sure you want to clear your clipboard history?</string>
+    <string name="clipboard__confirm_clear_history__message">Are you sure you want to clear your clipboard history? This will clear all items except pinned ones, regardless of active filters.</string>
     <string name="settings__clipboard__title">Clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>

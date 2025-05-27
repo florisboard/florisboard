@@ -69,6 +69,26 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "clipboard-content",
         resId = R.string.snygg__rule_element__clipboard_content,
     ),
+    ClipboardFilterRow(
+        elementName = "clipboard-filter-row",
+        resId = R.string.snygg__rule_element__clipboard_filter_row,
+    ),
+    ClipboardFilterChip(
+        elementName = "clipboard-filter-chip",
+        resId = R.string.snygg__rule_element__clipboard_filter_chip,
+    ),
+    ClipboardFilterChipIcon(
+        elementName = "clipboard-filter-chip-icon",
+        resId = R.string.snygg__rule_element__clipboard_filter_chip_icon,
+    ),
+    ClipboardFilterChipText(
+        elementName = "clipboard-filter-chip-text",
+        resId = R.string.snygg__rule_element__clipboard_filter_chip_text,
+    ),
+    ClipboardGrid(
+        elementName = "clipboard-grid",
+        resId = R.string.snygg__rule_element__clipboard_grid,
+    ),
     ClipboardItem(
         elementName = "clipboard-item",
         resId = R.string.snygg__rule_element__clipboard_item,

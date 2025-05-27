@@ -24,10 +24,12 @@ import android.provider.MediaStore
 import android.util.Size
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -51,16 +53,22 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Backspace
-import androidx.compose.material.icons.filled.ClearAll
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.FilterListOff
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -68,6 +76,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -83,10 +92,14 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
+import dev.patrickgold.florisboard.ime.smartbar.AnimationDuration
+import dev.patrickgold.florisboard.ime.smartbar.VerticalEnterTransition
+import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
+import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.rippleClickable
 import dev.patrickgold.florisboard.lib.compose.stringRes
@@ -94,6 +107,7 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
@@ -123,12 +137,32 @@ fun ClipboardInputLayout(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
-    val history by clipboardManager.history.observeAsNonNullState()
+    val unfilteredHistory by clipboardManager.history.observeAsNonNullState()
+
+    var isFilterRowShown by remember { mutableStateOf(false) }
+    val activeFilterTypes = remember { mutableStateSetOf<ItemType>() }
+
+    val history = remember(unfilteredHistory, activeFilterTypes.toSet()) {
+        if (activeFilterTypes.isEmpty()) {
+            unfilteredHistory
+        } else {
+            unfilteredHistory.all
+                .filter { activeFilterTypes.contains(it.type) }
+                .let { ClipboardManager.ClipboardHistory(it) }
+        }
+    }
 
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
     fun isPopupSurfaceActive() = popupItem != null || showClearAllHistory
+
+    LaunchedEffect(isFilterRowShown) {
+        delay(AnimationDuration.toLong())
+        if (!isFilterRowShown) {
+            activeFilterTypes.clear()
+        }
+    }
 
     @Composable
     fun HeaderRow() {
@@ -173,22 +207,24 @@ fun ClipboardInputLayout(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { showClearAllHistory = true },
                 modifier = sizeModifier.autoMirrorForRtl(),
-                enabled = !deviceLocked && historyEnabled && history.all.isNotEmpty() && !isPopupSurfaceActive(),
+                enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
-                    imageVector = Icons.Default.ClearAll,
+                    imageVector = Icons.Default.DeleteSweep,
                 )
             }
             SnyggIconButton(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
-                onClick = {
-                    context.showShortToast("TODO: implement inline clip item editing")
-                },
+                onClick = { isFilterRowShown = !isFilterRowShown },
                 modifier = sizeModifier,
-                enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive(),
+                enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
-                    imageVector = Icons.Default.Edit,
+                    imageVector = if (!isFilterRowShown) {
+                        Icons.Default.FilterList
+                    } else {
+                        Icons.Default.FilterListOff
+                    },
                 )
             }
             KeyboardLikeButton(
@@ -339,27 +375,105 @@ fun ClipboardInputLayout(
                 }
             }
 
-            LazyVerticalStaggeredGrid(
+            Column(
                 modifier = Modifier
                     .matchParentSize()
                     .alpha(historyAlpha),
-                columns = staggeredGridCells,
             ) {
-                clipboardItems(
-                    items = history.pinned,
-                    key = "pinned-header",
-                    title = R.string.clipboard__group_pinned,
-                )
-                clipboardItems(
-                    items = history.recent,
-                    key = "recent-header",
-                    title = R.string.clipboard__group_recent,
-                )
-                clipboardItems(
-                    items = history.other,
-                    key = "other-header",
-                    title = R.string.clipboard__group_other,
-                )
+                AnimatedVisibility(
+                    visible = isFilterRowShown,
+                    enter = VerticalEnterTransition,
+                    exit = VerticalExitTransition,
+                ) {
+                    SnyggRow(
+                        elementName = FlorisImeUi.ClipboardFilterRow.elementName,
+                        modifier = Modifier.fillMaxWidth(),
+                        clickAndSemanticsModifier = Modifier.florisHorizontalScroll(),
+                    ) {
+                        @Composable
+                        fun Chip(
+                            imageVector: ImageVector,
+                            text: String,
+                            itemType: ItemType,
+                        ) {
+                            val active = activeFilterTypes.contains(itemType)
+                            val attributes = remember(active) {
+                                mapOf(
+                                    "state" to if (active) "active" else "inactive",
+                                    "type" to itemType.toString().lowercase(),
+                                )
+                            }
+                            SnyggRow(
+                                elementName = FlorisImeUi.ClipboardFilterChip.elementName,
+                                attributes = attributes,
+                                clickAndSemanticsModifier = Modifier
+                                    .clickable(
+                                        interactionSource = null,
+                                        indication = ripple(),
+                                        onClick = {
+                                            if (!activeFilterTypes.add(itemType)) {
+                                                activeFilterTypes.remove(itemType)
+                                            }
+                                        },
+                                    ),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                SnyggIcon(
+                                    elementName = FlorisImeUi.ClipboardFilterChipIcon.elementName,
+                                    attributes = attributes,
+                                    imageVector = imageVector,
+                                )
+                                SnyggText(
+                                    elementName = FlorisImeUi.ClipboardFilterChipText.elementName,
+                                    attributes = attributes,
+                                    text = text,
+                                )
+                            }
+                        }
+
+                        Chip(
+                            imageVector = Icons.Default.TextFields,
+                            text = "Text",
+                            itemType = ItemType.TEXT,
+                        )
+                        Chip(
+                            imageVector = Icons.Default.Image,
+                            text = "Images",
+                            itemType = ItemType.IMAGE,
+                        )
+                        Chip(
+                            imageVector = Icons.Default.Movie,
+                            text = "Videos",
+                            itemType = ItemType.VIDEO,
+                        )
+                    }
+                }
+                SnyggBox(FlorisImeUi.ClipboardGrid.elementName,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                ) {
+                    LazyVerticalStaggeredGrid(
+                        modifier = Modifier.fillMaxSize(),
+                        columns = staggeredGridCells,
+                    ) {
+                        clipboardItems(
+                            items = history.pinned,
+                            key = "pinned-header",
+                            title = R.string.clipboard__group_pinned,
+                        )
+                        clipboardItems(
+                            items = history.recent,
+                            key = "recent-header",
+                            title = R.string.clipboard__group_recent,
+                        )
+                        clipboardItems(
+                            items = history.other,
+                            key = "other-header",
+                            title = R.string.clipboard__group_other,
+                        )
+                    }
+                }
             }
 
             if (popupItem != null) {
@@ -454,6 +568,7 @@ fun ClipboardInputLayout(
                                     clipboardManager.clearHistory()
                                     context.showShortToast(R.string.clipboard__cleared_history)
                                     showClearAllHistory = false
+                                    isFilterRowShown = false
                                 },
                             ) {
                                 SnyggText(
@@ -534,7 +649,7 @@ fun ClipboardInputLayout(
             HistoryLockedView()
         } else {
             if (historyEnabled) {
-                if (history.all.isNotEmpty()) {
+                if (history.all.isNotEmpty() || !activeFilterTypes.isEmpty()) {
                     HistoryMainView()
                 } else {
                     HistoryEmptyView()
