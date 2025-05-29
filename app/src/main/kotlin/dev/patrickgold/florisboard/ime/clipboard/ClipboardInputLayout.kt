@@ -49,6 +49,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -108,6 +110,7 @@ import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
@@ -119,6 +122,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import java.util.Objects
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -152,6 +156,7 @@ fun ClipboardInputLayout(
         }
     }
 
+    val gridState = rememberLazyStaggeredGridState()
     var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
@@ -162,6 +167,10 @@ fun ClipboardInputLayout(
         if (!isFilterRowShown) {
             activeFilterTypes.clear()
         }
+    }
+
+    LaunchedEffect(activeFilterTypes.toSet()) {
+        gridState.scrollToItem(0)
     }
 
     @Composable
@@ -246,7 +255,11 @@ fun ClipboardInputLayout(
         contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
-        SnyggBox(elementName,
+        SnyggBox(
+            elementName = elementName,
+            attributes = remember(item) {
+                mapOf("type" to item.type.toString().lowercase())
+            },
             modifier = modifier.fillMaxWidth(),
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -455,6 +468,7 @@ fun ClipboardInputLayout(
                 ) {
                     LazyVerticalStaggeredGrid(
                         modifier = Modifier.fillMaxSize(),
+                        state = gridState,
                         columns = staggeredGridCells,
                     ) {
                         clipboardItems(
