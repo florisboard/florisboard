@@ -29,7 +29,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -50,7 +49,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -110,19 +108,18 @@ import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggChip
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
-import java.util.Objects
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -404,7 +401,7 @@ fun ClipboardInputLayout(
                         clickAndSemanticsModifier = Modifier.florisHorizontalScroll(),
                     ) {
                         @Composable
-                        fun Chip(
+                        fun FilterChip(
                             imageVector: ImageVector,
                             text: String,
                             itemType: ItemType,
@@ -416,45 +413,30 @@ fun ClipboardInputLayout(
                                     "type" to itemType.toString().lowercase(),
                                 )
                             }
-                            SnyggRow(
+                            SnyggChip(
                                 elementName = FlorisImeUi.ClipboardFilterChip.elementName,
                                 attributes = attributes,
-                                clickAndSemanticsModifier = Modifier
-                                    .clickable(
-                                        interactionSource = null,
-                                        indication = ripple(),
-                                        onClick = {
-                                            if (!activeFilterTypes.add(itemType)) {
-                                                activeFilterTypes.remove(itemType)
-                                            }
-                                        },
-                                    ),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                SnyggIcon(
-                                    elementName = FlorisImeUi.ClipboardFilterChipIcon.elementName,
-                                    attributes = attributes,
-                                    imageVector = imageVector,
-                                )
-                                SnyggText(
-                                    elementName = FlorisImeUi.ClipboardFilterChipText.elementName,
-                                    attributes = attributes,
-                                    text = text,
-                                )
-                            }
+                                onClick = {
+                                    if (!activeFilterTypes.add(itemType)) {
+                                        activeFilterTypes.remove(itemType)
+                                    }
+                                },
+                                imageVector = imageVector,
+                                text = text,
+                            )
                         }
 
-                        Chip(
+                        FilterChip(
                             imageVector = Icons.Default.TextFields,
                             text = "Text",
                             itemType = ItemType.TEXT,
                         )
-                        Chip(
+                        FilterChip(
                             imageVector = Icons.Default.Image,
                             text = "Images",
                             itemType = ItemType.IMAGE,
                         )
-                        Chip(
+                        FilterChip(
                             imageVector = Icons.Default.Movie,
                             text = "Videos",
                             itemType = ItemType.VIDEO,
