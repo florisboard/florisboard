@@ -93,6 +93,10 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "clipboard-item",
         resId = R.string.snygg__rule_element__clipboard_item,
     ),
+    ClipboardItemDescription(
+        elementName = "clipboard-item-description",
+        resId = R.string.snygg__rule_element__clipboard_item_description,
+    ),
     ClipboardItemPopup(
         elementName = "clipboard-item-popup",
         resId = R.string.snygg__rule_element__clipboard_item_popup,

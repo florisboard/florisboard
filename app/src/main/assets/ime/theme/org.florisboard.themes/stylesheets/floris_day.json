@@ -290,6 +290,10 @@
   "clipboard-item[type=`text`]": {
     "padding": "12dp 8dp"
   },
+  "clipboard-item-description": {
+    "font-size": "12sp",
+    "font-style": "italic"
+  },
   "clipboard-item-popup": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",

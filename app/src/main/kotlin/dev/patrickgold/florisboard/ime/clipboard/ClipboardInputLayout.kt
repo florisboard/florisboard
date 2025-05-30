@@ -22,7 +22,6 @@ import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.provider.MediaStore
 import android.util.Size
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -53,15 +52,21 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Backspace
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
+import androidx.compose.material.icons.outlined.ContentPaste
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -81,7 +86,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
@@ -112,6 +116,7 @@ import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggChip
@@ -252,11 +257,12 @@ fun ClipboardInputLayout(
         contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
+        val attributes = remember(item) {
+            mapOf("type" to item.type.toString().lowercase())
+        }
         SnyggBox(
             elementName = elementName,
-            attributes = remember(item) {
-                mapOf("type" to item.type.toString().lowercase())
-            },
+            attributes = attributes,
             modifier = modifier.fillMaxWidth(),
             clickAndSemanticsModifier = Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -339,7 +345,11 @@ fun ClipboardInputLayout(
             } else {
                 val text = item.stringRepresentation()
                 Column {
-                    ClipTextItemDescription(text)
+                    ClipTextItemDescription(
+                        elementName = FlorisImeUi.ClipboardItemDescription.elementName,
+                        attributes = attributes,
+                        text = text,
+                    )
                     SnyggText(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -490,7 +500,7 @@ fun ClipboardInputLayout(
                     )
                     SnyggColumn(FlorisImeUi.ClipboardItemActions.elementName) {
                         PopupAction(
-                            iconId = R.drawable.ic_pin,
+                            icon = Icons.Outlined.PushPin,
                             text = stringRes(if (popupItem!!.isPinned) {
                                 R.string.clip__unpin_item
                             } else {
@@ -505,14 +515,14 @@ fun ClipboardInputLayout(
                             popupItem = null
                         }
                         PopupAction(
-                            iconId = R.drawable.ic_delete,
+                            icon = Icons.Default.Delete,
                             text = stringRes(R.string.clip__delete_item),
                         ) {
                             clipboardManager.deleteClip(popupItem!!)
                             popupItem = null
                         }
                         PopupAction(
-                            iconId = R.drawable.ic_content_paste,
+                            icon = Icons.Outlined.ContentPaste,
                             text = stringRes(R.string.clip__paste_item),
                         ) {
                             clipboardManager.pasteItem(popupItem!!)
@@ -670,36 +680,40 @@ private fun ClipCategoryTitle(
 
 @Composable
 private fun ClipTextItemDescription(
+    elementName: String,
+    attributes: SnyggQueryAttributes,
     text: String,
     modifier: Modifier = Modifier,
 ): Unit = with(LocalDensity.current) {
-    val iconId: Int?
+    val icon: ImageVector?
     val description: String?
     when {
         NetworkUtils.isEmailAddress(text) -> {
-            iconId = R.drawable.ic_email
+            icon = Icons.Outlined.Email
             description = stringRes(R.string.clipboard__item_description_email)
         }
         NetworkUtils.isUrl(text) -> {
-            iconId = R.drawable.ic_link
+            icon = Icons.Default.Link
             description = stringRes(R.string.clipboard__item_description_url)
         }
         NetworkUtils.isPhoneNumber(text) -> {
-            iconId = R.drawable.ic_phone
+            icon = Icons.Default.Phone
             description = stringRes(R.string.clipboard__item_description_phone)
         }
         else -> {
-            iconId = null
+            icon = null
             description = null
         }
     }
-    if (iconId != null && description != null) {
+    if (icon != null && description != null) {
         SnyggRow(
+            elementName = elementName,
+            attributes = attributes,
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIcon(
-                painter = painterResource(id = iconId),
+                imageVector = icon,
             )
             SnyggText(
                 modifier = Modifier.weight(1f),
@@ -711,7 +725,7 @@ private fun ClipTextItemDescription(
 
 @Composable
 private fun PopupAction(
-    @DrawableRes iconId: Int,
+    icon: ImageVector,
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
@@ -721,7 +735,7 @@ private fun PopupAction(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         SnyggIcon(FlorisImeUi.ClipboardItemActionIcon.elementName,
-            painter = painterResource(iconId),
+            imageVector = icon,
         )
         SnyggText(FlorisImeUi.ClipboardItemActionText.elementName,
             modifier = Modifier.weight(1f),
