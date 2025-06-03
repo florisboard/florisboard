@@ -22,7 +22,7 @@
         "label": "Armenian Alt Phonetic",
         "authors": [ "MikayelB" ],
         "direction": "ltr",
-        "modifier": "org.florisboard.layouts:armenian_alt_phonetic"
+        "modifier": "org.florisboard.layouts:armenian"
       },
       {
         "id": "western_armenian",
