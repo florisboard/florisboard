@@ -25,7 +25,6 @@ import android.util.Size
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -102,6 +101,7 @@ import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
 import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
@@ -125,6 +125,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import java.time.Instant
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -249,7 +250,6 @@ fun ClipboardInputLayout(
         }
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     fun ClipItemView(
         elementName: String,
@@ -492,41 +492,52 @@ fun ClipboardInputLayout(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
-                    ClipItemView(
-                        elementName = FlorisImeUi.ClipboardItemPopup.elementName,
-                        modifier = Modifier.widthIn(max = ItemWidth),
-                        item = popupItem!!,
-                        contentScrollInsteadOfClip = true,
-                    )
-                    SnyggColumn(FlorisImeUi.ClipboardItemActions.elementName) {
-                        PopupAction(
-                            icon = Icons.Outlined.PushPin,
-                            text = stringRes(if (popupItem!!.isPinned) {
-                                R.string.clip__unpin_item
-                            } else {
-                                R.string.clip__pin_item
-                            }),
-                        ) {
-                            if (popupItem!!.isPinned) {
-                                clipboardManager.unpinClip(popupItem!!)
-                            } else {
-                                clipboardManager.pinClip(popupItem!!)
+                    SnyggColumn(modifier = Modifier.weight(0.5f)) {
+                        ClipItemView(
+                            elementName = FlorisImeUi.ClipboardItemPopup.elementName,
+                            modifier = Modifier.widthIn(max = ItemWidth),
+                            item = popupItem!!,
+                            contentScrollInsteadOfClip = true,
+                        )
+                        SnyggBox(FlorisImeUi.ClipboardItemTimestamp.elementName) {
+                            val formatter = LocalLocalizedDateTimeFormatter.current
+                            SnyggText(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = formatter.format(Instant.ofEpochMilli(popupItem!!.creationTimestampMs)),
+                            )
+                        }
+                    }
+                    SnyggColumn(modifier = Modifier.weight(0.5f)) {
+                        SnyggColumn(FlorisImeUi.ClipboardItemActions.elementName) {
+                            PopupAction(
+                                icon = Icons.Outlined.PushPin,
+                                text = stringRes(if (popupItem!!.isPinned) {
+                                    R.string.clip__unpin_item
+                                } else {
+                                    R.string.clip__pin_item
+                                }),
+                            ) {
+                                if (popupItem!!.isPinned) {
+                                    clipboardManager.unpinClip(popupItem!!)
+                                } else {
+                                    clipboardManager.pinClip(popupItem!!)
+                                }
+                                popupItem = null
                             }
-                            popupItem = null
-                        }
-                        PopupAction(
-                            icon = Icons.Default.Delete,
-                            text = stringRes(R.string.clip__delete_item),
-                        ) {
-                            clipboardManager.deleteClip(popupItem!!)
-                            popupItem = null
-                        }
-                        PopupAction(
-                            icon = Icons.Outlined.ContentPaste,
-                            text = stringRes(R.string.clip__paste_item),
-                        ) {
-                            clipboardManager.pasteItem(popupItem!!)
-                            popupItem = null
+                            PopupAction(
+                                icon = Icons.Default.Delete,
+                                text = stringRes(R.string.clip__delete_item),
+                            ) {
+                                clipboardManager.deleteClip(popupItem!!)
+                                popupItem = null
+                            }
+                            PopupAction(
+                                icon = Icons.Outlined.ContentPaste,
+                                text = stringRes(R.string.clip__paste_item),
+                            ) {
+                                clipboardManager.pasteItem(popupItem!!)
+                                popupItem = null
+                            }
                         }
                     }
                 }

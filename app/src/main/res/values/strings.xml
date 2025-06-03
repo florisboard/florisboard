@@ -244,6 +244,7 @@
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
     <string name="snygg__rule_element__clipboard_item_description">Clipboard item description</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Clipboard item timestamp</string>
     <string name="snygg__rule_element__clipboard_item_actions">Clipboard item actions</string>
     <string name="snygg__rule_element__clipboard_item_action">Clipboard item action</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Clipboard item action icon</string>

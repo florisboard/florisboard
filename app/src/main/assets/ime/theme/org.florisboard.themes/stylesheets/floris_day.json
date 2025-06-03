@@ -305,6 +305,10 @@
   "clipboard-item-popup[type=`text`]": {
     "padding": "12dp 8dp"
   },
+  "clipboard-item-timestamp": {
+    "font-size": "11sp",
+    "padding": "16dp 8dp"
+  },
   "clipboard-item-actions": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
