@@ -189,6 +189,8 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">É tema noturno</string>
     <string name="settings__theme_editor__component_meta_is_borderless">É sem bordas</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Caminho da folha de estilo</string>
+    <string name="snygg__rule_annotation__defines_description">Defina variáveis dentro desta regra para reutilizar cores ou tamanhos comuns em sua folha de estilo.</string>
+    <string name="snygg__rule_annotation__font">Fonte</string>
     <string name="snygg__rule_element__key">Tecla</string>
     <string name="snygg__rule_element__key_hint">Dica da tecla</string>
     <string name="snygg__rule_element__clipboard_header">Cabeçalho da área de transferência</string>
@@ -529,7 +531,6 @@
     <string name="clipboard__cleared_primary_clip">Clipe primário excluído</string>
     <string name="clipboard__cleared_history">Histórico excluído</string>
     <string name="clipboard__cleared_full_history">Todo o histórico excluído</string>
-    <string name="clipboard__confirm_clear_history__message">Tem certeza de que deseja limpar o histórico da área de transferência?</string>
     <string name="settings__clipboard__title">Área de transferência</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use uma área de transferência interna em vez da área de transferência do sistema</string>

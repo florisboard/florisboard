@@ -174,10 +174,13 @@
     <string name="settings__theme_editor__rule_name">Element / Adnotacja</string>
     <string name="settings__theme_editor__rule_codes">Docelowe kody przycisków</string>
     <string name="settings__theme_editor__rule_groups">Grupy</string>
+    <string name="settings__theme_editor__rule_modes">Tryby docelowe (warstwy)</string>
+    <string name="settings__theme_editor__rule_shift_states">Stany zmiany celu</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__add_code">Dodaj kod przycisku</string>
     <string name="settings__theme_editor__edit_code">Edytuj kod przycisku</string>
     <string name="settings__theme_editor__no_codes_defined">Zastosuj reguły do wszystkich elementów docelowych.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Wszystkie możliwe wartości zostały dodane.</string>
     <string name="settings__theme_editor__code_already_exists">Ten kod klucza jest już zdefiniowany.</string>
     <string name="settings__theme_editor__code_invalid">Ten kod jest nieprawidłowy. Upewnij się, że kod mieści się w zakresie od {c_min} do {c_max} dla znaków lub od {i_min} do {i_max} dla wewnętrznych kluczy specjalnych.</string>
     <string name="settings__theme_editor__code_help_text">Alternatywnie, poniższe linki pomogą Ci znaleźć odpowiedni kod:</string>
@@ -219,9 +222,10 @@
     <string name="snygg__rule_element__clipboard_content">Zawartość schowka</string>
     <string name="snygg__rule_element__clipboard_item">Element schowka</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elementu schowka</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Wyskakujące działanie elementu schowka</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Wyskakująca ikona elementu schowka</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Wyskakujący tekst elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Działania na elementach schowka</string>
+    <string name="snygg__rule_element__clipboard_item_action">Działanie na elemencie schowka</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Ikona działania elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Tekst działania elementu schowka</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog">Okno dialogowe wyczyść wszystko w schowku</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Komunikat dialogowy wyczyść wszystko w schowku</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Wyczyść wszystkie przyciski dialogowe w schowku</string>
@@ -255,6 +259,8 @@
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Przełącznik rozszerzonych działań Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_action_key">Przycisk działań inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_action_tile">Kafelek działań Inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Ikona kafelka akcji inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Tekst kafelka akcji inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Przepełnienie działań Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Dostosuj przycisk przepełnienia działań Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Edytor działań Inteligentnego paska</string>
@@ -265,7 +271,11 @@
     <string name="snygg__rule_element__smartbar_actions_editor_tile">Kafelek edytora akcji inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Wiersz kandydatów Inteligentnego paska</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Sugestia słowa inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Tekst słowa kandydującego na inteligentnym pasku</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Tekst pomocniczy słowa kandydującego na inteligentnym pasku</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Sugestia schowka inteligentnego paska</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Ikona klipu słowa kandydującego na inteligentnym pasku</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Tekst klipu słowa kandydującego na inteligentnym pasku</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Sugestia odstępu inteligentnego paska</string>
     <string name="snygg__rule_element__subtype_panel">Podtyp panelu</string>
     <string name="snygg__rule_element__subtype_panel_header">Podtyp nagłówka panelu</string>
@@ -615,7 +625,6 @@
     <string name="clipboard__cleared_primary_clip">Wyczyść główny schowek</string>
     <string name="clipboard__cleared_history">Historia została usunięta</string>
     <string name="clipboard__cleared_full_history">Cała historia została usunięta</string>
-    <string name="clipboard__confirm_clear_history__message">Czy jesteś pewien, że chcesz wyczyścić historię schowka?</string>
     <string name="settings__clipboard__title">Schowek</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>
@@ -626,6 +635,7 @@
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugestie schowka</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zasugeruj poprzednio skopiowaną zawartość schowka</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Liczba kolumn siatki</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ogranicz podpowiedzi schowka do</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Elementy skopiowane w ciągu ostatnich {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Historia schowka</string>
@@ -816,6 +826,7 @@
     <string name="general__unlimited">Nielimitowany</string>
     <string name="general__file_name">Nazwa pliku</string>
     <string name="general__properties">Właściwości</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Automatycznie</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portret</string>
     <string name="screen_orientation__landscape">Orientacja pozioma</string>
@@ -902,6 +913,13 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift (ręczny)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shift (automatyczny)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Znaki</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbole</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbole 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Numeryczne</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Numeryczne zaawansowane</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Telefon</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Telefon 2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nigdy nie pokazuj</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Zawsze pokazuj</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Pokazuj dynamicznie</string>

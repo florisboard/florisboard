@@ -373,7 +373,6 @@
     <string name="clip__pin_item">항목 고정</string>
     <string name="clip__delete_item">삭제</string>
     <string name="clip__paste_item">붙여넣기</string>
-    <string name="clipboard__confirm_clear_history__message">정말 클립보드 기록을 비우시겠습니까?</string>
     <string name="settings__clipboard__title">클립보드</string>
     <string name="pref__clipboard__use_internal_clipboard__label">앱 자체 클립보드 사용</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">시스템 클립보드 대신 앱 자체에서 제공하는 클립보드를 사용합니다.</string>

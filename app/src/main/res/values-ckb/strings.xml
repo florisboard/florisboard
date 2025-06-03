@@ -15,6 +15,9 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">کامۆجی</string>
     <string name="prefs__media__emoji_preferred_skin_tone">ڕەنگی بنەڕەتی خەندەکان</string>
     <string name="prefs__media__emoji_preferred_hair_style">ڕەنگی بنەڕەتی قژی خەندەکان</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">مێژووی ئیمۆجی</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">مێژووی ئیمۆجی کارا بکە</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">دوایین ئیمۆجییە بەکارھێندراوەکان بھێڵەوە بۆ ئاسانکاری</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">خەندەکان </string>
     <string name="emoji__category__people_body" comment="Emoji category name">خەڵک</string>
@@ -469,7 +472,6 @@
     <string name="clipboard__cleared_primary_clip">سڕینەوەی گشتی</string>
     <string name="clipboard__cleared_history">سڕینەوەی مێژوو</string>
     <string name="clipboard__cleared_full_history">سڕینەوەی هەموو شتێک</string>
-    <string name="clipboard__confirm_clear_history__message">ئایا دڵنیایت لە سڕینەوەی لەبەرگیراوەکان؟</string>
     <string name="settings__clipboard__title">لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__label">بەشی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">بەکارهێنانی بەشی لەبەرگیراوەکان بۆ هەڵگرتنی شتەکان</string>

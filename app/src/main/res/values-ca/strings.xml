@@ -15,8 +15,26 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">To de pell preferit dels emojis</string>
     <string name="prefs__media__emoji_preferred_hair_style">Pentinat preferit dels emojis</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Historial d\'emojis</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Habilita l\'historial d\'emojis</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Recorda els emojis usats fa poc per a un accés ràpid</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Estratègia d\'actualització (Fixats)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Estratègia d\'actualització (Recents)</string>
+    <string name="prefs__media__emoji_history_max_size">Nombre màxim d\'elements que es desaran</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Restableix els emojis fixats</string>
+    <string name="prefs__media__emoji_history_reset">Restableix els emojis recents</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Suggeriment d\'emojis</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Habilita el suggeriment d\'emojis</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Suggereix emojis mentre escrius</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Tipus d\'activador</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">Actualitza l\'historial dels emojis</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Acceptar els emojis suggerits els afegeix a l\'historial d\'emojis</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Mostra el nom de l\'emoji</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">El suggeriment d\'emojis mostra el nom amb l\'emoji</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Longitud mínima de la consulta</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Nombre màxim de suggeriments</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emoticones &amp; emocions</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emoticones &amp; Emocions</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Persones &amp; Cos</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Animals &amp; Natura</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Menjar &amp; Beure</string>
@@ -25,19 +43,78 @@
     <string name="emoji__category__objects" comment="Emoji category name">Objectes</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">No s\'han trobat emojis recents. Un cop comencis a entrar-ne apareixeran automàticament aquí.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Per accedir a l\'historial d\'emojis has de desbloquejar primer el dispositiu.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Consell d\'amic: Fes un toc llarg sobre l\'emoji de l\'historial per fixar-la o suprimir-la!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">S\'ha suprimit {emoji} de l\'historial d\'emojis</string>
+    <string name="emoji__history__pinned">Fixats</string>
+    <string name="emoji__history__recent">Recents</string>
     <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" maxLength="12">Amunt</string>
+    <string name="quick_action__arrow_up__tooltip">Ves amunt</string>
+    <string name="quick_action__arrow_down" maxLength="12">Avall</string>
+    <string name="quick_action__arrow_down__tooltip">Ves avall</string>
+    <string name="quick_action__arrow_left" maxLength="12">Esquerra</string>
+    <string name="quick_action__arrow_left__tooltip">Cap a l\'esquerra</string>
+    <string name="quick_action__arrow_right" maxLength="12">Dreta</string>
+    <string name="quick_action__arrow_right__tooltip">Cap a la dreta</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Buidar clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Suprimeix l\'entrada del porta-retalls principal</string>
+    <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_copy__tooltip">Copia el contingut al porta-retalls</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">Retalla</string>
+    <string name="quick_action__clipboard_cut__tooltip">Retalla i desa al porta-retalls</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">Enganxa</string>
+    <string name="quick_action__clipboard_paste__tooltip">Enganxa del porta-retalls</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">Escull tot</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Selecciona-ho tot i desa-ho al porta-retalls</string>
+    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Porta-retall</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Obre l\'historial del porta-retalls</string>
+    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Obre el tauler d\'emojis</string>
+    <string name="quick_action__language_switch" maxLength="12">Canvi idioma</string>
+    <string name="quick_action__language_switch__tooltip">Canvia l\'idioma</string>
+    <string name="quick_action__settings" maxLength="12">Paràmetres</string>
+    <string name="quick_action__settings__tooltip">Obre la configuració</string>
+    <string name="quick_action__undo" maxLength="12">Desfés</string>
+    <string name="quick_action__undo__tooltip">Desfà la darrera acció</string>
+    <string name="quick_action__redo" maxLength="12">Refés</string>
+    <string name="quick_action__redo__tooltip">Refà la darrera acció</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">Més accions</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Mostra o amaga les accions addicionals</string>
+    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incògnit</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Passa al mode incògnit</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">Correc. auto</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Habilita la correcció automàtica</string>
+    <string name="quick_action__voice_input" maxLength="12">Entrada veu</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Obre el proveïdor d\'entrada de veu</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">Amb una mà</string>
+    <string name="quick_action__one_handed_mode__tooltip">Passa al mode d\'Amb una mà</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posició actual del cursor</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap operació</string>
+    <string name="quick_actions_overflow__customize_actions_button">Reorganitza les accions</string>
+    <string name="quick_actions_editor__header">Personalitza l\'ordre de les accions</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Acció fixada ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Accions dinàmiques ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Accions ocultes ({n})</string>
+    <string name="select_subtype_panel__header">Escull un subtipus</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Estàs en mode incògnit, en aquest mode\n\n{app_name} no aprendrà les paraules que entris</string>
+    <string name="incognito_mode__toast_after_disabled">El mode incògnit ara està inhabilitat per defecte</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Preferències</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Prova la configuració</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ajuda</string>
-    <string name="settings__default" comment="General string which is used when a preference has the default value set">Predefinit</string>
-    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Predefinit pel sistema</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Per defecte</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
     <string name="settings__home__title" comment="Title of the Home screen">Us donem la benvinguda a {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i, per tant, no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per a resoldre aquest problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per a resoldre aquest problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llengües &amp; Disposicions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostra els noms de les llengües en</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostra les etiquetes del teclat en l\'idioma del subtipus</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtipus</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gestiona els paquets de llengua instal·lats</string>
@@ -70,26 +147,127 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">Almenys un camp no té cap valor seleccionat. Trieu un valor per al(s) camp(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (no instal·lat)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Dissenys</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Confirmació de la supressió</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Segur que vols suprimir aquest subtipus?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode del tema</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora de trenc d\'alba</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora de posta de sol</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema diürn</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema nocturn</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Color de ressalt (Temes Material You)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Emmagatzematge intern</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecciona el tema del dia</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Selecciona el tema de nit</string>
+    <string name="settings__theme_editor__fine_tune__title">Editor d\'ajusts precisos</string>
+    <string name="settings__theme_editor__fine_tune__level">Nivell d\'edició</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Representació dels colors</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostra el teclat després dels diàlegs</string>
     <string name="settings__theme_editor__add_rule">Afegir norma</string>
     <string name="settings__theme_editor__edit_rule">Editar norma</string>
+    <string name="settings__theme_editor__no_rules_defined">Aquest full d\'estil no té regles definides. Afegeix-hi una regla per començar a personalitzar-lo.</string>
+    <string name="settings__theme_editor__rule_already_exists">Aquesta regla de full d\'estil ja ha estat definida.</string>
+    <string name="settings__theme_editor__rule_name">Element / Anotació</string>
+    <string name="settings__theme_editor__rule_codes">Codis de tecla de destinació</string>
     <string name="settings__theme_editor__rule_groups">Grups</string>
+    <string name="settings__theme_editor__rule_modes">Modes de destinació (capes)</string>
+    <string name="settings__theme_editor__rule_shift_states">Estats de destinació a majúscules</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
+    <string name="settings__theme_editor__add_code">Afegeix un codi de tecla</string>
+    <string name="settings__theme_editor__edit_code">Edita el codi de tecla</string>
+    <string name="settings__theme_editor__no_codes_defined">Aplica la regla a tots els elements de destinació.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">S\'han afegit tots els valors possibles.</string>
+    <string name="settings__theme_editor__code_already_exists">Aquest codi de tecla ja ha estat definit.</string>
+    <string name="settings__theme_editor__code_invalid">Aquest codi de tecla no és vàlid. Assegura\'t que el codi de tecla està dins del rang de {c_min} a {c_max} per als caràcters o {i_min} a {i_max} per als caràcters especials.</string>
+    <string name="settings__theme_editor__code_help_text">Els enllaços següents t\'ajudaran a trobar el codi de tecla corresponent:</string>
+    <string name="settings__theme_editor__code_placeholder">Codi</string>
+    <string name="settings__theme_editor__code_recording_help_text">Per trobar el codi d\'una tecla usa el botó que hi ha al costat del camp d\'entrada de codis. Quan l\'habilites enregistrarà el següent toc de tecla i inserirà el codi al camp d\'entrada.</string>
+    <string name="settings__theme_editor__code_recording_started">S\'ha iniciat l\'enregistrament del codi de tecla</string>
+    <string name="settings__theme_editor__code_recording_stopped">S\'ha aturat l\'enregistrament del codi de tecla</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} ha de ser el teclat per defecte per enregistrar un codi de tecla</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Enregistrant…</string>
     <string name="settings__theme_editor__add_property">Afegir propietat</string>
     <string name="settings__theme_editor__edit_property">Editar propietat</string>
+    <string name="settings__theme_editor__property_already_exists">Ja hi ha una propietat amb aquest nom en la regla actual.</string>
     <string name="settings__theme_editor__property_name">Nom de la propietat</string>
     <string name="settings__theme_editor__property_value">Valor de la propietat</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Aplica-ho per a tots els cantons</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Edita la cadena de colors</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Escull un fitxer</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Encara no s\'ha afegit cap fitxer a aquesta extensió. Usa l\'acció {action_title} de la pantalla anterior per importar fitxers.</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">És tema fosc</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">És sense vores</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Camí al full d\'estil</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Error amb el full d\'estil</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} pot carregar el full d\'estil i afegir-hi les regles i esquemes que falten, o suprimir-ne les regles, propietats o valors no vàlids. Vols que {app_name} faci aquests canvis?</string>
+    <string name="snygg__rule_annotation__defines">Variables</string>
+    <string name="snygg__rule_annotation__defines_description">Defineix les variables dins d\'aquesta regla per reutilitzar els colors o les mides comunes en el teu full d\'estil.</string>
+    <string name="snygg__rule_annotation__font">Fonts</string>
+    <string name="snygg__rule_annotation__font_name">Nom de la font</string>
+    <string name="snygg__rule_element__root">Arrel</string>
+    <string name="snygg__rule_element__window">Finestra</string>
+    <string name="snygg__rule_element__key">Tecla</string>
+    <string name="snygg__rule_element__key_hint">Suggeriment de tecla</string>
+    <string name="snygg__rule_element__key_popup_box">Tecla de la finestra emergent</string>
+    <string name="snygg__rule_element__key_popup_element">Tecla de l\'element emergent</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Tecla de l\'indicador ampliat emergent</string>
+    <string name="snygg__rule_element__clipboard_header">Capçalera del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_header_button">Botó de la capçalera del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_header_text">Text de la capçalera del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_subheader">Subcapçalera del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_content">Contingut del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_item">Element del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Element del porta-retalls emergent</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Accions de l\'element del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_item_action">Acció de l\'element del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Icona d\'acció de l\'element del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Text d\'acció de l\'element del porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Diàleg de supressió de tot el porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Missatge del diàleg de supressió de tot el porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Botons del diàleg de supressió de tot el porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Botó del diàleg de supressió de tot el porta-retalls</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Títol de l\'historial del porta-retalls inhabilitat</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Missatge de l\'historial del porta-retalls inhabilitat</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Botó de l\'historial del porta-retalls inhabilitat</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Títol de l\'historial del porta-retalls bloquejat</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Missatge de l\'historial del porta-retalls bloquejat</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Disposició d\'entrada en mode horitzontal</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Camp d\'entrada en mode horitzontal</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Acció d\'entrada en mode horitzontal</string>
+    <string name="snygg__rule_element__glide_trail">Recorregut del gest</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">Indicador del mode incògnit</string>
+    <string name="snygg__rule_element__inline_autofill_chip">Xip de compleció automàtica en línia</string>
+    <string name="snygg__rule_element__media">Multimèdia</string>
+    <string name="snygg__rule_element__media_emoji_subheader">Subcapçalera de l\'emoji multimèdia</string>
+    <string name="snygg__rule_element__media_emoji_key">Tecla de l\'emoji multimèdia</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Finestra emergent de la tecla de l\'emoji multimèdia</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Element emergent de la tecla de l\'emoji multimèdia</string>
+    <string name="snygg__rule_element__media_emoji_tab">Pestanya de l\'emoji multimèdia</string>
+    <string name="snygg__rule_element__media_bottom_row">Fila inferior multimèdia</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Botó de la fila inferior multimèdia</string>
+    <string name="snygg__rule_element__one_handed_panel">Tauler d\'Amb una mà</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Botó del tauler d\'Amb una mà</string>
+    <string name="snygg__rule_element__smartbar">Barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Fila d\'accions compartides de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Habilita o no les accions compartides de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Fila d\'accions ampliada de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Habilita o no les accions ampliades de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_action_key">Tecla d\'acció de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Mosaic d\'acció de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Icona del mosaic d\'acció de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Text del mosaic d\'acció de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Desbordament de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Botó de personalització del desbordament de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Editor de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Capçalera de l\'editor de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Botó de la capçalera de l\'editor de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Subcapçalera de l\'editor de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Graella del mosaic de l\'editor de les accions de la barra intel·ligent</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Mosaic de l\'editor de les accions de la barra intel·ligent</string>
     <string name="snygg__rule_selector__pressed">Premut</string>
     <string name="snygg__rule_selector__focus">Enfocat</string>
     <string name="snygg__rule_selector__disabled">Desactivat</string>
@@ -104,59 +282,478 @@
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons &amp; vibracions</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retroacció hàptica / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilita la retroacció hàptica</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Sense so per als esdeveniments d\'entrada, independentment de la configuració del sistema</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volum per als esdeveniments d\'entrada</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sons en pitjar la tecla</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons de toc llarg de la tecla</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Sons d\'acció repetida de la tecla</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sons del gest arrossegar</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sons en fer el gest d\'arrossegar</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Resposta tàctil / Vibració</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Habilita la resposta tàctil</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Sense vibració per als esdeveniments d\'entrada, independentment de la configuració del sistema</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Mode de vibració</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durada de la vibració</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensitat de la vibració</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">A aquesta funció li cal un maquinari de vibració, però sembla que el vostre dispositiu no en té cap</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">A aquesta funció li cal un maquinari de suport de control d\'amplificació, però sembla que el vostre dispositiu no en té cap</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">A aquesta funció li cal el suport del control d\'amplificació, però només està disponible en versions d\'Android 8.0 o posteriors</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibració en pitjar la tecla</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibració de toc llarg de la tecla</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibració d\'acció repetida de la tecla</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibració del gest arrossegar</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibració en fer el gest d\'arrossegar</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">p. e. tecles, botons, pestanyes d\'emojis</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">p. e. menú emergent</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">p. e. tecla de supressió</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">No implementat</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">p. e. el control d\'arrossegament del cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Teclat</string>
-    <string name="pref__keyboard__number_row__label" comment="Preference title">Número de fila</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Número d\'indicació de fila</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symbols marcats</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Fila amb els números</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostra una fila amb els números a la part superior del teclat</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Números suggerits a les tecles</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Símbols suggerits a les tecles</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra la clau d\'utilitat</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra una clau d\'utilitat configurable al costat de la barra d\'espai</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acció de la clau d\'utilitat</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Etiqueta de la barra espaiadora</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportament de les majúscules</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador de la mida de la font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode d\'una sola mà</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Amplada del teclat en mode una sola mà</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa apaïsada</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Alçada del teclat</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espai entre tecles</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Espai a sota</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitat de les tecles emergents</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Els accents inclouen emergents de símbols</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Afegeix emergents de símbols als accents per defecte del teclat</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a caràcters</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Torna automàticament a caràcters quan és a símbols o números</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Indicador d\'incògnit</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Barra intel·ligent</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Es mostrarà a la part superior del teclat</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">Disposició</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Opcions específiques de disposició</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Commuta els botons</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Commuta la posició dels botons a la fila d\'accions</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Desplega / Replega automàticament</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Desplega / Replega automàticament la fila d\'accions en relació amb l\'estat actual</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Ubicació de la fila d\'accions</string>
     <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Title of Typing screen">Escriptura</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggeriments</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Mostra suggeriments</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Mostra suggeriments mentre escrius</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">Mode de visualització de suggeriments</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Bloqueja les paraules potencialment ofensives</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Mostra els suggeriments en línia proveïts pels serveis d\'emplenament automàtic</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Mode incògnit</string>
     <string name="pref__correction__title" comment="Preference group title">Correccions</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Posa en majúscula les paraules en base al context d\'entrada actual</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Espaiat automàtic després de punt</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Insereix automàticament un espai després de posar un punt</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Recorda l\'estat de bloqueig de les majúscules</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Es mantindrà el bloqueig de les majúscules en moure\'s a un altre camp de text</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Doble espai final de frase</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Si toques dues vegades la barra espaiadora posa un punt i un espai</string>
+    <string name="pref__spelling__title" comment="Preference group title">Ortografia</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Inhabilitada a nivell sistema. No es mostraran línies vermelles al text per a les paraules incorrectes. Toca per canviar-ho.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">No s\'ha habilitat cap servei de correcció ortogràfica. Toca per canviar-ho.</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Idiomes</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usa els noms dels contactes</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Cerca els noms a la teva llista de contactes</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Usa les entrades del diccionari d\'usuari</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Cerca a les entrades del diccionari d\'usuari</string>
+    <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">Diccionaris d\'usuari</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilita el diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggereix paraules emmagatzemades al diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestiona el diccionari d\'usuari del sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Afegeix, visualitza i suprimeix entrades per al diccionari d\'usuari del sistema</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Habilita el diccionari intern d\'usuari</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggereix les paraules emmagatzemades al diccionari intern d\'usuari</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gestiona el diccionari intern d\'usuari</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Afegeix, visualitza i suprimeix entrades per al diccionari intern d\'usuari</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Diccionari intern d\'usuari</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Diccionari d\'usuari del sistema</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Aquest diccionari d\'usuari no conté cap paraula.</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Freqüència: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Freqüència: {freq} | Drecera: {shortcut}</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Per a tots els idiomes</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Obre la interfície d\'usuari de l\'administrador del sistema</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">El diccionari d\'usuari s\'ha importat correctament!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">El diccionari d\'usuari s\'ha exportat correctament!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Afegeix una paraula</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edita la paraula</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Introdueix una paraula</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Introdueix una paraula que coincideixi amb {regex}</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Freqüència (entre {f_min} i {f_max})</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Introdueix un valor de freqüència</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Introdueix una xifra vàlida entre els límits especificats</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Drecera (opcional)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Introdueix una drecera que coincideixi amb {regex}</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Codi d\'idioma (opcional)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Aquest codi d\'idioma no té la sintaxi esperada. El codi ha de ser només un idioma (com ara ca), un idioma i país (com ara ca_AD) o un idioma, país i script (com ara ca_AD-script).</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestos &amp; Escriure lliscant</string>
+    <string name="pref__glide__title" comment="Preference group title">Escriure lliscant</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Habilita escriure lliscant</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Escriu una paraula fent lliscar el dit sobre les lletres que la componen</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Mostra el recorregut del gest</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Desapareixerà després de cada paraula</string>
+    <string name="pref__glide_trail_fade_duration">Temps d\'esvaniment del recorregut del gest</string>
+    <string name="pref__glide_preview_refresh_delay">Retard de l\'actualització de la vista prèvia</string>
+    <string name="pref__glide__show_preview">Mostra la vista prèvia mentre escrius lliscant</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Suprimeix sempre la paraula</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">En prémer \"suprimeix\" just després d\'un lliscament s\'esborra tota la paraula</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gestos generals</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos de la barra espaiadora</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Altres gestos / Límits dels gestos</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">En lliscar cap amunt</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">En lliscar cap avall</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">En lliscar cap a l\'esquerra</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">En lliscar cap a la dreta</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Lliscar cap amunt a la barra espaiadora</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Lliscar cap a l\'esquerra a la barra espaiadora</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Lliscar cap a la dreta a la barra espaiadora</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Toc llarg a la barra espaiadora</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Lliscar cap a l\'esquerra a la tecla suprimeix</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">Toc llarg a la tecla suprimeix</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Límit de velocitat del lliscament</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Límit de distància del lliscament</string>
+    <string name="settings__other__title" comment="Title of Other settings">Altres</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Paràmetres del tema</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">Per defecte del sistema (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Clar</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Fosc</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED fosc</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Paràmetres de color de ressalt
+    </string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Paràmetres d\'idioma</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Mostra la icona de l\'aplicació al llançador</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Habilitat sempre a Android 10 i posteriors a conseqüència de les restriccions del sistema</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Quant a</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona de l\'aplicació de FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Llicències de codi obert</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacitat</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Codi font</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Llicències de codi obert</string>
     <string name="about__version__title" comment="Preference title">Versió</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versió copiada al porta-retalls</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">Alguna cosa ha anat malament: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">Registre de canvis</string>
+    <string name="about__changelog__summary" comment="Preference summary">Novetats</string>
+    <string name="about__repository__title" comment="Preference title">Repositori (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Codi font, debats, incidències i informació</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Política de privacitat</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacitat per a aquest projecte</string>
+    <string name="about__project_license__title" comment="Preference title">Llicència del projecte</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard està sota la llicència de {license_name}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: No s\'ha pogut carregar la llicència.\n-&gt; Motiu: {error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">La referència al gestor de recursos és nul·la</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Llicències de tercers</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Llicències de les biblioteques de tercers incloses en aquesta aplicació</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Benvinguts!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Gràcies per usar {app_name}! Aquesta configuració ràpida t\'acompanyarà en els passos necessaris per poder usar {app_name} al teu dispositiu.</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Política de privacitat</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Repositori</string>
+    <string name="setup__enable_ime__title">Habilita {app_name}</string>
+    <string name="setup__enable_ime__description">Android requereix que cada teclat personalitzat s\'habiliti per separat abans de poder usar-lo. Obre els paràmetres de <i>Idioma i entrada</i> a Sistema i allà habilita \"{app_name}\".</string>
+    <string name="setup__enable_ime__open_settings_btn">Obre els paràmetres del sistema</string>
+    <string name="setup__select_ime__title">Selecciona {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} s\'ha habilitat al sistema. Per usar-lo canvia a {app_name} al diàleg de selecció de mètode d\'entrada!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Canvia el teclat</string>
+    <string name="setup__grant_notification_permission__title">Permet les notificacions d\'informes d\'errors</string>
+    <string name="setup__grant_notification_permission__description">Des d\'Android 13 i posteriors les aplicacions han de demanar permís per
+        enviar notificacions. FlorisBoard només en fa ús per obrir una pantalla d\'informe d\'error en cas de fallada.
+        Aquest permís es pot modificar en qualsevol moment als paràmetres del sistema.
+    </string>
+    <string name="setup__grant_notification_permission__btn">Concedeix permís</string>
+    <string name="setup__finish_up__title">Finalitza</string>
+    <string name="setup__finish_up__description_p1">{app_name} s\'habilitat al sistema i està preparat perquè el personalitzis.</string>
+    <string name="setup__finish_up__description_p2">Si trobes cap incidència, error, fallada o simplement vols suggerir alguna cosa, només has d\'anar al repositori del projecte des de la pantalla Quant a!</string>
+    <string name="setup__finish_up__finish_btn">Comença a personalitzar</string>
     <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Còpia de seguretat &amp; Restauració</string>
+    <string name="backup_and_restore__back_up__title">Còpia de seguretat de les dades</string>
+    <string name="backup_and_restore__back_up__summary">Genera un fitxer de còpia de seguretat amb les preferències i les personalitzacions</string>
+    <string name="backup_and_restore__back_up__destination">Tria el camí per a la còpia de seguretat</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Sistema de fitxers local</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Aplicació de tercers via el menú compartir</string>
+    <string name="backup_and_restore__back_up__files">Tria de què fer còpia de seguretat</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Preferències</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Extensions del teclat</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Extensions de correcció ortogràfica / diccionaris</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Extensions del tema</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Historial del porta-retalls</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Entrades de text</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Imatges</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Vídeos</string>
+    <string name="backup_and_restore__back_up__success">El fitxer de còpia de seguretat s\'ha exportat correctament!</string>
+    <string name="backup_and_restore__back_up__failure">Ha fallat en exportar el fitxer de còpia de seguretat: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Restauració de les dades</string>
+    <string name="backup_and_restore__restore__summary">Restaura les preferències i personalitzacions des d\'un fitxer de còpia de seguretat</string>
+    <string name="backup_and_restore__restore__files">Tria què cal restaurar</string>
+    <string name="backup_and_restore__restore__metadata">Fitxer de còpia de seguretat seleccionat</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Aquest fitxer de còpia de seguretat ha estat generat per una versió diferent a l\'actual que, en general, hauria de ser compatible. Tingues present que hi pot haver algunes petites incidències o que algunes preferències poden no ser transferides correctament a conseqüència de diferències en les característiques.</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">Aquest fitxer de còpia de seguretat ha estat generat per una aplicació de tercers que, en general, no és compatible. Hi pot haver una pèrdua de dades, si ho restaures serà sota la teva responsabilitat!</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">Aquest fitxer de còpia de seguretat conté metadades no vàlides. O està corromput o ha estat mal modificat. No es pot fer una restauració des d\'aquest fitxer, tria\'n un altre.</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">Aquest fitxer de còpia de seguretat no conté res per restaurar, tria\'n un altre.</string>
+    <string name="backup_and_restore__restore__mode">Mode de restauració</string>
+    <string name="backup_and_restore__restore__mode_merge">Combina-ho amb les dades actuals</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">Suprimeix o sobreescriu les dades actuals</string>
+    <string name="backup_and_restore__restore__success">Les dades s\'han restaurat correctament!</string>
+    <string name="backup_and_restore__restore__failure">Ha fallat en restaurar les dades: {error_message}</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">Informe d\'errors de FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Disculpa les molèsties, però FlorisBoard ha fallat a conseqüència d\'un error inesperat.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vols informar d\'aquest error, mira\'t primer si ja s\'ha informat al rastrejador d\'incidències de GitHub.\nSi no, copia el registre de l\'error i obre una incidència nova. Usa la plantilla %s i emplena-la amb la descripció, els passos per reproduir-lo i enganxa el registre d\'error generat al final. Això ens ajuda a millorar FlorisBoard i fer-lo més estable per a tothom. Gràcies!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia al porta-retalls del sistema</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">S\'ha copiat al porta-retalls del sistema</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No es pot copiar al porta-retalls del sistema: No s\'ha trobat la instància d\'administració del porta-retalls</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Obre el rastrejador d\'incidències (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tanca</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes d\'error de FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard ha deixat de funcionar…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Toca per veure els detalls de l\'error</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Sembla que FlorisBoard ha deixat de funcionar repetidament…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Tornant al teclat anterior per aturar el bucle de fallada infinit. Toca per veure els detalls de l\'error</string>
     <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Porta-retalls</string>
+    <string name="clipboard__disabled__title">L\'historial del porta-retalls està inhabilitat actualment</string>
+    <string name="clipboard__disabled__message">L\'historial del porta-retalls de {app_name} et permet emmagatzemar i accedir al text i a les imatges que has copiat ràpidament, amb la possibilitat de fixar entrades, configurar la neteja automàtica i definir un límit màxim d\'entrades.</string>
+    <string name="clipboard__disabled__enable_button">Habilita l\'historial del porta-retalls</string>
+    <string name="clipboard__empty__title">El porta-retalls és buit</string>
+    <string name="clipboard__empty__message">Els textos o imatges que hagis copiat es mostraran aquí.</string>
+    <string name="clipboard__locked__title">El porta-retalls està bloquejat</string>
+    <string name="clipboard__locked__message">Per accedir a l\'historial del porta-retalls desbloqueja primer el dispositiu.</string>
+    <string name="clipboard__group_pinned">Fixat</string>
+    <string name="clipboard__group_recent">Recent</string>
     <string name="clipboard__group_other">Altres</string>
     <string name="clipboard__item_description_email">Correu</string>
     <string name="clipboard__item_description_url">Enllaç</string>
+    <string name="clipboard__item_description_phone">Telèfon</string>
+    <string name="clip__clear_history">Suprimeix l\'historial</string>
+    <string name="clip__unpin_item">Solta l\'entrada</string>
+    <string name="clip__pin_item">Fixa l\'entrada</string>
     <string name="clip__delete_item">Eliminar</string>
     <string name="clip__paste_item">Enganxa</string>
+    <string name="clip__back_to_text_input">Torna a l\'entrada de text</string>
+    <string name="clip__cant_paste">Aquesta aplicació no permet enganxar aquest contingut.</string>
+    <string name="clipboard__cleared_primary_clip">S\'ha suprimit el clip principal</string>
+    <string name="clipboard__cleared_history">S\'ha suprimit l\'historial</string>
+    <string name="clipboard__cleared_full_history">S\'ha suprimit tot l\'historial</string>
+    <string name="settings__clipboard__title">Porta-retalls</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Usa el porta-retalls intern</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Usa un porta-retalls intern en lloc del porta-retalls del sistema</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronitza des del porta-retalls del sistema</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Les actualitzacions al porta-retalls del sistema també s\'actualitzaran al port-retalls de Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronitza cap al porta-retalls del sistema</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Les actualitzacions al porta-retalls de Floris també s\'actualitzaran al port-retalls del sistema</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Suggeriments del porta-retalls</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggeriments del contingut del porta-retalls</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggereix continguts copiats prèviament al porta-retalls</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Nombre de columnes de la graella</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limita els suggeriments del porta-retalls a</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Entrades copiades en els darrers {v} s</string>
+    <string name="pref__clipboard__group_clipboard_history__label">Historial del porta-retalls</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Habilita l\'historial del porta-retalls</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Conserva les entrades del porta-retalls per accedir ràpidament</string>
+    <string name="pref__clipboard__clean_up_old__label">Suprimeix les entrades antigues</string>
+    <string name="pref__clipboard__clean_up_after__label">Suprimeix les entrades antigues després de</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">Suprimeix automàticament les entrades sensibles</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">Suprimeix automàticament les entrades sensibles després de</string>
+    <string name="pref__clipboard__limit_history_size__label">Límit de la mida de l\'historial</string>
+    <string name="pref__clipboard__max_history_size__label">Mida màxima de l\'historial</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Suprimir l\'entrada principal afecta l\'historial</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Si suprimeixes l\'entrada principal, també suprimiràs la darrera entrada de l\'historial</string>
+    <string name="send_to_clipboard__unknown_error">S\'ha produït un error desconegut. Torna-ho a provar!</string>
+    <string name="send_to_clipboard__type_not_supported_error">Aquest tipus de mitjà no és compatible.</string>
+    <string name="send_to_clipboard__android_version_to_old_error">La versió d\'Android és massa antiga per a aquesta funció.
+    </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">La imatge de sota s\'ha copiat al porta-retalls.</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Eines de desenvolupament</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Habilita les eines de desenvolupament</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Eines específicament adreçades a la depuració i resolució de problemes</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Mostra l\'entrada principal</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Superposa l\'entrada principal actual del porta-retalls</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">Mostra la superposició de l\'estat de l\'entrada</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">Superposa l\'estat actual de l\'entrada per a la depuració</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Mostra la superposició de la correcció ortogràfica</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">Superposa els resultats actuals de correcció ortogràfica per a la depuració</string>
+    <string name="devtools__show_inline_autofill_overlay__label">Mostra la superposició de la compleció automàtica</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">Superposa els resultats actuals de la compleció automàtica per a la depuració</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Mostra els límits de toc de les tecles</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Ressalta en vermell els límits de toc de les tecles</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Mostra les ajudes per a Arrossega&amp;Deixa anar</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Fa visibles les ajudes, d\'altra banda invisibles, a les pantalles d\'Arrossega&amp;Deixa anar per a la depuració</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Suprimeix la base de dades del diccionari intern de l\'usuari</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Suprimeix totes les paraules de la taula de la base de dades del diccionari</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Restableix les accions ràpides de la barra intel·ligent</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Restableix les accions ràpides de la barra intel·ligent a la disposició per defecte</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">S\'han restablit correctament les accions ràpides de la barra intel·ligent a la disposició per defecte</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Restableix l\'indicador {flag_name}</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Acció de depuració per tornar a mostrar la pantalla de configuració</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Prova la pantalla d\'informe de fallades</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Acció de depuració per produir una fallada intencionadament</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Eines del sistema d\'Android</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Paràmetres globals d\'Android</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Paràmetres de seguretat d\'Android</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Paràmetres de sistema d\'Android</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Paràmetres d\'idiomes</string>
+    <string name="devtools__debuglog__title">Registre de depuració</string>
+    <string name="devtools__debuglog__copied_to_clipboard">El registre de depuració s\'ha copiat al porta-retalls</string>
+    <string name="devtools__debuglog__copy_log">Copia el registre</string>
+    <string name="devtools__debuglog__copy_for_github">Copia el registre (en format GitHub)</string>
+    <string name="devtools__debuglog__loading">Carregant…</string>
     <!-- Extension strings -->
+    <string name="ext__home__title">Complements &amp; Extensions</string>
+    <string name="ext__list__ext_theme">Extensions del tema</string>
+    <string name="ext__list__ext_keyboard">Extensions del teclat</string>
+    <string name="ext__list__ext_languagepack">Extensions del paquet d\'idiomes</string>
+    <string name="ext__meta__authors">Autors</string>
+    <string name="ext__meta__components">Components agrupats</string>
+    <string name="ext__meta__components_theme">Temes agrupats</string>
+    <string name="ext__meta__components_language_pack">Paquets d\'idiomes fornits</string>
+    <string name="ext__meta__components_none_found">Aquest fitxer d\'extensió no conté cap component agrupat.</string>
+    <string name="ext__meta__description">Descripció</string>
+    <string name="ext__meta__homepage">Pàgina d\'inici</string>
     <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Rastrejador d\'incidències</string>
     <string name="ext__meta__keywords">Paraules clau</string>
+    <string name="ext__meta__label">Etiqueta</string>
     <string name="ext__meta__license">Llicència</string>
+    <string name="ext__meta__maintainers">Mantenidors</string>
+    <string name="ext__meta__maintainers_by">Per: {maintainers}</string>
     <string name="ext__meta__title">Títol</string>
     <string name="ext__meta__version">Versió</string>
     <string name="ext__error__not_found_title">Extensió no trobada</string>
     <string name="ext__error__not_found_description">No s\'ha trobat cap extensió amb ID \"{id}\".</string>
+    <string name="ext__editor__title_create_any">Crea una extensió</string>
+    <string name="ext__editor__title_create_keyboard">Crea una extensió de teclat</string>
+    <string name="ext__editor__title_create_theme">Crea una extensió de tema</string>
+    <string name="ext__editor__title_edit_any">Edita l\'extensió</string>
+    <string name="ext__editor__title_edit_keyboard">Edita l\'extensió de teclat</string>
+    <string name="ext__editor__title_edit_theme">Edita l\'extensió de tema</string>
+    <string name="ext__editor__metadata__title">Gestiona les metadades</string>
+    <string name="ext__editor__metadata__title_invalid">Metadades no vàlides</string>
+    <string name="ext__editor__metadata__message_invalid">Les metadades per a aquesta extensió no són vàlides, comprova l\'editor de metadades per obtenir-ne més detalls!</string>
+    <string name="ext__editor__dependencies__title">Gestiona les dependències</string>
+    <string name="ext__editor__files__title">Gestiona els fitxers d\'arxius</string>
+    <string name="ext__editor__files__type_fonts">Fonts</string>
+    <string name="ext__editor__files__type_images">Imatges</string>
+    <string name="ext__editor__create_component__title">Crea un component</string>
+    <string name="ext__editor__create_component__title_theme">Crea un tema</string>
+    <string name="ext__editor__create_component__from_empty">Buit</string>
+    <string name="ext__editor__create_component__from_existing">D\'un existent</string>
+    <string name="ext__editor__create_component__from_empty_warning">Crear i configurar un component buit pot ser difícil si ets nou a {app_name} o si no estàs familiaritzat amb els detalls. Sempre pots copiar un component existent i modificar-lo al teu gust si és el cas.</string>
+    <string name="ext__editor__edit_component__title">Edita el component</string>
+    <string name="ext__editor__edit_component__title_theme">Edita el component de tema</string>
+    <string name="ext__export__success">L\'extensió s\'ha exportat correctament!</string>
+    <string name="ext__export__failure">Error en exportar l\'extensió: {error_message}</string>
+    <string name="ext__import__success">L\'extensió s\'ha importat correctament!</string>
+    <string name="ext__import__failure">Error en importar l\'extensió: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importa l\'extensió</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importa l\'extensió de teclat</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importa l\'extensió de tema</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importa l\'extensió de paquet d\'idioma</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">No es pot importar el fitxer. Motiu:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">Tipus de fitxer incompatible o no reconegut.</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">Impossible substituir o actualitzar els paquets d\'extensió per defecte proveïts amb els recursos base de l\'aplicació. Planteja\'t d\'actualitzar l\'aplicació mateixa si vols usar una versió nova d\'un paquet d\'extensió base.</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">El fitxer sembla un arxiu d\'extensió però l\'anàlisi de dades de l\'arxiu ha fallat. O l\'arxiu està malmès o el fitxer no és realment una extensió.</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">S\'esperava un arxiu d\'extensió amb tipus de sèrie \"{expected_serial_type}\" però era \"{actual_serial_type}\".</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">S\'esperava un fitxer multimèdia (imatge, àudio, font, etc.) però s\'ha trobat un arxiu d\'extensió.</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">S\'esperava un arxiu d\'extensió però s\'ha trobat un fitxer multimèdia (imatge, àudio, font, etc.).</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">S\'ha produït un error inesperat durant la importació. Els detalls són els següents:</string>
+    <string name="ext__validation__enter_package_name">Introdueix el nom del paquet</string>
+    <string name="ext__validation__error_package_name">El nom del paquet no coincideix amb l\'expressió regular {id_regex}</string>
+    <string name="ext__validation__enter_version">Introdueix una versió</string>
+    <string name="ext__validation__enter_title">Introdueix un títol</string>
+    <string name="ext__validation__enter_maintainer">Introdueix almenys un mantenidor vàlid</string>
+    <string name="ext__validation__enter_license">Introdueix un identificador de llicència</string>
+    <string name="ext__validation__enter_component_id">Introdueix un ID de component</string>
+    <string name="ext__validation__error_component_id">Introdueix un ID de component que coincideixi amb {component_id_regex}</string>
+    <string name="ext__validation__enter_component_label">Introdueix una etiqueta de component</string>
+    <string name="ext__validation__hint_component_label_to_long">La teva etiqueta de component és molt llarga i per això podria mostrar-se retallada la interfície d\'usuari</string>
+    <string name="ext__validation__error_author">Introdueix almenys un autor vàlid</string>
+    <string name="ext__validation__error_stylesheet_path_blank">El camí al full d\'estil no pot ser buit</string>
+    <string name="ext__validation__error_stylesheet_path">Introdueix un camí vàlid al full d\'estil que coincideixi amb {stylesheet_path_regex}</string>
+    <string name="ext__validation__enter_property">Introdueix un nom de variable</string>
+    <string name="ext__validation__error_property">Introdueix un nom vàlid de variable que coincideixi amb {variable_name_regex}</string>
+    <string name="ext__validation__enter_color">Introdueix una cadena de color</string>
+    <string name="ext__validation__error_color">Introdueix una cadena de color vàlida</string>
+    <string name="ext__validation__enter_dp_size">Introdueix la mida de densitat de píxels</string>
+    <string name="ext__validation__enter_valid_number">Introdueix un nombre vàlid</string>
+    <string name="ext__validation__enter_positive_number">Introdueix un nombre positiu (&gt;=0)</string>
+    <string name="ext__validation__enter_percent_size">Introdueix un percentatge</string>
+    <string name="ext__validation__enter_number_between_0_100">Introdueix un nombre positiu entre 0 i 100</string>
+    <string name="ext__validation__hint_value_above_50_percent">Qualsevol valor superior al 50% es comportarà com si fos el 50%, considera de disminuir-ne el percentatge</string>
+    <string name="ext__update_box__internet_permission_hint">Com que aquesta aplicació no té permisos per accedir a internet, les actualitzacions de les extensions instal·lades s\'han de comprovar manualment.</string>
+    <string name="ext__update_box__search_for_updates">Cerca actualitzacions</string>
+    <string name="ext__addon_management_box__managing_placeholder">Gestionant {extensions}</string>
+    <string name="ext__addon_management_box__addon_manager_info">Totes les tasques referides a la importació, exportació, creació, personalització i supressió d\'extensions es poden gestionar a través de l\'administrador de complements centralitzat.</string>
+    <string name="ext__addon_management_box__go_to_page">Ves a {ext_home_title}</string>
+    <string name="ext__home__info">Pots descarregar i instal·lar les extensions des de la botiga de complements de FlorisBoard o importar qualsevol fitxer d\'extensió que hagis descarregat d\'internet.</string>
+    <string name="ext__home__visit_store">Visita la botiga de complements</string>
+    <string name="ext__home__manage_extensions">Administra les extensions instal·lades</string>
+    <string name="ext__list__view_details">Visualitza els detalls</string>
+    <string name="ext__check_updates__title">Comprova les actualitzacions</string>
     <!-- Action strings -->
+    <string name="action__add">Afegeix</string>
+    <string name="action__apply">Aplica</string>
+    <string name="action__back_up">Còpia de seguretat</string>
+    <string name="action__cancel">Cancel·la</string>
+    <string name="action__create">Crea</string>
+    <string name="action__default">Per defecte</string>
+    <string name="action__delete">Suprimeix</string>
+    <string name="action__delete_confirm_title">Confirma la supressió</string>
+    <string name="action__delete_confirm_message">Segur que vols suprimir \"{name}\"? Aquesta acció no es podrà revertir un cop s\'hagi fet.</string>
+    <string name="action__reset_confirm_title">Confirma el restabliment</string>
+    <string name="action__reset_confirm_message">Segur que vols restablir \"{name}\"? Aquesta acció no es podrà revertir un cop s\'hagi fet.</string>
+    <string name="action__discard">Descarta</string>
+    <string name="action__discard_confirm_title">Canvis no desats</string>
+    <string name="action__discard_confirm_message">Segur que vols descartar els canvis no desats\"? Aquesta acció no es podrà revertir un cop s\'hagi fet.</string>
+    <string name="action__edit">Edita</string>
+    <string name="action__export">Exporta</string>
+    <string name="action__export_file">Exporta el fitxer</string>
+    <string name="action__export_files">Exporta els fitxers</string>
+    <string name="action__import">Importa</string>
+    <string name="action__import_file">Importa el fitxer</string>
+    <string name="action__import_files">Importa els fitxers</string>
+    <string name="action__no">No</string>
+    <string name="action__ok">D\'acord</string>
+    <string name="action__restore">Restaura</string>
+    <string name="action__save">Desa</string>
+    <string name="action__select">Selecciona</string>
+    <string name="action__select_dir">Selecciona el directori</string>
+    <string name="action__select_dirs">Selecciona els directoris</string>
+    <string name="action__select_file">Selecciona el fitxer</string>
+    <string name="action__select_files">Selecciona els fitxers</string>
+    <string name="action__yes">Sí</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">Error</string>
+    <string name="error__details">Detalls</string>
+    <string name="error__invalid">No és vàlid</string>
+    <string name="error__snackbar_message">Alguna cosa ha anat malament</string>
+    <string name="error__snackbar_message_template">Alguna cosa ha anat malament: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">p. ex. {example}</string>
     <string name="general__no_browser_app_found_for_url">No s\'ha trobat cap aplicació de navegació per gestionar URL \"{url}\"</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; selecciona &#45;</string>
+    <string name="general__unlimited">Sense límit</string>
+    <string name="general__file_name">Nom del fitxer</string>
+    <string name="general__properties">Propietats</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Automàtic</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Vertical</string>
     <string name="screen_orientation__landscape">Apaïsat</string>
@@ -165,17 +762,147 @@
     <!-- State strings -->
     <string name="state__disabled">Deshabilitat</string>
     <string name="state__enabled">Habilitat</string>
+    <string name="state__no_dir_selected">No s\'ha seleccionat cap directori</string>
+    <string name="state__no_dirs_selected">No s\'han seleccionat directoris</string>
+    <string name="state__no_file_selected">No s\'ha seleccionat cap fitxer</string>
+    <string name="state__no_files_selected">No s\'han seleccionat fitxers</string>
     <!-- Enum label and description strings -->
-    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent està prioritzat</string>
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">Clàssic (3 columnes)</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Amplada dinàmica</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Amplada dinàmica &amp; Desplaçable</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Habilita el bloqueig de majúscules amb doble toc a majúscules</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Canvia al següent mode de majúscules cada cop que toques la tecla majúscules</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Vermell Verd Blau</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">To Saturació Valor</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Mostra-ho sempre</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Mostra sempre el teclat després de tancar qualsevol finestra de diàleg de l\'editor</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">No ho mostris mai</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">No mostra mai el teclat després de tancar qualsevol finestra de diàleg de l\'editor</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Recorda l\'últim estat</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Només mostra el teclat després de tancar qualsevol finestra de diàleg de l\'editor si era visible prèviament</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Idioma del sistema</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Els noms dels idiomes a l\'aplicació i a la interfície d\'usuari del teclat es mostren als paràmetres d\'idioma configurats per a tot el dispositiu</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Idioma nadiu</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Els noms dels idiomes a l\'aplicació i a la interfície d\'usuari del teclat es mostren en l\'idioma referit per a ell mateix</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Ordena automàticament (anteposa)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Reordena automàticament els emojis en funció de l\'ús. Els emojis nous s\'afegeixen a l\'inici.</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Ordena automàticament (annexa al final)</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Reordena automàticament els emojis en funció de l\'ús. Els emojis nous s\'afegeixen al final.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">Ordena manualment (anteposa)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">No reordena automàticament els emojis en funció de l\'ús. Els emojis nous s\'afegeixen a l\'inici.</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">Ordena manualment (annexa al final)</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">No reordena automàticament els emojis en funció de l\'ús. Els emojis nous s\'afegeixen al final.</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} To de pell per defecte</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} To de pell clar</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} To de pell mitjà-clar</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} To de pell mitjà</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} To de pell mitjà-fosc</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} To de pell fosc</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} Cabell per defecte</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} Pèl-roig</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} Rull</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} Blanc</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} Calb</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">Dos punts a l\'inici</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">Suggereix emojis fent servir la sintaxi :nom_emoji</string>
+    <string name="enum__emoji_suggestion_type__inline_text">Integrat al text</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">Suggereix els emojis simplement en escriure el nom de l\'emoji com una paraula més</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">Damunt dels suggeriments</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">Situa la fila ampliada d\'accions entre la interfície d\'usuari de l\'aplicació i la fila de suggeriments</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">Sota els suggeriments</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Situa la fila ampliada d\'accions entre la fila de suggeriments i el teclat</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Superposa la interfície d\'usuari de l\'aplicació</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Situa la fila ampliada d\'accions com una superposició sobre la interfície d\'usuari de l\'aplicació per tal de no afectar l\'alçada resultant del teclat. Tingues present que aquesta ubicació pot fer que el camp d\'entrada de l\'aplicació sigui parcialment superposat</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Usa el vibrador directament</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} interacciona directament amb el maquinari de vibració per defecte. Això dona més control sobre la durada i la força de la vibració, però pot no ser tan suau ni optimitzada com si s\'usa la interfície de resposta tàctil</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Usa la interfície de resposta tàctil</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} usa la interfície de resposta tàctil per activar una seqüència predeterminada de vibració en tocar les tecles. Això funciona de forma excepcional en alguns dispositius, però falla completament o funciona malament en d\'altres</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent prioritzat</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">El caràcter inicial escollit després d\'un toc llarg serà sempre l\'accent principal, o el símbol si no hi ha cap accent principal disponible</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Símbol suggerit prioritzat</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">El caràcter inicial escollit després d\'un toc llarg serà sempre el símbol, o l\'accent principal si no hi ha cap símbol disponible</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorització intel·ligent</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">El caràcter inicial escollit després d\'un toc llarg decideix dinàmicament si serà l\'accent principal o el símbol en funció de l\'idioma i la distribució del teclat actuals</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Substitueix la icona de commutació d\'accions compartides per l\'indicador d\'incògnit</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Mostra l\'indicador d\'incògnit darrere del teclat</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">Força la inhabilitació</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">El mode incògnit sempre estarà inhabilitat, independent de les opcions anteriors de l\'aplicació de destí. L\'acció ràpida d\'incògnit a la barra intel·ligent no estarà disponible amb aquesta opció.</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">Força l\'habilitació</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">El mode incògnit sempre estarà habilitat, independent de les opcions anteriors de l\'aplicació de destí. L\'acció ràpida d\'incògnit a la barra intel·ligent no estarà disponible amb aquesta opció.</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Habilitació/Inhabililitació dinàmica</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Opció recomanada. El mode incògnit s\'habilitarà o inhabilitarà dinàmicament a través de les opcions anteriors de l\'aplicació de destí o commutant-lo manualment amb l\'acció ràpida d\'incògnit a la barra intel·ligent.</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Reproducció dinàmica dels sons per als esdeveniments d\'entrada, segons la configuració del sistema</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Reprodueix sempre els sons per als esdeveniments d\'entrada, independentment de la configuració del sistema</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Vibració dinàmica per als esdeveniments d\'entrada, segons la configuració del sistema</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Vibra sempre en els esdeveniments d\'entrada, independentment de la configuració del sistema</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">Sense desplaçament</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Desplaçament (manual)</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Desplaçament (automàtic)</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Bloq Majús</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Caràcters</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Símbols</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Símbols 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Numèric</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Numèric avançat</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Telèfon</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Telèfon 2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Mode esquerrà</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Mode dretà</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">Dalt a l\'esquerra</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">Dalt a la dreta</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">A sota a la dreta</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">A sota a l\'esquerra</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Només suggeriments</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Mostra només la fila de suggeriments sense cap commutació/fila d\'accions ni acció fixa</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Només accions</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Mostra només la fila d\'accions sense cap fila de suggeriments ni cap acció fixa explicita</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggeriments &amp; Accions totes dues</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Fila compartida commutable de suggeriments i accions, inclosa l\'acció fixa</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Extensió de Suggeriments &amp; Accions</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Fila d\'accions estàtica ampliable amb la fila d\'accions i l\'acció fixa</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">Bàsic</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">Només es mostren les propietats del color, les propietats i les regles es tradueixen.</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Avançat</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">Es mostren totes les propietats, les propietats i les regles es tradueixen.</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">Desenvolupador</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">Es mostren totes les propietats, les propietats i les regles es mostren tal com estan escrites al full d\'estils.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">Sense etiqueta</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">Idioma actual</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Usa els idiomes del sistema</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Usa els subtipus de teclat</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">Cap acció</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passa al mode de teclat precedent</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passa al mode de teclat següent</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">Suprimeix el caràcter d\'abans del cursor</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Suprimeix els caràcters amb precisió</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Suprimeix la paraula d\'abans del cursor</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Suprimeix les paraules amb precisió</string>
     <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Amagar el teclat</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Insereix un espai</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Mou el cursor cap amunt</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Mou el cursor cap avall</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Mou el cursor cap a l\'esquerra</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Mou el cursor cap a la dreta</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Mou el cursor al principi de la línia</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Mou el cursor al final de la línia</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Mou el cursor al principi de la pàgina</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Mou el cursor al final de la pàgina</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Obre l\'historial/administrador del porta-retalls</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Majúscules</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Refés</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Desfés</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">Selecciona els caràcters amb precisió</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">Selecciona les paraules amb precisió</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Mostra el selector de mode d\'introducció</string>
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Canvia a teclat previ</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Canvia a subtipus anterior</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Canvia a subtipus següent</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Commuta la visibilitat de la barra intel·ligent</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Sempre diürn</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Sempre nocturn</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Segueix sistema</string>
@@ -186,4 +913,28 @@
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dinámic: Canviar a emojis/Canviar idioma</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} hora</item>
+        <item quantity="other">{v} hores</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minut</item>
+        <item quantity="other">{v} minuts</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} segon</item>
+        <item quantity="other">{v} segons</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} ítem</item>
+        <item quantity="other">{v} ítems</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} caràcter</item>
+        <item quantity="other">{v} caràcters</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} suggeriment</item>
+        <item quantity="other">{v} suggeriments</item>
+    </plurals>
 </resources>

@@ -171,10 +171,13 @@
     <string name="settings__theme_editor__rule_name">Elements / Anotācija</string>
     <string name="settings__theme_editor__rule_codes">Mērķa taustiņu kodi</string>
     <string name="settings__theme_editor__rule_groups">Kopas</string>
+    <string name="settings__theme_editor__rule_modes">Mērķa veidi (slāņi)</string>
+    <string name="settings__theme_editor__rule_shift_states">Mērķa pārslēgšanas stāvokļi</string>
     <string name="settings__theme_editor__rule_selectors">Atlasītāji</string>
     <string name="settings__theme_editor__add_code">Pievienot taustiņa kodu</string>
     <string name="settings__theme_editor__edit_code">Labot taustiņa kodu</string>
     <string name="settings__theme_editor__no_codes_defined">Pielietot nosacījumu visām mērķa daļām.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Visas iespējamās vērtības tika pievienotas.</string>
     <string name="settings__theme_editor__code_already_exists">Šis taustiņa kods jau ir noteikts.</string>
     <string name="settings__theme_editor__code_invalid">Šis taustiņa kods ir nederīgs. Jānodrošina, ka taustiņa kods ir starp {c_min} un {c_max} rakstzīmēm vai starp {i_min} un {i_max} iekšējiem īpašajiem taustiņiem.</string>
     <string name="settings__theme_editor__code_help_text">Vai arī šīs saites palīdzēs atrast atbilstošo taustiņa kodu:</string>
@@ -216,9 +219,19 @@
     <string name="snygg__rule_element__clipboard_content">Starpliktuves saturs</string>
     <string name="snygg__rule_element__clipboard_item">Starpliktuves vienums</string>
     <string name="snygg__rule_element__clipboard_item_popup">Starpliktuves vienuma uznirstošais lodziņš</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Starpliktuves vienuma uznirstošā lodziņa darbība</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Starpliktuves vienuma uznirstošā lodziņa ikona</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Starpliktuves vienuma uznirstošā lodziņa teksts</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Starpliktuves vienuma darbības</string>
+    <string name="snygg__rule_element__clipboard_item_action">Starpliktuves vienuma darbība</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Starpliktuves vienuma darbības ikona</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Starpliktuves vienuma darbības teksts</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Starplituves visa notīrīšanas dialoglodziņš</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Starpliktuves visa notīrīšanas dialoglodziņa ziņojums</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Starpliktuves visa notīrīšanas dialoglodziņa pogas</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Starpliktuves visa notīrīšanas dialoglodziņa poga</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Atspējotas starpliktuves vēstures virsraksts</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Atspējotas starpliktuves vēstures ziņojums</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Atspējotas starpliktuves vēstures poga</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Aizslēgtas starpliktuves vēstures virsraksts</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Aizslēgtas starpliktuves vēstures ziņojums</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Līmeniskās ievades izkārtojums</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Līmeniskās ievades lauks</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Līmeniskās ievades darbība</string>
@@ -233,6 +246,8 @@
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Viedjoslas paplašināto darbību pārslēgs</string>
     <string name="snygg__rule_element__smartbar_action_key">Viedjoslas darbības taustiņš</string>
     <string name="snygg__rule_element__smartbar_action_tile">Viedjoslas darbības lauciņš</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Viedjoslas darbības lauciņa ikona</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Viedjoslas darbības lauciņa teksts</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Viedjoslas darbību pārpilde</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Viedjoslas darbību pārpildes pielāgošanas poga</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Viedjoslas darbību labotājs</string>
@@ -240,7 +255,11 @@
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Viedjoslas darbību labotāja apakšgalvene</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Viedjoslas ieteikumu rinda</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Viedjoslas ieteikumu vārds</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Viedjoslas ieteikumu vārda teksts</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Viedjoslas ieteikumu vārda otrējais teksts</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Viedjoslas ieteikumu starpliktuves vienums</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Viedjoslas ieteikumu starpliktuves vienuma ikona</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Viedjoslas ieteikumu starpliktuves vienuma teksts</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Viedjoslas ieteikumu atdalītājs</string>
     <string name="snygg__rule_element__subtype_panel_list">Apakšveida paneļu saraksts</string>
     <string name="snygg__rule_element__subtype_panel_list_item">Apakšveida paneļu saraksta vienums</string>
@@ -561,7 +580,6 @@
     <string name="clipboard__cleared_primary_clip">Galvenais vienums notīrīts</string>
     <string name="clipboard__cleared_history">Vēsture notīrīta</string>
     <string name="clipboard__cleared_full_history">Visa vēsture notīrīta</string>
-    <string name="clipboard__confirm_clear_history__message">Vai tiešām iztīrīt starpliktuves vēsturi?</string>
     <string name="settings__clipboard__title">Starpliktuve</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
@@ -572,6 +590,7 @@
     <string name="pref__clipboard__group_clipboard_suggestion__label">Starpliktuves ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Režģa sleju skaits</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ierobežot starpliktuves ieteikumus līdz</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Vienumi ievietoti starpliktuvē pēdējās {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Starpliktuves vēsture</string>
@@ -762,6 +781,7 @@
     <string name="general__unlimited">Neierobežots</string>
     <string name="general__file_name">Datnes nosaukums</string>
     <string name="general__properties">Īpašības</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Automātiski</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrets</string>
     <string name="screen_orientation__landscape">Līmeniski</string>
@@ -845,6 +865,13 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Pārslēgts (pašrocīgi)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Pārslēgts (automātiski)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Burtslēgs</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Rakstzīmes</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Zīmes</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Zīmes 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Skaitliska</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Skaitliska (uzlabota)</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Tālrunis</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Tālrunis 2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nerādīt nekad</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Rādīt pielāgojoties</string>

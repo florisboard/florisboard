@@ -530,7 +530,6 @@
     <string name="clipboard__cleared_primary_clip">تنظيف الحافظة الأساسية</string>
     <string name="clipboard__cleared_history">مسح التاريخ</string>
     <string name="clipboard__cleared_full_history">مسح التاريخ الكامل</string>
-    <string name="clipboard__confirm_clear_history__message">هل ترغب حقًا في مسح سجل الحافظة؟</string>
     <string name="settings__clipboard__title">الحافظة</string>
     <string name="pref__clipboard__use_internal_clipboard__label">استخدم الحافظة الداخلية</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">استخدم الحافظة الداخلية بدلا من حافظة النظام</string>
