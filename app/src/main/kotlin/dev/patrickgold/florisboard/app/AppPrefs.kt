@@ -864,6 +864,20 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 )
             }
 
+            // Migrate Catalan char layout
+            // Keep migration rule until: ?.? dev cycle
+            "localization__subtypes" -> {
+                val subtypesBefore = Json.decodeFromString<List<Subtype>>(entry.rawValue)
+                val subtypesAfter = subtypesBefore.map {
+                    it.apply {
+                        if (layoutMap.characters == "org.florisboard.layouts:catalan") {
+                            layoutMap.characters = "org.florisboard.layouts:qwerty_c"
+                        }
+                    }
+                }
+                entry.transform(rawValue = JSON.encodeToString(subtypesAfter))
+            }
+
 
             // Default: keep entry
             else -> entry.keepAsIs()
