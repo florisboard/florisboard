@@ -23,7 +23,8 @@
     "--on-surface-variant": "#a0a0a0",
 
     "--shape": "rounded-corner(8dp, 8dp, 8dp, 8dp)",
-    "--shape-variant": "rounded-corner(12dp, 12dp, 12dp, 12dp)"
+    "--shape-variant": "rounded-corner(12dp, 12dp, 12dp, 12dp)",
+    "--shape-chip": "rounded-corner(50%, 50%, 50%, 50%)"
   },
 
   "window": {
@@ -243,30 +244,65 @@
   },
   "clipboard-subheader": {
     "font-size": "14sp",
-    "margin": "6dp"
+    "margin": "6dp 10dp 6dp 6dp"
   },
   "clipboard-content": {
-    "padding": "10dp"
+    "padding": "10dp 0dp"
+  },
+  "clipboard-filter-row": {
+    "background": "var(--background-variant)",
+    "foreground": "var(--on-background)",
+    "padding": "0dp 0dp 4dp 0dp",
+    "shape": "var(--shape-variant)"
+  },
+  "clipboard-filter-chip": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)",
+    "margin": "4dp 4dp 0dp 4dp",
+    "padding": "8dp 4dp",
+    "shape": "var(--shape-chip)"
+  },
+  "clipboard-filter-chip[state=`active`]": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)"
+  },
+  "clipboard-filter-chip-text": {
+    "margin": "4dp 0dp 0dp 0dp"
+  },
+  "clipboard-grid": {
+    "shape": "var(--shape-variant)"
   },
   "clipboard-item": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
     "margin": "4dp",
-    "padding": "12dp 8dp",
     "shape": "var(--shape-variant)",
     "shadow-elevation": "2dp",
     "text-max-lines": "10",
     "text-overflow": "ellipsis"
+  },
+  "clipboard-item[type=`text`]": {
+    "padding": "12dp 8dp"
+  },
+  "clipboard-item-description": {
+    "font-size": "12sp",
+    "font-style": "italic"
   },
   "clipboard-item-popup": {
     "background": "var(--surface)",
     "foreground": "var(--on-surface)",
     "font-size": "14sp",
     "margin": "4dp",
-    "padding": "12dp 8dp",
     "shape": "var(--shape-variant)",
     "shadow-elevation": "2dp"
+  },
+  "clipboard-item-popup[type=`text`]": {
+    "padding": "12dp 8dp"
+  },
+  "clipboard-item-timestamp": {
+    "font-size": "11sp",
+    "padding": "16dp 8dp"
   },
   "clipboard-item-actions": {
     "background": "var(--surface)",
@@ -278,6 +314,9 @@
   "clipboard-item-action": {
     "font-size": "16sp",
     "padding": "12dp"
+  },
+  "clipboard-item-action-text": {
+    "margin": "4dp 0dp 0dp 0dp"
   },
   "clipboard-clear-all-dialog": {
     "background": "var(--surface)",
