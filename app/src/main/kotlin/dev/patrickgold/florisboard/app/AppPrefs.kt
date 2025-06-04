@@ -879,7 +879,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                                 },
                             ),
                         ),
-                    ),
+                    )
                 }
                 entry.transform(rawValue = Json.encodeToString(subtypesAfter))
             }
