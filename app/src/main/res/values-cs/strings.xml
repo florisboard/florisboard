@@ -58,8 +58,7 @@
     <string name="quick_action__arrow_left__tooltip">Vykonat šipku vlevo</string>
     <string name="quick_action__arrow_right" maxLength="12">Šipka vpravo</string>
     <string name="quick_action__arrow_right__tooltip">Vykonat šipku vpravo</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Vy. p. k. s.</string>
-    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vykonat vymazání primárního klipu schránky</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vykonat vymazání primární položky schránky</string>
     <string name="quick_action__clipboard_copy" maxLength="12">Kopírovat</string>
     <string name="quick_action__clipboard_copy__tooltip">Vykonat kopírování do schránky</string>
     <string name="quick_action__clipboard_cut" maxLength="12">Vyjmout</string>
@@ -173,10 +172,13 @@
     <string name="settings__theme_editor__rule_name">Prvek / anotace</string>
     <string name="settings__theme_editor__rule_codes">Kódy cílových kláves</string>
     <string name="settings__theme_editor__rule_groups">Skupiny</string>
+    <string name="settings__theme_editor__rule_modes">Cílové režimy (vrstvy)</string>
+    <string name="settings__theme_editor__rule_shift_states">Cílové stavy Shiftu</string>
     <string name="settings__theme_editor__rule_selectors">Selektory</string>
     <string name="settings__theme_editor__add_code">Přidat kód klávesy</string>
     <string name="settings__theme_editor__edit_code">Upravit kód klávesy</string>
     <string name="settings__theme_editor__no_codes_defined">Použít pravidlo na všechny prvky.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Byly přidány všechny možné hodnoty.</string>
     <string name="settings__theme_editor__code_already_exists">Tento klávesový kód je již definován.</string>
     <string name="settings__theme_editor__code_invalid">Tento kód klávesy není platný. Ujistěte se, že kód klávesy je v rozmezí od {c_min} do {c_max} pro znaky nebo od {i_min} do {i_max} pro interní speciální klávesy.</string>
     <string name="settings__theme_editor__code_help_text">Případně použijte následující odkazy, které vám pomohou zjistit odpovídající kód klávesy:</string>
@@ -218,9 +220,10 @@
     <string name="snygg__rule_element__clipboard_content">Obsah schránky</string>
     <string name="snygg__rule_element__clipboard_item">Položka schránky</string>
     <string name="snygg__rule_element__clipboard_item_popup">Vyskakovací nabídka položky schránky</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Akce vyskakovacího dialogu položky schránky</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Ikona vyskakovacího dialogu položky schránky</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Text vyskakovacího dialogu položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Akce položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_action">Akce položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Ikona akce položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Text akce položky schránky</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog">Dialog vymazání všeho ze schránky</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Zpráva dialogu vymazání všeho ze schránky</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Tlačítka dialogu vymazání všeho ze schránky</string>
@@ -254,6 +257,8 @@
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Přepínač rozšířených akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_action_key">Akční klávesa chytré lišty</string>
     <string name="snygg__rule_element__smartbar_action_tile">Akční dlaždice chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Ikona akční dlaždice chytré lišty</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Text akční dlaždice chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Přetečení akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Tlačítko přizpůsobení přetečení akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Editor akcí chytré lišty</string>
@@ -263,9 +268,13 @@
     <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Mřížka dlaždic editoru akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_actions_editor_tile">Dlaždice editoru akcí chytré lišty</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Řádek navrhnutých slov chytré lišty</string>
-    <string name="snygg__rule_element__smartbar_candidate_word">Navrhnuté slovo v chytré liště</string>
-    <string name="snygg__rule_element__smartbar_candidate_clip">Navrhnutá položka v chytré liště</string>
-    <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení navrhnutí v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Navržené slovo v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Text navrženého slova v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Sekundární text navrženého slova v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Navržená položka v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Ikona navržené položky v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Text navržené položky v chytré liště</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Odsazení návrhu v chytré liště</string>
     <string name="snygg__rule_element__subtype_panel">Panel podtypu</string>
     <string name="snygg__rule_element__subtype_panel_header">Záhlaví panelu podtypu</string>
     <string name="snygg__rule_element__subtype_panel_list">Seznam panelu podtypů</string>
@@ -614,7 +623,6 @@
     <string name="clipboard__cleared_primary_clip">Primární zkopírovaná položka vymazána</string>
     <string name="clipboard__cleared_history">Historie vymazána</string>
     <string name="clipboard__cleared_full_history">Celá historie vymazána</string>
-    <string name="clipboard__confirm_clear_history__message">Opravdu chcete vymazat historii své schránky?</string>
     <string name="settings__clipboard__title">Schránka</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
@@ -625,6 +633,7 @@
     <string name="pref__clipboard__group_clipboard_suggestion__label">Návrhy schránky</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Obsah návrhu schránky</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Navrhnout obsah dříve zkopírovaný do schránky</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Počet sloupců mřížky</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Omezit návrhy ze schránky na</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Položky zkopírované v posledních {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Historie schránky</string>
@@ -815,6 +824,7 @@
     <string name="general__unlimited">Neomezené</string>
     <string name="general__file_name">Název souboru</string>
     <string name="general__properties">Vlastnosti</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Automaticky</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Na výšku</string>
     <string name="screen_orientation__landscape">Na šířku</string>
@@ -901,6 +911,13 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Se shiftem (manuální)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Se shiftem (automatické)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Znaky</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symboly</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symboly 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Číselné</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Číselné pokročilé</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Telefon</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Telefon 2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>

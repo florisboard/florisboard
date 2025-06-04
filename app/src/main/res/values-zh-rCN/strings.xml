@@ -532,7 +532,6 @@
     <string name="clipboard__cleared_primary_clip">已清除主要剪贴板条目</string>
     <string name="clipboard__cleared_history">已清除历史记录</string>
     <string name="clipboard__cleared_full_history">已清除全部历史记录</string>
-    <string name="clipboard__confirm_clear_history__message">确定清除剪贴板历史记录？</string>
     <string name="settings__clipboard__title">剪贴板</string>
     <string name="pref__clipboard__use_internal_clipboard__label">使用内部剪贴板</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">使用内部剪贴板，而不是系统剪贴板</string>

@@ -557,7 +557,6 @@
     <string name="clipboard__cleared_primary_clip">Attache principale effacée</string>
     <string name="clipboard__cleared_history">Historique effacé</string>
     <string name="clipboard__cleared_full_history">Historique complet effacé</string>
-    <string name="clipboard__confirm_clear_history__message">Êtes-vous sûr de vouloir effacer votre historique de presse-papier ?</string>
     <string name="settings__clipboard__title">Presse-papier</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Utiliser le presse-papier interne</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Utiliser un presse-papier interne plutôt que celui du système</string>

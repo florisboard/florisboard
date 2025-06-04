@@ -316,7 +316,6 @@
     <string name="clip__cant_paste">Sovellus ei hyväksy tämän sisällön liittämistä.</string>
     <string name="clipboard__cleared_history">Historia tyhjennetty</string>
     <string name="clipboard__cleared_full_history">Koko historia tyhjennetty</string>
-    <string name="clipboard__confirm_clear_history__message">Tyhjennetäänkö koko leikepöydän historia?</string>
     <string name="settings__clipboard__title">Leikepöytä</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Käytä sisäistä leikepöytää</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Käytä järjestelmän leikepöydän sijasta sisäistä leikepöytää</string>

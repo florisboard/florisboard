@@ -531,7 +531,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="clipboard__cleared_primary_clip">Primaire clip gewist</string>
     <string name="clipboard__cleared_history">Geschiedenis gewist</string>
     <string name="clipboard__cleared_full_history">Volledige geschiedenis gewist</string>
-    <string name="clipboard__confirm_clear_history__message">Weet je zeker dat je je klembordgeschiedenis wilt wissen?</string>
     <string name="settings__clipboard__title">Klembord</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Gebruik intern klembord</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Gebruik een intern klembord in plaats van het systeemklembord</string>

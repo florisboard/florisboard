@@ -2,283 +2,994 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">一時停止</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">お待ちください</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">3つのドットのアイコン。 表示されている場合は長押しするとより多くの文字を使用できることを示します。</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">待機</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">3点リーダーアイコン。表示されている場合、長押しで他の文字が利用できることを示します。</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">片手モードを閉じる</string>
-    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">キーボードを左に移動します。</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">キーボードを左に移動。</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">キーボードを右に移動</string>
     <!-- Media strings -->
-    <string name="settings__media__title">絵文字</string>
+    <string name="settings__media__title">メディア</string>
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">絵文字</string>
-    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">絵文字</string>
-    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">顔文字</string>
-    <string name="prefs__media__emoji_preferred_skin_tone">好みの絵文字の肌の色</string>
-    <string name="prefs__media__emoji_preferred_hair_style">好みの絵文字ヘアスタイル</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">顔文字</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">カオモジ</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">優先する絵文字の肌の色</string>
+    <string name="prefs__media__emoji_preferred_hair_style">優先する絵文字の髪型</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">絵文字履歴</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">絵文字履歴を有効化</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">最近使用した絵文字を保存して素早くアクセスできるようにします</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">更新方法（ピン留め）</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">更新方法（最近使用）</string>
+    <string name="prefs__media__emoji_history_max_size">保持できる最大アイテム数</string>
+    <string name="prefs__media__emoji_history_pinned_reset">ピン留めした絵文字をリセット</string>
+    <string name="prefs__media__emoji_history_reset">最近使用した絵文字をリセット</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">絵文字の候補</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">絵文字の候補を有効にする</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">入力中に絵文字の候補を表示します</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">トリガータイプ</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">絵文字履歴を更新する</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">候補の絵文字を選択すると、絵文字履歴に保存されます</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">絵文字の名前を表示</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">絵文字の候補に、絵文字と一緒に名前が表示されます</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">検索クエリの最小文字数</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">最大候補数</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">スマイリー &amp; 感情</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">人間 &amp; 体</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">動物 &amp; 自然</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">フード &amp; ドリンク</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">旅行 &amp; 場所</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">笑顔と感情</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">人物と体</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">動物と自然</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">食べ物と飲み物</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">旅行と場所</string>
     <string name="emoji__category__activities" comment="Emoji category name">アクティビティ</string>
-    <string name="emoji__category__objects" comment="Emoji category name">オブジェクト</string>
-    <string name="emoji__category__symbols" comment="Emoji category name">シンボル</string>
+    <string name="emoji__category__objects" comment="Emoji category name">モノ</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">記号</string>
     <string name="emoji__category__flags" comment="Emoji category name">旗</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">最近使用した絵文字はありません。絵文字を入力し始めると、ここに表示されます。</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">絵文字履歴にアクセスするには、まずデバイスのロックを解除してください。</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">ヒント：絵文字履歴の絵文字を長押しすると、ピン留めや削除ができます！</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">絵文字履歴から{emoji}を削除しました</string>
+    <string name="emoji__history__pinned">ピン留め済み</string>
+    <string name="emoji__history__recent">最近使用</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">上矢印</string>
-    <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
+    <string name="quick_action__arrow_up__tooltip">上矢印を実行</string>
     <string name="quick_action__arrow_down" maxLength="12">下矢印</string>
-    <string name="quick_action__arrow_down__tooltip">Perform arrow up</string>
+    <string name="quick_action__arrow_down__tooltip">下矢印を実行</string>
     <string name="quick_action__arrow_left" maxLength="12">左矢印</string>
-    <string name="quick_action__arrow_left__tooltip"></string>
+    <string name="quick_action__arrow_left__tooltip">左矢印を実行</string>
     <string name="quick_action__arrow_right" maxLength="12">右矢印</string>
+    <string name="quick_action__arrow_right__tooltip">右矢印を実行</string>
+    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">メインクリップ消去</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">メインクリップボードを空にする</string>
     <string name="quick_action__clipboard_copy" maxLength="12">コピー</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">カット</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">ペースト</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">全て選択</string>
+    <string name="quick_action__clipboard_copy__tooltip">クリップボードにコピー</string>
+    <string name="quick_action__clipboard_cut" maxLength="12">切り取り</string>
+    <string name="quick_action__clipboard_cut__tooltip">クリップボードに切り取り</string>
+    <string name="quick_action__clipboard_paste" maxLength="12">貼り付け</string>
+    <string name="quick_action__clipboard_paste__tooltip">クリップボードから貼り付け</string>
+    <string name="quick_action__clipboard_select_all" maxLength="12">すべて選択</string>
+    <string name="quick_action__clipboard_select_all__tooltip">すべて選択</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">クリップボード</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">クリップボード履歴を開く</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">絵文字</string>
-    <string name="quick_action__ime_ui_mode_media__tooltip">絵文字パネルを開く</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">メディアパネルを開く</string>
+    <string name="quick_action__language_switch" maxLength="12">言語切替</string>
+    <string name="quick_action__language_switch__tooltip">言語を切り替える</string>
     <string name="quick_action__settings" maxLength="12">設定</string>
     <string name="quick_action__settings__tooltip">設定を開く</string>
     <string name="quick_action__undo" maxLength="12">元に戻す</string>
+    <string name="quick_action__undo__tooltip">直前の操作を元に戻す</string>
     <string name="quick_action__redo" maxLength="12">やり直し</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">その他の操作</string>
+    <string name="quick_action__redo__tooltip">直前の操作をやり直す</string>
+    <string name="quick_action__toggle_actions_overflow" maxLength="12">他の操作</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">追加の操作を表示/非表示</string>
     <string name="quick_action__toggle_incognito_mode" maxLength="12">シークレット</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">なし</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">シークレットモードの切り替え</string>
+    <string name="quick_action__toggle_autocorrect" maxLength="12">自動修正</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">自動修正の切り替え</string>
+    <string name="quick_action__voice_input" maxLength="12">音声入力</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">音声入力プロバイダを開く</string>
+    <string name="quick_action__one_handed_mode" maxLength="12">片手モード</string>
+    <string name="quick_action__one_handed_mode__tooltip">片手モードの切り替え</string>
+    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">ドラッグマーカー</string>
+    <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
+    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">操作なし</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">No operation</string>
+    <string name="quick_actions_overflow__customize_actions_button">アクションの並び替え</string>
+    <string name="quick_actions_editor__header">アクションの順序をカスタマイズ</string>
+    <string name="quick_actions_editor__subheader_sticky_action">固定アクション ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">動的アクション ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">非表示のアクション ({n})</string>
+    <string name="select_subtype_panel__header">サブタイプを選択</string>
     <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">シークレットモードが有効になりました\n\nこのモードがアクティブな間、{app_name} は入力から単語を学習しません</string>
+    <string name="incognito_mode__toast_after_disabled">シークレットモードはデフォルトで無効になりました</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">設定</string>
-    <string name="settings__preview_keyboard" comment="Hint for try your setup box">セットアップを試す</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">設定を試す</string>
     <string name="settings__help" comment="General label for help buttons in Settings">ヘルプ</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">デフォルト</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">システムのデフォルト</string>
-    <string name="settings__home__title" comment="Title of the Home screen">ようこそ！{app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardはシステムで有効になっていないため、入力ピッカーの入力メソッドとして使用できません。 この問題を解決するには、ここをタップしてください。</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardは、デフォルトの入力方法として選択されていません。 この問題を解決するには、ここをタップしてください。</string>
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">言語 &amp; 入力</string>
-    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">で言語名を表示する</string>
+    <string name="settings__home__title" comment="Title of the Home screen">{app_name}へようこそ</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardがシステムで有効になっていないため、入力方法として使用できません。この問題を解決するには、ここをタップしてください。</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardは、デフォルトの入力方法として選択されていません。この問題を解決するには、ここをタップしてください。</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">言語と入力</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">言語名の表示形式</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">サブタイプの言語でキーボードラベルを表示</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">サブタイプ</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">サブタイプを追加</string>
+    <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">インストール済み言語パックの管理</string>
+    <string name="settings__localization__language_pack_summary" comment="Summary of preference item for adding a new language pack">実験的：特定の言語（現在は形状ベースの中国語入力）のサポートを追加する拡張機能を管理します</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">サブタイプを編集</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">主要言語</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">ロケール</string>
     <string name="settings__localization__subtype_popup_mapping" comment="Label for popup mapping dropdown in subtype screen">ポップアップマッピング</string>
-    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">キャラクターレイアウト</string>
-    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">シンボルのプライマリレイアウト</string>
-    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">シンボルの二次レイアウト</string>
-    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">作曲家</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">文字レイアウト</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Label for suggestion provider dropdown in subtype dialog">候補エンジン</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">記号レイアウト（プライマリ）</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">記号レイアウト（セカンダリ）</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">コンポーザー</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">通貨セット</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">数字レイアウト</string>
-    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(高度な) 数値レイアウト</string>
-    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">番号行のレイアウト</string>
-    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">電話のプライマリレイアウト</string>
-    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">電話のセカンダリレイアウト</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">数字レイアウト（詳細）</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">数字行レイアウト</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">電話レイアウト（プライマリ）</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">電話レイアウト（セカンダリ）</string>
     <string name="settings__localization__subtype_select_locale" comment="Subtype select language title">言語を選択</string>
     <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">言語を検索</string>
-    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">\"{search_term}\"に一致する言語が見つかりませんでした。</string>
-    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; 選択します &#8210;</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Subtype search language not found">「{search_term}」に一致する言語が見つかりませんでした。</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Subtype dialog select value placeholder (&amp;#8210; is a hyphen character)">&#8210; 選択してください &#8210;</string>
     <string name="settings__localization__subtype_summary" comment="Subtype summary">{characters_name} / {symbols_name} / {currency_set_name}</string>
-    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">推奨されるサブタイププリセット</string>
-    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">利用可能な推奨プリセットはありません。 下のボタンを使用して、すべてのサブタイププリセットを表示します。</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Suggested presets title">推奨サブタイププリセット</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Suggested presets none found">利用可能な推奨プリセットはありません。下のボタンを使用して、すべてのサブタイププリセットを表示します。</string>
     <string name="settings__localization__subtype_presets" comment="Subtype presets dialog title">サブタイププリセット</string>
-    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">全て表示</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">サブタイプを構成していないようです。 フォールバックとして、サブタイプEnglish / QWERTYが使用されます！</string>
-    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">このサブタイプはすでに存在します！</string>
-    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">少なくとも1つのフィールドで値が選択されていません。 フィールドの値を選択してください。</string>
-    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (インストールされていません)</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="View all presets button">すべて表示</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">サブタイプが設定されていません。フォールバックとして英語/QWERTYサブタイプが使用されます。</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">このサブタイプは既に存在します！</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">少なくとも1つのフィールドで値が選択されていません。フィールドの値を選択してください。</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (未インストール)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">レイアウト</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">削除の確認</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">このサブタイプを削除してもよろしいですか？</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">テーマ</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">テーマモード</string>
-    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">日の出時間</string>
-    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日の入時間</string>
-    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">日のテーマ</string>
-    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜間テーマ</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">インストールされたテーマを管理</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoardアプリアセット</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">日の出時刻</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日の入り時刻</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">昼のテーマ</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜のテーマ</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme"> アクセントカラー (Material You テーマ) </string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">インストール済みテーマの管理</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoardアプリのアセット</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">内部ストレージ</string>
-    <string name="pref__theme__source_external" comment="Label for the theme source field">外部プロバイダー</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">日のテーマを選択</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">夜間テーマを選択</string>
-    <string name="settings__theme_editor__fine_tune__title">微調整エディター</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">外部プロバイダ</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">昼のテーマを選択</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">夜のテーマを選択</string>
+    <string name="settings__theme_editor__fine_tune__title">微調整エディタ</string>
     <string name="settings__theme_editor__fine_tune__level">編集レベル</string>
-    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">ダイアログの後にキーボードを表示</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">色の表現</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">ダイアログ後にキーボードを表示</string>
     <string name="settings__theme_editor__add_rule">ルールを追加</string>
     <string name="settings__theme_editor__edit_rule">ルールを編集</string>
-    <string name="settings__theme_editor__no_rules_defined">このスタイルシートにはルールが定義されていません。 このスタイルシートのカスタマイズを開始するルールを追加します。</string>
-    <string name="settings__theme_editor__rule_already_exists">このスタイルシートルールはすでに定義されています。</string>
+    <string name="settings__theme_editor__no_rules_defined">このスタイルシートにはルールが定義されていません。このスタイルシートのカスタマイズを開始するにはルールを追加してください。</string>
+    <string name="settings__theme_editor__rule_already_exists">このスタイルシートルールは既に定義されています。</string>
+    <string name="settings__theme_editor__rule_name">要素 / アノテーション</string>
+    <string name="settings__theme_editor__rule_codes">対象キーコード</string>
     <string name="settings__theme_editor__rule_groups">グループ</string>
-    <string name="settings__theme_editor__rule_selectors">セレクター</string>
-    <string name="settings__theme_editor__code_already_exists">このキーコードはすでに定義されています。</string>
-    <string name="settings__theme_editor__code_invalid">このキーコードは無効です。 キーコードが、文字の場合は {c_min} から {c_max} の範囲内、内部特殊キーの場合は {i_min} から {i_max} の範囲内にあることを確認してください。</string>
-    <string name="settings__theme_editor__code_recording_help_text">キーのコードを見つけるには、コード入力フィールドの横にあるボタンを使用します。 アクティブ化されると、次にキーを押したことが記録され、コードが入力フィールドに挿入されます。</string>
+    <string name="settings__theme_editor__rule_modes">対象モード（レイヤー）</string>
+    <string name="settings__theme_editor__rule_shift_states">対象シフト状態</string>
+    <string name="settings__theme_editor__rule_selectors">セレクタ</string>
+    <string name="settings__theme_editor__add_code">キーコードを追加</string>
+    <string name="settings__theme_editor__edit_code">キーコードを編集</string>
+    <string name="settings__theme_editor__no_codes_defined">すべてのターゲット要素にルールを適用します。</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">すべての可能な値が追加されました。</string>
+    <string name="settings__theme_editor__code_already_exists">このキーコードは既に定義されています。</string>
+    <string name="settings__theme_editor__code_invalid">このキーコードは無効です。キーコードが文字の場合は {c_min}～{c_max} の範囲内、内部特殊キーの場合は {i_min}～{i_max} の範囲内であることを確認してください。</string>
+    <string name="settings__theme_editor__code_help_text">または、次のリンクが対応するキーコードを見つけるのに役立ちます:</string>
+    <string name="settings__theme_editor__code_placeholder">コード</string>
+    <string name="settings__theme_editor__code_recording_help_text">キーのコードを見つけるには、コード入力フィールドの横にあるボタンを使用します。有効化すると、次に押したキーが記録され、コードが入力フィールドに挿入されます。</string>
+    <string name="settings__theme_editor__code_recording_started">キーコードの記録を開始しました</string>
+    <string name="settings__theme_editor__code_recording_stopped">キーコードの記録を停止しました</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} はキーコードを記録するためにデフォルトのキーボードである必要があります</string>
+    <string name="settings__theme_editor__code_recording_placeholder">記録中…</string>
     <string name="settings__theme_editor__add_property">プロパティを追加</string>
     <string name="settings__theme_editor__edit_property">プロパティを編集</string>
-    <string name="settings__theme_editor__property_already_exists">この名前のプロパティは、現在のルール内にすでに存在します。</string>
+    <string name="settings__theme_editor__property_already_exists">この名前のプロパティは、現在のルール内に既に存在します。</string>
     <string name="settings__theme_editor__property_name">プロパティの名前</string>
     <string name="settings__theme_editor__property_value">プロパティ値</string>
-    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">すべてのコーナーに申し込む</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">すべての角に適用</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">カラー文字列を編集</string>
-    <string name="settings__theme_editor__component_meta_is_night_theme">夜間のテーマ</string>
-    <string name="settings__theme_editor__component_meta_is_borderless">ボーダレスです</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">ファイルを選択</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">この拡張機能にはまだファイルが追加されていません。 前の画面の「{action_title}」アクションを使用してファイルをインポートしてください。</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">夜のテーマ</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">枠線なし</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">スタイルシートパス</string>
+    <string name="settings__theme_editor__stylesheet_error_title">スタイルシートエラー</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} はスタイルシートを寛大に読み込み、不足しているスキーマやルールを追加したり、無効なルール、プロパティ、値を削除したりすることができます。 {app_name} にこれらの変更を適用させますか？</string>
+    <string name="snygg__rule_annotation__defines">変数</string>
+    <string name="snygg__rule_annotation__defines_description">このルール内で変数を定義して、スタイルシート内で共通の色やサイズを再利用します。</string>
+    <string name="snygg__rule_annotation__font">フォント</string>
+    <string name="snygg__rule_annotation__font_name">フォント名</string>
+    <string name="snygg__rule_element__root">ルート</string>
+    <string name="snygg__rule_element__window">ウィンドウ</string>
     <string name="snygg__rule_element__key">キー</string>
-    <string name="snygg__rule_element__key_hint">重要なヒント</string>
+    <string name="snygg__rule_element__key_hint">キーヒント</string>
+    <string name="snygg__rule_element__key_popup_box">キーポップアップボックス</string>
+    <string name="snygg__rule_element__key_popup_element">キーポップアップ要素</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">キーポップアップ拡張インジケーター</string>
     <string name="snygg__rule_element__clipboard_header">クリップボードヘッダー</string>
+    <string name="snygg__rule_element__clipboard_header_button">クリップボードヘッダーボタン</string>
+    <string name="snygg__rule_element__clipboard_header_text">クリップボードヘッダーテキスト</string>
+    <string name="snygg__rule_element__clipboard_subheader">クリップボードサブヘッダー</string>
+    <string name="snygg__rule_element__clipboard_content">クリップボードコンテンツ</string>
     <string name="snygg__rule_element__clipboard_item">クリップボードアイテム</string>
-    <string name="snygg__rule_element__clipboard_item_popup">クリップボードアイテムのポップアップ</string>
-    <string name="snygg__rule_element__glide_trail">グライドトレイル</string>
-    <string name="snygg__rule_element__one_handed_panel">片手パネル</string>
-    <string name="snygg__rule_element__smartbar_candidate_word">スマートバー候補の単語</string>
+    <string name="snygg__rule_element__clipboard_item_popup">クリップボードアイテムポップアップ</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">クリップボード全消去ダイアログ</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">クリップボード全消去ダイアログメッセージ</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">クリップボード全消去ダイアログボタン</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">クリップボード全消去ダイアログボタン</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">クリップボード履歴無効タイトル</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">クリップボード履歴無効メッセージ</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">クリップボード履歴無効ボタン</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">クリップボード履歴ロックタイトル</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">クリップボード履歴ロックメッセージ</string>
+    <string name="snygg__rule_element__extracted_landscape_input_layout">横向き入力レイアウト</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">横向き入力フィールド</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">横向き入力アクション</string>
+    <string name="snygg__rule_element__glide_trail">グライド軌跡</string>
+    <string name="snygg__rule_element__incognito_mode_indicator">シークレットモードインジケーター</string>
+    <string name="snygg__rule_element__inline_autofill_chip">インライン自動入力チップ</string>
+    <string name="snygg__rule_element__media">メディア</string>
+    <string name="snygg__rule_element__media_emoji_subheader">メディア絵文字サブヘッダー</string>
+    <string name="snygg__rule_element__media_emoji_key">メディア絵文字キー</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">メディア絵文字キーポップアップボックス</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">メディア絵文字キーポップアップ要素</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">メディア絵文字キーポップアップ拡張インジケーター</string>
+    <string name="snygg__rule_element__media_emoji_tab">メディア絵文字タブ</string>
+    <string name="snygg__rule_element__media_bottom_row">メディア下部行</string>
+    <string name="snygg__rule_element__media_bottom_row_button">メディア下部行ボタン</string>
+    <string name="snygg__rule_element__one_handed_panel">片手モードパネル</string>
+    <string name="snygg__rule_element__one_handed_panel_button">片手パネルボタン</string>
+    <string name="snygg__rule_element__smartbar">スマートバー</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">スマートバー共有アクション行</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">スマートバー共有アクショントグル</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">スマートバー拡張アクション行</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">スマートバー拡張アクショントグル</string>
+    <string name="snygg__rule_element__smartbar_action_key">スマートバーアクションキー</string>
+    <string name="snygg__rule_element__smartbar_action_tile">スマートバーアクションタイル</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">スマートバーアクションタイルアイコン</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">スマートバーアクションタイルテキスト</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">スマートバーアクションオーバーフロー</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">スマートバーアクションオーバーフローカスタマイズボタン</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">スマートバーアクションエディター</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">スマートバーアクションエディターヘッダー</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">スマートバーアクションエディターヘッダーボタン</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">スマートバーアクションエディターサブヘッダー</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">スマートバーアクションエディタータイルグリッド</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">スマートバーアクションエディタータイル</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">スマートバー候補行</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">スマートバー候補単語</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">スマートバー候補単語テキスト</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">スマートバー候補単語セカンダリテキスト</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">スマートバー候補クリップ</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">スマートバー候補クリップアイコン</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">スマートバー候補クリップテキスト</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">スマートバー候補スペーサー</string>
-    <string name="snygg__rule_selector__pressed">押された</string>
-    <string name="snygg__rule_selector__focus">集中</string>
-    <string name="snygg__rule_selector__disabled">無効</string>
-    <string name="snygg__property_name__background">バックグラウンド</string>
-    <string name="snygg__property_name__foreground">フォアグラウンド</string>
-    <string name="snygg__property_name__border_color">ボーダの色</string>
-    <string name="snygg__property_name__border_style">ボーダースタイル</string>
-    <string name="snygg__property_name__border_width">ボーダーの幅</string>
+    <string name="snygg__rule_element__subtype_panel">サブタイプパネル</string>
+    <string name="snygg__rule_element__subtype_panel_header">サブタイプパネルヘッダー</string>
+    <string name="snygg__rule_element__subtype_panel_list">サブタイプパネルリスト</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">サブタイプパネルリストアイテム</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">サブタイプパネルリストアイテムアイコン（先頭）</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">サブタイプパネルリストアイテムテキスト</string>
+    <string name="snygg__rule_selector__pressed">押下状態</string>
+    <string name="snygg__rule_selector__focus">フォーカス状態</string>
+    <string name="snygg__rule_selector__hover">ホバー</string>
+    <string name="snygg__rule_selector__disabled">無効状態</string>
+    <string name="snygg__property_name__background">背景</string>
+    <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__background_image">背景画像</string>
+    <string name="snygg__property_name__content_scale">コンテンツスケール</string>
+    <string name="snygg__property_name__border_color">枠線の色</string>
+    <string name="snygg__property_name__border_style">枠線のスタイル</string>
+    <string name="snygg__property_name__border_width">枠線の幅</string>
     <string name="snygg__property_name__font_family">フォントファミリー</string>
-    <string name="snygg__property_name__font_size">フォントのサイズ</string>
+    <string name="snygg__property_name__font_size">フォントサイズ</string>
     <string name="snygg__property_name__font_style">フォントスタイル</string>
     <string name="snygg__property_name__font_weight">フォントの太さ</string>
-    <string name="snygg__property_name__shadow_elevation">影の標高</string>
-    <string name="snygg__property_name__shape">形態</string>
-    <string name="snygg__property_name__var_primary">プライマリーカラー</string>
-    <string name="snygg__property_name__var_primary_variant">プライマリーカラー(バリアント)</string>
-    <string name="snygg__property_name__var_secondary">セカンダリーカラー</string>
-    <string name="snygg__property_name__var_secondary_variant">セカンダリーカラー(バリアント)</string>
-    <string name="snygg__property_name__var_background">共通の背景</string>
-    <string name="snygg__property_name__var_surface">共通の表面</string>
-    <string name="snygg__property_name__var_surface_variant">共通の表面(バリアント)</string>
-    <string name="snygg__property_name__var_on_primary">プライマリの前景</string>
-    <string name="snygg__property_name__var_on_secondary">セカンダリの前景</string>
-    <string name="snygg__property_name__var_on_background">背景の前景</string>
-    <string name="snygg__property_name__var_on_surface">表面の前景</string>
-    <string name="snygg__property_name__var_on_surface_variant">表面の前景(バリアント)</string>
-    <string name="snygg__property_name__var_shape">一般的な形状</string>
-    <string name="snygg__property_name__var_shape_variant">一般的な形状(バリアント)</string>
+    <string name="snygg__property_name__letter_spacing">文字間隔</string>
+    <string name="snygg__property_name__line_height">行の高さ</string>
+    <string name="snygg__property_name__margin">マージン</string>
+    <string name="snygg__property_name__padding">パディング</string>
+    <string name="snygg__property_name__shadow_color">影の色</string>
+    <string name="snygg__property_name__shadow_elevation">影の高さ</string>
+    <string name="snygg__property_name__shape">形状</string>
+    <string name="snygg__property_name__clip">クリップ</string>
+    <string name="snygg__property_name__src">ソース</string>
+    <string name="snygg__property_name__text_align">テキスト整列</string>
+    <string name="snygg__property_name__text_decoration_line">テキスト装飾線</string>
+    <string name="snygg__property_name__text_max_lines">テキスト最大行数</string>
+    <string name="snygg__property_name__text_overflow">テキストオーバーフロー</string>
+    <string name="snygg__property_name__var_primary">プライマリカラー</string>
+    <string name="snygg__property_name__var_primary_variant">プライマリカラー（バリアント）</string>
+    <string name="snygg__property_name__var_secondary">セカンダリカラー</string>
+    <string name="snygg__property_name__var_secondary_variant">セカンダリカラー（バリアント）</string>
+    <string name="snygg__property_name__var_background">共通背景</string>
+    <string name="snygg__property_name__var_surface">共通サーフェス</string>
+    <string name="snygg__property_name__var_surface_variant">共通サーフェス（バリアント）</string>
+    <string name="snygg__property_name__var_on_primary">プライマリ上の前景</string>
+    <string name="snygg__property_name__var_on_secondary">セカンダリ上の前景</string>
+    <string name="snygg__property_name__var_on_background">背景上の前景</string>
+    <string name="snygg__property_name__var_on_surface">サーフェス上の前景</string>
+    <string name="snygg__property_name__var_on_surface_variant">サーフェス上の前景（バリアント）</string>
+    <string name="snygg__property_name__var_shape">共通形状</string>
+    <string name="snygg__property_name__var_shape_variant">共通形状（バリアント）</string>
     <string name="snygg__property_value__explicit_inherit">継承</string>
-    <string name="snygg__property_value__defined_var">変数リファレンス</string>
-    <string name="snygg__property_value__solid_color">ソリッドカラー</string>
+    <string name="snygg__property_value__defined_var">変数参照</string>
+    <string name="snygg__property_value__yes">はい</string>
+    <string name="snygg__property_value__no">いいえ</string>
+    <string name="snygg__property_value__solid_color">単色</string>
+    <string name="snygg__property_value__material_you_light_color">Material Youカラー（ライト）</string>
+    <string name="snygg__property_value__material_you_dark_color">Material Youカラー（ダーク）</string>
+    <string name="snygg__property_value__font_family_generic">フォントファミリー (ジェネリック)</string>
+    <string name="snygg__property_value__font_family_custom">フォントファミリー（カスタム）</string>
+    <string name="snygg__property_value__font_style">フォントスタイル</string>
+    <string name="snygg__property_value__font_weight">フォントの太さ</string>
+    <string name="snygg__property_value__padding">パディングまたはマージン</string>
     <string name="snygg__property_value__rectangle_shape">長方形</string>
     <string name="snygg__property_value__circle_shape">円形</string>
-    <string name="snygg__property_value__cut_corner_shape_dp">カットコーナー形状(dp)</string>
-    <string name="snygg__property_value__cut_corner_shape_percent">カットコーナー形状(%)</string>
-    <string name="snygg__property_value__rounded_corner_shape_dp">丸みを帯びた角の形(dp)</string>
-    <string name="snygg__property_value__rounded_corner_shape_percent">丸みを帯びた角の形状(%)</string>
-    <string name="snygg__property_value__dp_size">サイズ (dp)</string>
-    <string name="snygg__property_value__sp_size">サイズ (sp)</string>
-    <string name="snygg__property_value__percentage_size">サイズ (%)</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">角丸（切り取り、dp）</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">角丸（切り取り、%）</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">角丸（dp）</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">角丸（%）</string>
+    <string name="snygg__property_value__dp_size">サイズ（dp）</string>
+    <string name="snygg__property_value__sp_size">サイズ（sp）</string>
+    <string name="snygg__property_value__percentage_size">サイズ（%）</string>
+    <string name="snygg__property_value__content_scale">コンテンツスケール</string>
+    <string name="snygg__property_value__text_align">テキスト整列</string>
+    <string name="snygg__property_value__text_decoration_line">テキスト装飾線</string>
+    <string name="snygg__property_value__text_max_lines">テキスト最大行数</string>
+    <string name="snygg__property_value__text_overflow">テキストオーバーフロー</string>
+    <string name="snygg__property_value__uri">URIリファレンス</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">音とバイブレーション</string>
-    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ハウリング</string>
-    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">ハウリングを有効にする</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">音声フィードバック</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">音声フィードバックを有効にする</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">システム設定に関わらず、入力イベントの音を再生しない</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">入力イベントの音量</string>
-    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">キーを押したときのサウンド</string>
-    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">キーを長く押した時のサウンド</string>
-    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">キーリピートアクションサウンド</string>
-    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">ジェスチャーをスワイプした時のサウンド</string>
-    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャーを移動した時のスワイプサウンド</string>
-    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触覚フィードバック/バイブレーション</string>
-    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">触覚フィードバックを有効</string>
-    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">バイブレーション持続時間</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">バイブレーションの強さ</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">この機能にはハードウェア振幅制御のサポートが必要ですが、これはこのデバイスにはありません</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">この機能には、Android8.0以降でのみ利用可能な振幅制御のサポートが必要です。</string>
-    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">キーバイブレーション</string>
-    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">キーを長く押した時の振動</string>
-    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">キーリピートアクションバイブレーション</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">ジェスチャーをスワイプした時の振動</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャーを移動した時のスワイプ振動</string>
-    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">例えば キー、ボタン、絵文字タブ</string>
-    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">例えば ポップアップメニュー</string>
-    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">例えばキーを削除</string>
-    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">実装されていません</string>
-    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">例えば カーソルコントロールスワイプ</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">キー押下時のサウンド</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">キー長押し時のサウンド</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">キーリピート時のサウンド</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">ジェスチャースワイプ時のサウンド</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャームービングスワイプ時のサウンド</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">触覚フィードバック（バイブレーション）</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">触覚フィードバックを有効にする</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">システム設定に関わらず、入力イベントで振動しない</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">振動モード</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">振動時間</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">振動の強さ</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">この機能にはハードウェアバイブレータが必要ですが、このデバイスには搭載されていないようです</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">この機能にはハードウェア振幅制御のサポートが必要ですが、このデバイスにはありません</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">この機能には、Android 8.0以降でのみ利用可能な振幅制御のサポートが必要です。</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">キー押下時のバイブレーション</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">キー長押し時のバイブレーション</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">キーリピート時のバイブレーション</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">ジェスチャースワイプ時のバイブレーション</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">ジェスチャームービングスワイプ時のバイブレーション</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">例：キー、ボタン、絵文字タブ</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">例：ポップアップメニュー</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">例：削除キー</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">未実装</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">例：カーソルコントロールスワイプ</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">キーボード</string>
-    <string name="pref__keyboard__number_row__label" comment="Preference title">行数</string>
-    <string name="pref__keyboard__number_row__summary" comment="Preference summary">文字レイアウトの上に数字の行を表示する</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">ヒント付きの数字の行</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">ヒント記号</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">数字行</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">文字レイアウトの上に数字行を表示します</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">ヒント付き数字行モード</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">ヒント付き記号モード</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">ユーティリティキーを表示</string>
-    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">スペースバーの横に設定可能なユーティリティキーを表示します</string>
-    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">ユーティリティキーアクション</string>
-    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズの倍率</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">スペースバーの横に設定可能なユーティリティキーを表示</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">ユーティリティキーのアクション</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">スペースバーラベル</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">大文字化の動作</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズ倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">片手モード</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">片手モード時のキーボードの幅</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーンの入力</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">片手モード時のキーボード幅</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーン入力</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">キーボードの高さ</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">キーの間隔</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">ボトムオフセット</string>
-    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キーを押す時の設定</string>
-    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">ポップアップの可視性</string>
-    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">キーを押すとポップアップが表示されます</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">アクセントにシンボルポップアップを含む</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">デフォルトのレイアウトのアクセントにシンボルポップアップを追加します</string>
-    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">長くキーを押した時の待ち時間</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">スペースバーを文字に切り替える</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">記号または数字の場合、自動的に文字に戻ります</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">キー間隔</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">下部オフセット</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キー入力</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">キーポップアップの表示</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">キーを押すとポップアップを表示</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">アクセントに記号ポップアップを含める</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">デフォルトレイアウトのアクセントに記号ポップアップを追加します</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">キー長押しの遅延時間</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">スペースバーで文字入力に切り替え</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">記号または数字入力時、スペースバーで自動的に文字入力に戻ります</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">シークレットインジケーター</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">スマートバー</string>
-    <string name="pref__smartbar__enabled__label" comment="Preference title">スマートバーを有効</string>
-    <string name="pref__smartbar__enabled__summary" comment="Preference summary">キーボードの上に表示されます</string>
-    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">トグルボタンを切り替える</string>
-    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">アクション行の切り替えを反転します</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">スマートバーを有効にする</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">キーボードの上に表示</string>
+    <string name="pref__smartbar__layout__label" comment="Preference title">レイアウト</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">レイアウト固有のオプション</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Preference title">トグルボタンを反転</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">アクション行のトグルを反転します</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">自動展開/折りたたみ</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">現在の状態に基づいて共有アクション行を自動的に展開/折りたたみます</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">アクション行の配置</string>
     <!-- Typing strings -->
-    <string name="pref__suggestion__title" comment="Preference group title">提案</string>
-    <string name="pref__suggestion__display_mode__label" comment="Preference title">提案表示モード</string>
-    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">オートフィルサービスによって提供されるインライン提案を表示する</string>
-    <string name="pref__correction__title" comment="Preference group title">訂正</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">自動大文字変換</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">現在の入力コンテキストに基づいて単語を大文字にする</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">CapsLock状態を維持</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">別のテキストフィールドに移動しても、CapsLockはオンのままになります</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">ダブルスペースでピリオドを入力</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">スペースバーを2回タップすると、ピリオドの後にスペースが挿入されます</string>
+    <string name="settings__typing__title" comment="Title of Typing screen">入力</string>
+    <string name="pref__suggestion__title" comment="Preference group title">候補</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">候補を表示</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">入力中に候補を提供します</string>
+    <string name="pref__suggestion__display_mode__label" comment="Preference title">候補表示モード</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">不快感を与える可能性のある単語をブロック</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">自動入力サービスによって提供されるインライン候補を表示します</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">シークレットモード</string>
+    <string name="pref__correction__title" comment="Preference group title">修正</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">自動大文字化</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">現在の入力コンテキストに基づいて単語を大文字にします</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">句読点の後に自動でスペースを挿入</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">句読点の後に自動的にスペースを挿入します</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">CapsLockの状態を記憶</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">別のテキストフィールドに移動してもCapsLockはオンのまま</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">ダブルスペースでピリオド入力</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">スペースバーを2回タップするとピリオドとスペースを挿入</string>
+    <string name="pref__spelling__title" comment="Preference group title">スペル</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">システム全体で無効。誤った単語のテキストフィールドに赤い線は表示されません。タップして変更。</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">インラインテキストスペルチェッカーサービスが設定されていません。タップして変更。</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">言語</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">連絡先から名前を使用</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">連絡先リストから名前を検索します</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">ユーザー辞書のエントリを使用</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">ユーザー辞書からエントリを検索します</string>
     <string name="settings__dictionary__title" comment="Title of the User dictionaries screen">ユーザー辞書</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">システムユーザー辞書を有効化</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">システムユーザー辞書に保存されている単語を提案します</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">システムユーザー辞書を有効にする</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">システムユーザー辞書に保存されている単語を候補として表示します</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">システムユーザー辞書を管理</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">システムユーザー辞書のエントリを追加、表示、および削除をします</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">内部ユーザー辞書を有効化</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">内部ユーザー辞書に保存されている単語を提案します</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">システムユーザー辞書のエントリを追加、表示、削除します</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">内部ユーザー辞書を有効にする</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">内部ユーザー辞書に保存されている単語を候補として表示します</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">内部ユーザー辞書を管理</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">内部ユーザー辞書のエントリを追加、表示、および削除をします</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">内部ユーザー辞書のエントリを追加、表示、削除します</string>
     <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">内部ユーザー辞書</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">システムユーザー辞書</string>
-    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">このユーザー辞書には単語が含まれていません。</string>
-    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">頻度:{freq}</string>
-    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">頻度:{freq} | ショートカット:{shortcut}</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">このユーザー辞書に単語はありません。</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">頻度：{freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">頻度：{freq} | ショートカット：{shortcut}</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">すべての言語</string>
-    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">この言語コードは、予想される構文に準拠していません。 コードは、言語のみ (en など)、言語と国 (en_US など)、または言語、国、およびスクリプト (en_US-script など) のいずれかである必要があります。</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">システムマネージャーUIを開く</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">ユーザー辞書が正常にインポートされました！</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">ユーザー辞書が正常にエクスポートされました！</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">単語を追加</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">単語を編集</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">単語</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">単語を入力してください</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">{regex} に一致する単語を入力してください</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">頻度（{f_min}～{f_max}）</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">頻度値を入力してください</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">指定された範囲内の有効な数値を入力してください</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">ショートカット (オプション)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">{regex} に一致するショートカットを入力してください</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">言語コード (オプション)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">この言語コードは想定される構文に準拠していません。コードは、言語のみ（例: en）、言語と国（例: en_US）、または言語、国、スクリプト（例: en_US-Latn）のいずれかである必要があります。</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">ジェスチャーとグライド入力</string>
+    <string name="pref__glide__title" comment="Preference group title">グライド入力</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">グライド入力を有効にする</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">指を文字の上でスライドさせて単語を入力します</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">グライド軌跡を表示</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">各単語の後で消えます</string>
+    <string name="pref__glide_trail_fade_duration">グライド軌跡のフェード時間</string>
+    <string name="pref__glide_preview_refresh_delay">プレビュー更新遅延</string>
+    <string name="pref__glide__show_preview">グライド入力中にプレビューを表示</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">常に単語を削除</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">グライド直後に削除を押すと単語全体を削除します</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">一般ジェスチャー</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">スペースバーのジェスチャー</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">その他のジェスチャー / ジェスチャー閾値</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">上にスワイプ</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">下にスワイプ</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">左にスワイプ</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">右にスワイプ</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">スペースバーを上にスワイプ</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">スペースバーを左にスワイプ</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">スペースバーを右にスワイプ</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">スペースバーを長押し</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">削除キーを左にスワイプ</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">削除キーを長押し</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">スワイプ速度の閾値</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">スワイプ距離の閾値</string>
+    <string name="settings__other__title" comment="Title of Other settings">その他</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">設定テーマ</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">システムデフォルト (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">ライト</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">ダーク</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLEDダーク</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other"> 設定アクセントカラー </string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">設定言語</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">ランチャーにアプリアイコンを表示</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">システムの制限により、Android 10以降では常に有効です</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">アプリについて</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoardのアプリアイコン</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">オープンソースライセンス</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">プライバシーポリシー</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">ソースコード</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">オープンソースライセンス</string>
+    <string name="about__version__title" comment="Preference title">バージョン</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">バージョンをクリップボードにコピーしました</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string">問題が発生しました: {error_message}</string>
+    <string name="about__changelog__title" comment="Preference title">変更履歴</string>
+    <string name="about__changelog__summary" comment="Preference summary">新機能</string>
+    <string name="about__repository__title" comment="Preference title">リポジトリ (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">ソースコード、ディスカッション、課題、情報</string>
+    <string name="about__privacy_policy__title" comment="Preference title">プライバシーポリシー</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">このプロジェクトのプライバシーポリシー</string>
+    <string name="about__project_license__title" comment="Preference title">プロジェクトライセンス</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoardは{license_name}の下でライセンスされています</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">エラー: ライセンステキストの読み込みに失敗しました。\n-&gt; 理由: {error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">アセットマネージャーの参照がnullです</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">サードパーティライセンス</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">このアプリに含まれるサードパーティライブラリのライセンス</string>
     <!-- Setup UI strings -->
-    <string name="setup__enable_ime__description">Android では、使用する前にすべてのカスタム キーボードを個別に有効にする必要があります。 システム <i>言語 &amp; を開きます。 </i> 設定を入力すると、\"{app_name}\"が有効になります。</string>
+    <string name="setup__title" comment="Title of Setup">ようこそ！</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">{app_name}をご利用いただきありがとうございます！このクイックセットアップでは、お使いのデバイスで{app_name}を使用するために必要な手順を案内します。</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">プライバシーポリシー</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">リポジトリ</string>
+    <string name="setup__enable_ime__title">{app_name}を有効にする</string>
+    <string name="setup__enable_ime__description">Androidでは、使用する前にすべてのカスタムキーボードを個別に有効にする必要があります。システムの<i>「言語と入力」</i>設定を開き、「{app_name}」を有効にしてください。</string>
+    <string name="setup__enable_ime__open_settings_btn">システム設定を開く</string>
+    <string name="setup__select_ime__title">{app_name}を選択</string>
+    <string name="setup__select_ime__description">{app_name}はシステムで有効になりました。アクティブに使用するには、入力セレクターダイアログで{app_name}を選択して切り替えてください！</string>
+    <string name="setup__select_ime__switch_keyboard_btn">キーボードを切り替える</string>
+    <string name="setup__grant_notification_permission__title">クラッシュレポート通知を許可</string>
+    <string name="setup__grant_notification_permission__description">Android 13以降、アプリは通知を送信するために許可を求める必要があります。\n Florisboardでは、これはクラッシュ発生時にクラッシュレポート画面を開くためにのみ使用されます。\n この許可はシステム設定でいつでも変更できます。\n </string>
+    <string name="setup__grant_notification_permission__btn">許可を与える</string>
+    <string name="setup__finish_up__title">完了</string>
+    <string name="setup__finish_up__description_p1">{app_name}はシステムで有効になり、カスタマイズの準備ができました。</string>
+    <string name="setup__finish_up__description_p2">問題、バグ、クラッシュが発生した場合、または単に提案をしたい場合は、概要画面からプロジェクトリポジトリを確認してください！</string>
+    <string name="setup__finish_up__finish_btn">カスタマイズを開始</string>
     <!-- Back up & Restore -->
-    <string name="backup_and_restore__restore__metadata_warn_different_version">このバックアップ アーカイブは、通常サポートされている現在とは別のバージョンで生成されました。 ただし、機能の違いにより、軽微な問題が発生したり、一部の設定が正しく転送されない場合があることに注意してください。</string>
+    <string name="backup_and_restore__title">バックアップと復元</string>
+    <string name="backup_and_restore__back_up__title">データをバックアップ</string>
+    <string name="backup_and_restore__back_up__summary">設定とカスタマイズのバックアップアーカイブを生成します</string>
+    <string name="backup_and_restore__back_up__destination">バックアップ先を選択</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">ローカルファイルシステム</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">共有メニュー経由のサードパーティアプリ</string>
+    <string name="backup_and_restore__back_up__files">バックアップするものを選択</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">設定</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">キーボード拡張機能</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">スペル拡張機能 / 辞書</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">テーマ拡張機能</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">クリップボード履歴</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">テキストアイテム</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">画像</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">動画</string>
+    <string name="backup_and_restore__back_up__success">バックアップアーカイブの書き出しに成功しました！</string>
+    <string name="backup_and_restore__back_up__failure">バックアップアーカイブの書き出しに失敗しました: {error_message}</string>
+    <string name="backup_and_restore__restore__title">データを復元</string>
+    <string name="backup_and_restore__restore__summary">バックアップアーカイブから設定とカスタマイズを復元します</string>
+    <string name="backup_and_restore__restore__files">復元するものを選択</string>
+    <string name="backup_and_restore__restore__metadata">選択されたバックアップアーカイブ</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">このバックアップアーカイブは、通常サポートされている現在のバージョンとは異なるバージョンで生成されました。機能の違いにより、軽微な問題が発生したり、一部の設定が正しく転送されない場合があることに注意してください。</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_vendor">このバックアップアーカイブはサードパーティ製アプリで生成されたものであり、通常はサポートされていません。データ損失が発生する可能性があります。自己責任で復元してください！</string>
+    <string name="backup_and_restore__restore__metadata_error_invalid_metadata">このバックアップアーカイブには無効なメタデータが含まれています。破損しているか、不適切に変更された可能性があります。このアーカイブからの復元はできません。別のものを選択してください。</string>
+    <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">このバックアップアーカイブには復元するファイルが含まれていません。別のものを選択してください。</string>
+    <string name="backup_and_restore__restore__mode">復元モード</string>
+    <string name="backup_and_restore__restore__mode_merge">現在のデータとマージ</string>
+    <string name="backup_and_restore__restore__mode_erase_and_overwrite">現在のデータを消去して上書き</string>
+    <string name="backup_and_restore__restore__success">データの復元に成功しました！</string>
+    <string name="backup_and_restore__restore__failure">データの復元に失敗しました: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">このエラーを報告する場合、クラッシュがまだ報告されていない場合は、まず GitHub の課題トラッカーを確認してください。\n報告されていない場合は、生成されたクラッシュ ログをコピーして、新しい課題を開きます。 \"%s\"テンプレートを使用して、説明と再現手順を入力し、生成されたクラッシュ ログを最後に貼り付けます。 これは、FlorisBoard を誰にとってもより良く、より安定させるのに役立ちます。 ありがとうございました！</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardエラーレポート</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">ご不便をおかけして申し訳ありませんが、予期しないエラーによりFlorisBoardがクラッシュしました。</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">このエラーを報告する場合、まずGitHubの課題トラッカーでクラッシュがまだ報告されていないか確認してください。\n報告されていない場合は、生成されたクラッシュログをコピーして新しい課題を開き、「%s」テンプレートを使用して説明と再現手順を入力し、最後に生成されたクラッシュログを貼り付けてください。これにより、FlorisBoardをより良く、より安定させるのに役立ちます。ご協力ありがとうございます！</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">システムクリップボードにコピー</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">システムクリップボードにコピーしました</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">システムクリップボードにコピーできません：クリップボードマネージャーのインスタンスが見つかりません</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">課題トラッカーを開く (github.com)</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">閉じる</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoardエラーレポート</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoardの動作が停止しました…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">タップしてエラー詳細を表示</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoardが繰り返し動作を停止しているようです…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">無限クラッシュループを停止するため、以前のキーボードにフォールバックしています。タップしてエラー詳細を表示</string>
     <!-- Clipboard strings -->
-    <string name="clipboard__disabled__message">{app_name} のクリップボード履歴を使用すると、コピーしたテキストや画像をすばやく保存してアクセスできます。また、アイテムを固定したり、自動クリーンアップを構成したり、アイテムの上限を設定したりできます。</string>
+    <string name="clipboard__header_title">クリップボード</string>
+    <string name="clipboard__disabled__title">クリップボード履歴は現在無効です</string>
+    <string name="clipboard__disabled__message">{app_name}のクリップボード履歴を使用すると、コピーしたテキストや画像を素早く保存してアクセスできます。また、アイテムをピン留めしたり、自動クリーンアップを設定したり、アイテム数の上限を設定したりできます。</string>
+    <string name="clipboard__disabled__enable_button">クリップボード履歴を有効にする</string>
+    <string name="clipboard__empty__title">クリップボードは空です</string>
+    <string name="clipboard__empty__message">テキストクリップや画像をコピーすると、ここに表示されます。</string>
+    <string name="clipboard__locked__title">クリップボードはロックされています</string>
+    <string name="clipboard__locked__message">クリップボード履歴にアクセスするには、まずデバイスのロックを解除してください。</string>
+    <string name="clipboard__group_pinned">ピン留め済み</string>
+    <string name="clipboard__group_recent">最近の項目</string>
+    <string name="clipboard__group_other">その他</string>
+    <string name="clipboard__item_description_email">メール</string>
+    <string name="clipboard__item_description_url">URL</string>
+    <string name="clipboard__item_description_phone">電話</string>
+    <string name="clip__clear_history">履歴を消去</string>
+    <string name="clip__unpin_item">アイテムのピン留めを解除</string>
+    <string name="clip__pin_item">アイテムをピン留め</string>
+    <string name="clip__delete_item">削除</string>
+    <string name="clip__paste_item">貼り付け</string>
+    <string name="clip__back_to_text_input">テキスト入力に戻る</string>
+    <string name="clip__cant_paste">このアプリはこのコンテンツの貼り付けを許可していません。</string>
+    <string name="clipboard__cleared_primary_clip">メインクリップを消去しました</string>
+    <string name="clipboard__cleared_history">履歴を消去しました</string>
+    <string name="clipboard__cleared_full_history">全履歴を消去しました</string>
+    <string name="settings__clipboard__title">クリップボード</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">内部クリップボードを使用</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">システムクリップボードの代わりに内部クリップボードを使用します</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">システムクリップボードから同期</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">システムクリップボードの更新はFlorisクリップボードも更新します</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">システムクリップボードへ同期</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Florisクリップボードの更新はシステムクリップボードも更新します</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">クリップボードの候補</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">クリップボードコンテンツ候補</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">以前にコピーしたクリップボードコンテンツを提案します</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">クリップボード候補を制限する</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">過去{v}秒以内にコピーされたアイテム</string>
+    <string name="pref__clipboard__group_clipboard_history__label">クリップボード履歴</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">クリップボード履歴を有効にする</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">クリップボードアイテムを保持して素早くアクセス</string>
+    <string name="pref__clipboard__clean_up_old__label">古いアイテムをクリーンアップ</string>
+    <string name="pref__clipboard__clean_up_after__label">経過後に古いアイテムをクリーンアップ</string>
+    <string name="pref__clipboard__auto_clean_sensitive__label">機密アイテムを自動クリーンアップ</string>
+    <string name="pref__clipboard__auto_clean_sensitive_after__label">経過後に機密アイテムを自動クリーンアップ</string>
+    <string name="pref__clipboard__limit_history_size__label">履歴サイズを制限</string>
+    <string name="pref__clipboard__max_history_size__label">最大履歴サイズ</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">プライマリクリップのクリアは履歴に影響</string>
+    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">プライマリクリップをクリアすると最新の履歴エントリも削除されます</string>
+    <string name="send_to_clipboard__unknown_error">不明なエラーが発生しました。もう一度お試しください！</string>
+    <string name="send_to_clipboard__type_not_supported_error">このメディアタイプはサポートされていません。</string>
+    <string name="send_to_clipboard__android_version_to_old_error">Androidのバージョンが古いため、この機能は利用できません。\n </string>
+    <string name="send_to_clipboard__description__copied_image_to_clipboard">下の画像をクリップボードにコピーしました。</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">開発者ツール</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">開発者ツールを有効にする</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">デバッグとトラブルシューティング専用のツール</string>
+    <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">メインクリップを表示</string>
+    <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">クリップボードの現在のプライマリクリップをオーバーレイ表示します</string>
+    <string name="devtools__show_input_state_overlay__label" comment="Label of Show input cache overlay in Devtools">入力状態オーバーレイを表示</string>
+    <string name="devtools__show_input_state_overlay__summary" comment="Summary of Show input cache overlay in Devtools">デバッグ用に現在の入力状態をオーバーレイ表示します</string>
+    <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">スペルオーバーレイを表示</string>
+    <string name="devtools__show_spelling_overlay__summary" comment="Summary of Show spelling overlay in Devtools">デバッグ用に現在のスペル結果をオーバーレイ表示します</string>
+    <string name="devtools__show_inline_autofill_overlay__label">インライン自動入力オーバーレイを表示</string>
+    <string name="devtools__show_inline_autofill_overlay__summary">デバッグ用に現在のインライン自動入力結果をオーバーレイ表示します</string>
+    <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">キータッチ境界を表示</string>
+    <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">キータッチ境界を赤色で囲みます</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">ドラッグ＆ドロップヘルパーを表示</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">デバッグ用にドラッグ&amp;ドロップ画面で通常は見えないヘルパーをレンダリングします</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">内部ユーザー辞書データベースを消去</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">辞書データベーステーブルからすべての単語をクリアします</string>
+    <string name="devtools__reset_quick_actions_to_default__label">スマートバーのクイックアクションをリセット</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">スマートバークイックアクションをデフォルトの配置にリセットします</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">スマートバークイックアクションをデフォルトに正常にリセットしました</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">「{flag_name}」フラグをリセット</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">セットアップ画面を再表示するためのデバッグアクション</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">クラッシュレポート画面をテスト</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">意図的にクラッシュを発生させるデバッグアクション</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Androidシステムツール</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">グローバルAndroid設定</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">セキュアAndroid設定</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">システムAndroid設定</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">システムロケール</string>
+    <string name="devtools__debuglog__title">デバッグログ</string>
+    <string name="devtools__debuglog__copied_to_clipboard">デバッグログをクリップボードにコピーしました</string>
+    <string name="devtools__debuglog__copy_log">ログをコピー</string>
+    <string name="devtools__debuglog__copy_for_github">ログをコピー（GitHubフォーマット）</string>
+    <string name="devtools__debuglog__loading">読み込み中…</string>
     <!-- Extension strings -->
-    <string name="ext__editor__create_component__from_empty_warning">{app_name} を初めて使用する場合、または詳細に慣れていない場合は、空のコンポーネントを作成して構成するのが難しい場合があります。 その場合は、既存のコンポーネントをコピーして好みに合わせて変更することを検討してください。</string>
-    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">アプリのコア アセットで提供されるデフォルトの拡張機能パッケージを置換または更新できません。 新しいバージョンのコア拡張機能パッケージを使用する場合は、アプリ自体を更新することを検討してください。</string>
+    <string name="ext__home__title">アドオンと拡張機能</string>
+    <string name="ext__list__ext_theme">テーマ拡張機能</string>
+    <string name="ext__list__ext_keyboard">キーボード拡張機能</string>
+    <string name="ext__list__ext_languagepack">言語パック拡張機能</string>
+    <string name="ext__meta__authors">作成者</string>
+    <string name="ext__meta__components">バンドルコンポーネント</string>
+    <string name="ext__meta__components_theme">バンドルテーマ</string>
+    <string name="ext__meta__components_language_pack">バンドル言語パック</string>
+    <string name="ext__meta__components_none_found">この拡張機能アーカイブにはバンドルコンポーネントが含まれていません。</string>
+    <string name="ext__meta__description">説明</string>
+    <string name="ext__meta__homepage">ホームページ</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">課題トラッカー</string>
+    <string name="ext__meta__keywords">キーワード</string>
+    <string name="ext__meta__label">ラベル</string>
+    <string name="ext__meta__license">ライセンス</string>
+    <string name="ext__meta__maintainers">メンテナー</string>
+    <string name="ext__meta__maintainers_by">作成者：{maintainers}</string>
+    <string name="ext__meta__title">タイトル</string>
+    <string name="ext__meta__version">バージョン</string>
+    <string name="ext__error__not_found_title">拡張機能が見つかりません</string>
+    <string name="ext__error__not_found_description">ID「{id}」の拡張機能が見つかりませんでした。</string>
+    <string name="ext__editor__title_create_any">拡張機能を作成</string>
+    <string name="ext__editor__title_create_keyboard">キーボード拡張機能を作成</string>
+    <string name="ext__editor__title_create_theme">テーマ拡張機能を作成</string>
+    <string name="ext__editor__title_edit_any">拡張機能を編集</string>
+    <string name="ext__editor__title_edit_keyboard">キーボード拡張機能を編集</string>
+    <string name="ext__editor__title_edit_theme">テーマ拡張機能を編集</string>
+    <string name="ext__editor__metadata__title">メタデータを管理</string>
+    <string name="ext__editor__metadata__title_invalid">無効なメタデータ</string>
+    <string name="ext__editor__metadata__message_invalid">この拡張機能のメタデータは無効です。詳細はメタデータエディターを確認してください！</string>
+    <string name="ext__editor__dependencies__title">依存関係を管理</string>
+    <string name="ext__editor__files__title">アーカイブファイルを管理</string>
+    <string name="ext__editor__files__type_fonts">フォント</string>
+    <string name="ext__editor__files__type_images">画像</string>
+    <string name="ext__editor__create_component__title">コンポーネントを作成</string>
+    <string name="ext__editor__create_component__title_theme">テーマを作成</string>
+    <string name="ext__editor__create_component__from_empty">空</string>
+    <string name="ext__editor__create_component__from_existing">既存のものから</string>
+    <string name="ext__editor__create_component__from_empty_warning">{app_name}を初めて使用する場合、または詳細に慣れていない場合は、空のコンポーネントを作成して設定するのが難しい場合があります。その場合は、既存のコンポーネントをコピーして好みに合わせて変更することを検討してください。</string>
+    <string name="ext__editor__edit_component__title">コンポーネントを編集</string>
+    <string name="ext__editor__edit_component__title_theme">テーマコンポーネントを編集</string>
+    <string name="ext__export__success">拡張機能の書き出しに成功しました！</string>
+    <string name="ext__export__failure">拡張機能の書き出しに失敗しました: {error_message}</string>
+    <string name="ext__import__success">拡張機能の取り込みに成功しました！</string>
+    <string name="ext__import__failure">拡張機能の取り込みに失敗しました: {error_message}</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">拡張機能を取り込む</string>
+    <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">キーボード拡張機能を取り込む</string>
+    <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">テーマ拡張機能を取り込む</string>
+    <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">言語パック拡張機能を取り込む</string>
+    <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">ファイルを取り込めません。理由:</string>
+    <string name="ext__import__file_skip_unsupported" comment="Reason string when file is unsupported">サポートされていない、または認識されないファイルタイプです。</string>
+    <string name="ext__import__file_skip_ext_core" comment="Reason string when ext has core extension ID">アプリのコアアセットで提供されるデフォルトの拡張機能パッケージを置換または更新できません。新しいバージョンのコア拡張機能パッケージを使用する場合は、アプリ自体を更新することを検討してください。</string>
+    <string name="ext__import__file_skip_ext_corrupted" comment="Reason string when file seems to be ext but is corrupted">ファイルは拡張機能アーカイブのようですが、アーカイブデータの解析に失敗しました。アーカイブが破損しているか、このファイルが拡張機能ではない可能性があります。</string>
+    <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">シリアルタイプ「{expected_serial_type}」の拡張機能アーカイブが必要でしたが、「{actual_serial_type}」でした。</string>
+    <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">メディアファイル（画像、音声、フォントなど）が必要でしたが、拡張機能アーカイブが見つかりました。</string>
+    <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">拡張機能アーカイブが必要でしたが、メディアファイル（画像、音声、フォントなど）が見つかりました。</string>
+    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">取り込み中に予期せぬエラーが発生しました。以下の詳細が提供されました:</string>
+    <string name="ext__validation__enter_package_name">パッケージ名を入力してください</string>
+    <string name="ext__validation__error_package_name">パッケージ名が正規表現 {id_regex} と一致しません</string>
+    <string name="ext__validation__enter_version">バージョンを入力してください</string>
+    <string name="ext__validation__enter_title">タイトルを入力してください</string>
+    <string name="ext__validation__enter_maintainer">少なくとも1人の有効なメンテナーを入力してください</string>
+    <string name="ext__validation__enter_license">ライセンス識別子を入力してください</string>
+    <string name="ext__validation__enter_component_id">コンポーネントIDを入力してください</string>
+    <string name="ext__validation__error_component_id">{component_id_regex} に一致するコンポーネントIDを入力してください</string>
+    <string name="ext__validation__enter_component_label">コンポーネントラベルを入力してください</string>
+    <string name="ext__validation__hint_component_label_to_long">コンポーネントラベルが長すぎます。UIでクリッピングが発生する可能性があります</string>
+    <string name="ext__validation__error_author">少なくとも1人の有効な作成者を入力してください</string>
+    <string name="ext__validation__error_stylesheet_path_blank">スタイルシートパスは空にできません</string>
+    <string name="ext__validation__error_stylesheet_path">{stylesheet_path_regex} に一致する有効なスタイルシートパスを入力してください</string>
+    <string name="ext__validation__enter_property">変数名を入力してください</string>
+    <string name="ext__validation__error_property">{variable_name_regex} に一致する有効な変数名を入力してください</string>
+    <string name="ext__validation__enter_color">色の文字列を入力してください</string>
+    <string name="ext__validation__error_color">有効な色の文字列を入力してください</string>
+    <string name="ext__validation__enter_dp_size">dpサイズを入力してください</string>
+    <string name="ext__validation__enter_valid_number">有効な数値を入力してください</string>
+    <string name="ext__validation__enter_positive_number">正の数 (&gt;=0) を入力してください</string>
+    <string name="ext__validation__enter_percent_size">パーセントサイズを入力してください</string>
+    <string name="ext__validation__enter_number_between_0_100">0から100の間の正の数を入力してください</string>
+    <string name="ext__validation__hint_value_above_50_percent">50%を超える値は50%に設定した場合と同様に動作します。パーセントサイズを小さくすることを検討してください</string>
+    <string name="ext__update_box__internet_permission_hint">このアプリにはインターネットアクセス許可がないため、インストールされている拡張機能の更新は手動で確認する必要があります。</string>
+    <string name="ext__update_box__search_for_updates">更新を確認</string>
+    <string name="ext__addon_management_box__managing_placeholder">{extensions}を管理中</string>
+    <string name="ext__addon_management_box__addon_manager_info">拡張機能のインポート、エクスポート、作成、カスタマイズ、削除に関連するすべてのタスクは、集中管理されたアドオンマネージャーを通じて処理できます。</string>
+    <string name="ext__addon_management_box__go_to_page">{ext_home_title} に移動</string>
+    <string name="ext__home__info">FlorisBoardアドオンストアから拡張機能をダウンロードしてインストールしたり、インターネットからダウンロードした拡張機能ファイルをインポートしたりできます。</string>
+    <string name="ext__home__visit_store">アドオンストアにアクセス</string>
+    <string name="ext__home__manage_extensions">インストール済み拡張機能を管理</string>
+    <string name="ext__list__view_details">詳細を表示</string>
+    <string name="ext__check_updates__title">更新を確認</string>
     <!-- Action strings -->
+    <string name="action__add">追加</string>
+    <string name="action__apply">適用</string>
+    <string name="action__back_up">バックアップ</string>
+    <string name="action__cancel">キャンセル</string>
+    <string name="action__create">作成</string>
+    <string name="action__default">デフォルト</string>
+    <string name="action__delete">削除</string>
+    <string name="action__delete_confirm_title">削除の確認</string>
+    <string name="action__delete_confirm_message">「{name}」を削除してもよろしいですか？この操作は一度実行すると元に戻せません。</string>
+    <string name="action__reset_confirm_title">リセットの確認</string>
+    <string name="action__reset_confirm_message">「{name}」をリセットしてもよろしいですか？この操作は一度実行すると元に戻せません。</string>
+    <string name="action__discard">破棄</string>
+    <string name="action__discard_confirm_title">未保存の変更</string>
+    <string name="action__discard_confirm_message">未保存の変更を破棄してもよろしいですか？この操作は一度実行すると元に戻せません。</string>
+    <string name="action__edit">編集</string>
+    <string name="action__export">エクスポート</string>
+    <string name="action__export_file">ファイルをエクスポート</string>
+    <string name="action__export_files">ファイルをエクスポート</string>
+    <string name="action__import">インポート</string>
+    <string name="action__import_file">ファイルをインポート</string>
+    <string name="action__import_files">ファイルをインポート</string>
+    <string name="action__no">いいえ</string>
+    <string name="action__ok">OK</string>
+    <string name="action__restore">復元</string>
+    <string name="action__save">保存</string>
+    <string name="action__select">選択</string>
+    <string name="action__select_dir">ディレクトリを選択</string>
+    <string name="action__select_dirs">ディレクトリを選択</string>
+    <string name="action__select_file">ファイルを選択</string>
+    <string name="action__select_files">ファイルを選択</string>
+    <string name="action__yes">はい</string>
     <!-- Error strings (generic) -->
+    <string name="error__title">エラー</string>
+    <string name="error__details">詳細</string>
+    <string name="error__invalid">無効</string>
+    <string name="error__snackbar_message">問題が発生しました</string>
+    <string name="error__snackbar_message_template">問題が発生しました: {error_message}</string>
     <!-- General strings -->
+    <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">例：{example}</string>
+    <string name="general__no_browser_app_found_for_url">URL {url} を処理するためのブラウザアプリが見つかりません</string>
+    <string name="general__select_dropdown_value_placeholder">&#45; 選択 &#45;</string>
+    <string name="general__unlimited">無制限</string>
+    <string name="general__file_name">ファイル名</string>
+    <string name="general__properties">プロパティ</string>
     <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">縦向き</string>
+    <string name="screen_orientation__landscape">横向き</string>
+    <string name="screen_orientation__vertical">垂直</string>
+    <string name="screen_orientation__horizontal">水平</string>
     <!-- State strings -->
+    <string name="state__disabled">無効</string>
+    <string name="state__enabled">有効</string>
+    <string name="state__no_dir_selected">ディレクトリが選択されていません</string>
+    <string name="state__no_dirs_selected">ディレクトリが選択されていません</string>
+    <string name="state__no_file_selected">ファイルが選択されていません</string>
+    <string name="state__no_files_selected">ファイルが選択されていません</string>
     <!-- Enum label and description strings -->
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">キーボード UI の高さに影響を与えずに、拡張アクションをアプリ UI の上にオーバーレイとして配置します。 この配置により、アプリの入力フィールドが部分的に上書きされる可能性があることに注意してください</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} デフォルトのハードウェアバイブレータと直接やり取りします。 これにより、振動の持続時間と強さをより詳細に制御できますが、振動は、触覚フィードバック インターフェイスを使用するほど滑らかで最適化されない場合があります。</string>
-    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} は触覚フィードバック インターフェースを使用して、キーを押すと定義済みのバイブレーション シーケンスをトリガーします。 これは、一部のデバイスでは非常にうまく動作する場合がありますが、他のデバイスでは動作しないか、パフォーマンスが非常に低くなります。</string>
-    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">ターゲット アプリの渡されたオプションに関係なく、シークレット モードは常に無効になります。 このオプションでは、Smartbar のシークレット クイック アクションは使用できません。</string>
-    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">ターゲット アプリの渡されたオプションに関係なく、シークレット モードは常に有効になります。 このオプションでは、Smartbar のシークレット クイック アクションは使用できません。</string>
-    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">推奨オプション。 シークレット モードは、ターゲット アプリのオプションを使用するか、Smartbar のシークレット クイック アクションを介して手動で切り替えることにより、動的に有効または無効になります。</string>
+    <string name="enum__candidates_display_mode__classic" comment="Enum value label">クラシック（3列）</string>
+    <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">動的幅</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">動的幅＆スクロール可能</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">ShiftキーをダブルタップしてCapsLockを有効にする</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Shiftキーを押すたびに次の大文字化ステップに切り替える</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">16進数</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">赤緑青</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">色相・彩度・明度</string>
+    <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">常に表示</string>
+    <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">エディターダイアログを閉じた後、常にキーボードを表示します</string>
+    <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">表示しない</string>
+    <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">エディターダイアログを閉じた後、キーボードを表示しません</string>
+    <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">最後の状態を記憶</string>
+    <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">以前に表示されていた場合にのみ、エディターダイアログを閉じた後にキーボードを表示します</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">システムロケール</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">アプリとキーボードUI全体の言語名は、デバイス全体に設定されているロケールで表示されます</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">ネイティブロケール</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">アプリとキーボードUI全体の言語名は、それ自体が参照するロケールで表示されます</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">自動ソート（先頭に追加）</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">絵文字の使用時に絵文字を自動的に並べ替えます。新しい絵文字は先頭に追加されます。</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">自動ソート（末尾に追加）</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">絵文字の使用時に絵文字を自動的に並べ替えます。新しい絵文字は末尾に追加されます。</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">手動ソート（先頭に追加）</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">絵文字の使用時に絵文字を自動的に並べ替えません。新しい絵文字は先頭に追加されます。</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">手動ソート（末尾に追加）</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">絵文字の使用時に絵文字を自動的に並べ替えません。新しい絵文字は末尾に追加されます。</string>
+    <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} デフォルトの肌の色</string>
+    <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} 明るい肌の色</string>
+    <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} やや明るい肌の色</string>
+    <string name="enum__emoji_skin_tone__medium_skin_tone" comment="Enum value label">{emoji} 普通の肌の色</string>
+    <string name="enum__emoji_skin_tone__medium_dark_skin_tone" comment="Enum value label">{emoji} やや暗い肌の色</string>
+    <string name="enum__emoji_skin_tone__dark_skin_tone" comment="Enum value label">{emoji} 暗い肌の色</string>
+    <string name="enum__emoji_hair_style__default" comment="Enum value label">{emoji} デフォルトの髪型</string>
+    <string name="enum__emoji_hair_style__red_hair" comment="Enum value label">{emoji} 赤毛</string>
+    <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} カーリーヘア</string>
+    <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} 白髪</string>
+    <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} 坊主</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">先頭コロン</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">:emoji_name 構文を使用して絵文字を提案します</string>
+    <string name="enum__emoji_suggestion_type__inline_text">インラインテキスト</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">絵文字名を単語として入力するだけで絵文字を提案します</string>
+    <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">候補の上</string>
+    <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">拡張アクション行をアプリUIと候補行の間に配置します</string>
+    <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">候補の下</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">拡張アクション行を候補行とテキストキーボードの間に配置します</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">アプリUIにオーバーレイ</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">キーボードUIの高さに影響を与えずに、拡張アクションをアプリUIの上にオーバーレイとして配置します。この配置により、アプリの入力フィールドが部分的に隠れる可能性があることに注意してください</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">バイブレーターを直接使用</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name}はデフォルトのハードウェアバイブレーターと直接やり取りします。これにより、振動の持続時間と強さをより詳細に制御できますが、振動は触覚フィードバックインターフェースを使用するほど滑らかで最適化されない場合があります。</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">触覚フィードバックインターフェースを使用</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name}は触覚フィードバックインターフェースを使用して、キーを押すと定義済みの振動シーケンスをトリガーします。これは、一部のデバイスでは非常にうまく動作する場合がありますが、他のデバイスでは動作しないか、パフォーマンスが非常に低くなります。</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">アクセント優先</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">長押し後に最初に選択される文字は常にプライマリアクセント、またはプライマリアクセントが利用できない場合はヒントシンボルです</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">ヒント優先</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">長押し後に最初に選択される文字は常にヒントシンボル、またはヒントシンボルが利用できない場合はプライマリアクセントです</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">スマート優先</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">長押し後に最初に選択される文字は、現在の言語とレイアウトに基づいて、プライマリアクセントまたはヒントシンボルのいずれかに動的に決定されます</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">共有アクショントグルアイコンをシークレットインジケーターに置き換える</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">シークレットインジケーターをキーボードの背後に表示する</string>
+    <string name="enum__incognito_mode__force_off" comment="Enum value label">強制オフ</string>
+    <string name="enum__incognito_mode__force_off__description" comment="Enum value description">ターゲットアプリから渡されたオプションに関係なく、シークレットモードは常に無効になります。このオプションでは、スマートバーのシークレットクイックアクションは使用できません。</string>
+    <string name="enum__incognito_mode__force_on" comment="Enum value label">強制オン</string>
+    <string name="enum__incognito_mode__force_on__description" comment="Enum value description">ターゲットアプリから渡されたオプションに関係なく、シークレットモードは常に有効になります。このオプションでは、スマートバーのシークレットクイックアクションは使用できません。</string>
+    <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">動的にオン/オフ</string>
+    <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">推奨オプション。シークレットモードは、ターゲットアプリのオプションを使用するか、スマートバーのシークレットクイックアクションを介して手動で切り替えることにより、動的に有効または無効になります。</string>
+    <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">システム設定に応じて、入力イベントのサウンドを動的に再生</string>
+    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">システム設定に関わらず、入力イベントのサウンドを常に再生</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">システム設定に応じて、入力イベントで動的に振動</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">システム設定に関わらず、入力イベントで常に振動</string>
+    <string name="enum__input_shift_state__unshifted" comment="Enum value label">シフトなし</string>
+    <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">シフト（手動）</string>
+    <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">シフト（自動）</string>
+    <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps Lock</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">文字</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">記号</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">記号2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">数字</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">高度な数字</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">電話</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">電話2</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">表示しない</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">常に表示</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">動的に表示</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">左利きモード</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">右利きモード</string>
+    <string name="enum__shape_corner__top_start" comment="Enum value label">左上</string>
+    <string name="enum__shape_corner__top_end" comment="Enum value label">右上</string>
+    <string name="enum__shape_corner__bottom_end" comment="Enum value label">右下</string>
+    <string name="enum__shape_corner__bottom_start" comment="Enum value label">左下</string>
+    <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">候補のみ</string>
+    <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">アクション行/トグルや固定アクションなしで、候補行のみを表示します</string>
+    <string name="enum__smartbar_layout__actions_only" comment="Enum value label">アクションのみ</string>
+    <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">候補行や明示的な固定アクションなしで、アクション行のみを表示します</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">候補とアクションを共有</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">固定アクション付きの共有可能なトグル式候補およびアクション行</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">候補とアクションを拡張</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">固定アクション付きの静的候補行と追加のトグル式アクション行</string>
+    <string name="enum__snygg_level__basic" comment="Enum value label">基本</string>
+    <string name="enum__snygg_level__basic__description" comment="Enum value description">色プロパティのみが表示され、プロパティとルールは翻訳されます。</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">詳細</string>
+    <string name="enum__snygg_level__advanced__description" comment="Enum value description">すべてのプロパティが表示され、プロパティとルールは翻訳されます。</string>
+    <string name="enum__snygg_level__developer" comment="Enum value label">開発者</string>
+    <string name="enum__snygg_level__developer__description" comment="Enum value description">すべてのプロパティが表示され、プロパティとルールはスタイルシートファイル自体に記述されているとおりに表示されます。</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">ラベルなし</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">現在の言語</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">システム言語を使用</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">キーボードサブタイプを使用</string>
+    <string name="enum__swipe_action__no_action" comment="Enum value label">アクションなし</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">前のキーボードモードに切り替える</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">次のキーボードモードに切り替える</string>
+    <string name="enum__swipe_action__delete_character" comment="Enum value label">カーソル前の文字を削除</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">文字を正確に削除</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">カーソル前の単語を削除</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">単語を正確に削除</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">キーボードを非表示</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">スペースを挿入</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">カーソルを上に移動</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">カーソルを下に移動</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">カーソルを左に移動</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">カーソルを右に移動</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">カーソルを行頭に移動</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">カーソルを行末に移動</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">カーソルをページ先頭に移動</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">カーソルをページ末尾に移動</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">クリップボードマネージャー/履歴を開く</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">やり直し</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">元に戻す</string>
+    <string name="enum__swipe_action__select_characters_precisely" comment="Enum value label">文字を正確に選択</string>
+    <string name="enum__swipe_action__select_words_precisely" comment="Enum value label">単語を正確に選択</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">入力方法ピッカーを表示</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">前のキーボードに切り替える</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">前のサブタイプに切り替える</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">次のサブタイプに切り替える</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">スマートバーの表示/非表示を切り替える</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">常に昼</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">常に夜</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">システムに従う</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">時間に従う</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">絵文字に切り替える</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">言語を切り替える</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">キーボードアプリを切り替える</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">動的：絵文字に切り替え / 言語を切り替え</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="other">{v}時間</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="other">{v}分</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="other">{v}秒</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="other">{v}アイテム</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="other">{v}文字</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="other">{v}候補</item>
+    </plurals>
 </resources>

@@ -25,8 +25,8 @@ val artifactId = "florisboard-lib-kotlin"
 val projectVersion: String by project
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 sourceSets {
@@ -37,14 +37,14 @@ sourceSets {
 
 tasks {
     compileKotlin {
-        compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
         compilerOptions.freeCompilerArgs = listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-Xjvm-default=all-compatibility",
         )
     }
     compileTestKotlin {
-        compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+        compilerOptions.jvmTarget = JvmTarget.JVM_11
     }
 }
 

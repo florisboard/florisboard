@@ -174,10 +174,13 @@
     <string name="settings__theme_editor__rule_name">Elem / Magyarázat</string>
     <string name="settings__theme_editor__rule_codes">Célbillentyűkódok</string>
     <string name="settings__theme_editor__rule_groups">Csoportok</string>
+    <string name="settings__theme_editor__rule_modes">Célmódok (rétegek)</string>
+    <string name="settings__theme_editor__rule_shift_states">Célváltási állapotok</string>
     <string name="settings__theme_editor__rule_selectors">Választók</string>
     <string name="settings__theme_editor__add_code">Billentyűkód hozzáadása</string>
     <string name="settings__theme_editor__edit_code">Billentyűkód szerkesztése</string>
     <string name="settings__theme_editor__no_codes_defined">Szabály alkalmazása az összes célelemre.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Az összes lehetséges érték hozzá lett adva.</string>
     <string name="settings__theme_editor__code_already_exists">Ez a billentyűkód már meg lett adva.</string>
     <string name="settings__theme_editor__code_invalid">Ez a billentyűkód nem érvényes. Győződjön meg róla, hogy az érték {c_min} és {c_max} között van, vagy {i_min} és {i_max} között a belső speciális billentyűk esetében.</string>
     <string name="settings__theme_editor__code_help_text">Esetlegesen az alábbi linkek segíteni fognak a megfelelő billentyűkód megtalálásában:</string>
@@ -219,9 +222,10 @@
     <string name="snygg__rule_element__clipboard_content">Vágólap tartalma</string>
     <string name="snygg__rule_element__clipboard_item">Vágólapelem</string>
     <string name="snygg__rule_element__clipboard_item_popup">Felugró vágólapelem</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Vágólapelem felugró művelet</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Vágólapelem felugró ikon</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Vágólapelem felugró szöveg</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Vágólapi elemműveletek</string>
+    <string name="snygg__rule_element__clipboard_item_action">Vágólapi elemművelet</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Vágólapi elemművelet ikonja</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Vágólapi elemművelet szövege</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog">Vágólap összes párbeszéd törlése</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Vágólap összes párbeszédüzenet törlése</string>
     <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Vágólap összes párbeszédgomb törlése</string>
@@ -242,6 +246,7 @@
     <string name="snygg__rule_element__media_emoji_key">Médiaemodzsi billentyű</string>
     <string name="snygg__rule_element__media_emoji_key_popup_box">Médiaemodzsi felugró ablak billentyű</string>
     <string name="snygg__rule_element__media_emoji_key_popup_element">Médiaemodzsi felugró ablak elem</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Médiaemodzsi-billentyű felugró kiterjesztett jelzője</string>
     <string name="snygg__rule_element__media_emoji_tab">Médiaemodzsi-lap</string>
     <string name="snygg__rule_element__media_bottom_row">Média alsó sor</string>
     <string name="snygg__rule_element__media_bottom_row_button">Média alsó sor gomb</string>
@@ -254,6 +259,8 @@
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Okossáv bővített műveletei be/ki</string>
     <string name="snygg__rule_element__smartbar_action_key">Okossáv műveletgombja</string>
     <string name="snygg__rule_element__smartbar_action_tile">Okossáv művelet csempe</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Okossáv műveleti csempeikon</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Okossáv műveleti csempeszöveg</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Okossáv művelet túlfolyó</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Okossáv túlfolyó műveleteinek testreszabó gombja</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Okossáv művelet szerkesztő</string>
@@ -264,10 +271,18 @@
     <string name="snygg__rule_element__smartbar_actions_editor_tile">Okossáv műveletek szerkesztőcsempe</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Okossáv javaslat sor</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Okossáv javaslat szó</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Okossáv megjelölt szó szövege</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Okossáv megjelölt szó másodlagos szövege</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Okossáv javaslat vágólapról</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Okossáv megjelölt kapocs ikonja</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Okossáv megjelölt kapocs szövege</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Okossáv javaslat elválasztó</string>
     <string name="snygg__rule_element__subtype_panel">Altípuspanel</string>
     <string name="snygg__rule_element__subtype_panel_header">Altípuspanel-fejléc</string>
+    <string name="snygg__rule_element__subtype_panel_list">Altípus panellista</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Altípus panellista-elem</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Altípus panellista-elem ikonja (vezető)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Altípus panellista-elem szövege</string>
     <string name="snygg__rule_selector__pressed">Lenyomott</string>
     <string name="snygg__rule_selector__focus">Fókuszált</string>
     <string name="snygg__rule_selector__hover">Rámutatás</string>
@@ -611,7 +626,6 @@
     <string name="clipboard__cleared_primary_clip">Elsődleges vágólap törölve</string>
     <string name="clipboard__cleared_history">Előzmények törölve</string>
     <string name="clipboard__cleared_full_history">Az összes előzmény törölve</string>
-    <string name="clipboard__confirm_clear_history__message">Biztos, hogy törli a vágólapelőzményeit?</string>
     <string name="settings__clipboard__title">Vágólap</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Belső vágólap használata</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Belső vágólap használata a rendszer vágólapja helyett</string>
@@ -622,6 +636,7 @@
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vágólapjavaslatok</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vágólaptartalom-javaslatok</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Javasolja a vágólap korábban másolt tartalmát</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Rácsoszlopok száma</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Korlátozza a vágólapjavaslatokat a következőkre:</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Az utolsó {v} másodpercben másolt elemek</string>
     <string name="pref__clipboard__group_clipboard_history__label">Vágólapelőzmények</string>
@@ -812,6 +827,7 @@
     <string name="general__unlimited">Korlátlan</string>
     <string name="general__file_name">Fájl neve</string>
     <string name="general__properties">Tulajdonságok</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Automatikus</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Álló</string>
     <string name="screen_orientation__landscape">Fekvő</string>
@@ -869,11 +885,11 @@
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">A javaslatok felett</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">A kiterjesztett műveletsort az alkalmazás felhasználói felülete és a javaslatok sora közé helyezi</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">A javaslatok alatt</string>
-    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">A kiterjesztett műveletsort a javaslatok sora  és a szöveges billentyűzet közé helyezi</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">App fölött való megjelenés</string>
-    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">A kiegészítő műveleti sort az app felület fölött lebeg, anélkül hogy befolyásolná a billentyűzet magasságát. Lehetséges, hogy a beviteli rész takarásba kerül emiatt</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Rezgőmotor közvetlen kezelése</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">A {app_name} közvetlenül kommunikál az alapértelmezett hardveres rezgőmotorral. Ez nagyobb szabályozást biztosít a rezgés hossza és erőssége felett, de nem biztos hogy annyira sima és optimális, mintha a haptikus visszajelzés felületét használná</string>
+    <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">A kiterjesztett műveletsort a javaslatok sora és a szöveges billentyűzet közé helyezi</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Alkalmazás felületének átfedése</string>
+    <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">A kiegészítő műveleti sor az alkalmazás felülete fölött lebeg, anélkül hogy befolyásolná a billentyűzet magasságát. Lehetséges, hogy a beviteli rész takarásba kerül emiatt</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Rezgés közvetlen kezelése</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">A(z) {app_name} közvetlenül kezeli a hardveres rezgést. Ez nagyobb szabályozást biztosít a rezgés hossza és erőssége felett, de nem biztos hogy annyira simán viselkedik, mintha a haptic feedback felület esetében</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Használjon haptic feedback felületet</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">A(z) {app_name} haptikus visszajelzési felületet használ, hogy előre beállított rezgéseket váltson ki a gombok megnyomásakor. Ez egyes eszközökön kiválóan működhet, de másokon teljesen meghiúsulhat, vagy elégtelenül teljesíthet.</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Ékezetesek az elsődlegesek</string>
@@ -898,6 +914,13 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift-elt (manuál)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Eltolt (automatikus)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Karakterek</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Szimbólumok</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Szimbólumok 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Számjegyek</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Speciális számjegyek</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Telefon</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Telefon 2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Soha ne jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mindig jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamikus megjelenítés</string>

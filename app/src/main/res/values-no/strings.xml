@@ -364,7 +364,6 @@
     <string name="clip__paste_item">Lim inn</string>
     <string name="clip__back_to_text_input">Tilbake til tekstinput</string>
     <string name="clip__cant_paste">Denne appen tillater ikke innliming av dette innholdet.</string>
-    <string name="clipboard__confirm_clear_history__message">Er du sikker på at du vil tømme utklippstavlehistorikken?</string>
     <string name="settings__clipboard__title">Utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Bruk intern utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Bruk en intern utklippstavle i steden for systemutklippstavlen</string>

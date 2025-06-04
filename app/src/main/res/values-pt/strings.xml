@@ -367,7 +367,6 @@
     <string name="clipboard__cleared_primary_clip">Item principal limpo</string>
     <string name="clipboard__cleared_history">Histórico limpo</string>
     <string name="clipboard__cleared_full_history">Todo o histórico foi limpo</string>
-    <string name="clipboard__confirm_clear_history__message">Tem a certeza que quer limpar o seu histórico de pesquisas?</string>
     <string name="settings__clipboard__title">Área de transferência</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Utilizar área de transferência interna e não a do sistema</string>

@@ -72,6 +72,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Apri cronologia degli appunti</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Apri pannello degli emoji</string>
+    <string name="quick_action__language_switch__tooltip">Esegui cambio lingua</string>
     <string name="quick_action__settings" maxLength="12">Impostazioni</string>
     <string name="quick_action__settings__tooltip">Apri impostazioni</string>
     <string name="quick_action__undo" maxLength="12">Annulla</string>
@@ -187,14 +188,17 @@
     <string name="settings__theme_editor__property_value">Valore della proprietà</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Applica per tutti gli angoli</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Modifica stringa di colore</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Seleziona file</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">È tema scuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">È senza bordi</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Percorso del file di stile</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Errore foglio di stile</string>
     <string name="snygg__rule_annotation__defines">Variabili</string>
     <string name="snygg__rule_annotation__defines_description">Definisci le variabili all\'interno di questa regola per riutilizzare colori o dimensioni comuni nel tuo foglio di stile.</string>
     <string name="snygg__rule_annotation__font">Font</string>
     <string name="snygg__rule_annotation__font_name">Nome font</string>
     <string name="snygg__rule_element__root">Root</string>
+    <string name="snygg__rule_element__window">Finestra</string>
     <string name="snygg__rule_element__key">Tasto</string>
     <string name="snygg__rule_element__key_hint">Suggerimento tasto</string>
     <string name="snygg__rule_element__clipboard_header">Intestazione degli appunti</string>
@@ -204,9 +208,9 @@
     <string name="snygg__rule_element__clipboard_content">Contenuto degli appunti</string>
     <string name="snygg__rule_element__clipboard_item">Elemento degli appunti</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elemento degli appunti</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action">Azione dell\'elemento popup degli appunti</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_icon">Icona dell\'elemento popup degli appunti</string>
-    <string name="snygg__rule_element__clipboard_item_popup_action_text">Testo dell\'elemento popup degli appunti</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Azione dell\'elemento degli appunti</string>
+    <string name="snygg__rule_element__clipboard_item_action">Azione dell\'elemento degli appunti</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Azione dell\'icona dell\'elemento degli appunti</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Layout di input orizzontale</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Campo di input orizzontale</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Azione di input orizzontale</string>
@@ -526,7 +530,6 @@
     <string name="clipboard__cleared_primary_clip">Clip principale cancellata</string>
     <string name="clipboard__cleared_history">Cronologia cancellata</string>
     <string name="clipboard__cleared_full_history">Tutta la cronologia cancellata</string>
-    <string name="clipboard__confirm_clear_history__message">Sei sicuro di voler cancellare la cronologia degli appunti?</string>
     <string name="settings__clipboard__title">Appunti</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>

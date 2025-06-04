@@ -22,6 +22,7 @@ import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
@@ -29,6 +30,10 @@ import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.R
 import org.florisboard.lib.kotlin.CurlyArg
 import org.florisboard.lib.kotlin.curlyFormat
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
 
 private val LocalResourcesContext = staticCompositionLocalOf<Context> {
     error("resources context not initialized!!")
@@ -36,6 +41,13 @@ private val LocalResourcesContext = staticCompositionLocalOf<Context> {
 
 private val LocalAppNameString = staticCompositionLocalOf {
     "FlorisBoard"
+}
+
+internal val LocalLocalizedDateTimeFormatter = staticCompositionLocalOf {
+    DateTimeFormatter
+        .ofLocalizedDateTime(FormatStyle.MEDIUM)
+        .withLocale(Locale.ROOT)
+        .withZone(ZoneId.systemDefault())
 }
 
 @Composable
@@ -49,8 +61,16 @@ fun ProvideLocalizedResources(
         View.LAYOUT_DIRECTION_RTL -> LayoutDirection.Rtl
         else -> error("Given configuration specifies invalid layout direction!")
     }
+    val localeList = resourcesContext.resources.configuration.locales
+    val dateTimeFormatter = remember(resourcesContext) {
+        DateTimeFormatter
+            .ofLocalizedDateTime(FormatStyle.MEDIUM)
+            .withLocale(if (localeList.isEmpty) Locale.getDefault() else localeList.get(0))
+            .withZone(ZoneId.systemDefault())
+    }
     CompositionLocalProvider(
         LocalResourcesContext provides resourcesContext,
+        LocalLocalizedDateTimeFormatter provides dateTimeFormatter,
         LocalLayoutDirection provides layoutDirection,
         LocalAppNameString provides stringResource(R.string.floris_app_name),
     ) {

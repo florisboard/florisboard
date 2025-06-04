@@ -500,7 +500,6 @@
     <string name="clipboard__cleared_primary_clip">Birincil klip temizlendi</string>
     <string name="clipboard__cleared_history">Geçmiş temizlendi</string>
     <string name="clipboard__cleared_full_history">Tüm geçmiş temizlendi</string>
-    <string name="clipboard__confirm_clear_history__message">Pano geçmişini temizlemek istediğinize emin misiniz?</string>
     <string name="settings__clipboard__title">Pano</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Dahili panoyu kullan</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Sistem panosu yerine dahili panoyu kullan</string>

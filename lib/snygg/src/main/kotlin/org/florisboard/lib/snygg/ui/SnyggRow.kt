@@ -39,6 +39,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  * @param attributes The attributes of the element used to refine the query.
  * @param selector A specific SnyggSelector to query the style for.
  * @param modifier The modifier to be applied to the Row.
+ * @param clickAndSemanticsModifier The modifier to be applied to the layout after drawing the background.
  * @param horizontalArrangement The horizontal arrangement of the layout's children.
  * @param verticalAlignment The vertical alignment of the layout's children.
  * @param content The content of the Row
@@ -53,6 +54,7 @@ fun SnyggRow(
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
     modifier: Modifier = Modifier,
+    clickAndSemanticsModifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable RowScope.() -> Unit,
@@ -64,6 +66,7 @@ fun SnyggRow(
                 .snyggShadow(style)
                 .snyggBorder(style)
                 .snyggBackground(style)
+                .then(clickAndSemanticsModifier)
                 .snyggPadding(style),
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = verticalAlignment,
