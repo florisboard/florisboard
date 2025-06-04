@@ -556,7 +556,7 @@
       "currencySet": "org.florisboard.currencysets:euro",
       "popupMapping": "org.florisboard.localization:ca",
       "preferred": {
-        "characters": "org.florisboard.layouts:catalan"
+        "characters": "org.florisboard.layouts:qwerty_c"
       }
     },
     {
