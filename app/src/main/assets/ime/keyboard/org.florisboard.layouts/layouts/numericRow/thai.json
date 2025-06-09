@@ -27,10 +27,10 @@
     { "code":  3667, "label": "๓", "type": "numeric", "popup": {
       "main": { "code":  179, "label": "³" },
       "relevant": [
-        { "code": 8535, "label": "⅗" },
+        { "code": 8540, "label": "⅜" },
         { "code": 8323, "label": "₃"},
         { "code":  190, "label": "¾" },
-        { "code": 8540, "label": "⅜" }
+        { "code": 8535, "label": "⅗" }
       ]
     } },
     { "code":  3668, "label": "๔", "type": "numeric", "popup": {
