@@ -72,10 +72,9 @@ val MIME_TYPES = mapOf(
     FONTS to listOf(
         // Source: https://www.alienfactory.co.uk/articles/mime-types-for-web-fonts-in-bedsheet#mimeTypes
         "font/*",
-        "application/vnd.ms-fontobject", // .eot
-        "application/font-woff", // .woff
-        "application/x-font-truetype", // .ttf
-        "application/x-font-opentype", // .otf
+        "application/font-*",
+        "application/x-font-*",
+        "application/vnd.ms-fontobject",
     ),
     IMAGES to listOf(
         "image/*",
