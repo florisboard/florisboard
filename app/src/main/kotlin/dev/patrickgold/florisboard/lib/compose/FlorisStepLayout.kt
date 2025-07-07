@@ -168,10 +168,11 @@ fun FlorisStepLayout(
     ) {
         val scope = FlorisStepLayoutScope(this, primaryColor)
         header(scope)
-        for (step in steps) {
+        for ((index, step) in steps.withIndex()) {
             key(step.id) {
                 Step(
                     ownStepId = step.id,
+                    index = index + 1, // Start numbering with 1
                     stepState = stepState,
                     title = step.title,
                     primaryColor = primaryColor,
@@ -188,6 +189,7 @@ fun FlorisStepLayout(
 @Composable
 private fun ColumnScope.Step(
     ownStepId: Int,
+    index: Int,
     stepState: FlorisStepState,
     title: String,
     primaryColor: Color,
@@ -207,7 +209,7 @@ private fun ColumnScope.Step(
             else -> Modifier.alpha(0.38f)
         },
         backgroundColor = backgroundColor,
-        step = ownStepId,
+        step = index,
         title = title,
     )
     val animSpec = spring<Float>(stiffness = Spring.StiffnessMedium)
