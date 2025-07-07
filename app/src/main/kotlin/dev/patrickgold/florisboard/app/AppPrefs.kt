@@ -819,12 +819,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
             //Migrate one hand mode prefs keep until: 0.7 dev cycle
             "keyboard__one_handed_mode" -> {
-                if (entry.rawValue != "OFF") {
-                    val prefs by florisPreferenceModel()
-                    prefs.keyboard.oneHandedModeEnabled.set(true)
-                    entry.keepAsIs()
-                } else {
+                if (entry.rawValue == "OFF") {
                     entry.reset()
+                } else {
+                    entry.keepAsIs()
                 }
             }
             "smartbar__action_arrangement" -> {
