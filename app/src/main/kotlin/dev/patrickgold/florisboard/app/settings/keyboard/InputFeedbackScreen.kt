@@ -138,8 +138,6 @@ fun InputFeedbackScreen() = FlorisScreen {
                 summary = { strength ->
                     if (vibrator == null || !vibrator.hasVibrator()) {
                         stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_vibrator)
-                    } else if (AndroidVersion.ATMOST_API25_N_MR1) {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
                     } else if (!vibrator.hasAmplitudeControl()) {
                         stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
                     } else {
