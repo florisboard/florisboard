@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.editor
 import android.content.ClipDescription
 import android.content.ContentUris
 import android.content.Context
-import android.content.Intent
 import android.view.KeyEvent
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
@@ -30,21 +29,20 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showShortToast
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
-import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.coroutines.runBlocking
+import org.florisboard.lib.android.showShortToast
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
@@ -324,16 +322,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 )
                 val ic = currentInputConnection() ?: return false
                 ic.finishComposingText()
-                var flags = 0
-                if (AndroidVersion.ATLEAST_API25_N_MR1) {
-                    flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
-                } else {
-                    appContext.grantUriPermission(
-                        activeInfo.packageName,
-                        item.uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION,
-                    )
-                }
+                val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 InputConnectionCompat.commitContent(ic, activeInfo.base, inputContentInfo, flags, null)
             }
         }
