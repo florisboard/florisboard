@@ -46,7 +46,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.content.MimeTypeFilter
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
@@ -64,19 +63,20 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.kotlin.io.parentDir
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
+import org.florisboard.lib.kotlin.mimeTypeFilterOf
 
 const val FONTS = "fonts"
 const val IMAGES = "images"
 
 val MIME_TYPES = mapOf(
-    FONTS to listOf(
+    FONTS to mimeTypeFilterOf(
         // Source: https://www.alienfactory.co.uk/articles/mime-types-for-web-fonts-in-bedsheet#mimeTypes
         "font/*",
         "application/font-*",
         "application/x-font-*",
         "application/vnd.ms-fontobject",
     ),
-    IMAGES to listOf(
+    IMAGES to mimeTypeFilterOf(
         "image/*",
     ),
 )
@@ -117,9 +117,9 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                     val tempFile = context.cacheDir.subFile("temp_${UUID.randomUUID()}")
                     context.contentResolver.readToFile(uri, tempFile)
                     val mimeType = context.contentResolver.getType(uri)
-                    val types = MIME_TYPES[currentImportDest!!]!!
-                    checkNotNull(MimeTypeFilter.matches(mimeType, types.toTypedArray())) {
-                        "Given file mime type was '$mimeType', expected one of $types"
+                    val filter = MIME_TYPES[currentImportDest!!]!!
+                    check(filter.matches(mimeType)) {
+                        "Given file mime type was '$mimeType', expected one of ${filter.types}"
                     }
                     val fileName = context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME)).use { cursor ->
                         if (cursor == null || !cursor.moveToFirst()) return@use null
