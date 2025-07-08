@@ -714,8 +714,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
     <string name="send_to_clipboard__unknown_error">An unknown error occurred. Please try again!</string>
     <string name="send_to_clipboard__type_not_supported_error">This media type is not supported.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">The version of android is to old for this feature.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Copied below image to clipboard.</string>
 
 

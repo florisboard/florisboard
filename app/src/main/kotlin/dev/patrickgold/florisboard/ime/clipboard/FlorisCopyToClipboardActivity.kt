@@ -20,7 +20,6 @@ import android.content.ClipData
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
@@ -53,6 +52,7 @@ import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.android.AndroidClipboardManager
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.android.systemService
 
@@ -62,7 +62,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
 
     internal enum class CopyToClipboardError {
         UNKNOWN_ERROR,
-        ANDROID_VERSION_TO_OLD_ERROR,
         TYPE_NOT_SUPPORTED_ERROR;
 
         @Composable
@@ -70,7 +69,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             val textId = when (this) {
                 UNKNOWN_ERROR -> R.string.send_to_clipboard__unknown_error
                 TYPE_NOT_SUPPORTED_ERROR -> R.string.send_to_clipboard__type_not_supported_error
-                ANDROID_VERSION_TO_OLD_ERROR -> R.string.send_to_clipboard__android_version_to_old_error
             }
             return stringRes(id = textId)
         }
@@ -97,21 +95,16 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                 if (!hasExtraStream) {
                     error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
                 } else {
-                    // pasting images via virtual keyboard only available since Android 7.1 (API 25)
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
-                        error = CopyToClipboardError.ANDROID_VERSION_TO_OLD_ERROR
-                    } else {
-                        val uri: Uri? =
-                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                                @Suppress("DEPRECATION")
-                                intent.getParcelableExtra(Intent.EXTRA_STREAM)
-                            } else {
-                                intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
-                            }
-                        val clip = ClipData.newUri(contentResolver, "image", uri)
-                        systemClipboardManager.setPrimaryClip(clip)
-                        bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-                    }
+                    val uri: Uri? =
+                        if (AndroidVersion.ATLEAST_API33_T) {
+                            intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            intent.getParcelableExtra(Intent.EXTRA_STREAM)
+                        }
+                    val clip = ClipData.newUri(contentResolver, "image", uri)
+                    systemClipboardManager.setPrimaryClip(clip)
+                    bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
                 }
             } else {
                 error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
@@ -165,9 +158,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                         .align(Alignment.End)
                         .padding(16.dp),
                     onClick = { finish() },
-                    colors = ButtonDefaults.textButtonColors(
-                        //containerColor = buttonContainer.background.solidColor(context = context),
-                    )
+                    colors = ButtonDefaults.textButtonColors()
                 ) {
                     Text(text = stringRes(id = R.string.action__ok))
                 }
