@@ -159,6 +159,10 @@ android {
         }
     }
 
+    lint {
+        baseline = file("lint.xml")
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
