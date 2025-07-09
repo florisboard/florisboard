@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.ime.clipboard
 import android.content.ClipData
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -55,10 +55,12 @@ import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.kotlin.mimeTypeFilterOf
 
 class FlorisCopyToClipboardActivity : ComponentActivity() {
     private var error: CopyToClipboardError? = null
     private var bitmap: Bitmap? = null
+    private val systemClipboardManager = systemService(AndroidClipboardManager::class)
 
     internal enum class CopyToClipboardError {
         UNKNOWN_ERROR,
@@ -79,61 +81,79 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         super.onPause()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val systemClipboardManager = this.systemService(AndroidClipboardManager::class)
+    private fun handleIntent(intent: Intent) {
         val type = intent.type
         val action = intent.action
 
-        val prefs by florisPreferenceModel()
+        val filter = mimeTypeFilterOf("image/*")
 
         if (Intent.ACTION_SEND != action || type == null) {
             error = CopyToClipboardError.UNKNOWN_ERROR
-        } else {
-            if (type.startsWith("image/")) {
-                val hasExtraStream = intent.hasExtra(Intent.EXTRA_STREAM)
-                if (!hasExtraStream) {
-                    error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
-                } else {
-                    val uri: Uri? =
-                        if (AndroidVersion.ATLEAST_API33_T) {
-                            intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
-                        } else {
-                            @Suppress("DEPRECATION")
-                            intent.getParcelableExtra(Intent.EXTRA_STREAM)
-                        }
-                    val clip = ClipData.newUri(contentResolver, "image", uri)
-                    systemClipboardManager.setPrimaryClip(clip)
-                    bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-                }
-            } else {
-                error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
-            }
+            return
+        }
+        if (!filter.matches(type) || !intent.hasExtra(Intent.EXTRA_STREAM)) {
+            error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
+            return
         }
 
+        val uri: Uri? =
+            if (AndroidVersion.ATLEAST_API33_T) {
+                intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableExtra(Intent.EXTRA_STREAM)
+            }
+
+        if (uri == null) {
+            error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
+            return
+        }
+        bitmap = uriToBitmap(uri)
+    }
+
+    private fun uriToBitmap(uri: Uri): Bitmap {
+        return uri.let { uri ->
+            val clip = ClipData.newUri(contentResolver, "image", uri)
+            systemClipboardManager.setPrimaryClip(clip)
+            val source = ImageDecoder.createSource(contentResolver, uri)
+            ImageDecoder.decodeBitmap(source)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        handleIntent(intent)
+
         setContent {
-            ProvideLocalizedResources(this, forceLayoutDirection = LayoutDirection.Ltr) {
-                val theme by prefs.other.settingsTheme.observeAsState()
-                FlorisAppTheme(theme) {
-                    BottomSheet {
-                        Row {
-                            Text(
-                                text = error?.showError()
-                                    ?: bitmap?.let { stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard) }
-                                    ?: stringRes(R.string.send_to_clipboard__unknown_error),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.weight(1f),
+            Content()
+        }
+    }
+
+    @Composable
+    private fun Content() {
+        val prefs by florisPreferenceModel()
+        ProvideLocalizedResources(this, forceLayoutDirection = LayoutDirection.Ltr) {
+            val theme by prefs.other.settingsTheme.observeAsState()
+            FlorisAppTheme(theme) {
+                BottomSheet {
+                    Row {
+                        Text(
+                            text = error?.showError()
+                                ?: bitmap?.let { stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard) }
+                                ?: stringRes(R.string.send_to_clipboard__unknown_error),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                    bitmap?.let {
+                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                            Image(
+                                modifier = Modifier
+                                    .padding(start = 64.dp, end = 64.dp, top = 32.dp, bottom = 8.dp),
+                                bitmap = bitmap!!.asImageBitmap(),
+                                contentDescription = null
                             )
-                        }
-                        bitmap?.let {
-                            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                                Image(
-                                    modifier = Modifier
-                                        .padding(start = 64.dp, end = 64.dp, top = 32.dp, bottom = 8.dp),
-                                    bitmap = bitmap!!.asImageBitmap(),
-                                    contentDescription = null
-                                )
-                            }
                         }
                     }
                 }
@@ -141,10 +161,9 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         }
     }
 
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    internal fun BottomSheet(
+    private fun BottomSheet(
         content: @Composable ColumnScope.() -> Unit,
     ) {
         ModalBottomSheet(
@@ -158,7 +177,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                         .align(Alignment.End)
                         .padding(16.dp),
                     onClick = { finish() },
-                    colors = ButtonDefaults.textButtonColors()
+                    colors = ButtonDefaults.textButtonColors(),
                 ) {
                     Text(text = stringRes(id = R.string.action__ok))
                 }
