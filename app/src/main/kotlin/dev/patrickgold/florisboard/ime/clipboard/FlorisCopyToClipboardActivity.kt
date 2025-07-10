@@ -22,6 +22,7 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -60,7 +61,8 @@ import org.florisboard.lib.kotlin.mimeTypeFilterOf
 class FlorisCopyToClipboardActivity : ComponentActivity() {
     private var error: CopyToClipboardError? = null
     private var bitmap: Bitmap? = null
-    private val systemClipboardManager = systemService(AndroidClipboardManager::class)
+    private val clipboardManager by lazy { systemService(AndroidClipboardManager::class) }
+    private val filter = mimeTypeFilterOf("image/*")
 
     internal enum class CopyToClipboardError {
         UNKNOWN_ERROR,
@@ -76,6 +78,16 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        handleIntent(intent)
+
+        setContent {
+            Content()
+        }
+    }
+
     override fun onPause() {
         finish()
         super.onPause()
@@ -84,8 +96,6 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
     private fun handleIntent(intent: Intent) {
         val type = intent.type
         val action = intent.action
-
-        val filter = mimeTypeFilterOf("image/*")
 
         if (Intent.ACTION_SEND != action || type == null) {
             error = CopyToClipboardError.UNKNOWN_ERROR
@@ -112,21 +122,14 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {
-        return uri.let { uri ->
-            val clip = ClipData.newUri(contentResolver, "image", uri)
-            systemClipboardManager.setPrimaryClip(clip)
+        val clip = ClipData.newUri(contentResolver, "image", uri)
+        clipboardManager.setPrimaryClip(clip)
+        return if (AndroidVersion.ATLEAST_API28_P) {
             val source = ImageDecoder.createSource(contentResolver, uri)
             ImageDecoder.decodeBitmap(source)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        handleIntent(intent)
-
-        setContent {
-            Content()
+        } else {
+            @Suppress("DEPRECATION")
+            MediaStore.Images.Media.getBitmap(contentResolver, uri)
         }
     }
 
