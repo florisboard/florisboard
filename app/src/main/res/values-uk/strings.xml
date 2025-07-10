@@ -72,6 +72,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Відкрити буфер обміну</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Емоджі</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Відкрити панель емоджі</string>
+    <string name="quick_action__language_switch" maxLength="12">Змінити мову</string>
     <string name="quick_action__settings" maxLength="12">Налаштування</string>
     <string name="quick_action__settings__tooltip">Відкрити налаштування</string>
     <string name="quick_action__undo" maxLength="12">Скасувати</string>
@@ -277,7 +278,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила вібрації</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Для цієї функції потрібен вібромотор, якого, схоже, немає на цьому пристрої</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ця функція вимагає підтримки апаратного керування амплітудою, яка відсутня на вашому пристрої</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Ця функція вимагає підтримки контролю амплітуди, яка доступна лише на Android 8.0 або новіше</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вібрація при натисканні клавіш</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вібрація при довгому натисканні клавіш</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вібрація повторювального натискання клавіш</string>
@@ -557,7 +557,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Очищення основного запису також видаляє останній запис історії</string>
     <string name="send_to_clipboard__unknown_error">Виникла невідома помилка. Спробуйте ще раз!</string>
     <string name="send_to_clipboard__type_not_supported_error">Цей тип медіа не підтримується.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Версія Android застаріла для цієї функції.    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Зображення нижче скопійовано в буфер обміну.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Інструменти розробника</string>

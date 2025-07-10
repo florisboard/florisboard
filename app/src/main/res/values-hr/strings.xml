@@ -178,7 +178,6 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trajanje vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Jačina vibracije</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja nedostaje na ovom uređaju</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Ova značajka zahtijeva mogućnost upravljanja amplitudom hardvera, koja je dostuna samo na uređajima inačice Androida 8.0 ili novije</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibriraj na tipku</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibriraj na produljen pritisak tipke</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibriraj na ponovljenu radnju tipke</string>

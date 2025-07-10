@@ -95,7 +95,6 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Διάρκεια δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Ένταση δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους στο υλισμικό, η οποία απουσιάζει από τη συσκευή σας</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους, η οποία είναι διαθέσιμη μόνο στο Android 8.0 ή νεότερο</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Δόνηση πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Δόνηση παρατεταμένου πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Δόνηση επαναλαμβανόμενης ενέργειας πλήκτρου</string>

@@ -277,7 +277,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">قوة الاهتزاز</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">تتطلب هذه الميزة عتاد الهزاز في جهازك ، والذي يبدو أنه مفقود</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في مدى الأجهزة ، وهو مفقود على جهازك</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في المدى ، والذي لا يتوفر إلا على نظام اندرويد 8.0 أو أحدث</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">اهتزاز الضغط على المفتاح</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">اهتزاز الضغط المطول على المفاتيح</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">اهتزاز عند الضغط المتكرر</string>
@@ -555,7 +554,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">يؤدي مسح السجل الأساسي للحافظة أيضًا إلى حذف آخر إدخال للمحفوظات</string>
     <string name="send_to_clipboard__unknown_error">حدث خطأ غير معروف. حاول مرة اخرى!</string>
     <string name="send_to_clipboard__type_not_supported_error">هذا النوع من الوسائط غير مدعوم.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">إصدار Android قديم جدًا لهذه الميزة.    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">نسخ الصورة أدناه إلى الحافظة.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">أدوات المطور</string>

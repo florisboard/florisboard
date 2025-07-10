@@ -72,6 +72,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Zwischenablage Verlauf öffnen</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Öffne Emoji-Panel</string>
+    <string name="quick_action__language_switch__tooltip">Sprachwechsel ausführen</string>
     <string name="quick_action__settings" maxLength="12">Einstellung</string>
     <string name="quick_action__settings__tooltip">Einstellungen öffnen</string>
     <string name="quick_action__undo" maxLength="12">Rückgängig</string>
@@ -172,6 +173,7 @@
     <string name="settings__theme_editor__add_code">Key code hinzufügen</string>
     <string name="settings__theme_editor__edit_code">Key code bearbeiten</string>
     <string name="settings__theme_editor__no_codes_defined">Regel auf alle Zielelemente anwenden.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Alle möglichen Werte wurden hinzugefügt.</string>
     <string name="settings__theme_editor__code_already_exists">Dieser Tastencode ist bereits definiert.</string>
     <string name="settings__theme_editor__code_invalid">Dieser Tastencode ist nicht gültig. Stelle sicher, dass der Tastencode innerhalb der Spanne von {c_min} bis {c_max} für Zeichen oder von {i_min} bis {i_max} für interne Spezialschlüssel liegt.</string>
     <string name="settings__theme_editor__code_help_text">Alternativ werden die folgenden Links helfen die korrespondierenden Codes zu finden:</string>
@@ -189,9 +191,11 @@
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Auf alle Ecken anwenden</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Farbzeichenkette bearbeiten</string>
     <string name="settings__theme_editor__file_selector_dialog_title">Datei auswählen</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Es wurden noch keine Dateien zu der Erweiterung hinzugefügt. Bitte nutze {action_title} auf der vorherigen Seite um die Dateien zu importieren.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Ist Nachtthema</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Ist randlos</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheetpfad</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Stylesheet Fehler</string>
     <string name="snygg__rule_annotation__defines">Variablen</string>
     <string name="snygg__rule_annotation__font">Schriftart</string>
     <string name="snygg__rule_annotation__font_name">Schriftname</string>
@@ -200,9 +204,14 @@
     <string name="snygg__rule_element__key">Taste</string>
     <string name="snygg__rule_element__key_hint">Tastenhinweis</string>
     <string name="snygg__rule_element__clipboard_header">Zwischenablagekopfzeile</string>
+    <string name="snygg__rule_element__clipboard_header_button">Zwischenablagekopfzeilen Knopf</string>
     <string name="snygg__rule_element__clipboard_header_text">Zwischenablagekopfzeilentext</string>
+    <string name="snygg__rule_element__clipboard_subheader">Zwischenablagenuntertitel</string>
+    <string name="snygg__rule_element__clipboard_content">Zwischenablageninhalt</string>
     <string name="snygg__rule_element__clipboard_item">Zwischenablagenitem</string>
     <string name="snygg__rule_element__clipboard_item_popup">Zwischensblagenitem-Popup</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Zwischenablagehistorie Deaktivierungsnachricht</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Zwischenablagehistorie Deaktivierungsknopf</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Eingabeanordnung im Querformat</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Eingabefeld im Querformat</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Eingabeaktion im Querformat</string>
@@ -293,7 +302,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstärke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Diese Funktion benötigt einen Vibrationsmotor, der bei diesem Gerät anscheinend fehlt</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Diese Funktion erfordert hardwareseitige Unterstützung zur Festlegung der Stärke von Vibrationsimpulsen, die auf diesem Gerät fehlt</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Diese Funktion verwendet Api Funktionen zur Steuerung der Stärke von Vibrationsimpulsen, die erst ab Android 8.0 unterstützt werden</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Bei Tastendruck vibrieren</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Bei langem Drücken einer Taste vibrieren</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Bei Doppeltippen auf eine Taste vibrieren</string>
@@ -569,7 +577,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Durch das Löschen des aktiven Elements wird auch das neueste Verlaufselement entfernt</string>
     <string name="send_to_clipboard__unknown_error">Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut!</string>
     <string name="send_to_clipboard__type_not_supported_error">Dieser Media-Typ wird nicht unterstützt.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Die Androidversion ist zu alt für diese Funktion.    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Nachfolgendes Bild wurde in die Zwischenablage kopiert.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Entwicklerwerkzeuge</string>

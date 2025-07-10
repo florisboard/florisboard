@@ -207,6 +207,7 @@
     <string name="snygg__rule_element__clipboard_subheader">Sottotitolo degli appunti</string>
     <string name="snygg__rule_element__clipboard_content">Contenuto degli appunti</string>
     <string name="snygg__rule_element__clipboard_item">Elemento degli appunti</string>
+    <string name="snygg__rule_element__clipboard_item_description">Descrizione degli appunti della clipboard</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elemento degli appunti</string>
     <string name="snygg__rule_element__clipboard_item_actions">Azione dell\'elemento degli appunti</string>
     <string name="snygg__rule_element__clipboard_item_action">Azione dell\'elemento degli appunti</string>
@@ -290,7 +291,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Resistenza alle vibrazioni</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Questa funzione richiede una componente hardware in grado di generare vibrazioni, che sembra assente nel dispositivo</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Questa funzione richiede il supporto del controllo dell\'ampiezza dell\'hardware, che manca sul tuo dispositivo</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Questa funzione richiede il supporto del controllo dell\'ampiezza, che è disponibile solo su Android 8.0 o più recente</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrazione dei tasti</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrazione dei tasti premuti a lungo</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibrazione dell\'azione ripetuta del tasto</string>
@@ -530,6 +530,7 @@
     <string name="clipboard__cleared_primary_clip">Clip principale cancellata</string>
     <string name="clipboard__cleared_history">Cronologia cancellata</string>
     <string name="clipboard__cleared_full_history">Tutta la cronologia cancellata</string>
+    <string name="clipboard__confirm_clear_history__message">Sei sicuro di voler cancellare la cronologia degli appunti? Questa azione cancellerà tutti gli appunti tranne quelli spuntati, indipendentemente dai filtri attivi.</string>
     <string name="settings__clipboard__title">Appunti</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>

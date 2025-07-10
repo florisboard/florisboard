@@ -218,8 +218,15 @@
     <string name="snygg__rule_element__clipboard_header_text">Text záhlaví schránky</string>
     <string name="snygg__rule_element__clipboard_subheader">Podzáhlaví schránky</string>
     <string name="snygg__rule_element__clipboard_content">Obsah schránky</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Řádek filtru schránky</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Pilulka filtru schránky</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Ikona pilulky filtru schránky</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Text pilulky filtru schránky</string>
+    <string name="snygg__rule_element__clipboard_grid">Mřížka schránky</string>
     <string name="snygg__rule_element__clipboard_item">Položka schránky</string>
+    <string name="snygg__rule_element__clipboard_item_description">Popis položky schránky</string>
     <string name="snygg__rule_element__clipboard_item_popup">Vyskakovací nabídka položky schránky</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Čas položky schránky</string>
     <string name="snygg__rule_element__clipboard_item_actions">Akce položky schránky</string>
     <string name="snygg__rule_element__clipboard_item_action">Akce položky schránky</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Ikona akce položky schránky</string>
@@ -368,7 +375,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Síla vibrací</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Tato funkce vyžaduje hardwarové vibrační zařízení, které na tomto zařízení nejspíše chybí</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tato funkce vyžaduje hardwarovou podporu řízení amplitudy, která ve vašem zařízení chybí</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Tato funkce vyžaduje podporu řízení amplitudy, která je dostupná pouze na systému Android 8.0 nebo vyšším</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrace při stisku klávesy</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrace při dlouhém stisku klávesy</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibrace při opakované akci klávesy</string>
@@ -593,7 +599,7 @@
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nepodařilo se zkopírovat do systémové schránky: Instance správce schránky nenalezena</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Nahlásit problém (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavřít</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybová hlášení</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Chybová hlášení FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal pracovat…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Klepnutím zobrazíte podrobnosti o chybě</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
@@ -623,6 +629,7 @@
     <string name="clipboard__cleared_primary_clip">Primární zkopírovaná položka vymazána</string>
     <string name="clipboard__cleared_history">Historie vymazána</string>
     <string name="clipboard__cleared_full_history">Celá historie vymazána</string>
+    <string name="clipboard__confirm_clear_history__message">Opravdu chcete vymazat historii schránky? Smažete tím všechny položky kromě připnutých, nezávisle na aktivních filtrech.</string>
     <string name="settings__clipboard__title">Schránka</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
@@ -649,8 +656,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Vymazání primární položky také vymaže poslední zápis v historii</string>
     <string name="send_to_clipboard__unknown_error">Došlo k neznámé chybě. Zkuste to prosím znovu!</string>
     <string name="send_to_clipboard__type_not_supported_error">Tento typ médií není podporován.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Pro použití této funkce máte příliš starou verzi systému.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Obrázek níže zkopírován do schránky.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Vývojářské nástroje</string>

@@ -140,7 +140,6 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Värinän kesto</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Värinän voimakkuus</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Tämä ominaisuus vaatii tuen laitteiston värinänvoimakkuudensäätöön, jota laitteellasi ei ole</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Tämä ominaisuus vaatii tuen värinänvoimakkuudensäätöön, joka on saatavilla Android 8.0 tai uudemmassa versiossa</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Painalluksen värinä</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Pitkän painalluksen värinä</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Toistetun painalluksen värinä</string>

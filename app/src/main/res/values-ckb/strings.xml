@@ -18,6 +18,16 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">مێژووی ئیمۆجی</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">مێژووی ئیمۆجی کارا بکە</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">دوایین ئیمۆجییە بەکارھێندراوەکان بھێڵەوە بۆ ئاسانکاری</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">ماوەی نوێبونەوە (جێگیرکراو)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">ماوەی نوێبونەوە (دوایین)</string>
+    <string name="prefs__media__emoji_history_max_size">زۆرترین ڕێژەی هەڵگرتن</string>
+    <string name="prefs__media__emoji_history_pinned_reset">ڕێکخستنەوەی لیستی خەندە جێگیرکراوەکان</string>
+    <string name="prefs__media__emoji_history_reset">ڕێکخستنەوەی لیستی خەندەکان</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">پێشنیارکردنی خەندەکان</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">چالاککردنی پێشنیاری خەندەکان</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">پێشنیارکردنی خەندە و کاردانەوەکان لەکاتی نووسیندا</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">شێوازی پێشنیاری خەندەکان</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">پیشاندانی ناوی خەندەکان</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">خەندەکان </string>
     <string name="emoji__category__people_body" comment="Emoji category name">خەڵک</string>
@@ -28,6 +38,8 @@
     <string name="emoji__category__objects" comment="Emoji category name">ئامانجەکان</string>
     <string name="emoji__category__symbols" comment="Emoji category name">هێماکان</string>
     <string name="emoji__category__flags" comment="Emoji category name">ئاڵاکان</string>
+    <string name="emoji__history__pinned">جێگیرکراو</string>
+    <string name="emoji__history__recent">دوایین</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">چونە سەرەوە</string>
     <string name="quick_action__arrow_up__tooltip">چوونە سەرەتای دێڕ</string>
@@ -51,6 +63,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">پیشاندانی لەبەرگیراوەکان</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">ئیمۆجی</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">کردنەوەی لیستی ئیمۆجیەکان</string>
+    <string name="quick_action__language_switch" maxLength="12">گۆڕینی زمان</string>
+    <string name="quick_action__language_switch__tooltip">گۆڕینی زمانی تەختەکلیل</string>
     <string name="quick_action__settings" maxLength="12">ڕێکخستنەکان</string>
     <string name="quick_action__settings__tooltip">کردنەوەی ڕێکخستنەکان</string>
     <string name="quick_action__undo" maxLength="12">دواتر</string>
@@ -166,6 +180,10 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">ڕووکاری تاریکە</string>
     <string name="settings__theme_editor__component_meta_is_borderless">بێ لێوار</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">شوێنی هەڵگرتن</string>
+    <string name="snygg__rule_annotation__font">فۆنت</string>
+    <string name="snygg__rule_annotation__font_name">ناوی فۆنت</string>
+    <string name="snygg__rule_element__root">بنەڕەتی</string>
+    <string name="snygg__rule_element__window">پەنجەرە</string>
     <string name="snygg__rule_element__key">دوگمە</string>
     <string name="snygg__rule_element__key_hint">پیتە لاوەکییەکان</string>
     <string name="snygg__rule_element__clipboard_header">سەرەوەی لەبەرگیراوەکان</string>
@@ -217,6 +235,7 @@
     <string name="snygg__property_name__var_shape_variant">شێوەی دوگمەکان (هەمەجۆر)</string>
     <string name="snygg__property_value__explicit_inherit">بنەڕەتی</string>
     <string name="snygg__property_value__defined_var">سەرچاوە</string>
+    <string name="snygg__property_value__no">نەخێر</string>
     <string name="snygg__property_value__solid_color">ڕەنگ</string>
     <string name="snygg__property_value__rectangle_shape">چوارگۆشەیی</string>
     <string name="snygg__property_value__circle_shape">بازنەیی</string>
@@ -245,7 +264,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">هێزی لەرزین</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">ئەم تایبەتمەندییە پێویستی بە هاردوێری لەرینەوەیە کە لە ئامێرەکەتدا بوونی نییە</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">مۆبایلەکەت پشتگری ئەم تایبەتمەندییە ناکات</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">ئەم تایبەتمەندییە تەنها لە ئەندرۆیدی ٨. ٠ و بەرەو سەر کاردەکات</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">لەرزین لەکاتی نووسین</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">لەرزین لەکاتی دەست ڕاگرتن</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">لەرزین لەکاتی فرمانە دووبارەکان</string>
@@ -602,6 +620,8 @@
     <string name="general__no_browser_app_found_for_url">هیچ بەرنامەیەکی وێبگەڕ نەدۆزرایەوە بۆ کردنەوەی {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; دیاریبکە &#45;</string>
     <string name="general__unlimited">بێ سنوور</string>
+    <string name="general__file_name">ناوی فایل</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">خۆکار</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">دۆخی ئاسایی</string>
     <string name="screen_orientation__landscape">دۆخی خستنە سەرلا</string>
@@ -618,6 +638,7 @@
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">ئاسایی (٣ ڕیز)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">جوڵاو</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">جوڵاو و ڕاکێشان</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">سوور سەوز شین</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">هەمیشە پیشاندان</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">پیشاندانی تەختەکلیل دوای داخستنی بەشی دەستکاریکردنی ڕووکار</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">پیشان نەدان</string>
@@ -674,6 +695,9 @@
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">هەموو زانیارییەکانی ڕەنگەکان پیشان ئەدرێن، درێژە و بەشەکانی تر وەردەگێڕدرێن.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">گەشەپێدەر</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">هەموو زانیارییەکانی ڕەنگەکان پیشان ئەدرێن، زانیاری ڕووکار هەمان ناوی فایل پیشان ئەدات.</string>
+    <string name="enum__space_bar_mode__nothing" comment="Enum value label">بێ ناو</string>
+    <string name="enum__space_bar_mode__current_language" comment="Enum value label">ناوی زمان</string>
+    <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">بەکارهێنانی زمانی سیستەم</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">بەکارهێنانی ناوی تەختەکلیل</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">هیچ فرمانێک</string>
@@ -727,6 +751,14 @@
         <item quantity="other">{v} چرکە</item>
     </plurals>
     <plurals name="unit__items__written">
+        <item quantity="one">{v} دانە</item>
+        <item quantity="other">{v} دانە</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} پیت</item>
+        <item quantity="other">{v} پیت</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
         <item quantity="one">{v} دانە</item>
         <item quantity="other">{v} دانە</item>
     </plurals>

@@ -370,7 +370,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Esta función requiere de un motor de vibración, el cual al parecer no está presente en este dispositivo</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte de control de amplitud de hardware, el cual falta en su dispositivo</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Esta función requiere soporte de control de amplitud, el cual solo está disponible desde Android 8.0 en adelante</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibración al presionar una tecla</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibración al presionar prolongadamente</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibración al presionar repetidamente</string>
@@ -651,7 +650,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Al borrar el clip principal también se borra la última entrada del historial</string>
     <string name="send_to_clipboard__unknown_error">Ha ocurrido un error desconocido. Por favor, vuelve a intentarlo.</string>
     <string name="send_to_clipboard__type_not_supported_error">Este tipo de medio no está soportado.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">La versión de android es demasiado antigua para esta función.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Imagen copiada en el portapapeles.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Herramientas de desarrollo</string>

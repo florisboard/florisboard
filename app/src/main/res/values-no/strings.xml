@@ -193,7 +193,6 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som bare er tilgjengelig på Android 8.0 eller nyere</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Tastevibrasjon</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Tastevibrasjon for lange trykk</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Gjentatte tastehandlingsvibrasjoner</string>

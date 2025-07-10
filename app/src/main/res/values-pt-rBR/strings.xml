@@ -71,6 +71,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir histórico da área de transferência</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Painel de emojis</string>
+    <string name="quick_action__language_switch" maxLength="12">Mudar idioma</string>
     <string name="quick_action__settings" maxLength="12">Ajustes</string>
     <string name="quick_action__settings__tooltip">Abrir configurações</string>
     <string name="quick_action__undo" maxLength="12">Desfazer</string>
@@ -151,6 +152,8 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora do pôr do sol</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema diurno</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema noturno</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Cor de destaque (Temas Material You)
+    </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gerenciar temas instalados</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Assets do Aplicativo FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Armazenamento Interno</string>
@@ -186,11 +189,14 @@
     <string name="settings__theme_editor__property_value">Valor da propriedade</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Aplicar para todos os cantos</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Editar sequência de cores</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Selecionar arquivo</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">É tema noturno</string>
     <string name="settings__theme_editor__component_meta_is_borderless">É sem bordas</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Caminho da folha de estilo</string>
+    <string name="snygg__rule_annotation__defines">Variáveis</string>
     <string name="snygg__rule_annotation__defines_description">Defina variáveis dentro desta regra para reutilizar cores ou tamanhos comuns em sua folha de estilo.</string>
     <string name="snygg__rule_annotation__font">Fonte</string>
+    <string name="snygg__rule_annotation__font_name">Nome da fonte</string>
     <string name="snygg__rule_element__key">Tecla</string>
     <string name="snygg__rule_element__key_hint">Dica da tecla</string>
     <string name="snygg__rule_element__clipboard_header">Cabeçalho da área de transferência</string>
@@ -248,6 +254,8 @@
     <string name="snygg__property_name__var_shape_variant">Forma comum (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Herdar</string>
     <string name="snygg__property_value__defined_var">Referência da Var</string>
+    <string name="snygg__property_value__yes">Sim</string>
+    <string name="snygg__property_value__no">Não</string>
     <string name="snygg__property_value__solid_color">Cor sólida</string>
     <string name="snygg__property_value__material_you_light_color">Cor do Material You (Clara)</string>
     <string name="snygg__property_value__material_you_dark_color">Cor do Material You (Escura)</string>
@@ -260,6 +268,7 @@
     <string name="snygg__property_value__dp_size">Tamanho (dp)</string>
     <string name="snygg__property_value__sp_size">Tamanho (sp)</string>
     <string name="snygg__property_value__percentage_size">Tamanho (%)</string>
+    <string name="snygg__property_value__text_align">Alinhamento do texto</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sons e Vibração</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Resposta de Áudio / Sons</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ativar resposta de áudio</string>
@@ -278,7 +287,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidade da vibração</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Essa funcionalidade exige um vibrador no hardware, que parece não estar presente nesse dispositivo</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Este recurso requer suporte de controle de amplitude de hardware, que está faltando em seu dispositivo</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Este recurso requer suporte de controle de amplitude, que só está disponível no Android 8.0 ou mais recente</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibração ao pressionar tecla</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibração ao pressionar e segurar tecla</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibração de ação repetida da tecla</string>
@@ -556,7 +564,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Limpar o clipe primário também exclui a última entrada do histórico</string>
     <string name="send_to_clipboard__unknown_error">Ocorreu um erro desconhecido. Por favor, tente novamente!</string>
     <string name="send_to_clipboard__type_not_supported_error">Esse tipo de mídia não é suportado.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Sua versão do Android é muito antiga para essa funcionalidade.    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Imagem abaixo copiada para área de transferência.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Ferramentas de desenvolvedor</string>

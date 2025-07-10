@@ -297,7 +297,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensitat de la vibració</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">A aquesta funció li cal un maquinari de vibració, però sembla que el vostre dispositiu no en té cap</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">A aquesta funció li cal un maquinari de suport de control d\'amplificació, però sembla que el vostre dispositiu no en té cap</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">A aquesta funció li cal el suport del control d\'amplificació, però només està disponible en versions d\'Android 8.0 o posteriors</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibració en pitjar la tecla</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibració de toc llarg de la tecla</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibració d\'acció repetida de la tecla</string>
@@ -313,9 +312,9 @@
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostra una fila amb els números a la part superior del teclat</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Números suggerits a les tecles</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Símbols suggerits a les tecles</string>
-    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra la clau d\'utilitat</string>
-    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra una clau d\'utilitat configurable al costat de la barra d\'espai</string>
-    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acció de la clau d\'utilitat</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra la tecla d\'utilitat</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra una tecla d\'utilitat configurable al costat de la barra d\'espai</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acció de la tecla d\'utilitat</string>
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Etiqueta de la barra espaiadora</string>
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportament de les majúscules</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador de la mida de la font</string>
@@ -578,8 +577,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Si suprimeixes l\'entrada principal, també suprimiràs la darrera entrada de l\'historial</string>
     <string name="send_to_clipboard__unknown_error">S\'ha produït un error desconegut. Torna-ho a provar!</string>
     <string name="send_to_clipboard__type_not_supported_error">Aquest tipus de mitjà no és compatible.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">La versió d\'Android és massa antiga per a aquesta funció.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">La imatge de sota s\'ha copiat al porta-retalls.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Eines de desenvolupament</string>

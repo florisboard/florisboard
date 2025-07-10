@@ -306,7 +306,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Kekuatan getaran</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Fitur ini membutuhkan penggetar perangkat keras, yang sepertinya tidak ada pada perangkat ini</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Fitur ini memerlukan dukungan kontrol amplitudo perangkat keras, yang tidak ada di perangkat Anda</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Fitur ini memerlukan dukungan kontrol amplitudo, yang hanya tersedia di Android 8.0 ke atas</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Getaran tekanan tombol</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Getaran tekanan lama tombol</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Getaran aksi berulang tombol</string>
@@ -576,8 +575,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Membersihkan klip utama juga menghapus entri riwayat terkini</string>
     <string name="send_to_clipboard__unknown_error">Terjadi kesalahan yang tidak diketahui. Harap coba lagi!</string>
     <string name="send_to_clipboard__type_not_supported_error">Jenis media ini tidak didukung.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Versi android terlalu lawas untuk fitur ini.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Salin gambar berikut ke papan klip.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Alat pengembang</string>

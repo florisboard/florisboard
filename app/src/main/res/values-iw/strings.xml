@@ -174,10 +174,13 @@
     <string name="settings__theme_editor__rule_name">אלמנט / ביאור</string>
     <string name="settings__theme_editor__rule_codes">קודי מפתח יעד</string>
     <string name="settings__theme_editor__rule_groups">קבוצות</string>
+    <string name="settings__theme_editor__rule_modes">מצבי יעד (שכבות)</string>
+    <string name="settings__theme_editor__rule_shift_states">מצבי הזזת יעד</string>
     <string name="settings__theme_editor__rule_selectors">כלי בחירה</string>
     <string name="settings__theme_editor__add_code">הוסף קוד מפתח</string>
     <string name="settings__theme_editor__edit_code">ערוך מפתח קוד</string>
     <string name="settings__theme_editor__no_codes_defined">החל כלל על כל רכיבי היעד.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">כל הערכים האפשריים נוספו.</string>
     <string name="settings__theme_editor__code_already_exists">מפתח זה כבר מוגדר.</string>
     <string name="settings__theme_editor__code_invalid">קוד מפתח זה אינו תקף. ודא שקוד המפתח נמצא בטווח של {c_min} עד {c_max} עבור תווים או {i_min} עד {i_max} עבור מפתחות מיוחדים פנימיים.</string>
     <string name="settings__theme_editor__code_placeholder">קוד</string>
@@ -188,6 +191,12 @@
     <string name="settings__theme_editor__property_name">שם מאפיין</string>
     <string name="settings__theme_editor__property_value">ערך מאפיין</string>
     <string name="settings__theme_editor__file_selector_dialog_title">בחר קובץ</string>
+    <string name="snygg__rule_annotation__font">גופן</string>
+    <string name="snygg__rule_annotation__font_name">שם גופן</string>
+    <string name="snygg__rule_element__root">רוט</string>
+    <string name="snygg__rule_element__window">חלון</string>
+    <string name="snygg__rule_element__key">מקש</string>
+    <string name="snygg__rule_element__clipboard_grid">רשת הלוח</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">מקלדת</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>

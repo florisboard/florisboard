@@ -278,7 +278,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">振动强度</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">此功能需要硬件振动器，此设备上似乎缺少此部件</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">此功能需要硬件振幅控制支持，您的设备上缺少该支持</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">此功能需要振幅控制支持，仅适用于安卓8.0或更高版本</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">按键振动</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">长按键振动</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">键盘重复操作振动</string>
@@ -557,7 +556,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">清除主要剪贴板条目时还会删除最新的历史记录条目</string>
     <string name="send_to_clipboard__unknown_error">发生未知错误。请重试！</string>
     <string name="send_to_clipboard__type_not_supported_error">不支持这一媒体类型。</string>
-    <string name="send_to_clipboard__android_version_to_old_error">安卓版本过低，无法使用此功能。    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">已将以下图像复制到剪贴板。</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">开发者工具</string>

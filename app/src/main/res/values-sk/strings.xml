@@ -178,7 +178,6 @@
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Zvuky stláčania klávesov</string>
     <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Režim vibrácií</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Táto funkcia vyžaduje hardvérovú podporu riadenia amplitúdy, ktorá vo vašom zariadení chýba.</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Táto funkcia vyžaduje podporu ovládania amplitúdy, ktorá je k dispozícii len v systéme Android 8.0 alebo novšom.</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrácie pri stlačení tlačidla</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrácie pri dlhom stlačení tlačidla</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Kľúčové opakované vibrácie</string>

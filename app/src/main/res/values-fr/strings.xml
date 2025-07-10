@@ -72,6 +72,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Ouvrir l\'historique du presse-papier</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Émoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Ouvrir le panneau émoji</string>
+    <string name="quick_action__language_switch__tooltip">Effectuer un changement de langue</string>
     <string name="quick_action__settings" maxLength="12">Paramètres</string>
     <string name="quick_action__settings__tooltip">Accède aux paramètres</string>
     <string name="quick_action__undo" maxLength="12">Annuler</string>
@@ -176,6 +177,7 @@
     <string name="settings__theme_editor__add_code">Ajouter un code de touche</string>
     <string name="settings__theme_editor__edit_code">Modifier le code de touche</string>
     <string name="settings__theme_editor__no_codes_defined">Appliquer la règle à tous les éléments cibles.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Toutes les valeurs possibles ont été ajoutées.</string>
     <string name="settings__theme_editor__code_already_exists">Ce code de touche est déjà défini.</string>
     <string name="settings__theme_editor__code_invalid">Ce code de touche n\'est pas valide. Assurez-vous que le code de touche est dans la plage de {c_min} à {c_max} pour les caractères ou de {i_min} à {i_max} pour les touches spéciales internes.</string>
     <string name="settings__theme_editor__code_help_text">Sinon, les liens suivants vous aideront à trouver le code de touche correspondant :</string>
@@ -192,6 +194,8 @@
     <string name="settings__theme_editor__property_value">Valeur de la propriété</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Appliquer pour tous les coins</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Modifier la chaîne de couleur</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Sélectionner un fichier</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Aucun fichier n’a encore été ajouté à cette extension. Veuillez utiliser l’action « {action_title} » dans l’écran précédent pour importer des fichiers.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Est le thème sombre</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Est sans bordures</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Chemin vers la feuille de style</string>
@@ -205,9 +209,21 @@
     <string name="snygg__rule_element__window">Fenêtre</string>
     <string name="snygg__rule_element__key">Touche</string>
     <string name="snygg__rule_element__key_hint">Indice de touche</string>
+    <string name="snygg__rule_element__key_popup_box">Info-bulle de touche</string>
+    <string name="snygg__rule_element__key_popup_element">Aperçu de touche</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Indicateur étendu de l\'aperçu de touche</string>
     <string name="snygg__rule_element__clipboard_header">En-tête du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_header_button">Bouton d’en-tête du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_header_text">Texte d\'en-tête du presse-papier</string>
+    <string name="snygg__rule_element__clipboard_subheader">Sous-en-tête du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_content">Contenu du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Ligne de filtre du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Puce de filtre de presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Icône de puce de filtre de presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Texte de puce de filtre de presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_grid">Grille de disposition du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item">Élément du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_item_description">Description de l’élément du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up d\'élément du presse-papiers</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposition en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Champ d\'entrée en mode paysage</string>
@@ -300,7 +316,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensité de la vibration</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Cette fonctionnalité nécessite un vibreur matériel, qui semble manquer dans cet appareil</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude du matériel, qui n\'est pas disponible sur votre appareil</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude, qui n\'est disponible que sur Android 8.0 ou plus récent</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibration de touche</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibration lors d\'un appuie long</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibration de la touche d\'action répétée</string>
@@ -315,7 +330,7 @@
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de chiffres</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Afficher une rangée de chiffres au dessus des caractères</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rangée de chiffres suggérée</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symboles suggérés</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symbole suggéré</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Afficher la touche utilitaire</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Affiche une touche utilitaire configurable à côté de la barre d\'espace</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Action de la touche utilitaire</string>
@@ -582,8 +597,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Effacer l\'attache principale supprime aussi le dernier élément de l\'historique</string>
     <string name="send_to_clipboard__unknown_error">Une erreur inconnue s\'est produite. Merci de réessayer !</string>
     <string name="send_to_clipboard__type_not_supported_error">Ce type de média n\'est pas supporté.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">La version d\'Android est trop ancienne pour cette fonctionnalité.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">L\'image ci-dessous est copiée dans le presse-papiers.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Outils de développement</string>
@@ -807,12 +820,12 @@
     <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} interagit directement avec le vibreur matériel par défaut. Cela contrôle mieux la durée et la force d\'une vibration, mais la vibration peut ne pas être aussi douce et optimisée qu\'avec l\'interface de retour haptique</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Utiliser l\'interface de retour haptique</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} utilise l\'interface de retour haptique pour déclencher une séquence de vibrations prédéfinie pour les pressions sur les touches. Cela peut fonctionner exceptionnellement bien sur certains appareils, mais échouer complètement ou avoir des performances très faibles sur d\'autres</string>
-    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Activé priorité à l\'accent</string>
-    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
-    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Activé priorité à l\'accent</string>
-    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent primaire ou le symbole de l\'indice si aucun accent primaire n\'est disponible.</string>
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Priorité à l\'accent</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est toujours l\'accent le plus courant, ou le symbole de l\'indice si aucun accent n\'est disponible</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Priorité à l\'indice</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Le caractère initial sélectionné après un appui long est toujours le symbole de l\'indice, ou l’accent le plus courant si aucun symbole d’indice n’est disponible</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Priorité intelligente</string>
-    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est décidé de manière dynamique pour être soit l\'accent principal, soit le symbole de l\'indice, en fonction de la langue et de la disposition actuelles.</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Le caractère initial sélectionné après une pression longue est décidé de manière dynamique pour être soit l\'accent le plus courant, soit le symbole de l\'indice, en fonction de la langue et de la disposition actuelle</string>
     <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Remplace l\'icône de bascule des actions partagées par l\'indicateur incognito</string>
     <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Affiche l\'indicateur incognito derrière le clavier</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Forcer la désactivation</string>

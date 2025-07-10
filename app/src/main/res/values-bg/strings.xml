@@ -219,8 +219,15 @@
     <string name="snygg__rule_element__clipboard_header_text">Текст в заглавката на межд. памет</string>
     <string name="snygg__rule_element__clipboard_subheader">Подзаглавие на междинната памет</string>
     <string name="snygg__rule_element__clipboard_content">Съдържание на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Ред на филтър на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Елемент на филтър на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Пиктограма на елемент на филтър на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Текст на елемент на филтър на междинната памет</string>
+    <string name="snygg__rule_element__clipboard_grid">Мрежа на междинната памет</string>
     <string name="snygg__rule_element__clipboard_item">Елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item_description">Описание на елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_popup">Подсказка на елемент от междинната памет</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Времеви маркер на елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_actions">Действия на елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_action">Действие на елемент от междинната памет</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Пиктограма с действие на елемент от междинната памет</string>
@@ -369,7 +376,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила на вибрацията</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Тази възможност изисква модул за вибрации, какъвто изглежда липсва на устройството</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Тази възможност изисква поддръжка на апаратен контрол на амплитудата, каквато липсва на устройството</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Тази възможност изисква поддръжка на апаратен контрол на амплитудата, каквато е налична от Android 8.0 и по-нов</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация при докосване на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация при задържане на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация при продължително задържане на клавиш</string>
@@ -621,6 +627,7 @@
     <string name="clipboard__cleared_primary_clip">Текущото съдържание на междинната памет е изчистено</string>
     <string name="clipboard__cleared_history">Историята е изчистена</string>
     <string name="clipboard__cleared_full_history">Цялата история е изчистена</string>
+    <string name="clipboard__confirm_clear_history__message">Желаете ли историята на междинната памет да бъде изчистена? Всички елементи, с изключение на закачените ще бъдат премахнати без значение на използвания филтър.</string>
     <string name="settings__clipboard__title">Междинна памет</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Междинна памет на приложението</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Използва се междинната памет на приложението вместо системната</string>
@@ -647,7 +654,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Изчистване на текущото съдържание на междинната памет изчиства и последния елемент от историята</string>
     <string name="send_to_clipboard__unknown_error">Възникна неизвестна грешка. Опитайте отново!</string>
     <string name="send_to_clipboard__type_not_supported_error">Този вид медия не се поддържа.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Това издание на Андроид е твърде остаряло за тази възможност.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Долното изображение е копирано в междинната памет.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Развойни инструменти</string>

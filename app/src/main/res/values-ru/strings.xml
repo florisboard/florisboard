@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Включить историю буфера обмена</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Эмодзи</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Открыть панель эмодзи</string>
+    <string name="quick_action__language_switch" maxLength="12">Сменить язык</string>
+    <string name="quick_action__language_switch__tooltip">Выполнить переключение языка</string>
     <string name="quick_action__settings" maxLength="12">Настройки</string>
     <string name="quick_action__settings__tooltip">Открыть настройки</string>
     <string name="quick_action__undo" maxLength="12">Отменить</string>
@@ -146,7 +148,7 @@
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (не установлен)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Раскладки</string>
     <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Подтверждение удаления</string>
-    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Вы уверены что хотите удалить этот подтип?</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Вы уверены, что хотите удалить этот подтип?</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Темы</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Тема оформления</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Время восхода</string>
@@ -163,11 +165,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Выбрать темную тему</string>
     <string name="settings__theme_editor__fine_tune__title">Настройки редактора тем</string>
     <string name="settings__theme_editor__fine_tune__level">Уровень редактирования</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Цветопередача</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Отображать клавиатуру после диалогов</string>
     <string name="settings__theme_editor__add_rule">Добавить правило</string>
     <string name="settings__theme_editor__edit_rule">Изменить правило</string>
     <string name="settings__theme_editor__no_rules_defined">В таблице стилей не определены правила. Добавьте правило, чтобы начать её настройку.</string>
     <string name="settings__theme_editor__rule_already_exists">Это правило таблицы стилей уже определено.</string>
+    <string name="settings__theme_editor__rule_name">Элемент / Аннотация</string>
     <string name="settings__theme_editor__rule_codes">Целевые коды клавиш</string>
     <string name="settings__theme_editor__rule_groups">Группы</string>
     <string name="settings__theme_editor__rule_modes">Целевые режимы (слои)</string>
@@ -193,12 +197,18 @@
     <string name="settings__theme_editor__property_value">Значения свойства</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Применить ко всем углам</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Изменить цвет строки</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Выбрать файл</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">В это расширение еще не добавлено ни одного файла. Для импорта файлов используйте действие \"{action_title}\" на предыдущем экране.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Ошибка таблицы стилей</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} может попытаться мягко загрузить таблицу стилей и добавить недостающие схемы, правила или удалить недействительные правила, свойства или значения. Хотите ли вы, чтобы {app_name} применило эти изменения?</string>
     <string name="snygg__rule_annotation__defines">Переменные</string>
+    <string name="snygg__rule_annotation__defines_description">Определите переменные в этом правиле, чтобы повторно использовать общие цвета или размеры в таблице стилей.</string>
     <string name="snygg__rule_annotation__font">Шрифт</string>
     <string name="snygg__rule_annotation__font_name">Название шрифта</string>
+    <string name="snygg__rule_element__window">Окно</string>
     <string name="snygg__rule_element__key">Кнопка</string>
     <string name="snygg__rule_element__key_hint">Подсказка кнопки</string>
     <string name="snygg__rule_element__clipboard_header">Заголовок буфера обмена</string>
@@ -268,7 +278,7 @@
     <string name="snygg__property_value__dp_size">Размер (dp)</string>
     <string name="snygg__property_value__sp_size">Размер (sp)</string>
     <string name="snygg__property_value__percentage_size">Размер (%)</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук и вибрация</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук &amp; Вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Не воспроизводить звуки при вводе вне зависимости от системных настроек</string>
@@ -286,7 +296,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила вибрации</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Для этой функции требуется вибромотор, который, по-видимому, отсутствует на данном устройстве</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Эта функция требует аппаратной поддержки управления амплитудой, которая отсутствует на вашем устройстве</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Эта функция требует поддержки управления амплитудой, которая доступна только на Android 8.0 или новее</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация нажатия кнопки</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация долгого нажатия кнопки</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация автоповтора ввода кнопки</string>
@@ -426,7 +435,7 @@
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">        Настройки цвета акцента
     </string>
     <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Настройки языка</string>
-    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Показывать значок приложения а лаунчере</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Показывать значок приложения в лаунчере</string>
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">О приложении</string>
@@ -446,7 +455,7 @@
     <string name="about__privacy_policy__summary" comment="Preference summary">Политика конфиденциальности этого проекта</string>
     <string name="about__project_license__title" comment="Preference title">Лицензия проекта</string>
     <string name="about__project_license__summary" comment="Preference summary">FlorisBoard выпускается под лицензией {license_name}</string>
-    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Ошибка: невозможно загрузить текст лицензии.\nПричина: {error_message}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Ошибка: невозможно загрузить текст лицензии.\n-&gt; Причина: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Ссылка на диспетчер активов не определена</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Лицензии третьих сторон</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензии сторонних библиотек, используемых в данном приложении</string>
@@ -566,9 +575,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">При очистке основного клипа также удаляется последняя запись в истории</string>
     <string name="send_to_clipboard__unknown_error">Неизвестная ошибка. Попробуйте еще раз!</string>
     <string name="send_to_clipboard__type_not_supported_error">Данный формат файла не поддерживается.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Требуется более новая версия Android для этой функции.
-    
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Изображение ниже скопировано в буфер обмена.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Инструменты разработчика</string>
@@ -624,7 +630,7 @@
     <string name="ext__meta__title">Заголовок</string>
     <string name="ext__meta__version">Версия</string>
     <string name="ext__error__not_found_title">Расширение не найдено</string>
-    <string name="ext__error__not_found_description">Не найдено расширения с ID \"{id}\"</string>
+    <string name="ext__error__not_found_description">Не найдено расширения с ID \"{id}\".</string>
     <string name="ext__editor__title_create_any">Создать расширение</string>
     <string name="ext__editor__title_create_keyboard">Создать расширение клавиатуры</string>
     <string name="ext__editor__title_create_theme">Создать расширение темы</string>

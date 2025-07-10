@@ -220,8 +220,15 @@
     <string name="snygg__rule_element__clipboard_header_text">Tekst nagłówka schowka</string>
     <string name="snygg__rule_element__clipboard_subheader">Podtytuł schowka</string>
     <string name="snygg__rule_element__clipboard_content">Zawartość schowka</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Wiersz filtra schowka</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Układu filtra schowka</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Ikona układu filtra schowka</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Tekst układu filtra schowka</string>
+    <string name="snygg__rule_element__clipboard_grid">Siatka schowka</string>
     <string name="snygg__rule_element__clipboard_item">Element schowka</string>
+    <string name="snygg__rule_element__clipboard_item_description">Opis elementu schowka</string>
     <string name="snygg__rule_element__clipboard_item_popup">Popup elementu schowka</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Znacznik czasu elementu schowka</string>
     <string name="snygg__rule_element__clipboard_item_actions">Działania na elementach schowka</string>
     <string name="snygg__rule_element__clipboard_item_action">Działanie na elemencie schowka</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Ikona działania elementu schowka</string>
@@ -370,7 +377,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Siła wibracji</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Ta funkcja wymaga fizycznego wibratora, którego to urządzenie nie posiada</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ta funkcja wymaga obsługi sprzętowej kontroli amplitudy, której brakuje na Twoim urządzeniu</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Ta funkcja wymaga obsługi kontroli amplitudy, która jest dostępna tylko w systemie Android 8.0 lub nowszym</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Wibracja po naciśnięciu klawisza</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Wibracje przy długim naciśnięciu klawisza</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Wibracja powtórzonego wciśnięcia klawisza</string>
@@ -625,6 +631,7 @@
     <string name="clipboard__cleared_primary_clip">Wyczyść główny schowek</string>
     <string name="clipboard__cleared_history">Historia została usunięta</string>
     <string name="clipboard__cleared_full_history">Cała historia została usunięta</string>
+    <string name="clipboard__confirm_clear_history__message">Czy na pewno chcesz wyczyścić historię schowka? Spowoduje to wyczyszczenie wszystkich elementów z wyjątkiem przypiętych, niezależnie od aktywnych filtrów.</string>
     <string name="settings__clipboard__title">Schowek</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>
@@ -651,8 +658,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Wyczyszczenie głównego schowka również usuwa najnowsze pozycje w historii</string>
     <string name="send_to_clipboard__unknown_error">Wystąpił nieoczekiwany błąd. Proszę spróbować ponownie!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ten typ mediów nie jest wspierany.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Wersja Androida jest zbyt stara, aby obsłużyć tę funkcję.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Skopiowano poniższy obraz do schowka.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Narzędzia Programistyczne</string>

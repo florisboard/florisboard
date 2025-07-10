@@ -220,8 +220,15 @@
     <string name="snygg__rule_element__clipboard_header_text">Vágólapfejlécszöveg</string>
     <string name="snygg__rule_element__clipboard_subheader">Vágólap alfejléc</string>
     <string name="snygg__rule_element__clipboard_content">Vágólap tartalma</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Vágólap-szűrősor</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Vágólapszűrő chip</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Vágólapszűrő chip ikonja</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Vágólapszűrő chip szövege</string>
+    <string name="snygg__rule_element__clipboard_grid">Vágólaprács</string>
     <string name="snygg__rule_element__clipboard_item">Vágólapelem</string>
+    <string name="snygg__rule_element__clipboard_item_description">Vágólapi elem leírása</string>
     <string name="snygg__rule_element__clipboard_item_popup">Felugró vágólapelem</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Vágólapi elem időbélyege</string>
     <string name="snygg__rule_element__clipboard_item_actions">Vágólapi elemműveletek</string>
     <string name="snygg__rule_element__clipboard_item_action">Vágólapi elemművelet</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Vágólapi elemművelet ikonja</string>
@@ -240,7 +247,7 @@
     <string name="snygg__rule_element__extracted_landscape_input_action">Fekvő bemeneti művelet</string>
     <string name="snygg__rule_element__glide_trail">Csúsztatási nyomvonal</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Inkognitó mód jelzője</string>
-    <string name="snygg__rule_element__inline_autofill_chip">Beágyazott automatikus kitöltés chip</string>
+    <string name="snygg__rule_element__inline_autofill_chip">Beágyazott automatikus kitöltési chip</string>
     <string name="snygg__rule_element__media">Média</string>
     <string name="snygg__rule_element__media_emoji_subheader">Médiaemodzsi-alfejléc</string>
     <string name="snygg__rule_element__media_emoji_key">Médiaemodzsi billentyű</string>
@@ -370,7 +377,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Rezgés erőssége</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Ez a funkció rezgőmotort igényel, amely úgy tűnik nem található a készülékben</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Ez a funkció rezgéserősség-vezérlést igényel, amely úgy tűnik nem található a készülékben</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Ez a funkció rezgéserősség-vezérlést igényel, amely csak Android 8.0-tól elérhető</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Gombnyomás rezgése</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Hosszú gombnyomás rezgése</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Ismételt billentyűművelet rezgése</string>
@@ -626,6 +632,7 @@
     <string name="clipboard__cleared_primary_clip">Elsődleges vágólap törölve</string>
     <string name="clipboard__cleared_history">Előzmények törölve</string>
     <string name="clipboard__cleared_full_history">Az összes előzmény törölve</string>
+    <string name="clipboard__confirm_clear_history__message">Biztosan törölni szeretné a vágólap előzményeit? Ez az összes elemet törli, kivéve a kitűzötteket, függetlenül az aktív szűrőktől.</string>
     <string name="settings__clipboard__title">Vágólap</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Belső vágólap használata</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Belső vágólap használata a rendszer vágólapja helyett</string>
@@ -652,8 +659,6 @@
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Az elsődleges vágólap ürítése emellett törli az utolsó elemet</string>
     <string name="send_to_clipboard__unknown_error">Ismeretlen hiba történt. Kérjük próbálja újra!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ez a médiatípus nem támogatott.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">Az android verziója túl régi ehhez a funkcióhoz.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Az alábbi kép a vágólapra lett másolva.</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Fejlesztői eszközök</string>
