@@ -609,6 +609,12 @@
         "direction": "ltr"
       },
       {
+        "id": "cs",
+        "label": "Czech",
+        "authors": [ "bmondream" ],
+        "direction": "ltr"
+      },
+      {
         "id": "devanagari",
         "label": "Devanagari",
         "authors": [ "yashpalgoyal1304" ],
