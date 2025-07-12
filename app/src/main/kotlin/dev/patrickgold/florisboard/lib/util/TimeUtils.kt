@@ -17,10 +17,7 @@
 package dev.patrickgold.florisboard.lib.util
 
 import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
-import android.icu.util.TimeZone
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import org.florisboard.lib.android.AndroidVersion
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -28,10 +25,6 @@ object TimeUtils {
     private val ISO_INSTANT = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", FlorisLocale.ENGLISH.base)
 
     fun currentUtcTimestamp(): CharSequence {
-        return if (AndroidVersion.ATLEAST_API26_O) {
-            DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-        } else {
-            ISO_INSTANT.format(Calendar.getInstance(TimeZone.GMT_ZONE, FlorisLocale.ENGLISH.base))
-        }
+        return DateTimeFormatter.ISO_INSTANT.format(Instant.now())
     }
 }
