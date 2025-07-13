@@ -180,6 +180,7 @@ tasks.withType<Test> {
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
+    implementation("commons-codec:commons-codec:1.16.0")
     // testImplementation(composeBom)
     // androidTestImplementation(composeBom)
 

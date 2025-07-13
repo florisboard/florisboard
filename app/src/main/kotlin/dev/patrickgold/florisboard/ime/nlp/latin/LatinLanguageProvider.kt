@@ -22,21 +22,16 @@ import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
-import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
-import dev.patrickgold.florisboard.ime.nlp.SpellingResult
-import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
-import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.*
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
+import org.apache.commons.codec.language.Metaphone
 import org.florisboard.lib.android.readText
 import org.florisboard.lib.kotlin.guardedByLock
-import kotlin.math.ln
+import java.io.File
 import kotlin.math.max
 import kotlin.math.min
 
@@ -45,67 +40,78 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         // Default user ID used for all subtypes, unless otherwise specified.
         // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.latin"
-        
-        // Parameters for suggestion algorithms
-        private const val MIN_WORD_LENGTH_FOR_SUGGESTIONS = 2
+
+        // Minimum word length to trigger suggestions
+        private const val MIN_WORD_LENGTH = 2
+
+        // Maximum allowed Levenshtein distance for spelling corrections
         private const val MAX_EDIT_DISTANCE = 2
-        private const val MIN_FREQUENCY_THRESHOLD = 10
-        private const val BASE_PREFIX_MATCH_BONUS = 0.2
-        private const val EXACT_MATCH_BONUS = 0.5
-        private const val CONTEXT_MATCH_BONUS = 0.15
-        private const val PERSONAL_DICTIONARY_BONUS = 0.25
-        
-        // Context analysis parameters
+
+        // Number of preceding words to consider for context-aware prediction
         private const val MAX_PRECEDING_WORDS = 3
-        private const val MIN_CONTEXT_WORD_LENGTH = 2
-        
-        // Frequency scaling parameters
-        private const val FREQUENCY_SCALE_FACTOR = 255.0
-        private const val FREQUENCY_LOG_BASE = 2.0
-        private const val MIN_LOG_FREQUENCY = 1.0
-        
-        // Personal dictionary parameters
-        private const val LEARNING_FREQUENCY_INCREMENT = 5
-        private const val MAX_PERSONAL_FREQUENCY = 255
-        private const val LEARNING_DECAY_FACTOR = 0.95
+
+        // Scoring bonuses
+        private const val PERSONAL_BONUS = 0.25
+        private const val CONTEXT_BONUS = 0.15
+        private const val EXACT_MATCH_BONUS = 0.5
+
+        // Learning constants
+        private const val DECAY_FACTOR = 0.95
+        private const val MAX_PERSONAL_FREQ = 255
     }
+
+    override val providerId = ProviderId
 
     private val appContext by context.appContext()
     private val dictionaryManager = DictionaryManager.default()
     private val breakIterators = BreakIteratorGroup()
+    private val metaphone = Metaphone()
 
-    private val wordData = guardedByLock { mutableMapOf<String, Int>() }
-    private val wordDataSerializer = MapSerializer(String.serializer(), Int.serializer())
-    
-    // Personal dictionary for on-the-fly learning
-    private val personalDictionary = guardedByLock { mutableMapOf<String, Int>() }
-    
-    // Context-based word associations (word -> list of following words with frequencies)
-    private val contextAssociations = guardedByLock { mutableMapOf<String, MutableMap<String, Int>>() }
+    private val mainDict = guardedByLock { mutableMapOf<String, Int>() }
+    private val personalDict = guardedByLock { mutableMapOf<String, Int>() }
+    private val contextMap = guardedByLock { mutableMapOf<String, MutableMap<String, Int>>() }
+    private val phoneticIndex = guardedByLock { mutableMapOf<String, MutableSet<String>>() }
+    private val predictionCache = guardedByLock { mutableMapOf<String, List<WordSuggestionCandidate>>() }
+    private val prefixIndex = guardedByLock { mutableMapOf<Char, MutableList<Pair<String, Int>>>() }
 
-    override val providerId = ProviderId
+    private val contextFile = File(appContext.filesDir, "context_associations.json")
+    private val contextSerializer = MapSerializer(String.serializer(), MapSerializer(String.serializer(), Int.serializer()))
 
+    private var latestEditorContent: EditorContent? = null
+
+    /**
+     * Initializes personal dictionary, context associations, and phonetic fallback index.
+     */
     override suspend fun create() {
-        // Initialize personal dictionary from user dictionary
-        loadPersonalDictionary()
-    }
-
-    override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
-        wordData.withLock { wordData ->
-            if (wordData.isEmpty()) {
-                // Load main dictionary
-                val rawData = appContext.assets.readText("ime/dict/data.json")
-                val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
-                wordData.putAll(jsonData)
-                flogDebug { "Loaded ${wordData.size} words from dictionary" }
-            }
-        }
-        
-        // Load personal dictionary and context associations
         loadPersonalDictionary()
         loadContextAssociations()
+        buildPhoneticIndex()
     }
 
+    /**
+     * Loads the dictionary data from assets when a new subtype is activated.
+     */
+    override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
+        mainDict.withLock {
+            if (it.isEmpty()) {
+                val rawData = appContext.assets.readText("ime/dict/data.json")
+                val json = Json.decodeFromString(MapSerializer(String.serializer(), Int.serializer()), rawData)
+                it.putAll(json.mapKeys { it.key.trim() })
+            }
+
+            prefixIndex.withLock { index ->
+                index.clear()
+                for ((word, freq) in it) {
+                    val firstChar = word.firstOrNull()?.lowercaseChar() ?: continue
+                    index.getOrPut(firstChar) { mutableListOf() }.add(word to freq)
+                }
+            }
+        }
+    }
+
+    /**
+     * Validates whether a word is known, or provides correction suggestions otherwise.
+     */
     override suspend fun spell(
         subtype: Subtype,
         word: String,
@@ -113,557 +119,335 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         followingWords: List<String>,
         maxSuggestionCount: Int,
         allowPossiblyOffensive: Boolean,
-        isPrivateSession: Boolean,
+        isPrivateSession: Boolean
     ): SpellingResult {
-        if (word.isBlank()) {
-            return SpellingResult.unspecified()
-        }
+        val normalized = word.lowercase().trim()
+        if (normalized.isBlank()) return SpellingResult.unspecified()
+        if (isKnownWord(normalized, word)) return SpellingResult.validWord()
 
-        val normalizedWord = word.lowercase().trim()
-        
-        // Check main dictionary and personal dictionary
-        val isValidWord = isWordValid(normalizedWord, word)
-        
-        if (isValidWord) {
-            return SpellingResult.validWord()
-        }
-        
-        // Generate context-aware spelling suggestions
-        val suggestions = generateSpellingSuggestions(normalizedWord, precedingWords, maxSuggestionCount)
-        
-        return if (suggestions.isNotEmpty()) {
+        val suggestions = suggestCorrections(normalized, precedingWords, maxSuggestionCount)
+        return if (suggestions.isNotEmpty())
             SpellingResult.typo(suggestions.toTypedArray(), isHighConfidenceResult = suggestions.size >= 2)
-        } else {
+        else
             SpellingResult.typo(arrayOf())
-        }
     }
 
+    /**
+     * Generates word suggestions based on user input and prior context.
+     */
     override suspend fun suggest(
         subtype: Subtype,
         content: EditorContent,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
-        isPrivateSession: Boolean,
+        isPrivateSession: Boolean
     ): List<SuggestionCandidate> {
-        val composingText = content.composingText.trim()
-        
-        if (composingText.length < MIN_WORD_LENGTH_FOR_SUGGESTIONS) {
-            return emptyList()
-        }
-        
-        // Extract preceding words for context-aware predictions
-        val precedingWords = extractPrecedingWords(content, subtype)
-        
-        return generateContextAwareSuggestions(composingText, precedingWords, maxCandidateCount, !isPrivateSession, subtype)
+        latestEditorContent = content
+        val prefix = content.composingText.trim()
+        if (prefix.length < MIN_WORD_LENGTH) return emptyList()
+
+        val precedingWords = extractContextWords(content, subtype)
+        return suggestWords(prefix, precedingWords, maxCandidateCount)
     }
 
     /**
-     * Extract preceding words from editor content for context analysis
+     * Determines if a word exists in the main or personal dictionary.
      */
-    private suspend fun extractPrecedingWords(content: EditorContent, subtype: Subtype): List<String> {
-        val textBefore = content.textBeforeSelection
-        if (textBefore.isEmpty()) return emptyList()
-        
-        return breakIterators.word(subtype.primaryLocale) { iterator ->
-            iterator.setText(textBefore)
-            val words = mutableListOf<String>()
-            var end = iterator.last()
-            
-            // Extract words working backwards from the cursor
-            for (i in 0 until MAX_PRECEDING_WORDS) {
-                if (end == BreakIterator.DONE) break
-                
-                val start = iterator.previous()
-                if (start == BreakIterator.DONE) break
-                
-                if (iterator.ruleStatus != BreakIterator.WORD_NONE) {
-                    val word = textBefore.substring(start, end).trim()
-                    if (word.length >= MIN_CONTEXT_WORD_LENGTH && word.all { it.isLetter() }) {
-                        words.add(word.lowercase())
-                    }
-                }
-                end = start
-            }
-            
-            words.reversed() // Return in chronological order
-        }
+    private suspend fun isKnownWord(normalized: String, original: String): Boolean {
+        val variants = listOf(normalized, original, normalized.replaceFirstChar { it.uppercase() }, normalized.uppercase())
+        return mainDict.withLock { dict -> variants.any { dict.containsKey(it) } } ||
+               personalDict.withLock { dict -> variants.any { dict.containsKey(it) } }
     }
 
     /**
-     * Check if a word is valid in any dictionary
+     * Suggests spelling corrections based on edit distance and context.
      */
-    private suspend fun isWordValid(normalizedWord: String, originalWord: String): Boolean {
-        return wordData.withLock { it.containsKey(normalizedWord) || it.containsKey(originalWord) } ||
-               personalDictionary.withLock { it.containsKey(normalizedWord) } ||
-               wordData.withLock { it.containsKey(normalizedWord.replaceFirstChar { it.uppercase() }) }
-    }
+    private suspend fun suggestCorrections(word: String, context: List<String>, max: Int): List<String> {
+        val candidates = mutableListOf<Pair<String, Double>>()
+        val dicts = listOf(mainDict to 0.0, personalDict to PERSONAL_BONUS)
 
-    /**
-     * Generate context-aware spelling suggestions
-     */
-    private suspend fun generateSpellingSuggestions(
-        word: String, 
-        precedingWords: List<String>, 
-        maxCount: Int
-    ): List<String> {
-        if (word.length < 2) return emptyList()
-        
-        return wordData.withLock { dictionary ->
-            val suggestions = mutableListOf<Pair<String, Double>>()
-            
-            // Get base dictionary suggestions
-            for ((dictWord, frequency) in dictionary) {
-                if (dictWord.length <= word.length + MAX_EDIT_DISTANCE && 
-                    dictWord.length >= word.length - MAX_EDIT_DISTANCE) {
-                    
-                    val distance = calculateEditDistance(word, dictWord)
-                    if (distance <= MAX_EDIT_DISTANCE) {
-                        val baseScore = calculateSpellingScore(word, dictWord, frequency, distance)
-                        val contextScore = calculateContextScore(dictWord, precedingWords)
-                        val finalScore = baseScore + contextScore
-                        suggestions.add(dictWord to finalScore)
+        for ((dict, bonus) in dicts) {
+            dict.withLock {
+                for ((candidate, freq) in it) {
+                    val dist = editDistance(word, candidate)
+                    if (dist <= MAX_EDIT_DISTANCE) {
+                        val score = spellingScore(word, candidate, freq, dist) + bonus + contextScore(candidate, context)
+                        candidates.add(candidate to score)
                     }
                 }
             }
-            
-            // Add personal dictionary suggestions
-            personalDictionary.withLock { personalDict ->
-                for ((dictWord, frequency) in personalDict) {
-                    val distance = calculateEditDistance(word, dictWord)
-                    if (distance <= MAX_EDIT_DISTANCE) {
-                        val baseScore = calculateSpellingScore(word, dictWord, frequency, distance)
-                        val contextScore = calculateContextScore(dictWord, precedingWords)
-                        val personalBonus = PERSONAL_DICTIONARY_BONUS
-                        val finalScore = baseScore + contextScore + personalBonus
-                        suggestions.add(dictWord to finalScore)
-                    }
-                }
-            }
-            
-            suggestions.sortedByDescending { it.second }
-                .distinctBy { it.first }
-                .take(maxCount)
-                .map { it.first }
         }
+
+        return candidates.sortedByDescending { it.second }.map { it.first }.distinct().take(max)
     }
 
     /**
-     * Generate context-aware word suggestions with improved frequency scaling and prefix matching
+     * Standard Levenshtein distance algorithm.
      */
-    private suspend fun generateContextAwareSuggestions(
-        prefix: String, 
-        precedingWords: List<String>, 
-        maxCount: Int,
-        allowLearning: Boolean,
-        subtype: Subtype
-    ): List<SuggestionCandidate> {
-        val lowerPrefix = prefix.lowercase()
-        
-        return withContext(Dispatchers.Default) {
-            val suggestions = mutableListOf<SuggestionScore>()
-            var hasExactMatch = false
-            
-            // Process main dictionary
-            wordData.withLock { dictionary ->
-                for ((word, frequency) in dictionary) {
-                    val lowerWord = word.lowercase()
-                    val suggestion = processWordForSuggestion(
-                        word, lowerWord, lowerPrefix, frequency, precedingWords, false
+    private fun editDistance(a: String, b: String): Int {
+        val dp = Array(a.length + 1) { IntArray(b.length + 1) }
+        for (i in 0..a.length) dp[i][0] = i
+        for (j in 0..b.length) dp[0][j] = j
+        for (i in 1..a.length) {
+            for (j in 1..b.length) {
+                val cost = if (a[i - 1] == b[j - 1]) 0 else 1
+                dp[i][j] = minOf(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)
+            }
+        }
+        return dp[a.length][b.length]
+    }
+
+    /**
+     * Computes a weighted spelling score using frequency, distance, and prefix matching.
+     */
+    private fun spellingScore(input: String, candidate: String, freq: Int, dist: Int): Double {
+        val freqScore = when {
+            freq >= 5000 -> 1.0
+            freq >= 1000 -> 0.9
+            freq >= 200  -> 0.6
+            freq >= 10   -> 0.3
+            else         -> 0.1
+        }
+        val distScore = (MAX_EDIT_DISTANCE - dist).toDouble() / MAX_EDIT_DISTANCE
+        val prefixBonus = if (candidate.startsWith(input)) 0.2 else 0.0
+        return freqScore * 0.4 + distScore * 0.4 + prefixBonus * 0.2
+    }
+
+    private fun getPrefixVariants(prefix: String): List<String> {
+        val normalized = prefix.lowercase()
+        return listOf(
+            normalized,
+            prefix,
+            normalized.replaceFirstChar { it.uppercase() },
+            normalized.uppercase()
+        )
+    }
+
+    /**
+     * Suggests word completions/predictions using prefix and context.
+     */
+    private suspend fun suggestWords(prefix: String, context: List<String>, maxCount: Int): List<SuggestionCandidate> {
+        val prefixVariants = getPrefixVariants(prefix)
+        val suggestions = mutableListOf<SuggestionCandidate>()
+
+        personalDict.withLock {
+            for ((word, freq) in it) {
+                if (prefixVariants.none { variant -> word.lowercase().startsWith(variant.lowercase()) }) continue
+
+                val displayWord = when {
+                    prefix.all { it.isUpperCase() } -> word.uppercase()
+                    prefix.firstOrNull()?.isUpperCase() == true -> word.replaceFirstChar { it.uppercaseChar() }
+                    else -> word.lowercase()
+                }
+
+                var conf = frequencyScore(freq) * 0.6 + contextScore(word, context) * 0.2
+                if (word.equals(prefix, ignoreCase = true)) conf += EXACT_MATCH_BONUS
+
+                suggestions.add(
+                    WordSuggestionCandidate(
+                        text = displayWord,
+                        confidence = conf,
+                        sourceProvider = this
                     )
-                    suggestion?.let { 
-                        suggestions.add(it)
-                        if (it.isExactMatch) hasExactMatch = true
-                    }
-                }
-            }
-            
-            // Process personal dictionary with higher confidence
-            personalDictionary.withLock { personalDict ->
-                for ((word, frequency) in personalDict) {
-                    val lowerWord = word.lowercase()
-                    val suggestion = processWordForSuggestion(
-                        word, lowerWord, lowerPrefix, frequency, precedingWords, true
-                    )
-                    suggestion?.let { 
-                        suggestions.add(it)
-                        if (it.isExactMatch) hasExactMatch = true
-                    }
-                }
-            }
-            
-            // Add user dictionary suggestions
-            try {
-                val userDictSuggestions = dictionaryManager.queryUserDictionary(lowerPrefix, subtype.primaryLocale)
-                for (candidate in userDictSuggestions) {
-                    if (candidate is WordSuggestionCandidate) {
-                        val contextScore = calculateContextScore(candidate.text.toString(), precedingWords)
-                        val adjustedConfidence = candidate.confidence + contextScore + PERSONAL_DICTIONARY_BONUS
-                        suggestions.add(SuggestionScore(
-                            word = candidate.text.toString(),
-                            rawFrequency = (adjustedConfidence * FREQUENCY_SCALE_FACTOR).toInt(),
-                            confidence = adjustedConfidence,
-                            isExactMatch = candidate.text.toString().lowercase() == lowerPrefix,
-                            isPrefixMatch = candidate.text.toString().lowercase().startsWith(lowerPrefix),
-                            isPersonal = true
-                        ))
-                    }
-                }
-            } catch (e: Exception) {
-                // If DictionaryManager is not available, continue without user dictionary suggestions
-                flogDebug { "User dictionary not available: ${e.message}" }
-            }
-            
-            // Sort and convert to suggestion candidates
-            suggestions.sortedWith(
-                compareByDescending<SuggestionScore> { it.confidence }
-                    .thenByDescending { it.rawFrequency }
-                    .thenBy { it.word.length }
-            )
-            .distinctBy { it.word.lowercase() }
-            .take(maxCount)
-            .mapIndexed { index, score ->
-                val shouldAutoCommit = shouldAutoCommitSuggestion(score, lowerPrefix, index, hasExactMatch)
-                val displayText = if (shouldAutoCommit && score.isExactMatch) {
-                    applyCasePattern(prefix, score.word)
-                } else {
-                    score.word
-                }
-                
-                WordSuggestionCandidate(
-                    text = displayText,
-                    confidence = score.confidence.coerceIn(0.0, 1.0),
-                    isEligibleForAutoCommit = shouldAutoCommit,
-                    sourceProvider = this@LatinLanguageProvider
                 )
             }
         }
-    }
 
-    /**
-     * Process a single word for suggestion generation
-     */
-    private suspend fun processWordForSuggestion(
-        word: String,
-        lowerWord: String,
-        lowerPrefix: String,
-        rawFrequency: Int,
-        precedingWords: List<String>,
-        isPersonal: Boolean
-    ): SuggestionScore? {
-        val baseFrequencyScore = calculateImprovedFrequencyScore(rawFrequency)
-        val contextScore = calculateContextScore(word, precedingWords)
-        val personalBonus = if (isPersonal) PERSONAL_DICTIONARY_BONUS else 0.0
-        
-        return when {
-            // Exact match (different case)
-            lowerWord == lowerPrefix && word != lowerPrefix -> {
-                val confidence = baseFrequencyScore + EXACT_MATCH_BONUS + contextScore + personalBonus
-                SuggestionScore(word, rawFrequency, confidence, true, true, isPersonal)
-            }
-            // Perfect case match
-            word == lowerPrefix -> {
-                val confidence = 1.0 + contextScore + personalBonus
-                SuggestionScore(word, rawFrequency, confidence, true, true, isPersonal)
-            }
-            // Prefix match with improved weighting
-            lowerWord.startsWith(lowerPrefix) && lowerWord != lowerPrefix -> {
-                val prefixBonus = calculateImprovedPrefixBonus(lowerPrefix, lowerWord)
-                val confidence = baseFrequencyScore + prefixBonus + contextScore + personalBonus
-                SuggestionScore(word, rawFrequency, confidence, false, true, isPersonal)
-            }
-            // Fuzzy match for longer prefixes
-            lowerPrefix.length >= 3 -> {
-                val distance = calculateEditDistance(lowerPrefix, lowerWord)
-                if (distance <= 1 && rawFrequency >= MIN_FREQUENCY_THRESHOLD) {
-                    val confidence = baseFrequencyScore - (distance * 0.2) + contextScore + personalBonus
-                    if (confidence > 0.1) {
-                        SuggestionScore(word, rawFrequency, confidence, false, false, isPersonal)
-                    } else null
-                } else null
-            }
-            else -> null
-        }
-    }
+        prefixIndex.withLock { index ->
+            val firstChar = prefix.firstOrNull()?.lowercaseChar()
+            val indexedCandidates = index[firstChar] ?: emptyList()
 
-    /**
-     * Improved frequency scaling that handles varying frequency ranges
-     */
-    private fun calculateImprovedFrequencyScore(frequency: Int): Double {
-        return when {
-            frequency <= 0 -> 0.0
-            frequency >= FREQUENCY_SCALE_FACTOR -> 1.0
-            else -> {
-                // Use logarithmic scaling for better distribution
-                val logFreq = ln(frequency.toDouble() + 1) / ln(FREQUENCY_LOG_BASE)
-                val maxLogFreq = ln(FREQUENCY_SCALE_FACTOR + 1) / ln(FREQUENCY_LOG_BASE)
-                (logFreq / maxLogFreq).coerceIn(0.0, 1.0)
-            }
-        }
-    }
+            for ((word, freq) in indexedCandidates) {
+                if (prefixVariants.none { variant -> word.lowercase().startsWith(variant.lowercase()) }) continue
 
-    /**
-     * Calculate improved prefix match bonus based on match length
-     */
-    private fun calculateImprovedPrefixBonus(prefix: String, word: String): Double {
-        val matchLength = prefix.length
-        val wordLength = word.length
-        
-        // Longer prefix matches get higher bonus
-        val lengthRatio = matchLength.toDouble() / wordLength
-        val lengthBonus = lengthRatio * BASE_PREFIX_MATCH_BONUS
-        
-        // Additional bonus for longer absolute matches
-        val absoluteLengthBonus = when {
-            matchLength >= 6 -> 0.15
-            matchLength >= 4 -> 0.10
-            matchLength >= 3 -> 0.05
-            else -> 0.0
-        }
-        
-        return BASE_PREFIX_MATCH_BONUS + lengthBonus + absoluteLengthBonus
-    }
-
-    /**
-     * Calculate context score based on preceding words
-     */
-    private suspend fun calculateContextScore(candidate: String, precedingWords: List<String>): Double {
-        if (precedingWords.isEmpty()) return 0.0
-        
-        return contextAssociations.withLock { associations ->
-            var maxScore = 0.0
-            
-            for (precedingWord in precedingWords) {
-                val followingWords = associations[precedingWord]
-                if (followingWords != null) {
-                    val candidateLower = candidate.lowercase()
-                    val frequency = followingWords[candidateLower] ?: 0
-                    if (frequency > 0) {
-                        val totalCount = followingWords.values.sum()
-                        val contextProbability = frequency.toDouble() / totalCount
-                        maxScore = max(maxScore, contextProbability * CONTEXT_MATCH_BONUS)
-                    }
+                val displayWord = when {
+                    prefix.all { it.isUpperCase() } -> word.uppercase()
+                    prefix.firstOrNull()?.isUpperCase() == true -> word.replaceFirstChar { it.uppercaseChar() }
+                    else -> word.lowercase()
                 }
+
+                var conf = frequencyScore(freq) * 0.6 + contextScore(word, context) * 0.2
+                if (word.equals(prefix, ignoreCase = true)) conf += EXACT_MATCH_BONUS
+
+                suggestions.add(
+                    WordSuggestionCandidate(
+                        text = displayWord,
+                        confidence = conf,
+                        sourceProvider = this
+                    )
+                )
             }
-            
-            maxScore
+        }
+
+        return suggestions
+            .sortedByDescending { it.confidence }
+            .distinctBy { it.text.toString().lowercase() }
+            .take(maxCount)
+    }
+
+    /**
+     * Converts raw frequency into a normalized score.
+     */
+    private fun frequencyScore(freq: Int): Double = when {
+        freq >= 5000 -> 1.0
+        freq >= 1000 -> 0.9
+        freq >= 500  -> 0.75
+        freq >= 100  -> 0.5
+        freq >= 10   -> 0.25
+        else         -> 0.1
+    }
+
+    /**
+     * Calculates context-based bonus for word prediction.
+     */
+    private suspend fun contextScore(word: String, context: List<String>): Double {
+        var score = 0.0
+        contextMap.withLock { map ->
+            context.forEachIndexed { i, w ->
+                val count = map[w]?.get(word) ?: return@forEachIndexed
+                val weight = 1.0 - i.toDouble() / context.size
+                score += count * weight
+            }
+        }
+        return score.coerceIn(0.0, 1.0)
+    }
+
+    /**
+     * Extracts up to N previous words for context-aware suggestions.
+     */
+    private suspend fun extractContextWords(content: EditorContent, subtype: Subtype): List<String> {
+        val text = content.textBeforeSelection
+        return breakIterators.word(subtype.primaryLocale) { iterator ->
+            iterator.setText(text)
+            buildList {
+                var end = iterator.last()
+                repeat(MAX_PRECEDING_WORDS) {
+                    val start = iterator.previous()
+                    if (start == BreakIterator.DONE) return@repeat
+                    val word = text.substring(start, end).trim().lowercase()
+                    if (word.length >= 2 && word.all { it.isLetter() }) add(word)
+                    end = start
+                }
+            }.reversed()
         }
     }
 
     /**
-     * Determine if suggestion should be auto-committed
+     * Builds reverse Metaphone index for fallback suggestions.
      */
-    private fun shouldAutoCommitSuggestion(
-        score: SuggestionScore,
-        lowerPrefix: String,
-        index: Int,
-        hasExactMatch: Boolean
-    ): Boolean {
-        return when {
-            // Only auto-commit if we have an exact match and it's the first suggestion
-            hasExactMatch && index == 0 && score.isExactMatch -> true
-            // For very short prefixes, be more liberal
-            lowerPrefix.length <= 2 && score.isExactMatch && index == 0 -> true
-            // For longer prefixes, require high confidence
-            lowerPrefix.length >= 3 && score.isExactMatch && score.confidence > 0.9 && index == 0 -> true
-            // Personal dictionary words get preference
-            score.isPersonal && score.isExactMatch && index == 0 -> true
-            else -> false
+    private suspend fun buildPhoneticIndex() {
+        phoneticIndex.withLock { it.clear() }
+        val allWords = mainDict.withLock { it.keys } + personalDict.withLock { it.keys }
+        for (word in allWords) {
+            val code = metaphone.encode(word)
+            phoneticIndex.withLock { it.getOrPut(code) { mutableSetOf() }.add(word) }
         }
     }
 
     /**
-     * Load personal dictionary from user preferences or storage
+     * Learns from accepted suggestions by boosting frequency and context.
      */
-    private suspend fun loadPersonalDictionary() {
-        // This would typically load from a file or database
-        // For now, we'll start with an empty personal dictionary
-        personalDictionary.withLock { it.clear() }
+    override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
+        val word = candidate.text.toString().lowercase().trim()
+        if (word.length < 2) return
+
+        personalDict.withLock {
+            val current = it[word] ?: 0
+            it[word] = min(current + 5, MAX_PERSONAL_FREQ)
+        }
+
+        val context = latestEditorContent?.let { extractContextWords(it, subtype) } ?: return
+        for (prev in context) {
+            contextMap.withLock {
+                val map = it.getOrPut(prev) { mutableMapOf() }
+                map[word] = (map[word] ?: 0) + 1
+            }
+        }
     }
 
     /**
-     * Load context associations from storage
+     * Penalizes reverted suggestions by decaying learned frequency.
      */
-    private suspend fun loadContextAssociations() {
-        // This would typically load from a file or database
-        // For now, we'll start with empty associations
-        contextAssociations.withLock { it.clear() }
+    override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
+        val word = candidate.text.toString().lowercase().trim()
+        personalDict.withLock {
+            val current = it[word] ?: return
+            it[word] = max((current * DECAY_FACTOR).toInt(), 1)
+        }
     }
 
     /**
-     * Save personal dictionary to storage
+     * Removes a word from the personal dictionary and phonetic index.
      */
-    private suspend fun savePersonalDictionary() {
-        // Implementation would save to persistent storage
-        // This could use SharedPreferences, Room database, or file storage
+    override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
+        val word = candidate.text.toString().lowercase().trim()
+        return personalDict.withLock {
+            val removed = it.remove(word) != null
+            if (removed) {
+                val code = metaphone.encode(word)
+                phoneticIndex.withLock { idx -> idx[code]?.remove(word) }
+            }
+            removed
+        }
     }
 
     /**
-     * Save context associations to storage
+     * Returns all known words from main and personal dictionaries.
+     */
+    override suspend fun getListOfWords(subtype: Subtype): List<String> {
+        return mainDict.withLock { md ->
+            personalDict.withLock { pd ->
+                (md.keys + pd.keys).distinct()
+            }
+        }
+    }
+
+    /**
+     * Returns normalized frequency score for a given word.
+     */
+    override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
+        val lower = word.lowercase()
+        return mainDict.withLock { md ->
+            personalDict.withLock { pd ->
+                val freq = max(md[lower] ?: 0, (pd[lower] ?: 0) * 2)
+                frequencyScore(freq)
+            }
+        }
+    }
+
+    private fun loadPersonalDictionary() {
+        // TODO: Implement persistent loading
+    }
+
+    private fun loadContextAssociations() {
+        // TODO: Implement persistent loading
+    }
+
+    private fun savePersonalDictionary() {
+        // TODO: Implement persistent saving
+    }
+
+    /**
+     * Saves context associations to local storage in JSON format.
      */
     private suspend fun saveContextAssociations() {
-        // Implementation would save to persistent storage
+        withContext(Dispatchers.IO) {
+            contextMap.withLock {
+                val json = Json.encodeToString(contextSerializer, it)
+                contextFile.writeText(json)
+            }
+        }
     }
 
     /**
-     * Data class to hold suggestion scoring information
+     * Clears all state and saves data on shutdown.
      */
-    private data class SuggestionScore(
-        val word: String,
-        val rawFrequency: Int,
-        val confidence: Double,
-        val isExactMatch: Boolean,
-        val isPrefixMatch: Boolean,
-        val isPersonal: Boolean
-    )
-
-    /**
-     * Calculate edit distance (Levenshtein distance) between two strings
-     */
-    private fun calculateEditDistance(s1: String, s2: String): Int {
-        val len1 = s1.length
-        val len2 = s2.length
-        
-        if (len1 == 0) return len2
-        if (len2 == 0) return len1
-        
-        val dp = Array(len1 + 1) { IntArray(len2 + 1) }
-        
-        for (i in 0..len1) dp[i][0] = i
-        for (j in 0..len2) dp[0][j] = j
-        
-        for (i in 1..len1) {
-            for (j in 1..len2) {
-                val cost = if (s1[i - 1] == s2[j - 1]) 0 else 1
-                dp[i][j] = minOf(
-                    dp[i - 1][j] + 1,      // deletion
-                    dp[i][j - 1] + 1,      // insertion
-                    dp[i - 1][j - 1] + cost // substitution
-                )
-            }
-        }
-        
-        return dp[len1][len2]
-    }
-
-    /**
-     * Calculate spelling suggestion score based on edit distance and frequency
-     */
-    private fun calculateSpellingScore(input: String, candidate: String, frequency: Int, editDistance: Int): Double {
-        val frequencyScore = calculateImprovedFrequencyScore(frequency)
-        val distanceScore = (MAX_EDIT_DISTANCE - editDistance).toDouble() / MAX_EDIT_DISTANCE
-        val lengthScore = min(input.length, candidate.length).toDouble() / maxOf(input.length, candidate.length)
-        
-        // Bonus for common prefixes
-        val prefixBonus = if (input.isNotEmpty() && candidate.lowercase().startsWith(input.lowercase())) {
-            calculateImprovedPrefixBonus(input, candidate)
-        } else {
-            0.0
-        }
-        
-        return (frequencyScore * 0.4 + distanceScore * 0.4 + lengthScore * 0.2 + prefixBonus)
-    }
-
-    /**
-     * Apply the capitalization pattern from the input to the suggestion
-     */
-    private fun applyCasePattern(input: String, suggestion: String): String {
-        if (input.isEmpty() || suggestion.isEmpty()) return suggestion
-        
-        return when {
-            // All uppercase
-            input.all { it.isUpperCase() } -> suggestion.uppercase()
-            // First letter uppercase (title case)
-            input.first().isUpperCase() && input.drop(1).all { it.isLowerCase() } -> {
-                suggestion.lowercase().replaceFirstChar { it.uppercase() }
-            }
-            // Mixed case - preserve original suggestion
-            input.any { it.isUpperCase() } && input.any { it.isLowerCase() } -> suggestion
-            // All lowercase
-            else -> suggestion.lowercase()
-        }
-    }
-
-    override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
-        flogDebug { "Suggestion accepted: ${candidate.text}" }
-        
-        // Learn from accepted suggestions
-        val word = candidate.text.toString().lowercase().trim()
-        if (word.length >= MIN_CONTEXT_WORD_LENGTH) {
-            personalDictionary.withLock { personalDict ->
-                val currentFreq = personalDict[word] ?: 0
-                val newFreq = min(currentFreq + LEARNING_FREQUENCY_INCREMENT, MAX_PERSONAL_FREQUENCY)
-                personalDict[word] = newFreq
-            }
-            
-            // TODO: Update context associations based on preceding words
-            // This would require passing context information through the notification
-            
-            // Persist the learning
-            savePersonalDictionary()
-        }
-    }
-
-    override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
-        flogDebug { "Suggestion reverted: ${candidate.text}" }
-        
-        // Reduce confidence for reverted suggestions
-        val word = candidate.text.toString().lowercase().trim()
-        personalDictionary.withLock { personalDict ->
-            val currentFreq = personalDict[word] ?: 0
-            if (currentFreq > 0) {
-                val newFreq = max((currentFreq * LEARNING_DECAY_FACTOR).toInt(), 1)
-                personalDict[word] = newFreq
-            }
-        }
-        
-        savePersonalDictionary()
-    }
-
-    override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
-        flogDebug { "Remove suggestion requested: ${candidate.text}" }
-        
-        // Remove from personal dictionary
-        val word = candidate.text.toString().lowercase().trim()
-        val removed = personalDictionary.withLock { personalDict ->
-            personalDict.remove(word) != null
-        }
-        
-        if (removed) {
-            savePersonalDictionary()
-        }
-        
-        return removed
-    }
-
-    override suspend fun getListOfWords(subtype: Subtype): List<String> {
-        return wordData.withLock { mainDict ->
-            personalDictionary.withLock { personalDict ->
-                (mainDict.keys + personalDict.keys).distinct()
-            }
-        }
-    }
-
-    override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return wordData.withLock { mainDict ->
-            personalDictionary.withLock { personalDict ->
-                val mainFreq = mainDict[word.lowercase()] ?: mainDict[word] ?: 0
-                val personalFreq = personalDict[word.lowercase()] ?: 0
-                
-                // Combine frequencies, giving preference to personal dictionary
-                val combinedFreq = max(mainFreq, personalFreq * 2) // Personal words get 2x weight
-                calculateImprovedFrequencyScore(combinedFreq)
-            }
-        }
-    }
-
     override suspend fun destroy() {
-        // Save any pending data before destruction
         savePersonalDictionary()
         saveContextAssociations()
-        
-        // Clear memory
-        wordData.withLock { it.clear() }
-        personalDictionary.withLock { it.clear() }
-        contextAssociations.withLock { it.clear() }
+        mainDict.withLock { it.clear() }
+        personalDict.withLock { it.clear() }
+        contextMap.withLock { it.clear() }
+        phoneticIndex.withLock { it.clear() }
     }
 }

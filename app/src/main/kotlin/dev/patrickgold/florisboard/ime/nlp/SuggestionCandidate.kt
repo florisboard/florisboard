@@ -108,7 +108,7 @@ data class WordSuggestionCandidate(
     override val text: CharSequence,
     override val secondaryText: CharSequence? = null,
     override val confidence: Double = 0.0,
-    override val isEligibleForAutoCommit: Boolean = false,
+    override val isEligibleForAutoCommit: Boolean = true,
     override val isEligibleForUserRemoval: Boolean = true,
     override val sourceProvider: SuggestionProvider? = null,
 ) : SuggestionCandidate {
