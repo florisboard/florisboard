@@ -58,6 +58,7 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.model.LocalTime
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
@@ -749,14 +750,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             },
             serializer = ColorPreferenceSerializer,
         )
-        //val sunriseTime = localTime(
-        //    key = "theme__sunrise_time",
-        //    default = LocalTime.of(6, 0),
-        //)
-        //val sunsetTime = localTime(
-        //    key = "theme__sunset_time",
-        //    default = LocalTime.of(18, 0),
-        //)
+        val sunriseTime = time(
+            key = "theme__sunrise_time",
+            default = LocalTime(6, 0),
+        )
+        val sunsetTime = time(
+            key = "theme__sunset_time",
+            default = LocalTime(18, 0),
+        )
         val editorColorRepresentation = enum(
             key = "theme__editor_color_representation",
             default = ColorRepresentation.HEX,
