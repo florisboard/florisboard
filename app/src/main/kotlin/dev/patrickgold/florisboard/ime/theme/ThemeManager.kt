@@ -50,7 +50,10 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.util.TimeUtils.javaLocalTime
 import dev.patrickgold.florisboard.lib.util.ViewUtils
+import java.time.LocalTime
+import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -63,7 +66,6 @@ import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import java.util.UUID
 import kotlin.properties.Delegates
 
 /**
@@ -187,18 +189,14 @@ class ThemeManager(context: Context) {
                 prefs.theme.dayThemeId.get()
             }
             ThemeMode.FOLLOW_TIME -> {
-                //if (AndroidVersion.ATLEAST_API26_O) {
-                //    val current = LocalTime.now()
-                //    val sunrise = prefs.theme.sunriseTime.get()
-                //    val sunset = prefs.theme.sunsetTime.get()
-                //    if (current in sunrise..sunset) {
-                //        prefs.theme.dayThemeId.get()
-                //    } else {
-                //        prefs.theme.nightThemeId.get()
-                //    }
-                //} else {
+                val current = LocalTime.now()
+                val sunrise = prefs.theme.sunriseTime.get().javaLocalTime
+                val sunset = prefs.theme.sunsetTime.get().javaLocalTime
+                if (current in sunrise..sunset) {
+                    prefs.theme.dayThemeId.get()
+                } else {
                     prefs.theme.nightThemeId.get()
-                //}
+                }
             }
         }
     }
