@@ -18,6 +18,7 @@ ARG REPO_DIR="${USER_DIR}/${REPO_NAME}"
 # Install dependencies and OpenJDK
 RUN apt-get update && apt-get install -y \
     curl \
+    jq \
     unzip \
     wget \
     git \
@@ -61,13 +62,31 @@ ENV PATH="${ANDROID_HOME}/platform-tools:$PATH"
 # Setup git
 RUN git config --global --add safe.directory "${REPO_DIR}"
 
-FROM setup_deps AS setup_gradle
+
+FROM setup_deps AS setup_androiddebugkey
+
+RUN keytool -genkey -v \
+  -keystore "${ANDROID_HOME}/debug.keystore" \
+  -alias androiddebugkey \
+  -keyalg RSA \
+  -keysize 2048 \
+  -validity 10000 \
+  -storepass android \
+  -keypass android \
+  -dname "CN=Android Debug,O=Android,C=US"
+
+
+FROM setup_androiddebugkey AS setup_gradle
 
 COPY --chown="${USER_NAME}:${USER_NAME}" ./gradle ./gradle
 COPY --chown="${USER_NAME}:${USER_NAME}" ./gradlew .
 
+# As weird as it sounds, calling ./gradlew help only downloads the Gradle zip, but does not validate the project state.
+# => This is exactly what we need at this point in the Dockerfile.
 RUN ./gradlew --no-daemon help
+
 
 FROM setup_gradle AS setup_proj
 
+COPY --chown="${USER_NAME}:${USER_NAME}" ./utils/repr-build/assemble.sh .
 COPY --chown="${USER_NAME}:${USER_NAME}" . .

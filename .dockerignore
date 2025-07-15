@@ -1,5 +1,9 @@
 **/.*/
+!.git/
 **/build/
+**/dist/
+**/out/
 **/target/
 utils/
+!utils/repr-build/assemble.sh
 local.properties
