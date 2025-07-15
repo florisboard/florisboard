@@ -94,13 +94,13 @@ fun ThemeScreen() = FlorisScreen {
         )
         LocalTimePickerPreference(
             pref = prefs.theme.sunriseTime,
-            title = "Sunrise Time",
+            title = stringRes(R.string.pref__theme__sunrise_time__label),
             icon = Icons.Default.WbTwilight,
             enabledIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
         )
         LocalTimePickerPreference(
             pref = prefs.theme.sunsetTime,
-            title = "Sunset Time",
+            title = stringRes(R.string.pref__theme__sunset_time__label),
             icon = Icons.Default.Brightness2,
             enabledIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
         )
