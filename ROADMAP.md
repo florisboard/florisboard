@@ -11,7 +11,7 @@ Each major milestone has associated alpha/beta releases, so if you are intereste
 
 - [ ] Theme rework part II / Snygg v2
   - [x] See https://github.com/florisboard/florisboard/pull/2855
-  - [ ] Spaces in URI bug (See https://github.com/florisboard/florisboard/issues/2898)
+  - [x] Spaces in URI bug (See https://github.com/florisboard/florisboard/issues/2898)
   - [ ] Rework cache manager (See https://github.com/florisboard/florisboard/issues/2870)
   - [x] Re-add time based theme switching (See https://github.com/florisboard/florisboard/pull/2977)
 - [ ] Add support for any remaining new features introduced with Android 13 / 14
