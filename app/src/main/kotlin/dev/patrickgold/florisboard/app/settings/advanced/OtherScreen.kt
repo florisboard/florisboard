@@ -45,6 +45,7 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
 
@@ -153,6 +154,11 @@ fun OtherScreen() = FlorisScreen {
                 else -> null
             },
             enabledIf = { AndroidVersion.ATMOST_API28_P },
+        )
+        Preference(
+            icon = vectorResource(R.drawable.ic_keyboard_keys),
+            title = stringRes(R.string.physical_keyboard__title),
+            onClick = { navController.navigate(Routes.Settings.PhysicalKeyboard) },
         )
         Preference(
             icon = Icons.Default.Adb,

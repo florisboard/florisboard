@@ -612,6 +612,14 @@
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
     <string name="setup__finish_up__finish_btn">Start Customizing</string>
 
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Physical keyboard</string>
+    <string name="physical_keyboard__system_settings__title">System physical keyboard settings</string>
+    <string name="physical_keyboard__system_settings__summary">Layouts, keyboard shortcuts and modifier keys</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Only available when keyboard is attached</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Show on-screen keyboard</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Show on-screen keyboard while using physical keyboard</string>
+
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Back up &amp; Restore</string>
     <string name="backup_and_restore__back_up__title">Back up data</string>
