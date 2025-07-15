@@ -24,6 +24,7 @@ else
   exit 1
 fi
 
+BUILD_VERSION_NAME=""
 build() {
   local TYPE="$1"
   BUILD_LOG_PATH="build.log"
@@ -43,9 +44,17 @@ build() {
     echo "failed, aborting..."
     exit 1
   fi
-  BUILD_METADATA_JSON="$BUILD_DIR/output-metadata.json"
-  BUILD_FILE_NAME="$(jq -r ".elements[].outputFile" "$BUILD_METADATA_JSON")"
-  BUILD_VERSION_NAME="$(jq -r ".elements[].versionName" "$BUILD_METADATA_JSON")"
+  if [ "$TYPE" = "apk" ]; then
+    BUILD_METADATA_JSON="$BUILD_DIR/output-metadata.json"
+    BUILD_FILE_NAME="$(jq -r ".elements[].outputFile" "$BUILD_METADATA_JSON")"
+    BUILD_VERSION_NAME="$(jq -r ".elements[].versionName" "$BUILD_METADATA_JSON")"
+  else
+    BUILD_FILE_NAME="app-$GRADLE_TASK_LC.aab"
+    if [ -z "$BUILD_VERSION_NAME" ]; then
+      echo "fatal: BUILD_VERSION_NAME was empty, should not be the case if apk is built before aab, aborting..."
+      exit 1
+    fi
+  fi
   BUILD_FILE_PATH="$BUILD_DIR/$BUILD_FILE_NAME"
   if [ "$TRACK" = "$TRACK_DEBUG" ]; then
     OUTPUT_FILE_PATH="$OUTPUT_DIR/florisboard-$BUILD_VERSION_NAME.$TYPE"
