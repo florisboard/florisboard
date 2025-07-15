@@ -28,8 +28,6 @@ plugins {
 val projectMinSdk: String by project
 val projectTargetSdk: String by project
 val projectCompileSdk: String by project
-val projectBuildToolsVersion: String by project
-val projectNdkVersion: String by project
 val projectVersionCode: String by project
 val projectVersionName: String by project
 val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { suffix ->
@@ -43,8 +41,8 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
 android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = projectCompileSdk.toInt()
-    buildToolsVersion = projectBuildToolsVersion
-    ndkVersion = projectNdkVersion
+    buildToolsVersion = tools.versions.buildTools.get()
+    ndkVersion = tools.versions.ndk.get()
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

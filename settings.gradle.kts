@@ -31,6 +31,12 @@ dependencyResolutionManagement {
         // Uncomment the following if testing snapshots from Maven Central
         maven("https://central.sonatype.com/repository/maven-snapshots/")
     }
+
+    versionCatalogs {
+        create("tools") {
+            from(files("gradle/tools.versions.toml"))
+        }
+    }
 }
 
 include(":app")
