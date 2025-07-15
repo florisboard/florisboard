@@ -32,7 +32,7 @@ jobs:
           java-version: 17
           distribution: temurin
       - name: Set up CMake and Ninja
-        uses: lukka/get-cmake@latest
+        uses: lukka/get-cmake@v4.0.2
       - name: Build with Gradle
         run: ./gradlew clean assembleDebug
       - uses: actions/upload-artifact@v4

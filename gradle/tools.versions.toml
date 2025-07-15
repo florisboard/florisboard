@@ -1,6 +1,6 @@
 [versions]
 buildTools = "35.0.0"
-cmake = "3.30.5"
+cmake = "4.0.2"
 jdk = "17"
 ndk = "26.1.10909125"
 rustup = "1.24.3"
