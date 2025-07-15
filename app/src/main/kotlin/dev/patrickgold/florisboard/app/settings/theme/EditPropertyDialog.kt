@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.settings.theme
 
+import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -655,7 +656,7 @@ private fun PropertyValueEditor(
                             JetPrefListItem(
                                 modifier = Modifier.clickable {
                                     val relPath = file.path.removePrefix(workspace.extDir.path)
-                                    inputStr = "flex:$relPath"
+                                    inputStr = "flex:" + Uri.encode(relPath, "/")
                                     onValueChange(SnyggUriValue(inputStr))
                                     showSelectFileDialog = false
                                 },

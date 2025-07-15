@@ -26,7 +26,7 @@
   "$defs": {
     "snygg-uri-value": {
       "type": "string",
-      "pattern": "^\\s*uri[(]\\s*(?<enclosedUri>`flex:/[^`]+`)\\s*[)]\\s*$"
+      "pattern": "^\\s*uri[(]\\s*(?<enclosedUri>`flex:/[^` ]+`)\\s*[)]\\s*$"
     },
     "snygg-font-style-value": {
       "type": "string",

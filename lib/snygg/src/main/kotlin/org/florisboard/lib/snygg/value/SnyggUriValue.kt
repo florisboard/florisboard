@@ -24,7 +24,7 @@ data class SnyggUriValue(val uri: String) : SnyggValue {
         private const val EnclosedUriFunction = "uri"
         private const val EnclosedUriId = "enclosedUri"
         // TODO: evaluate the pattern for the URI
-        private val EnclosedUriPattern = """`flex:/[^`]+`""".toRegex()
+        private val EnclosedUriPattern = """`flex:/[^` ]+`""".toRegex()
 
         override val spec = SnyggValueSpec {
             function(name = EnclosedUriFunction) {
