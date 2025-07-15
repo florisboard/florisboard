@@ -28,12 +28,15 @@ Each major milestone has associated alpha/beta releases, so if you are intereste
 ## k3lp
 
 > [!NOTE]
-> The development of kelp is not tied to a florisboard version and takes place on [codeberg.org](https://codeberg.org/k3lp/k3lp) simultaneously.
+> The development of k3lp is not tied to a florisboard version and takes place on [codeberg.org](https://codeberg.org/k3lp/k3lp) simultaneously.
 
 - [ ] New keyboard layout engine + file syntax based on the upcoming Unicode Keyboard v3 standard
 - [ ] Add Tablet mode / Optimizations for landscape input based on new keyboard layout engine
 
-## 0.7
+## 0.7+
+
+> [!NOTE]
+> From 0.6 onwards we plan to have more stable 0.X releases but with at most one large feature per release, thus having a much quicker iteration of new features on the stable track, which is a benefit for everyone involved.
 
 - [ ] Add floating keyboard mode
 - [ ] New text processing logic
