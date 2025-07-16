@@ -59,13 +59,18 @@ docker_run_assemble() {
     echo "fatal: uuidgen not available, aborting"
     exit 1
   }
-  local track
-  track="$1"
+  local track="$1"
+  local tmp_out_dir="/tmp/$container"
+  local final_out_dir="${2:-out}"
+  mkdir -p "$tmp_out_dir" || exit 1
+  mkdir -p "$final_out_dir" || exit 1
   docker run --name "$container" \
     -w "$REPO_MOUNT" \
     "$IMAGE_NAME:$IMAGE_TAG" ./assemble.sh "$track" \
     && {
-      docker cp "$container:$REPO_MOUNT/out" "."
+      docker cp "$container:$REPO_MOUNT/out" "$tmp_out_dir"
+      cp "$tmp_out_dir/out"/* "$final_out_dir"
+      rm -r "$tmp_out_dir"
     }
   docker rm "$container"
 }
