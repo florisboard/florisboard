@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim AS setup_deps
+FROM debian:bookworm-slim AS setup_system
 
 ARG PROJECT_COMPILE_SDK
 ARG CMDLINE_TOOLS_VERSION
@@ -10,7 +10,7 @@ ARG NDK_VERSION
 ARG RUSTUP_VERSION
 ARG RUST_TOOLCHAIN_VERSION
 
-ARG USER_NAME="runner"
+ARG USER_NAME
 ARG USER_DIR="/home/${USER_NAME}"
 ARG REPO_NAME="florisboard"
 ARG REPO_DIR="${USER_DIR}/${REPO_NAME}"
@@ -59,11 +59,13 @@ RUN yes | sdkmanager --install \
 ENV ANDROID_NDK_HOME="${ANDROID_HOME}/ndk/${NDK_VERSION}"
 ENV PATH="${ANDROID_HOME}/platform-tools:$PATH"
 
-# Setup git
+# Setup other stuff
 RUN git config --global --add safe.directory "${REPO_DIR}"
+RUN mkdir "${HOME}/.gradle"
 
 
-FROM setup_deps AS setup_androiddebugkey
+
+FROM setup_system AS setup_androiddebugkey
 
 RUN keytool -genkey -v \
   -keystore "${ANDROID_HOME}/debug.keystore" \
@@ -76,17 +78,7 @@ RUN keytool -genkey -v \
   -dname "CN=Android Debug,O=Android,C=US"
 
 
-FROM setup_androiddebugkey AS setup_gradle
 
-COPY --chown="${USER_NAME}:${USER_NAME}" ./gradle/wrapper ./gradle/wrapper
-COPY --chown="${USER_NAME}:${USER_NAME}" ./gradlew .
+FROM setup_androiddebugkey AS copy_proj
 
-# As weird as it sounds, calling ./gradlew help only downloads the Gradle zip, but does not validate the project state.
-# => This is exactly what we need at this point in the Dockerfile.
-RUN ./gradlew help
-
-
-FROM setup_gradle AS setup_proj
-
-COPY --chown="${USER_NAME}:${USER_NAME}" ./utils/repr_build/assemble.sh .
 COPY --chown="${USER_NAME}:${USER_NAME}" . .

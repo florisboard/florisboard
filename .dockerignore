@@ -5,5 +5,7 @@
 **/out/
 **/target/
 utils/
-!utils/repr_build/assemble.sh
+!utils/repr_build/scripts/
+.env
+gradlew.bat
 local.properties

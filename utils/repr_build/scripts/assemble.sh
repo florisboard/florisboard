@@ -6,6 +6,7 @@ readonly TRACK_DEBUG="debug"
 
 TRACK="$1"
 OUTPUT_DIR="out"
+OUTPUT_VERSION_DIR=""
 
 if [ "$TRACK" = "$TRACK_STABLE" ]; then
   GRADLE_TASK_LC="release"
@@ -24,10 +25,25 @@ else
   exit 1
 fi
 
+calculate_and_write_sha256_sum() {
+  local FILE_PATH="$1"
+  local DIR_PATH
+  local FILE_NAME
+  DIR_PATH="$(dirname "$FILE_PATH")"
+  FILE_NAME="$(basename "$FILE_PATH")"
+  SHA256_NAME="$FILE_NAME.sha256"
+  CURR_DIR="$(pwd)"
+  echo -n "calculate sha256sum ... "
+  cd "$DIR_PATH" || { echo "failed (cd dir)"; return 1; }
+  sha256sum "$FILE_NAME" > "$SHA256_NAME" || { echo "failed (sha256 generate)"; return 1; }
+  sha256sum -c "$SHA256_NAME" || { echo "failed (sha256 verify)"; return 1; }
+  cd "$CURR_DIR" || { echo "failed (cd pwd)"; return 1; }
+}
+
 BUILD_VERSION_NAME=""
 build() {
   local TYPE="$1"
-  BUILD_LOG_PATH="build.log"
+  BUILD_LOG_PATH="$OUTPUT_DIR/tmp_$TYPE.log"
   if [ "$TYPE" = "apk" ]; then
     TASK="assemble$GRADLE_TASK_TC"
     BUILD_DIR="app/build/outputs/apk/$GRADLE_TASK_LC"
@@ -38,7 +54,7 @@ build() {
     echo "fatal: unknown type '$TYPE', aborting..."
   fi
   echo -n "build: $TASK ... "
-  if ./gradlew "$TASK" > "$BUILD_LOG_PATH" 2>&1; then
+  if ./gradlew "$TASK" --profile > "$BUILD_LOG_PATH" 2>&1; then
     echo "done"
   else
     echo "failed, aborting..."
@@ -57,10 +73,13 @@ build() {
   fi
   BUILD_FILE_PATH="$BUILD_DIR/$BUILD_FILE_NAME"
   if [ "$TRACK" = "$TRACK_DEBUG" ]; then
-    OUTPUT_FILE_PATH="$OUTPUT_DIR/florisboard-$BUILD_VERSION_NAME.$TYPE"
+    OUTPUT_VERSION_DIR="$OUTPUT_DIR/$BUILD_VERSION_NAME"
+    OUTPUT_FILE_PATH="$OUTPUT_VERSION_DIR/florisboard-$BUILD_VERSION_NAME.$TYPE"
   else
-    OUTPUT_FILE_PATH="$OUTPUT_DIR/florisboard-$BUILD_VERSION_NAME-$TRACK.$TYPE"
+    OUTPUT_VERSION_DIR="$OUTPUT_DIR/$BUILD_VERSION_NAME-$TRACK"
+    OUTPUT_FILE_PATH="$OUTPUT_VERSION_DIR/florisboard-$BUILD_VERSION_NAME-$TRACK.$TYPE"
   fi
+  mkdir "$OUTPUT_VERSION_DIR"
   OUTPUT_LOG_PATH="$OUTPUT_FILE_PATH.log"
   echo "generated $TYPE: $BUILD_FILE_PATH"
   if [ ! -f "$BUILD_FILE_PATH" ]; then
@@ -69,6 +88,7 @@ build() {
   fi
   cp "$BUILD_FILE_PATH" "$OUTPUT_FILE_PATH" || exit 1
   mv "$BUILD_LOG_PATH" "$OUTPUT_LOG_PATH" || exit 1
+  calculate_and_write_sha256_sum "$OUTPUT_FILE_PATH" || exit 1
 }
 
 mkdir "$OUTPUT_DIR"
@@ -76,3 +96,5 @@ build apk
 if [ "$AAB_ENABLED" -eq 1 ]; then
   build aab
 fi
+
+cp -r "build/reports" "$OUTPUT_VERSION_DIR/"

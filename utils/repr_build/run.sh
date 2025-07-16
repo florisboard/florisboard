@@ -2,7 +2,10 @@
 
 IMAGE_NAME="fl-repr-build"
 IMAGE_TAG="default"
-REPO_MOUNT="/home/runner/florisboard"
+USER_NAME="runner"
+REPO_MOUNT="/home/$USER_NAME/florisboard"
+GRADLE_CACHE_VOLUME_NAME="fl-repr-build-gradle-cache"
+GRADLE_CACHE_VOLUME_BIND="$GRADLE_CACHE_VOLUME_NAME:/home/$USER_NAME/.gradle"
 
 read_property() {
   local version
@@ -38,18 +41,24 @@ docker build -t "$IMAGE_NAME:$IMAGE_TAG" -f "utils/repr_build/Dockerfile" . \
   --build-arg "NDK_VERSION=$NDK_VERSION" \
   --build-arg "RUSTUP_VERSION=$RUSTUP_VERSION" \
   --build-arg "RUST_TOOLCHAIN_VERSION=$RUST_TOOLCHAIN_VERSION" \
-  --build-arg "REPO_MOUNT=$REPO_MOUNT" \
+  --build-arg "USER_NAME=$USER_NAME" \
   || exit 1
+
+docker volume inspect "$GRADLE_CACHE_VOLUME_NAME" > /dev/null 2>&1 || docker volume create "$GRADLE_CACHE_VOLUME_NAME"
 
 docker_run_it() {
   docker run --rm -it \
     -w "$REPO_MOUNT" \
+    --user "$USER_NAME" \
+    -v "$GRADLE_CACHE_VOLUME_BIND" \
     "$IMAGE_NAME:$IMAGE_TAG" "$@"
 }
 
 docker_run() {
   docker run --rm \
     -w "$REPO_MOUNT" \
+    --user "$USER_NAME" \
+    -v "$GRADLE_CACHE_VOLUME_BIND" \
     "$IMAGE_NAME:$IMAGE_TAG" "$@"
 }
 
@@ -66,10 +75,12 @@ docker_run_assemble() {
   mkdir -p "$final_out_dir" || exit 1
   docker run --name "$container" \
     -w "$REPO_MOUNT" \
-    "$IMAGE_NAME:$IMAGE_TAG" ./assemble.sh "$track" \
+    --user "$USER_NAME" \
+    -v "$GRADLE_CACHE_VOLUME_BIND" \
+    "$IMAGE_NAME:$IMAGE_TAG" ./utils/repr_build/scripts/assemble.sh "$track" \
     && {
       docker cp "$container:$REPO_MOUNT/out" "$tmp_out_dir"
-      cp "$tmp_out_dir/out"/* "$final_out_dir"
+      cp -r "$tmp_out_dir/out"/* "$final_out_dir"
       rm -r "$tmp_out_dir"
     }
   docker rm "$container"
