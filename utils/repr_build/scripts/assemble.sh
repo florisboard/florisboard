@@ -25,34 +25,33 @@ else
   exit 1
 fi
 
-init_signing_config() {
-  APKSIGNER_PATH="$(find / -name apksigner 2>/dev/null | head -n 1)"
-  if [ -z "$APKSIGNER_PATH" ]; then
-    echo "fatal: apksigner not found, aborting..."
+find_executable() {
+  local executable_path
+  local executable_name="$1"
+  local target_var_name="$2"
+  executable_path="$(find / -name "$executable_name" 2>/dev/null | head -n 1)"
+  [ -n "$executable_path" ] || {
+    echo "fatal: $executable_name not found, aborting..."
     return 1
-  fi
-  APKSIGNER_PATH="$(realpath "$APKSIGNER_PATH")"
-  echo "using apksigner at: $APKSIGNER_PATH"
-
-  JARSIGNER_PATH="$(find / -name jarsigner 2>/dev/null | head -n 1)"
-  if [ -z "$JARSIGNER_PATH" ]; then
-    echo "fatal: jarsigner not found, aborting..."
-    return 1
-  fi
-  JARSIGNER_PATH="$(realpath "$JARSIGNER_PATH")"
-  echo "using jarsigner at: $JARSIGNER_PATH"
+  }
+  executable_path="$(realpath "$executable_path")"
+  echo "using $executable_name at: $executable_path"
+  declare -g "$target_var_name"="$executable_path"
 }
 
-if [ "$FLSEC_SIGNING_ENABLED" = "1" ]; then
-  if [ "$TRACK" = "$TRACK_DEBUG" ]; then
-    echo "fatal: requested signing for track '$TRACK_DEBUG', aborting..."
-    exit 1
+init_signing() {
+  if [ "$FLSEC_SIGNING_ENABLED" = "1" ]; then
+    echo "signing requested, initialize..."
+    [ "$TRACK" != "$TRACK_DEBUG" ] || {
+      echo "fatal: requested signing for track '$TRACK_DEBUG', aborting..."
+      return 1
+    }
+    find_executable apksigner APKSIGNER_PATH || return 1
+    find_executable jarsigner JARSIGNER_PATH || return 1
+  else
+    echo "signing not requested, skipping..."
   fi
-  echo "signing requested, initialize..."
-  init_signing_config || exit 1
-else
-  echo "signing not requested, skipping..."
-fi
+}
 
 sign_and_write_apk() {
   local APK_PATH="$1"
@@ -77,7 +76,7 @@ sign_and_write_aab() {
     "$AAB_PATH" "$FLSEC_KEYALIAS"
 }
 
-calculate_and_write_sha256_sum() {
+calculate_and_write_sha256sum() {
   local FILE_PATH="$1"
   local DIR_PATH
   local FILE_NAME
@@ -110,7 +109,7 @@ build() {
     echo "done"
   else
     echo "failed, aborting..."
-    exit 1
+    return 1
   fi
   if [ "$TYPE" = "apk" ]; then
     BUILD_METADATA_JSON="$BUILD_DIR/output-metadata.json"
@@ -120,7 +119,7 @@ build() {
     BUILD_FILE_NAME="app-$GRADLE_TASK_LC.aab"
     if [ -z "$BUILD_VERSION_NAME" ]; then
       echo "fatal: BUILD_VERSION_NAME was empty, should not be the case if apk is built before aab, aborting..."
-      exit 1
+      return 1
     fi
   fi
   BUILD_FILE_PATH="$BUILD_DIR/$BUILD_FILE_NAME"
@@ -136,24 +135,25 @@ build() {
   echo "generated $TYPE: $BUILD_FILE_PATH"
   if [ ! -f "$BUILD_FILE_PATH" ]; then
     echo "fatal: $TYPE not generated, aborting..."
-    exit 1
+    return 1
   fi
-  cp "$BUILD_FILE_PATH" "$OUTPUT_FILE_PATH" || exit 1
-  mv "$BUILD_LOG_PATH" "$OUTPUT_LOG_PATH" || exit 1
+  cp "$BUILD_FILE_PATH" "$OUTPUT_FILE_PATH" || return 1
+  mv "$BUILD_LOG_PATH" "$OUTPUT_LOG_PATH" || return 1
   if [ "$FLSEC_SIGNING_ENABLED" = "1" ]; then
     if [ "$TYPE" = "apk" ]; then
-      sign_and_write_apk "$OUTPUT_FILE_PATH" || exit 1
+      sign_and_write_apk "$OUTPUT_FILE_PATH" || return 1
     else
-      sign_and_write_aab "$OUTPUT_FILE_PATH" || exit 1
+      sign_and_write_aab "$OUTPUT_FILE_PATH" || return 1
     fi
   fi
-  calculate_and_write_sha256_sum "$OUTPUT_FILE_PATH" || exit 1
+  calculate_and_write_sha256sum "$OUTPUT_FILE_PATH" || return 1
 }
 
-mkdir "$OUTPUT_DIR"
-build apk
+mkdir "$OUTPUT_DIR" || exit 1
+init_signing || exit 1
+build apk || exit 1
 if [ "$AAB_ENABLED" -eq 1 ]; then
-  build aab
+  build aab || exit 1
 fi
 
-cp -r "build/reports" "$OUTPUT_VERSION_DIR/"
+cp -r "build/reports" "$OUTPUT_VERSION_DIR/" || exit 1
