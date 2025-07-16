@@ -639,6 +639,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
     }
 
+    val physicalKeyboard = PhysicalKeyboard()
+    inner class PhysicalKeyboard {
+        val showOnScreenKeyboard = boolean(
+            key = "physical_keyboard__show_on_screen_keyboard",
+            default = false,
+        )
+    }
+
     val smartbar = Smartbar()
     inner class Smartbar {
         val enabled = boolean(

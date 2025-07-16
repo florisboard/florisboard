@@ -291,6 +291,9 @@ class FlorisImeService : LifecycleInputMethodService() {
             }
             resourcesContext = createConfigurationContext(config)
         }
+        prefs.physicalKeyboard.showOnScreenKeyboard.observeForever {
+            updateInputViewShown()
+        }
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
         registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
@@ -354,6 +357,13 @@ class FlorisImeService : LifecycleInputMethodService() {
             activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
             editorInstance.handleStartInputView(editorInfo, isRestart = restarting)
         }
+    }
+
+    override fun onEvaluateInputViewShown(): Boolean {
+        val config = resources.configuration
+        return super.onEvaluateInputViewShown()
+            || config.keyboard == Configuration.KEYBOARD_NOKEYS
+            || prefs.physicalKeyboard.showOnScreenKeyboard.get()
     }
 
     override fun onUpdateSelection(
@@ -759,7 +769,8 @@ class FlorisImeService : LifecycleInputMethodService() {
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
+                            SnyggBox(
+                                elementName = FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .weight(1f),
