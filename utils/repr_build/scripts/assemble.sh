@@ -25,6 +25,58 @@ else
   exit 1
 fi
 
+init_signing_config() {
+  APKSIGNER_PATH="$(find / -name apksigner 2>/dev/null | head -n 1)"
+  if [ -z "$APKSIGNER_PATH" ]; then
+    echo "fatal: apksigner not found, aborting..."
+    return 1
+  fi
+  APKSIGNER_PATH="$(realpath "$APKSIGNER_PATH")"
+  echo "using apksigner at: $APKSIGNER_PATH"
+
+  JARSIGNER_PATH="$(find / -name jarsigner 2>/dev/null | head -n 1)"
+  if [ -z "$JARSIGNER_PATH" ]; then
+    echo "fatal: jarsigner not found, aborting..."
+    return 1
+  fi
+  JARSIGNER_PATH="$(realpath "$JARSIGNER_PATH")"
+  echo "using jarsigner at: $JARSIGNER_PATH"
+}
+
+if [ "$FLSEC_SIGNING_ENABLED" = "1" ]; then
+  if [ "$TRACK" = "$TRACK_DEBUG" ]; then
+    echo "fatal: requested signing for track '$TRACK_DEBUG', aborting..."
+    exit 1
+  fi
+  echo "signing requested, initialize..."
+  init_signing_config || exit 1
+else
+  echo "signing not requested, skipping..."
+fi
+
+sign_and_write_apk() {
+  local APK_PATH="$1"
+  echo -n "signing APK ... "
+  "$APKSIGNER_PATH" sign -v \
+    --ks "${FLSEC_KEYFILE}" \
+    --ks-key-alias "$FLSEC_KEYALIAS" \
+    --ks-pass "pass:$FLSEC_KS_PASS" \
+    --key-pass "pass:$FLSEC_KEY_PASS" \
+    --out "$APK_PATH" \
+    "$APK_PATH"
+}
+
+sign_and_write_aab() {
+  local AAB_PATH="$1"
+  echo -n "signing AAB ... "
+  "$JARSIGNER_PATH" -sigalg SHA256withRSA -digestalg SHA256 \
+    -keystore "${FLSEC_KEYFILE}" \
+    -storepass "$FLSEC_KS_PASS" \
+    -keypass "$FLSEC_KEY_PASS" \
+    -signedjar "$AAB_PATH" \
+    "$AAB_PATH" "$FLSEC_KEYALIAS"
+}
+
 calculate_and_write_sha256_sum() {
   local FILE_PATH="$1"
   local DIR_PATH
@@ -79,7 +131,7 @@ build() {
     OUTPUT_VERSION_DIR="$OUTPUT_DIR/$BUILD_VERSION_NAME-$TRACK"
     OUTPUT_FILE_PATH="$OUTPUT_VERSION_DIR/florisboard-$BUILD_VERSION_NAME-$TRACK.$TYPE"
   fi
-  mkdir "$OUTPUT_VERSION_DIR"
+  [ ! -d "$OUTPUT_VERSION_DIR" ] && mkdir "$OUTPUT_VERSION_DIR"
   OUTPUT_LOG_PATH="$OUTPUT_FILE_PATH.log"
   echo "generated $TYPE: $BUILD_FILE_PATH"
   if [ ! -f "$BUILD_FILE_PATH" ]; then
@@ -88,6 +140,13 @@ build() {
   fi
   cp "$BUILD_FILE_PATH" "$OUTPUT_FILE_PATH" || exit 1
   mv "$BUILD_LOG_PATH" "$OUTPUT_LOG_PATH" || exit 1
+  if [ "$FLSEC_SIGNING_ENABLED" = "1" ]; then
+    if [ "$TYPE" = "apk" ]; then
+      sign_and_write_apk "$OUTPUT_FILE_PATH" || exit 1
+    else
+      sign_and_write_aab "$OUTPUT_FILE_PATH" || exit 1
+    fi
+  fi
   calculate_and_write_sha256_sum "$OUTPUT_FILE_PATH" || exit 1
 }
 
