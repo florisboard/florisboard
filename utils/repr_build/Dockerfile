@@ -39,7 +39,7 @@ ENV PATH="$HOME/.cargo/bin:$PATH"
 
 # Install sdkmanager
 ARG CMDLINE_TOOLS_ZIP="commandlinetools-linux-${CMDLINE_TOOLS_VERSION}_latest.zip"
-ENV ANDROID_HOME="$HOME/.android"
+ENV ANDROID_HOME="$HOME/Android/Sdk"
 RUN mkdir -p ${ANDROID_HOME}/cmdline-tools \
     && cd ${ANDROID_HOME}/cmdline-tools \
     && wget https://dl.google.com/android/repository/${CMDLINE_TOOLS_ZIP} \
@@ -78,15 +78,15 @@ RUN keytool -genkey -v \
 
 FROM setup_androiddebugkey AS setup_gradle
 
-COPY --chown="${USER_NAME}:${USER_NAME}" ./gradle ./gradle
+COPY --chown="${USER_NAME}:${USER_NAME}" ./gradle/wrapper ./gradle/wrapper
 COPY --chown="${USER_NAME}:${USER_NAME}" ./gradlew .
 
 # As weird as it sounds, calling ./gradlew help only downloads the Gradle zip, but does not validate the project state.
 # => This is exactly what we need at this point in the Dockerfile.
-RUN ./gradlew --no-daemon help
+RUN ./gradlew help
 
 
 FROM setup_gradle AS setup_proj
 
-COPY --chown="${USER_NAME}:${USER_NAME}" ./utils/repr-build/assemble.sh .
+COPY --chown="${USER_NAME}:${USER_NAME}" ./utils/repr_build/assemble.sh .
 COPY --chown="${USER_NAME}:${USER_NAME}" . .

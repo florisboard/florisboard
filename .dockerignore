@@ -5,5 +5,5 @@
 **/out/
 **/target/
 utils/
-!utils/repr-build/assemble.sh
+!utils/repr_build/assemble.sh
 local.properties

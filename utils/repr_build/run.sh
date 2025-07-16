@@ -28,7 +28,7 @@ read_property ndk                   NDK_VERSION
 read_property rustup                RUSTUP_VERSION
 read_property rustToolchain         RUST_TOOLCHAIN_VERSION
 
-docker build -t "$IMAGE_NAME:$IMAGE_TAG" -f "utils/repr-build/Dockerfile" . \
+docker build -t "$IMAGE_NAME:$IMAGE_TAG" -f "utils/repr_build/Dockerfile" . \
   --build-arg "PROJECT_COMPILE_SDK=$PROJECT_COMPILE_SDK" \
   --build-arg "CMDLINE_TOOLS_VERSION=$CMDLINE_TOOLS_VERSION" \
   --build-arg "CMDLINE_TOOLS_CHECKSUM=$CMDLINE_TOOLS_CHECKSUM" \
