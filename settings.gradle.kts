@@ -33,6 +33,12 @@ dependencyResolutionManagement {
         // Uncomment the following if testing snapshots from Maven Local
         // mavenLocal()
     }
+
+    versionCatalogs {
+        create("tools") {
+            from(files("gradle/tools.versions.toml"))
+        }
+    }
 }
 
 include(":app")
