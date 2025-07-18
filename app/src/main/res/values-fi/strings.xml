@@ -281,6 +281,7 @@
     <string name="setup__enable_ime__open_settings_btn">Avaa järjestelmän asetukset</string>
     <string name="setup__select_ime__title">Valitse {app_name}</string>
     <string name="setup__select_ime__switch_keyboard_btn">Vaihda näppäimistöä</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>

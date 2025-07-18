@@ -252,6 +252,7 @@
     <string name="setup__enable_ime__title">Aktivér {app_name}</string>
     <string name="setup__select_ime__title">Vælg {app_name}</string>
     <string name="setup__select_ime__switch_keyboard_btn">Skift tastatur</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>

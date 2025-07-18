@@ -72,6 +72,8 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">فتح سجل الحافظة</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">رمز تعبيري</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">فتح نافذة الرموز التعبيرية</string>
+    <string name="quick_action__language_switch" maxLength="12">تبديل اللغة</string>
+    <string name="quick_action__language_switch__tooltip">تنفيذ تبديل اللغة</string>
     <string name="quick_action__settings" maxLength="12">الإعدادات</string>
     <string name="quick_action__settings__tooltip">فتح الإعدادات</string>
     <string name="quick_action__undo" maxLength="12">تراجع</string>
@@ -459,6 +461,7 @@
     <string name="setup__finish_up__description_p1">تم تمكين{app_name} في النظام وجاهز للتخصيص بأسلوبك.</string>
     <string name="setup__finish_up__description_p2">إذا واجهت أي مشاكل أو أخطاء أو أعطال أو اذا كنت ترغب فقط في تقديم اقتراح ، تحقق من مستودع المشروع من شاشة \"حول التطبيق\"!</string>
     <string name="setup__finish_up__finish_btn">أبدأ بالتخصيص</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">النسخ الإحتياطي و الإستعادة</string>
     <string name="backup_and_restore__back_up__title">النسخ الاحتياطي للبيانات</string>

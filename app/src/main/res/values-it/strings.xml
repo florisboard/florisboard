@@ -464,6 +464,7 @@
     <string name="setup__finish_up__description_p1">{app_name} è stata abilitata nel sistema ed è pronta per essere personalizzata.</string>
     <string name="setup__finish_up__description_p2">Se riscontri problemi, bug, arresti anomali o vuoi semplicemente dare un suggerimento, controlla il repository del progetto dalla schermata informazioni!</string>
     <string name="setup__finish_up__finish_btn">Inizia la personalizzazione</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Backup &amp; Ripristino</string>
     <string name="backup_and_restore__back_up__title">Backup dei dati</string>

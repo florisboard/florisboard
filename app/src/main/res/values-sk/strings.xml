@@ -278,6 +278,7 @@
     <string name="setup__enable_ime__title">Povoliť {app_name}</string>
     <string name="setup__enable_ime__description">Android vyžaduje, aby bola každá vlastná klávesnica samostatne povolená, kým ju bude možné používať. Prejdite na Systém <i> Jazyk a vstup </i> Nastavenia a povoľte tam aplikáciu {app_name}.</string>
     <string name="setup__enable_ime__open_settings_btn">Otvoriť systémové nastavenia</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Zálohovanie a obnovenie</string>
     <string name="backup_and_restore__back_up__title">Zálohovať dáta</string>

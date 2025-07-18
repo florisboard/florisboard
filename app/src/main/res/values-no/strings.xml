@@ -328,6 +328,7 @@
     <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>
     <string name="setup__finish_up__description_p2">Dersom du støter på problemer, feil, krasj eller ønsker å komme med forslag, sjekk ut prosjektlageret fra Om-skjermen!</string>
     <string name="setup__finish_up__finish_btn">Begynn å Tilpasse</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__back_up__destination_file_sys">Lokalt filsystem</string>
     <string name="backup_and_restore__restore__title">Gjenopprett data</string>

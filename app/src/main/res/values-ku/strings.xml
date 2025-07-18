@@ -237,6 +237,7 @@
     <string name="setup__finish_up__description_p1">{app_name} niha di pergalê de çalak e û amade ye ku ji hêla we ve were xwemalîkirin.</string>
     <string name="setup__finish_up__description_p2">Heke hûn bi pirsgirêk, xeletî, qezayan an jî bi tenê dixwazin pêşnîyazekê bikin, li depoya projeyê binêrin ji ekrana der barê ekranê!</string>
     <string name="setup__finish_up__finish_btn">Dest Bi Taybetkirinê Bike</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Yêdek &amp; Nûvdekirin kirin</string>
     <string name="backup_and_restore__back_up__title">Daneyên paşde bikin</string>

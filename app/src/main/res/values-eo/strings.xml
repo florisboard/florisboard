@@ -388,6 +388,7 @@
     <string name="setup__grant_notification_permission__btn">Permesi</string>
     <string name="setup__finish_up__title">Plenumi</string>
     <string name="setup__finish_up__finish_btn">Komenci agordi</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Savkopiado &amp; Restaŭrigo</string>
     <string name="backup_and_restore__back_up__title">Savi datumojn</string>

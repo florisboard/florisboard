@@ -328,6 +328,7 @@
     <string name="setup__finish_up__description_p1">이제 {app_name} 키보드를 마음껏 꾸미고 써볼 수 있어요.</string>
     <string name="setup__finish_up__description_p2">문제가 생기거나, 버그를 발견하거나, 제안할 내용이 있다면 정보 화면에서 프로젝트 리포지터리에 방문해 주세요!</string>
     <string name="setup__finish_up__finish_btn">꾸미기 시작</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">백업 및 복원</string>
     <string name="backup_and_restore__back_up__title">데이터 백업</string>

@@ -478,6 +478,9 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="setup__finish_up__description_p1">{app_name} is nu ingeschakeld in het systeem en kan door jou worden aangepast.</string>
     <string name="setup__finish_up__description_p2">Als je problemen, bugs, crashes tegenkomt of gewoon een suggestie wilt doen, bekijk dan de projectrepository vanaf het about-scherm!</string>
     <string name="setup__finish_up__finish_btn">Begin met aanpassen</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Fysiek toetsenbord</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Enkel beschikbaar wanneer toetsenbord is aangesloten</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Back-up &amp; Herstel</string>
     <string name="backup_and_restore__back_up__title">Back-upgegevens</string>

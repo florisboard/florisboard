@@ -480,6 +480,7 @@
     <string name="setup__finish_up__description_p1">Клавиатура {app_name} активирована и готова к дальнейшей настройке.</string>
     <string name="setup__finish_up__description_p2">Если столкнетесь с какими-либо трудностями, ошибками, сбоями или просто захотите предложить идею, загляните в репозиторий проекта в разделе «О программе»!</string>
     <string name="setup__finish_up__finish_btn">Перейти к настройке</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Резервное копирование и восстановление</string>
     <string name="backup_and_restore__back_up__title">Резервирование данных</string>

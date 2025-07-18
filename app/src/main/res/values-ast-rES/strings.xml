@@ -188,6 +188,7 @@
     <string name="setup__finish_up__description_p1">{app_name} ta activáu nel sistema y yá pues personalizalu.</string>
     <string name="setup__finish_up__description_p2">Si atopes cualesquier problema, fallu, casque o namás quier facer dalguna suxerencia, consulta\'l depósitu del proyeutu na pantalla «Tocante a».</string>
     <string name="setup__finish_up__finish_btn">Comenzar a personalizar</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__back_up__destination_file_sys">Sistema de ficheros llocal</string>
     <string name="backup_and_restore__back_up__destination_share_intent">Aplicación de terceros pel menú de compartición</string>

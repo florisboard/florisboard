@@ -80,6 +80,7 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Välkommen!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Sekretesspolicy</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Stäng</string>

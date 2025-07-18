@@ -554,6 +554,13 @@
     <string name="setup__finish_up__description_p1">{app_name} ahora está habilitado en su sistema y listo para ser personalizado.</string>
     <string name="setup__finish_up__description_p2">Si encuentra algún problema, errores, fallos o sólo desea hacer alguna sugerencia, ¡revise el repositorio del proyecto en el menú de \"Acerca de\"!</string>
     <string name="setup__finish_up__finish_btn">Empiece a personalizar</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Teclado físico</string>
+    <string name="physical_keyboard__system_settings__title">Configuración del teclado físico del sistema</string>
+    <string name="physical_keyboard__system_settings__summary">Distribuciones, atajos de teclado y teclas modificadoras</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Solo disponible cuando el teclado está conectado</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Mostrar teclado en pantalla</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Mostrar el teclado en pantalla mientras se utiliza el teclado físico</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Respaldar &amp; Restaurar</string>
     <string name="backup_and_restore__back_up__title">Respaldar datos</string>

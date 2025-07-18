@@ -557,6 +557,13 @@
     <string name="setup__finish_up__description_p1">Клавииатурата на {app_name} вече е включена в системата и готова да я настроите според вашите предпочитения.</string>
     <string name="setup__finish_up__description_p2">Акосе сблъскате с проблеми, дефекти, сривове или просто искате да направите предложение, разгледайте хранилището на проекта от екрана Относно!</string>
     <string name="setup__finish_up__finish_btn">Започнете да настройвате</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Физическа клавиатура</string>
+    <string name="physical_keyboard__system_settings__title">Системни настройки на физическа клавиатура</string>
+    <string name="physical_keyboard__system_settings__summary">Подредби, клав. комбинации и специални клавиши</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Достъпно само при включена клавиатура</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Екранна клавиатура</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Показване на екранна клавиатура при използване на физкческа клавиатура</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Резервно копие и възстановяване</string>
     <string name="backup_and_restore__back_up__title">Резервно копие на данни</string>

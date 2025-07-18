@@ -562,6 +562,7 @@
     <string name="setup__finish_up__description_p1">{app_name} most már engedélyezve van a rendszerben, és csak arra vár, hogy személyre szabja.</string>
     <string name="setup__finish_up__description_p2">Ha bármilyen hibával vagy összeomlással találkozik, vagy csak javaslatot szeretne tenni, nézze meg a projekt kódtárját a névjegy képernyőn!</string>
     <string name="setup__finish_up__finish_btn">Személyre szabás megkezdése</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Mentés és helyreállítás</string>
     <string name="backup_and_restore__back_up__title">Adatok biztonsági mentése</string>

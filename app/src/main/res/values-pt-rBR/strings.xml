@@ -469,6 +469,7 @@
     <string name="setup__finish_up__description_p1">{app_name} agora está ativado no sistema e pronto para ser personalizado por você.</string>
     <string name="setup__finish_up__description_p2">Se você encontrar quaisquer problemas, bugs, travamentos ou apenas quiser fazer uma sugestão, verifique o repositório do projeto na tela sobre!</string>
     <string name="setup__finish_up__finish_btn">Começar a Personalizar</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Backup e Restauração</string>
     <string name="backup_and_restore__back_up__title">Fazer backup dos dados</string>

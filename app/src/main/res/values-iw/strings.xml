@@ -264,6 +264,7 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">ברוכים הבאים!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">מדיניות פרטיות</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>

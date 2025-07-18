@@ -57,6 +57,7 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Izvorni kod</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Dobrodošli!</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>

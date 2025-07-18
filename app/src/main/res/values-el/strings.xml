@@ -226,6 +226,7 @@
     <string name="setup__finish_up__description_p1">{app_name} είναι τώρα ενεργοποιημένο στο σύστημα και έτοιμο να προσαρμοστεί από εσάς.</string>
     <string name="setup__finish_up__description_p2">Εάν αντιμετωπίσετε τυχόν θέματα, προβλήματα, σφάλματα ή απλώς θέλετε να κάνετε μία πρόταση, ρίξτε μία ματιά στο αποθετήριο από το πεδίο σχετικά με!</string>
     <string name="setup__finish_up__finish_btn">Ξεκινήστε την προσαρμογή</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__restore__title">Επαναφορά δεδομένων</string>
     <string name="backup_and_restore__restore__mode">Λειτουργία επαναφοράς</string>

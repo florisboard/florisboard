@@ -526,6 +526,13 @@
     <string name="setup__finish_up__description_p1">{app_name} tagad ir iespējots un ir gatavs pielāgojumiem.</string>
     <string name="setup__finish_up__description_p2">Ja tiek pamanītas kādas nepilnības, kļūdas, avārijas vai ir vēlme kaut ko ieteikt, apskati projekta glabātavu, kuras saite ir sadaļā \"Par\"!</string>
     <string name="setup__finish_up__finish_btn">Sākt pielāgošanu</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Fiziska tastatūra</string>
+    <string name="physical_keyboard__system_settings__title">Sistēmas fiziskās tastatūras iestatījumi</string>
+    <string name="physical_keyboard__system_settings__summary">Izkārtojumi, tastatūras saīsnes un pārveidotājtaustiņi</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Pieejams tikai tad, kad ir pievienotat tastatūra</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Rādīt ekrāna tastatūru</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Rādīt ekrāna tastatūru, kamēr izmanto fizisko tastatūru</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Rezerves kopēšana un atjaunošana</string>
     <string name="backup_and_restore__back_up__title">Veikt datu rezerves kopēšanu</string>

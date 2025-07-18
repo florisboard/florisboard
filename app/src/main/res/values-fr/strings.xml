@@ -225,6 +225,10 @@
     <string name="snygg__rule_element__clipboard_item">Élément du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_description">Description de l’élément du presse-papiers</string>
     <string name="snygg__rule_element__clipboard_item_popup">Pop-up d\'élément du presse-papiers</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Horodatage des éléments du presse-papier</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Désactiver l\'historique</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">L\'historique du presse-papier va être désactivé</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Confirmer</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Disposition en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Champ d\'entrée en mode paysage</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Action d\'entrée en mode paysage</string>
@@ -502,6 +506,7 @@
     <string name="setup__finish_up__description_p1">{app_name} est maintenant activé dans le système et prêt à être personnalisé par vous.</string>
     <string name="setup__finish_up__description_p2">Si vous rencontrez des problèmes, des bogues, des pannes ou si vous voulez simplement faire une suggestion, consultez le dépôt du projet à partir de l\'écran \" à propos \" !</string>
     <string name="setup__finish_up__finish_btn">Commencer à personnaliser</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Sauvegarder &amp; Restaurer</string>
     <string name="backup_and_restore__back_up__title">Sauvegarder les données</string>
@@ -784,9 +789,9 @@
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Se souvenir du dernier état</string>
     <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">N\'affiche le clavier qu\'après la fermeture d\'une boîte de dialogue d\'éditeur s\'il était auparavant visible</string>
     <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Langage du système</string>
-    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Les noms de langue dans l\'application et l\'interface utilisateur du clavier sont affichés dans les paramètres régionaux définis pour l\'ensemble de l\'appareil</string>
+    <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Les noms de langues dans l\'app et l\'interface clavier sont affichés dans la langue définie pour l\'appareil</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Langage natif</string>
-    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Les noms de langue dans l\'application et l\'interface utilisateur du clavier sont affichés dans les paramètres régionaux référencés par eux-mêmes</string>
+    <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Les noms de langue dans l\'app et l\'interface clavier sont affichés dans chaque langue</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Tri automatique (ajout au début)</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Réordonner automatiquement les émojis en fonction de votre usage. Les nouveaux émojis sont ajoutés au début.</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">Tri automatique (ajout à la fin)</string>
@@ -869,7 +874,7 @@
     <string name="enum__space_bar_mode__current_language" comment="Enum value label">Langue actuelle</string>
     <string name="enum__space_bar_mode__space_bar_key" comment="Enum value label">␣</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Utiliser la langue du système</string>
-    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Utiliser les sous-types du clavier</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Utiliser la langue du clavier</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Aucune action</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Passer au mode de clavier précédent</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Passer au mode de clavier suivant</string>

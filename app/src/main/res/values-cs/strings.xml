@@ -559,6 +559,13 @@
     <string name="setup__finish_up__description_p1">{app_name} je nyní povolena ve vašem systému a je připravena na přizpůsobení.</string>
     <string name="setup__finish_up__description_p2">Pokud objevíte jakékoli problémy, chyby, pády nebo prostě jen budete chtít podat návrh, podívejte se na repozitář projektu na obrazovce O aplikaci!</string>
     <string name="setup__finish_up__finish_btn">Začít přizpůsobovat</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Fyzická klávesnice</string>
+    <string name="physical_keyboard__system_settings__title">Systémová nastavení fyzické klávesnice</string>
+    <string name="physical_keyboard__system_settings__summary">Rozložení, klávesové zkratky a modifikátory</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Dostupné pouze při připojené klávesnici</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Zobrazit klávesnici na obrazovce</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Zobrazí klávesnici na obrazovce při používání fyzické klávesnice</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Záloha a obnovení</string>
     <string name="backup_and_restore__back_up__title">Zálohovat data</string>

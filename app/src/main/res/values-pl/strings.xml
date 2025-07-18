@@ -561,6 +561,13 @@
     <string name="setup__finish_up__description_p1">Aplikacja {app_name} jest teraz włączona w systemie i gotowa do dostosowania przez Ciebie.</string>
     <string name="setup__finish_up__description_p2">Jeśli napotkasz jakieś problemy, błędy, awarie lub po prostu chcesz coś zasugerować, sprawdź repozytorium projektu z ekranu \"Informacje o oprogramowaniu\"!</string>
     <string name="setup__finish_up__finish_btn">Rozpocznij personalizowanie</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Klawiatura fizyczna</string>
+    <string name="physical_keyboard__system_settings__title">Ustawienia klawiatury fizycznej systemu</string>
+    <string name="physical_keyboard__system_settings__summary">Układy, skróty klawiaturowe i klawisze modyfikujące</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Dostępne tylko po podłączeniu klawiatury</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Pokazuj klawiaturę ekranową</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Wyświetlaj klawiaturę ekranową podczas korzystania z klawiatury fizycznej</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Kopia zapasowa i przywracanie</string>
     <string name="backup_and_restore__back_up__title">Utwórz kopię zapasową</string>

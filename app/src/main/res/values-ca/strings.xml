@@ -481,6 +481,7 @@
     <string name="setup__finish_up__description_p1">{app_name} s\'habilitat al sistema i està preparat perquè el personalitzis.</string>
     <string name="setup__finish_up__description_p2">Si trobes cap incidència, error, fallada o simplement vols suggerir alguna cosa, només has d\'anar al repositori del projecte des de la pantalla Quant a!</string>
     <string name="setup__finish_up__finish_btn">Comença a personalitzar</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Còpia de seguretat &amp; Restauració</string>
     <string name="backup_and_restore__back_up__title">Còpia de seguretat de les dades</string>

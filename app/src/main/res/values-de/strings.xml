@@ -482,6 +482,7 @@
     <string name="setup__finish_up__description_p1">{app_name} ist nun im System aktiviert und bereit von dir angepasst zu werden.</string>
     <string name="setup__finish_up__description_p2">Falls dir irgendwelche Probleme, Bugs oder Abstürze begegnen, oder du einfach einen Vorschlag machen möchtest, besuche einfach die GitHub Seite des Projekts (zu finden im About \"Über die App\" Screen)!</string>
     <string name="setup__finish_up__finish_btn">Anpassung beginnen</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Sichern &amp; Wiederherstellen</string>
     <string name="backup_and_restore__back_up__title">Daten sichern</string>
