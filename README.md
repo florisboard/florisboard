@@ -64,7 +64,7 @@ fully respecting your privacy. Currently in early-beta state.
 </tr>
 </table>
 
-Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
+Beginning with v0.7 FlorisBoard will enter the public beta on Google Play.
 
 ## Highlighted features
 - Integrated clipboard manager / history
@@ -74,7 +74,7 @@ Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 
 > [!IMPORTANT]
 > Word suggestions/spell checking are not included in the current releases
-> and are a major goal for the v0.5 milestone.
+> and are a major goal for the v0.6 milestone.
 
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
