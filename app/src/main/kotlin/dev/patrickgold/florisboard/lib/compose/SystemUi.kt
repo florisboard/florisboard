@@ -38,7 +38,7 @@ fun SystemUiIme() {
     LaunchedEffect(useDarkIcons) {
         windowInsetsController.isAppearanceLightNavigationBars = useDarkIcons
         if (AndroidVersion.ATLEAST_API29_Q) {
-            window.isNavigationBarContrastEnforced = true
+            window.isNavigationBarContrastEnforced = false
         }
     }
 }
