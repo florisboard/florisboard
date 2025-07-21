@@ -49,9 +49,6 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
-import dev.patrickgold.florisboard.lib.compose.FlorisStep
-import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
-import dev.patrickgold.florisboard.lib.compose.FlorisStepState
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
@@ -62,6 +59,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisBulletSpacer
+import org.florisboard.lib.compose.FlorisStep
+import org.florisboard.lib.compose.FlorisStepLayout
+import org.florisboard.lib.compose.FlorisStepState
 
 @Composable
 fun SetupScreen() = FlorisScreen {

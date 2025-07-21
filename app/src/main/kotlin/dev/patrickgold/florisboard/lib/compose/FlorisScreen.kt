@@ -43,6 +43,10 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisAppBar
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.autoMirrorForRtl
+import org.florisboard.lib.compose.florisVerticalScroll
 
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
