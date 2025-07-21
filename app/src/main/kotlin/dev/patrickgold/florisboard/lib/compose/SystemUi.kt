@@ -37,8 +37,12 @@ fun SystemUiIme() {
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
 
-    val useDarkIcons = backgroundColor.luminance() >= 0.5
     val hasBackgroundImage = backgroundImage != null
+    val useDarkIcons = if (backgroundImage == null) {
+        backgroundColor.luminance() >= 0.5
+    } else {
+        false
+    }
 
     val view = LocalView.current
     val window = view.context.findWindow()!!
