@@ -23,22 +23,35 @@ import android.inputmethodservice.InputMethodService
 import android.view.Window
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsControllerCompat
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.florisboard.lib.snygg.ui.uriOrNull
 
 @Composable
 fun SystemUiIme() {
-    val useDarkIcons = !FlorisImeTheme.config.isNightTheme
+    val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
+    val backgroundColor = backgroundQuery.background()
+    val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
+
+    val hasBackgroundImage = backgroundImage != null
+    val useDarkIcons = if (backgroundImage == null) {
+        backgroundColor.luminance() >= 0.5
+    } else {
+        false
+    }
+
     val view = LocalView.current
     val window = view.context.findWindow()!!
     val windowInsetsController = WindowInsetsControllerCompat(window, view)
 
-    LaunchedEffect(useDarkIcons) {
+    LaunchedEffect(useDarkIcons, hasBackgroundImage) {
         windowInsetsController.isAppearanceLightNavigationBars = useDarkIcons
         if (AndroidVersion.ATLEAST_API29_Q) {
-            window.isNavigationBarContrastEnforced = true
+            window.isNavigationBarContrastEnforced = hasBackgroundImage
         }
     }
 }
