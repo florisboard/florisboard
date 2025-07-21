@@ -124,6 +124,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.suggestion.forceIncognitoModeFromDynamic.get()
             }
         }
+        activeState.inputShiftState = InputShiftState.SHIFTED_AUTOMATIC
+        keyboardManager.reevaluateInputShiftState()
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
@@ -195,17 +197,75 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             punctuationRule.symbolsPrecedingAutoSpace.contains(text.first())
     }
 
-    override fun commitChar(char: String): Boolean {
+    private fun shouldEnableShiftAfterSpace(): Boolean {
+        val textBefore = activeContent.getTextBeforeCursor(2)
+        return textBefore.length >= 2 &&
+            ".!?".contains(textBefore[textBefore.length - 2]) &&
+            textBefore.last().isWhitespace()
+    }
+
+   override fun commitChar(char: String): Boolean {
+        if (char == " ") {
+            val topSuggestion = nlpManager.activeCandidates
+                .maxByOrNull { it.confidence }
+
+            if (topSuggestion != null && topSuggestion.isEligibleForAutoCommit && topSuggestion.confidence > 0.75) {
+                val word = topSuggestion.text.toString()
+                val currentWord = activeContent.currentWordText
+
+                // Prevent re-committing if the user has edited the suggestion or typed something different
+                if (currentWord.isBlank() || !word.lowercase().startsWith(currentWord.lowercase())) {
+                    // Proceed without auto-committing
+                    return super.commitChar(char)
+                }
+
+                currentInputConnection()?.finishComposingText()
+
+                val finalWord = when {
+                    currentWord == currentWord.uppercase() -> currentWord
+                    word == word.uppercase() -> word
+                    activeState.inputShiftState != InputShiftState.UNSHIFTED ->
+                        word.replaceFirstChar { it.uppercaseChar() }
+                    else -> word
+                }
+
+                deleteBeforeCursor(TextType.CHARACTERS, currentWord.length)
+                commitText("$finalWord ")
+
+                runBlocking {
+                    topSuggestion.sourceProvider?.notifySuggestionAccepted(
+                        subtypeManager.activeSubtype,
+                        topSuggestion
+                    )
+                }
+
+                phantomSpace.setInactive()
+                activeState.inputShiftState = InputShiftState.UNSHIFTED
+                return true
+            }
+        }
+
+        // Clear revert candidate only if not auto-committing
+        clearRevertCandidateIfNeeded()
+
         val isInsertAutoSpaceBeforeChar = shouldInsertAutoSpaceBefore(char)
         val isInsertAutoSpaceAfterChar = shouldInsertAutoSpaceAfter(char)
         val isDeletePreviousSpace = isInsertAutoSpaceAfterChar && autoSpace.isActive
+
         if (isInsertAutoSpaceAfterChar) {
             autoSpace.setActive()
         } else {
             autoSpace.setInactive()
         }
+
         val isPhantomSpaceActive = phantomSpace.determine(char)
         phantomSpace.setInactive()
+
+        if (char == " " && shouldEnableShiftAfterSpace()) {
+            activeState.inputShiftState = InputShiftState.SHIFTED_AUTOMATIC
+            keyboardManager.reevaluateInputShiftState()
+        }
+
         return super.commitChar(
             char = char,
             deletePreviousSpace = isDeletePreviousSpace,
@@ -213,6 +273,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             insertSpaceAfterChar = isInsertAutoSpaceAfterChar,
         )
     }
+
 
     /**
      * Commits the given [text] to this editor instance and adjusts both the cursor position and
@@ -629,6 +690,15 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
         fun reset() {
             state.set(0)
+        }
+    }
+
+    // Call this at the start of any user edit (typing, paste, etc.)
+    private fun clearRevertCandidateIfNeeded() {
+        if (phantomSpace.candidateForRevert != null) {
+            phantomSpace.setInactive()
+            // Optionally, refresh suggestions here if needed
+            keyboardManager.resetSuggestions(activeContent)
         }
     }
 }
