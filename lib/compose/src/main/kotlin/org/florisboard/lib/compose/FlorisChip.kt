@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package org.florisboard.lib.compose
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

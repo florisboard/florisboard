@@ -20,7 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.lib.compose.FlorisChip
+import org.florisboard.lib.compose.FlorisChip
 
 @Composable
 fun ExtensionKeywordChip(

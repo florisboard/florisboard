@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package org.florisboard.lib.compose
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 @Composable
 fun FlorisAppBar(
     title: String,
-    navigationIcon: FlorisScreenNavigationIcon?,
+    navigationIcon: (@Composable () -> Unit)?,
     actions: @Composable RowScope.() -> Unit = { },
     scrollBehavior: TopAppBarScrollBehavior
 ) {

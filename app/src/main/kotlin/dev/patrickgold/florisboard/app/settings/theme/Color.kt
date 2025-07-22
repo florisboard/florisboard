@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package dev.patrickgold.florisboard.app.settings.theme
 
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridItemScope
-import androidx.compose.foundation.lazy.grid.LazyGridScope
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 
-fun LazyGridScope.header(
-    key: Any? = null,
-    content: @Composable LazyGridItemScope.() -> Unit,
-) {
-    item(key, span = { GridItemSpan(this.maxLineSpan) }, content = content)
+object ColorPreferenceSerializer : PreferenceSerializer<Color> {
+    @OptIn(ExperimentalStdlibApi::class)
+    override fun deserialize(value: String): Color {
+        return Color(value.hexToULong())
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    override fun serialize(value: Color): String = value.value.toHexString()
 }

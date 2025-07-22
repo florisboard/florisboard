@@ -49,16 +49,16 @@ import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.compose.conditional
+import org.florisboard.lib.compose.stringRes
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -116,7 +116,10 @@ class FlorisAppActivity : ComponentActivity() {
             if (!isModelLoaded) return@observe
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
-                ProvideLocalizedResources(resourcesContext) {
+                ProvideLocalizedResources(
+                    resourcesContext,
+                    appName = R.string.app_name,
+                ) {
                     FlorisAppTheme(theme = appTheme) {
                         Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()

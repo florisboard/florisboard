@@ -34,14 +34,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
-import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
-import dev.patrickgold.florisboard.lib.compose.FlorisSimpleCard
-import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
-import dev.patrickgold.florisboard.lib.compose.observeAsState
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.compose.FlorisCanvasIcon
+import org.florisboard.lib.compose.FlorisErrorCard
+import org.florisboard.lib.compose.FlorisSimpleCard
+import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.observeAsState
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun SpellCheckerServiceSelector(florisSpellCheckerEnabled: MutableState<Boolean>) {

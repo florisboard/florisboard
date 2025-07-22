@@ -34,9 +34,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.toIntOffset
-import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.snygg.SnyggSinglePropertySet
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
