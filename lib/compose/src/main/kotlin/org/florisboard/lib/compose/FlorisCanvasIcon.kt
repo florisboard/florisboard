@@ -16,7 +16,6 @@
 
 package org.florisboard.lib.compose
 
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
@@ -26,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.createBitmap
 
 @Composable
 fun FlorisCanvasIcon(
@@ -52,9 +52,9 @@ fun FlorisCanvasIcon(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
 ) {
-    val bitmap = Bitmap.createBitmap(
-        drawable.intrinsicWidth, drawable.intrinsicHeight,
-        Bitmap.Config.ARGB_8888
+    val bitmap = createBitmap(
+        width = drawable.intrinsicWidth,
+        height = drawable.intrinsicHeight,
     )
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, canvas.width, canvas.height)
