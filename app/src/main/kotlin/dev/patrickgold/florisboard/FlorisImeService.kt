@@ -102,7 +102,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -121,6 +120,8 @@ import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
@@ -572,7 +573,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     @Composable
     private fun ImeUiWrapper() {
-        ProvideLocalizedResources(resourcesContext) {
+        ProvideLocalizedResources(
+            resourcesContext,
+            appName = R.string.app_name,
+        ) {
             ProvideKeyboardRowBaseHeight {
                 CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
@@ -709,7 +713,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             val keyboardManager by context.keyboardManager()
             val state by keyboardManager.activeState.collectAsState()
 
-            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+            ProvideLocalizedResources(
+                resourcesContext,
+                appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
+            ) {
                 FlorisImeTheme {
                     BottomSheetHostUi(
                         isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
@@ -761,7 +769,11 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         fun Content() {
-            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+            ProvideLocalizedResources(
+                resourcesContext,
+                appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
+            ) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
                     SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {

@@ -76,7 +76,6 @@ import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
@@ -88,6 +87,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import org.florisboard.lib.compose.FlorisButtonBar
 import org.florisboard.lib.compose.FlorisDropdownLikeButton
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 
 
 private val SelectComponentName = ExtensionComponentName("00", "00")

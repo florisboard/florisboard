@@ -57,7 +57,6 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryValidation
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -70,6 +69,7 @@ import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 
 private val AllLanguagesLocale = FlorisLocale.from(language = "zz")
 private val UserDictionaryEntryToAdd = UserDictionaryEntry(id = 0, "", 255, null, null)

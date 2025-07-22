@@ -63,7 +63,6 @@ import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -89,6 +88,7 @@ import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.FlorisInfoCard
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir

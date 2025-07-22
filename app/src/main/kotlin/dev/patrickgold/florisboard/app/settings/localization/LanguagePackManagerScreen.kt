@@ -49,7 +49,6 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
@@ -61,6 +60,7 @@ import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.android.showLongToastSync
 
 enum class LanguagePackManagerScreenAction(val id: String) {

@@ -102,8 +102,6 @@ import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
@@ -116,10 +114,12 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
 import org.florisboard.lib.compose.autoMirrorForRtl
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton

@@ -52,7 +52,6 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import org.florisboard.lib.compose.FlorisBulletSpacer
 import org.florisboard.lib.compose.FlorisButtonBar
@@ -60,6 +59,7 @@ import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisOutlinedButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.resultOk
 

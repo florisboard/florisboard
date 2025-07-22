@@ -86,7 +86,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
@@ -98,6 +97,7 @@ import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggAttributes

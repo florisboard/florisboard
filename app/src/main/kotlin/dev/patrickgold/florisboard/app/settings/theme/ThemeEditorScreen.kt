@@ -84,7 +84,6 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.themeManager
@@ -101,6 +100,7 @@ import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.rippleClickable
 import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule

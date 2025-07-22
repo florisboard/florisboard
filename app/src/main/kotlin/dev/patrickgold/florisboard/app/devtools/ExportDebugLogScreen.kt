@@ -41,12 +41,12 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.FlorisButton
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.android.showShortToastSync
 
 // TODO: This screen is just a quick thrown-together thing and needs further enhancing in the UI

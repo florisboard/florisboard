@@ -87,7 +87,6 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
@@ -95,6 +94,7 @@ import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.header
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon

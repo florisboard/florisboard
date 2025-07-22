@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -56,6 +55,7 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.stringRes
 
 internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
     save = {
