@@ -14,66 +14,61 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package org.florisboard.lib.compose
 
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.ShapeDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.draw.rotate
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldAppearance
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlorisDropdownLikeButton(
     item: String,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
     onClick: () -> Unit = { },
+    appearance: JetPrefTextFieldAppearance = JetPrefDropdownMenuDefaults.filled(),
 ) {
-    Box(modifier = modifier.wrapContentSize(Alignment.TopStart)) {
-        val color = if (isError) {
-            MaterialTheme.colorScheme.error
-        } else {
-            MaterialTheme.colorScheme.onBackground
+    Box(
+        modifier = modifier.wrapContentSize(Alignment.TopStart)
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val pressed by interactionSource.collectIsPressedAsState()
+
+        if (pressed) {
+            onClick()
         }
-        OutlinedButton(
-            modifier = Modifier
-                .fillMaxWidth(),
-            border = if (isError) {
-                BorderStroke(ButtonDefaults.outlinedButtonBorder.width, MaterialTheme.colorScheme.error)
-            } else {
-                ButtonDefaults.outlinedButtonBorder
+
+        JetPrefTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = item,
+            onValueChange = {},
+            enabled = true,
+            readOnly = true,
+            isError = isError,
+            singleLine = true,
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = true,
+                    modifier = Modifier.rotate(90f), //Arrow to the right
+                )
             },
-            shape = ShapeDefaults.ExtraSmall,
-            onClick = onClick,
-        ) {
-            Text(
-                modifier = Modifier.weight(1.0f),
-                text = item,
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Normal,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                color = color,
-            )
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                tint = color.copy(alpha = 0.74f), //Also test 0.60f
-                contentDescription = "Dropdown indicator",
-            )
-        }
+            appearance = appearance,
+            interactionSource = interactionSource,
+        )
     }
 }

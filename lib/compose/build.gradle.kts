@@ -81,9 +81,8 @@ dependencies {
     implementation(libs.androidx.compose.material.icons)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.gif)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.patrickgold.jetpref.material.ui)
 
     testImplementation(libs.kotlin.test.junit5)
 }
