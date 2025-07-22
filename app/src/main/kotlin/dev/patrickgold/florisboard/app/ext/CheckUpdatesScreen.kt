@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun CheckUpdatesScreen() = FlorisScreen {

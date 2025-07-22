@@ -27,8 +27,8 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ExtensionHomeScreen() = FlorisScreen {

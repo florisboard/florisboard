@@ -78,7 +78,6 @@ import dev.patrickgold.florisboard.app.ext.IMAGES
 import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
@@ -96,6 +95,7 @@ import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.toStringWithoutDotZero

@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
@@ -60,6 +59,7 @@ import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.parentDir
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
