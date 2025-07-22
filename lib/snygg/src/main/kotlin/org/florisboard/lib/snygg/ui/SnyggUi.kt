@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.takeOrElse
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.snygg.CompiledFontFamilyData
-import org.florisboard.lib.snygg.SnyggAttributes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
@@ -364,7 +363,7 @@ internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     }
 }
 
-internal fun SnyggValue.uriOrNull(): String? {
+fun SnyggValue.uriOrNull(): String? {
     return when (this) {
         is SnyggUriValue -> this.uri
         else -> null
