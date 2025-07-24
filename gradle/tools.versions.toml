@@ -1,0 +1,12 @@
+[versions]
+buildTools = "35.0.0"
+cmake = "4.0.2"
+jdk = "17"
+ndk = "26.1.10909125"
+rustup = "1.24.3"
+rustToolchain = "1.83.0"
+
+### Command line tools ###
+# See: https://developer.android.com/studio#command-line-tools-only
+cmdlineTools = "13114758"
+cmdlineToolsChecksum = "7ec965280a073311c339e571cd5de778b9975026cfcbe79f2b1cdcb1e15317ee"

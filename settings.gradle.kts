@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,13 +29,22 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         // Uncomment the following if testing snapshots from Maven Central
-        //maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+        // maven("https://central.sonatype.com/repository/maven-snapshots/")
+        // Uncomment the following if testing snapshots from Maven Local
+        // mavenLocal()
+    }
+
+    versionCatalogs {
+        create("tools") {
+            from(files("gradle/tools.versions.toml"))
+        }
     }
 }
 
 include(":app")
-include(":benchmark")
+//include(":benchmark")
 include(":lib:android")
+include(":lib:color")
 include(":lib:kotlin")
 include(":lib:native")
 include(":lib:snygg")

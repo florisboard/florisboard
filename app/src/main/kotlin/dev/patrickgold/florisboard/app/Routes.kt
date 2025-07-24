@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,8 +47,9 @@ import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.settings.about.ThirdPartyLicensesScreen
-import dev.patrickgold.florisboard.app.settings.advanced.AdvancedScreen
 import dev.patrickgold.florisboard.app.settings.advanced.BackupScreen
+import dev.patrickgold.florisboard.app.settings.advanced.OtherScreen
+import dev.patrickgold.florisboard.app.settings.advanced.PhysicalKeyboardScreen
 import dev.patrickgold.florisboard.app.settings.advanced.RestoreScreen
 import dev.patrickgold.florisboard.app.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.settings.dictionary.DictionaryScreen
@@ -110,9 +111,10 @@ object Routes {
 
         const val Media = "settings/media"
 
-        const val Advanced = "settings/advanced"
-        const val Backup = "settings/advanced/backup"
-        const val Restore = "settings/advanced/restore"
+        const val Other = "settings/other"
+        const val PhysicalKeyboard = "settings/other/physical-keyboard"
+        const val Backup = "settings/other/backup"
+        const val Restore = "settings/other/restore"
 
         const val About = "settings/about"
         const val ProjectLicense = "settings/about/project-license"
@@ -239,7 +241,8 @@ object Routes {
 
             composableWithDeepLink(Settings.Media) { MediaScreen() }
 
-            composableWithDeepLink(Settings.Advanced) { AdvancedScreen() }
+            composableWithDeepLink(Settings.Other) { OtherScreen() }
+            composableWithDeepLink(Settings.PhysicalKeyboard) { PhysicalKeyboardScreen() }
             composableWithDeepLink(Settings.Backup) { BackupScreen() }
             composableWithDeepLink(Settings.Restore) { RestoreScreen() }
 

@@ -72,7 +72,7 @@
     "র": {
       "main": { "$": "auto_text_key", "code":  2482, "label": "ল" },
       "relevant": [
-        { "code": -255, "label": "র‌্য" }
+        { "code": -255, "label": "র‍্য" }
       ]
     },
     "ন": {

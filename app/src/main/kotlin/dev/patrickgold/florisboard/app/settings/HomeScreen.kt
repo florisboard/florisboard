@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -152,8 +152,8 @@ fun HomeScreen() = FlorisScreen {
         )
         Preference(
             icon = Icons.Outlined.Build,
-            title = stringRes(R.string.settings__advanced__title),
-            onClick = { navController.navigate(Routes.Settings.Advanced) },
+            title = stringRes(R.string.settings__other__title),
+            onClick = { navController.navigate(Routes.Settings.Other) },
         )
         Preference(
             icon = Icons.Outlined.Info,

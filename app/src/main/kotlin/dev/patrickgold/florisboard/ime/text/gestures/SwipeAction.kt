@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@ enum class SwipeAction {
     SELECT_WORDS_PRECISELY,
     SHIFT,
     SHOW_INPUT_METHOD_PICKER,
+    SHOW_SUBTYPE_PICKER,
     SWITCH_TO_PREV_SUBTYPE,
     SWITCH_TO_NEXT_SUBTYPE,
     SWITCH_TO_CLIPBOARD_CONTEXT,

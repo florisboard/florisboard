@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2024 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@ package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
@@ -40,58 +42,36 @@ import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
+import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.model.LocalTime
+import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
-import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import kotlinx.serialization.encodeToString
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
-import org.florisboard.lib.snygg.SnyggLevel
+import org.florisboard.lib.color.DEFAULT_GREEN
 
 fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
-    val advanced = Advanced()
-    inner class Advanced {
-        val settingsTheme = enum(
-            key = "advanced__settings_theme",
-            default = AppTheme.AUTO,
-        )
-        val useMaterialYou = boolean(
-            key = "advanced__use_material_you",
-            default = true,
-        )
-        val settingsLanguage = string(
-            key = "advanced__settings_language",
-            default = "auto",
-        )
-        val showAppIcon = boolean(
-            key = "advanced__show_app_icon",
-            default = true,
-        )
-        val incognitoMode = enum(
-            key = "advanced__incognito_mode",
-            default = IncognitoMode.DYNAMIC_ON_OFF,
-        )
-        // Internal pref
-        val forceIncognitoModeFromDynamic = boolean(
-            key = "advanced__force_incognito_mode_from_dynamic",
-            default = false,
-        )
-    }
-
     val clipboard = Clipboard()
     inner class Clipboard {
         val useInternalClipboard = boolean(
@@ -110,6 +90,23 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__history_enabled",
             default = false,
         )
+        val numHistoryGridColumnsPortrait = int(
+            key = "clipboard__num_history_grid_columns_portrait",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        val numHistoryGridColumnsLandscape = int(
+            key = "clipboard__num_history_grid_columns_landscape",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        @Composable
+        fun numHistoryGridColumns(): PreferenceData<Int> {
+            val configuration = LocalConfiguration.current
+            return if (configuration.isOrientationPortrait()) {
+                numHistoryGridColumnsPortrait
+            } else {
+                numHistoryGridColumnsLandscape
+            }
+        }
         val cleanUpOld = boolean(
             key = "clipboard__clean_up_old",
             default = false,
@@ -138,6 +135,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "clipboard__clear_primary_clip_deletes_last_item",
             default = true,
         )
+        val suggestionEnabled = boolean(
+            key = "clipboard__suggestion_enabled",
+            default = true,
+        )
+        val suggestionTimeout = int(
+            key = "clipboard__suggestion_timeout",
+            default = 60,
+        )
     }
 
     val correction = Correction()
@@ -164,10 +169,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     inner class Devtools {
         val enabled = boolean(
             key = "devtools__enabled",
-            default = false,
-        )
-        val showHeapMemoryStats = boolean(
-            key = "devtools__show_heap_memory_stats",
             default = false,
         )
         val showPrimaryClip = boolean(
@@ -502,7 +503,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val oneHandedMode = enum(
             key = "keyboard__one_handed_mode",
-            default = OneHandedMode.OFF,
+            default = OneHandedMode.END,
+        )
+        val oneHandedModeEnabled = boolean(
+            key = "keyboard__one_handed_mode_enabled",
+            default = false,
         )
         val oneHandedModeScaleFactor = int(
             key = "keyboard__one_handed_mode_scale_factor",
@@ -574,14 +579,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         @Composable
         fun fontSizeMultiplier(): Float {
             val configuration = LocalConfiguration.current
-            val oneHandedMode by oneHandedMode.observeAsState()
+            val oneHandedModeEnabled by oneHandedModeEnabled.observeAsState()
             val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
             val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
                 fontSizeMultiplierPortrait
             } else {
                 fontSizeMultiplierLandscape
             }.observeAsTransformingState { it / 100.0f }
-            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedMode != OneHandedMode.OFF && configuration.isOrientationPortrait()) {
+            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedModeEnabled && configuration.isOrientationPortrait()) {
                 oneHandedModeFactor
             } else {
                 1.0f
@@ -596,6 +601,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "localization__display_language_names_in",
             default = DisplayLanguageNamesIn.SYSTEM_LOCALE,
         )
+        val displayKeyboardLabelsInSubtypeLanguage = boolean(
+            key = "localization__display_keyboard_labels_in_subtype_language",
+            default = false,
+        )
         val activeSubtypeId = long(
             key = "localization__active_subtype_id",
             default = Subtype.DEFAULT.id,
@@ -603,6 +612,38 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val subtypes = string(
             key = "localization__subtypes",
             default = "[]",
+        )
+    }
+
+    val other = Other()
+    inner class Other {
+        val settingsTheme = enum(
+            key = "other__settings_theme",
+            default = AppTheme.AUTO,
+        )
+        val accentColor = custom(
+            key = "other__accent_color",
+            default = when (AndroidVersion.ATLEAST_API31_S) {
+                true -> Color.Unspecified
+                false -> DEFAULT_GREEN
+            },
+            serializer = ColorPreferenceSerializer,
+        )
+        val settingsLanguage = string(
+            key = "other__settings_language",
+            default = "auto",
+        )
+        val showAppIcon = boolean(
+            key = "other__show_app_icon",
+            default = true,
+        )
+    }
+
+    val physicalKeyboard = PhysicalKeyboard()
+    inner class PhysicalKeyboard {
+        val showOnScreenKeyboard = boolean(
+            key = "physical_keyboard__show_on_screen_keyboard",
+            default = false,
         )
     }
 
@@ -682,13 +723,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "suggestion__block_possibly_offensive",
             default = true,
         )
-        val clipboardContentEnabled = boolean(
-            key = "suggestion__clipboard_content_enabled",
-            default = true,
+        val incognitoMode = enum(
+            key = "suggestion__incognito_mode",
+            default = IncognitoMode.DYNAMIC_ON_OFF,
         )
-        val clipboardContentTimeout = int(
-            key = "suggestion__clipboard_content_timeout",
-            default = 60,
+        // Internal pref
+        val forceIncognitoModeFromDynamic = boolean(
+            key = "suggestion__force_incognito_mode_from_dynamic",
+            default = false,
         )
     }
 
@@ -708,17 +750,25 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             default = extCoreTheme("floris_night"),
             serializer = ExtensionComponentName.Serializer,
         )
-        //val sunriseTime = localTime(
-        //    key = "theme__sunrise_time",
-        //    default = LocalTime.of(6, 0),
-        //)
-        //val sunsetTime = localTime(
-        //    key = "theme__sunset_time",
-        //    default = LocalTime.of(18, 0),
-        //)
-        val editorDisplayColorsAs = enum(
-            key = "theme__editor_display_colors_as",
-            default = DisplayColorsAs.HEX8,
+        val accentColor = custom(
+            key = "theme__accent_color",
+            default = when (AndroidVersion.ATLEAST_API31_S) {
+                true -> Color.Unspecified
+                false -> DEFAULT_GREEN
+            },
+            serializer = ColorPreferenceSerializer,
+        )
+        val sunriseTime = time(
+            key = "theme__sunrise_time",
+            default = LocalTime(6, 0),
+        )
+        val sunsetTime = time(
+            key = "theme__sunset_time",
+            default = LocalTime(18, 0),
+        )
+        val editorColorRepresentation = enum(
+            key = "theme__editor_color_representation",
+            default = ColorRepresentation.HEX,
         )
         val editorDisplayKbdAfterDialogs = enum(
             key = "theme__editor_display_kbd_after_dialogs",
@@ -732,34 +782,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     override fun migrate(entry: PreferenceMigrationEntry): PreferenceMigrationEntry {
         return when (entry.key) {
-            // Migrate enums from their lowercase to uppercase representation
-            // Keep migration rule until: 0.5 dev cycle
-            "advanced__settings_theme", "gestures__swipe_up", "gestures__swipe_down", "gestures__swipe_left",
-            "gestures__swipe_right", "gestures__space_bar_swipe_up", "gestures__space_bar_swipe_left",
-            "gestures__space_bar_swipe_right", "gestures__space_bar_long_press", "gestures__delete_key_swipe_left",
-            "gestures__delete_key_long_press", "keyboard__hinted_number_row_mode", "keyboard__hinted_symbols_mode",
-            "keyboard__utility_key_action", "keyboard__one_handed_mode", "keyboard__landscape_input_ui_mode",
-            "localization__display_language_names_in", "smartbar__primary_actions_row_type",
-            "smartbar__secondary_actions_placement", "smartbar__secondary_actions_row_type", "spelling__language_mode",
-            "suggestion__display_mode", "theme__mode", "theme__editor_display_colors_as",
-            "theme__editor_display_kbd_after_dialogs", "theme__editor_level",
-            -> {
-                entry.transform(rawValue = entry.rawValue.uppercase())
-            }
-
-            // Migrate old private mode force flag as this is a sensitive preference
-            // Keep migration rule until: 0.5 dev cycle
-            "advanced__force_private_mode" -> {
-                if (entry.rawValue.toBoolean()) {
-                    entry.transform(
-                        type = PreferenceType.string(),
-                        key = "advanced__incognito_mode",
-                        rawValue = IncognitoMode.FORCE_ON.toString(),
-                    )
-                } else {
-                    entry.reset()
-                }
-            }
 
             // Migrate media prefs to emoji prefs
             // Keep migration rule until: 0.6 dev cycle
@@ -774,18 +796,81 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "media__emoji_recently_used_max_size" -> {
                 entry.transform(key = "emoji__history_recent_max_size")
             }
-            "media__emoji_preferred_skin_tone" -> {
+
+            // Migrate advanced prefs to other prefs
+            // Keep migration rules until: 0.7 dev cycle
+            "advanced__settings_theme" -> {
+                entry.transform(key = "other__settings_theme")
+            }
+            "advanced__accent_color" -> {
+                entry.transform(key = "other__accent_color")
+            }
+            "advanced__settings_language" -> {
+                entry.transform(key = "other__settings_language")
+            }
+            "advanced__show_app_icon" -> {
+                entry.transform(key = "other__show_app_icon")
+            }
+            "advanced__incognito_mode" -> {
+                entry.transform(key = "suggestion__incognito_mode")
+            }
+            "advanced__force_incognito_mode_from_dynamic" -> {
+                entry.transform(key = "suggestion__force_incognito_mode_from_dynamic")
+            }
+            // Migrate clipboard suggestion prefs to clipboard
+            // Keep migration rules until: 0.7 dev cycle
+            "suggestion__clipboard_content_enabled" -> {
+                entry.transform(key = "clipboard__suggestion_enabled")
+            }
+            "suggestion__clipboard_content_timeout" -> {
+                entry.transform(key = "clipboard__suggestion_timeout")
+            }
+
+            //Migrate one hand mode prefs keep until: 0.7 dev cycle
+            "keyboard__one_handed_mode" -> {
+                if (entry.rawValue == "OFF") {
+                    entry.reset()
+                } else {
+                    entry.keepAsIs()
+                }
+            }
+            "smartbar__action_arrangement" -> {
+                fun migrateAction(action: QuickAction): QuickAction {
+                    return if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
+                        action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                    } else {
+                        action
+                    }
+                }
+
+                val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
+                var newArrangement = arrangement.copy(
+                    stickyAction = arrangement.stickyAction?.let{ migrateAction(it) },
+                    dynamicActions = arrangement.dynamicActions.map { migrateAction(it) },
+                    hiddenActions = arrangement.hiddenActions.map { migrateAction(it) },
+                )
+                if (QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH))
+                    )
+                }
+                val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
+                entry.transform(rawValue = json)
+            }
+
+            // Migrate theme editor fine-tuning
+            // Keep migration rule until: 0.6 dev cycle
+            "theme__editor_display_colors_as" -> {
+                val colorRepresentation = when (entry.rawValue) {
+                    "RGBA" -> ColorRepresentation.RGB
+                    else -> ColorRepresentation.HEX
+                }
                 entry.transform(
-                    key = "emoji__preferred_skin_tone",
-                    rawValue = entry.rawValue.uppercase(), // keep until: 0.5 dev cycle
+                    key = "theme__editor_color_representation",
+                    rawValue = colorRepresentation.name,
                 )
             }
-            "media__emoji_preferred_hair_style" -> {
-                entry.transform(
-                    key = "emoji__preferred_hair_style",
-                    rawValue = entry.rawValue.uppercase(), // keep until: 0.5 dev cycle
-                )
-            }
+
 
             // Default: keep entry
             else -> entry.keepAsIs()

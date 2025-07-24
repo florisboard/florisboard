@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -260,7 +260,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
 
     fun stringRepresentation(): String {
         return when {
-            text != null -> text.take(500)
+            text != null -> text
             uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }

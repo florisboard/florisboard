@@ -18,6 +18,13 @@
         "modifier": "org.florisboard.layouts:arabic"
       },
       {
+        "id": "armenian_alt_phonetic",
+        "label": "Armenian Alt Phonetic",
+        "authors": [ "MikayelB" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:armenian"
+      },
+      {
         "id": "western_armenian",
         "label": "Armenian (Western)",
         "authors": [ "PJTSearch" ],
@@ -47,6 +54,12 @@
         "id": "bengali_bd",
         "label": "বাংলা",
         "authors": [ "iamrasel" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "hindi_in",
+        "label": "हिंदी",
+        "authors": [ "npnpatidar" ],
         "direction": "ltr"
       },
       {

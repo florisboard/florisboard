@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,20 +45,27 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.util.TimeUtils.javaLocalTime
 import dev.patrickgold.florisboard.lib.util.ViewUtils
+import java.time.LocalTime
+import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
-import org.florisboard.lib.snygg.ui.solidColor
-import org.florisboard.lib.snygg.value.MaterialYouColor
-import org.florisboard.lib.snygg.value.SnyggSolidColorValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
 
 /**
@@ -119,7 +126,6 @@ class ThemeManager(context: Context) {
      */
     fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
         activeThemeGuard.withLock {
-            MaterialYouColor.resetColorSchemeCache()
             action()
             previewThemeInfo?.let { previewThemeInfo ->
                 _activeThemeInfo.postValue(previewThemeInfo)
@@ -129,25 +135,40 @@ class ThemeManager(context: Context) {
             val cachedInfo = cachedThemeInfos.find { it.name == activeName }
             if (cachedInfo != null) {
                 _activeThemeInfo.postValue(cachedInfo)
-            } else {
-                val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
-                val themeExtRef = themeExt?.sourceRef
-                if (themeExtRef != null) {
-                    val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
-                    if (themeConfig != null) {
-                        val newStylesheet = ZipUtils.readFileFromArchive(
-                            appContext, themeExtRef, themeConfig.stylesheetPath(),
-                        ).getOrNull()?.let { raw -> SnyggStylesheetJsonConfig.decodeFromString<SnyggStylesheet>(raw) }
-                        if (newStylesheet != null) {
-                            val newCompiledStylesheet = (newStylesheet)
-                                .compileToFullyQualified(FlorisImeUiSpec)
-                            val newInfo = ThemeInfo(activeName, themeConfig, newCompiledStylesheet)
-                            cachedThemeInfos.add(newInfo)
-                            _activeThemeInfo.postValue(newInfo)
-                        }
-                    }
-                }
+                return@withLock
             }
+            val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
+            val themeExtRef = themeExt?.sourceRef
+            if (themeExtRef == null) {
+                return@withLock
+            }
+            val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
+            if (themeConfig == null) {
+                return@withLock
+            }
+            // TODO: loaded dir is implemented already...
+            // TODO: this leaks the loaded dir, but at least the state is not kaputt from compose viewpoint
+            val loadedDir = appContext.cacheDir.subDir("loaded").subDir(UUID.randomUUID().toString())
+            runCatching {
+                loadedDir.mkdirs()
+                loadedDir.deleteContentsRecursively()
+                ZipUtils.unzip(appContext, themeExtRef, loadedDir).getOrThrow()
+                flogInfo { "Loaded extension ${themeExt.meta.id} into $loadedDir" }
+                val stylesheetFile = loadedDir.subFile(themeConfig.stylesheetPath())
+                val stylesheetJson = stylesheetFile.readText()
+                SnyggStylesheet.fromJson(stylesheetJson).getOrThrow()
+            }.fold(
+                onSuccess = { newStylesheet ->
+                    val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet, loadedDir, null)
+                    cachedThemeInfos.add(newInfo)
+                    _activeThemeInfo.postValue(newInfo)
+                },
+                onFailure = { cause ->
+                    _activeThemeInfo.postValue(ThemeInfo.DEFAULT.copy(
+                        loadFailure = LoadFailure(themeExt.meta, themeConfig, cause)
+                    ))
+                },
+            )
         }
     }
 
@@ -168,18 +189,14 @@ class ThemeManager(context: Context) {
                 prefs.theme.dayThemeId.get()
             }
             ThemeMode.FOLLOW_TIME -> {
-                //if (AndroidVersion.ATLEAST_API26_O) {
-                //    val current = LocalTime.now()
-                //    val sunrise = prefs.theme.sunriseTime.get()
-                //    val sunset = prefs.theme.sunsetTime.get()
-                //    if (current in sunrise..sunset) {
-                //        prefs.theme.dayThemeId.get()
-                //    } else {
-                //        prefs.theme.nightThemeId.get()
-                //    }
-                //} else {
+                val current = LocalTime.now()
+                val sunrise = prefs.theme.sunriseTime.get().javaLocalTime
+                val sunset = prefs.theme.sunsetTime.get().javaLocalTime
+                if (current in sunrise..sunset) {
+                    prefs.theme.dayThemeId.get()
+                } else {
                     prefs.theme.nightThemeId.get()
-                //}
+                }
             }
         }
     }
@@ -188,20 +205,16 @@ class ThemeManager(context: Context) {
      * Creates a new inline suggestion UI bundle based on the attributes of the given [style].
      *
      * @param context The context of the parent view/controller.
-     * @param style The theme from which the color attributes should be fetched. Defaults to
-     *  [FlorisImeThemeBaseStyle].
+     * @param style The style set which is responsible for styling the chips.
      *
      * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
      */
     @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.R)
-    fun createInlineSuggestionUiStyleBundle(
-        context: Context,
-        style: SnyggStylesheet = activeThemeInfo.value?.stylesheet ?: FlorisImeThemeBaseStyle,
-    ): Bundle {
-        val snyggStyle = style.getStatic(FlorisImeUi.SmartbarSharedActionsToggle)
-        val bgColor = snyggStyle.background.solidColor(context)
-        val fgColor = snyggStyle.foreground.solidColor(context)
+    fun createInlineSuggestionUiStyleBundle(context: Context): Bundle? {
+        val styleSet = CachedInlineSuggestionsChipStyleSet ?: return null
+        val bgColor = styleSet.background(default = Color.White)
+        val fgColor = styleSet.foreground(default = Color.Black)
 
         val bgDrawableId = androidx.autofill.R.drawable.autofill_inline_suggestion_chip_background
         val bgDrawable = Icon.createWithResource(context, bgDrawableId).apply {
@@ -276,21 +289,35 @@ class ThemeManager(context: Context) {
         val name: ExtensionComponentName,
         val config: ThemeExtensionComponent,
         val stylesheet: SnyggStylesheet,
+        val loadedDir: FsDir?,
+        val loadFailure: LoadFailure?,
     ) {
+        override fun toString(): String {
+            return "ThemeInfo(name=$name, config=$config, loadedDir=$loadedDir)"
+        }
+
         companion object {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
                 config = ThemeExtensionComponentImpl(id = "base", label = "Base", authors = listOf()),
-                stylesheet = FlorisImeThemeBaseStyle.compileToFullyQualified(FlorisImeUiSpec),
+                stylesheet = FlorisImeThemeBaseStyle,
+                loadedDir = null,
+                loadFailure = null,
             )
         }
     }
 
+    data class LoadFailure(
+        val extension: ExtensionMeta,
+        val component: ThemeExtensionComponent,
+        val cause: Throwable,
+    )
+
     data class RemoteColors(
         val packageName: String,
-        val colorPrimary: SnyggSolidColorValue?,
-        val colorPrimaryVariant: SnyggSolidColorValue?,
-        val colorSecondary: SnyggSolidColorValue?,
+        val colorPrimary: SnyggStaticColorValue?,
+        val colorPrimaryVariant: SnyggStaticColorValue?,
+        val colorSecondary: SnyggStaticColorValue?,
     ) {
         companion object {
             val DEFAULT = RemoteColors("undefined", null, null, null)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Patrick Goldinger
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,20 +21,6 @@ import androidx.annotation.ChecksSdkIntAtLeast
 
 @Suppress("unused")
 object AndroidVersion {
-    /** Android 7.1 **/
-    inline val ATLEAST_API25_N_MR1
-        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N_MR1)
-        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
-    inline val ATMOST_API25_N_MR1
-        get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
-
-    /** Android 8 **/
-    inline val ATLEAST_API26_O
-        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
-        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-    inline val ATMOST_API26_O
-        get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O
-
     /** Android 8.1 **/
     inline val ATLEAST_API27_O_MR1
         @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O_MR1)
@@ -90,4 +76,11 @@ object AndroidVersion {
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
     inline val ATMOST_API34_U
         get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+
+    /** Android 15 **/
+    inline val ATLEAST_API35_V
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
+    inline val ATMOST_API35_V
+        get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.VANILLA_ICE_CREAM
 }

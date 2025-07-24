@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -23,35 +22,39 @@ plugins {
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.mannodermaus.android.junit5)
     alias(libs.plugins.mikepenz.aboutlibraries)
 }
 
 val projectMinSdk: String by project
 val projectTargetSdk: String by project
 val projectCompileSdk: String by project
-val projectBuildToolsVersion: String by project
-val projectNdkVersion: String by project
 val projectVersionCode: String by project
 val projectVersionName: String by project
-val projectVersionNameSuffix = projectVersionName.substringAfter("-", "")
+val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { suffix ->
+    if (suffix.isNotEmpty()) {
+        "-$suffix"
+    } else {
+        suffix
+    }
+}
 
 android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = projectCompileSdk.toInt()
-    buildToolsVersion = projectBuildToolsVersion
-    ndkVersion = projectNdkVersion
+    buildToolsVersion = tools.versions.buildTools.get()
+    ndkVersion = tools.versions.ndk.get()
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs = listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-Xjvm-default=all-compatibility",
+            "-Xwhen-guards",
         )
     }
 
@@ -149,7 +152,13 @@ android {
     }
 
     aboutLibraries {
-        configPath = "app/src/main/config"
+        collect {
+            configPath = file("src/main/config")
+        }
+    }
+
+    lint {
+        baseline = file("lint.xml")
     }
 
     testOptions {
@@ -162,21 +171,21 @@ android {
     }
 }
 
-composeCompiler {
-    // DO NOT ENABLE STRONG SKIPPING! This project currently relies on
-    // recomposition on parent state change to update the UI correctly.
-    featureFlags.add(ComposeFeatureFlag.StrongSkipping.disabled())
-}
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
 
 dependencies {
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    // testImplementation(composeBom)
+    // androidTestImplementation(composeBom)
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.autofill)
     implementation(libs.androidx.collection.ktx)
+    implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.compose.ui)
@@ -186,7 +195,6 @@ dependencies {
     implementation(libs.androidx.emoji2)
     implementation(libs.androidx.emoji2.views)
     implementation(libs.androidx.exifinterface)
-    implementation(libs.androidx.material.icons)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
@@ -202,16 +210,12 @@ dependencies {
     implementation(libs.patrickgold.jetpref.material.ui)
 
     implementation(project(":lib:android"))
+    implementation(project(":lib:color"))
     implementation(project(":lib:kotlin"))
     implementation(project(":lib:native"))
     implementation(project(":lib:snygg"))
 
-    testImplementation(libs.equalsverifier)
-    testImplementation(libs.kotest.assertions.core)
-    testImplementation(libs.kotest.extensions.roboelectric)
-    testImplementation(libs.kotest.property)
-    testImplementation(libs.kotest.runner.junit5)
-
+    testImplementation(libs.kotlin.test.junit5)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

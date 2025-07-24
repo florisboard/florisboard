@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Patrick Goldinger
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,6 +113,9 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
             contentPadding = PaddingValues(bottom = fabHeightDp),
         ) {
             if (showUpdate) {
+                item {
+                    ImportExtensionBox(navController)
+                }
                 item {
                     UpdateBox(extensionIndex = extensionIndex)
                 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,6 +68,7 @@ object KeyCode {
     const val CLIPBOARD_CLEAR_FULL_HISTORY = -37
     const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -38
 
+    const val TOGGLE_COMPACT_LAYOUT =       -110
     const val COMPACT_LAYOUT_TO_LEFT =      -111
     const val COMPACT_LAYOUT_TO_RIGHT =     -112
     const val SPLIT_LAYOUT =                -113
@@ -95,6 +96,7 @@ object KeyCode {
     const val IME_PREV_SUBTYPE =            -225
     const val IME_NEXT_SUBTYPE =            -226
     const val LANGUAGE_SWITCH =             -227
+    const val SHOW_SUBTYPE_PICKER =         -228
 
     const val IME_SHOW_UI =                 -231
     const val IME_HIDE_UI =                 -232

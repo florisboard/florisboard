@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import org.florisboard.lib.android.AndroidSettings
 import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
@@ -61,12 +63,6 @@ fun DevtoolsScreen() = FlorisScreen {
         )
 
         PreferenceGroup(title = stringRes(R.string.devtools__title)) {
-            SwitchPreference(
-                prefs.devtools.showHeapMemoryStats,
-                title = stringRes(R.string.devtools__show_heap_memory_stats__label),
-                summary = stringRes(R.string.devtools__show_heap_memory_stats__summary),
-                enabledIf = { prefs.devtools.enabled isEqualTo true },
-            )
             SwitchPreference(
                 prefs.devtools.showPrimaryClip,
                 title = stringRes(R.string.devtools__show_primary_clip__label),
@@ -111,6 +107,15 @@ fun DevtoolsScreen() = FlorisScreen {
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(
+                title = stringRes(R.string.devtools__reset_quick_actions_to_default__label),
+                summary = stringRes(R.string.devtools__reset_quick_actions_to_default__summary),
+                onClick = {
+                    prefs.smartbar.actionArrangement.set(QuickActionArrangement.Default)
+                    context.showLongToast(R.string.devtools__reset_quick_actions_to_default__toast_success)
+                },
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            Preference(
                 title = stringRes(R.string.devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
                 summary = stringRes(R.string.devtools__reset_flag_is_ime_set_up__summary),
                 onClick = { prefs.internal.isImeSetUp.set(false) },
@@ -126,6 +131,13 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = "Debug log",
                 summary = "View and export the debug log",
                 onClick = { navController.navigate(Routes.Devtools.ExportDebugLog) },
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.glide.enabled,
+                title = "prefs.glide.enabled (debug)",
+                summaryOn = "This impacts your performance and may trigger the all keys invisible bug!",
+                summaryOff = "Recommended to keep this off!",
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
         }

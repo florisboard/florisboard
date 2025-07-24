@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,18 @@
 
 package dev.patrickgold.florisboard.app.settings.theme
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Brightness2
 import androidx.compose.material.icons.filled.BrightnessAuto
+import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -35,14 +36,17 @@ import dev.patrickgold.florisboard.app.ext.AddonManagementReferenceBox
 import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
+import org.florisboard.lib.color.ColorMappings
 
 @Composable
 fun ThemeScreen() = FlorisScreen {
@@ -61,20 +65,8 @@ fun ThemeScreen() = FlorisScreen {
     }
 
     content {
-        val themeMode by prefs.theme.mode.observeAsState()
         val dayThemeId by prefs.theme.dayThemeId.observeAsState()
         val nightThemeId by prefs.theme.nightThemeId.observeAsState()
-
-        /*Card(modifier = Modifier.padding(8.dp)) {
-            Column(modifier = Modifier.padding(8.dp)) {
-                Text("If you want to give feedback on the new stylesheet editor and theme engine, please do so in below linked feedback thread:\n")
-                Button(onClick = {
-                    context.launchUrl("https://github.com/florisboard/florisboard/discussions/1531")
-                }) {
-                    Text("Open Feedback Thread")
-                }
-            }
-        }*/
 
         ListPreference(
             prefs.theme.mode,
@@ -82,14 +74,6 @@ fun ThemeScreen() = FlorisScreen {
             title = stringRes(R.string.pref__theme__mode__label),
             entries = enumDisplayEntriesOf(ThemeMode::class),
         )
-        if (themeMode == ThemeMode.FOLLOW_TIME) {
-            FlorisInfoCard(
-                modifier = Modifier.padding(8.dp),
-                text = """
-                The theme mode "Follow time" is not available in this beta release.
-            """.trimIndent()
-            )
-        }
         Preference(
             icon = Icons.Default.LightMode,
             title = stringRes(R.string.pref__theme__day),
@@ -107,6 +91,34 @@ fun ThemeScreen() = FlorisScreen {
             onClick = {
                 navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_NIGHT))
             },
+        )
+        LocalTimePickerPreference(
+            pref = prefs.theme.sunriseTime,
+            title = stringRes(R.string.pref__theme__sunrise_time__label),
+            icon = Icons.Default.WbTwilight,
+            enabledIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+        )
+        LocalTimePickerPreference(
+            pref = prefs.theme.sunsetTime,
+            title = stringRes(R.string.pref__theme__sunset_time__label),
+            icon = Icons.Default.Brightness2,
+            enabledIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+        )
+        ColorPickerPreference(
+            pref = prefs.theme.accentColor,
+            title = stringRes(R.string.pref__theme__theme_accent_color__label),
+            defaultValueLabel = stringRes(R.string.action__default),
+            icon = Icons.Default.ColorLens,
+            defaultColors = ColorMappings.colors,
+            showAlphaSlider = false,
+            enableAdvancedLayout = false,
+            colorOverride = {
+                if (it.isMaterialYou(context)) {
+                    Color.Unspecified
+                } else {
+                    it
+                }
+            }
         )
 
         AddonManagementReferenceBox(type = ExtensionListScreenType.EXT_THEME)

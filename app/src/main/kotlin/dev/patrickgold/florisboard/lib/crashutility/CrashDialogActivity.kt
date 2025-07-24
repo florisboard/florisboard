@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -66,6 +67,9 @@ class CrashDialogActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val layout = layoutInflater.inflate(R.layout.crash_dialog, null)
         setContentView(layout)
+
+        val toolbar = layout.findViewById<Toolbar>(R.id.crash_dialog_toolbar)
+        setActionBar(toolbar)
 
         stacktraces = CrashUtility.getUnhandledStacktraces(this)
         val versionName = buildString {

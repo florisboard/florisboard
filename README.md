@@ -64,7 +64,7 @@ fully respecting your privacy. Currently in early-beta state.
 </tr>
 </table>
 
-Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
+Beginning with v0.7 FlorisBoard will enter the public beta on Google Play.
 
 ## Highlighted features
 - Integrated clipboard manager / history
@@ -74,7 +74,7 @@ Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 
 > [!IMPORTANT]
 > Word suggestions/spell checking are not included in the current releases
-> and are a major goal for the v0.5 milestone.
+> and are a major goal for the v0.6 milestone.
 
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
@@ -114,7 +114,7 @@ Many thanks to [Nikolay Anzarov](https://www.behance.net/nikolayanzarov) ([@Bloo
 
 ## License
 ```
-Copyright 2020-2024 Patrick Goldinger
+Copyright 2020-2025 The FlorisBoard Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -128,6 +128,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+Thanks to [The FlorisBoard Contributors](https://github.com/florisboard/florisboard/graphs/contributors) for making this project possible!
 
 <!-- BEGIN SECTION: obtainium_links -->
 <!-- auto-generated link templates, do NOT edit by hand -->

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,17 +88,17 @@ class FlorisAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        prefs.advanced.settingsTheme.observe(this) {
+        prefs.other.settingsTheme.observe(this) {
             appTheme = it
         }
-        prefs.advanced.settingsLanguage.observe(this) {
+        prefs.other.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
             val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
             config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {
-            prefs.advanced.showAppIcon.observe(this) {
+            prefs.other.showAppIcon.observe(this) {
                 showAppIcon = it
             }
         }
@@ -117,8 +117,7 @@ class FlorisAppActivity : ComponentActivity() {
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
                 ProvideLocalizedResources(resourcesContext) {
-                    val useMaterialYou by prefs.advanced.useMaterialYou.observeAsState()
-                    FlorisAppTheme(theme = appTheme, isMaterialYouAware = useMaterialYou) {
+                    FlorisAppTheme(theme = appTheme) {
                         Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()
                         }

@@ -71,9 +71,9 @@
     <string name="snygg__rule_element__incognito_mode_indicator">Treguesi i metodës fshehurazi</string>
     <!-- Smartbar strings -->
     <!-- Typing strings -->
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Metoda fshehurazi</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->

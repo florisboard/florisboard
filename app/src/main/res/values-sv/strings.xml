@@ -21,6 +21,7 @@
     <string name="emoji__category__objects" comment="Emoji category name">Föremål</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggor</string>
+    <string name="emoji__history__recent"></string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">Pil upp</string>
     <!-- Incognito mode strings -->
@@ -34,6 +35,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard är inte vald som standard inmatningsmetod. Tryck här för att lösa problemet.</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Lägg till undertyp</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redigera undertyp</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Subtype search language placeholder">Sök efter ett språk</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined">Det verkar som du inte har konfigurerat några undertyper. Undertyp Engelska/QWERTY kommer då användas!</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Denna undertyp finns redan!</string>
     <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
@@ -45,6 +47,7 @@
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard app-tillgångar</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Extern leverantör</string>
+    <string name="snygg__rule_element__key">Tangent</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tangentbord</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Sifferrad</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
@@ -66,11 +69,6 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Blanksteg svep vänster</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Blanksteg svep höger</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Blanksteg långtryck</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Avancerat</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Temainställningar</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ljust</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mörkt</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Visa appikonen i startprogrammet</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard appikon</string>
@@ -82,6 +80,7 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Välkommen!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Sekretesspolicy</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Stäng</string>
@@ -97,7 +96,6 @@
     <!-- State strings -->
     <string name="state__disabled">Inaktiverad</string>
     <!-- Enum label and description strings -->
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Vänsterhandsläge</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Högerhandsläge</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Skift</string>

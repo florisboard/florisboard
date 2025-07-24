@@ -132,18 +132,15 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Velg nattema</string>
     <string name="settings__theme_editor__fine_tune__title">Finpussingsredigerer</string>
     <string name="settings__theme_editor__fine_tune__level">Endrer nivå</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Vis farger som</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Vis tastatur etter merknader</string>
     <string name="settings__theme_editor__add_rule">Legg til rettesnor</string>
     <string name="settings__theme_editor__edit_rule">Endre rettesnor</string>
     <string name="settings__theme_editor__no_rules_defined">Dette stilarket har ingen definerte rettesnorer. Legg til ei rettesnor for å starte med å endre på stilarket.</string>
     <string name="settings__theme_editor__rule_already_exists">Denne stilarkrettesnora er alt definert.</string>
-    <string name="settings__theme_editor__rule_element">Målelement</string>
     <string name="settings__theme_editor__rule_groups">Grupper</string>
     <string name="settings__theme_editor__add_code">Legg til tastekode</string>
     <string name="settings__theme_editor__edit_code">Rediger tastekode</string>
     <string name="settings__theme_editor__no_codes_defined">Bruk regelen på alle målelementer.</string>
-    <string name="settings__theme_editor__codes_defined">Bruk kun regelen på målelementer med følgende tastekoder:</string>
     <string name="settings__theme_editor__code_already_exists">Denne tastekoden er allerede definert.</string>
     <string name="settings__theme_editor__code_invalid">Denne tastekoden er ugyldig. Sjekk at verdien er minst {c_min} og maks {c_max} for tegn eller minst {i_min} og maks {i_max} for interne spesialtaster.</string>
     <string name="settings__theme_editor__code_help_text">Alternativt vil de følgende lenkene hjelp deg å finne den tilsvarende tastekoden:</string>
@@ -161,12 +158,7 @@
     <string name="settings__theme_editor__property_value_color_dialog_title">Rediger fargestreng</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Er kantløs(t)</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stilark-sti</string>
-    <string name="snygg__rule_element__defines">Variabler</string>
-    <string name="snygg__rule_element__defines_description">Definer variabler innenfor denne regelen for å gjenbruke vanlige farger eller størrelser i ditt stilark.</string>
-    <string name="snygg__rule_element__keyboard">Tastaturvindu</string>
     <string name="snygg__rule_element__key">Tast</string>
-    <string name="snygg__rule_element__emoji_key">Emojitast</string>
-    <string name="snygg__rule_element__emoji_key_popup">Emojitast-popup</string>
     <string name="snygg__rule_element__glide_trail">Sveipespor</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Indikator for inkognitomodus</string>
     <string name="snygg__rule_element__one_handed_panel">Enhånds-panel</string>
@@ -179,8 +171,6 @@
     <string name="snygg__rule_element__smartbar_action_tile">Gløggfelt gjerningsfelt</string>
     <string name="snygg__rule_selector__focus">Fokusert</string>
     <string name="snygg__rule_selector__disabled">Deaktivert</string>
-    <string name="snygg__property_name__width">Bredde</string>
-    <string name="snygg__property_name__height">Høyde</string>
     <string name="snygg__property_name__background">Bakgrunn</string>
     <string name="snygg__property_name__foreground">Forgrunn</string>
     <string name="snygg__property_name__border_color">Kantfarge</string>
@@ -203,7 +193,6 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrasjonsvarighet</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrasjonsstyrke</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som mangler på enheten din</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Denne funksjonen krever støtte for kontroll av maskinvareamplitude, som bare er tilgjengelig på Android 8.0 eller nyere</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Tastevibrasjon</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Tastevibrasjon for lange trykk</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Gjentatte tastehandlingsvibrasjoner</string>
@@ -300,15 +289,6 @@
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Sveip til venstre på slettetasten</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Sveipehastighetsterskel</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Sveipedistanseterskel</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Avansert</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Innstillingstema</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lyst</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørkt</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Mørkt</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Innstillingsspråk</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Vis app-ikon i programmeny</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Alltid aktiver på Android 10+ på grunn av restriksjoner fra systemet</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Inkognitomodus</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard\'s app ikon</string>
@@ -348,6 +328,7 @@
     <string name="setup__finish_up__description_p1">{app_name} er nå aktivert i systemet og klar til å bli tilpasset av deg.</string>
     <string name="setup__finish_up__description_p2">Dersom du støter på problemer, feil, krasj eller ønsker å komme med forslag, sjekk ut prosjektlageret fra Om-skjermen!</string>
     <string name="setup__finish_up__finish_btn">Begynn å Tilpasse</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__back_up__destination_file_sys">Lokalt filsystem</string>
     <string name="backup_and_restore__restore__title">Gjenopprett data</string>
@@ -383,7 +364,6 @@
     <string name="clip__paste_item">Lim inn</string>
     <string name="clip__back_to_text_input">Tilbake til tekstinput</string>
     <string name="clip__cant_paste">Denne appen tillater ikke innliming av dette innholdet.</string>
-    <string name="clipboard__confirm_clear_history__message">Er du sikker på at du vil tømme utklippstavlehistorikken?</string>
     <string name="settings__clipboard__title">Utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Bruk intern utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Bruk en intern utklippstavle i steden for systemutklippstavlen</string>
@@ -403,8 +383,6 @@
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Utviklerverktøy</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Skru på utviklerverktøy</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Verktøy som er spesifikt utviklet for feilsøking</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Vis haugminnestatistikk</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Overlegger haugminnebruk og maks størrelse i hjørnet øverst til høyre</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Tøm intern brukerordlistedatabase</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Fjerner alle ord fra ordlistedatabasetabellen</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Tilbakestill \"{flag_name}\" flagg</string>
@@ -472,8 +450,6 @@
     <string name="state__disabled">Deaktivert</string>
     <string name="state__enabled">Aktivert</string>
     <!-- Enum label and description strings -->
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Heksadesimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Rød Grønn Blå Alfa</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} Standard hudfarge</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} Lys hudfarge</string>
     <string name="enum__emoji_skin_tone__medium_light_skin_tone" comment="Enum value label">{emoji} Medium lys hudfarge</string>
@@ -497,7 +473,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis alltid</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisk visning</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Av</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
     <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Bare råd</string>

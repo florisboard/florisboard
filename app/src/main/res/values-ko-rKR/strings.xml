@@ -17,10 +17,17 @@
     <string name="prefs__media__emoji_preferred_hair_style">선호하는 이모지 머리 스타일</string>
     <string name="prefs__media__emoji_history__title" comment="Preference group title">이모지 기록</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">이모지 기록 사용</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">빠른 액세스를 위해 최근에 사용한 이모티콘을 보관</string>
+    <string name="prefs__media__emoji_history_max_size">보관할 수 있는 최대 항목</string>
+    <string name="prefs__media__emoji_history_pinned_reset">고정한 이모지 초기화</string>
+    <string name="prefs__media__emoji_history_reset">최근 사용한 이모지 초기화</string>
     <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">이모지 제안</string>
     <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">이모지 제안 사용</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">입력하는 동안 이모티콘 제안 제공</string>
     <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">이모지 기록 업데이트</string>
     <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">이모지 이름 표시</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">최소 요청 길이</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">제안 최대 개수</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">스마일리 및 이모티콘</string>
     <string name="emoji__category__people_body" comment="Emoji category name">사람 및 신체</string>
@@ -31,6 +38,11 @@
     <string name="emoji__category__objects" comment="Emoji category name">사물</string>
     <string name="emoji__category__symbols" comment="Emoji category name">상징</string>
     <string name="emoji__category__flags" comment="Emoji category name">깃발</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">최근에 이모지를 사용하지 않았습니다. 이모지를 사용하면 사용한 이모지가 여기에 나타납니다.</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">이모티콘 기록을 보려면 먼저 기기의 잠금을 해제해 주세요.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">전문가 팁: 이모티콘 기록에서 이모티콘을 길게 눌러 고정하거나 제거하세요!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">이모티콘 기록에서 {emoji} 을/를 제거했습니다.</string>
+    <string name="emoji__history__pinned">고정됨</string>
     <string name="emoji__history__recent">최근</string>
     <!-- Quick action strings -->
     <string name="quick_action__arrow_up" maxLength="12">화살표 위로</string>
@@ -139,18 +151,16 @@
     <string name="pref__theme__source_external" comment="Label for the theme source field">외부 제공자</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">라이트 테마 선택</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">다크 테마 선택</string>
+    <string name="settings__theme_editor__fine_tune__title">미세 조정 편집기</string>
     <string name="settings__theme_editor__add_rule">규칙 추가</string>
     <string name="settings__theme_editor__edit_rule">규칙 편집</string>
     <string name="settings__theme_editor__no_rules_defined">이 스타일시트는 지정되어 있는 규칙이 없습니다. 규칙을 추가하여 스타일시트를 꾸며 보세요.</string>
     <string name="settings__theme_editor__rule_already_exists">이 스타일시트 규칙은 이미 지정되어 있습니다.</string>
-    <string name="settings__theme_editor__rule_element">대상 요소</string>
     <string name="settings__theme_editor__rule_codes">대상 키 코드</string>
     <string name="settings__theme_editor__rule_groups">그룹</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift 상태</string>
     <string name="settings__theme_editor__add_code">키 코드 추가</string>
     <string name="settings__theme_editor__edit_code">키 코드 편집</string>
     <string name="settings__theme_editor__no_codes_defined">모든 대상 요소에 규칙을 적용합니다.</string>
-    <string name="settings__theme_editor__codes_defined">다음 키 코드와 일치하는 대상 요소에만 규칙을 적용합니다:</string>
     <string name="settings__theme_editor__code_already_exists">이 키 코드는 이미 지정되어 있습니다.</string>
     <string name="settings__theme_editor__code_invalid">키 코드가 잘못되었습니다. 문자는 {c_min}에서 {c_max} 사이, 내부 특수 키는 {i_min}에서 {i_max} 사이의 키 코드를 사용합니다.</string>
     <string name="settings__theme_editor__code_placeholder">코드</string>
@@ -169,17 +179,11 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">다크 테마</string>
     <string name="settings__theme_editor__component_meta_is_borderless">테두리 없음</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">스타일시트 경로</string>
-    <string name="snygg__rule_element__defines">변수</string>
-    <string name="snygg__rule_element__keyboard">키보드 창</string>
     <string name="snygg__rule_element__key">키</string>
     <string name="snygg__rule_element__key_hint">키 힌트</string>
-    <string name="snygg__rule_element__key_popup">키 팝업</string>
     <string name="snygg__rule_element__clipboard_header">클립보드 헤더</string>
     <string name="snygg__rule_element__clipboard_item">클립보드 항목</string>
     <string name="snygg__rule_element__clipboard_item_popup">클립보드 항목 팝업</string>
-    <string name="snygg__rule_element__emoji_key">이모지 키</string>
-    <string name="snygg__rule_element__emoji_key_popup">이모지 키 팝업</string>
-    <string name="snygg__rule_element__emoji_key_tab">이모지 탭</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">가로 입력 레이아웃</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">가로 입력 필드</string>
     <string name="snygg__rule_element__incognito_mode_indicator">시크릿 모드 표시기</string>
@@ -189,9 +193,6 @@
     <string name="snygg__rule_element__smartbar_action_tile">스마트 바 액션 타일</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">스마트 바 액션 오버플로우</string>
     <string name="snygg__rule_element__smartbar_actions_editor">스마트 바 액션 편집 도구</string>
-    <string name="snygg__rule_element__system_nav_bar">시스템 내비게이션 바</string>
-    <string name="snygg__property_name__width">너비</string>
-    <string name="snygg__property_name__height">높이</string>
     <string name="snygg__property_name__background">백그라운드</string>
     <string name="snygg__property_name__foreground">포그라운드</string>
     <string name="snygg__property_name__border_color">테두리 색상</string>
@@ -200,17 +201,15 @@
     <string name="snygg__property_name__font_family">글꼴 패밀리</string>
     <string name="snygg__property_name__font_size">글꼴 크기</string>
     <string name="snygg__property_name__font_style">글꼴 스타일</string>
-    <string name="snygg__property_name__font_variant">글꼴 배리언트</string>
     <string name="snygg__property_name__font_weight">글꼴 굵기</string>
     <string name="snygg__property_name__var_primary">주 색상</string>
     <string name="snygg__property_name__var_secondary">부 색상</string>
+    <string name="snygg__property_value__defined_var">변수 참조</string>
     <string name="snygg__property_value__material_you_light_color">Material You 색상(라이트)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You 색상(다크)</string>
-    <string name="snygg__property_value__image_ref">이미지 참조</string>
     <string name="snygg__property_value__dp_size">크기(dp)</string>
     <string name="snygg__property_value__sp_size">크기(sp)</string>
     <string name="snygg__property_value__percentage_size">크기(%)</string>
-    <string name="snygg__property_value__defined_var">변수 참조</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">소리 및 진동</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">오디오 피드백 / 소리</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">오디오 피드백 사용</string>
@@ -246,7 +245,6 @@
     <string name="settings__typing__title" comment="Title of Typing screen">입력</string>
     <string name="pref__suggestion__title" comment="Preference group title">제안</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">제안 표시</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">클립보드 내용 제안</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">자동 대문자화</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">캡스락 상태 기억</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">다른 텍스트 필드로 이동할 때 캡스락 상태 유지</string>
@@ -294,17 +292,6 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">스페이스 바 길게 누르기</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">지우기 키 왼쪽으로 스와이프</string>
     <string name="pref__gestures__delete_key_long_press__label" comment="Preference title">지우기 키 길게 누르기</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">고급</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">앱 설정 테마</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">시스템 기본값 (블랙)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">라이트 테마</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">다크 테마</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">블랙 테마</string>
-    <string name="pref__advanced__settings_material_you__label" comment="Label of Material You preference in Advanced">Material You 사용</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">앱 설정 언어</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">런처에 앱 아이콘 표시</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Android 10 버전 이상에서는 구조적인 제한으로 인해 항상 켜져 있습니다.</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">시크릿 모드</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">정보</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">앱 아이콘</string>
@@ -341,6 +328,7 @@
     <string name="setup__finish_up__description_p1">이제 {app_name} 키보드를 마음껏 꾸미고 써볼 수 있어요.</string>
     <string name="setup__finish_up__description_p2">문제가 생기거나, 버그를 발견하거나, 제안할 내용이 있다면 정보 화면에서 프로젝트 리포지터리에 방문해 주세요!</string>
     <string name="setup__finish_up__finish_btn">꾸미기 시작</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">백업 및 복원</string>
     <string name="backup_and_restore__back_up__title">데이터 백업</string>
@@ -386,7 +374,6 @@
     <string name="clip__pin_item">항목 고정</string>
     <string name="clip__delete_item">삭제</string>
     <string name="clip__paste_item">붙여넣기</string>
-    <string name="clipboard__confirm_clear_history__message">정말 클립보드 기록을 비우시겠습니까?</string>
     <string name="settings__clipboard__title">클립보드</string>
     <string name="pref__clipboard__use_internal_clipboard__label">앱 자체 클립보드 사용</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">시스템 클립보드 대신 앱 자체에서 제공하는 클립보드를 사용합니다.</string>
@@ -456,6 +443,7 @@
     <string name="action__delete">삭제</string>
     <string name="action__delete_confirm_title">삭제 확인</string>
     <string name="action__delete_confirm_message">정말 \"{name}\" 항목을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.</string>
+    <string name="action__reset_confirm_title">초기화 확인</string>
     <string name="action__discard">버리기</string>
     <string name="action__discard_confirm_title">저장하지 않은 내용</string>
     <string name="action__discard_confirm_message">정말 저장하지 않은 내용을 버리시겠습니까? 이 작업은 취소할 수 없습니다.</string>
@@ -496,8 +484,6 @@
     <string name="state__no_file_selected">선택한 파일 없음</string>
     <string name="state__no_files_selected">선택한 파일 없음</string>
     <!-- Enum label and description strings -->
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hex 값</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">RGBA</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">항상 표시</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">이전 상태 기억</string>
     <string name="enum__display_language_names_in__system_locale" comment="Enum value label">시스템 언어</string>
@@ -522,7 +508,6 @@
     <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 따라 진동합니다.</string>
     <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 관계없이 항상 진동합니다.</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">캡스락</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">꺼짐</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">왼손 모드</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">오른손 모드</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">기본</string>

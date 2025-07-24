@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,12 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.plus
 import kotlinx.serialization.modules.polymorphic
 
-private val QuickActionJsonConfig = Json(DefaultJsonConfig) {
+val QuickActionJsonConfig = Json(DefaultJsonConfig) {
     classDiscriminator = "$"
     encodeDefaults = false
     ignoreUnknownKeys = true
@@ -47,8 +46,22 @@ data class QuickActionArrangement(
     val dynamicActions: List<QuickAction>,
     val hiddenActions: List<QuickAction>,
 ) {
-    fun contains(action: QuickAction): Boolean {
+    operator fun contains(action: QuickAction): Boolean {
         return stickyAction == action || dynamicActions.contains(action) || hiddenActions.contains(action)
+    }
+
+    fun distinct(): QuickActionArrangement {
+        val distinctSet = mutableSetOf<QuickAction>()
+        if (stickyAction != null) {
+            distinctSet.add(stickyAction)
+        }
+        val distinctDynamicActions = dynamicActions.filter { distinctSet.add(it) }
+        val distinctHiddenActions = hiddenActions.filter { distinctSet.add(it) }
+        return QuickActionArrangement(
+            stickyAction = stickyAction,
+            dynamicActions = distinctDynamicActions,
+            hiddenActions = distinctHiddenActions,
+        )
     }
 
     companion object {
@@ -61,7 +74,7 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.TOGGLE_INCOGNITO_MODE),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_CLIPBOARD),
                 QuickAction.InsertKey(TextKeyData.IME_UI_MODE_MEDIA),
-                QuickAction.InsertKey(TextKeyData.COMPACT_LAYOUT_TO_RIGHT),
+                QuickAction.InsertKey(TextKeyData.TOGGLE_COMPACT_LAYOUT),
                 QuickAction.InsertKey(TextKeyData.TOGGLE_AUTOCORRECT),
                 QuickAction.InsertKey(TextKeyData.ARROW_UP),
                 QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
@@ -72,6 +85,7 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_CUT),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_PASTE),
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT_ALL),
+                QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH),
             ),
             hiddenActions = listOf(
             ),

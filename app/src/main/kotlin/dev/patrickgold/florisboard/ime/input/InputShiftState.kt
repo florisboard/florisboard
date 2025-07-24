@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ enum class InputShiftState(val value: Int) {
     companion object {
         fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: UNSHIFTED
     }
+
+    override fun toString() = name.lowercase()
 
     fun toInt() = value
 }
