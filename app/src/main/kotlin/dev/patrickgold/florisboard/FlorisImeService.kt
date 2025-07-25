@@ -47,7 +47,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -630,8 +629,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        // Apply system bars padding here (we already drew our keyboard background)
-                        .safeDrawingPadding()
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
