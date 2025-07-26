@@ -1,4 +1,5 @@
 import java.io.ByteArrayOutputStream
+val APP_ID: String by project
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -23,7 +24,7 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
 }
 
 android {
-    namespace = "dev.patrickgold.florisboard"
+    namespace = APP_ID
     compileSdk = projectCompileSdk.toInt()
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
@@ -43,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "dev.patrickgold.florisboard"
+        applicationId = APP_ID
         minSdk = projectMinSdk.toInt()
         targetSdk = projectTargetSdk.toInt()
         versionCode = projectVersionCode.toInt()
