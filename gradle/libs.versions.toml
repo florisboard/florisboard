@@ -20,7 +20,7 @@ kotlinx-serialization-json = "1.8.1"
 ksp = "2.1.20-1.0.32"
 mikepenz-aboutlibraries = "12.1.2"
 patrickgold-compose-tooltip = "0.2.0-rc02"
-patrickgold-jetpref = "20250728T110348Z-SNAPSHOT"
+patrickgold-jetpref = "20250728T162848Z-SNAPSHOT"
 
 # Testing
 androidx-benchmark = "1.3.4"
