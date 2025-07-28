@@ -21,7 +21,7 @@ import android.view.ViewConfiguration
 import androidx.collection.SparseArrayCompat
 import androidx.collection.isNotEmpty
 import androidx.collection.set
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -48,7 +48,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         fun new(repeatableKeyCodes: IntArray = intArrayOf()) = InputEventDispatcher(repeatableKeyCodes.clone())
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     private val pressedKeys = guardedByLock { SparseArrayCompat<PressedKeyInfo>() }

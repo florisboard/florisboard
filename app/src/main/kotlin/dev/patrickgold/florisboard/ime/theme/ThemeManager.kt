@@ -42,7 +42,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
@@ -64,6 +64,7 @@ import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
+import org.florisboard.lib.kotlin.observeLatestIn
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
@@ -73,7 +74,7 @@ import kotlin.properties.Delegates
  * Settings Activities.
  */
 class ThemeManager(context: Context) {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
 
@@ -109,13 +110,13 @@ class ThemeManager(context: Context) {
                 cachedThemeInfos.clear()
             }
         }
-        prefs.theme.mode.observeForever {
+        prefs.theme.mode.getAsFlow().observeLatestIn(scope) {
             updateActiveTheme()
         }
-        prefs.theme.dayThemeId.observeForever {
+        prefs.theme.dayThemeId.getAsFlow().observeLatestIn(scope) {
             updateActiveTheme()
         }
-        prefs.theme.nightThemeId.observeForever {
+        prefs.theme.nightThemeId.getAsFlow().observeLatestIn(scope) {
             updateActiveTheme()
         }
     }

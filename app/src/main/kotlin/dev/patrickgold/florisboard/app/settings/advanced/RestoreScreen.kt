@@ -43,8 +43,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -60,7 +60,6 @@ import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.jetpref.datastore.JetPref
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -91,7 +90,7 @@ fun RestoreScreen() = FlorisScreen {
     title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
@@ -149,15 +148,16 @@ fun RestoreScreen() = FlorisScreen {
     suspend fun performRestore() {
         val workspace = restoreWorkspace!!
         val shouldReset = restoreMode == Restore.Mode.ERASE_AND_OVERWRITE
-        if (restoreFilesSelector.jetprefDatastore) {
-            val datastoreFile = workspace.outputDir
-                .subDir(JetPref.JETPREF_DIR_NAME)
-                .subFile("${prefs.name}.${JetPref.JETPREF_FILE_EXT}")
-            if (datastoreFile.exists()) {
-                prefs.datastorePersistenceHandler?.loadPrefs(datastoreFile, shouldReset)
-                prefs.datastorePersistenceHandler?.persistPrefs()
-            }
-        }
+        // FIXME
+//        if (restoreFilesSelector.jetprefDatastore) {
+//            val datastoreFile = workspace.outputDir
+//                .subDir(JetPref.JETPREF_DIR_NAME)
+//                .subFile("${prefs.name}.${JetPref.JETPREF_FILE_EXT}")
+//            if (datastoreFile.exists()) {
+//                prefs.datastorePersistenceHandler?.loadPrefs(datastoreFile, shouldReset)
+//                prefs.datastorePersistenceHandler?.persistPrefs()
+//            }
+//        }
         val workspaceFilesDir = workspace.outputDir.subDir("files")
         if (restoreFilesSelector.imeKeyboard) {
             val srcDir = workspaceFilesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH)

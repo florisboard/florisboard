@@ -57,7 +57,6 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.jetpref.datastore.jetprefDatastoreDir
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -167,11 +166,12 @@ fun BackupScreen() = FlorisScreen {
 
     fun prepareBackupWorkspace() {
         val workspace = cacheManager.backupAndRestore.new()
-        if (backupFilesSelector.jetprefDatastore) {
-            context.jetprefDatastoreDir.let { dir ->
-                dir.copyRecursively(workspace.inputDir.subDir(dir.name))
-            }
-        }
+        // FIXME
+//        if (backupFilesSelector.jetprefDatastore) {
+//            context.jetprefDatastoreDir.let { dir ->
+//                dir.copyRecursively(workspace.inputDir.subDir(dir.name))
+//            }
+//        }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
         if (backupFilesSelector.imeKeyboard) {
             context.filesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH).let { dir ->

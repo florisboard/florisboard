@@ -57,7 +57,8 @@ import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
-import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.annotations.Preferences
+import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
 import dev.patrickgold.jetpref.datastore.model.LocalTime
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
@@ -69,9 +70,10 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.color.DEFAULT_GREEN
 
-fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
+val FlorisPreferenceStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
-class AppPrefs : PreferenceModel("florisboard-app-prefs") {
+@Preferences
+abstract class FlorisPreferenceModel : PreferenceModel() {
     val clipboard = Clipboard()
     inner class Clipboard {
         val useInternalClipboard = boolean(
@@ -758,11 +760,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             },
             serializer = ColorPreferenceSerializer,
         )
-        val sunriseTime = time(
+        val sunriseTime = localTime(
             key = "theme__sunrise_time",
             default = LocalTime(6, 0),
         )
-        val sunsetTime = time(
+        val sunsetTime = localTime(
             key = "theme__sunset_time",
             default = LocalTime(18, 0),
         )

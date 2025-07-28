@@ -40,7 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
@@ -64,7 +64,7 @@ private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.
 @Composable
 fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
 

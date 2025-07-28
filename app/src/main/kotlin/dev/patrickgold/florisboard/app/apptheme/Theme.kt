@@ -29,9 +29,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.AppTheme
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
 
 /*private val AmoledDarkColorPalette = darkColorScheme(
@@ -79,7 +78,7 @@ fun getColorScheme(
     context: Context,
     theme: AppTheme,
 ): ColorScheme {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val accentColor by prefs.other.accentColor.observeAsState()
     val isDark = isSystemInDarkTheme()
 

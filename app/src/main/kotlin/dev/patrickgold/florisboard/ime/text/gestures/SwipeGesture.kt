@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -39,7 +39,7 @@ abstract class SwipeGesture {
      * @property listener The listener to report detected swipes to.
      */
     class Detector(private val listener: Listener) {
-        private val prefs by florisPreferenceModel()
+        private val prefs by FlorisPreferenceStore
 
         var isEnabled: Boolean = true
         private var pointerMap: PointerMap<GesturePointer> = PointerMap { GesturePointer() }
