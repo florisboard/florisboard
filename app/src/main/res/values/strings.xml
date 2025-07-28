@@ -448,6 +448,8 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
+    <string name="pref__keyboard__ignore_navigation_bar_padding__label" comment="Preference title">Stick to bottom</string>
+    <string name="pref__keyboard__ignore_navigation_bar_padding__summary" comment="Preference summary">Position keyboard directly at the bottom of the screen, ignoring navigation bar padding</string>
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>

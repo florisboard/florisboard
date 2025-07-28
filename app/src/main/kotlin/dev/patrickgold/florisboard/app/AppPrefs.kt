@@ -561,6 +561,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__incognito_indicator",
             default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
         )
+        val ignoreNavigationBarPadding = boolean(
+            key = "keyboard__ignore_navigation_bar_padding",
+            default = true,
+        )
 
         fun keyHintConfiguration(): KeyHintConfiguration {
             return KeyHintConfiguration(

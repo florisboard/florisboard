@@ -47,6 +47,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -625,10 +626,18 @@ class FlorisImeService : LifecycleInputMethodService() {
                 } else {
                     prefs.keyboard.bottomOffsetLandscape
                 }.observeAsTransformingState { it.dp }
+                val ignoreNavigationBarPadding by prefs.keyboard.ignoreNavigationBarPadding.observeAsState()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        .run {
+                            if (ignoreNavigationBarPadding) {
+                                this
+                            } else {
+                                this.safeDrawingPadding()
+                            }
+                        }
                         .padding(bottom = bottomOffset),
                 ) {
                     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
