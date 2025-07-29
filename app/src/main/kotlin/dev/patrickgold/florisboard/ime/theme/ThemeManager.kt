@@ -110,13 +110,13 @@ class ThemeManager(context: Context) {
                 cachedThemeInfos.clear()
             }
         }
-        prefs.theme.mode.getAsFlow().observeLatestIn(scope) {
+        prefs.theme.mode.asFlow().observeLatestIn(scope) {
             updateActiveTheme()
         }
-        prefs.theme.dayThemeId.getAsFlow().observeLatestIn(scope) {
+        prefs.theme.dayThemeId.asFlow().observeLatestIn(scope) {
             updateActiveTheme()
         }
-        prefs.theme.nightThemeId.getAsFlow().observeLatestIn(scope) {
+        prefs.theme.nightThemeId.asFlow().observeLatestIn(scope) {
             updateActiveTheme()
         }
     }

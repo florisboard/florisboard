@@ -58,7 +58,7 @@ class SubtypeManager(context: Context) {
         private set(v) { _activeSubtypeFlow.value = v }
 
     init {
-        prefs.localization.subtypes.getAsFlow().observeLatestIn(scope) { listRaw ->
+        prefs.localization.subtypes.asFlow().observeLatestIn(scope) { listRaw ->
             flogDebug { listRaw }
             val list = if (listRaw.isNotBlank()) {
                 SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)

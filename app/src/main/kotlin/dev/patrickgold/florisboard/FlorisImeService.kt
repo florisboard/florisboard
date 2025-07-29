@@ -284,14 +284,14 @@ class FlorisImeService : LifecycleInputMethodService() {
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.getAsFlow().observeLatestIn(lifecycleScope) { shouldSync ->
+        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow().observeLatestIn(lifecycleScope) { shouldSync ->
             val config = Configuration(resources.configuration)
             if (shouldSync) {
                 config.setLocale(subtypeManager.activeSubtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.physicalKeyboard.showOnScreenKeyboard.getAsFlow().observeLatestIn(lifecycleScope) {
+        prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().observeLatestIn(lifecycleScope) {
             updateInputViewShown()
         }
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes

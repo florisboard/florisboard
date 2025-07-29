@@ -93,13 +93,13 @@ class NlpManager(context: Context) {
         clipboardManager.primaryClipFlow.observeLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.suggestion.enabled.getAsFlow().observeLatestIn(scope) {
+        prefs.suggestion.enabled.asFlow().observeLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.clipboard.suggestionEnabled.getAsFlow().observeLatestIn(scope) {
+        prefs.clipboard.suggestionEnabled.asFlow().observeLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.emoji.suggestionEnabled.getAsFlow().observeLatestIn(scope) {
+        prefs.emoji.suggestionEnabled.asFlow().observeLatestIn(scope) {
             assembleCandidates()
         }
         subtypeManager.activeSubtypeFlow.observeLatestIn(scope) { subtype ->

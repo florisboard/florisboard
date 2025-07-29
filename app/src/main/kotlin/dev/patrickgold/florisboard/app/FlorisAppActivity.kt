@@ -92,17 +92,17 @@ class FlorisAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        prefs.other.settingsTheme.getAsFlow().observeLatestIn(lifecycleScope) {
+        prefs.other.settingsTheme.asFlow().observeLatestIn(lifecycleScope) {
             appTheme = it
         }
-        prefs.other.settingsLanguage.getAsFlow().observeLatestIn(lifecycleScope) {
+        prefs.other.settingsLanguage.asFlow().observeLatestIn(lifecycleScope) {
             val config = Configuration(resources.configuration)
             val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
             config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {
-            prefs.other.showAppIcon.getAsFlow().observeLatestIn(lifecycleScope) {
+            prefs.other.showAppIcon.asFlow().observeLatestIn(lifecycleScope) {
                 showAppIcon = it
             }
         }

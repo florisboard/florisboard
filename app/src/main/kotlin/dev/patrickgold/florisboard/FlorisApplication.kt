@@ -25,6 +25,7 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.util.Log
 import androidx.core.os.UserManagerCompat
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
@@ -116,7 +117,7 @@ class FlorisApplication : Application() {
         scope.launch {
             val result = FlorisPreferenceStore.initAndroid(
                 context = this@FlorisApplication,
-                datastoreName = "florisboard-app-prefs",
+                datastoreName = FlorisPreferenceModel.NAME,
             )
             Log.i("PREFS", result.toString())
             preferenceStoreLoaded.value = true

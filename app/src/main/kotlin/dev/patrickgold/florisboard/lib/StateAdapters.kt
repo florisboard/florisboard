@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.map
 inline fun <V : Any, R : Any> PreferenceData<V>.observeAsTransformingState(
     crossinline transform: @DisallowComposableCalls (V) -> R,
 ): State<R> {
-    return getAsFlow().let { flow ->
+    return asFlow().let { flow ->
         flow.map { transform(it) }.collectAsState(transform(flow.value))
     }
 }

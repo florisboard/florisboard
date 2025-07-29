@@ -32,6 +32,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -41,6 +42,8 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
@@ -57,7 +60,9 @@ import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.android.showLongToast
@@ -135,6 +140,7 @@ fun BackupScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
+    val scope = rememberCoroutineScope()
 
     var backupDestination by remember { mutableStateOf(Backup.Destination.FILE_SYS) }
     val backupFilesSelector = remember { Backup.FilesSelector() }
@@ -164,14 +170,16 @@ fun BackupScreen() = FlorisScreen {
         },
     )
 
-    fun prepareBackupWorkspace() {
+    suspend fun prepareBackupWorkspace() {
         val workspace = cacheManager.backupAndRestore.new()
-        // FIXME
-//        if (backupFilesSelector.jetprefDatastore) {
-//            context.jetprefDatastoreDir.let { dir ->
-//                dir.copyRecursively(workspace.inputDir.subDir(dir.name))
-//            }
-//        }
+        if (backupFilesSelector.jetprefDatastore) {
+            val datastoreFile = workspace.inputDir
+                .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
+                .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+            FlorisPreferenceStore.export { rawDatastoreContent ->
+                datastoreFile.writeText(rawDatastoreContent)
+            }
+        }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
         if (backupFilesSelector.imeKeyboard) {
             context.filesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH).let { dir ->
@@ -225,7 +233,7 @@ fun BackupScreen() = FlorisScreen {
         backupWorkspace = workspace
     }
 
-    fun prepareAndPerformBackup() {
+    suspend fun prepareAndPerformBackup() {
         runCatching {
             if (backupWorkspace == null || backupWorkspace!!.isClosed()) {
                 prepareBackupWorkspace()
@@ -265,7 +273,7 @@ fun BackupScreen() = FlorisScreen {
             )
             ButtonBarButton(
                 onClick = {
-                    prepareAndPerformBackup()
+                    scope.launch { prepareAndPerformBackup() }
                 },
                 text = stringRes(R.string.action__back_up),
                 enabled = backupFilesSelector.atLeastOneSelected(),

@@ -129,21 +129,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     keyboardCache.clear()
                 }
             }
-            prefs.keyboard.numberRow.getAsFlow().observeLatestIn(scope) {
+            prefs.keyboard.numberRow.asFlow().observeLatestIn(scope) {
                 updateActiveEvaluators {
                     keyboardCache.clear(KeyboardMode.CHARACTERS)
                 }
             }
-            prefs.keyboard.hintedNumberRowEnabled.getAsFlow().observeLatestIn(scope) {
+            prefs.keyboard.hintedNumberRowEnabled.asFlow().observeLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.hintedSymbolsEnabled.getAsFlow().observeLatestIn(scope) {
+            prefs.keyboard.hintedSymbolsEnabled.asFlow().observeLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.utilityKeyEnabled.getAsFlow().observeLatestIn(scope) {
+            prefs.keyboard.utilityKeyEnabled.asFlow().observeLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.utilityKeyAction.getAsFlow().observeLatestIn(scope) {
+            prefs.keyboard.utilityKeyAction.asFlow().observeLatestIn(scope) {
                 updateActiveEvaluators()
             }
             activeState.observeLatestIn(scope) {
@@ -164,10 +164,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             editorInstance.activeContentFlow.collectIn(scope) { content ->
                 resetSuggestions(content)
             }
-            prefs.devtools.enabled.getAsFlow().observeLatestIn(scope) {
+            prefs.devtools.enabled.asFlow().observeLatestIn(scope) {
                 reevaluateDebugFlags()
             }
-            prefs.devtools.showDragAndDropHelpers.getAsFlow().observeLatestIn(scope) {
+            prefs.devtools.showDragAndDropHelpers.asFlow().observeLatestIn(scope) {
                 reevaluateDebugFlags()
             }
         }

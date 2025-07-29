@@ -74,6 +74,10 @@ val FlorisPreferenceStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
 @Preferences
 abstract class FlorisPreferenceModel : PreferenceModel() {
+    companion object {
+        const val NAME = "florisboard-app-prefs"
+    }
+
     val clipboard = Clipboard()
     inner class Clipboard {
         val useInternalClipboard = boolean(
