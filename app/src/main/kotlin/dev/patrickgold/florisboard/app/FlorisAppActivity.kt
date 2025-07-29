@@ -61,7 +61,8 @@ import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
-import org.florisboard.lib.kotlin.observeLatestIn
+import org.florisboard.lib.kotlin.collectIn
+import java.util.concurrent.atomic.AtomicBoolean
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -92,24 +93,25 @@ class FlorisAppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        prefs.other.settingsTheme.asFlow().observeLatestIn(lifecycleScope) {
+        prefs.other.settingsTheme.asFlow().collectIn(lifecycleScope) {
             appTheme = it
         }
-        prefs.other.settingsLanguage.asFlow().observeLatestIn(lifecycleScope) {
+        prefs.other.settingsLanguage.asFlow().collectIn(lifecycleScope) {
             val config = Configuration(resources.configuration)
             val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
             config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {
-            prefs.other.showAppIcon.asFlow().observeLatestIn(lifecycleScope) {
+            prefs.other.showAppIcon.asFlow().collectIn(lifecycleScope) {
                 showAppIcon = it
             }
         }
 
         // We defer the setContent call until the datastore model is loaded, until then the splash screen stays drawn
-        appContext.preferenceStoreLoaded.observeLatestIn(lifecycleScope) { isModelLoaded ->
-            if (!isModelLoaded) return@observeLatestIn
+        val isModelLoaded = AtomicBoolean(false)
+        appContext.preferenceStoreLoaded.collectIn(lifecycleScope) { loaded ->
+            if (!loaded || isModelLoaded.getAndSet(true)) return@collectIn
             // Check if android 13+ is running and the NotificationPermission is not set
             if (AndroidVersion.ATLEAST_API33_T &&
                 prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET

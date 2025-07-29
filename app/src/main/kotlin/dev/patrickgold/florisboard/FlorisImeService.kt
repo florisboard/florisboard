@@ -120,7 +120,7 @@ import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.kotlin.observeLatestIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -277,21 +277,21 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
-        subtypeManager.activeSubtypeFlow.observeLatestIn(lifecycleScope) { subtype ->
+        subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
                 config.setLocale(subtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow().observeLatestIn(lifecycleScope) { shouldSync ->
+        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow().collectLatestIn(lifecycleScope) { shouldSync ->
             val config = Configuration(resources.configuration)
             if (shouldSync) {
                 config.setLocale(subtypeManager.activeSubtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().observeLatestIn(lifecycleScope) {
+        prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectLatestIn(lifecycleScope) {
             updateInputViewShown()
         }
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes

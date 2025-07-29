@@ -64,7 +64,7 @@ import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.kotlin.observeLatestIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import kotlin.properties.Delegates
@@ -110,13 +110,13 @@ class ThemeManager(context: Context) {
                 cachedThemeInfos.clear()
             }
         }
-        prefs.theme.mode.asFlow().observeLatestIn(scope) {
+        prefs.theme.mode.asFlow().collectLatestIn(scope) {
             updateActiveTheme()
         }
-        prefs.theme.dayThemeId.asFlow().observeLatestIn(scope) {
+        prefs.theme.dayThemeId.asFlow().collectLatestIn(scope) {
             updateActiveTheme()
         }
-        prefs.theme.nightThemeId.asFlow().observeLatestIn(scope) {
+        prefs.theme.nightThemeId.asFlow().collectLatestIn(scope) {
             updateActiveTheme()
         }
     }

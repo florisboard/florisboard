@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.kotlin.observeLatestIn
+import org.florisboard.lib.kotlin.collectLatestIn
 
 val SubtypeJsonConfig = Json {
     encodeDefaults = true
@@ -58,7 +58,7 @@ class SubtypeManager(context: Context) {
         private set(v) { _activeSubtypeFlow.value = v }
 
     init {
-        prefs.localization.subtypes.asFlow().observeLatestIn(scope) { listRaw ->
+        prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->
             flogDebug { listRaw }
             val list = if (listRaw.isNotBlank()) {
                 SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)

@@ -77,7 +77,7 @@ import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
-import org.florisboard.lib.kotlin.observeLatestIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicInteger
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
@@ -129,45 +129,45 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     keyboardCache.clear()
                 }
             }
-            prefs.keyboard.numberRow.asFlow().observeLatestIn(scope) {
+            prefs.keyboard.numberRow.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators {
                     keyboardCache.clear(KeyboardMode.CHARACTERS)
                 }
             }
-            prefs.keyboard.hintedNumberRowEnabled.asFlow().observeLatestIn(scope) {
+            prefs.keyboard.hintedNumberRowEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.hintedSymbolsEnabled.asFlow().observeLatestIn(scope) {
+            prefs.keyboard.hintedSymbolsEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.utilityKeyEnabled.asFlow().observeLatestIn(scope) {
+            prefs.keyboard.utilityKeyEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.utilityKeyAction.asFlow().observeLatestIn(scope) {
+            prefs.keyboard.utilityKeyAction.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            activeState.observeLatestIn(scope) {
+            activeState.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            subtypeManager.subtypesFlow.observeLatestIn(scope) {
+            subtypeManager.subtypesFlow.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            subtypeManager.activeSubtypeFlow.observeLatestIn(scope) {
+            subtypeManager.activeSubtypeFlow.collectLatestIn(scope) {
                 reevaluateInputShiftState()
                 updateActiveEvaluators()
                 editorInstance.refreshComposing()
                 resetSuggestions(editorInstance.activeContent)
             }
-            clipboardManager.primaryClipFlow.observeLatestIn(scope) {
+            clipboardManager.primaryClipFlow.collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             editorInstance.activeContentFlow.collectIn(scope) { content ->
                 resetSuggestions(content)
             }
-            prefs.devtools.enabled.asFlow().observeLatestIn(scope) {
+            prefs.devtools.enabled.asFlow().collectLatestIn(scope) {
                 reevaluateDebugFlags()
             }
-            prefs.devtools.showDragAndDropHelpers.asFlow().observeLatestIn(scope) {
+            prefs.devtools.showDragAndDropHelpers.asFlow().collectLatestIn(scope) {
                 reevaluateDebugFlags()
             }
         }

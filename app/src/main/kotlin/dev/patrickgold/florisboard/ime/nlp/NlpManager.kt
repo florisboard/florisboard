@@ -44,7 +44,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.guardedByLock
-import org.florisboard.lib.kotlin.observeLatestIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
@@ -90,19 +90,19 @@ class NlpManager(context: Context) {
     private val debugOverlayVersionSource = AtomicInteger(0)
 
     init {
-        clipboardManager.primaryClipFlow.observeLatestIn(scope) {
+        clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.suggestion.enabled.asFlow().observeLatestIn(scope) {
+        prefs.suggestion.enabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.clipboard.suggestionEnabled.asFlow().observeLatestIn(scope) {
+        prefs.clipboard.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.emoji.suggestionEnabled.asFlow().observeLatestIn(scope) {
+        prefs.emoji.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        subtypeManager.activeSubtypeFlow.observeLatestIn(scope) { subtype ->
+        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
             preload(subtype)
         }
     }
