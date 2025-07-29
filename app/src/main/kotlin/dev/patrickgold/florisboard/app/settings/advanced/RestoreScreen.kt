@@ -62,6 +62,7 @@ import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
@@ -146,12 +147,11 @@ fun RestoreScreen() = FlorisScreen {
         val workspace = restoreWorkspace!!
         val shouldReset = importStrategy == ImportStrategy.Erase
         if (restoreFilesSelector.jetprefDatastore) {
-            val datastoreFile = workspace.outputDir
+            val fileBasedStorage = workspace.outputDir
                 .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
                 .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
-            FlorisPreferenceStore.import(importStrategy) {
-                datastoreFile.readText()
-            }
+                .let { FileBasedStorage(it.path) }
+            FlorisPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
         }
         val workspaceFilesDir = workspace.outputDir.subDir("files")
         if (restoreFilesSelector.imeKeyboard) {

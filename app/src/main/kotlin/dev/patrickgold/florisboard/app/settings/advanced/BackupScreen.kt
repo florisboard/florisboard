@@ -61,6 +61,7 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
@@ -173,12 +174,11 @@ fun BackupScreen() = FlorisScreen {
     suspend fun prepareBackupWorkspace() {
         val workspace = cacheManager.backupAndRestore.new()
         if (backupFilesSelector.jetprefDatastore) {
-            val datastoreFile = workspace.inputDir
+            val fileBasedStorage = workspace.inputDir
                 .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
                 .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
-            FlorisPreferenceStore.export { rawDatastoreContent ->
-                datastoreFile.writeText(rawDatastoreContent)
-            }
+                .let { FileBasedStorage(it.path) }
+            FlorisPreferenceStore.export(fileBasedStorage).getOrThrow()
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
         if (backupFilesSelector.imeKeyboard) {
