@@ -29,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -75,7 +74,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
 
     val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
-    val themeInfo by themeManager.activeThemeInfo.observeAsState()
+    val themeInfo by themeManager.activeThemeInfo.collectAsState()
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White,
@@ -97,7 +96,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
             if (devtoolsEnabled && showInlineAutofillOverlay && AndroidVersion.ATLEAST_API30_R) {
                 DevtoolsInlineAutofillOverlay()
             }
-            val loadFailure = themeInfo?.loadFailure
+            val loadFailure = themeInfo.loadFailure
             if (loadFailure != null) {
                 DevtoolsStylesheetFailedToLoadOverlay(loadFailure)
             }
@@ -163,13 +162,13 @@ private fun DevtoolsLastLayoutComputationOverlay(debugLayoutResult: DebugLayoutC
             return@DevtoolsOverlayBox
         }
         DevtoolsSubGroup(title = "main") {
-            PrintResult(debugLayoutResult!!.main)
+            PrintResult(debugLayoutResult.main)
         }
         DevtoolsSubGroup(title = "mod") {
-            PrintResult(debugLayoutResult!!.mod)
+            PrintResult(debugLayoutResult.mod)
         }
         DevtoolsSubGroup(title = "ext") {
-            PrintResult(debugLayoutResult!!.ext)
+            PrintResult(debugLayoutResult.ext)
         }
     }
 }

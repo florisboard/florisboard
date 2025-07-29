@@ -309,14 +309,14 @@ fun ThemeEditorScreen(
         }
 
         DisposableEffect(workspace.version) {
-            themeManager.previewThemeInfo = ThemeManager.ThemeInfo.DEFAULT.copy(
+            themeManager.previewThemeInfo.value = ThemeManager.ThemeInfo.DEFAULT.copy(
                 name = extPreviewTheme(System.currentTimeMillis().toString()),
                 config = editor.build(),
                 stylesheet = stylesheetEditor.build(),
                 loadedDir = workspace.extDir,
             )
             onDispose {
-                themeManager.previewThemeInfo = null
+                themeManager.previewThemeInfo.value = null
             }
         }
 

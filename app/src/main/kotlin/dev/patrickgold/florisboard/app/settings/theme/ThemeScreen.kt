@@ -24,8 +24,8 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
@@ -59,8 +59,8 @@ fun ThemeScreen() = FlorisScreen {
 
     @Composable
     fun ThemeManager.getThemeLabel(id: ExtensionComponentName): String {
-        val configs by indexedThemeConfigs.observeAsState()
-        configs?.get(id)?.let { return it.label }
+        val configs by indexedThemeConfigs.collectAsState()
+        configs[id]?.let { return it.label }
         return id.toString()
     }
 

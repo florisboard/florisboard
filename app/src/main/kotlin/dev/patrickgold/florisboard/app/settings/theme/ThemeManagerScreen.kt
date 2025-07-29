@@ -99,9 +99,9 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
 
     content {
         DisposableEffect(activeThemeId) {
-            themeManager.previewThemeId = activeThemeId
+            themeManager.previewThemeId.value = activeThemeId
             onDispose {
-                themeManager.previewThemeId = null
+                themeManager.previewThemeId.value = null
             }
         }
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
