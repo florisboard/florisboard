@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 
 // TODO: This screen is just a quick thrown-together thing and needs further enhancing in the UI
 @Composable
@@ -74,7 +75,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
             FlorisButton(
                 onClick = {
                     clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
-                    context.showShortToast(context.getString(R.string.devtools__debuglog__copied_to_clipboard))
+                    context.showShortToastSync(context.getString(R.string.devtools__debuglog__copied_to_clipboard))
                 },
                 modifier = Modifier,
                 text = stringRes(R.string.devtools__debuglog__copy_log),
@@ -83,7 +84,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
             FlorisButton(
                 onClick = {
                     clipboardManager.addNewPlaintext(formattedDebugLog!!.joinToString("\n"))
-                    context.showShortToast(context.getString(R.string.devtools__debuglog__copied_to_clipboard))
+                    context.showShortToastSync(context.getString(R.string.devtools__debuglog__copied_to_clipboard))
                 },
                 text = stringRes(R.string.devtools__debuglog__copy_for_github),
                 enabled = debugLog != null,

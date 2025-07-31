@@ -119,6 +119,7 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -246,7 +247,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             }
-            ims.showShortToast("Failed to find voice IME, do you have one installed?")
+            ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
             return false
         }
     }

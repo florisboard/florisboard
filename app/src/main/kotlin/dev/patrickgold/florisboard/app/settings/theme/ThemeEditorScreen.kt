@@ -100,6 +100,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
@@ -633,7 +634,7 @@ private fun ComponentMetaEditorDialog(
             if (!allFieldsValid) {
                 showValidationErrors = true
             } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
-                context.showLongToast("A theme with this ID already exists!")
+                context.showLongToastSync("A theme with this ID already exists!")
             } else {
                 workspace.update {
                     editor.id = id.trim()

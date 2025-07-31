@@ -41,6 +41,7 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.showLongToastSync
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
@@ -116,7 +117,7 @@ fun DevtoolsScreen() = FlorisScreen {
                     scope.launch {
                         prefs.smartbar.actionArrangement.set(QuickActionArrangement.Default)
                     }
-                    context.showLongToast(R.string.devtools__reset_quick_actions_to_default__toast_success)
+                    context.showLongToastSync(R.string.devtools__reset_quick_actions_to_default__toast_success)
                 },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
@@ -205,14 +206,14 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = "keyboardExtensions",
                 summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
                 onClick = {
-                    context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
+                    context.showLongToastSync(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
                 },
             )
             Preference(
                 title = "themes",
                 summary = extensionManager.themes.internalModuleDir.absolutePath,
                 onClick = {
-                    context.showLongToast(extensionManager.themes.internalModuleDir.absolutePath)
+                    context.showLongToastSync(extensionManager.themes.internalModuleDir.absolutePath)
                 },
             )
         }

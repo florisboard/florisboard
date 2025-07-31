@@ -61,6 +61,7 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.android.showLongToastSync
 
 enum class LanguagePackManagerScreenAction(val id: String) {
     MANAGE("manage-installed-language-packs");
@@ -199,7 +200,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
                     runCatching {
                         extensionManager.delete(languagePackExtToDelete!!)
                     }.onFailure { error ->
-                        context.showLongToast(
+                        context.showLongToastSync(
                             R.string.error__snackbar_message,
                             "error_message" to error.localizedMessage,
                         )

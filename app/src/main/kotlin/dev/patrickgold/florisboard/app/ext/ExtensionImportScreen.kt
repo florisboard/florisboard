@@ -61,6 +61,7 @@ import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.io.FileRegistry
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
@@ -188,10 +189,10 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     }
                 }.onSuccess {
                     workspace.close()
-                    context.showLongToast(R.string.ext__import__success)
+                    context.showLongToastSync(R.string.ext__import__success)
                     navController.popBackStack()
                 }.onFailure { error ->
-                    context.showLongToast(R.string.ext__import__failure, "error_message" to error.localizedMessage)
+                    context.showLongToastSync(R.string.ext__import__failure, "error_message" to error.localizedMessage)
                 }
             }
         }

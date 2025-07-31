@@ -62,6 +62,7 @@ import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.FlorisRef
+import org.florisboard.lib.android.showLongToastSync
 
 @Composable
 fun ExtensionViewScreen(id: String) {
@@ -202,7 +203,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     }.onSuccess {
                         navController.popBackStack()
                     }.onFailure { error ->
-                        context.showLongToast(
+                        context.showLongToastSync(
                             R.string.error__snackbar_message,
                             "error_message" to error.localizedMessage,
                         )

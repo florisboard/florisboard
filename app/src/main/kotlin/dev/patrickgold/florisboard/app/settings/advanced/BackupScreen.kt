@@ -67,6 +67,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.writeFromFile
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
@@ -161,11 +162,11 @@ fun BackupScreen() = FlorisScreen {
                 context.contentResolver.writeFromFile(uri, backupWorkspace!!.zipFile)
                 backupWorkspace!!.close()
             }.onSuccess {
-                context.showLongToast(R.string.backup_and_restore__back_up__success)
+                context.showLongToastSync(R.string.backup_and_restore__back_up__success)
                 navController.popBackStack()
             }.onFailure { error ->
                 flogError { error.stackTraceToString() }
-                context.showLongToast(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
+                context.showLongToastSync(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
                 backupWorkspace = null
             }
         },

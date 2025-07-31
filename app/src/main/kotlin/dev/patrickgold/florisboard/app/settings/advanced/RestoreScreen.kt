@@ -70,6 +70,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subDir
@@ -135,7 +136,7 @@ fun RestoreScreen() = FlorisScreen {
                 }
                 restoreWorkspace = workspace
             }.onFailure { error ->
-                context.showLongToast(
+                context.showLongToastSync(
                     R.string.backup_and_restore__restore__failure,
                     "error_message" to error.localizedMessage,
                 )
@@ -288,7 +289,7 @@ fun RestoreScreen() = FlorisScreen {
                 runCatching {
                     restoreDataFromFileSystemLauncher.launch("*/*")
                 }.onFailure { error ->
-                    context.showLongToast(
+                    context.showLongToastSync(
                         R.string.backup_and_restore__restore__failure,
                         "error_message" to error.localizedMessage,
                     )
