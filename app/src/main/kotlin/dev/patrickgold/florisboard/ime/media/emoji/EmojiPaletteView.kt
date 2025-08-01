@@ -199,6 +199,10 @@ fun EmojiPaletteView(
                 keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                 scope.launch {
                     EmojiHistoryHelper.markEmojiUsed(prefs, emoji)
+                    if (isRecent || isPinned) {
+                        return@launch
+                    }
+                    recentlyUsedVersion++
                 }
             },
             onHistoryAction = {
