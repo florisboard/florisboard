@@ -41,10 +41,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
 import org.florisboard.lib.android.showLongToast
@@ -61,6 +61,7 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.android.showLongToastSync
 
 enum class LanguagePackManagerScreenAction(val id: String) {
     MANAGE("manage-installed-language-packs");
@@ -75,7 +76,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
         else -> error("LanguagePack manager screen action must not be null")
     })
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
@@ -199,7 +200,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
                     runCatching {
                         extensionManager.delete(languagePackExtToDelete!!)
                     }.onFailure { error ->
-                        context.showLongToast(
+                        context.showLongToastSync(
                             R.string.error__snackbar_message,
                             "error_message" to error.localizedMessage,
                         )

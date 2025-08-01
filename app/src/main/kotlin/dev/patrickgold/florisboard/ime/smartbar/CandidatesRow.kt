@@ -20,7 +20,6 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
@@ -40,7 +39,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -62,7 +61,7 @@ val CandidatesRowScrollbarHeight = 2.dp
 
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()

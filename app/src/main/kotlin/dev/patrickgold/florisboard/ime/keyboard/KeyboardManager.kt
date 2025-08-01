@@ -26,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
@@ -74,7 +74,9 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
@@ -83,7 +85,7 @@ import java.util.concurrent.atomic.AtomicInteger
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
@@ -129,21 +131,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     keyboardCache.clear()
                 }
             }
-            prefs.keyboard.numberRow.observeForever {
+            prefs.keyboard.numberRow.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators {
                     keyboardCache.clear(KeyboardMode.CHARACTERS)
                 }
             }
-            prefs.keyboard.hintedNumberRowEnabled.observeForever {
+            prefs.keyboard.hintedNumberRowEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.hintedSymbolsEnabled.observeForever {
+            prefs.keyboard.hintedSymbolsEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.utilityKeyEnabled.observeForever {
+            prefs.keyboard.utilityKeyEnabled.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
-            prefs.keyboard.utilityKeyAction.observeForever {
+            prefs.keyboard.utilityKeyAction.asFlow().collectLatestIn(scope) {
                 updateActiveEvaluators()
             }
             activeState.collectLatestIn(scope) {
@@ -164,10 +166,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             editorInstance.activeContentFlow.collectIn(scope) { content ->
                 resetSuggestions(content)
             }
-            prefs.devtools.enabled.observeForever {
+            prefs.devtools.enabled.asFlow().collectLatestIn(scope) {
                 reevaluateDebugFlags()
             }
-            prefs.devtools.showDragAndDropHelpers.observeForever {
+            prefs.devtools.showDragAndDropHelpers.asFlow().collectLatestIn(scope) {
                 reevaluateDebugFlags()
             }
         }
@@ -237,7 +239,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         return subtypeManager.subtypes.size > 1
     }
 
-    fun toggleOneHandedMode() {
+    suspend fun toggleOneHandedMode() {
         prefs.keyboard.oneHandedModeEnabled.set(!prefs.keyboard.oneHandedModeEnabled.get())
     }
 
@@ -580,7 +582,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.TOGGLE_INCOGNITO_MODE] event.
      */
-    private fun handleToggleIncognitoMode() {
+    private suspend fun handleToggleIncognitoMode() {
         prefs.suggestion.forceIncognitoModeFromDynamic.set(!prefs.suggestion.forceIncognitoModeFromDynamic.get())
         val newState = !activeState.isIncognitoMode
         activeState.isIncognitoMode = newState
@@ -606,7 +608,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun handleToggleAutocorrect() {
         lastToastReference.get()?.cancel()
         lastToastReference = WeakReference(
-            appContext.showLongToast("Autocorrect toggle is a placeholder and not yet implemented")
+            appContext.showLongToastSync("Autocorrect toggle is a placeholder and not yet implemented")
         )
     }
 
@@ -716,14 +718,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it) }
                 }
                 clipboardManager.updatePrimaryClip(null)
-                appContext.showShortToast(R.string.clipboard__cleared_primary_clip)
+                appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
             }
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> toggleOneHandedMode()
-            KeyCode.COMPACT_LAYOUT_TO_LEFT -> {
+            KeyCode.TOGGLE_COMPACT_LAYOUT -> scope.launch { toggleOneHandedMode() }
+            KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
                 prefs.keyboard.oneHandedMode.set(OneHandedMode.START)
                 toggleOneHandedMode()
             }
-            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
+            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
                 prefs.keyboard.oneHandedMode.set(OneHandedMode.END)
                 toggleOneHandedMode()
             }
@@ -753,7 +755,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
-            KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> {
+            KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> scope.launch {
                 prefs.smartbar.enabled.let { it.set(!it.get()) }
             }
             KeyCode.TOGGLE_ACTIONS_OVERFLOW -> {
@@ -762,7 +764,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.TOGGLE_ACTIONS_EDITOR -> {
                 activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
-            KeyCode.TOGGLE_INCOGNITO_MODE -> handleToggleIncognitoMode()
+            KeyCode.TOGGLE_INCOGNITO_MODE -> scope.launch { handleToggleIncognitoMode() }
             KeyCode.TOGGLE_AUTOCORRECT -> handleToggleAutocorrect()
             KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS

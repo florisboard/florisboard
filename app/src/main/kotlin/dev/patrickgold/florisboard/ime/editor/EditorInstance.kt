@@ -23,7 +23,7 @@ import android.view.KeyEvent
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -43,13 +43,14 @@ import dev.patrickgold.florisboard.subtypeManager
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
         private const val SPACE = " "
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
@@ -393,7 +394,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
-            appContext.showShortToast("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
+            appContext.showShortToastSync("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
         }
         return deleteBackwards()
     }
@@ -411,7 +412,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
-            appContext.showShortToast("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
+            appContext.showShortToastSync("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
         }
         val activeSelection = activeContent.selection
         return setSelection(activeSelection.end, activeSelection.end)
@@ -428,7 +429,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         return commitClipboardItem(clipboardManager.primaryClip).also { result ->
             if (!result) {
-                appContext.showShortToast("Failed to paste item.")
+                appContext.showShortToastSync("Failed to paste item.")
             }
         }
     }

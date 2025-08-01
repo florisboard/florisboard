@@ -68,7 +68,7 @@ fun SmartbarScreen() = FlorisScreen {
             // TODO: schedule to remove this preference in the future, but keep it for now so users
             //  know why the setting is not available anymore. Also force enable it for UI display.
             SideEffect {
-                prefs.smartbar.sharedActionsAutoExpandCollapse.set(true)
+                // prefs.smartbar.sharedActionsAutoExpandCollapse.set(true)
             }
             SwitchPreference(
                 prefs.smartbar.sharedActionsAutoExpandCollapse,

@@ -90,6 +90,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import java.util.*
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
@@ -287,7 +288,7 @@ private fun EditScreen(
                             stylesheetFile.writeText(stylesheet)
                         }.onFailure {
                             // TODO: better error handling
-                            context.showLongToast(it.message.toString())
+                            context.showLongToastSync(it.message.toString())
                             return
                         }
                     } else {
@@ -665,7 +666,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                     when (createFrom) {
                         CreateFrom.EMPTY -> {
                             if (editor.themes.any { it.id == newId.trim() }) {
-                                context.showLongToast("A theme with this ID already exists!")
+                                context.showLongToastSync("A theme with this ID already exists!")
                             } else {
                                 val componentEditor = ThemeExtensionComponentEditor(
                                     id = newId.trim(),

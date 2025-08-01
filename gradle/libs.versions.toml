@@ -1,6 +1,6 @@
 [versions]
 # Main
-android-gradle-plugin = "8.9.3"
+android-gradle-plugin = "8.10.1"
 androidx-activity = "1.10.1"
 androidx-autofill = "1.1.0"
 androidx-collection = "1.5.0"
@@ -11,16 +11,16 @@ androidx-emoji2 = "1.5.0"
 androidx-exifinterface = "1.4.1"
 androidx-navigation = "2.9.0"
 androidx-profileinstaller = "1.4.1"
-androidx-room = "2.6.1"
+androidx-room = "2.7.2"
 cache4k = "0.7.0"
 coil = "3.2.0"
-kotlin = "2.1.20"
+kotlin = "2.2.0"
 kotlinx-coroutines = "1.10.2"
-kotlinx-serialization-json = "1.8.1"
-ksp = "2.1.20-1.0.32"
+kotlinx-serialization-json = "1.9.0"
+ksp = "2.2.0-2.0.2"
 mikepenz-aboutlibraries = "12.1.2"
 patrickgold-compose-tooltip = "0.2.0-rc02"
-patrickgold-jetpref = "0.2.0-rc04"
+patrickgold-jetpref = "0.3.0-beta01"
 
 # Testing
 androidx-benchmark = "1.3.4"
@@ -63,6 +63,7 @@ mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", ve
 mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "mikepenz-aboutlibraries" }
 patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:tooltip", version.ref = "patrickgold-compose-tooltip" }
 patrickgold-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "patrickgold-jetpref" }
+patrickgold-jetpref-datastore-model-processor = { module = "dev.patrickgold.jetpref:jetpref-datastore-model-processor", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-datastore-ui = { module = "dev.patrickgold.jetpref:jetpref-datastore-ui", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-material-ui = { module = "dev.patrickgold.jetpref:jetpref-material-ui", version.ref = "patrickgold-jetpref" }
 

@@ -27,8 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -52,7 +52,7 @@ fun MediaScreen() = FlorisScreen {
     previewFieldVisible = true
     iconSpaceReserved = true
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
 
     var shouldDelete by remember { mutableStateOf<ShouldDelete?>(null) }
     val scope = rememberCoroutineScope()

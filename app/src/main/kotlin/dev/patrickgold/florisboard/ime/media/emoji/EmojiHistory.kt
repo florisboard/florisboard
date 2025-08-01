@@ -16,13 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import dev.patrickgold.florisboard.app.AppPrefs
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 @Serializable
@@ -76,7 +75,7 @@ data class EmojiHistory(
 object EmojiHistoryHelper {
     private var emojiGuard = Mutex(locked = false)
 
-    suspend fun markEmojiUsed(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
+    suspend fun markEmojiUsed(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -121,7 +120,7 @@ object EmojiHistoryHelper {
         )
     }
 
-    suspend fun pinEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
+    suspend fun pinEmoji(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -138,7 +137,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun unpinEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
+    suspend fun unpinEmoji(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -155,7 +154,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun moveEmoji(prefs: AppPrefs, emoji: Emoji, offset: Int) = emojiGuard.withLock {
+    suspend fun moveEmoji(prefs: FlorisPreferenceModel, emoji: Emoji, offset: Int): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get() || offset == 0) {
             return
         }
@@ -175,7 +174,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun removeEmoji(prefs: AppPrefs, emoji: Emoji) = emojiGuard.withLock {
+    suspend fun removeEmoji(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -195,7 +194,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun deleteHistory(prefs: AppPrefs) = emojiGuard.withLock {
+    suspend fun deleteHistory(prefs: FlorisPreferenceModel): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -203,7 +202,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(EmojiHistory(pinned = dataMut.pinned, listOf()))
     }
 
-    suspend fun deletePinned(prefs: AppPrefs) = emojiGuard.withLock {
+    suspend fun deletePinned(prefs: FlorisPreferenceModel): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }

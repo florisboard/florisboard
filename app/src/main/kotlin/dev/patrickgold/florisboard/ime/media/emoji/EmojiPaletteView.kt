@@ -25,7 +25,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,8 +45,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -83,7 +80,7 @@ import androidx.compose.ui.window.Popup
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.widget.EmojiTextView
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -133,7 +130,7 @@ fun EmojiPaletteView(
     fullEmojiMappings: EmojiData,
     modifier: Modifier = Modifier,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val editorInstance by context.editorInstance()
     val keyboardManager by context.keyboardManager()
@@ -497,7 +494,7 @@ private fun EmojiHistoryPopup(
     onHistoryAction: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
     val context = LocalContext.current

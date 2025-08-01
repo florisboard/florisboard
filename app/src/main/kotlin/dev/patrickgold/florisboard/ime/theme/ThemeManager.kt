@@ -39,10 +39,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
@@ -52,70 +50,67 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.util.TimeUtils.javaLocalTime
 import dev.patrickgold.florisboard.lib.util.ViewUtils
-import java.time.LocalTime
-import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import kotlin.properties.Delegates
+import java.time.LocalTime
+import java.util.*
 
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
  * Settings Activities.
  */
 class ThemeManager(context: Context) {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val _indexedThemeConfigs = MutableLiveData(mapOf<ExtensionComponentName, ThemeExtensionComponent>())
-    val indexedThemeConfigs: LiveData<Map<ExtensionComponentName, ThemeExtensionComponent>> get() = _indexedThemeConfigs
-    var previewThemeId: ExtensionComponentName? by Delegates.observable(null) { _, _, _ ->
-        updateActiveTheme()
-    }
-    var previewThemeInfo: ThemeInfo? by Delegates.observable(null) { _, _, _ ->
-        updateActiveTheme()
-    }
+    private val _indexedThemeConfigs = MutableStateFlow(mapOf<ExtensionComponentName, ThemeExtensionComponent>())
+    val indexedThemeConfigs get() = _indexedThemeConfigs.asStateFlow()
+    val previewThemeId = MutableStateFlow<ExtensionComponentName?>(null)
+    val previewThemeInfo = MutableStateFlow<ThemeInfo?>(null)
+    val wallpaperChangedCounter = MutableStateFlow(0)
 
     private val cachedThemeInfos = mutableListOf<ThemeInfo>()
     private val activeThemeGuard = Mutex(locked = false)
-    private val _activeThemeInfo = MutableLiveData(ThemeInfo.DEFAULT)
-    val activeThemeInfo: LiveData<ThemeInfo> get() = _activeThemeInfo
+    private val _activeThemeInfo = MutableStateFlow(ThemeInfo.DEFAULT)
+    val activeThemeInfo get() = _activeThemeInfo.asStateFlow()
 
     init {
         extensionManager.themes.observeForever { themeExtensions ->
-            val map = buildMap {
+            _indexedThemeConfigs.value = buildMap {
                 for (themeExtension in themeExtensions) {
                     for (themeComponent in themeExtension.themes) {
                         put(ExtensionComponentName(themeExtension.meta.id, themeComponent.id), themeComponent)
                     }
                 }
             }
-            _indexedThemeConfigs.postValue(map)
         }
-        indexedThemeConfigs.observeForever {
-            updateActiveTheme {
-                cachedThemeInfos.clear()
-            }
+        indexedThemeConfigs.collectIn(scope) {
+            updateActiveTheme { cachedThemeInfos.clear() }
         }
-        prefs.theme.mode.observeForever {
-            updateActiveTheme()
-        }
-        prefs.theme.dayThemeId.observeForever {
-            updateActiveTheme()
-        }
-        prefs.theme.nightThemeId.observeForever {
+        combine(
+            prefs.theme.mode.asFlow(),
+            prefs.theme.dayThemeId.asFlow(),
+            prefs.theme.nightThemeId.asFlow(),
+            previewThemeId,
+            previewThemeInfo,
+            wallpaperChangedCounter,
+        ) {}.collectIn(scope) {
             updateActiveTheme()
         }
     }
@@ -124,56 +119,54 @@ class ThemeManager(context: Context) {
      * Updates the current theme ref and loads the corresponding theme, as well as notifies all
      * callback receivers about the new theme.
      */
-    fun updateActiveTheme(action: () -> Unit = { }) = scope.launch {
-        activeThemeGuard.withLock {
-            action()
-            previewThemeInfo?.let { previewThemeInfo ->
-                _activeThemeInfo.postValue(previewThemeInfo)
-                return@withLock
-            }
-            val activeName = evaluateActiveThemeName()
-            val cachedInfo = cachedThemeInfos.find { it.name == activeName }
-            if (cachedInfo != null) {
-                _activeThemeInfo.postValue(cachedInfo)
-                return@withLock
-            }
-            val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
-            val themeExtRef = themeExt?.sourceRef
-            if (themeExtRef == null) {
-                return@withLock
-            }
-            val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
-            if (themeConfig == null) {
-                return@withLock
-            }
-            // TODO: loaded dir is implemented already...
-            // TODO: this leaks the loaded dir, but at least the state is not kaputt from compose viewpoint
-            val loadedDir = appContext.cacheDir.subDir("loaded").subDir(UUID.randomUUID().toString())
-            runCatching {
-                loadedDir.mkdirs()
-                loadedDir.deleteContentsRecursively()
-                ZipUtils.unzip(appContext, themeExtRef, loadedDir).getOrThrow()
-                flogInfo { "Loaded extension ${themeExt.meta.id} into $loadedDir" }
-                val stylesheetFile = loadedDir.subFile(themeConfig.stylesheetPath())
-                val stylesheetJson = stylesheetFile.readText()
-                SnyggStylesheet.fromJson(stylesheetJson).getOrThrow()
-            }.fold(
-                onSuccess = { newStylesheet ->
-                    val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet, loadedDir, null)
-                    cachedThemeInfos.add(newInfo)
-                    _activeThemeInfo.postValue(newInfo)
-                },
-                onFailure = { cause ->
-                    _activeThemeInfo.postValue(ThemeInfo.DEFAULT.copy(
-                        loadFailure = LoadFailure(themeExt.meta, themeConfig, cause)
-                    ))
-                },
-            )
+    suspend fun updateActiveTheme(action: () -> Unit = { }) = activeThemeGuard.withLock {
+        action()
+        previewThemeInfo.value?.let { previewThemeInfo ->
+            _activeThemeInfo.value = previewThemeInfo
+            return@withLock
         }
+        val activeName = evaluateActiveThemeName()
+        val cachedInfo = cachedThemeInfos.find { it.name == activeName }
+        if (cachedInfo != null) {
+            _activeThemeInfo.value = cachedInfo
+            return@withLock
+        }
+        val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
+        val themeExtRef = themeExt?.sourceRef
+        if (themeExtRef == null) {
+            return@withLock
+        }
+        val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
+        if (themeConfig == null) {
+            return@withLock
+        }
+        // TODO: loaded dir is implemented already...
+        // TODO: this leaks the loaded dir, but at least the state is not kaputt from compose viewpoint
+        val loadedDir = appContext.cacheDir.subDir("loaded").subDir(UUID.randomUUID().toString())
+        runCatching {
+            loadedDir.mkdirs()
+            loadedDir.deleteContentsRecursively()
+            ZipUtils.unzip(appContext, themeExtRef, loadedDir).getOrThrow()
+            flogInfo { "Loaded extension ${themeExt.meta.id} into $loadedDir" }
+            val stylesheetFile = loadedDir.subFile(themeConfig.stylesheetPath())
+            val stylesheetJson = stylesheetFile.readText()
+            SnyggStylesheet.fromJson(stylesheetJson).getOrThrow()
+        }.fold(
+            onSuccess = { newStylesheet ->
+                val newInfo = ThemeInfo(activeName, themeConfig, newStylesheet, loadedDir, null)
+                cachedThemeInfos.add(newInfo)
+                _activeThemeInfo.value = newInfo
+            },
+            onFailure = { cause ->
+                _activeThemeInfo.value = ThemeInfo.DEFAULT.copy(
+                    loadFailure = LoadFailure(themeExt.meta, themeConfig, cause)
+                )
+            },
+        )
     }
 
     private fun evaluateActiveThemeName(): ExtensionComponentName {
-        previewThemeId?.let { return it }
+        previewThemeId.value?.let { return it }
         return when (prefs.theme.mode.get()) {
             ThemeMode.ALWAYS_DAY -> {
                 prefs.theme.dayThemeId.get()
@@ -202,10 +195,9 @@ class ThemeManager(context: Context) {
     }
 
     /**
-     * Creates a new inline suggestion UI bundle based on the attributes of the given [style].
+     * Creates a new inline suggestion UI bundle.
      *
      * @param context The context of the parent view/controller.
-     * @param style The style set which is responsible for styling the chips.
      *
      * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
      */

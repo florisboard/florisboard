@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
@@ -37,7 +37,7 @@ fun FineTuneDialog(onDismiss: () -> Unit) {
         onDismiss = onDismiss,
         contentPadding = FineTuneContentPadding,
     ) {
-        PreferenceLayout(florisPreferenceModel(), iconSpaceReserved = false) {
+        PreferenceLayout(FlorisPreferenceStore, iconSpaceReserved = false) {
             ListPreference(
                 listPref = prefs.theme.editorLevel,
                 title = stringRes(R.string.settings__theme_editor__fine_tune__level),

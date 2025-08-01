@@ -44,8 +44,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -61,7 +61,7 @@ fun SelectLocaleScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__subtype_select_locale)
     scrollable = false
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()

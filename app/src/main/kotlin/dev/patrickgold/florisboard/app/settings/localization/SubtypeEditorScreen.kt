@@ -58,9 +58,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
@@ -86,7 +86,6 @@ import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import kotlinx.serialization.encodeToString
 
 private val SelectComponentName = ExtensionComponentName("00", "00")
 private val SelectNlpProviderId = SelectComponentName.toString()
@@ -186,7 +185,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val selectValue = stringRes(R.string.settings__localization__subtype_select_placeholder)
     val selectListValues = remember(selectValue) { listOf(selectValue) }
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val configuration = LocalConfiguration.current

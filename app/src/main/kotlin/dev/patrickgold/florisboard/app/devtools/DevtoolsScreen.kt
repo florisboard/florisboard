@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -38,7 +39,9 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.showLongToastSync
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
@@ -52,6 +55,7 @@ fun DevtoolsScreen() = FlorisScreen {
     val context = LocalContext.current
     val navController = LocalNavController.current
     val extensionManager by context.extensionManager()
+    val scope = rememberCoroutineScope()
 
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
 
@@ -110,15 +114,17 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = stringRes(R.string.devtools__reset_quick_actions_to_default__label),
                 summary = stringRes(R.string.devtools__reset_quick_actions_to_default__summary),
                 onClick = {
-                    prefs.smartbar.actionArrangement.set(QuickActionArrangement.Default)
-                    context.showLongToast(R.string.devtools__reset_quick_actions_to_default__toast_success)
+                    scope.launch {
+                        prefs.smartbar.actionArrangement.set(QuickActionArrangement.Default)
+                    }
+                    context.showLongToastSync(R.string.devtools__reset_quick_actions_to_default__toast_success)
                 },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(
                 title = stringRes(R.string.devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
                 summary = stringRes(R.string.devtools__reset_flag_is_ime_set_up__summary),
-                onClick = { prefs.internal.isImeSetUp.set(false) },
+                onClick = { scope.launch { prefs.internal.isImeSetUp.set(false) } },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(
@@ -200,14 +206,14 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = "keyboardExtensions",
                 summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
                 onClick = {
-                    context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
+                    context.showLongToastSync(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
                 },
             )
             Preference(
                 title = "themes",
                 summary = extensionManager.themes.internalModuleDir.absolutePath,
                 onClick = {
-                    context.showLongToast(extensionManager.themes.internalModuleDir.absolutePath)
+                    context.showLongToastSync(extensionManager.themes.internalModuleDir.absolutePath)
                 },
             )
         }

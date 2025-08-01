@@ -30,7 +30,6 @@ import androidx.compose.material.icons.automirrored.filled.FormatAlignLeft
 import androidx.compose.material.icons.automirrored.filled.FormatAlignRight
 import androidx.compose.material.icons.automirrored.filled.WrapText
 import androidx.compose.material.icons.filled.AttachFile
-import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.FormatAlignCenter
@@ -57,7 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
@@ -121,7 +120,7 @@ internal fun SnyggValueIcon(
     modifier: Modifier = Modifier,
     spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val accentColor by prefs.theme.accentColor.observeAsState()
 

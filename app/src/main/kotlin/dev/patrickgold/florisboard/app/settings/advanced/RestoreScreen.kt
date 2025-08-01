@@ -43,8 +43,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -60,13 +61,16 @@ import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
+import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subDir
@@ -79,11 +83,6 @@ object Restore {
     const val MIN_VERSION_CODE = 64
     const val PACKAGE_NAME = "dev.patrickgold.florisboard"
     const val BACKUP_ARCHIVE_FILE_NAME = "backup.zip"
-
-    enum class Mode {
-        MERGE,
-        ERASE_AND_OVERWRITE;
-    }
 }
 
 @Composable
@@ -91,13 +90,12 @@ fun RestoreScreen() = FlorisScreen {
     title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
-    val prefs by florisPreferenceModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
 
     val restoreFilesSelector = remember { Backup.FilesSelector() }
-    var restoreMode by remember { mutableStateOf(Restore.Mode.MERGE) }
+    var importStrategy by remember { mutableStateOf(ImportStrategy.Merge) }
     // TODO: rememberCoroutineScope() is unusable because it provides the scope in a cancelled state, which does
     //  not make sense at all. I suspect that this is a bug and once it is resolved we can use it here again.
     val restoreScope = remember { CoroutineScope(Dispatchers.Main) }
@@ -138,7 +136,7 @@ fun RestoreScreen() = FlorisScreen {
                 }
                 restoreWorkspace = workspace
             }.onFailure { error ->
-                context.showLongToast(
+                context.showLongToastSync(
                     R.string.backup_and_restore__restore__failure,
                     "error_message" to error.localizedMessage,
                 )
@@ -148,15 +146,13 @@ fun RestoreScreen() = FlorisScreen {
 
     suspend fun performRestore() {
         val workspace = restoreWorkspace!!
-        val shouldReset = restoreMode == Restore.Mode.ERASE_AND_OVERWRITE
+        val shouldReset = importStrategy == ImportStrategy.Erase
         if (restoreFilesSelector.jetprefDatastore) {
-            val datastoreFile = workspace.outputDir
-                .subDir(JetPref.JETPREF_DIR_NAME)
-                .subFile("${prefs.name}.${JetPref.JETPREF_FILE_EXT}")
-            if (datastoreFile.exists()) {
-                prefs.datastorePersistenceHandler?.loadPrefs(datastoreFile, shouldReset)
-                prefs.datastorePersistenceHandler?.persistPrefs()
-            }
+            val fileBasedStorage = workspace.outputDir
+                .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
+                .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+                .let { FileBasedStorage(it.path) }
+            FlorisPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
         }
         val workspaceFilesDir = workspace.outputDir.subDir("files")
         if (restoreFilesSelector.imeKeyboard) {
@@ -275,16 +271,16 @@ fun RestoreScreen() = FlorisScreen {
         ) {
             RadioListItem(
                 onClick = {
-                    restoreMode = Restore.Mode.MERGE
+                    importStrategy = ImportStrategy.Merge
                 },
-                selected = restoreMode == Restore.Mode.MERGE,
+                selected = importStrategy == ImportStrategy.Merge,
                 text = stringRes(R.string.backup_and_restore__restore__mode_merge),
             )
             RadioListItem(
                 onClick = {
-                    restoreMode = Restore.Mode.ERASE_AND_OVERWRITE
+                    importStrategy = ImportStrategy.Erase
                 },
-                selected = restoreMode == Restore.Mode.ERASE_AND_OVERWRITE,
+                selected = importStrategy == ImportStrategy.Erase,
                 text = stringRes(R.string.backup_and_restore__restore__mode_erase_and_overwrite),
             )
         }
@@ -293,7 +289,7 @@ fun RestoreScreen() = FlorisScreen {
                 runCatching {
                     restoreDataFromFileSystemLauncher.launch("*/*")
                 }.onFailure { error ->
-                    context.showLongToast(
+                    context.showLongToastSync(
                         R.string.backup_and_restore__restore__failure,
                         "error_message" to error.localizedMessage,
                     )

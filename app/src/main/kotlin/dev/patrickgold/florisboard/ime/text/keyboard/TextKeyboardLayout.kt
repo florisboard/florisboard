@@ -56,7 +56,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
@@ -104,7 +104,7 @@ fun TextKeyboardLayout(
     evaluator: ComputingEvaluator,
     isPreview: Boolean = false,
 ): Unit = with(LocalDensity.current) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
@@ -132,7 +132,7 @@ fun TextKeyboardLayout(
             controller.onTouchEventInternal(event)
             controller.popupUiController.hide()
             event.recycle()
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             // Ignore
         }
     }
@@ -337,7 +337,7 @@ private fun TextKeyButton(
         key.label?.let { label ->
             var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
-                val prefs by florisPreferenceModel()
+                val prefs by FlorisPreferenceStore
                 val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
                 when (spaceBarMode) {
                     SpaceBarMode.NOTHING -> return@let
@@ -385,7 +385,7 @@ private fun TextKeyButton(
 private class TextKeyboardLayoutController(
     context: Context,
 ) : SwipeGesture.Listener, GlideTypingGesture.Listener {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
 

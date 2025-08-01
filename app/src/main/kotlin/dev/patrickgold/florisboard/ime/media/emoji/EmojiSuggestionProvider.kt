@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.stream.Collectors
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
@@ -41,7 +41,7 @@ import io.github.reactivecircus.cache4k.Cache
 class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider {
     override val providerId = "org.florisboard.nlp.providers.emoji"
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val lettersRegex = "^[A-Za-z]*$".toRegex()
 
     private val cachedEmojiMappings = Cache.Builder().build<FlorisLocale, EmojiDataBySkinTone>()

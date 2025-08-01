@@ -75,8 +75,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
 import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
@@ -119,8 +119,9 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -246,12 +247,12 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             }
-            ims.showShortToast("Failed to find voice IME, do you have one installed?")
+            ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
             return false
         }
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val editorInstance by editorInstance()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
@@ -277,21 +278,21 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
-        subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
+        subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
                 config.setLocale(subtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.observeForever { shouldSync ->
+        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow().collectIn(lifecycleScope) { shouldSync ->
             val config = Configuration(resources.configuration)
             if (shouldSync) {
                 config.setLocale(subtypeManager.activeSubtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.physicalKeyboard.showOnScreenKeyboard.observeForever {
+        prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectIn(lifecycleScope) {
             updateInputViewShown()
         }
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
@@ -408,7 +409,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = true
-        themeManager.updateActiveTheme()
         inputFeedbackController.updateSystemPrefsState()
     }
 

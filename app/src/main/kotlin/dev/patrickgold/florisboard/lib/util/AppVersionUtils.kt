@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.lib.util
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.AppPrefs
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 
 object AppVersionUtils {
     private fun getRawVersionName(context: Context): String {
@@ -28,7 +28,7 @@ object AppVersionUtils {
         }
     }
 
-    fun shouldShowChangelog(context: Context, prefs: AppPrefs): Boolean {
+    fun shouldShowChangelog(context: Context, prefs: FlorisPreferenceModel): Boolean {
         val installVersion =
             VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
         val lastChangelogVersion =
@@ -39,14 +39,14 @@ object AppVersionUtils {
         return lastChangelogVersion < currentVersion && installVersion != currentVersion
     }
 
-    fun updateVersionOnInstallAndLastUse(context: Context, prefs: AppPrefs) {
+    suspend fun updateVersionOnInstallAndLastUse(context: Context, prefs: FlorisPreferenceModel) {
         if (prefs.internal.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
             prefs.internal.versionOnInstall.set(getRawVersionName(context))
         }
         prefs.internal.versionLastUse.set(getRawVersionName(context))
     }
 
-    fun updateVersionLastChangelog(context: Context, prefs: AppPrefs) {
+    suspend fun updateVersionLastChangelog(context: Context, prefs: FlorisPreferenceModel) {
         prefs.internal.versionLastChangelog.set(getRawVersionName(context))
     }
 }

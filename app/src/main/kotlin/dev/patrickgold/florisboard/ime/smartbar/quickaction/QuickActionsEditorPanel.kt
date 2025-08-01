@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -40,6 +39,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -60,8 +60,8 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.toIntOffset
+import kotlinx.coroutines.launch
 import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
@@ -74,8 +74,9 @@ private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.
 
 @Composable
 fun QuickActionsEditorPanel() {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val keyboardManager by context.keyboardManager()
 
     // We get the current arrangement once and do not observe on purpose
@@ -235,7 +236,9 @@ fun QuickActionsEditorPanel() {
                 dynamicActions.filter { it != NoopAction && it != DragMarkerAction },
                 hiddenActions.filter { it != NoopAction && it != DragMarkerAction },
             )
-            prefs.smartbar.actionArrangement.set(newActionArrangement)
+            scope.launch {
+                prefs.smartbar.actionArrangement.set(newActionArrangement)
+            }
             if (keyboardManager.activeState.isActionsEditorVisible) {
                 keyboardManager.activeState.isActionsEditorVisible = false
             }
