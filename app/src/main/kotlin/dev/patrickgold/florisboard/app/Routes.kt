@@ -97,11 +97,17 @@ inline fun <reified T : Routes.ArgumentRoute> NavGraphBuilder.composableWithDeep
 @Suppress("FunctionName", "ConstPropertyName")
 sealed interface Routes {
 
-    sealed interface SimpleRoute {
+    /**
+     * Simple route that should be accessible with a deep link
+     */
+    sealed interface SimpleRoute : Routes {
         val route: String
     }
 
-    sealed interface ArgumentRoute
+    /**
+     * Route with arguments that should be accessible with a deep link
+     */
+    sealed interface ArgumentRoute : Routes
 
     object Setup {
         @Serializable
