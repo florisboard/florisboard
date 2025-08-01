@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 internal fun ExtensionNotFoundScreen(id: String) = FlorisScreen {

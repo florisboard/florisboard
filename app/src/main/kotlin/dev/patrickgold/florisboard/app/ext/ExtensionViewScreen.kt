@@ -51,18 +51,17 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
-import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.FlorisOutlinedButton
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ExtensionViewScreen(id: String) {

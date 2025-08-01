@@ -50,12 +50,7 @@ import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
@@ -69,6 +64,11 @@ import kotlinx.serialization.Serializable
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.writeFromFile
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.io.writeJson

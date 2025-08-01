@@ -29,11 +29,11 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.loadTextAsset
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ProjectLicenseScreen() = FlorisScreen {

@@ -212,6 +212,7 @@ dependencies {
 
     implementation(project(":lib:android"))
     implementation(project(":lib:color"))
+    implementation(project(":lib:compose"))
     implementation(project(":lib:kotlin"))
     implementation(project(":lib:native"))
     implementation(project(":lib:snygg"))
