@@ -866,6 +866,20 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 handleEnter()
                 return true
             }
+            KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
+                inputEventDispatcher.sendDown(TextKeyData.SHIFT)
+                return true
+            }
+            else -> return false
+        }
+    }
+
+    fun onHardwareKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
+                inputEventDispatcher.sendUp(TextKeyData.SHIFT)
+                return true
+            }
             else -> return false
         }
     }
