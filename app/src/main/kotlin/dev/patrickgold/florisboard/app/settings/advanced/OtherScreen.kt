@@ -27,7 +27,9 @@ import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -44,7 +46,6 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
 import org.florisboard.lib.compose.stringRes
@@ -156,7 +157,7 @@ fun OtherScreen() = FlorisScreen {
             enabledIf = { AndroidVersion.ATMOST_API28_P },
         )
         Preference(
-            icon = vectorResource(R.drawable.ic_keyboard_keys),
+            icon = ImageVector.vectorResource(R.drawable.ic_keyboard_keys),
             title = stringRes(R.string.physical_keyboard__title),
             onClick = { navController.navigate(Routes.Settings.PhysicalKeyboard) },
         )

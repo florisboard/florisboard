@@ -49,7 +49,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -62,7 +64,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.horizontalTween
@@ -186,7 +187,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             } else {
                 Icons.AutoMirrored.Default.KeyboardArrowRight
             }
-            val incognitoIcon = vectorResource(id = R.drawable.ic_incognito)
+            val incognitoIcon = ImageVector.vectorResource(id = R.drawable.ic_incognito)
             val incognitoDisplayMode = prefs.keyboard.incognitoDisplayMode.observeAsState()
             val isIncognitoMode = keyboardManager.activeState.isIncognitoMode
             val icon = if (isIncognitoMode) {
