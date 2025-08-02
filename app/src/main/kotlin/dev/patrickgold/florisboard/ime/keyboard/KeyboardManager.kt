@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
+import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
@@ -75,7 +76,6 @@ import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
@@ -417,27 +417,30 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.DELETE] event.
      */
-    private fun handleDelete() {
+    private fun handleBackwardDelete(unit: OperationUnit) {
+        if (inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+            return handleForwardDelete(unit)
+        }
         activeState.batchEdit {
             it.isManualSelectionMode = false
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
         revertPreviouslyAcceptedCandidate()
-        editorInstance.deleteBackwards()
+        editorInstance.deleteBackwards(unit)
     }
 
     /**
-     * Handles a [KeyCode.DELETE_WORD] event.
+     * Handles a [KeyCode.FORWARD_DELETE] event.
      */
-    private fun handleDeleteWord() {
+    private fun handleForwardDelete(unit: OperationUnit) {
         activeState.batchEdit {
             it.isManualSelectionMode = false
             it.isManualSelectionModeStart = false
             it.isManualSelectionModeEnd = false
         }
         revertPreviouslyAcceptedCandidate()
-        editorInstance.deleteWordBackwards()
+        editorInstance.deleteForwards(unit)
     }
 
     /**
@@ -566,7 +569,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             if (inputEventDispatcher.isConsecutiveUp(data)) {
                 val text = editorInstance.run { activeContent.getTextBeforeCursor(2) }
                 if (text.length == 2 && DoubleSpacePeriodMatcher.matches(text)) {
-                    editorInstance.deleteBackwards()
+                    editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
                     editorInstance.commitText(". ")
                     return
                 }
@@ -729,9 +732,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 prefs.keyboard.oneHandedMode.set(OneHandedMode.END)
                 toggleOneHandedMode()
             }
-            KeyCode.DELETE -> handleDelete()
-            KeyCode.DELETE_WORD -> handleDeleteWord()
+            KeyCode.DELETE -> handleBackwardDelete(OperationUnit.CHARACTERS)
+            KeyCode.DELETE_WORD -> handleBackwardDelete(OperationUnit.WORDS)
             KeyCode.ENTER -> handleEnter()
+            KeyCode.FORWARD_DELETE -> handleForwardDelete(OperationUnit.CHARACTERS)
+            KeyCode.FORWARD_DELETE_WORD -> handleForwardDelete(OperationUnit.WORDS)
             KeyCode.IME_SHOW_UI -> FlorisImeService.showUi()
             KeyCode.IME_HIDE_UI -> FlorisImeService.hideUi()
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()

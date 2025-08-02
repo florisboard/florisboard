@@ -42,7 +42,6 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
@@ -336,34 +335,37 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun deleteBackwards(): Boolean {
+    fun deleteBackwards(unit: OperationUnit): Boolean {
         val content = activeContent
-        if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
-            return deleteWordBackwards()
+        if (unit == OperationUnit.CHARACTERS) {
+            if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
+                return deleteBackwards(OperationUnit.WORDS)
+            }
         }
         autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (content.selection.isSelectionMode) {
             commitText("")
-        } else {
-            deleteBeforeCursor(TextType.CHARACTERS, 1)
+        } else runBlocking {
+            deleteAroundCursor(unit, OperationScope.BEFORE_CURSOR, n = 1)
         }
     }
 
     /**
      * Executes a backward delete on this editor's text. If a text selection is active, all
-     * characters inside this selection will be removed, else only the left-most word from
+     * characters inside this selection will be removed, else only the left-most character from
      * the cursor's position.
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun deleteWordBackwards(): Boolean {
+    fun deleteForwards(unit: OperationUnit): Boolean {
+        val content = activeContent
         autoSpace.setInactive()
         phantomSpace.setInactive()
-        return if (activeContent.selection.isSelectionMode) {
+        return if (content.selection.isSelectionMode) {
             commitText("")
-        } else {
-            deleteBeforeCursor(TextType.WORDS, 1)
+        } else runBlocking {
+            deleteAroundCursor(unit, OperationScope.AFTER_CURSOR, n = 1)
         }
     }
 
@@ -396,7 +398,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         } else {
             appContext.showShortToastSync("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
         }
-        return deleteBackwards()
+        return deleteBackwards(OperationUnit.CHARACTERS)
     }
 
     /**
