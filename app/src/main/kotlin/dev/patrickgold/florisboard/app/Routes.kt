@@ -17,12 +17,17 @@
 package dev.patrickgold.florisboard.app
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -30,6 +35,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
 import dev.patrickgold.florisboard.app.devtools.AndroidLocalesScreen
 import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
@@ -70,113 +76,185 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
-import org.florisboard.lib.kotlin.curlyFormat
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.reflect.KClass
 
-@Suppress("FunctionName", "ConstPropertyName")
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Deeplink(val path: String)
+
+inline fun <reified T : Any> NavGraphBuilder.composableWithDeepLink(
+    kClass: KClass<T>,
+    noinline content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit),
+) {
+    val deeplink = requireNotNull(kClass.annotations.firstOrNull { it is Deeplink } as? Deeplink) {
+        "faulty class: $kClass with annotations ${kClass.annotations}"
+    }
+    composable<T>(
+        deepLinks = listOf(navDeepLink<T>(basePath = "ui://florisboard/${deeplink.path}")),
+        content = content,
+    )
+}
+
 object Routes {
     object Setup {
-        const val Screen = "setup"
+        @Serializable
+        object Screen
     }
 
     object Settings {
-        const val Home = "settings"
+        @Serializable
+        @Deeplink("settings/home")
+        object Home
 
-        const val Localization = "settings/localization"
-        const val SelectLocale = "settings/localization/select-locale"
-        const val LanguagePackManager = "settings/localization/language-pack-manage/{action}"
-        fun LanguagePackManager(action: LanguagePackManagerScreenAction) =
-            LanguagePackManager.curlyFormat("action" to action.id)
-        const val SubtypeAdd = "settings/localization/subtype/add"
-        const val SubtypeEdit = "settings/localization/subtype/edit/{id}"
-        fun SubtypeEdit(id: Long) = SubtypeEdit.curlyFormat("id" to id)
+        @Serializable
+        @Deeplink("settings/localization")
+        object Localization
 
-        const val Theme = "settings/theme"
-        const val ThemeManager = "settings/theme/manage/{action}"
-        fun ThemeManager(action: ThemeManagerScreenAction) = ThemeManager.curlyFormat("action" to action.id)
+        @Serializable
+        @Deeplink("settings/localization/select-locale")
+        object SelectLocale
 
-        const val Keyboard = "settings/keyboard"
-        const val InputFeedback = "settings/keyboard/input-feedback"
+        @Serializable
+        @Deeplink("settings/localization/language-pack-manage")
+        data class LanguagePackManager(val action: LanguagePackManagerScreenAction)
 
-        const val Smartbar = "settings/smartbar"
+        @Serializable
+        @Deeplink("settings/localization/subtype/add")
+        object SubtypeAdd
 
-        const val Typing = "settings/typing"
+        @Serializable
+        @Deeplink("settings/localization/subtype/edit")
+        data class SubtypeEdit(val id: Long)
 
-        const val Dictionary = "settings/dictionary"
-        const val UserDictionary = "settings/dictionary/user-dictionary/{type}"
-        fun UserDictionary(type: UserDictionaryType) = UserDictionary.curlyFormat("type" to type.id)
+        @Serializable
+        @Deeplink("settings/theme")
+        object Theme
 
-        const val Gestures = "settings/gestures"
+        @Serializable
+        @Deeplink("settings/theme/manage")
+        data class ThemeManager(val action: ThemeManagerScreenAction)
 
-        const val Clipboard = "settings/clipboard"
+        @Serializable
+        @Deeplink("settings/keyboard")
+        object Keyboard
 
-        const val Media = "settings/media"
+        @Serializable
+        @Deeplink("settings/keyboard/input-feedback")
+        object InputFeedback
 
-        const val Other = "settings/other"
-        const val PhysicalKeyboard = "settings/other/physical-keyboard"
-        const val Backup = "settings/other/backup"
-        const val Restore = "settings/other/restore"
+        @Serializable
+        @Deeplink("settings/smartbar")
+        object Smartbar
 
-        const val About = "settings/about"
-        const val ProjectLicense = "settings/about/project-license"
-        const val ThirdPartyLicenses = "settings/about/third-party-licenses"
+        @Serializable
+        @Deeplink("settings/typing")
+        object Typing
+
+        @Serializable
+        @Deeplink("settings/dictionary")
+        object Dictionary
+
+        @Serializable
+        @Deeplink("settings/dictionary/user-dictionary")
+        data class UserDictionary(val type: UserDictionaryType)
+
+        @Serializable
+        @Deeplink("settings/gestures")
+        object Gestures
+
+        @Serializable
+        @Deeplink("settings/clipboard")
+        object Clipboard
+
+        @Serializable
+        @Deeplink("settings/media")
+        object Media
+
+        @Serializable
+        @Deeplink("settings/other")
+        object Other
+
+        @Serializable
+        @Deeplink("settings/other/physical-keyboard")
+        object PhysicalKeyboard
+
+        @Serializable
+        @Deeplink("settings/other/backup")
+        object Backup
+
+        @Serializable
+        @Deeplink("settings/other/restore")
+        object Restore
+
+        @Serializable
+        @Deeplink("settings/about")
+        object About
+
+        @Serializable
+        @Deeplink("settings/about/project-license")
+        object ProjectLicense
+
+        @Serializable
+        @Deeplink("settings/about/third-party-licenses")
+        object ThirdPartyLicenses
     }
 
     object Devtools {
-        const val Home = "devtools"
+        @Serializable
+        @Deeplink("devtools")
+        object Home
 
-        const val AndroidLocales = "devtools/android/locales"
-        const val AndroidSettings = "devtools/android/settings/{name}"
-        fun AndroidSettings(name: String) = AndroidSettings.curlyFormat("name" to name)
+        @Serializable
+        @Deeplink("devtools/android/locales")
+        object AndroidLocales
 
-        const val ExportDebugLog = "export-debug-log"
+        @Serializable
+        @Deeplink("devtools/android/settings")
+        data class AndroidSettings(val name: String)
+
+        @Serializable
+        @Deeplink("export-debug-log")
+        object ExportDebugLog
     }
 
     object Ext {
-        const val Home = "ext"
+        @Serializable
+        @Deeplink("ext")
+        object Home
 
-        const val List = "ext/list/{type}?showUpdate={showUpdate}"
-        fun List(
-            type: ExtensionListScreenType,
-            showUpdate: Boolean
-        ) = List.curlyFormat("type" to type.id, "showUpdate" to showUpdate)
+        @Serializable
+        @Deeplink("ext/list")
+        data class List(val type: ExtensionListScreenType, val showUpdate: Boolean? = null)
 
-        const val Edit = "ext/edit/{id}?create={serial_type}"
-        fun Edit(id: String, serialType: String? = null): String {
-            return Edit.curlyFormat("id" to id, "serial_type" to (serialType ?: ""))
-        }
+        @Serializable
+        @Deeplink("ext/edit")
+        data class Edit(val id: String, @SerialName("create") val serialType: String? = null)
 
-        const val Export = "ext/export/{id}"
-        fun Export(id: String) = Export.curlyFormat("id" to id)
+        @Serializable
+        @Deeplink("ext/export")
+        data class Export(val id: String)
 
-        const val Import = "ext/import/{type}?uuid={uuid}"
-        fun Import(
-            type: ExtensionImportScreenType,
-            uuid: String?,
-        ) = Import.curlyFormat("type" to type.id, "uuid" to uuid.toString())
+        @Serializable
+        @Deeplink("ext/import")
+        data class Import(val type: ExtensionImportScreenType, val uuid: String? = null)
 
-        const val View = "ext/view/{id}"
-        fun View(id: String) = View.curlyFormat("id" to id)
+        @Serializable
+        @Deeplink("ext/view")
+        data class View(val id: String)
 
-        const val CheckUpdates = "ext/check-updates"
+        @Serializable
+        @Deeplink("ext/check-updates")
+        object CheckUpdates
     }
 
     @Composable
     fun AppNavHost(
         modifier: Modifier,
         navController: NavHostController,
-        startDestination: String,
+        startDestination: KClass<*>,
     ) {
-        fun NavGraphBuilder.composableWithDeepLink(
-            route: String,
-            content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit),
-        ) {
-            composable(
-                route = route,
-                deepLinks = listOf(navDeepLink { uriPattern = "ui://florisboard/$route" }),
-                content = content,
-            )
-        }
-
         NavHost(
             modifier = modifier,
             navController = navController,
@@ -187,109 +265,103 @@ object Routes {
             exitTransition = {
                 slideOut { IntOffset(-it.width, 0) } + fadeOut()
             },
-            popEnterTransition = {
-                slideIn { IntOffset(-it.width, 0) } + fadeIn()
-            },
+            popEnterTransition = { EnterTransition.None },
             popExitTransition = {
-                slideOut { IntOffset(it.width, 0) } + fadeOut()
-            }
+                scaleOut(
+                    targetScale = 0.85F,
+                    transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
+                ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
+            },
         ) {
-            composable(Setup.Screen) { SetupScreen() }
+            composable<Setup.Screen> { SetupScreen() }
 
-            composableWithDeepLink(Settings.Home) { HomeScreen() }
+            composableWithDeepLink(Settings.Home::class) { HomeScreen() }
 
-            composableWithDeepLink(Settings.Localization) { LocalizationScreen() }
-            composableWithDeepLink(Settings.SelectLocale) { SelectLocaleScreen() }
-            composableWithDeepLink(Settings.LanguagePackManager) { navBackStack ->
-                val action = navBackStack.arguments?.getString("action")?.let { actionId ->
-                    LanguagePackManagerScreenAction.entries.firstOrNull { it.id == actionId }
-                }
-                LanguagePackManagerScreen(action)
+            composableWithDeepLink(Settings.Localization::class) { LocalizationScreen() }
+            composableWithDeepLink(Settings.SelectLocale::class) { SelectLocaleScreen() }
+            composableWithDeepLink(Settings.LanguagePackManager::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.LanguagePackManager>()
+                LanguagePackManagerScreen(payload.action)
             }
-            composableWithDeepLink(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
-            composableWithDeepLink(Settings.SubtypeEdit) { navBackStack ->
-                val id = navBackStack.arguments?.getString("id")?.toLongOrNull()
-                SubtypeEditorScreen(id)
+            composableWithDeepLink(Settings.SubtypeAdd::class) { SubtypeEditorScreen(null) }
+            composableWithDeepLink(Settings.SubtypeEdit::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.SubtypeEdit>()
+                SubtypeEditorScreen(payload.id)
             }
 
-            composableWithDeepLink(Settings.Theme) { ThemeScreen() }
-            composableWithDeepLink(Settings.ThemeManager) { navBackStack ->
-                val action = navBackStack.arguments?.getString("action")?.let { actionId ->
-                    ThemeManagerScreenAction.entries.firstOrNull { it.id == actionId }
-                }
-                ThemeManagerScreen(action)
+            composableWithDeepLink(Settings.Theme::class) { ThemeScreen() }
+            composableWithDeepLink(Settings.ThemeManager::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.ThemeManager>()
+                ThemeManagerScreen(payload.action)
             }
 
-            composableWithDeepLink(Settings.Keyboard) { KeyboardScreen() }
-            composableWithDeepLink(Settings.InputFeedback) { InputFeedbackScreen() }
+            composableWithDeepLink(Settings.Keyboard::class) { KeyboardScreen() }
+            composableWithDeepLink(Settings.InputFeedback::class) { InputFeedbackScreen() }
 
-            composableWithDeepLink(Settings.Smartbar) { SmartbarScreen() }
+            composableWithDeepLink(Settings.Smartbar::class) { SmartbarScreen() }
 
-            composableWithDeepLink(Settings.Typing) { TypingScreen() }
+            composableWithDeepLink(Settings.Typing::class) { TypingScreen() }
 
-            composableWithDeepLink(Settings.Dictionary) { DictionaryScreen() }
-            composableWithDeepLink(Settings.UserDictionary) { navBackStack ->
-                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
-                    UserDictionaryType.entries.firstOrNull { it.id == typeId }
-                }
-                UserDictionaryScreen(type!!)
+            composableWithDeepLink(Settings.Dictionary::class) { DictionaryScreen() }
+            composableWithDeepLink(Settings.UserDictionary::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.UserDictionary>()
+                UserDictionaryScreen(payload.type)
             }
 
-            composableWithDeepLink(Settings.Gestures) { GesturesScreen() }
+            composableWithDeepLink(Settings.Gestures::class) { GesturesScreen() }
 
-            composableWithDeepLink(Settings.Clipboard) { ClipboardScreen() }
+            composableWithDeepLink(Settings.Clipboard::class) { ClipboardScreen() }
 
-            composableWithDeepLink(Settings.Media) { MediaScreen() }
+            composableWithDeepLink(Settings.Media::class) { MediaScreen() }
 
-            composableWithDeepLink(Settings.Other) { OtherScreen() }
-            composableWithDeepLink(Settings.PhysicalKeyboard) { PhysicalKeyboardScreen() }
-            composableWithDeepLink(Settings.Backup) { BackupScreen() }
-            composableWithDeepLink(Settings.Restore) { RestoreScreen() }
+            composableWithDeepLink(Settings.Other::class) { OtherScreen() }
+            composableWithDeepLink(Settings.PhysicalKeyboard::class) { PhysicalKeyboardScreen() }
+            composableWithDeepLink(Settings.Backup::class) { BackupScreen() }
+            composableWithDeepLink(Settings.Restore::class) { RestoreScreen() }
 
-            composableWithDeepLink(Settings.About) { AboutScreen() }
-            composableWithDeepLink(Settings.ProjectLicense) { ProjectLicenseScreen() }
-            composableWithDeepLink(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+            composableWithDeepLink(Settings.About::class) { AboutScreen() }
+            composableWithDeepLink(Settings.ProjectLicense::class) { ProjectLicenseScreen() }
+            composableWithDeepLink(Settings.ThirdPartyLicenses::class) { ThirdPartyLicensesScreen() }
 
-            composableWithDeepLink(Devtools.Home) { DevtoolsScreen() }
-            composableWithDeepLink(Devtools.AndroidLocales) { AndroidLocalesScreen() }
-            composableWithDeepLink(Devtools.AndroidSettings) { navBackStack ->
-                val name = navBackStack.arguments?.getString("name")
-                AndroidSettingsScreen(name)
+            composableWithDeepLink(Devtools.Home::class) { DevtoolsScreen() }
+            composableWithDeepLink(Devtools.AndroidLocales::class) { AndroidLocalesScreen() }
+            composableWithDeepLink(Devtools.AndroidSettings::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Devtools.AndroidSettings>()
+                AndroidSettingsScreen(payload.name)
             }
-            composableWithDeepLink(Devtools.ExportDebugLog) { ExportDebugLogScreen() }
+            composableWithDeepLink(Devtools.ExportDebugLog::class) { ExportDebugLogScreen() }
 
-            composableWithDeepLink(Ext.Home) { ExtensionHomeScreen() }
-            composableWithDeepLink(Ext.List) { navBackStack ->
-                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
-                    ExtensionListScreenType.entries.firstOrNull { it.id == typeId }
-                } ?: error("unknown type")
-                val showUpdate = navBackStack.arguments?.getString("showUpdate")
-                ExtensionListScreen(type, showUpdate == "true")
+            composableWithDeepLink(Ext.Home::class) { ExtensionHomeScreen() }
+            composableWithDeepLink(Ext.List::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.List>()
+                val showUpdate = payload.showUpdate != null && payload.showUpdate
+                ExtensionListScreen(payload.type, showUpdate)
             }
-            composableWithDeepLink(Ext.Edit) { navBackStack ->
-                val extensionId = navBackStack.arguments?.getString("id")
-                val serialType = navBackStack.arguments?.getString("serial_type")
+            composableWithDeepLink(Ext.Edit::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Edit>()
+                val extensionId = payload.id
+                val serialType = payload.serialType
                 ExtensionEditScreen(
-                    id = extensionId.toString(),
+                    id = extensionId,
                     createSerialType = serialType.takeIf { !it.isNullOrBlank() },
                 )
             }
-            composableWithDeepLink(Ext.Export) { navBackStack ->
-                val extensionId = navBackStack.arguments?.getString("id")
-                ExtensionExportScreen(id = extensionId.toString())
+            composableWithDeepLink(Ext.Export::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Export>()
+                val extensionId = payload.id
+                ExtensionExportScreen(id = extensionId)
             }
-            composableWithDeepLink(Ext.Import) { navBackStack ->
-                val type = navBackStack.arguments?.getString("type")?.let { typeId ->
-                    ExtensionImportScreenType.entries.firstOrNull { it.id == typeId }
-                } ?: ExtensionImportScreenType.EXT_ANY
-                val uuid = navBackStack.arguments?.getString("uuid")?.takeIf { it != "null" }
-                ExtensionImportScreen(type, uuid)
+            composableWithDeepLink(Ext.Import::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Import>()
+                val uuid = payload.uuid
+                ExtensionImportScreen(payload.type, uuid)
             }
-            composableWithDeepLink(Ext.View) { navBackStack ->
-                val extensionId = navBackStack.arguments?.getString("id")
-                ExtensionViewScreen(id = extensionId.toString())
+            composableWithDeepLink(Ext.View::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.View>()
+                val extensionId = payload.id
+                ExtensionViewScreen(id = extensionId)
             }
-            composableWithDeepLink(Ext.CheckUpdates) {
+            composableWithDeepLink(Ext.CheckUpdates::class) {
                 CheckUpdatesScreen()
             }
         }

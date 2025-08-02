@@ -197,7 +197,7 @@ class FlorisAppActivity : ComponentActivity() {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),
                         navController = navController,
-                        startDestination = if (isImeSetUp) Routes.Settings.Home else Routes.Setup.Screen,
+                        startDestination = if (isImeSetUp) Routes.Settings.Home::class else Routes.Setup.Screen::class,
                     )
                     PreviewKeyboardField(previewFieldController)
                 }
