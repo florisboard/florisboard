@@ -675,10 +675,13 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean =
-        if (keyboardManager.onHardwareKeyDown(keyCode, event)) true
-        else super.onKeyDown(keyCode, event)
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return keyboardManager.onHardwareKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
+    }
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
+    }
 
     private inner class ComposeInputView : AbstractComposeView(this) {
         init {
