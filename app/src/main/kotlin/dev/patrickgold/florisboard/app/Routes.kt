@@ -76,382 +76,293 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
-inline fun <reified T : Routes.SimpleRoute> NavGraphBuilder.composableWithDeepLink(
-    route: T,
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Deeplink(val path: String)
+
+inline fun <reified T : Any> NavGraphBuilder.composableWithDeepLink(
+    kClass: KClass<T>,
     noinline content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit),
 ) {
-    composable<T>(
-        deepLinks = listOf(navDeepLink<T>(basePath = "ui://florisboard/${route.route}")),
-        content = content,
-    )
-}
-
-inline fun <reified T : Routes.ArgumentRoute> NavGraphBuilder.composableWithDeepLink(
-    route: String,
-    noinline content: @Composable (AnimatedContentScope.(NavBackStackEntry) -> Unit),
-) {
-    composable<T>(
-        deepLinks = listOf(navDeepLink<T>(basePath = "ui://florisboard/$route")),
-        content = content,
-    )
-}
-
-@Suppress("FunctionName", "ConstPropertyName")
-sealed interface Routes {
-
-    /**
-     * Simple route that should be accessible with a deep link
-     */
-    sealed interface SimpleRoute : Routes {
-        val route: String
+    val deeplink = requireNotNull(kClass.annotations.firstOrNull { it is Deeplink } as? Deeplink) {
+        "faulty class: $kClass with annotations ${kClass.annotations}"
     }
+    composable<T>(
+        deepLinks = listOf(navDeepLink<T>(basePath = "ui://florisboard/${deeplink.path}")),
+        content = content,
+    )
+}
 
-    /**
-     * Route with arguments that should be accessible with a deep link
-     */
-    sealed interface ArgumentRoute : Routes
-
+object Routes {
     object Setup {
         @Serializable
-        object Screen : Routes
+        object Screen
     }
 
     object Settings {
         @Serializable
-        object Home : SimpleRoute {
-            override val route = "settings/home"
-        }
+        @Deeplink("settings/home")
+        object Home
 
         @Serializable
-        object Localization : SimpleRoute {
-            override val route = "settings/localization"
-        }
+        @Deeplink("settings/localization")
+        object Localization
 
         @Serializable
-        object SelectLocale : SimpleRoute {
-            override val route = "settings/localization/select-locale"
-        }
+        @Deeplink("settings/localization/select-locale")
+        object SelectLocale
 
         @Serializable
-        data class LanguagePackManager(val action: LanguagePackManagerScreenAction) : ArgumentRoute {
-            companion object {
-                const val route = "settings/localization/language-pack-manage"
-            }
-        }
+        @Deeplink("settings/localization/language-pack-manage")
+        data class LanguagePackManager(val action: LanguagePackManagerScreenAction)
 
         @Serializable
-        object SubtypeAdd : SimpleRoute {
-            override val route = "settings/localization/subtype/add"
-        }
+        @Deeplink("settings/localization/subtype/add")
+        object SubtypeAdd
 
         @Serializable
-        data class SubtypeEdit(val id: Long) : ArgumentRoute {
-            companion object {
-                const val route = "settings/localization/subtype/edit"
-            }
-        }
+        @Deeplink("settings/localization/subtype/edit")
+        data class SubtypeEdit(val id: Long)
 
         @Serializable
-        object Theme : SimpleRoute {
-            override val route = "settings/theme"
-        }
+        @Deeplink("settings/theme")
+        object Theme
 
         @Serializable
-        data class ThemeManager(val action: ThemeManagerScreenAction) : ArgumentRoute {
-            companion object {
-                const val route = "settings/theme/manage"
-            }
-        }
+        @Deeplink("settings/theme/manage")
+        data class ThemeManager(val action: ThemeManagerScreenAction)
 
         @Serializable
-        object Keyboard : SimpleRoute {
-            override val route = "settings/keyboard"
-        }
+        @Deeplink("settings/keyboard")
+        object Keyboard
 
         @Serializable
-        object InputFeedback : SimpleRoute {
-            override val route = "settings/keyboard/input-feedback"
-        }
+        @Deeplink("settings/keyboard/input-feedback")
+        object InputFeedback
 
         @Serializable
-        object Smartbar : SimpleRoute {
-            override val route = "settings/smartbar"
-        }
+        @Deeplink("settings/smartbar")
+        object Smartbar
 
         @Serializable
-        object Typing : SimpleRoute {
-            override val route = "settings/typing"
-        }
+        @Deeplink("settings/typing")
+        object Typing
 
         @Serializable
-        object Dictionary : SimpleRoute {
-            override val route = "settings/dictionary"
-        }
+        @Deeplink("settings/dictionary")
+        object Dictionary
 
         @Serializable
-        data class UserDictionary(val type: UserDictionaryType) : ArgumentRoute {
-            companion object {
-                const val route = "settings/dictionary/user-dictionary"
-            }
-        }
+        @Deeplink("settings/dictionary/user-dictionary")
+        data class UserDictionary(val type: UserDictionaryType)
 
         @Serializable
-        object Gestures : SimpleRoute {
-            override val route = "settings/gestures"
-        }
+        @Deeplink("settings/gestures")
+        object Gestures
 
         @Serializable
-        object Clipboard : SimpleRoute {
-            override val route = "settings/clipboard"
-        }
+        @Deeplink("settings/clipboard")
+        object Clipboard
 
         @Serializable
-        object Media : SimpleRoute {
-            override val route = "settings/media"
-        }
+        @Deeplink("settings/media")
+        object Media
 
         @Serializable
-        object Other : SimpleRoute {
-            override val route = "settings/other"
-        }
+        @Deeplink("settings/other")
+        object Other
 
         @Serializable
-        object PhysicalKeyboard : SimpleRoute {
-            override val route = "settings/other/physical-keyboard"
-        }
+        @Deeplink("settings/other/physical-keyboard")
+        object PhysicalKeyboard
 
         @Serializable
-        object Backup : SimpleRoute {
-            override val route = "settings/other/backup"
-        }
+        @Deeplink("settings/other/backup")
+        object Backup
 
         @Serializable
-        object Restore : SimpleRoute {
-            override val route = "settings/other/restore"
-        }
+        @Deeplink("settings/other/restore")
+        object Restore
 
         @Serializable
-        object About : SimpleRoute {
-            override val route = "settings/about"
-        }
+        @Deeplink("settings/about")
+        object About
 
         @Serializable
-        object ProjectLicense : SimpleRoute {
-            override val route = "settings/about/project-license"
-        }
+        @Deeplink("settings/about/project-license")
+        object ProjectLicense
 
         @Serializable
-        object ThirdPartyLicenses : SimpleRoute {
-            override val route = "settings/about/third-party-licenses"
-        }
+        @Deeplink("settings/about/third-party-licenses")
+        object ThirdPartyLicenses
     }
 
     object Devtools {
         @Serializable
-        object Home : SimpleRoute {
-            override val route = "devtools"
-        }
+        @Deeplink("devtools")
+        object Home
 
         @Serializable
-        object AndroidLocales : SimpleRoute {
-            override val route = "devtools/android/locales"
-        }
+        @Deeplink("devtools/android/locales")
+        object AndroidLocales
 
         @Serializable
-        data class AndroidSettings(val name: String) : ArgumentRoute {
-            companion object {
-                const val route = "devtools/android/settings"
-            }
-        }
+        @Deeplink("devtools/android/settings")
+        data class AndroidSettings(val name: String)
 
         @Serializable
-        object ExportDebugLog : SimpleRoute {
-            override val route = "export-debug-log"
-        }
+        @Deeplink("export-debug-log")
+        object ExportDebugLog
     }
 
     object Ext {
         @Serializable
-        object Home : SimpleRoute {
-            override val route = "ext"
-        }
+        @Deeplink("ext")
+        object Home
 
         @Serializable
-        data class List(val type: ExtensionListScreenType, val showUpdate: Boolean? = null) : ArgumentRoute {
-            companion object {
-                const val route = "ext/list"
-            }
-        }
-
+        @Deeplink("ext/list")
+        data class List(val type: ExtensionListScreenType, val showUpdate: Boolean? = null)
 
         @Serializable
-        data class Edit(val id: String, val serialType: String? = null) : ArgumentRoute {
-            companion object {
-                const val route = "ext/edit"
-            }
-        }
+        @Deeplink("ext/edit")
+        data class Edit(val id: String, @SerialName("create") val serialType: String? = null)
 
         @Serializable
-        data class Export(val id: String) : ArgumentRoute {
-            companion object {
-                const val route = "ext/export"
-            }
-        }
+        @Deeplink("ext/export")
+        data class Export(val id: String)
 
         @Serializable
-        data class Import(val type: ExtensionImportScreenType, val uuid: String? = null) : ArgumentRoute {
-            companion object {
-                const val route = "ext/import"
-            }
-        }
+        @Deeplink("ext/import")
+        data class Import(val type: ExtensionImportScreenType, val uuid: String? = null)
 
         @Serializable
-        data class View(val id: String) : ArgumentRoute {
-            companion object {
-                const val route = "ext/view"
-            }
-        }
+        @Deeplink("ext/view")
+        data class View(val id: String)
 
         @Serializable
-        object CheckUpdates : SimpleRoute {
-            override val route = "ext/check-updates"
-        }
+        @Deeplink("ext/check-updates")
+        object CheckUpdates
     }
 
-    companion object {
-        @Composable
-        fun AppNavHost(
-            modifier: Modifier,
-            navController: NavHostController,
-            startDestination: KClass<*>,
+    @Composable
+    fun AppNavHost(
+        modifier: Modifier,
+        navController: NavHostController,
+        startDestination: KClass<*>,
+    ) {
+        NavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = startDestination,
+            enterTransition = {
+                slideIn { IntOffset(it.width, 0) } + fadeIn()
+            },
+            exitTransition = {
+                slideOut { IntOffset(-it.width, 0) } + fadeOut()
+            },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = {
+                scaleOut(
+                    targetScale = 0.85F,
+                    transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
+                ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
+            },
         ) {
-            NavHost(
-                modifier = modifier,
-                navController = navController,
-                startDestination = startDestination,
-                enterTransition = {
-                    slideIn { IntOffset(it.width, 0) } + fadeIn()
-                },
-                exitTransition = {
-                    slideOut { IntOffset(-it.width, 0) } + fadeOut()
-                },
-                popEnterTransition = { EnterTransition.None },
-                popExitTransition = {
-                    scaleOut(
-                        targetScale = 0.85F,
-                        transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
-                    ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
-                },
-            ) {
-                composable<Setup.Screen> { SetupScreen() }
+            composable<Setup.Screen> { SetupScreen() }
 
-                composableWithDeepLink(Settings.Home) { HomeScreen() }
+            composableWithDeepLink(Settings.Home::class) { HomeScreen() }
 
-                composableWithDeepLink(Settings.Localization) { LocalizationScreen() }
-                composableWithDeepLink(Settings.SelectLocale) { SelectLocaleScreen() }
-                composableWithDeepLink<Settings.LanguagePackManager>(Settings.LanguagePackManager.route) { navBackStack ->
-                    val languagePackManager = navBackStack.toRoute<Settings.LanguagePackManager>()
-                    val action = languagePackManager.action.let { actionId ->
-                        LanguagePackManagerScreenAction.entries.first { it == actionId }
-                    }
-                    LanguagePackManagerScreen(action)
-                }
-                composableWithDeepLink(Settings.SubtypeAdd) { SubtypeEditorScreen(null) }
-                composableWithDeepLink<Settings.SubtypeEdit>(Settings.SubtypeEdit.route) { navBackStack ->
-                    val subtypeEdit = navBackStack.toRoute<Settings.SubtypeEdit>()
-                    SubtypeEditorScreen(subtypeEdit.id)
-                }
+            composableWithDeepLink(Settings.Localization::class) { LocalizationScreen() }
+            composableWithDeepLink(Settings.SelectLocale::class) { SelectLocaleScreen() }
+            composableWithDeepLink(Settings.LanguagePackManager::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.LanguagePackManager>()
+                LanguagePackManagerScreen(payload.action)
+            }
+            composableWithDeepLink(Settings.SubtypeAdd::class) { SubtypeEditorScreen(null) }
+            composableWithDeepLink(Settings.SubtypeEdit::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.SubtypeEdit>()
+                SubtypeEditorScreen(payload.id)
+            }
 
-                composableWithDeepLink(Settings.Theme) { ThemeScreen() }
-                composableWithDeepLink<Settings.ThemeManager>(Settings.ThemeManager.route) { navBackStack ->
-                    val themeManager = navBackStack.toRoute<Settings.ThemeManager>()
-                    val action = themeManager.action.let { action ->
-                        ThemeManagerScreenAction.entries.firstOrNull { it.id == action.id }
-                    }
-                    ThemeManagerScreen(action)
-                }
+            composableWithDeepLink(Settings.Theme::class) { ThemeScreen() }
+            composableWithDeepLink(Settings.ThemeManager::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.ThemeManager>()
+                ThemeManagerScreen(payload.action)
+            }
 
-                composableWithDeepLink(Settings.Keyboard) { KeyboardScreen() }
-                composableWithDeepLink(Settings.InputFeedback) { InputFeedbackScreen() }
+            composableWithDeepLink(Settings.Keyboard::class) { KeyboardScreen() }
+            composableWithDeepLink(Settings.InputFeedback::class) { InputFeedbackScreen() }
 
-                composableWithDeepLink(Settings.Smartbar) { SmartbarScreen() }
+            composableWithDeepLink(Settings.Smartbar::class) { SmartbarScreen() }
 
-                composableWithDeepLink(Settings.Typing) { TypingScreen() }
+            composableWithDeepLink(Settings.Typing::class) { TypingScreen() }
 
-                composableWithDeepLink(Settings.Dictionary) { DictionaryScreen() }
-                composableWithDeepLink<Settings.UserDictionary>(Settings.UserDictionary.route) { navBackStack ->
-                    val userDictionary = navBackStack.toRoute<Settings.UserDictionary>()
-                    val type = userDictionary.type.let { type ->
-                        UserDictionaryType.entries.first { it.id == type.id }
-                    }
-                    UserDictionaryScreen(type)
-                }
+            composableWithDeepLink(Settings.Dictionary::class) { DictionaryScreen() }
+            composableWithDeepLink(Settings.UserDictionary::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.UserDictionary>()
+                UserDictionaryScreen(payload.type)
+            }
 
-                composableWithDeepLink(Settings.Gestures) { GesturesScreen() }
+            composableWithDeepLink(Settings.Gestures::class) { GesturesScreen() }
 
-                composableWithDeepLink(Settings.Clipboard) { ClipboardScreen() }
+            composableWithDeepLink(Settings.Clipboard::class) { ClipboardScreen() }
 
-                composableWithDeepLink(Settings.Media) { MediaScreen() }
+            composableWithDeepLink(Settings.Media::class) { MediaScreen() }
 
-                composableWithDeepLink(Settings.Other) { OtherScreen() }
-                composableWithDeepLink(Settings.PhysicalKeyboard) { PhysicalKeyboardScreen() }
-                composableWithDeepLink(Settings.Backup) { BackupScreen() }
-                composableWithDeepLink(Settings.Restore) { RestoreScreen() }
+            composableWithDeepLink(Settings.Other::class) { OtherScreen() }
+            composableWithDeepLink(Settings.PhysicalKeyboard::class) { PhysicalKeyboardScreen() }
+            composableWithDeepLink(Settings.Backup::class) { BackupScreen() }
+            composableWithDeepLink(Settings.Restore::class) { RestoreScreen() }
 
-                composableWithDeepLink(Settings.About) { AboutScreen() }
-                composableWithDeepLink(Settings.ProjectLicense) { ProjectLicenseScreen() }
-                composableWithDeepLink(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+            composableWithDeepLink(Settings.About::class) { AboutScreen() }
+            composableWithDeepLink(Settings.ProjectLicense::class) { ProjectLicenseScreen() }
+            composableWithDeepLink(Settings.ThirdPartyLicenses::class) { ThirdPartyLicensesScreen() }
 
-                composableWithDeepLink(Devtools.Home) { DevtoolsScreen() }
-                composableWithDeepLink(Devtools.AndroidLocales) { AndroidLocalesScreen() }
-                composableWithDeepLink<Devtools.AndroidSettings>(Devtools.AndroidSettings.route) { navBackStack ->
-                    val androidSettings = navBackStack.toRoute<Devtools.AndroidSettings>()
-                    AndroidSettingsScreen(androidSettings.name)
-                }
-                composableWithDeepLink(Devtools.ExportDebugLog) { ExportDebugLogScreen() }
+            composableWithDeepLink(Devtools.Home::class) { DevtoolsScreen() }
+            composableWithDeepLink(Devtools.AndroidLocales::class) { AndroidLocalesScreen() }
+            composableWithDeepLink(Devtools.AndroidSettings::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Devtools.AndroidSettings>()
+                AndroidSettingsScreen(payload.name)
+            }
+            composableWithDeepLink(Devtools.ExportDebugLog::class) { ExportDebugLogScreen() }
 
-                composableWithDeepLink(Ext.Home) { ExtensionHomeScreen() }
-                composableWithDeepLink<Ext.List>(Ext.List.route) { navBackStack ->
-                    val list = navBackStack.toRoute<Ext.List>()
-                    val type = list.let { list ->
-                        ExtensionListScreenType.entries.first { it.id == list.type.id}
-                    }
-                    val showUpdate = list.showUpdate != null && list.showUpdate
-                    ExtensionListScreen(type, showUpdate)
-                }
-                composableWithDeepLink<Ext.Edit>(Ext.Edit.route) { navBackStack ->
-                    val edit = navBackStack.toRoute<Ext.Edit>()
-                    val extensionId = edit.id
-                    val serialType = edit.serialType
-                    ExtensionEditScreen(
-                        id = extensionId,
-                        createSerialType = serialType.takeIf { !it.isNullOrBlank() },
-                    )
-                }
-                composableWithDeepLink<Ext.Export>(Ext.Export.route) { navBackStack ->
-                    val export = navBackStack.toRoute<Ext.Export>()
-                    val extensionId = export.id
-                    ExtensionExportScreen(id = extensionId)
-                }
-                composableWithDeepLink<Ext.Import>(Ext.Import.route) { navBackStack ->
-                    val import = navBackStack.toRoute<Ext.Import>()
-                    val type = import.type.let { type ->
-                        ExtensionImportScreenType.entries.first { it.id == type.id }
-                    }
-                    val uuid = import.uuid
-                    ExtensionImportScreen(type, uuid)
-                }
-                composableWithDeepLink<Ext.View>(Ext.View.route) { navBackStack ->
-                    val view = navBackStack.toRoute<Ext.View>()
-                    val extensionId = view.id
-                    ExtensionViewScreen(id = extensionId)
-                }
-                composableWithDeepLink(Ext.CheckUpdates) {
-                    CheckUpdatesScreen()
-                }
+            composableWithDeepLink(Ext.Home::class) { ExtensionHomeScreen() }
+            composableWithDeepLink(Ext.List::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.List>()
+                val showUpdate = payload.showUpdate != null && payload.showUpdate
+                ExtensionListScreen(payload.type, showUpdate)
+            }
+            composableWithDeepLink(Ext.Edit::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Edit>()
+                val extensionId = payload.id
+                val serialType = payload.serialType
+                ExtensionEditScreen(
+                    id = extensionId,
+                    createSerialType = serialType.takeIf { !it.isNullOrBlank() },
+                )
+            }
+            composableWithDeepLink(Ext.Export::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Export>()
+                val extensionId = payload.id
+                ExtensionExportScreen(id = extensionId)
+            }
+            composableWithDeepLink(Ext.Import::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Import>()
+                val uuid = payload.uuid
+                ExtensionImportScreen(payload.type, uuid)
+            }
+            composableWithDeepLink(Ext.View::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.View>()
+                val extensionId = payload.id
+                ExtensionViewScreen(id = extensionId)
+            }
+            composableWithDeepLink(Ext.CheckUpdates::class) {
+                CheckUpdatesScreen()
             }
         }
     }
