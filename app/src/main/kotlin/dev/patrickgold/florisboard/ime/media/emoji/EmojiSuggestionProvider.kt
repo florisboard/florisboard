@@ -71,7 +71,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         val candidates = withContext(Dispatchers.Default) {
             emojis.parallelStream()
                 .filter { emoji ->
-                    emoji.name.contains(query, ignoreCase = true) &&
+                    emoji.name.contains(query, ignoreCase = true) ||
                         emoji.keywords.any { it.contains(query, ignoreCase = true) }
                 }
                 .limit(maxCandidateCount.toLong())
