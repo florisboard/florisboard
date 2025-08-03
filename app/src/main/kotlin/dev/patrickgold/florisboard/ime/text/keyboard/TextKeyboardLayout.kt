@@ -59,6 +59,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
+import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -498,7 +499,7 @@ private class TextKeyboardLayoutController(
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                             val selection = editorInstance.activeContent.selection
                             if (selection.isSelectionMode) {
-                                editorInstance.deleteBackwards()
+                                editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
                             }
                         }
                         onTouchCancelInternal(event, pointer)
@@ -521,7 +522,7 @@ private class TextKeyboardLayoutController(
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
                                 val selection = editorInstance.activeContent.selection
                                 if (selection.isSelectionMode) {
-                                    editorInstance.deleteBackwards()
+                                    editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
                                 }
                             }
                             onTouchCancelInternal(event, pointer)
@@ -765,10 +766,19 @@ private class TextKeyboardLayoutController(
                     }
                     val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {
-                        editorInstance.setSelection(
-                            (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
-                            activeSelection.end,
-                        )
+                        if (inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                            // Forward select
+                            editorInstance.setSelection(
+                                activeSelection.start,
+                                (activeSelection.start - event.absUnitCountX + 1).coerceAtLeast(activeSelection.start),
+                            )
+                        } else {
+                            // Backward select
+                            editorInstance.setSelection(
+                                (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
+                                activeSelection.end,
+                            )
+                        }
                     }
                     true
                 }
