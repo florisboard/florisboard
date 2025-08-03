@@ -860,6 +860,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH))
                     )
                 }
+                if (QuickAction.InsertKey(TextKeyData.FORWARD_DELETE) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.FORWARD_DELETE))
+                    )
+                }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
                 entry.transform(rawValue = json)
             }
