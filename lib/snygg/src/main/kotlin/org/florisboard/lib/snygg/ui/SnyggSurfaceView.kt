@@ -27,16 +27,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.center
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toAndroidRectF
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.times
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.graphics.toRect
 import androidx.lifecycle.compose.LifecycleResumeEffect
-import coil3.Image
+import coil3.Bitmap
 import coil3.SingletonImageLoader
 import coil3.request.ImageRequest
 import coil3.request.SuccessResult
 import coil3.request.allowHardware
+import coil3.toBitmap
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 
@@ -76,11 +84,12 @@ fun SnyggSurfaceView(
                 assetResolver.resolveAbsolutePath(imageUri).getOrNull()
             }
         }
-        var image by remember { mutableStateOf<Image?>(null) }
+        var imageBitmap by remember { mutableStateOf<Bitmap?>(null) }
+        val contentScale = style.contentScale()
 
         LaunchedEffect(imagePath) {
             if (imagePath == null) {
-                image = null
+                imageBitmap = null
                 return@LaunchedEffect
             }
             val request = ImageRequest.Builder(context)
@@ -88,8 +97,10 @@ fun SnyggSurfaceView(
                 .allowHardware(false)
                 .build()
             val imageResult = imageLoader.execute(request)
-            image = if (imageResult is SuccessResult) {
-                imageResult.image
+            imageBitmap = if (imageResult is SuccessResult) {
+                imageResult.image.toBitmap().also {
+                    it.prepareToDraw()
+                }
             } else {
                 null
             }
@@ -117,21 +128,43 @@ fun SnyggSurfaceView(
                 update = { surfaceView = it },
             )
             surfaceView?.let { surfaceView ->
-                LaunchedEffect(surfaceView, backgroundColor, image) {
-                    Log.d("SnyggSurfaceView", "drawToSurface(backgroundColor=$backgroundColor, image=$image)")
-                    val surface = surfaceView.holder.surface
-                    Log.d("SnyggSurfaceView", "drawToSurface: surface.isValid=${surface.isValid}")
-                    if (surface.isValid) {
-                        val canvas = surface.lockCanvas(null)
-                        try {
-                            canvas.drawColor(backgroundColor.toArgb())
-                            image?.draw(canvas)
-                        } finally {
-                            surface.unlockCanvasAndPost(canvas)
-                        }
-                    }
+                LaunchedEffect(surfaceView, backgroundColor, imageBitmap, contentScale) {
+                    surfaceView.drawToSurface(backgroundColor, imageBitmap, contentScale)
                 }
             }
         }
+    }
+}
+
+private fun SurfaceView.drawToSurface(
+    color: Color,
+    bitmap: Bitmap?,
+    contentScale: ContentScale,
+) {
+    Log.d("SnyggSurfaceView", "drawToSurface(color=$color, bitmap=$bitmap)")
+    val surface = holder.surface
+    if (!surface.isValid) {
+        Log.w("SnyggSurfaceView", "drawToSurface: surface.isValid=false, may indicate state issue")
+        return
+    }
+    val canvas = surface.lockCanvas(null)
+    try {
+        canvas.drawColor(color.toArgb())
+        bitmap?.let { bitmap ->
+            val srcSize = Size(bitmap.width.toFloat(), bitmap.height.toFloat())
+            val canvasSize = Size(canvas.width.toFloat(), canvas.height.toFloat())
+            val scaleFactor = contentScale.computeScaleFactor(srcSize, canvasSize)
+            Log.d("SnyggSurfaceView",
+                "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor")
+            val dstSize = srcSize.times(scaleFactor)
+            val srcRect = srcSize.toRect().toAndroidRectF().toRect()
+            val dstRect = dstSize.toRect().let {
+                // Align center behavior
+                it.translate(canvasSize.center - it.center)
+            }.toAndroidRectF().toRect()
+            canvas.drawBitmap(bitmap, srcRect, dstRect, null)
+        }
+    } finally {
+        surface.unlockCanvasAndPost(canvas)
     }
 }
