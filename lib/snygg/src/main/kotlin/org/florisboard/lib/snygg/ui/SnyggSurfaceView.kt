@@ -16,7 +16,9 @@
 
 package org.florisboard.lib.snygg.ui
 
+import android.graphics.Canvas
 import android.graphics.PixelFormat
+import android.graphics.drawable.Animatable
 import android.util.Log
 import android.view.SurfaceView
 import androidx.compose.foundation.layout.Box
@@ -40,11 +42,16 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toRect
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import coil3.Bitmap
+import coil3.BitmapImage
+import coil3.DrawableImage
+import coil3.Image
 import coil3.SingletonImageLoader
 import coil3.request.ImageRequest
 import coil3.request.SuccessResult
 import coil3.request.allowHardware
 import coil3.toBitmap
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 
@@ -84,12 +91,12 @@ fun SnyggSurfaceView(
                 assetResolver.resolveAbsolutePath(imageUri).getOrNull()
             }
         }
-        var imageBitmap by remember { mutableStateOf<Bitmap?>(null) }
+        var loadedImage by remember { mutableStateOf<Image?>(null) }
         val contentScale = style.contentScale()
 
         LaunchedEffect(imagePath) {
             if (imagePath == null) {
-                imageBitmap = null
+                loadedImage = null
                 return@LaunchedEffect
             }
             val request = ImageRequest.Builder(context)
@@ -97,12 +104,13 @@ fun SnyggSurfaceView(
                 .allowHardware(false)
                 .build()
             val imageResult = imageLoader.execute(request)
-            imageBitmap = if (imageResult is SuccessResult) {
-                imageResult.image.toBitmap().also {
-                    it.prepareToDraw()
+            loadedImage = when (imageResult) {
+                is SuccessResult -> when (val image = imageResult.image) {
+                    is BitmapImage -> image.also { it.bitmap.prepareToDraw() }
+                    is DrawableImage -> image
+                    else -> null
                 }
-            } else {
-                null
+                else -> null
             }
         }
 
@@ -128,8 +136,25 @@ fun SnyggSurfaceView(
                 update = { surfaceView = it },
             )
             surfaceView?.let { surfaceView ->
-                LaunchedEffect(surfaceView, backgroundColor, imageBitmap, contentScale) {
-                    surfaceView.drawToSurface(backgroundColor, imageBitmap, contentScale)
+                LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale) {
+                    val image = loadedImage
+                    if (image is DrawableImage && image.drawable is Animatable) {
+                        // Slow path, need animation
+                        val fps = 30L // TODO: read frame delays from drawable
+                        val animatedDrawable = image.drawable as Animatable
+                        try {
+                            animatedDrawable.start()
+                            while (isActive) {
+                                surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                                delay(1000L / fps)
+                            }
+                        } finally {
+                            animatedDrawable.stop()
+                        }
+                    } else {
+                        // Fast path, render once and be done with it
+                        surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                    }
                 }
             }
         }
@@ -138,10 +163,10 @@ fun SnyggSurfaceView(
 
 private fun SurfaceView.drawToSurface(
     color: Color,
-    bitmap: Bitmap?,
+    image: Image?,
     contentScale: ContentScale,
 ) {
-    Log.d("SnyggSurfaceView", "drawToSurface(color=$color, bitmap=$bitmap)")
+    Log.d("SnyggSurfaceView", "drawToSurface(color=$color, image=$image)")
     val surface = holder.surface
     if (!surface.isValid) {
         Log.w("SnyggSurfaceView", "drawToSurface: surface.isValid=false, may indicate state issue")
@@ -150,21 +175,32 @@ private fun SurfaceView.drawToSurface(
     val canvas = surface.lockCanvas(null)
     try {
         canvas.drawColor(color.toArgb())
-        bitmap?.let { bitmap ->
-            val srcSize = Size(bitmap.width.toFloat(), bitmap.height.toFloat())
-            val canvasSize = Size(canvas.width.toFloat(), canvas.height.toFloat())
-            val scaleFactor = contentScale.computeScaleFactor(srcSize, canvasSize)
-            Log.d("SnyggSurfaceView",
-                "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor")
-            val dstSize = srcSize.times(scaleFactor)
-            val srcRect = srcSize.toRect().toAndroidRectF().toRect()
-            val dstRect = dstSize.toRect().let {
-                // Align center behavior
-                it.translate(canvasSize.center - it.center)
-            }.toAndroidRectF().toRect()
-            canvas.drawBitmap(bitmap, srcRect, dstRect, null)
+        when (image) {
+            is BitmapImage -> image.bitmap.drawToSurface(canvas, contentScale)
+            is DrawableImage -> image.drawToSurface(canvas, contentScale)
         }
     } finally {
         surface.unlockCanvasAndPost(canvas)
     }
 }
+
+private fun Bitmap.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
+    val bitmap = this
+    val srcSize = Size(bitmap.width.toFloat(), bitmap.height.toFloat())
+    val canvasSize = Size(canvas.width.toFloat(), canvas.height.toFloat())
+    val scaleFactor = contentScale.computeScaleFactor(srcSize, canvasSize)
+    Log.d("SnyggSurfaceView",
+        "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor")
+    val dstSize = srcSize.times(scaleFactor)
+    val srcRect = srcSize.toRect().toAndroidRectF().toRect()
+    val dstRect = dstSize.toRect().let {
+        // Align center behavior
+        it.translate(canvasSize.center - it.center)
+    }.toAndroidRectF().toRect()
+    canvas.drawBitmap(bitmap, srcRect, dstRect, null)
+}
+
+private fun DrawableImage.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
+    this.toBitmap().drawToSurface(canvas, contentScale)
+}
+
