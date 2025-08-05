@@ -117,15 +117,14 @@ import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.android.isOrientationPortrait
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.compose.ProvideLocalizedResources
-import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
@@ -621,9 +620,14 @@ class FlorisImeService : LifecycleInputMethodService() {
                 clickAndSemanticsModifier = Modifier
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
-                supportsBackgroundImage = true,
+                supportsBackgroundImage = false,
                 allowClip = false,
             ) {
+                SnyggSurfaceView(
+                    elementName = FlorisImeUi.Window.elementName,
+                    attributes = attributes,
+                    modifier = Modifier.matchParentSize(),
+                )
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {
                     prefs.keyboard.bottomOffsetPortrait
