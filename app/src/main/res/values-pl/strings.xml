@@ -68,6 +68,7 @@
     <string name="quick_action__clipboard_paste__tooltip">Wklej ze schowka</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Wszystko</string>
     <string name="quick_action__clipboard_select_all__tooltip">Zaznacz wszystko</string>
+    <string name="quick_action__forward_delete" maxLength="12">Usuń w przód</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schowek</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otwórz historię schowka</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emotki</string>

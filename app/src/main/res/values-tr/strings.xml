@@ -68,6 +68,7 @@
     <string name="quick_action__clipboard_paste__tooltip">Panoyu yapıştır</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Tümünü seç</string>
     <string name="quick_action__clipboard_select_all__tooltip">Tümünü seç eylemini gerçekleştir</string>
+    <string name="quick_action__forward_delete" maxLength="12">İletiyi sil</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Pano</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Pano geçmişini aç</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>

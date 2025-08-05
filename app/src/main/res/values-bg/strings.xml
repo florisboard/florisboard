@@ -68,6 +68,7 @@
     <string name="quick_action__clipboard_paste__tooltip">Поставя от междинната памет</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Избор всички</string>
     <string name="quick_action__clipboard_select_all__tooltip">Избира всичко</string>
+    <string name="quick_action__forward_delete" maxLength="12">Премахване →</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Хронология на междинната памет</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Емоции</string>

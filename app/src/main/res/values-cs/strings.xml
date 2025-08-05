@@ -67,6 +67,7 @@
     <string name="quick_action__clipboard_paste__tooltip">Vykonat vložení schránky</string>
     <string name="quick_action__clipboard_select_all" maxLength="12">Vybrat vše</string>
     <string name="quick_action__clipboard_select_all__tooltip">Vykonat vybrání všeho do schránky</string>
+    <string name="quick_action__forward_delete" maxLength="12">Smazat za</string>
     <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schránka</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otevřít historii schránky</string>
     <string name="quick_action__ime_ui_mode_media" maxLength="12">Emotikony</string>
