@@ -74,6 +74,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
     val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
+    val prefsLoaded by appContext.preferenceStoreLoaded.collectAsState()
 
     val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
     val themeInfo by themeManager.activeThemeInfo.collectAsState()
@@ -99,7 +100,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
                 DevtoolsInlineAutofillOverlay()
             }
             val loadFailure = themeInfo.loadFailure
-            if (loadFailure != null && appContext.preferenceStoreLoaded.value) {
+            if (loadFailure != null && prefsLoaded) {
                 DevtoolsStylesheetFailedToLoadOverlay(loadFailure)
             }
         }
