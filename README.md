@@ -96,6 +96,22 @@ Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store
 Please refer to this [page](https://github.com/florisboard/florisboard/wiki/List-of-permissions-FlorisBoard-requests)
 to get more information on this topic.
 
+## APK signing certificate hashes
+
+The package names and SHA-256 hashes of the signature certificate are listed below, so you can verify both FlorisBoard variants with apksigner by using `apksigner verify --print-certs florisboard-<version>-<track>.apk` when you download the APK.
+If you have [AppVerifier](https://github.com/soupslurpr/AppVerifier) installed, you can alternatively copy both the package name and the hash of the corresponding track and share them to AppVerifier.
+
+##### Stable track:
+
+dev.patrickgold.florisboard<br>
+0B:80:71:64:50:8E:AF:EB:1F:BB:81:5B:E7:A2:3C:77:FE:68:9D:94:B1:43:75:C9:9B:DA:A9:B6:57:7F:D6:D6
+
+##### Preview track:
+
+dev.patrickgold.florisboard.beta<br>
+0B:80:71:64:50:8E:AF:EB:1F:BB:81:5B:E7:A2:3C:77:FE:68:9D:94:B1:43:75:C9:9B:DA:A9:B6:57:7F:D6:D6
+
+
 ## Used libraries, components and icons
 * [AndroidX libraries](https://github.com/androidx/androidx) by
   [Android Jetpack](https://github.com/androidx)
