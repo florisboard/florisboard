@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
@@ -52,10 +53,10 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.SnyggMissingSchemaException
 import java.text.SimpleDateFormat
 import java.util.*
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.SnyggMissingSchemaException
 
 private val CardBackground = Color.Black.copy(0.6f)
 private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
@@ -64,6 +65,7 @@ private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.
 fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val prefs by FlorisPreferenceStore
+    val appContext by context.appContext()
     val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
 
@@ -72,6 +74,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
     val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
+    val prefsLoaded by appContext.preferenceStoreLoaded.collectAsState()
 
     val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
     val themeInfo by themeManager.activeThemeInfo.collectAsState()
@@ -97,7 +100,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
                 DevtoolsInlineAutofillOverlay()
             }
             val loadFailure = themeInfo.loadFailure
-            if (loadFailure != null) {
+            if (loadFailure != null && prefsLoaded) {
                 DevtoolsStylesheetFailedToLoadOverlay(loadFailure)
             }
         }
