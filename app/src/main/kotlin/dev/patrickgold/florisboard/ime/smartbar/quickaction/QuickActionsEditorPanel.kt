@@ -39,7 +39,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -60,7 +59,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.toIntOffset
 import org.florisboard.lib.compose.stringRes
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
@@ -76,7 +75,6 @@ private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.
 fun QuickActionsEditorPanel() {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val keyboardManager by context.keyboardManager()
 
     // We get the current arrangement once and do not observe on purpose
@@ -236,7 +234,7 @@ fun QuickActionsEditorPanel() {
                 dynamicActions.filter { it != NoopAction && it != DragMarkerAction },
                 hiddenActions.filter { it != NoopAction && it != DragMarkerAction },
             )
-            scope.launch {
+            runBlocking {
                 prefs.smartbar.actionArrangement.set(newActionArrangement)
             }
             if (keyboardManager.activeState.isActionsEditorVisible) {
