@@ -18,9 +18,13 @@ package org.florisboard.lib.snygg.ui
 
 import android.graphics.Canvas
 import android.graphics.PixelFormat
+import android.graphics.Rect
 import android.graphics.drawable.Animatable
 import android.util.Log
+import android.view.Surface
 import android.view.SurfaceView
+import androidx.compose.foundation.AndroidExternalSurface
+import androidx.compose.foundation.AndroidExternalSurfaceZOrder
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
@@ -114,73 +119,58 @@ fun SnyggSurfaceView(
             }
         }
 
-        var showSurfaceView by remember { mutableStateOf(false) }
-        LifecycleResumeEffect(Unit) {
-            showSurfaceView = true
-            onPauseOrDispose {
-                showSurfaceView = false
+        var surfaceRef by remember { mutableStateOf<Surface?>(null) }
+        AndroidExternalSurface(
+            modifier = modifier,
+            isOpaque = true,
+            zOrder = AndroidExternalSurfaceZOrder.Behind,
+        ) {
+            onSurface { surface, _, _ ->
+                surfaceRef = surface
+                surface.onDestroyed {
+                    surfaceRef = null
+                }
             }
         }
 
-        if (showSurfaceView) {
-            var surfaceView by remember { mutableStateOf<SurfaceView?>(null) }
-            AndroidView(
-                modifier = modifier,
-                factory = { context ->
-                    Log.d("SnyggSurfaceView", "creating new instance")
-                    SurfaceView(context).apply {
-                        setZOrderOnTop(false)
-                        holder.setFormat(PixelFormat.TRANSPARENT)
+        LaunchedEffect(surfaceRef, backgroundColor, loadedImage, contentScale) {
+            val surface = surfaceRef ?: return@LaunchedEffect
+            val image = loadedImage
+            if (image is DrawableImage && image.drawable is Animatable) {
+                // Slow path, need animation
+                val fps = 30L // TODO: read frame delays from drawable
+                val animatedDrawable = image.drawable as Animatable
+                try {
+                    animatedDrawable.start()
+                    while (isActive) {
+                        surface.drawColorAndImage(backgroundColor, loadedImage, contentScale)
+                        delay(1000L / fps)
                     }
-                },
-                update = { surfaceView = it },
-            )
-            surfaceView?.let { surfaceView ->
-                LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale) {
-                    val image = loadedImage
-                    if (image is DrawableImage && image.drawable is Animatable) {
-                        // Slow path, need animation
-                        val fps = 30L // TODO: read frame delays from drawable
-                        val animatedDrawable = image.drawable as Animatable
-                        try {
-                            animatedDrawable.start()
-                            while (isActive) {
-                                surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
-                                delay(1000L / fps)
-                            }
-                        } finally {
-                            animatedDrawable.stop()
-                        }
-                    } else {
-                        // Fast path, render once and be done with it
-                        surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
-                    }
+                } finally {
+                    animatedDrawable.stop()
                 }
+            } else {
+                // Fast path, render once and be done with it
+                surface.drawColorAndImage(backgroundColor, loadedImage, contentScale)
             }
         }
     }
 }
 
-private fun SurfaceView.drawToSurface(
+private fun Surface.drawColorAndImage(
     color: Color,
     image: Image?,
     contentScale: ContentScale,
 ) {
-    Log.d("SnyggSurfaceView", "drawToSurface(color=$color, image=$image)")
-    val surface = holder.surface
-    if (!surface.isValid) {
-        Log.w("SnyggSurfaceView", "drawToSurface: surface.isValid=false, may indicate state issue")
-        return
-    }
-    val canvas = surface.lockCanvas(null)
+    val canvas = lockCanvas(null)
     try {
         canvas.drawColor(color.toArgb())
         when (image) {
             is BitmapImage -> image.bitmap.drawToSurface(canvas, contentScale)
-            is DrawableImage -> image.drawToSurface(canvas, contentScale)
+            is DrawableImage -> image.toBitmap().drawToSurface(canvas, contentScale)
         }
     } finally {
-        surface.unlockCanvasAndPost(canvas)
+        unlockCanvasAndPost(canvas)
     }
 }
 
@@ -199,8 +189,3 @@ private fun Bitmap.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
     }.toAndroidRectF().toRect()
     canvas.drawBitmap(bitmap, srcRect, dstRect, null)
 }
-
-private fun DrawableImage.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
-    this.toBitmap().drawToSurface(canvas, contentScale)
-}
-
