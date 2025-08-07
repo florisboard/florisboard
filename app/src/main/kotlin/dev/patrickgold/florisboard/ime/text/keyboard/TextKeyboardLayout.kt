@@ -764,18 +764,19 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
+                    val safeEditorBounds = editorInstance.activeContent.safeEditorBounds
                     val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {
                         if (inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
                             // Forward select
                             editorInstance.setSelection(
                                 activeSelection.start,
-                                (activeSelection.start - event.absUnitCountX + 1).coerceAtLeast(activeSelection.start),
+                                (activeSelection.start - event.absUnitCountX + 1).coerceIn(activeSelection.start, safeEditorBounds.end),
                             )
                         } else {
                             // Backward select
                             editorInstance.setSelection(
-                                (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
+                                (activeSelection.end + event.absUnitCountX + 1).coerceIn(safeEditorBounds.start, activeSelection.end),
                                 activeSelection.end,
                             )
                         }
