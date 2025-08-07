@@ -70,12 +70,17 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         val candidates = withContext(Dispatchers.Default) {
             emojis.parallelStream()
-                .filter { emoji ->
-                    emoji.name.contains(query, ignoreCase = true) ||
-                        emoji.keywords.any { it.contains(query, ignoreCase = true) }
-                }
-                .limit(maxCandidateCount.toLong())
                 .map { emoji ->
+                    val nameWeight = emoji.name.containsWeighted(query, ignoreCase = true)
+                    val keywordWeight = emoji.keywords
+                        .any { it.contains(query, ignoreCase = true) }
+                        .let { if (it) 1.0 else 0.0 }
+                    emoji to (nameWeight * 0.7 + keywordWeight * 0.3)
+                }
+                .sorted { (_, a), (_, b) -> b.compareTo(a) }
+                .limit(maxCandidateCount.toLong())
+                .filter { (_, a) -> a > 0 }
+                .map { (emoji, _) ->
                     EmojiSuggestionCandidate(
                         emoji = emoji,
                         showName = showName,
@@ -126,5 +131,13 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
             return null
         }
         return emojiPartialName
+    }
+}
+
+private fun String.containsWeighted(other: String, ignoreCase: Boolean = false): Double = let { str ->
+    if (str.contains(other, ignoreCase = ignoreCase)) {
+        other.length.toDouble() / str.length.toDouble()
+    } else {
+        0.0
     }
 }
