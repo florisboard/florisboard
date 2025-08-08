@@ -26,38 +26,38 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Simbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flamuj</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Shigjet lart</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Shigjet lart</string>
     <string name="quick_action__arrow_up__tooltip">Trego shigjetën lart</string>
     <string name="quick_action__arrow_down__tooltip">Trego shigjetën poshtë</string>
     <string name="quick_action__arrow_left__tooltip">Trego shigjetën majtas</string>
     <string name="quick_action__arrow_right__tooltip">Trego shigjetën djathtas</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Trego pastro kapësen primare të clipboard</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopjo</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopjo</string>
     <string name="quick_action__clipboard_copy__tooltip">Trego kopjo clipboard</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Prite</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Prite</string>
     <string name="quick_action__clipboard_cut__tooltip">Trego prit clipboard</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Ngjite</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Clipboard</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Ngjite</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Clipboard</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Hap historikun e clipboard</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Hap panelin e emoji</string>
-    <string name="quick_action__settings" maxLength="12">Konfigurimet</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Konfigurimet</string>
     <string name="quick_action__settings__tooltip">Hap konfigurimet</string>
-    <string name="quick_action__undo" maxLength="12">Zhbëj</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Zhbëj</string>
     <string name="quick_action__undo__tooltip">Zhbëje hyrjen e fundit</string>
-    <string name="quick_action__redo" maxLength="12">Ribëj</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Ribëj</string>
     <string name="quick_action__redo__tooltip">Ribëje hyrjen e fundit</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Tregoji ose fshihi veprimet e tjera</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Fshehurazi</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Fshehurazi</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Ndiz / Fik mënyrën fshehurazi</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autokorrigjo</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autokorrigjo</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Ndiz / Fik autokorrigjuesin</string>
-    <string name="quick_action__voice_input" maxLength="12">Hyrja me zë</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Hyrja me zë</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Hap marrësin e hyrjes zanore</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Me një dorë</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Me një dorë</string>
     <string name="quick_action__one_handed_mode__tooltip">Ndiz / Fik metodën e përdorimit me një dorë</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Pozicioni i tanishëm i shënjesuit me të tërhequr</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Asnjë</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Asnjë</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Asnjë operim</string>
     <string name="quick_actions_overflow__customize_actions_button">Ri-organizo veprimet</string>
     <string name="quick_actions_editor__header">Ndrysho radhën e veprimeve</string>

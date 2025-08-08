@@ -50,46 +50,46 @@
     <string name="emoji__history__pinned">Piesprausta</string>
     <string name="emoji__history__recent">Nesena</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Uz augšu</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Uz augšu</string>
     <string name="quick_action__arrow_up__tooltip">Izpildīt bultu uz augšu</string>
-    <string name="quick_action__arrow_down" maxLength="12">Uz leju</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Uz leju</string>
     <string name="quick_action__arrow_down__tooltip">Izpildīt bultu uz leju</string>
-    <string name="quick_action__arrow_left" maxLength="12">Pa kreisi</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Pa kreisi</string>
     <string name="quick_action__arrow_left__tooltip">Izpildīt bultu pa kreisi</string>
-    <string name="quick_action__arrow_right" maxLength="12">Pa labi</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Pa labi</string>
     <string name="quick_action__arrow_right__tooltip">Izpildīt bultu pa labi</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Izpildīt galvenā starliktuves vienuma notīrīšanu</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopēt</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopēt</string>
     <string name="quick_action__clipboard_copy__tooltip">Izpildīt starpliktuves kopēšanu</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Izgriezt</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Izgriezt</string>
     <string name="quick_action__clipboard_cut__tooltip">Izpildīt starpliktuves izgriešanu</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Ielīmēt</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Ielīmēt</string>
     <string name="quick_action__clipboard_paste__tooltip">Izpildīt starpliktuves ielīmēšanu</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Iezīmēt visu</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Iezīmēt visu</string>
     <string name="quick_action__clipboard_select_all__tooltip">Veikt visu starpliktuves vienumu atlasīšanu</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Starpliktuve</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Starpliktuve</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Atvērt starpliktuves vēsturi</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emocijzīmes</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emocijzīmes</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Atvērt emocijzīmju izvēlni</string>
-    <string name="quick_action__language_switch" maxLength="12">Mainīt val.</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Mainīt val.</string>
     <string name="quick_action__language_switch__tooltip">Veikt valodas nomainīšanu</string>
-    <string name="quick_action__settings" maxLength="12">Iestatījumi</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Iestatījumi</string>
     <string name="quick_action__settings__tooltip">Atvērt iestatījumus</string>
-    <string name="quick_action__undo" maxLength="12">Atsaukt</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Atsaukt</string>
     <string name="quick_action__undo__tooltip">Atsaukt pēdējo ievadi</string>
-    <string name="quick_action__redo" maxLength="12">Atatsaukt</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Atatsaukt</string>
     <string name="quick_action__redo__tooltip">Atkārtoti veikt pēdējo ievadi</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Parādīt vai paslēpt papildu darbības</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Slepenība</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Slepenība</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Pārslēgt slepenību</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autolabošana</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autolabošana</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Pārslēgt automātisko labošanu</string>
-    <string name="quick_action__voice_input" maxLength="12">Balss ievade</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Balss ievade</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Atvērt balss ievades nodrošinātāju</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Vienrocīgs</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Vienrocīgs</string>
     <string name="quick_action__one_handed_mode__tooltip">Pārslēgt vienrocīgo ievadi</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Pašreizējā rādītāja vilkšanas atrašanās vieta</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nekas</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nekas</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nav darbības</string>
     <string name="quick_actions_overflow__customize_actions_button">Mainīt darbības secību</string>
     <string name="quick_actions_editor__header">Pielāgot darbību secību</string>

@@ -50,49 +50,49 @@
     <string name="emoji__history__pinned">הוצמד</string>
     <string name="emoji__history__recent">לאחרונה</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">חץ למעלה</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">חץ למעלה</string>
     <string name="quick_action__arrow_up__tooltip">ביצוע חץ למעלה</string>
-    <string name="quick_action__arrow_down" maxLength="12">חץ למטה</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">חץ למטה</string>
     <string name="quick_action__arrow_down__tooltip">ביצוע חץ למטה</string>
-    <string name="quick_action__arrow_left" maxLength="12">חץ שמאלי</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">חץ שמאלי</string>
     <string name="quick_action__arrow_left__tooltip">ביצוע חץ שמאלה</string>
-    <string name="quick_action__arrow_right" maxLength="12">חץ ימינה</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">חץ ימינה</string>
     <string name="quick_action__arrow_right__tooltip">ביצוע חץ ימינה</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">נקה לוח ראשי</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">נקה לוח ראשי</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">בצע ניקוי לוח ראשי</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">העתק</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">העתק</string>
     <string name="quick_action__clipboard_copy__tooltip">בצע העתקה מהלוח</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">גזור</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">גזור</string>
     <string name="quick_action__clipboard_cut__tooltip">בצע גזירה מהלוח</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">הדבק</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">הדבק</string>
     <string name="quick_action__clipboard_paste__tooltip">בצע הדבקה מהלוח</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">בחר הכל</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">בחר הכל</string>
     <string name="quick_action__clipboard_select_all__tooltip">בצע בחירה בהכל מהלוח</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">לוח הדבקה</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">לוח הדבקה</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">אפשר היסטוריה של הלוח</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">אמוג\'י</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">אמוג\'י</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">לפתוח אימוג\'י לוח</string>
-    <string name="quick_action__language_switch" maxLength="12">החלף שפה</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">החלף שפה</string>
     <string name="quick_action__language_switch__tooltip">בצע החלפת שפה</string>
-    <string name="quick_action__settings" maxLength="12">הגדרות</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">הגדרות</string>
     <string name="quick_action__settings__tooltip">לפתוח הגדרות</string>
-    <string name="quick_action__undo" maxLength="12">בטל</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">בטל</string>
     <string name="quick_action__undo__tooltip">בטל את השינוי האחרון</string>
-    <string name="quick_action__redo" maxLength="12">בצע שוב</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">בצע שוב</string>
     <string name="quick_action__redo__tooltip">החזר את השינוי האחרון</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">עוד פעולות</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">עוד פעולות</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">להראות או להחביא פעולות נוספות</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">גלישה בסתר</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">גלישה בסתר</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">הפעל גלישה בסתר</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">תיקון אוטומט</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">תיקון אוטומט</string>
     <string name="quick_action__toggle_autocorrect__tooltip">מתג תיקון אוטומטי</string>
-    <string name="quick_action__voice_input" maxLength="12">קלט קולי</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">קלט קולי</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">לפתוח ספק קלט קולי</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">ביד אחת</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">ביד אחת</string>
     <string name="quick_action__one_handed_mode__tooltip">מתג מצב יד-אחת</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">סמן גרור</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">סמן גרור</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">מקום נוכחי של סמן גרירה</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">כלום</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">כלום</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">שום פעולה</string>
     <string name="quick_actions_overflow__customize_actions_button">סדר פעולות</string>
     <string name="quick_actions_editor__header">התאם אישית סדר פעולות</string>

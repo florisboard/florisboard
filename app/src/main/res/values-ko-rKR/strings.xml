@@ -45,47 +45,47 @@
     <string name="emoji__history__pinned">고정됨</string>
     <string name="emoji__history__recent">최근</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">화살표 위로</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">화살표 위로</string>
     <string name="quick_action__arrow_up__tooltip">위쪽 화살표 동작 실행</string>
-    <string name="quick_action__arrow_down" maxLength="12">화살표 아래로</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">화살표 아래로</string>
     <string name="quick_action__arrow_down__tooltip">아래쪽 화살표 동작 실행</string>
-    <string name="quick_action__arrow_left" maxLength="12">화살표 왼쪽으로</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">화살표 왼쪽으로</string>
     <string name="quick_action__arrow_left__tooltip">왼쪽 화살표 동작 실행</string>
-    <string name="quick_action__arrow_right" maxLength="12">화살표 오른쪽으로</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">화살표 오른쪽으로</string>
     <string name="quick_action__arrow_right__tooltip">오른쪽 화살표 동작 실행</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">주 클립보드 비우기</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">주 클립보드 비우기</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">주 클립보드 내용 비우기 실행</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">복사</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">복사</string>
     <string name="quick_action__clipboard_copy__tooltip">클립보드에서 복사 실행</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">잘라내기</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">잘라내기</string>
     <string name="quick_action__clipboard_cut__tooltip">클립보드에서 잘라내기 실행</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">붙여넣기</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">붙여넣기</string>
     <string name="quick_action__clipboard_paste__tooltip">클립보드에서 붙여넣기 실행</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">모두 선택</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">모두 선택</string>
     <string name="quick_action__clipboard_select_all__tooltip">클립보드에서 모두 선택 실행</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">클립보드</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">클립보드</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">클립보드 기록 열기</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">이모지</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">이모지</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">이모지 패널 열기</string>
-    <string name="quick_action__settings" maxLength="12">설정</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">설정</string>
     <string name="quick_action__settings__tooltip">설정 열기</string>
-    <string name="quick_action__undo" maxLength="12">실행 취소</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">실행 취소</string>
     <string name="quick_action__undo__tooltip">마지막 입력 실행 취소</string>
-    <string name="quick_action__redo" maxLength="12">다시 실행</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">다시 실행</string>
     <string name="quick_action__redo__tooltip">마지막 입력 다시 실행</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">추가 동작</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">추가 동작</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">추가 동작 표시 / 숨기기</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">시크릿</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">시크릿</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">시크릿 모드 켜기 / 끄기</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">자동 수정</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">자동 수정</string>
     <string name="quick_action__toggle_autocorrect__tooltip">자동 수정 켜기 / 끄기</string>
-    <string name="quick_action__voice_input" maxLength="12">음성 입력</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">음성 입력</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">음성 입력 제공자 열기</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">한손</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">한손</string>
     <string name="quick_action__one_handed_mode__tooltip">한손 모드 켜기 / 끄기</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">드래그 마커</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">드래그 마커</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">현재 드래그 마커 위치</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">없음</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">없음</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">작업 없음</string>
     <string name="quick_actions_overflow__customize_actions_button">액션 재배치</string>
     <string name="quick_actions_editor__header">액션 순서 사용자 정의</string>

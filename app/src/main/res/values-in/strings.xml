@@ -50,49 +50,49 @@
     <string name="emoji__history__pinned">Disematkan</string>
     <string name="emoji__history__recent">Terbaru</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Panah atas</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Panah atas</string>
     <string name="quick_action__arrow_up__tooltip">Lakukan panah atas</string>
-    <string name="quick_action__arrow_down" maxLength="12">Panah bawah</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Panah bawah</string>
     <string name="quick_action__arrow_down__tooltip">Lakukan panah bawah</string>
-    <string name="quick_action__arrow_left" maxLength="12">Panah kiri</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Panah kiri</string>
     <string name="quick_action__arrow_left__tooltip">Lakukan panah kiri</string>
-    <string name="quick_action__arrow_right" maxLength="12">Panah kanan</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Panah kanan</string>
     <string name="quick_action__arrow_right__tooltip">Lakukan panah kanan</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Hapus klip</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Hapus klip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Lakukan penghapusan klip utama pada papan klip</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Salin</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Salin</string>
     <string name="quick_action__clipboard_copy__tooltip">Lakukan salinan papan klip</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Potong</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Potong</string>
     <string name="quick_action__clipboard_cut__tooltip">Lakukan potongan papan klip</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Tempelkan</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Tempelkan</string>
     <string name="quick_action__clipboard_paste__tooltip">Lakukan penempelan papan klip</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Pilih semua</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Pilih semua</string>
     <string name="quick_action__clipboard_select_all__tooltip">Lakukan pemilihan semua papan klip</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Papan klip</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Papan klip</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Buka riwayat papan klip</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Buka panel emoji</string>
-    <string name="quick_action__language_switch" maxLength="12">Ganti bahasa</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Ganti bahasa</string>
     <string name="quick_action__language_switch__tooltip">Ubah bahasa</string>
-    <string name="quick_action__settings" maxLength="12">Pengaturan</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Pengaturan</string>
     <string name="quick_action__settings__tooltip">Buka pengaturan</string>
-    <string name="quick_action__undo" maxLength="12">Urungkan</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Urungkan</string>
     <string name="quick_action__undo__tooltip">Urungkan masukan terakhir</string>
-    <string name="quick_action__redo" maxLength="12">Ulangi</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Ulangi</string>
     <string name="quick_action__redo__tooltip">Ulangi masukan terakhir</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Tndkn. lain</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Tndkn. lain</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Tampilkan atau sembunyikan tindakan tambahan</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Penyamaran</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Penyamaran</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Alihkan mode penyamaran</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Koreksi oto.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Koreksi oto.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Alihkan koreksi otomatis</string>
-    <string name="quick_action__voice_input" maxLength="12">Input suara</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Input suara</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Buka penyedia masukan suara</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Satu tangan</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Satu tangan</string>
     <string name="quick_action__one_handed_mode__tooltip">Alih mode satu tangan</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Tarik marker</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Tarik marker</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posisi penanda tarikan saat ini</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Tidak ada</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Tidak ada</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Tidak ada tindakan</string>
     <string name="quick_actions_overflow__customize_actions_button">Urutkan ulang tindakan</string>
     <string name="quick_actions_editor__header">Ubah urutan tindakan</string>

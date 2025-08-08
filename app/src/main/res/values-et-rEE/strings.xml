@@ -50,32 +50,32 @@
     <string name="emoji__history__pinned">Kinnitatud</string>
     <string name="emoji__history__recent">Hiljutine</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Nool üles</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Nool üles</string>
     <string name="quick_action__arrow_up__tooltip">Soorita nool üles</string>
-    <string name="quick_action__arrow_down" maxLength="12">Nool alla</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Nool alla</string>
     <string name="quick_action__arrow_down__tooltip">Soorita nool alla</string>
     <string name="quick_action__arrow_left__tooltip">Soorita nool vasakule</string>
     <string name="quick_action__arrow_right__tooltip">Soorita nool paremale</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Soorita põhilõikelaua tühjendus</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopeeri</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopeeri</string>
     <string name="quick_action__clipboard_copy__tooltip">Soorita lõikelaual kopeeri</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Lõika</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Lõika</string>
     <string name="quick_action__clipboard_cut__tooltip">Soorita lõikelaual lõika</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Kleebi</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Kleebi</string>
     <string name="quick_action__clipboard_paste__tooltip">Soorita lõikelaual kleebi</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Vali kõik</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Vali kõik</string>
     <string name="quick_action__clipboard_select_all__tooltip">Soorita lõikelaual vali kõik</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Lõikelaud</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Lõikelaud</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Ava lõikelaua ajalugu</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Ava emojide paneel</string>
-    <string name="quick_action__language_switch" maxLength="12">Vaheta keelt</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Vaheta keelt</string>
     <string name="quick_action__language_switch__tooltip">Soorita keelevahetus</string>
-    <string name="quick_action__settings" maxLength="12">Sätted</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Sätted</string>
     <string name="quick_action__settings__tooltip">Ava sätted</string>
-    <string name="quick_action__undo" maxLength="12">Võta tagasi</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Võta tagasi</string>
     <string name="quick_action__undo__tooltip">Võta viimane sisestus tagasi</string>
-    <string name="quick_action__redo" maxLength="12">Tee uuesti</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Tee uuesti</string>
     <string name="quick_action__redo__tooltip">Tee viimane sisestus uuesti</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

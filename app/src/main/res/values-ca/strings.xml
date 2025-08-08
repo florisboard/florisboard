@@ -50,49 +50,49 @@
     <string name="emoji__history__pinned">Fixats</string>
     <string name="emoji__history__recent">Recents</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Amunt</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Amunt</string>
     <string name="quick_action__arrow_up__tooltip">Ves amunt</string>
-    <string name="quick_action__arrow_down" maxLength="12">Avall</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Avall</string>
     <string name="quick_action__arrow_down__tooltip">Ves avall</string>
-    <string name="quick_action__arrow_left" maxLength="12">Esquerra</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Esquerra</string>
     <string name="quick_action__arrow_left__tooltip">Cap a l\'esquerra</string>
-    <string name="quick_action__arrow_right" maxLength="12">Dreta</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Dreta</string>
     <string name="quick_action__arrow_right__tooltip">Cap a la dreta</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Buidar clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Buidar clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Suprimeix l\'entrada del porta-retalls principal</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copia</string>
     <string name="quick_action__clipboard_copy__tooltip">Copia el contingut al porta-retalls</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Retalla</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Retalla</string>
     <string name="quick_action__clipboard_cut__tooltip">Retalla i desa al porta-retalls</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Enganxa</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Enganxa</string>
     <string name="quick_action__clipboard_paste__tooltip">Enganxa del porta-retalls</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Escull tot</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Escull tot</string>
     <string name="quick_action__clipboard_select_all__tooltip">Selecciona-ho tot i desa-ho al porta-retalls</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Porta-retall</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Porta-retall</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Obre l\'historial del porta-retalls</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Obre el tauler d\'emojis</string>
-    <string name="quick_action__language_switch" maxLength="12">Canvi idioma</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Canvi idioma</string>
     <string name="quick_action__language_switch__tooltip">Canvia l\'idioma</string>
-    <string name="quick_action__settings" maxLength="12">Paràmetres</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Paràmetres</string>
     <string name="quick_action__settings__tooltip">Obre la configuració</string>
-    <string name="quick_action__undo" maxLength="12">Desfés</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Desfés</string>
     <string name="quick_action__undo__tooltip">Desfà la darrera acció</string>
-    <string name="quick_action__redo" maxLength="12">Refés</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Refés</string>
     <string name="quick_action__redo__tooltip">Refà la darrera acció</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Més accions</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Més accions</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Mostra o amaga les accions addicionals</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incògnit</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incògnit</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Passa al mode incògnit</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Correc. auto</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Correc. auto</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Habilita la correcció automàtica</string>
-    <string name="quick_action__voice_input" maxLength="12">Entrada veu</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Entrada veu</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Obre el proveïdor d\'entrada de veu</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Amb una mà</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Amb una mà</string>
     <string name="quick_action__one_handed_mode__tooltip">Passa al mode d\'Amb una mà</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posició actual del cursor</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap operació</string>
     <string name="quick_actions_overflow__customize_actions_button">Reorganitza les accions</string>
     <string name="quick_actions_editor__header">Personalitza l\'ordre de les accions</string>

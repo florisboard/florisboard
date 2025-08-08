@@ -50,47 +50,47 @@
     <string name="emoji__history__pinned">已置顶</string>
     <string name="emoji__history__recent">最近使用</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">向上键</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">向上键</string>
     <string name="quick_action__arrow_up__tooltip">执行向上方向键</string>
-    <string name="quick_action__arrow_down" maxLength="12">向下键</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">向下键</string>
     <string name="quick_action__arrow_down__tooltip">执行向下方向键</string>
-    <string name="quick_action__arrow_left" maxLength="12">向左键</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">向左键</string>
     <string name="quick_action__arrow_left__tooltip">执行向左方向键</string>
-    <string name="quick_action__arrow_right" maxLength="12">向右键</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">向右键</string>
     <string name="quick_action__arrow_right__tooltip">执行向右方向键</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">清除主要剪贴板条目</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">清除主要剪贴板条目</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">执行清除主要剪贴板条目</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">复制</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">复制</string>
     <string name="quick_action__clipboard_copy__tooltip">执行剪贴板复制</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">剪切</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">剪切</string>
     <string name="quick_action__clipboard_cut__tooltip">执行剪贴板剪切</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">粘贴</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">粘贴</string>
     <string name="quick_action__clipboard_paste__tooltip">执行剪贴板粘贴</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">全选</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">全选</string>
     <string name="quick_action__clipboard_select_all__tooltip">执行剪贴板全选</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">剪贴板</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">剪贴板</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">打开剪贴板历史</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">表情符号</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">表情符号</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">打开表情符号面板</string>
-    <string name="quick_action__settings" maxLength="12">设置</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">设置</string>
     <string name="quick_action__settings__tooltip">打开设置</string>
-    <string name="quick_action__undo" maxLength="12">撤销</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">撤销</string>
     <string name="quick_action__undo__tooltip">撤销上次输入</string>
-    <string name="quick_action__redo" maxLength="12">恢复</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">恢复</string>
     <string name="quick_action__redo__tooltip">恢复上次输入</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">更多操作</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">更多操作</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">显示或隐藏其他操作</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">无痕模式</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">无痕模式</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">无痕模式开关</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">自动更正</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">自动更正</string>
     <string name="quick_action__toggle_autocorrect__tooltip">自动更正开关</string>
-    <string name="quick_action__voice_input" maxLength="12">语音输入</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">语音输入</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">打开语音输入提供者</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">单手模式</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">单手模式</string>
     <string name="quick_action__one_handed_mode__tooltip">单手模式开关</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">拖动标记</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">拖动标记</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">当前拖动标记位置</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无操作</string>
     <string name="quick_actions_overflow__customize_actions_button">重新排列操作</string>
     <string name="quick_actions_editor__header">自定义操作顺序</string>

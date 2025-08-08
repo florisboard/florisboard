@@ -50,50 +50,50 @@
     <string name="emoji__history__pinned">Sabitlenmiş</string>
     <string name="emoji__history__recent">Son Kullanılan</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Yukarı ok</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Yukarı ok</string>
     <string name="quick_action__arrow_up__tooltip">Yukarı ok eylemini gerçekleştir</string>
-    <string name="quick_action__arrow_down" maxLength="12">Aşağı ok</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Aşağı ok</string>
     <string name="quick_action__arrow_down__tooltip">Aşağı ok eylemini gerçekleştir</string>
-    <string name="quick_action__arrow_left" maxLength="12">Sol ok</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Sol ok</string>
     <string name="quick_action__arrow_left__tooltip">Sol ok eylemini gerçekleştir</string>
-    <string name="quick_action__arrow_right" maxLength="12">Sağ ok</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Sağ ok</string>
     <string name="quick_action__arrow_right__tooltip">Sağ ok eylemini gerçekleştir</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Panoyu sil</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Panoyu sil</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Birincil pano temizleme eylemini gerçekleştir</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopyala</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopyala</string>
     <string name="quick_action__clipboard_copy__tooltip">Panoya kopyala eylemini gerçekleştir</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Kes</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Kes</string>
     <string name="quick_action__clipboard_cut__tooltip">Panoya kes eylemini gerçekleştir</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Yapıştır</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Yapıştır</string>
     <string name="quick_action__clipboard_paste__tooltip">Panoyu yapıştır</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Tümünü seç</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Tümünü seç</string>
     <string name="quick_action__clipboard_select_all__tooltip">Tümünü seç eylemini gerçekleştir</string>
-    <string name="quick_action__forward_delete" maxLength="12">İletiyi sil</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Pano</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">İletiyi sil</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Pano</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Pano geçmişini aç</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Emoji panelini aç</string>
-    <string name="quick_action__language_switch" maxLength="12">Dil değiştir</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Dil değiştir</string>
     <string name="quick_action__language_switch__tooltip">Dili değiştirme eylemini gerçekleştir</string>
-    <string name="quick_action__settings" maxLength="12">Ayarlar</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Ayarlar</string>
     <string name="quick_action__settings__tooltip">Ayarları aç</string>
-    <string name="quick_action__undo" maxLength="12">Geri al</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Geri al</string>
     <string name="quick_action__undo__tooltip">Son girişi geri al</string>
-    <string name="quick_action__redo" maxLength="12">Yinele</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Yinele</string>
     <string name="quick_action__redo__tooltip">Son girişi yinele</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Daha fazla</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Daha fazla</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Ek eylemleri göster veya gizle</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Gizli Mod</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Gizli Mod</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Gizli modu aç/kapat</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Oto düzeltme</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Oto düzeltme</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Otomatik düzeltmeyi aç/kapat</string>
-    <string name="quick_action__voice_input" maxLength="12">Sesli giriş</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Sesli giriş</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Sesli giriş sağlayıcısını aç</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Tek el modu</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Tek el modu</string>
     <string name="quick_action__one_handed_mode__tooltip">Tek el modunu aç/kapat</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">İmleci oynat</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">İmleci oynat</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Mevcut sürükleme işareti konumu</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Yok</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Yok</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Eylem yok</string>
     <string name="quick_actions_overflow__customize_actions_button">Eylemleri yeniden sırala</string>
     <string name="quick_actions_editor__header">Eylem sırasını özelleştir</string>

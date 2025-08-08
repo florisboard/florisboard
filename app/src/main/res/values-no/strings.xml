@@ -26,47 +26,47 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagg</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Pil opp</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Pil opp</string>
     <string name="quick_action__arrow_up__tooltip">Gjør pil opp</string>
-    <string name="quick_action__arrow_down" maxLength="12">Pil ned</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Pil ned</string>
     <string name="quick_action__arrow_down__tooltip">Gjør pil ned</string>
-    <string name="quick_action__arrow_left" maxLength="12">Venstrepil</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Venstrepil</string>
     <string name="quick_action__arrow_left__tooltip">Gjør venstrepil</string>
-    <string name="quick_action__arrow_right" maxLength="12">Høgrepil</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Høgrepil</string>
     <string name="quick_action__arrow_right__tooltip">Gjør høgrepil</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Fjern klipp</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Fjern klipp</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Slett primærklipp fra utklippstavle</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopier</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopier</string>
     <string name="quick_action__clipboard_copy__tooltip">Gjør utklippstavlekopiering</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Klipp ut</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Klipp ut</string>
     <string name="quick_action__clipboard_cut__tooltip">Gjør utklippstavleutklipp</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Lim inn</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Lim inn</string>
     <string name="quick_action__clipboard_paste__tooltip">Gjør utklippstavleinnliming</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Merk alt</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Merk alt</string>
     <string name="quick_action__clipboard_select_all__tooltip">Gjør utklippstavleallmerking</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Utklipp</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Utklipp</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Åpne utklippstavlehistorikk</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Åpne emojipanel</string>
-    <string name="quick_action__settings" maxLength="12">Valg</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Valg</string>
     <string name="quick_action__settings__tooltip">Åpne innstillinger</string>
-    <string name="quick_action__undo" maxLength="12">Angre</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Angre</string>
     <string name="quick_action__undo__tooltip">Angre siste fôring</string>
-    <string name="quick_action__redo" maxLength="12">Gjør om</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Gjør om</string>
     <string name="quick_action__redo__tooltip">Gjør om siste fôring</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Flere handl.</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Flere handl.</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Vis eller gjøm tilleggsgjerninger</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Privat modus</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Privat modus</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Skru av/på privat modus</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autoretting</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autoretting</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Skru av/på autoretting</string>
-    <string name="quick_action__voice_input" maxLength="12">Talefôring</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Talefôring</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Åpne taleinndataleverandør</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Eihåndsmodus</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Eihåndsmodus</string>
     <string name="quick_action__one_handed_mode__tooltip">Skru av/på eihåndsmodus</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Dra-markør</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Dra-markør</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Dra-markørens posisjon</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ingen operasjon</string>
     <string name="quick_actions_overflow__customize_actions_button">Omordne gjerninger</string>
     <string name="quick_actions_editor__header">Endre gjerningsrekkefølgen</string>

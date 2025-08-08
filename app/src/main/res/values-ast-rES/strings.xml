@@ -27,23 +27,23 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">سهم لأعلى</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">سهم لأعلى</string>
     <string name="quick_action__arrow_up__tooltip">أداء السهم لأعلى</string>
-    <string name="quick_action__arrow_down" maxLength="12">سهم لأسفل</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">سهم لأسفل</string>
     <string name="quick_action__arrow_down__tooltip">تنفيذ السهم لأسفل</string>
-    <string name="quick_action__arrow_left" maxLength="12">Flecha esq.</string>
-    <string name="quick_action__arrow_right" maxLength="12">Flecha der.</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Apegar</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Cartafueyu</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Flecha esq.</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Flecha der.</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copiar</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Cortar</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Apegar</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Cartafueyu</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir l\'historial de fustaxes</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Abrir el panel de fustaxes</string>
-    <string name="quick_action__settings" maxLength="12">Opciones</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Opciones</string>
     <string name="quick_action__settings__tooltip">Abrir la configuración</string>
-    <string name="quick_action__undo" maxLength="12">Desfacer</string>
-    <string name="quick_action__redo" maxLength="12">Refacer</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Más aiciones</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Desfacer</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Refacer</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Más aiciones</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Alternar el correutor automáticu</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Aiciones dinámiques ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Aiciones anubríes ({n})</string>
