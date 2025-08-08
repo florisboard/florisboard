@@ -369,18 +369,41 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
     }
 
-    fun selectionSetNWordsLeft(n: Int): Boolean {
+    fun setSelectionSurrounding(n: Int, unit: OperationUnit, scope: OperationScope): Boolean {
         autoSpace.setInactive()
         phantomSpace.setInactive()
         val content = activeContent
         val selection = content.selection
+        val safeEditorBounds = content.safeEditorBounds
         if (selection.isNotValid) return false
-        if (n <= 0) {
-            return setSelection(selection.end, selection.end)
+        when (scope) {
+            OperationScope.BEFORE_CURSOR -> {
+                if (n <= 0) {
+                    return setSelection(selection.end, selection.end)
+                }
+                val textToAnalyze = content.text.substring(0, content.localSelection.end)
+                val length = runBlocking {
+                    when (unit) {
+                        OperationUnit.CHARACTERS -> breakIterators.measureLastUChars(textToAnalyze, n)
+                        OperationUnit.WORDS -> breakIterators.measureLastUWords(textToAnalyze, n)
+                    }
+                }
+                return setSelection((selection.end - length).coerceAtLeast(safeEditorBounds.start), selection.end)
+            }
+            OperationScope.AFTER_CURSOR -> {
+                if (n <= 0) {
+                    return setSelection(selection.start, selection.start)
+                }
+                val textToAnalyze = content.text.substring(content.localSelection.start)
+                val length = runBlocking {
+                    when (unit) {
+                        OperationUnit.CHARACTERS -> breakIterators.measureUChars(textToAnalyze, n)
+                        OperationUnit.WORDS -> breakIterators.measureUWords(textToAnalyze, n)
+                    }
+                }
+                return setSelection(selection.start, (selection.start + length).coerceAtMost(safeEditorBounds.end))
+            }
         }
-        val textToAnalyze = content.text.substring(0, content.localSelection.end)
-        val length = runBlocking { breakIterators.measureLastUWords(textToAnalyze, n) }
-        return setSelection((selection.end - length).coerceAtLeast(0), selection.end)
     }
 
     /**

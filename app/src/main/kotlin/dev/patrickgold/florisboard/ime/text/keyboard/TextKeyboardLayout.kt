@@ -59,6 +59,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
+import dev.patrickgold.florisboard.ime.editor.OperationScope
 import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
@@ -764,20 +765,21 @@ private class TextKeyboardLayoutController(
                     if (abs(event.relUnitCountX) > 0) {
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
-                    val safeEditorBounds = editorInstance.activeContent.safeEditorBounds
                     val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {
-                        if (inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
-                            // Forward select
-                            editorInstance.setSelection(
-                                activeSelection.start,
-                                (activeSelection.start - event.absUnitCountX + 1).coerceIn(activeSelection.start, safeEditorBounds.end),
+                        if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                            // Backward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX - 1,
+                                unit = OperationUnit.CHARACTERS,
+                                scope = OperationScope.BEFORE_CURSOR,
                             )
                         } else {
-                            // Backward select
-                            editorInstance.setSelection(
-                                (activeSelection.end + event.absUnitCountX + 1).coerceIn(safeEditorBounds.start, activeSelection.end),
-                                activeSelection.end,
+                            // Forward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX - 1,
+                                unit = OperationUnit.CHARACTERS,
+                                scope = OperationScope.AFTER_CURSOR,
                             )
                         }
                     }
@@ -788,8 +790,22 @@ private class TextKeyboardLayoutController(
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
                     val activeSelection = editorInstance.activeContent.selection
-                    if (activeSelection.isValid && event.absUnitCountX <= 0) {
-                        editorInstance.selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
+                    if (activeSelection.isValid) {
+                        if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                            // Backward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX / 2 - 1,
+                                unit = OperationUnit.WORDS,
+                                scope = OperationScope.BEFORE_CURSOR,
+                            )
+                        } else {
+                            // Forward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX / 2 - 1,
+                                unit = OperationUnit.WORDS,
+                                scope = OperationScope.AFTER_CURSOR,
+                            )
+                        }
                     }
                     true
                 }
