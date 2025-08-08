@@ -148,11 +148,13 @@ fun RestoreScreen() = FlorisScreen {
         val workspace = restoreWorkspace!!
         val shouldReset = importStrategy == ImportStrategy.Erase
         if (restoreFilesSelector.jetprefDatastore) {
-            val fileBasedStorage = workspace.outputDir
+            val file = workspace.outputDir
                 .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
                 .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
-                .let { FileBasedStorage(it.path) }
-            FlorisPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
+            if (file.exists()) {
+                val fileBasedStorage = FileBasedStorage(file.path)
+                FlorisPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
+            }
         }
         val workspaceFilesDir = workspace.outputDir.subDir("files")
         if (restoreFilesSelector.imeKeyboard) {
