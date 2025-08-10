@@ -113,6 +113,7 @@ import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
@@ -331,6 +332,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             addView(ComposeExtractedLandscapeInputView(extractEditText))
         }
         return defaultExtractView
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        themeManager.configurationChangeCounter.update { it + 1 }
     }
 
     override fun onDestroy() {

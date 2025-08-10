@@ -31,7 +31,7 @@ class WallpaperChangeReceiver : BroadcastReceiver() {
         if (intent.action == Intent.ACTION_WALLPAPER_CHANGED) {
             flogDebug { "Wallpaper changed" }
             val themeManager by context.themeManager()
-            themeManager.wallpaperChangedCounter.update { it + 1 }
+            themeManager.configurationChangeCounter.update { it + 1 }
         }
     }
 }

@@ -50,6 +50,8 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.util.TimeUtils.javaLocalTime
 import dev.patrickgold.florisboard.lib.util.ViewUtils
+import java.time.LocalTime
+import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -65,8 +67,6 @@ import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import java.time.LocalTime
-import java.util.*
 
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
@@ -83,7 +83,7 @@ class ThemeManager(context: Context) {
     val indexedThemeConfigs get() = _indexedThemeConfigs.asStateFlow()
     val previewThemeId = MutableStateFlow<ExtensionComponentName?>(null)
     val previewThemeInfo = MutableStateFlow<ThemeInfo?>(null)
-    val wallpaperChangedCounter = MutableStateFlow(0)
+    val configurationChangeCounter = MutableStateFlow(0)
 
     private val cachedThemeInfos = mutableListOf<ThemeInfo>()
     private val activeThemeGuard = Mutex(locked = false)
@@ -109,7 +109,7 @@ class ThemeManager(context: Context) {
             prefs.theme.nightThemeId.asFlow(),
             previewThemeId,
             previewThemeInfo,
-            wallpaperChangedCounter,
+            configurationChangeCounter,
         ) {}.collectIn(scope) {
             updateActiveTheme()
         }
