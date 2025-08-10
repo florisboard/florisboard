@@ -336,7 +336,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        themeManager.phoneThemeChangedCounter.update { it + 1 }
+        themeManager.configurationChangeCounter.update { it + 1 }
     }
 
     override fun onDestroy() {

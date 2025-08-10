@@ -83,8 +83,7 @@ class ThemeManager(context: Context) {
     val indexedThemeConfigs get() = _indexedThemeConfigs.asStateFlow()
     val previewThemeId = MutableStateFlow<ExtensionComponentName?>(null)
     val previewThemeInfo = MutableStateFlow<ThemeInfo?>(null)
-    val wallpaperChangedCounter = MutableStateFlow(0)
-    val phoneThemeChangedCounter = MutableStateFlow(0)
+    val configurationChangeCounter = MutableStateFlow(0)
 
     private val cachedThemeInfos = mutableListOf<ThemeInfo>()
     private val activeThemeGuard = Mutex(locked = false)
@@ -110,8 +109,7 @@ class ThemeManager(context: Context) {
             prefs.theme.nightThemeId.asFlow(),
             previewThemeId,
             previewThemeInfo,
-            wallpaperChangedCounter,
-            phoneThemeChangedCounter
+            configurationChangeCounter,
         ) {}.collectIn(scope) {
             updateActiveTheme()
         }
@@ -121,7 +119,7 @@ class ThemeManager(context: Context) {
      * Updates the current theme ref and loads the corresponding theme, as well as notifies all
      * callback receivers about the new theme.
      */
-    suspend fun updateActiveTheme(action: suspend () -> Unit = { }) = activeThemeGuard.withLock {
+    suspend fun updateActiveTheme(action: () -> Unit = { }) = activeThemeGuard.withLock {
         action()
         previewThemeInfo.value?.let { previewThemeInfo ->
             _activeThemeInfo.value = previewThemeInfo
