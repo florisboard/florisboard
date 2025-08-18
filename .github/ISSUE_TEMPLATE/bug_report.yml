@@ -44,7 +44,8 @@ body:
       label: Install Source
       options:
         - Google PlayStore
-        - F-Droid
+        - F-Droid (F-Droid Main)
+        - F-Droid (IzzyOnDroid)
         - GitHub
     validations:
       required: true
