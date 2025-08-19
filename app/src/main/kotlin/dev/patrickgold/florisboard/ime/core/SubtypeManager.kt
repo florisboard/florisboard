@@ -17,15 +17,18 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.serialization.encodeToString
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.kotlin.collectLatestIn
 
 val SubtypeJsonConfig = Json {
     encodeDefaults = true
@@ -38,8 +41,9 @@ val SubtypeJsonConfig = Json {
  * helper methods for the in-keyboard language switch process.
  */
 class SubtypeManager(context: Context) {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val keyboardManager by context.keyboardManager()
+    private val scope = CoroutineScope(Dispatchers.Default)
 
     private val _subtypesFlow = MutableStateFlow(listOf<Subtype>())
     val subtypesFlow = _subtypesFlow.asStateFlow()
@@ -54,7 +58,7 @@ class SubtypeManager(context: Context) {
         private set(v) { _activeSubtypeFlow.value = v }
 
     init {
-        prefs.localization.subtypes.observeForever { listRaw ->
+        prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->
             flogDebug { listRaw }
             val list = if (listRaw.isNotBlank()) {
                 SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
@@ -66,7 +70,7 @@ class SubtypeManager(context: Context) {
         }
     }
 
-    private fun persistNewSubtypeList(list: List<Subtype>) {
+    private fun persistNewSubtypeList(list: List<Subtype>) = scope.launch {
         val listRaw = SubtypeJsonConfig.encodeToString(list)
         prefs.localization.subtypes.set(listRaw)
     }
@@ -78,7 +82,7 @@ class SubtypeManager(context: Context) {
      * @return The active subtype or null, if the subtype list is empty or no new active subtype
      *  could be determined.
      */
-    private fun evaluateActiveSubtype(list: List<Subtype>) {
+    private fun evaluateActiveSubtype(list: List<Subtype>) = scope.launch {
         val activeSubtypeId = prefs.localization.activeSubtypeId.get()
         val subtype = list.find { it.id == activeSubtypeId } ?: list.firstOrNull() ?: Subtype.DEFAULT
         if (subtype.id != activeSubtypeId) {
@@ -184,7 +188,7 @@ class SubtypeManager(context: Context) {
     /**
      * Switch to the previous subtype in the subtype list if possible.
      */
-    fun switchToPrevSubtype() {
+    fun switchToPrevSubtype() = scope.launch {
         val subtypeList = subtypes
         val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
@@ -207,7 +211,7 @@ class SubtypeManager(context: Context) {
     /**
      * Switch to the next subtype in the subtype list if possible.
      */
-    fun switchToNextSubtype() {
+    fun switchToNextSubtype() = scope.launch {
         val subtypeList = subtypes
         val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
@@ -227,7 +231,7 @@ class SubtypeManager(context: Context) {
         activeSubtype = newActiveSubtype
     }
 
-    fun switchToSubtypeById(id: Long) {
+    fun switchToSubtypeById(id: Long) = scope.launch {
         if (subtypes.any { it.id == id }) {
             activeSubtype = getSubtypeById(id)!!
             prefs.localization.activeSubtypeId.set(id)

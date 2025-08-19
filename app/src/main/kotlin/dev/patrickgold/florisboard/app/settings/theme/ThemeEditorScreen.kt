@@ -70,9 +70,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
@@ -80,16 +80,10 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.themeManager
@@ -100,6 +94,13 @@ import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
@@ -145,7 +146,7 @@ fun ThemeEditorScreen(
     title = stringRes(R.string.ext__editor__edit_component__title_theme)
     scrollable = false
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val themeManager by context.themeManager()
@@ -309,14 +310,14 @@ fun ThemeEditorScreen(
         }
 
         DisposableEffect(workspace.version) {
-            themeManager.previewThemeInfo = ThemeManager.ThemeInfo.DEFAULT.copy(
+            themeManager.previewThemeInfo.value = ThemeManager.ThemeInfo.DEFAULT.copy(
                 name = extPreviewTheme(System.currentTimeMillis().toString()),
                 config = editor.build(),
                 stylesheet = stylesheetEditor.build(),
                 loadedDir = workspace.extDir,
             )
             onDispose {
-                themeManager.previewThemeInfo = null
+                themeManager.previewThemeInfo.value = null
             }
         }
 
@@ -633,7 +634,7 @@ private fun ComponentMetaEditorDialog(
             if (!allFieldsValid) {
                 showValidationErrors = true
             } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
-                context.showLongToast("A theme with this ID already exists!")
+                context.showLongToastSync("A theme with this ID already exists!")
             } else {
                 workspace.update {
                     editor.id = id.trim()

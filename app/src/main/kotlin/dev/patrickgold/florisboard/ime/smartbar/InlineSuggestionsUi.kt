@@ -17,12 +17,14 @@
 package dev.patrickgold.florisboard.ime.smartbar
 
 import android.os.Build
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,10 +35,10 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
+import dev.patrickgold.florisboard.ime.popup.GlobalStateNumPopupsShowing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
 import dev.patrickgold.florisboard.lib.toIntOffset
-import org.florisboard.lib.snygg.SnyggPropertySet
+import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.snygg.SnyggSinglePropertySet
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
@@ -57,7 +59,8 @@ fun InlineSuggestionsUi(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
-    val almostEmptyRect = remember { android.graphics.Rect(0, 0, 1, 1) }
+    val numPopupsShowing by GlobalStateNumPopupsShowing.collectAsState()
+    val isZOrderedOnTop = numPopupsShowing == 0
 
     Row(
         modifier
@@ -78,19 +81,14 @@ fun InlineSuggestionsUi(
                 modifier = Modifier.onGloballyPositioned { chipPos = it.positionInParent().toIntOffset() },
                 factory = { inlineSuggestion.view },
                 update = { view ->
+                    view.isZOrderedOnTop = isZOrderedOnTop
                     view.clipBounds = android.graphics.Rect(
                         (xMin - chipPos.x).coerceAtLeast(0),
                         0,
                         (xMax - chipPos.x).coerceAtMost(view.width),
                         view.height,
                     )
-                    // The empty rect is a workaround for a bug (I suppose) where an empty rect causes
-                    // no clipping, but we actually want to completely hide the view.
-                    // Thus we just show the topmost pixel of the view, which due to the round shape
-                    // of the theme should be transparent anyways.
-                    if (view.clipBounds.isEmpty) {
-                        view.clipBounds = almostEmptyRect
-                    }
+                    view.visibility = if (view.clipBounds.isEmpty) View.INVISIBLE else View.VISIBLE
                 }
             )
         }

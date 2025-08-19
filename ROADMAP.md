@@ -9,13 +9,11 @@ Each major milestone has associated alpha/beta releases, so if you are intereste
 > [!NOTE]
 > The milestone 0.5 was split, thus the word suggestions now come with version 0.6. The old version 0.6 has been moved down and is now 0.7. The time it takes to implement word suggestions will not change, but we can now release the new theme editor earlier, which would otherwise lie dormant.
 
-- [ ] Theme rework part II / Snygg v2
+- [x] Theme rework part II / Snygg v2
   - [x] See https://github.com/florisboard/florisboard/pull/2855
   - [x] Spaces in URI bug (See https://github.com/florisboard/florisboard/issues/2898)
-  - [ ] Rework cache manager (See https://github.com/florisboard/florisboard/issues/2870)
   - [x] Re-add time based theme switching (See https://github.com/florisboard/florisboard/pull/2977)
-- [ ] Add support for any remaining new features introduced with Android 13 / 14
-- [ ] Proper physical keyboard support (See https://github.com/florisboard/florisboard/issues/2815)
+- [x] Add support for any remaining new features introduced with Android 13 / 14
 - [x] Raise minimum required Android version from Android 7 (SDK level 24) to Android 8 (SDK level 26)
 
 ## 0.6
@@ -24,6 +22,8 @@ Each major milestone has associated alpha/beta releases, so if you are intereste
 - [ ] Add new extension type: Language Pack
     - Basically groups all locale-relevant data (predictive base model, emoji suggestion data, ...)
       in a dynamically importable extension file
+- [ ] Proper physical keyboard support (See https://github.com/florisboard/florisboard/issues/1972)
+- [ ] Rework cache manager (See https://github.com/florisboard/florisboard/issues/2870)
 
 ## k3lp
 
@@ -62,7 +62,6 @@ Each major milestone has associated alpha/beta releases, so if you are intereste
 - Text translation
 - Stickers/GIFs
 - Kaomoji panel implementation
-- FlorisBoard landing web page for presentation
 - Implementing additional layouts
 - Support for Tasker/Automate/MacroDroid plugins
 - Support for WearOS/Smartwatches

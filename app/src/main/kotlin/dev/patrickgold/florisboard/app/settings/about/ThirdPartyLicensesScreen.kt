@@ -26,8 +26,8 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.m3.libraryColors
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.florisScrollbar
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ThirdPartyLicensesScreen() = FlorisScreen {

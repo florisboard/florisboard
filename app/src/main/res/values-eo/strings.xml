@@ -50,49 +50,49 @@
     <string name="emoji__history__pinned">Alpinglitaj</string>
     <string name="emoji__history__recent">Lastaj</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Supren</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Supren</string>
     <string name="quick_action__arrow_up__tooltip">Movi la kursoron al la supra linio</string>
-    <string name="quick_action__arrow_down" maxLength="12">Suben</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Suben</string>
     <string name="quick_action__arrow_down__tooltip">Movi la kursoron al la malsupra linio</string>
-    <string name="quick_action__arrow_left" maxLength="12">Maldekstren</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Maldekstren</string>
     <string name="quick_action__arrow_left__tooltip">Movi la kursoron maldekstren</string>
-    <string name="quick_action__arrow_right" maxLength="12">Dekstren</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Dekstren</string>
     <string name="quick_action__arrow_right__tooltip">Movi la kursoron dekstren</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Viŝi lastan</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Viŝi lastan</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Viŝi lastan tondujan eron</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopii</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopii</string>
     <string name="quick_action__clipboard_copy__tooltip">Kopii al la tondujo</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Eltondi</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Eltondi</string>
     <string name="quick_action__clipboard_cut__tooltip">Eltondi al la tondujo</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Alglui</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Alglui</string>
     <string name="quick_action__clipboard_paste__tooltip">Alglui el la tondujo</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Elekti ĉion</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Elekti ĉion</string>
     <string name="quick_action__clipboard_select_all__tooltip">Elekti ĉion por kopii aŭ eltondi</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Tondujo</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Tondujo</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Malfermi tondujan historion</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoĝioj</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoĝioj</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Malfermi emoĝian panelon</string>
-    <string name="quick_action__language_switch" maxLength="12">Lingva ŝanĝo</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Lingva ŝanĝo</string>
     <string name="quick_action__language_switch__tooltip">Baskuligi lingvon</string>
-    <string name="quick_action__settings" maxLength="12">Agordoj</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Agordoj</string>
     <string name="quick_action__settings__tooltip">Malfermi agordojn</string>
-    <string name="quick_action__undo" maxLength="12">Malfari</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Malfari</string>
     <string name="quick_action__undo__tooltip">Malfari la lastan enigon</string>
-    <string name="quick_action__redo" maxLength="12">Refari</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Refari</string>
     <string name="quick_action__redo__tooltip">Refari la lastan enigon</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Pliaj agoj</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Pliaj agoj</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Montri aŭ kaŝi pliajn agojn</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognita</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Inkognita</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Aktivigi/Malaktivigi Inkognitan moduson</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Aŭtokorekt.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Aŭtokorekt.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">(Mal)aktivigi aŭtokorektadon</string>
-    <string name="quick_action__voice_input" maxLength="12">Voĉa enigo</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Voĉa enigo</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Malfermi provizanton de voĉa enigo</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Unu-mana</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Unu-mana</string>
     <string name="quick_action__one_handed_mode__tooltip">Aktivigi/Malaktivigi unu-manan moduson</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Kursoro</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Kursoro</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Nuna kursora pozicio</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Neniu</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Neniu</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nenia operacio</string>
     <string name="quick_actions_overflow__customize_actions_button">Reordigi agojn</string>
     <string name="quick_actions_editor__header">Agordi agojn ordon</string>

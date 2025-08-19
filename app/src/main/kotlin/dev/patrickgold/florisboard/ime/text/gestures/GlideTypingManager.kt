@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.keyboardManager
@@ -39,7 +39,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
         private const val MAX_SUGGESTION_COUNT = 8
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val keyboardManager by context.keyboardManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()

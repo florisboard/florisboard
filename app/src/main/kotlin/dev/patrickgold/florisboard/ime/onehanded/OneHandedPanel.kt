@@ -26,14 +26,16 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ZoomOutMap
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.stringRes
+import kotlinx.coroutines.launch
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
@@ -44,7 +46,8 @@ fun RowScope.OneHandedPanel(
     panelSide: OneHandedMode,
     weight: Float,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
     val inputFeedbackController = LocalInputFeedbackController.current
 
     SnyggColumn(
@@ -58,8 +61,10 @@ fun RowScope.OneHandedPanel(
         SnyggIconButton(
             FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
-                inputFeedbackController.keyPress()
-                prefs.keyboard.oneHandedModeEnabled.set(false)
+                scope.launch {
+                    inputFeedbackController.keyPress()
+                    prefs.keyboard.oneHandedModeEnabled.set(false)
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -74,8 +79,10 @@ fun RowScope.OneHandedPanel(
         SnyggIconButton(
             FlorisImeUi.OneHandedPanelButton.elementName,
             onClick = {
-                inputFeedbackController.keyPress()
-                prefs.keyboard.oneHandedMode.set(panelSide)
+                scope.launch {
+                    inputFeedbackController.keyPress()
+                    prefs.keyboard.oneHandedMode.set(panelSide)
+                }
             },
             modifier = Modifier
                 .weight(1f)

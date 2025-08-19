@@ -55,11 +55,8 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryValidation
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -68,7 +65,11 @@ import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.stringRes
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 
 private val AllLanguagesLocale = FlorisLocale.from(language = "zz")
 private val UserDictionaryEntryToAdd = UserDictionaryEntry(id = 0, "", 255, null, null)
@@ -143,16 +144,16 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                 UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
             }
             if (db == null) {
-                context.showLongToast("Database handle is null, failed to import")
+                context.showLongToastSync("Database handle is null, failed to import")
                 return@rememberLauncherForActivityResult
             }
             runCatching {
                 db.importCombinedList(context, uri)
             }.onSuccess {
                 buildUi()
-                context.showLongToast(R.string.settings__udm__dictionary_import_success)
+                context.showLongToastSync(R.string.settings__udm__dictionary_import_success)
             }.onFailure { error ->
-                context.showLongToast("Error: ${error.localizedMessage}")
+                context.showLongToastSync("Error: ${error.localizedMessage}")
             }
         },
     )
@@ -168,15 +169,15 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                 UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
             }
             if (db == null) {
-                context.showLongToast("Database handle is null, failed to export")
+                context.showLongToastSync("Database handle is null, failed to export")
                 return@rememberLauncherForActivityResult
             }
             runCatching {
                 db.exportCombinedList(context, uri)
             }.onSuccess {
-                context.showLongToast(R.string.settings__udm__dictionary_export_success)
+                context.showLongToastSync(R.string.settings__udm__dictionary_export_success)
             }.onFailure { error ->
-                context.showLongToast("Error: ${error.localizedMessage}")
+                context.showLongToastSync("Error: ${error.localizedMessage}")
             }
         },
     )

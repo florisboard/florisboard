@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package org.florisboard.lib.compose
 
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 
-@Composable
-fun Modifier.conditional(
-    condition: Boolean,
-    modifier: @Composable Modifier.() -> Modifier
-): Modifier =
-    if (condition) then(modifier(Modifier)) else this
+fun LazyGridScope.header(
+    key: Any? = null,
+    content: @Composable LazyGridItemScope.() -> Unit,
+) {
+    item(key, span = { GridItemSpan(this.maxLineSpan) }, content = content)
+}

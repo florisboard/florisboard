@@ -26,34 +26,34 @@
     <string name="emoji__category__symbols" comment="Emoji category name">نمادها</string>
     <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">فلش بالا</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">فلش بالا</string>
     <string name="quick_action__arrow_up__tooltip">فلش به سمت بالا</string>
-    <string name="quick_action__arrow_down" maxLength="12">فلش پایین</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">فلش پایین</string>
     <string name="quick_action__arrow_down__tooltip">فلش به سمت پایین</string>
-    <string name="quick_action__arrow_left" maxLength="12">فلش چپ</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">فلش چپ</string>
     <string name="quick_action__arrow_left__tooltip">فلش به سمت چپ</string>
-    <string name="quick_action__arrow_right" maxLength="12">فلش راست</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">جابه جایی</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">برش</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">فلش راست</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">جابه جایی</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">برش</string>
     <string name="quick_action__clipboard_cut__tooltip">برش کلیپ بورد را انجام دهید</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">جای گذاری</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">جای گذاری</string>
     <string name="quick_action__clipboard_paste__tooltip">چسباندن کلیپ بورد را انجام دهید</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">انتخاب همه</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">کلیپ‌بورد</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">انتخاب همه</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">کلیپ‌بورد</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">باز کردن تاریخچه کلیپ بورد</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">شکلک</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">شکلک</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">باز کردن پنل شکلک ها</string>
-    <string name="quick_action__settings" maxLength="12">تنظیمات</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">تنظیمات</string>
     <string name="quick_action__settings__tooltip">باز کردن تنظیمات</string>
-    <string name="quick_action__undo" maxLength="12">بازگرد</string>
-    <string name="quick_action__redo" maxLength="12">انجام مجدد</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">ناشناس</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">بازگرد</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">انجام مجدد</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">ناشناس</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">غیر فعال کردن حالت ناشناس</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">تصحیح خودکار</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">تصحیح خودکار</string>
     <string name="quick_action__toggle_autocorrect__tooltip">غیر فعال کردن تصحیح خودکار</string>
-    <string name="quick_action__voice_input" maxLength="12">ورودی صدا</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">یک دستی</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ کدام</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">ورودی صدا</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">یک دستی</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ کدام</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ عملی</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

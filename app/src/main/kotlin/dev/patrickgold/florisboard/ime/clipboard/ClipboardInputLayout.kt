@@ -74,6 +74,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,7 +88,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -101,21 +102,24 @@ import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
-import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import java.time.Instant
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
+import org.florisboard.lib.compose.autoMirrorForRtl
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
@@ -125,7 +129,6 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
-import java.time.Instant
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -136,7 +139,8 @@ const val CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO: Int = 0
 fun ClipboardInputLayout(
     modifier: Modifier = Modifier,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
     val keyboardManager by context.keyboardManager()
@@ -203,7 +207,7 @@ fun ClipboardInputLayout(
             )
             SnyggIconButton(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
-                onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
+                onClick = { scope.launch { prefs.clipboard.historyEnabled.set(!historyEnabled) } },
                 modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             ) {
@@ -583,7 +587,7 @@ fun ClipboardInputLayout(
                                 attributes = mapOf("action" to "yes"),
                                 onClick = {
                                     clipboardManager.clearHistory()
-                                    context.showShortToast(R.string.clipboard__cleared_history)
+                                    context.showShortToastSync(R.string.clipboard__cleared_history)
                                     showClearAllHistory = false
                                     isFilterRowShown = false
                                 },
@@ -629,7 +633,7 @@ fun ClipboardInputLayout(
                 text = stringRes(R.string.clipboard__disabled__message),
             )
             SnyggButton(FlorisImeUi.ClipboardHistoryDisabledButton.elementName,
-                onClick = { prefs.clipboard.historyEnabled.set(true) },
+                onClick = { scope.launch { prefs.clipboard.historyEnabled.set(true) } },
                 modifier = Modifier.align(Alignment.End),
             ) {
                 SnyggText(

@@ -47,15 +47,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
-import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.mimeTypeFilterOf
 
 class FlorisCopyToClipboardActivity : ComponentActivity() {
@@ -135,8 +135,12 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
 
     @Composable
     private fun Content() {
-        val prefs by florisPreferenceModel()
-        ProvideLocalizedResources(this, forceLayoutDirection = LayoutDirection.Ltr) {
+        val prefs by FlorisPreferenceStore
+        ProvideLocalizedResources(
+            resourcesContext = this,
+            appName = R.string.app_name,
+            forceLayoutDirection = LayoutDirection.Ltr,
+        ) {
             val theme by prefs.other.settingsTheme.observeAsState()
             FlorisAppTheme(theme) {
                 BottomSheet {

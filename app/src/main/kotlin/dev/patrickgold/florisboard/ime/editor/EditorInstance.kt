@@ -23,7 +23,7 @@ import android.view.KeyEvent
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -42,14 +42,14 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
         private const val SPACE = " "
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
@@ -335,49 +335,75 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun deleteBackwards(): Boolean {
+    fun deleteBackwards(unit: OperationUnit): Boolean {
         val content = activeContent
-        if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
-            return deleteWordBackwards()
+        if (unit == OperationUnit.CHARACTERS) {
+            if (phantomSpace.isActive && content.currentWord.isValid && prefs.glide.immediateBackspaceDeletesWord.get()) {
+                return deleteBackwards(OperationUnit.WORDS)
+            }
         }
         autoSpace.setInactive()
         phantomSpace.setInactive()
         return if (content.selection.isSelectionMode) {
             commitText("")
-        } else {
-            deleteBeforeCursor(TextType.CHARACTERS, 1)
+        } else runBlocking {
+            deleteAroundCursor(unit, OperationScope.BEFORE_CURSOR, n = 1)
         }
     }
 
     /**
      * Executes a backward delete on this editor's text. If a text selection is active, all
-     * characters inside this selection will be removed, else only the left-most word from
+     * characters inside this selection will be removed, else only the left-most character from
      * the cursor's position.
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun deleteWordBackwards(): Boolean {
+    fun deleteForwards(unit: OperationUnit): Boolean {
+        val content = activeContent
         autoSpace.setInactive()
         phantomSpace.setInactive()
-        return if (activeContent.selection.isSelectionMode) {
+        return if (content.selection.isSelectionMode) {
             commitText("")
-        } else {
-            deleteBeforeCursor(TextType.WORDS, 1)
+        } else runBlocking {
+            deleteAroundCursor(unit, OperationScope.AFTER_CURSOR, n = 1)
         }
     }
 
-    fun selectionSetNWordsLeft(n: Int): Boolean {
+    fun setSelectionSurrounding(n: Int, unit: OperationUnit, scope: OperationScope): Boolean {
         autoSpace.setInactive()
         phantomSpace.setInactive()
         val content = activeContent
         val selection = content.selection
+        val safeEditorBounds = content.safeEditorBounds
         if (selection.isNotValid) return false
-        if (n <= 0) {
-            return setSelection(selection.end, selection.end)
+        when (scope) {
+            OperationScope.BEFORE_CURSOR -> {
+                if (n <= 0) {
+                    return setSelection(selection.end, selection.end)
+                }
+                val textToAnalyze = content.text.substring(0, content.localSelection.end)
+                val length = runBlocking {
+                    when (unit) {
+                        OperationUnit.CHARACTERS -> breakIterators.measureLastUChars(textToAnalyze, n)
+                        OperationUnit.WORDS -> breakIterators.measureLastUWords(textToAnalyze, n)
+                    }
+                }
+                return setSelection((selection.end - length).coerceAtLeast(safeEditorBounds.start), selection.end)
+            }
+            OperationScope.AFTER_CURSOR -> {
+                if (n <= 0) {
+                    return setSelection(selection.start, selection.start)
+                }
+                val textToAnalyze = content.text.substring(content.localSelection.start)
+                val length = runBlocking {
+                    when (unit) {
+                        OperationUnit.CHARACTERS -> breakIterators.measureUChars(textToAnalyze, n)
+                        OperationUnit.WORDS -> breakIterators.measureUWords(textToAnalyze, n)
+                    }
+                }
+                return setSelection(selection.start, (selection.start + length).coerceAtMost(safeEditorBounds.end))
+            }
         }
-        val textToAnalyze = content.text.substring(0, content.localSelection.end)
-        val length = runBlocking { breakIterators.measureLastUWords(textToAnalyze, n) }
-        return setSelection((selection.end - length).coerceAtLeast(0), selection.end)
     }
 
     /**
@@ -393,9 +419,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
-            appContext.showShortToast("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
+            appContext.showShortToastSync("Failed to retrieve selected text requested to cut: Eiter selection state is invalid or an error occurred within the input connection.")
         }
-        return deleteBackwards()
+        return deleteBackwards(OperationUnit.CHARACTERS)
     }
 
     /**
@@ -411,7 +437,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         if (text != null) {
             clipboardManager.addNewPlaintext(text.toString())
         } else {
-            appContext.showShortToast("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
+            appContext.showShortToastSync("Failed to retrieve selected text requested to copy: Eiter selection state is invalid or an error occurred within the input connection.")
         }
         val activeSelection = activeContent.selection
         return setSelection(activeSelection.end, activeSelection.end)
@@ -428,7 +454,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         phantomSpace.setInactive()
         return commitClipboardItem(clipboardManager.primaryClip).also { result ->
             if (!result) {
-                appContext.showShortToast("Failed to paste item.")
+                appContext.showShortToastSync("Failed to paste item.")
             }
         }
     }

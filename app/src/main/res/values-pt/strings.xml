@@ -26,7 +26,7 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
     <string name="emoji__category__flags" comment="Emoji category name">Bandeiras</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Seta p/ cima</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Seta p/ cima</string>
     <string name="quick_action__arrow_up__tooltip">Aciona a seta para cima</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->

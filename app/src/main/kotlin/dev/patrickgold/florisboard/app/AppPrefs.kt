@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import dev.patrickgold.florisboard.app.settings.theme.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
@@ -53,11 +54,11 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
-import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
-import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.annotations.Preferences
+import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
 import dev.patrickgold.jetpref.datastore.model.LocalTime
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
@@ -69,9 +70,14 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.color.DEFAULT_GREEN
 
-fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
+val FlorisPreferenceStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
-class AppPrefs : PreferenceModel("florisboard-app-prefs") {
+@Preferences
+abstract class FlorisPreferenceModel : PreferenceModel() {
+    companion object {
+        const val NAME = "florisboard-app-prefs"
+    }
+
     val clipboard = Clipboard()
     inner class Clipboard {
         val useInternalClipboard = boolean(
@@ -758,11 +764,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             },
             serializer = ColorPreferenceSerializer,
         )
-        val sunriseTime = time(
+        val sunriseTime = localTime(
             key = "theme__sunrise_time",
             default = LocalTime(6, 0),
         )
-        val sunsetTime = time(
+        val sunsetTime = localTime(
             key = "theme__sunset_time",
             default = LocalTime(18, 0),
         )
@@ -852,6 +858,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 if (QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH) !in newArrangement) {
                     newArrangement = newArrangement.copy(
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH))
+                    )
+                }
+                if (QuickAction.InsertKey(TextKeyData.FORWARD_DELETE) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.FORWARD_DELETE))
                     )
                 }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())

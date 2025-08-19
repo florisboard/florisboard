@@ -33,6 +33,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,26 +41,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppPrefs
 import dev.patrickgold.florisboard.app.FlorisAppActivity
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
-import dev.patrickgold.florisboard.lib.compose.FlorisStep
-import dev.patrickgold.florisboard.lib.compose.FlorisStepLayout
-import dev.patrickgold.florisboard.lib.compose.FlorisStepState
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
-
+import org.florisboard.lib.compose.FlorisBulletSpacer
+import org.florisboard.lib.compose.FlorisStep
+import org.florisboard.lib.compose.FlorisStepLayout
+import org.florisboard.lib.compose.FlorisStepState
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun SetupScreen() = FlorisScreen {
@@ -70,7 +72,8 @@ fun SetupScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
 
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
     val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
@@ -78,10 +81,12 @@ fun SetupScreen() = FlorisScreen {
 
     val requestNotification =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                prefs.internal.notificationPermissionState.set(NotificationPermissionState.GRANTED)
-            } else {
-                prefs.internal.notificationPermissionState.set(NotificationPermissionState.DENIED)
+            scope.launch {
+                if (isGranted) {
+                    prefs.internal.notificationPermissionState.set(NotificationPermissionState.GRANTED)
+                } else {
+                    prefs.internal.notificationPermissionState.set(NotificationPermissionState.DENIED)
+                }
             }
         }
 
@@ -91,7 +96,8 @@ fun SetupScreen() = FlorisScreen {
         context,
         navController,
         requestNotification,
-        hasNotificationPermission
+        hasNotificationPermission,
+        scope,
     )
 }
 
@@ -103,6 +109,7 @@ private fun FlorisScreenScope.content(
     navController: NavController,
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
     hasNotificationPermission: NotificationPermissionState,
+    scope: CoroutineScope,
 ) {
 
     val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
@@ -158,7 +165,7 @@ private fun FlorisScreenScope.content(
                 Spacer(modifier = Modifier.height(16.dp))
             },
             steps = steps(
-                context, navController, requestNotification
+                context, navController, requestNotification, scope
             ),
             footer = {
                 footer(context)
@@ -189,10 +196,11 @@ private fun footer(context: Context) {
 }
 
 @Composable
-private fun PreferenceUiScope<AppPrefs>.steps(
+private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
     context: Context,
     navController: NavController,
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
+    scope: CoroutineScope,
 ): List<FlorisStep> {
 
     return listOfNotNull(
@@ -232,7 +240,7 @@ private fun PreferenceUiScope<AppPrefs>.steps(
             StepText(stringRes(R.string.setup__finish_up__description_p1))
             StepText(stringRes(R.string.setup__finish_up__description_p2))
             StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
-                this@steps.prefs.internal.isImeSetUp.set(true)
+                scope.launch { this@steps.prefs.internal.isImeSetUp.set(true) }
                 navController.navigate(Routes.Settings.Home) {
                     popUpTo(Routes.Setup.Screen) {
                         inclusive = true

@@ -29,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,7 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
@@ -53,10 +53,10 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.SnyggMissingSchemaException
 import java.text.SimpleDateFormat
 import java.util.*
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.SnyggMissingSchemaException
 
 private val CardBackground = Color.Black.copy(0.6f)
 private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
@@ -64,7 +64,8 @@ private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.
 @Composable
 fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
+    val appContext by context.appContext()
     val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
 
@@ -73,9 +74,10 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
     val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
     val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
+    val prefsLoaded by appContext.preferenceStoreLoaded.collectAsState()
 
     val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
-    val themeInfo by themeManager.activeThemeInfo.observeAsState()
+    val themeInfo by themeManager.activeThemeInfo.collectAsState()
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White,
@@ -97,8 +99,8 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
             if (devtoolsEnabled && showInlineAutofillOverlay && AndroidVersion.ATLEAST_API30_R) {
                 DevtoolsInlineAutofillOverlay()
             }
-            val loadFailure = themeInfo?.loadFailure
-            if (loadFailure != null) {
+            val loadFailure = themeInfo.loadFailure
+            if (loadFailure != null && prefsLoaded) {
                 DevtoolsStylesheetFailedToLoadOverlay(loadFailure)
             }
         }
@@ -163,13 +165,13 @@ private fun DevtoolsLastLayoutComputationOverlay(debugLayoutResult: DebugLayoutC
             return@DevtoolsOverlayBox
         }
         DevtoolsSubGroup(title = "main") {
-            PrintResult(debugLayoutResult!!.main)
+            PrintResult(debugLayoutResult.main)
         }
         DevtoolsSubGroup(title = "mod") {
-            PrintResult(debugLayoutResult!!.mod)
+            PrintResult(debugLayoutResult.mod)
         }
         DevtoolsSubGroup(title = "ext") {
-            PrintResult(debugLayoutResult!!.ext)
+            PrintResult(debugLayoutResult.ext)
         }
     }
 }

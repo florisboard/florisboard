@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
@@ -52,16 +51,16 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.toIntOffset
+import org.florisboard.lib.compose.stringRes
+import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
@@ -74,7 +73,7 @@ private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.
 
 @Composable
 fun QuickActionsEditorPanel() {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
@@ -235,7 +234,9 @@ fun QuickActionsEditorPanel() {
                 dynamicActions.filter { it != NoopAction && it != DragMarkerAction },
                 hiddenActions.filter { it != NoopAction && it != DragMarkerAction },
             )
-            prefs.smartbar.actionArrangement.set(newActionArrangement)
+            runBlocking {
+                prefs.smartbar.actionArrangement.set(newActionArrangement)
+            }
             if (keyboardManager.activeState.isActionsEditorVisible) {
                 keyboardManager.activeState.isActionsEditorVisible = false
             }

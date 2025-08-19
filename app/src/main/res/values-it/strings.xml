@@ -50,48 +50,48 @@
     <string name="emoji__history__pinned">Selezionata</string>
     <string name="emoji__history__recent">Recente</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Freccia su</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Freccia su</string>
     <string name="quick_action__arrow_up__tooltip">Eseguire freccia su</string>
-    <string name="quick_action__arrow_down" maxLength="12">Freccia giù</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Freccia giù</string>
     <string name="quick_action__arrow_down__tooltip">Eseguire freccia giù</string>
-    <string name="quick_action__arrow_left" maxLength="12">Sinistra</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Sinistra</string>
     <string name="quick_action__arrow_left__tooltip">Eseguire freccia sinistra</string>
-    <string name="quick_action__arrow_right" maxLength="12">Destra</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Destra</string>
     <string name="quick_action__arrow_right__tooltip">Eseguire freccia destra</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Pulire clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Pulire clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Esegui sgombro degli appunti primari</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copia</string>
     <string name="quick_action__clipboard_copy__tooltip">Esegui copia negli appunti</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Taglia</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Taglia</string>
     <string name="quick_action__clipboard_cut__tooltip">Esegui taglia negli appunti</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Incolla</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Incolla</string>
     <string name="quick_action__clipboard_paste__tooltip">Esegui incolla negli appunti</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Selez. tutto</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Selez. tutto</string>
     <string name="quick_action__clipboard_select_all__tooltip">Esegui seleziona tutti negli appunti</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Appunti</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Appunti</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Apri cronologia degli appunti</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Apri pannello degli emoji</string>
     <string name="quick_action__language_switch__tooltip">Esegui cambio lingua</string>
-    <string name="quick_action__settings" maxLength="12">Impostazioni</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Impostazioni</string>
     <string name="quick_action__settings__tooltip">Apri impostazioni</string>
-    <string name="quick_action__undo" maxLength="12">Annulla</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Annulla</string>
     <string name="quick_action__undo__tooltip">Annulla l\'ultima azione</string>
-    <string name="quick_action__redo" maxLength="12">Ripristina</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Ripristina</string>
     <string name="quick_action__redo__tooltip">Ripristina l\'ultima azione</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Altre azioni</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Altre azioni</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Mostra o nascondi azioni aggiuntive</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Attiva o disattiva modalità in incognito</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Auto-correz.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Auto-correz.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Attiva o disattiva correzione automatica</string>
-    <string name="quick_action__voice_input" maxLength="12">Input vocale</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Input vocale</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Apri fornitore d\'immissione di voce</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">A una mano</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">A una mano</string>
     <string name="quick_action__one_handed_mode__tooltip">Attiva o disattiva modalità a una mano</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Trascina</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Trascina</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posizione dell\'attuale marcatore di trascinamento</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna operazione</string>
     <string name="quick_actions_overflow__customize_actions_button">Riordina azioni</string>
     <string name="quick_actions_editor__header">Riordina ordine azioni</string>

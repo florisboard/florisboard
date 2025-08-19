@@ -85,18 +85,19 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldDefaults
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.stringRes
+import org.florisboard.lib.compose.FlorisChip
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggAttributes
@@ -406,7 +407,7 @@ private fun EditCodeValueDialog(
         }
         if (!isFlorisBoardEnabled || !isFlorisBoardSelected) {
             lastRecordingToast?.cancel()
-            lastRecordingToast = context.showShortToast(
+            lastRecordingToast = context.showShortToastSync(
                 R.string.settings__theme_editor__code_recording_requires_default_ime_floris,
                 "app_name" to context.stringRes(R.string.floris_app_name),
             )
@@ -432,12 +433,12 @@ private fun EditCodeValueDialog(
             val defaultReceiver = keyboardManager.inputEventDispatcher.keyEventReceiver
             keyboardManager.inputEventDispatcher.keyEventReceiver = receiver
             lastRecordingToast?.cancel()
-            lastRecordingToast = context.showShortToast(R.string.settings__theme_editor__code_recording_started)
+            lastRecordingToast = context.showShortToastSync(R.string.settings__theme_editor__code_recording_started)
             focusRequester.requestFocus()
             onDispose {
                 keyboardManager.inputEventDispatcher.keyEventReceiver = defaultReceiver
                 lastRecordingToast?.cancel()
-                lastRecordingToast = context.showShortToast(R.string.settings__theme_editor__code_recording_stopped)
+                lastRecordingToast = context.showShortToastSync(R.string.settings__theme_editor__code_recording_stopped)
             }
         }
     }

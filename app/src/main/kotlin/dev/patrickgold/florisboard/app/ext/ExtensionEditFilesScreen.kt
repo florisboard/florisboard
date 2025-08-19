@@ -48,9 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
@@ -59,7 +57,11 @@ import java.util.*
 import org.florisboard.lib.android.query
 import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.parentDir
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
@@ -186,9 +188,9 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                     allowOutsideDismissal = true,
                     onNeutral = {
                         if (file.delete()) {
-                            context.showShortToast("Successfully deleted")
+                            context.showShortToastSync("Successfully deleted")
                         } else {
-                            context.showShortToast("Failed to delete")
+                            context.showShortToastSync("Failed to delete")
                         }
                         dialogFile = null
                         version++
@@ -196,18 +198,18 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                     onConfirm = {
                         val newFile = file.parentFile!!.subFile(fileNameInput).canonicalFile
                         if (newFile.parentFile != file.canonicalFile.parentFile) {
-                            context.showLongToast("Invalid file name!")
+                            context.showLongToastSync("Invalid file name!")
                             return@JetPrefAlertDialog
                         }
                         if (newFile.exists()) {
-                            context.showShortToast("Filename already exists.")
+                            context.showShortToastSync("Filename already exists.")
                             return@JetPrefAlertDialog
                         }
                         val success = file.renameTo(newFile)
                         if (success) {
-                            context.showShortToast("Successfully renamed")
+                            context.showShortToastSync("Successfully renamed")
                         } else {
-                            context.showShortToast("Failed to rename the file.")
+                            context.showShortToastSync("Failed to rename the file.")
                         }
                         dialogFile = null
                         version++
@@ -257,13 +259,13 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                     dir.mkdirs()
                     val file = dir.subFile(fileName)
                     if (file.parentDir != workspace.extDir.subDir(dest)) {
-                        context.showShortToast("Invalid file name")
+                        context.showShortToastSync("Invalid file name")
                     } else if (file.exists()) {
-                        context.showShortToast("File already exists")
+                        context.showShortToastSync("File already exists")
                     } else {
                         val tempFile = result.first
                         if (!tempFile.renameTo(file)) {
-                            context.showShortToast("Failed to rename file")
+                            context.showShortToastSync("Failed to rename file")
                             tempFile.delete()
                         }
                         currentImportDest = null

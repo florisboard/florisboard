@@ -50,48 +50,48 @@
     <string name="emoji__history__pinned">Закріплено</string>
     <string name="emoji__history__recent">Останні</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Курсор вгору</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Курсор вгору</string>
     <string name="quick_action__arrow_up__tooltip">Перемістити курсор на початок</string>
-    <string name="quick_action__arrow_down" maxLength="12">Курсор униз</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Курсор униз</string>
     <string name="quick_action__arrow_down__tooltip">Перемістити курсор в кінець</string>
-    <string name="quick_action__arrow_left" maxLength="12">Курсор вліво</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Курсор вліво</string>
     <string name="quick_action__arrow_left__tooltip">Перемістити курсор вліво</string>
-    <string name="quick_action__arrow_right" maxLength="12">Вправо</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Вправо</string>
     <string name="quick_action__arrow_right__tooltip">Перемістити курсор вправо</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Стерти буфер</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Стерти буфер</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Видалити останній копійований текст</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Копіювати</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копіювати</string>
     <string name="quick_action__clipboard_copy__tooltip">Копіювати</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Вирізати</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Вирізати</string>
     <string name="quick_action__clipboard_cut__tooltip">Вирізати</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Вставити</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Вставити</string>
     <string name="quick_action__clipboard_paste__tooltip">Вставити</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Обрати все</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Обрати все</string>
     <string name="quick_action__clipboard_select_all__tooltip">Виділити все</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер обміну</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Буфер обміну</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Відкрити буфер обміну</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Емоджі</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Емоджі</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Відкрити панель емоджі</string>
-    <string name="quick_action__language_switch" maxLength="12">Змінити мову</string>
-    <string name="quick_action__settings" maxLength="12">Налаштування</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Змінити мову</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Налаштування</string>
     <string name="quick_action__settings__tooltip">Відкрити налаштування</string>
-    <string name="quick_action__undo" maxLength="12">Скасувати</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Скасувати</string>
     <string name="quick_action__undo__tooltip">Скасувати останній ввід</string>
-    <string name="quick_action__redo" maxLength="12">Повторити</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Повторити</string>
     <string name="quick_action__redo__tooltip">Відновити останній ввід</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Більше дій</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Більше дій</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Показати або приховати додаткові дії</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Інкогніто</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Інкогніто</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Увімкнути режим інкогніто</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Автокорекція</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Автокорекція</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Увімкнути автовиправлення</string>
-    <string name="quick_action__voice_input" maxLength="12">Голос. Набір</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Голос. Набір</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Відкрити постачальника голосового введення</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Однією рукою</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Однією рукою</string>
     <string name="quick_action__one_handed_mode__tooltip">Увімкнути режим роботи однією рукою</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Поточне положення курсора</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Нічого</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Нічого</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Немає операцій</string>
     <string name="quick_actions_overflow__customize_actions_button">Змінити упорядкування</string>
     <string name="quick_actions_editor__header">Налаштувати порядок дій</string>

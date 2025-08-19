@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package org.florisboard.lib.compose
 
 import android.content.Context
 import android.view.View
@@ -27,13 +27,12 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
-import dev.patrickgold.florisboard.R
-import org.florisboard.lib.kotlin.CurlyArg
-import org.florisboard.lib.kotlin.curlyFormat
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
+import org.florisboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.curlyFormat
 
 private val LocalResourcesContext = staticCompositionLocalOf<Context> {
     error("resources context not initialized!!")
@@ -43,7 +42,7 @@ private val LocalAppNameString = staticCompositionLocalOf {
     "FlorisBoard"
 }
 
-internal val LocalLocalizedDateTimeFormatter = staticCompositionLocalOf {
+val LocalLocalizedDateTimeFormatter = staticCompositionLocalOf {
     DateTimeFormatter
         .ofLocalizedDateTime(FormatStyle.MEDIUM)
         .withLocale(Locale.ROOT)
@@ -53,6 +52,7 @@ internal val LocalLocalizedDateTimeFormatter = staticCompositionLocalOf {
 @Composable
 fun ProvideLocalizedResources(
     resourcesContext: Context,
+    @StringRes appName: Int,
     forceLayoutDirection: LayoutDirection? = null,
     content: @Composable () -> Unit,
 ) {
@@ -72,7 +72,7 @@ fun ProvideLocalizedResources(
         LocalResourcesContext provides resourcesContext,
         LocalLocalizedDateTimeFormatter provides dateTimeFormatter,
         LocalLayoutDirection provides layoutDirection,
-        LocalAppNameString provides stringResource(R.string.floris_app_name),
+        LocalAppNameString provides stringResource(appName),
     ) {
         content()
     }

@@ -24,7 +24,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
@@ -43,16 +42,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
@@ -60,12 +62,12 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.horizontalTween
-import dev.patrickgold.florisboard.lib.compose.verticalTween
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.horizontalTween
+import org.florisboard.lib.compose.verticalTween
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
@@ -89,7 +91,7 @@ private val NoAnimationTween = tween<Float>(0)
 
 @Composable
 fun Smartbar() {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
 
@@ -138,10 +140,11 @@ fun Smartbar() {
 
 @Composable
 private fun SmartbarMainRow(modifier: Modifier = Modifier) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
+    val scope = rememberCoroutineScope()
 
     val inlineSuggestions by NlpInlineAutofill.suggestions.collectAsState()
     LaunchedEffect(inlineSuggestions) {
@@ -164,7 +167,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 if (/* was */ sharedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
                 }
-                prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
+                scope.launch {
+                    prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
+                }
             },
             modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
         ) {
@@ -182,7 +187,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             } else {
                 Icons.AutoMirrored.Default.KeyboardArrowRight
             }
-            val incognitoIcon = vectorResource(id = R.drawable.ic_incognito)
+            val incognitoIcon = ImageVector.vectorResource(id = R.drawable.ic_incognito)
             val incognitoDisplayMode = prefs.keyboard.incognitoDisplayMode.observeAsState()
             val isIncognitoMode = keyboardManager.activeState.isIncognitoMode
             val icon = if (isIncognitoMode) {
@@ -244,7 +249,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 if (/* was */ extendedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
                 }
-                prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
+                scope.launch {
+                    prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
+                }
             },
             modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
         ) {
@@ -304,7 +311,9 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
     SideEffect {
         if (!shouldAnimate) {
-            prefs.smartbar.sharedActionsExpandWithAnimation.set(true)
+            scope.launch {
+                prefs.smartbar.sharedActionsExpandWithAnimation.set(true)
+            }
         }
     }
 
@@ -359,7 +368,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
     val secondaryRowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarExtendedActionsRow.elementName)
     val windowStyle = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)

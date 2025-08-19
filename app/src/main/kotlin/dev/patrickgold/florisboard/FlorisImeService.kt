@@ -75,8 +75,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
 import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
@@ -102,7 +102,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -114,16 +113,19 @@ import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
 import org.florisboard.lib.android.isOrientationPortrait
-import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
@@ -246,12 +248,12 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             }
-            ims.showShortToast("Failed to find voice IME, do you have one installed?")
+            ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
             return false
         }
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val editorInstance by editorInstance()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
@@ -277,21 +279,21 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
-        subtypeManager.activeSubtypeFlow.collectLatestIn(lifecycleScope) { subtype ->
+        subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
                 config.setLocale(subtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.observeForever { shouldSync ->
+        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow().collectIn(lifecycleScope) { shouldSync ->
             val config = Configuration(resources.configuration)
             if (shouldSync) {
                 config.setLocale(subtypeManager.activeSubtype.primaryLocale.base)
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.physicalKeyboard.showOnScreenKeyboard.observeForever {
+        prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectIn(lifecycleScope) {
             updateInputViewShown()
         }
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
@@ -330,6 +332,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             addView(ComposeExtractedLandscapeInputView(extractEditText))
         }
         return defaultExtractView
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        themeManager.configurationChangeCounter.update { it + 1 }
     }
 
     override fun onDestroy() {
@@ -408,7 +415,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = true
-        themeManager.updateActiveTheme()
         inputFeedbackController.updateSystemPrefsState()
     }
 
@@ -572,7 +578,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     @Composable
     private fun ImeUiWrapper() {
-        ProvideLocalizedResources(resourcesContext) {
+        ProvideLocalizedResources(
+            resourcesContext,
+            appName = R.string.app_name,
+        ) {
             ProvideKeyboardRowBaseHeight {
                 CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
                     FlorisImeTheme {
@@ -617,9 +626,14 @@ class FlorisImeService : LifecycleInputMethodService() {
                 clickAndSemanticsModifier = Modifier
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
-                supportsBackgroundImage = true,
+                supportsBackgroundImage = false,
                 allowClip = false,
             ) {
+                SnyggSurfaceView(
+                    elementName = FlorisImeUi.Window.elementName,
+                    attributes = attributes,
+                    modifier = Modifier.matchParentSize(),
+                )
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {
                     prefs.keyboard.bottomOffsetPortrait
@@ -671,10 +685,13 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean =
-        if (keyboardManager.onHardwareKeyDown(keyCode, event)) true
-        else super.onKeyDown(keyCode, event)
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return keyboardManager.onHardwareKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
+    }
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
+    }
 
     private inner class ComposeInputView : AbstractComposeView(this) {
         init {
@@ -709,7 +726,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             val keyboardManager by context.keyboardManager()
             val state by keyboardManager.activeState.collectAsState()
 
-            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+            ProvideLocalizedResources(
+                resourcesContext,
+                appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
+            ) {
                 FlorisImeTheme {
                     BottomSheetHostUi(
                         isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
@@ -761,7 +782,11 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Composable
         fun Content() {
-            ProvideLocalizedResources(resourcesContext, forceLayoutDirection = LayoutDirection.Ltr) {
+            ProvideLocalizedResources(
+                resourcesContext,
+                appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
+            ) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
                     SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {

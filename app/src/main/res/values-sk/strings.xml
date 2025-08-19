@@ -48,40 +48,40 @@
     <string name="emoji__history__pinned">Pripnuté</string>
     <string name="emoji__history__recent">Nedávne</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Šípka nahor</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Šípka nahor</string>
     <string name="quick_action__arrow_up__tooltip">Vykonať akciu šípky nahor</string>
-    <string name="quick_action__arrow_down" maxLength="12">Šípka nadol</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Šípka nadol</string>
     <string name="quick_action__arrow_down__tooltip">Vykonať akciu šípky nadol</string>
-    <string name="quick_action__arrow_left" maxLength="12">Šípka vľavo</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Šípka vľavo</string>
     <string name="quick_action__arrow_left__tooltip">Vykonať akciu šípky vľavo</string>
-    <string name="quick_action__arrow_right" maxLength="12">Šípka vpravo</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Šípka vpravo</string>
     <string name="quick_action__arrow_right__tooltip">Vykonať akciu šípky vpravo</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vymazať prvý výstrižok v schránke</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopírovať</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopírovať</string>
     <string name="quick_action__clipboard_copy__tooltip">Kopírovať zo schránky</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Vystrihnúť</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Vystrihnúť</string>
     <string name="quick_action__clipboard_cut__tooltip">Vystrihnúť zo schránky</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Prilepiť</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Prilepiť</string>
     <string name="quick_action__clipboard_paste__tooltip">Prilepiť zo schránky</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Vybr. všetko</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Vybr. všetko</string>
     <string name="quick_action__clipboard_select_all__tooltip">Vybrať všetko do schránky</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schránka</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Schránka</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otvoriť históriu schránky</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emodži</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emodži</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Otvoriť panel s emodži</string>
-    <string name="quick_action__settings" maxLength="12">Nastavenia</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Nastavenia</string>
     <string name="quick_action__settings__tooltip">Otvoriť nastavenia</string>
-    <string name="quick_action__undo" maxLength="12">Späť</string>
-    <string name="quick_action__redo" maxLength="12">Znovu</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Ďalšie akcie</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Späť</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Znovu</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Ďalšie akcie</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Zobraziť alebo skryť ďalšie akcie</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Inkognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Zapnúť inkognito režim</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Aut. opravy</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Aut. opravy</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Zapnúť automatické opravy</string>
-    <string name="quick_action__voice_input" maxLength="12">Hlas. vstup</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Hlas. vstup</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Otvoriť poskytovateľa hlasového vstupu</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Jednou rukou</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Jednou rukou</string>
     <string name="quick_action__one_handed_mode__tooltip">Zapnúť režim písania jednou rukou</string>
     <string name="quick_actions_overflow__customize_actions_button">Zmeniť poradie akcií</string>
     <string name="quick_actions_editor__header">Upraviť poradie akcií</string>

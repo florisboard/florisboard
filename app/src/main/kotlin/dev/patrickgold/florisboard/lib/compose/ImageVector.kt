@@ -16,15 +16,16 @@
 
 package dev.patrickgold.florisboard.lib.compose
 
-import androidx.compose.ui.graphics.Color
-import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import android.content.Context
+import androidx.annotation.DrawableRes
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 
-object ColorPreferenceSerializer : PreferenceSerializer<Color> {
-    @OptIn(ExperimentalStdlibApi::class)
-    override fun deserialize(value: String): Color {
-        return Color(value.hexToULong())
+fun Context.vectorResource(@DrawableRes id: Int): ImageVector? {
+    val theme = this.theme
+    return try {
+        ImageVector.vectorResource(theme = theme, resId = id, res = this.resources)
+    } catch (_: Exception) {
+        null
     }
-
-    @OptIn(ExperimentalStdlibApi::class)
-    override fun serialize(value: Color): String = value.value.toHexString()
 }

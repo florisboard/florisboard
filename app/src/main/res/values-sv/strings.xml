@@ -23,7 +23,7 @@
     <string name="emoji__category__flags" comment="Emoji category name">Flaggor</string>
     <string name="emoji__history__recent"></string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Pil upp</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Pil upp</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Inställningar</string>

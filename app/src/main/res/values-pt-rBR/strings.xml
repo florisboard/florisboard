@@ -49,48 +49,48 @@
     <string name="emoji__history__pinned">Fixados</string>
     <string name="emoji__history__recent">Recentes</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Cima</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Cima</string>
     <string name="quick_action__arrow_up__tooltip">Execute a seta para cima</string>
-    <string name="quick_action__arrow_down" maxLength="12">Baixo</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Baixo</string>
     <string name="quick_action__arrow_down__tooltip">Execute a seta para baixo</string>
-    <string name="quick_action__arrow_left" maxLength="12">Esquerda</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Esquerda</string>
     <string name="quick_action__arrow_left__tooltip">Aplicar seta para a esquerda</string>
-    <string name="quick_action__arrow_right" maxLength="12">Direita</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Direita</string>
     <string name="quick_action__arrow_right__tooltip">Aplicar seta para a direita</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Limpar</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Limpar</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Aplica limpeza de área de transferência primária</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copiar</string>
     <string name="quick_action__clipboard_copy__tooltip">Aplica cópia para área de transferência</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Cortar</string>
     <string name="quick_action__clipboard_cut__tooltip">Execute o corte da área de transferência</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Colar</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Colar</string>
     <string name="quick_action__clipboard_paste__tooltip">Executar colagem da área de transferência</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Selec. tudo</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Selec. tudo</string>
     <string name="quick_action__clipboard_select_all__tooltip">Executar seleção de tudo da área de transferência</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Área transf.</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Área transf.</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir histórico da área de transferência</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Painel de emojis</string>
-    <string name="quick_action__language_switch" maxLength="12">Mudar idioma</string>
-    <string name="quick_action__settings" maxLength="12">Ajustes</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Mudar idioma</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Ajustes</string>
     <string name="quick_action__settings__tooltip">Abrir configurações</string>
-    <string name="quick_action__undo" maxLength="12">Desfazer</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Desfazer</string>
     <string name="quick_action__undo__tooltip">Abrir a última entrada</string>
-    <string name="quick_action__redo" maxLength="12">Refazer</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Refazer</string>
     <string name="quick_action__redo__tooltip">Refazer a última entrada</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Mais ações</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Mais ações</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Mostrar ou ocultar ações adicionais</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Anônimo</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Anônimo</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Ativar/desativar modo anônimo</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorreção</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autocorreção</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Alternar correção automática</string>
-    <string name="quick_action__voice_input" maxLength="12">Etd. por voz</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Etd. por voz</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Abrir provedor de entrada de voz</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Modo uma mão</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Modo uma mão</string>
     <string name="quick_action__one_handed_mode__tooltip">Ativar/desativar modo uma mão</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastar</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastar</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posição atual do marcador de arrastar</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nenhum</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nenhum</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nenhuma Operação</string>
     <string name="quick_actions_overflow__customize_actions_button">Reordenar ações</string>
     <string name="quick_actions_editor__header">Personalizar ordem das ações</string>

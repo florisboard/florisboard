@@ -24,8 +24,8 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.WbTwilight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
@@ -37,7 +37,6 @@ import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -47,6 +46,7 @@ import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ThemeScreen() = FlorisScreen {
@@ -59,8 +59,8 @@ fun ThemeScreen() = FlorisScreen {
 
     @Composable
     fun ThemeManager.getThemeLabel(id: ExtensionComponentName): String {
-        val configs by indexedThemeConfigs.observeAsState()
-        configs?.get(id)?.let { return it.label }
+        val configs by indexedThemeConfigs.collectAsState()
+        configs[id]?.let { return it.label }
         return id.toString()
     }
 

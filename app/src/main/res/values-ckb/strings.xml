@@ -41,49 +41,49 @@
     <string name="emoji__history__pinned">جێگیرکراو</string>
     <string name="emoji__history__recent">دوایین</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">چونە سەرەوە</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">چونە سەرەوە</string>
     <string name="quick_action__arrow_up__tooltip">چوونە سەرەتای دێڕ</string>
-    <string name="quick_action__arrow_down" maxLength="12">چونە خوارەوە</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">چونە خوارەوە</string>
     <string name="quick_action__arrow_down__tooltip">چوونە کۆتایی دێڕ</string>
-    <string name="quick_action__arrow_left" maxLength="12">چونە لای چەپ</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">چونە لای چەپ</string>
     <string name="quick_action__arrow_left__tooltip">چوونە لای چەپی نووسین</string>
-    <string name="quick_action__arrow_right" maxLength="12">چونەلای ڕاست</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">چونەلای ڕاست</string>
     <string name="quick_action__arrow_right__tooltip">چوونە لای ڕاستی نووسین</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">لابردنی گشتی</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">لابردنی گشتی</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">سڕینەوەی سەرجەم لەبەرگیراوەکان</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">لەبەرگرتنەوە</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">لەبەرگرتنەوە</string>
     <string name="quick_action__clipboard_copy__tooltip">لەبەرگرتنەوەی شتەکان</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">بڕین</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">بڕین</string>
     <string name="quick_action__clipboard_cut__tooltip">برینی شتەکان</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">دانان</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">دانان</string>
     <string name="quick_action__clipboard_paste__tooltip">دانانی لەبەرگیراوە</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">دیاریکردن</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">دیاریکردن</string>
     <string name="quick_action__clipboard_select_all__tooltip">دیاریکردنی تەواوی نووسین</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">کۆپیکراوەکان</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">کۆپیکراوەکان</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">پیشاندانی لەبەرگیراوەکان</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">ئیمۆجی</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">ئیمۆجی</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">کردنەوەی لیستی ئیمۆجیەکان</string>
-    <string name="quick_action__language_switch" maxLength="12">گۆڕینی زمان</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">گۆڕینی زمان</string>
     <string name="quick_action__language_switch__tooltip">گۆڕینی زمانی تەختەکلیل</string>
-    <string name="quick_action__settings" maxLength="12">ڕێکخستنەکان</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">ڕێکخستنەکان</string>
     <string name="quick_action__settings__tooltip">کردنەوەی ڕێکخستنەکان</string>
-    <string name="quick_action__undo" maxLength="12">دواتر</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">دواتر</string>
     <string name="quick_action__undo__tooltip">گێڕانەوەی دوایین هەنگاو</string>
-    <string name="quick_action__redo" maxLength="12">پێشتر</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">پێشتر</string>
     <string name="quick_action__redo__tooltip">هێنانەوەی هەنگاوی پێشتر</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">فرمانی زیاتر</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">فرمانی زیاتر</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">پیشاندانی ئامرازی زیاتر</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">دۆخی نادیار</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">دۆخی نادیار</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">چالاککردنی دۆخی نادیار</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">ڕاستکردنەوە</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">ڕاستکردنەوە</string>
     <string name="quick_action__toggle_autocorrect__tooltip">چالاککردنی ڕاستکردنەوەی نووسین</string>
-    <string name="quick_action__voice_input" maxLength="12">گەڕانی دەنگی</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">گەڕانی دەنگی</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">کردنەوەی تایبەتمەندی گەڕانی دەنگی</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">دۆخی یەکدەست</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">دۆخی یەکدەست</string>
     <string name="quick_action__one_handed_mode__tooltip">چالاککردنی بەکارهێنان بەیەکدەست</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامراز</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامراز</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامرازەکانی ئێستا</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ نییە</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ نییە</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ فرمانێک</string>
     <string name="quick_actions_overflow__customize_actions_button">گۆڕینی شوێن</string>
     <string name="quick_actions_editor__header">دەستکاریکردنی شوێنی دوگمەکان</string>

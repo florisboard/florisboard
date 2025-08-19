@@ -56,9 +56,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.glideTypingManager
+import dev.patrickgold.florisboard.ime.editor.OperationScope
+import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -78,7 +80,6 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisRect
 import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.compose.DisposableLifecycleEffect
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
@@ -88,6 +89,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
 import org.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.compose.DisposableLifecycleEffect
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
@@ -104,7 +106,7 @@ fun TextKeyboardLayout(
     evaluator: ComputingEvaluator,
     isPreview: Boolean = false,
 ): Unit = with(LocalDensity.current) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
@@ -132,7 +134,7 @@ fun TextKeyboardLayout(
             controller.onTouchEventInternal(event)
             controller.popupUiController.hide()
             event.recycle()
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             // Ignore
         }
     }
@@ -337,7 +339,7 @@ private fun TextKeyButton(
         key.label?.let { label ->
             var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
-                val prefs by florisPreferenceModel()
+                val prefs by FlorisPreferenceStore
                 val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
                 when (spaceBarMode) {
                     SpaceBarMode.NOTHING -> return@let
@@ -385,7 +387,7 @@ private fun TextKeyButton(
 private class TextKeyboardLayoutController(
     context: Context,
 ) : SwipeGesture.Listener, GlideTypingGesture.Listener {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
 
@@ -498,7 +500,7 @@ private class TextKeyboardLayoutController(
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                             val selection = editorInstance.activeContent.selection
                             if (selection.isSelectionMode) {
-                                editorInstance.deleteBackwards()
+                                editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
                             }
                         }
                         onTouchCancelInternal(event, pointer)
@@ -521,7 +523,7 @@ private class TextKeyboardLayoutController(
                                 prefs.gestures.deleteKeySwipeLeft.get() != SwipeAction.SELECT_WORDS_PRECISELY) {
                                 val selection = editorInstance.activeContent.selection
                                 if (selection.isSelectionMode) {
-                                    editorInstance.deleteBackwards()
+                                    editorInstance.deleteBackwards(OperationUnit.CHARACTERS)
                                 }
                             }
                             onTouchCancelInternal(event, pointer)
@@ -765,10 +767,21 @@ private class TextKeyboardLayoutController(
                     }
                     val activeSelection = editorInstance.activeContent.selection
                     if (activeSelection.isValid) {
-                        editorInstance.setSelection(
-                            (activeSelection.end + event.absUnitCountX + 1).coerceIn(0, activeSelection.end),
-                            activeSelection.end,
-                        )
+                        if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                            // Backward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX - 1,
+                                unit = OperationUnit.CHARACTERS,
+                                scope = OperationScope.BEFORE_CURSOR,
+                            )
+                        } else {
+                            // Forward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX - 1,
+                                unit = OperationUnit.CHARACTERS,
+                                scope = OperationScope.AFTER_CURSOR,
+                            )
+                        }
                     }
                     true
                 }
@@ -777,8 +790,22 @@ private class TextKeyboardLayoutController(
                         inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                     }
                     val activeSelection = editorInstance.activeContent.selection
-                    if (activeSelection.isValid && event.absUnitCountX <= 0) {
-                        editorInstance.selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
+                    if (activeSelection.isValid) {
+                        if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                            // Backward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX / 2 - 1,
+                                unit = OperationUnit.WORDS,
+                                scope = OperationScope.BEFORE_CURSOR,
+                            )
+                        } else {
+                            // Forward select
+                            editorInstance.setSelectionSurrounding(
+                                n = -event.absUnitCountX / 2 - 1,
+                                unit = OperationUnit.WORDS,
+                                scope = OperationScope.AFTER_CURSOR,
+                            )
+                        }
                     }
                     true
                 }

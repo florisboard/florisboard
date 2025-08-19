@@ -50,48 +50,48 @@
     <string name="emoji__history__pinned">Angepinnt</string>
     <string name="emoji__history__recent">Kürzlich</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Pfeil hoch</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Pfeil hoch</string>
     <string name="quick_action__arrow_up__tooltip">Pfeil nach oben ausführen</string>
-    <string name="quick_action__arrow_down" maxLength="12">Pfeil unten</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Pfeil unten</string>
     <string name="quick_action__arrow_down__tooltip">Pfeil nach unten ausführen</string>
-    <string name="quick_action__arrow_left" maxLength="12">Pfeil links</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Pfeil links</string>
     <string name="quick_action__arrow_left__tooltip">Pfeil nach links ausführen</string>
-    <string name="quick_action__arrow_right" maxLength="12">Pfeil rechts</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Pfeil rechts</string>
     <string name="quick_action__arrow_right__tooltip">Pfeil nach rechts ausführen</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Clip löschen</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Clip löschen</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Hauptclip von der Zwischenablage löschen</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopieren</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopieren</string>
     <string name="quick_action__clipboard_copy__tooltip">Zur Zwischenablage kopieren</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Ausschneiden</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Ausschneiden</string>
     <string name="quick_action__clipboard_cut__tooltip">Zur Zwischenablage ausschneiden</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Einfügen</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Einfügen</string>
     <string name="quick_action__clipboard_paste__tooltip">Einfügen aus der Zwischenablage</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Alles ausw.</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Alles ausw.</string>
     <string name="quick_action__clipboard_select_all__tooltip">Alles auswählen in der Zwischenablage</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Zwischenab.</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Zwischenab.</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Zwischenablage Verlauf öffnen</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Öffne Emoji-Panel</string>
     <string name="quick_action__language_switch__tooltip">Sprachwechsel ausführen</string>
-    <string name="quick_action__settings" maxLength="12">Einstellung</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Einstellung</string>
     <string name="quick_action__settings__tooltip">Einstellungen öffnen</string>
-    <string name="quick_action__undo" maxLength="12">Rückgängig</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Rückgängig</string>
     <string name="quick_action__undo__tooltip">Letzte Aktion rückgängig machen</string>
-    <string name="quick_action__redo" maxLength="12">Wiederholen</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Wiederholen</string>
     <string name="quick_action__redo__tooltip">Letzte rückgängig gemachte Aktion wiederholen</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Mehr</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Mehr</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Zusätzliche Aktionen anzeigen oder verstecken</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Inkognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Inkognitomodus umschalten</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autokorrekt.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autokorrekt.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Autokorrektur umschalten</string>
-    <string name="quick_action__voice_input" maxLength="12">Spracheinga.</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Spracheinga.</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Öffne Anbieter für Spracheingabe</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Einhändig</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Einhändig</string>
     <string name="quick_action__one_handed_mode__tooltip">Einhandmodus umschalten</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Zug-Marker</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Zug-Marker</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Aktuelle Marker-Position</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine Operation</string>
     <string name="quick_actions_overflow__customize_actions_button">Aktionen neu ordnen</string>
     <string name="quick_actions_editor__header">Passe Reihenfolge der Aktionen an</string>
@@ -162,11 +162,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Nacht-Design auswählen</string>
     <string name="settings__theme_editor__fine_tune__title">Editoreinstellungen</string>
     <string name="settings__theme_editor__fine_tune__level">Bearbeitungsmodus</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Farbdarstellung</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zeige Tastatur nach Dialogen</string>
     <string name="settings__theme_editor__add_rule">Regel hinzufügen</string>
     <string name="settings__theme_editor__edit_rule">Regel bearbeiten</string>
     <string name="settings__theme_editor__no_rules_defined">Für das Stylesheet sind keine Regeln definiert. Füge eine Regel hinzu, um dieses Stylesheet anzupassen.</string>
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
+    <string name="settings__theme_editor__rule_name">Element / Anmerkung</string>
     <string name="settings__theme_editor__rule_codes">Ziel-Codes</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
     <string name="settings__theme_editor__rule_selectors">Selektoren</string>

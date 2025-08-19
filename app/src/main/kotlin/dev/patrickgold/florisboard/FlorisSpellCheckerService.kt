@@ -20,7 +20,7 @@ import android.service.textservice.SpellCheckerService
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
@@ -33,7 +33,7 @@ import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.kotlin.map
 
 class FlorisSpellCheckerService : SpellCheckerService() {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val dictionaryManager get() = DictionaryManager.default()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()

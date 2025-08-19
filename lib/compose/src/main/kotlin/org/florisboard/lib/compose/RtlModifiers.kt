@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package org.florisboard.lib.compose
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed

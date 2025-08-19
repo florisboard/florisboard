@@ -50,49 +50,49 @@
     <string name="emoji__history__pinned">ピン留め済み</string>
     <string name="emoji__history__recent">最近使用</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">上矢印</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">上矢印</string>
     <string name="quick_action__arrow_up__tooltip">上矢印を実行</string>
-    <string name="quick_action__arrow_down" maxLength="12">下矢印</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">下矢印</string>
     <string name="quick_action__arrow_down__tooltip">下矢印を実行</string>
-    <string name="quick_action__arrow_left" maxLength="12">左矢印</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">左矢印</string>
     <string name="quick_action__arrow_left__tooltip">左矢印を実行</string>
-    <string name="quick_action__arrow_right" maxLength="12">右矢印</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">右矢印</string>
     <string name="quick_action__arrow_right__tooltip">右矢印を実行</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">メインクリップ消去</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">メインクリップ消去</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">メインクリップボードを空にする</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">コピー</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">コピー</string>
     <string name="quick_action__clipboard_copy__tooltip">クリップボードにコピー</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">切り取り</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">切り取り</string>
     <string name="quick_action__clipboard_cut__tooltip">クリップボードに切り取り</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">貼り付け</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">貼り付け</string>
     <string name="quick_action__clipboard_paste__tooltip">クリップボードから貼り付け</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">すべて選択</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">すべて選択</string>
     <string name="quick_action__clipboard_select_all__tooltip">すべて選択</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">クリップボード</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">クリップボード</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">クリップボード履歴を開く</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">絵文字</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">絵文字</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">メディアパネルを開く</string>
-    <string name="quick_action__language_switch" maxLength="12">言語切替</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">言語切替</string>
     <string name="quick_action__language_switch__tooltip">言語を切り替える</string>
-    <string name="quick_action__settings" maxLength="12">設定</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">設定</string>
     <string name="quick_action__settings__tooltip">設定を開く</string>
-    <string name="quick_action__undo" maxLength="12">元に戻す</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">元に戻す</string>
     <string name="quick_action__undo__tooltip">直前の操作を元に戻す</string>
-    <string name="quick_action__redo" maxLength="12">やり直し</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">やり直し</string>
     <string name="quick_action__redo__tooltip">直前の操作をやり直す</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">他の操作</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">他の操作</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">追加の操作を表示/非表示</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">シークレット</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">シークレット</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">シークレットモードの切り替え</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">自動修正</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">自動修正</string>
     <string name="quick_action__toggle_autocorrect__tooltip">自動修正の切り替え</string>
-    <string name="quick_action__voice_input" maxLength="12">音声入力</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">音声入力</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">音声入力プロバイダを開く</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">片手モード</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">片手モード</string>
     <string name="quick_action__one_handed_mode__tooltip">片手モードの切り替え</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">ドラッグマーカー</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">ドラッグマーカー</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">操作なし</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">操作なし</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">No operation</string>
     <string name="quick_actions_overflow__customize_actions_button">アクションの並び替え</string>
     <string name="quick_actions_editor__header">アクションの順序をカスタマイズ</string>
