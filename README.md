@@ -5,7 +5,7 @@ src=".github/repo_icon.png" alt="App icon">
 
 **FlorisBoard** is a free and open-source keyboard for Android 8.0+
 devices. It aims at being modern, user-friendly and customizable while
-fully respecting your privacy. Currently in early-beta state.
+fully respecting your privacy. Currently in beta state.
 
 <table>
 <tr>
