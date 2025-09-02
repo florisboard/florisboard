@@ -695,7 +695,8 @@
     <string name="clipboard__cleared_primary_clip">Cleared primary clip</string>
     <string name="clipboard__cleared_history">Cleared history</string>
     <string name="clipboard__cleared_full_history">Cleared full history</string>
-    <string name="clipboard__confirm_clear_history__message">Are you sure you want to clear your clipboard history? This will clear all items except pinned ones, regardless of active filters.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Are you sure you want to clear your full clipboard history? This will affect all items, except pinned ones.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Are you sure you want to clear your clipboard history? This will affect all currently filtered items, except pinned ones.</string>
     <string name="settings__clipboard__title">Clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>
