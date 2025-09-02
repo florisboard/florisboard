@@ -626,14 +626,19 @@ class FlorisImeService : LifecycleInputMethodService() {
                 clickAndSemanticsModifier = Modifier
                     // Do not remove below line or touch input may get stuck
                     .pointerInteropFilter { false },
-                supportsBackgroundImage = false,
+                supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
                 allowClip = false,
             ) {
-                SnyggSurfaceView(
-                    elementName = FlorisImeUi.Window.elementName,
-                    attributes = attributes,
-                    modifier = Modifier.matchParentSize(),
-                )
+                // The SurfaceView is used to render the background image under inline-autofill chips. These are only
+                // available on Android >=11, and SurfaceView causes trouble on Android 8/9, thus we render the image
+                // in the SurfaceView for Android >=11, and in the Compose View Tree for Android <=10.
+                if (AndroidVersion.ATLEAST_API30_R) {
+                    SnyggSurfaceView(
+                        elementName = FlorisImeUi.Window.elementName,
+                        attributes = attributes,
+                        modifier = Modifier.matchParentSize(),
+                    )
+                }
                 val configuration = LocalConfiguration.current
                 val bottomOffset by if (configuration.isOrientationPortrait()) {
                     prefs.keyboard.bottomOffsetPortrait
