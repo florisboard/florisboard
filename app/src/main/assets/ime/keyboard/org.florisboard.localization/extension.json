@@ -611,7 +611,7 @@
       "languageTag": "ko-PK",
       "composer": "org.florisboard.composers:hangul-unicode",
       "currencySet": "org.florisboard.currencysets:south_korean_won",
-      "popupMapping": "org.florisboard.localization:ko-PK",
+      "popupMapping": "org.florisboard.localization:ko",
       "preferred": {
         "characters": "org.florisboard.layouts:korean_phonetic"
       }
