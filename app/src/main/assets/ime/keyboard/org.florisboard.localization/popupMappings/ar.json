@@ -72,7 +72,6 @@
     "~right": {
       "main": { "code": 1567, "label": "؟" },
       "relevant": [
-        { "code": 33, "label": "!" },
         { "code": 1611, "label": "ً" },
         { "code": 1622, "label": "ٖ" },
         { "code": 1648, "label": "ٰ" },
