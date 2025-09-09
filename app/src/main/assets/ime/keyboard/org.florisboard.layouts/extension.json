@@ -158,6 +158,13 @@
         "modifier": "org.florisboard.layouts:dvorak"
       },
       {
+        "id": "dvorak_se",
+        "label": "Dvorak (SE)",
+        "authors": [ "iceaway" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:dvorak_se"
+      },
+      {
         "id": "esperanto",
         "label": "Esperanto",
         "authors": [ "jeremiah-miller", "patrickgold" ],
@@ -508,6 +515,12 @@
         "id": "dvorak_de",
         "label": "Dvorak (DE)",
         "authors": [ "msrd0" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "dvorak_se",
+        "label": "Dvorak (SE)",
+        "authors": [ "iceaway" ],
         "direction": "ltr"
       },
       {
