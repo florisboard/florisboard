@@ -635,7 +635,8 @@
     <string name="clipboard__cleared_primary_clip">Текущото съдържание на междинната памет е изчистено</string>
     <string name="clipboard__cleared_history">Историята е изчистена</string>
     <string name="clipboard__cleared_full_history">Цялата история е изчистена</string>
-    <string name="clipboard__confirm_clear_history__message">Желаете ли историята на междинната памет да бъде изчистена? Всички елементи, с изключение на закачените ще бъдат премахнати без значение на използвания филтър.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Потвърждавате ли изчистване на междинната памет? Всички филтрирани елементи без закачените ще бъдат премахнати.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Потвърждавате ли изчистване на междинната памет? Всички елементи без закачените ще бъдат премахнати.</string>
     <string name="settings__clipboard__title">Междинна памет</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Междинна памет на приложението</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Използва се междинната памет на приложението вместо системната</string>

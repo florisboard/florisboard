@@ -632,7 +632,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clipboard__cleared_primary_clip">Klip utama dibersihkan</string>
     <string name="clipboard__cleared_history">Riwayat dibersihkan</string>
     <string name="clipboard__cleared_full_history">Seluruh riwayat dibersihkan</string>
-    <string name="clipboard__confirm_clear_history__message">Apakah Anda yakin ingin menghapus riwayat papan klip Anda? Ini akan menghapus semua item kecuali yang telah disematkan, terlepas dari filter yang aktif.</string>
     <string name="settings__clipboard__title">Papan klip</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Gunakan papan klip internal</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Gunakan papan klip internal daripada papan klip sistem</string>

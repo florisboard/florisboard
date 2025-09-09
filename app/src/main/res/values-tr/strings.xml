@@ -636,7 +636,8 @@
     <string name="clipboard__cleared_primary_clip">Birincil klip temizlendi</string>
     <string name="clipboard__cleared_history">Geçmiş temizlendi</string>
     <string name="clipboard__cleared_full_history">Tüm geçmiş temizlendi</string>
-    <string name="clipboard__confirm_clear_history__message">Pano geçmişinizi temizlemek istediğinizden emin misiniz? Bu, aktif filtrelerden bağımsız olarak sabitlenmiş ögeler dışındaki tüm ögeleri temizleyecektir.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Tüm pano geçmişinizi temizlemek istediğinizden emin misiniz? Bu işlem, sabitlenmiş olanlar hariç tüm öğeleri etkileyecektir.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Pano geçmişinizi temizlemek istediğinizden emin misiniz? Bu işlem, sabitlenmiş olanlar hariç, şu anda filtrelenmiş olan tüm öğeleri etkileyecektir.</string>
     <string name="settings__clipboard__title">Pano</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Dahili panoyu kullan</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Sistem panosu yerine dahili bir pano kullan</string>

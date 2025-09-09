@@ -643,6 +643,8 @@
     <string name="ext__editor__metadata__message_invalid">Неправильные метаданные для этого расширения, проверьте редактор метаданных для получения подробной информации!</string>
     <string name="ext__editor__dependencies__title">Управление зависимостями</string>
     <string name="ext__editor__files__title">Управление файлами архивов</string>
+    <string name="ext__editor__files__type_fonts">Шрифты</string>
+    <string name="ext__editor__files__type_images">Изображения</string>
     <string name="ext__editor__create_component__title">Создать компонент</string>
     <string name="ext__editor__create_component__title_theme">Создать тему</string>
     <string name="ext__editor__create_component__from_empty">Пустой</string>

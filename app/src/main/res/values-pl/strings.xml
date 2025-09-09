@@ -639,7 +639,8 @@
     <string name="clipboard__cleared_primary_clip">Wyczyść główny schowek</string>
     <string name="clipboard__cleared_history">Historia została usunięta</string>
     <string name="clipboard__cleared_full_history">Cała historia została usunięta</string>
-    <string name="clipboard__confirm_clear_history__message">Czy na pewno chcesz wyczyścić historię schowka? Spowoduje to wyczyszczenie wszystkich elementów z wyjątkiem przypiętych, niezależnie od aktywnych filtrów.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Czy na pewno chcesz wyczyścić całą historię schowka? Spowoduje to usunięcie wszystkich elementów z wyjątkiem przypiętych.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Czy na pewno chcesz wyczyścić historię schowka? Spowoduje to usunięcie wszystkich obecnie filtrowanych elementów, z wyjątkiem przypiętych.</string>
     <string name="settings__clipboard__title">Schowek</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>

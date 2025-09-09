@@ -637,7 +637,8 @@
     <string name="clipboard__cleared_primary_clip">Primární zkopírovaná položka vymazána</string>
     <string name="clipboard__cleared_history">Historie vymazána</string>
     <string name="clipboard__cleared_full_history">Celá historie vymazána</string>
-    <string name="clipboard__confirm_clear_history__message">Opravdu chcete vymazat historii schránky? Smažete tím všechny položky kromě připnutých, nezávisle na aktivních filtrech.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Opravdu chcete vymazat celou vaší historii schránky? Toto ovlivní všechny položky, kromě připnutých.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Opravdu chcete vymazat vaší historii schránky? Toto ovlivní všechny aktuálně vyfiltrované položky, kromě připnutých.</string>
     <string name="settings__clipboard__title">Schránka</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
