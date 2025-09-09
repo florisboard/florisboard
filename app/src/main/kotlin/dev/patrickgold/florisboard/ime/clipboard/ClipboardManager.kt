@@ -286,6 +286,15 @@ class ClipboardManager(
         }
     }
 
+    fun clearExactHistory(items: List<ClipboardItem>) {
+        ioScope.launch {
+            for (item in items) {
+                item.close(appContext)
+            }
+            clipHistoryDao?.delete(items)
+        }
+    }
+
     /**
      * Clears all unpinned items from the clipboard history
      */
@@ -391,7 +400,8 @@ class ClipboardManager(
         private val now = System.currentTimeMillis()
 
         val pinned = all.filter { it.isPinned }
-        val recent = all.filter { !it.isPinned && (now - it.creationTimestampMs < RECENT_TIMESPAN_MS) }
-        val other = all.filter { !it.isPinned && (now - it.creationTimestampMs >= RECENT_TIMESPAN_MS) }
+        val unpinned = all.filter { !it.isPinned }
+        val recent = unpinned.filter { (now - it.creationTimestampMs) < RECENT_TIMESPAN_MS }
+        val other = unpinned.filter { (now - it.creationTimestampMs) >= RECENT_TIMESPAN_MS }
     }
 }

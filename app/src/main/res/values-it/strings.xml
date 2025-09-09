@@ -153,6 +153,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ora del tramonto</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema giorno</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema scuro</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Colore dell\'accentMateria</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestisci temi installati</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Risorse dell\'app FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Memoria interna</string>
@@ -531,7 +532,7 @@
     <string name="clipboard__cleared_primary_clip">Clip principale cancellata</string>
     <string name="clipboard__cleared_history">Cronologia cancellata</string>
     <string name="clipboard__cleared_full_history">Tutta la cronologia cancellata</string>
-    <string name="clipboard__confirm_clear_history__message">Sei sicuro di voler cancellare la cronologia degli appunti? Questa azione cancellerà tutti gli appunti tranne quelli spuntati, indipendentemente dai filtri attivi.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Vuoi cancellare lo storico della clipboard? Questa azione cancellerà tutto lo storico tranne i messaggi con spunta.</string>
     <string name="settings__clipboard__title">Appunti</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>

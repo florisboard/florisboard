@@ -111,7 +111,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
@@ -148,12 +147,12 @@ fun ClipboardInputLayout(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
-    val unfilteredHistory by clipboardManager.history.observeAsNonNullState()
 
     var isFilterRowShown by remember { mutableStateOf(false) }
     val activeFilterTypes = remember { mutableStateSetOf<ItemType>() }
 
-    val history = remember(unfilteredHistory, activeFilterTypes.toSet()) {
+    val unfilteredHistory by clipboardManager.history.observeAsNonNullState()
+    val filteredHistory = remember(unfilteredHistory, activeFilterTypes.toSet()) {
         if (activeFilterTypes.isEmpty()) {
             unfilteredHistory
         } else {
@@ -164,7 +163,7 @@ fun ClipboardInputLayout(
     }
 
     val gridState = rememberLazyStaggeredGridState()
-    var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
+    var popupItem by remember(filteredHistory) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
     fun isPopupSurfaceActive() = popupItem != null || showClearAllHistory
@@ -223,7 +222,7 @@ fun ClipboardInputLayout(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { showClearAllHistory = true },
                 modifier = sizeModifier.autoMirrorForRtl(),
-                enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
+                enabled = !deviceLocked && historyEnabled && filteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
                     imageVector = Icons.Default.DeleteSweep,
@@ -468,17 +467,17 @@ fun ClipboardInputLayout(
                         columns = staggeredGridCells,
                     ) {
                         clipboardItems(
-                            items = history.pinned,
+                            items = filteredHistory.pinned,
                             key = "pinned-header",
                             title = R.string.clipboard__group_pinned,
                         )
                         clipboardItems(
-                            items = history.recent,
+                            items = filteredHistory.recent,
                             key = "recent-header",
                             title = R.string.clipboard__group_recent,
                         )
                         clipboardItems(
-                            items = history.other,
+                            items = filteredHistory.other,
                             key = "other-header",
                             title = R.string.clipboard__group_other,
                         )
@@ -567,7 +566,13 @@ fun ClipboardInputLayout(
                     ) {
                         SnyggText(
                             elementName = FlorisImeUi.ClipboardClearAllDialogMessage.elementName,
-                            text = stringRes(R.string.clipboard__confirm_clear_history__message),
+                            text = stringRes(
+                                if (isFilterRowShown) {
+                                    R.string.clipboard__confirm_clear_filtered_history__message
+                                } else {
+                                    R.string.clipboard__confirm_clear_unfiltered_history__message
+                                }
+                            ),
                         )
                         SnyggRow(FlorisImeUi.ClipboardClearAllDialogButtons.elementName) {
                             Spacer(modifier = Modifier.weight(1f))
@@ -586,10 +591,9 @@ fun ClipboardInputLayout(
                                 elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
                                 attributes = mapOf("action" to "yes"),
                                 onClick = {
-                                    clipboardManager.clearHistory()
+                                    clipboardManager.clearExactHistory(filteredHistory.unpinned)
                                     context.showShortToastSync(R.string.clipboard__cleared_history)
                                     showClearAllHistory = false
-                                    isFilterRowShown = false
                                 },
                             ) {
                                 SnyggText(
@@ -670,7 +674,7 @@ fun ClipboardInputLayout(
             HistoryLockedView()
         } else {
             if (historyEnabled) {
-                if (history.all.isNotEmpty() || !activeFilterTypes.isEmpty()) {
+                if (filteredHistory.all.isNotEmpty() || !activeFilterTypes.isEmpty()) {
                     HistoryMainView()
                 } else {
                     HistoryEmptyView()

@@ -60,7 +60,7 @@ fun ThemeScreen() = FlorisScreen {
     @Composable
     fun ThemeManager.getThemeLabel(id: ExtensionComponentName): String {
         val configs by indexedThemeConfigs.collectAsState()
-        configs[id]?.let { return it.label }
+        configs.first[id]?.let { return it.label }
         return id.toString()
     }
 

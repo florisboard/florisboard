@@ -631,7 +631,8 @@
     <string name="clipboard__cleared_primary_clip">Clip principal borrado</string>
     <string name="clipboard__cleared_history">Historial borrado</string>
     <string name="clipboard__cleared_full_history">Historial completo borrado</string>
-    <string name="clipboard__confirm_clear_history__message">¿Estás seguro de que quieres limpiar el historial del portapapeles? Esto limpiará todos los ítems excepto los fijados, sin tener en cuenta los filtros activos.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">¿Estás seguro de que quieres borrar todo el historial del portapapeles? Esto afectará a todos los elementos, excepto los fijados.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">¿Estás seguro de que quieres borrar el historial del portapapeles? Esto afectará a todos los elementos filtrados actualmente, excepto los fijados.</string>
     <string name="settings__clipboard__title">Portapapeles</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar portapapeles interno</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usar portapapeles interno en vez del portapapeles del sistema</string>

@@ -628,7 +628,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 for (theme in editor.themes) {
                     put(ExtensionComponentName(extId, theme.id), theme)
                 }
-                for ((componentName, theme) in themeManager.indexedThemeConfigs.value ?: emptyMap()) {
+                for ((componentName, theme) in themeManager.indexedThemeConfigs.value.first) {
                     if (componentName.extensionId != extId) {
                         put(componentName, theme)
                     }
@@ -710,7 +710,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 }
                                 editor.themes.add(componentEditor)
                             } else {
-                                val component = themeManager.indexedThemeConfigs.value?.get(componentName) ?: return
+                                val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
                                 val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
                                 componentEditor.id = componentId
                                 componentEditor.stylesheetPath = ""

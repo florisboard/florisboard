@@ -603,7 +603,8 @@
     <string name="clipboard__cleared_primary_clip">Galvenais vienums notīrīts</string>
     <string name="clipboard__cleared_history">Vēsture notīrīta</string>
     <string name="clipboard__cleared_full_history">Visa vēsture notīrīta</string>
-    <string name="clipboard__confirm_clear_history__message">Vai tiešām iztīrīt starpliktuves vēsturi? Tas notīrīs visus vienumus (izņemot piespraustos) neatkarīgi no spēkā esošajiem atlasītājiem.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Vai tiešām iztīrīt visu starpliktuves vēseturi? Tas ietekmēs visus vienums, izņemot piespraustos.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Vai tiešām iztīrīt starpliktuves vēseturi? Tas ietekmēs visus pašreiz atsijātos vienumus, izņemot piespraustos.</string>
     <string name="settings__clipboard__title">Starpliktuve</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
