@@ -608,7 +608,7 @@
       }
     },
     {
-      "languageTag": "ko-PK",
+      "languageTag": "ko-KR",
       "composer": "org.florisboard.composers:hangul-unicode",
       "currencySet": "org.florisboard.currencysets:south_korean_won",
       "popupMapping": "org.florisboard.localization:ko",
