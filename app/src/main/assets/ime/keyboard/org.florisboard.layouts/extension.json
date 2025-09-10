@@ -275,6 +275,12 @@
         "direction": "ltr"
       },
       {
+        "id": "korean_phonetic",
+        "label": "South Korean Phonetic",
+        "authors": [ "Shunnuo" ],
+        "direction": "ltr"
+      },
+      {
         "id": "kurdish",
         "label": "کوردی (قوەرتی نوێ)",
         "authors": [ "GoRaN" ],
