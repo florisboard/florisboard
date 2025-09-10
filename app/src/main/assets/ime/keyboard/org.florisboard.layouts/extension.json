@@ -94,12 +94,6 @@
         "direction": "ltr"
       },
       {
-        "id": "catalan",
-        "label": "Catalan (QWERTY)",
-        "authors": [ "mikelloc" ],
-        "direction": "ltr"
-      },
-      {
         "id": "catalan_accents",
         "label": "Catalan (Accents)",
         "authors": [ "mikelloc" ],
@@ -344,6 +338,12 @@
         "id": "qwerty",
         "label": "QWERTY",
         "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "qwerty_c",
+        "label": "QWERTY (Ç)",
+        "authors": [ "mikelloc" ],
         "direction": "ltr"
       },
       {
