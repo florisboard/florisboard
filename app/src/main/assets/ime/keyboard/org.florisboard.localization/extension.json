@@ -361,7 +361,7 @@
       "popupMapping": "org.florisboard.localization:ar",
       "preferred": {
         "characters": "org.florisboard.layouts:arabic",
-        "symbols": "org.florisboard.layouts:eastern",
+        "symbols": "org.florisboard.layouts:arabic",
         "symbols2": "org.florisboard.layouts:eastern",
         "numericRow": "org.florisboard.layouts:eastern_arabic"
       }
