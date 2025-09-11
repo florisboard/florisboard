@@ -736,6 +736,13 @@
     ],
     "symbols": [
       {
+        "id": "arabic",
+        "label": "Arabic",
+        "authors": [ "Ahmed Nagi" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:default"
+      },
+      {
         "id": "armenian",
         "label": "Armenian",
         "authors": [ "PJTSearch" ],
