@@ -213,6 +213,12 @@
         "direction": "ltr"
       },
       {
+        "id": "hcesar",
+        "label": "HCESAR",
+        "authors": [ "Shunnuo" ],
+        "direction": "ltr"
+      },
+      {
         "id": "hebrew",
         "label": "עברית",
         "authors": [ "Antony" ],
