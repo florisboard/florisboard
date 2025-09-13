@@ -15,7 +15,7 @@
           { "code":   44, "label": "," }
         ]
       } }
-  ],
+  ]
   [	
     { "$": "auto_text_key", "code":  113, "label": "q" },
     { "$": "auto_text_key", "code":  116, "label": "t" },
@@ -32,7 +32,7 @@
           { "code":   46, "label": "." }
         ]
       } }
-  ],
+  ]
   [
     { "$": "auto_text_key", "code":  231, "label": "ç" },
     { "$": "auto_text_key", "code":  106, "label": "j" },
