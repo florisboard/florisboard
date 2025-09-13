@@ -14,7 +14,7 @@
         "relevant": [
           { "code":   44, "label": "," }
         ]
-      } },
+      } }
   ],
   [	
     { "$": "auto_text_key", "code":  113, "label": "q" },
@@ -31,7 +31,7 @@
         "relevant": [
           { "code":   46, "label": "." }
         ]
-      } },
+      } }
   ],
   [
     { "$": "auto_text_key", "code":  231, "label": "ç" },
