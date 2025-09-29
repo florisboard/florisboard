@@ -42,7 +42,6 @@ import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import org.florisboard.lib.android.setOrClearPrimaryClip
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.tryOrNull
@@ -241,9 +240,9 @@ class ClipboardManager(
     }
 
     private fun enforceHistoryLimit(clipHistory: ClipboardHistory) {
-        if (prefs.clipboard.limitHistorySize.get()) {
+        if (prefs.clipboard.historySizeLimitEnabled.get()) {
             val nonPinnedItems = clipHistory.recent + clipHistory.other
-            val nToRemove = nonPinnedItems.size - prefs.clipboard.maxHistorySize.get()
+            val nToRemove = nonPinnedItems.size - prefs.clipboard.historySizeLimit.get()
             if (nToRemove > 0) {
                 val itemsToRemove = nonPinnedItems.asReversed().filterIndexed { n, _ -> n < nToRemove }
                 ioScope.launch {
@@ -255,14 +254,14 @@ class ClipboardManager(
 
     private fun enforceExpiryDate(clipHistory: ClipboardHistory) {
         val itemsToRemove = mutableSetOf<ClipboardItem>()
-        if (prefs.clipboard.cleanUpOld.get()) {
+        if (prefs.clipboard.historyAutoCleanOldEnabled.get()) {
             val nonPinnedItems = clipHistory.recent + clipHistory.other
-            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.cleanUpAfter.get() * 60 * 1000)
+            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.historyAutoCleanOldAfter.get() * 60 * 1000)
             itemsToRemove.addAll(nonPinnedItems.filter { it.creationTimestampMs < expiryTime })
         }
-        if (prefs.clipboard.autoCleanSensitive.get()) {
+        if (prefs.clipboard.historyAutoCleanSensitiveEnabled.get()) {
             val sensitiveData = clipHistory.all.filter { it.isSensitive }
-            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.autoCleanSensitiveAfter.get() * 1000)
+            val expiryTime = System.currentTimeMillis() - (prefs.clipboard.historyAutoCleanSensitiveAfter.get() * 1000)
             itemsToRemove.addAll(sensitiveData.filter { it.creationTimestampMs < expiryTime })
         }
         if (itemsToRemove.isNotEmpty()) {

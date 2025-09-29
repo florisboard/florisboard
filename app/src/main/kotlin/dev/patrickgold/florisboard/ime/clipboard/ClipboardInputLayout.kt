@@ -370,7 +370,7 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
         ) {
             val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
-            val staggeredGridCells by prefs.clipboard.numHistoryGridColumns()
+            val staggeredGridCells by prefs.clipboard.historyNumGridColumns()
                 .observeAsTransformingState { numGridColumns ->
                     if (numGridColumns == CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO) {
                         StaggeredGridCells.Adaptive(160.dp)

@@ -92,55 +92,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__sync_to_system",
             default = false,
         )
-        val historyEnabled = boolean(
-            key = "clipboard__history_enabled",
-            default = false,
-        )
-        val numHistoryGridColumnsPortrait = int(
-            key = "clipboard__num_history_grid_columns_portrait",
-            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
-        )
-        val numHistoryGridColumnsLandscape = int(
-            key = "clipboard__num_history_grid_columns_landscape",
-            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
-        )
-        @Composable
-        fun numHistoryGridColumns(): PreferenceData<Int> {
-            val configuration = LocalConfiguration.current
-            return if (configuration.isOrientationPortrait()) {
-                numHistoryGridColumnsPortrait
-            } else {
-                numHistoryGridColumnsLandscape
-            }
-        }
-        val cleanUpOld = boolean(
-            key = "clipboard__clean_up_old",
-            default = false,
-        )
-        val cleanUpAfter = int(
-            key = "clipboard__clean_up_after",
-            default = 20,
-        )
-        val autoCleanSensitive = boolean(
-            key = "clipboard__auto_clean_sensitive",
-            default = false,
-        )
-        val autoCleanSensitiveAfter = int(
-            key = "clipboard__auto_clean_sensitive_after",
-            default = 20,
-        )
-        val limitHistorySize = boolean(
-            key = "clipboard__limit_history_size",
-            default = true,
-        )
-        val maxHistorySize = int(
-            key = "clipboard__max_history_size",
-            default = 20,
-        )
-        val clearPrimaryClipDeletesLastItem = boolean(
-            key = "clipboard__clear_primary_clip_deletes_last_item",
-            default = true,
-        )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",
             default = true,
@@ -148,6 +99,55 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val suggestionTimeout = int(
             key = "clipboard__suggestion_timeout",
             default = 60,
+        )
+        val historyEnabled = boolean(
+            key = "clipboard__history_enabled",
+            default = false,
+        )
+        val historyNumGridColumnsPortrait = int(
+            key = "clipboard__history_num_grid_columns_portrait",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        val historyNumGridColumnsLandscape = int(
+            key = "clipboard__history_num_grid_columns_landscape",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        @Composable
+        fun historyNumGridColumns(): PreferenceData<Int> {
+            val configuration = LocalConfiguration.current
+            return if (configuration.isOrientationPortrait()) {
+                historyNumGridColumnsPortrait
+            } else {
+                historyNumGridColumnsLandscape
+            }
+        }
+        val historyAutoCleanOldEnabled = boolean(
+            key = "clipboard__history_auto_clean_old_enabled",
+            default = false,
+        )
+        val historyAutoCleanOldAfter = int(
+            key = "clipboard__history_auto_clean_old_after",
+            default = 20,
+        )
+        val historyAutoCleanSensitiveEnabled = boolean(
+            key = "clipboard__history_auto_clean_sensitive_enabled",
+            default = false,
+        )
+        val historyAutoCleanSensitiveAfter = int(
+            key = "clipboard__history_auto_clean_sensitive_after",
+            default = 20,
+        )
+        val historySizeLimitEnabled = boolean(
+            key = "clipboard__history_size_limit_enabled",
+            default = true,
+        )
+        val historySizeLimit = int(
+            key = "clipboard__history_size_limit",
+            default = 20,
+        )
+        val clearPrimaryClipDeletesLastItem = boolean(
+            key = "clipboard__clear_primary_clip_deletes_last_item",
+            default = true,
         )
     }
 
@@ -882,6 +882,32 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 )
             }
 
+            // Migrate clipboard history pref names
+            // Keep migration rules until: 0.7 dev cycle
+            "clipboard__num_history_grid_columns_portrait" -> {
+                entry.transform(key = "clipboard__history_num_grid_columns_portrait")
+            }
+            "clipboard__num_history_grid_columns_landscape" -> {
+                entry.transform(key = "clipboard__history_num_grid_columns_landscape")
+            }
+            "clipboard__clean_up_old" -> {
+                entry.transform(key = "clipboard__history_auto_clean_old_enabled")
+            }
+            "clipboard__clean_up_after" -> {
+                entry.transform(key = "clipboard__history_auto_clean_old_after")
+            }
+            "clipboard__auto_clean_sensitive" -> {
+                entry.transform(key = "clipboard__history_auto_clean_sensitive_enabled")
+            }
+            "clipboard__auto_clean_sensitive_after" -> {
+                entry.transform(key = "clipboard__history_auto_clean_sensitive_after")
+            }
+            "clipboard__limit_history_size" -> {
+                entry.transform(key = "clipboard__history_size_limit_enabled")
+            }
+            "clipboard__max_history_size" -> {
+                entry.transform(key = "clipboard__history_size_limit")
+            }
 
             // Default: keep entry
             else -> entry.keepAsIs()
