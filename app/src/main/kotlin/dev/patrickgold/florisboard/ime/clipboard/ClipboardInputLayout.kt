@@ -63,7 +63,7 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material.icons.outlined.ContentPaste
+import androidx.compose.material.icons.outlined.ContentPasteGo
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.Icon
@@ -537,7 +537,7 @@ fun ClipboardInputLayout(
                                 popupItem = null
                             }
                             PopupAction(
-                                icon = Icons.Outlined.ContentPaste,
+                                icon = Icons.Outlined.ContentPasteGo,
                                 text = stringRes(R.string.clip__paste_item),
                             ) {
                                 clipboardManager.pasteItem(popupItem!!)
