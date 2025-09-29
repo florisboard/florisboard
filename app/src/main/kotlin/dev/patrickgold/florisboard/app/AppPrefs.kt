@@ -153,8 +153,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__history_hide_on_next_text_field",
             default = true,
         )
-        val clearPrimaryClipDeletesLastItem = boolean(
-            key = "clipboard__clear_primary_clip_deletes_last_item",
+        val clearPrimaryClipAffectsHistoryIfUnpinned = boolean(
+            key = "clipboard__clear_primary_clip_affects_history_if_unpinned",
             default = true,
         )
     }
@@ -915,6 +915,9 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             }
             "clipboard__max_history_size" -> {
                 entry.transform(key = "clipboard__history_size_limit")
+            }
+            "clipboard__clear_primary_clip_deletes_last_item" -> {
+                entry.transform(key = "clipboard__clear_primary_clip_affects_history_if_unpinned")
             }
 
             // Default: keep entry

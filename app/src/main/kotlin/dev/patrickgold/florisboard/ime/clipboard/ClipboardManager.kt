@@ -270,7 +270,7 @@ class ClipboardManager(
 
     private fun moveToTheBeginning(oldItem: ClipboardItem, newItem: ClipboardItem) {
         ioScope.launch {
-            clipHistoryDao?.delete(oldItem)
+            clipHistoryDao?.delete(oldItem.id)
             clipHistoryDao?.insert(newItem)
         }
     }
@@ -332,9 +332,13 @@ class ClipboardManager(
         }
     }
 
-    fun deleteClip(item: ClipboardItem) {
+    fun deleteClip(item: ClipboardItem, onlyIfUnpinned: Boolean) {
         ioScope.launch {
-            clipHistoryDao?.delete(item)
+            if (onlyIfUnpinned) {
+                clipHistoryDao?.deleteIfUnpinned(item.id)
+            } else {
+                clipHistoryDao?.delete(item.id)
+            }
             tryOrNull {
                 val uri = item.uri
                 if (uri != null) {

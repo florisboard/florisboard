@@ -151,9 +151,9 @@ fun ClipboardScreen() = FlorisScreen {
             )
 
             SwitchPreference(
-                prefs.clipboard.clearPrimaryClipDeletesLastItem,
-                title = stringRes(R.string.pref__clipboard__clear_primary_clip_deletes_last_item__label),
-                summary = stringRes(R.string.pref__clipboard__clear_primary_clip_deletes_last_item__summary),
+                prefs.clipboard.clearPrimaryClipAffectsHistoryIfUnpinned,
+                title = stringRes(R.string.pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label),
+                summary = stringRes(R.string.pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary),
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true },
             )
         }

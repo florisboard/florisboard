@@ -293,11 +293,11 @@ interface ClipboardHistoryDao {
     @Update
     fun update(items: List<ClipboardItem>)
 
-    @Delete
-    fun delete(item: ClipboardItem)
-
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id")
     fun delete(id: Long)
+
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id AND not isPinned ")
+    fun deleteIfUnpinned(id: Long)
 
     @Delete
     fun delete(items: List<ClipboardItem>)

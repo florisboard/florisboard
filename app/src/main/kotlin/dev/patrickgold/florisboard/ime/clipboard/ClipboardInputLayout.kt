@@ -533,7 +533,7 @@ fun ClipboardInputLayout(
                                 icon = Icons.Default.Delete,
                                 text = stringRes(R.string.clip__delete_item),
                             ) {
-                                clipboardManager.deleteClip(popupItem!!)
+                                clipboardManager.deleteClip(popupItem!!, onlyIfUnpinned = false)
                                 popupItem = null
                             }
                             PopupAction(
