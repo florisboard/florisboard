@@ -39,6 +39,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
+import org.florisboard.lib.android.clearPrimaryClipAnyApi
 import org.florisboard.lib.android.setOrClearPrimaryClip
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
@@ -148,9 +149,12 @@ class ClipboardManager(
     fun updatePrimaryClip(item: ClipboardItem?) {
         primaryClip = item
         if (prefs.clipboard.useInternalClipboard.get()) {
-            // Purposely do not sync to system if disabled in prefs
-            if (prefs.clipboard.syncToSystem.get()) {
-                systemClipboardManager.setOrClearPrimaryClip(item?.toClipData(appContext))
+            val syncBehavior = prefs.clipboard.syncToSystem.get()
+            val clipData = item?.toClipData(appContext)
+            if (clipData != null && syncBehavior.shouldSyncSet) {
+                systemClipboardManager.setPrimaryClip(clipData)
+            } else if (clipData == null && syncBehavior.shouldSyncClear) {
+                systemClipboardManager.clearPrimaryClipAnyApi()
             }
         } else {
             systemClipboardManager.setOrClearPrimaryClip(item?.toClipData(appContext))
@@ -161,7 +165,8 @@ class ClipboardManager(
      * Called by system clipboard when the system primary clip has changed.
      */
     override fun onPrimaryClipChanged() {
-        if (!prefs.clipboard.useInternalClipboard.get() || prefs.clipboard.syncToFloris.get()) {
+        val syncBehavior = prefs.clipboard.syncToFloris.get()
+        if (!prefs.clipboard.useInternalClipboard.get() || syncBehavior != ClipboardSyncBehavior.NO_EVENTS) {
             val systemPrimaryClip = systemClipboardManager.primaryClip
             ioScope.launch {
                 val isDuplicate: Boolean
@@ -169,7 +174,7 @@ class ClipboardManager(
                     val a = primaryClipLastFromCallback?.getItemAt(0)
                     val b = systemPrimaryClip?.getItemAt(0)
                     isDuplicate = when {
-                        a === b || a == null && b == null -> true
+                        a === b -> true
                         a == null || b == null -> false
                         else -> a.text == b.text && a.uri == b.uri
                     }
@@ -180,12 +185,20 @@ class ClipboardManager(
                 val internalPrimaryClip = primaryClip
 
                 if (systemPrimaryClip == null) {
-                    primaryClip = null
+                    if (syncBehavior.shouldSyncClear) {
+                        primaryClip = null
+                    }
                     return@launch
                 }
 
                 if (systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
-                    primaryClip = null
+                    if (syncBehavior.shouldSyncClear) {
+                        primaryClip = null
+                    }
+                    return@launch
+                }
+
+                if (!syncBehavior.shouldSyncSet) {
                     return@launch
                 }
 

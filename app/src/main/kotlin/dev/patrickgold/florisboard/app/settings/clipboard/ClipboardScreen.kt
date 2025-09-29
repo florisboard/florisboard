@@ -18,10 +18,13 @@ package dev.patrickgold.florisboard.app.settings.clipboard
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import org.florisboard.lib.android.AndroidVersion
@@ -40,16 +43,16 @@ fun ClipboardScreen() = FlorisScreen {
             title = stringRes(R.string.pref__clipboard__use_internal_clipboard__label),
             summary = stringRes(R.string.pref__clipboard__use_internal_clipboard__summary),
         )
-        SwitchPreference(
+        ListPreference(
             prefs.clipboard.syncToFloris,
             title = stringRes(R.string.pref__clipboard__sync_from_system_clipboard__label),
-            summary = stringRes(R.string.pref__clipboard__sync_from_system_clipboard__summary),
+            entries = enumDisplayEntriesOf(ClipboardSyncBehavior::class),
             enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },
         )
-        SwitchPreference(
+        ListPreference(
             prefs.clipboard.syncToSystem,
             title = stringRes(R.string.pref__clipboard__sync_to_system_clipboard__label),
-            summary = stringRes(R.string.pref__clipboard__sync_to_system_clipboard__summary),
+            entries = enumDisplayEntriesOf(ClipboardSyncBehavior::class),
             enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },
         )
 

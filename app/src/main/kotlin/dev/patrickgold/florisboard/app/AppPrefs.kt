@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
@@ -63,6 +64,7 @@ import dev.patrickgold.jetpref.datastore.model.LocalTime
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
+import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import kotlinx.serialization.json.Json
@@ -84,13 +86,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__use_internal_clipboard",
             default = false,
         )
-        val syncToFloris = boolean(
+        val syncToFloris = enum(
             key = "clipboard__sync_to_floris",
-            default = true,
+            default = ClipboardSyncBehavior.ALL_EVENTS,
         )
-        val syncToSystem = boolean(
+        val syncToSystem = enum(
             key = "clipboard__sync_to_system",
-            default = false,
+            default = ClipboardSyncBehavior.NO_EVENTS,
         )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",
@@ -892,6 +894,15 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
             // Migrate clipboard history pref names
             // Keep migration rules until: 0.7 dev cycle
+            "clipboard__sync_to_floris", "clipboard__sync_to_system" -> {
+                entry.transform(
+                    type = PreferenceType.string(),
+                    rawValue = when (entry.rawValue) {
+                        "true" -> ClipboardSyncBehavior.ALL_EVENTS
+                        else -> ClipboardSyncBehavior.NO_EVENTS
+                    }.name,
+                )
+            }
             "clipboard__num_history_grid_columns_portrait" -> {
                 entry.transform(key = "clipboard__history_num_grid_columns_portrait")
             }
