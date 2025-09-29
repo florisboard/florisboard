@@ -118,7 +118,7 @@ class ClipboardMediaProvider : ContentProvider() {
     override fun getStreamTypes(uri: Uri, mimeTypeFilter: String): Array<String>? {
         return when (Matcher.match(uri)) {
             IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
-                cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes
+                cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.toTypedArray()
             }
             else -> null
         }
@@ -152,7 +152,7 @@ class ClipboardMediaProvider : ContentProvider() {
                     }
                     val id = ClipboardFileStorage.cloneUri(context!!, mediaUri)
                     val size = ClipboardFileStorage.getFileForId(context!!, id).length()
-                    val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
+                    val mimeTypes = values.getAsString(Columns.MimeTypes).split(",")
                     val displayName = values.getAsString(OpenableColumns.DISPLAY_NAME)
                     val fileInfo = ClipboardFileInfo(id, displayName, size, rotation, mimeTypes)
                     cachedFileInfos[id] = fileInfo

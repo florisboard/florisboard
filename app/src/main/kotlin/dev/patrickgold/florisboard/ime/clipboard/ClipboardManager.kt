@@ -18,8 +18,6 @@ package dev.patrickgold.florisboard.ime.clipboard
 
 import android.content.ClipData
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.editorInstance
@@ -61,7 +59,6 @@ class ClipboardManager(
     companion object {
         // 1 minute
         private const val INTERVAL = 60 * 1000L
-        private const val RECENT_TIMESPAN_MS = 300_000 // 300 sec = 5 min
 
         /**
          * Taken from ClipboardDescription.java from the AOSP
@@ -100,8 +97,10 @@ class ClipboardManager(
     private var clipHistoryDb: ClipboardHistoryDatabase? = null
     private val clipHistoryDao: ClipboardHistoryDao? get() = clipHistoryDb?.clipboardItemDao()
 
-    private val _history = MutableLiveData(ClipboardHistory.Empty)
-    val history: LiveData<ClipboardHistory> get() = _history
+    private val _historyFlow = MutableStateFlow(ClipboardHistory.EMPTY)
+    val historyFlow = _historyFlow.asStateFlow()
+    val currentHistory: ClipboardHistory
+        get() = historyFlow.value
 
     private val primaryClipLastFromCallbackGuard = Mutex(locked = false)
     private var primaryClipLastFromCallback: ClipData? = null
@@ -118,7 +117,7 @@ class ClipboardManager(
         cleanUpJob = ioScope.launch {
             while (isActive) {
                 delay(INTERVAL)
-                enforceExpiryDate(history())
+                enforceExpiryDate(currentHistory)
             }
         }
     }
@@ -140,10 +139,8 @@ class ClipboardManager(
         val itemsSorted = items.sortedByDescending { it.creationTimestampMs }
         val clipHistory = ClipboardHistory(itemsSorted)
         enforceHistoryLimit(clipHistory)
-        _history.postValue(clipHistory)
+        _historyFlow.value = clipHistory
     }
-
-    fun history(): ClipboardHistory = history.value!!
 
     /**
      * Sets the current primary clip without updating the internal clipboard history.
@@ -223,7 +220,7 @@ class ClipboardManager(
      */
     private fun insertOrMoveBeginning(newItem: ClipboardItem) {
         if (prefs.clipboard.historyEnabled.get()) {
-            val historyElement = history().all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
+            val historyElement = currentHistory.all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
             if (historyElement != null) {
                 moveToTheBeginning(
                     oldItem = historyElement,
@@ -299,7 +296,7 @@ class ClipboardManager(
      */
     fun clearHistory() {
         ioScope.launch {
-            for (item in history().all) {
+            for (item in currentHistory.all) {
                 item.close(appContext)
             }
             clipHistoryDao?.deleteAllUnpinned()
@@ -311,7 +308,7 @@ class ClipboardManager(
      */
     fun clearFullHistory() {
         ioScope.launch {
-            for (item in history().all) {
+            for (item in currentHistory.all) {
                 item.close(appContext)
             }
             clipHistoryDao?.deleteAll()
@@ -326,10 +323,10 @@ class ClipboardManager(
      */
     fun restoreHistory(items: List<ClipboardItem>) {
         ioScope.launch {
-            val currentHistory = this@ClipboardManager.history().all
+            val currentHistory = currentHistory.all
             for (item in items) {
                 if (!currentHistory.map { it.copy(id = 0) }.contains(item.copy(id = 0))) {
-                    this@ClipboardManager.insertClip(item.copy(id = 0))
+                    insertClip(item.copy(id = 0))
                 }
             }
         }
@@ -389,18 +386,5 @@ class ClipboardManager(
     override fun close() {
         systemClipboardManager.removePrimaryClipChangedListener(this)
         cleanUpJob.cancel()
-    }
-
-    class ClipboardHistory(val all: List<ClipboardItem>) {
-        companion object {
-            val Empty = ClipboardHistory(emptyList())
-        }
-
-        private val now = System.currentTimeMillis()
-
-        val pinned = all.filter { it.isPinned }
-        val unpinned = all.filter { !it.isPinned }
-        val recent = unpinned.filter { (now - it.creationTimestampMs) < RECENT_TIMESPAN_MS }
-        val other = unpinned.filter { (now - it.creationTimestampMs) >= RECENT_TIMESPAN_MS }
     }
 }

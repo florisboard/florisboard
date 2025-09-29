@@ -317,7 +317,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 if (!file.exists()) return false
                 val inputContentInfo = InputContentInfoCompat(
                     item.uri,
-                    ClipDescription("clipboard media file", mimeTypes),
+                    ClipDescription("clipboard media file", mimeTypes.toTypedArray()),
                     null,
                 )
                 val ic = currentInputConnection() ?: return false
