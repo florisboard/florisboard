@@ -498,7 +498,9 @@ fun ClipboardInputLayout(
                     SnyggColumn(modifier = Modifier.weight(0.5f)) {
                         ClipItemView(
                             elementName = FlorisImeUi.ClipboardItemPopup.elementName,
-                            modifier = Modifier.widthIn(max = ItemWidth),
+                            modifier = Modifier
+                                .widthIn(max = ItemWidth)
+                                .weight(1f, fill = false),
                             item = popupItem!!,
                             contentScrollInsteadOfClip = true,
                         )
