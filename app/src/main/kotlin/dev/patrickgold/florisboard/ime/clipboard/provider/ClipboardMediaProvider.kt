@@ -35,6 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.florisboard.lib.kotlin.tryOrNull
+import androidx.core.net.toUri
 
 /**
  * Allows apps to access images and videos on the clipboard.
@@ -49,8 +50,8 @@ class ClipboardMediaProvider : ContentProvider() {
 
     companion object {
         const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.clipboard"
-        val IMAGE_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/images")
-        val VIDEO_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/videos")
+        val IMAGE_CLIPS_URI: Uri = "content://$AUTHORITY/clips/images".toUri()
+        val VIDEO_CLIPS_URI: Uri = "content://$AUTHORITY/clips/videos".toUri()
 
         private const val IMAGE_CLIP_ITEM = 0
         private const val IMAGE_CLIPS_TABLE = 1

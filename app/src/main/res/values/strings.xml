@@ -719,6 +719,8 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Auto clean sensitive items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Hide history on paste</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Hide history on next text field</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
     <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
     <string name="send_to_clipboard__unknown_error">An unknown error occurred. Please try again!</string>

@@ -145,6 +145,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__history_size_limit",
             default = 20,
         )
+        val historyHideOnPaste = boolean(
+            key = "clipboard__history_hide_on_paste",
+            default = false,
+        )
+        val historyHideOnNextTextField = boolean(
+            key = "clipboard__history_hide_on_next_text_field",
+            default = true,
+        )
         val clearPrimaryClipDeletesLastItem = boolean(
             key = "clipboard__clear_primary_clip_deletes_last_item",
             default = true,

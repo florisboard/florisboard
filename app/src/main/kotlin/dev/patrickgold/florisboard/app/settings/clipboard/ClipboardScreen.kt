@@ -138,6 +138,18 @@ fun ClipboardScreen() = FlorisScreen {
                 stepIncrement = 5,
                 enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.historySizeLimitEnabled isEqualTo true },
             )
+
+            SwitchPreference(
+                prefs.clipboard.historyHideOnPaste,
+                title = stringRes(R.string.pref__clipboard__history_hide_on_paste__label),
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true }
+            )
+            SwitchPreference(
+                prefs.clipboard.historyHideOnNextTextField,
+                title = stringRes(R.string.pref__clipboard__history_hide_on_next_text_field__label),
+                enabledIf = { prefs.clipboard.historyEnabled isEqualTo true }
+            )
+
             SwitchPreference(
                 prefs.clipboard.clearPrimaryClipDeletesLastItem,
                 title = stringRes(R.string.pref__clipboard__clear_primary_clip_deletes_last_item__label),

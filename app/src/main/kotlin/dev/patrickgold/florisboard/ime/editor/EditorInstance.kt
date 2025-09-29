@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -324,6 +325,10 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 ic.finishComposingText()
                 val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 InputConnectionCompat.commitContent(ic, activeInfo.base, inputContentInfo, flags, null)
+            }
+        }.also {
+            if (prefs.clipboard.historyHideOnPaste.get()) {
+                keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
             }
         }
     }
