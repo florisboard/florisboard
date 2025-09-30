@@ -165,49 +165,44 @@ class ClipboardManager(
      * Called by system clipboard when the system primary clip has changed.
      */
     override fun onPrimaryClipChanged() {
+        val useInternalClipboard = prefs.clipboard.useInternalClipboard.get()
         val syncBehavior = prefs.clipboard.syncToFloris.get()
-        if (!prefs.clipboard.useInternalClipboard.get() || syncBehavior != ClipboardSyncBehavior.NO_EVENTS) {
-            val systemPrimaryClip = systemClipboardManager.primaryClip
-            ioScope.launch {
-                val isDuplicate: Boolean
-                primaryClipLastFromCallbackGuard.withLock {
-                    val a = primaryClipLastFromCallback?.getItemAt(0)
-                    val b = systemPrimaryClip?.getItemAt(0)
-                    isDuplicate = when {
-                        a === b -> true
-                        a == null || b == null -> false
-                        else -> a.text == b.text && a.uri == b.uri
-                    }
-                    primaryClipLastFromCallback = systemPrimaryClip
-                }
-                if (isDuplicate) return@launch
+        if (useInternalClipboard && syncBehavior == ClipboardSyncBehavior.NO_EVENTS) {
+            return // ignore event
+        }
 
-                val internalPrimaryClip = primaryClip
+        val systemPrimaryClip = systemClipboardManager.primaryClip
+        if (!syncBehavior.shouldSyncSet && systemPrimaryClip != null ||
+            !syncBehavior.shouldSyncClear && systemPrimaryClip == null) {
+            return // ignore event
+        }
 
-                if (systemPrimaryClip == null) {
-                    if (syncBehavior.shouldSyncClear) {
-                        primaryClip = null
-                    }
-                    return@launch
+        ioScope.launch {
+            val isDuplicate: Boolean
+            primaryClipLastFromCallbackGuard.withLock {
+                val a = primaryClipLastFromCallback?.getItemAt(0)
+                val b = systemPrimaryClip?.getItemAt(0)
+                isDuplicate = when {
+                    a === b -> true
+                    a == null || b == null -> false
+                    else -> a.text == b.text && a.uri == b.uri
                 }
+                primaryClipLastFromCallback = systemPrimaryClip
+            }
+            if (isDuplicate) return@launch
 
-                if (systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
-                    if (syncBehavior.shouldSyncClear) {
-                        primaryClip = null
-                    }
-                    return@launch
-                }
+            val internalPrimaryClip = primaryClip
 
-                if (!syncBehavior.shouldSyncSet) {
-                    return@launch
-                }
+            if (systemPrimaryClip == null || systemPrimaryClip.getItemAt(0).let { it.text == null && it.uri == null }) {
+                primaryClip = null
+                return@launch
+            }
 
-                val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
-                if (!isEqual) {
-                    val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
-                    primaryClip = item
-                    insertOrMoveBeginning(item)
-                }
+            val isEqual = internalPrimaryClip?.isEqualTo(systemPrimaryClip) == true
+            if (!isEqual) {
+                val item = ClipboardItem.fromClipData(appContext, systemPrimaryClip, cloneUri = true)
+                primaryClip = item
+                insertOrMoveBeginning(item)
             }
         }
     }
