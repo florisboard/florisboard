@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -44,20 +45,6 @@ android {
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
-            "-Xwhen-guards",
-        )
-    }
-
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = projectMinSdk.toInt()
@@ -71,12 +58,6 @@ android {
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
 
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
-
         sourceSets {
             maybeCreate("main").apply {
                 assets {
@@ -87,6 +68,31 @@ android {
                 }
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+            optIn.addAll(
+                "kotlin.time.ExperimentalTime",
+                "kotlin.contracts.ExperimentalContracts",
+            )
+            freeCompilerArgs.addAll(
+                "-Xjvm-default=all-compatibility",
+                "-Xwhen-guards",
+            )
+        }
+    }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
+        arg("room.expandProjection", "true")
     }
 
     bundle {
