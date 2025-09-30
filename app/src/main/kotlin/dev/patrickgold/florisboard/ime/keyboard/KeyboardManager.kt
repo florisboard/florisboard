@@ -717,8 +717,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistory()
             KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
             KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
-                if (prefs.clipboard.clearPrimaryClipDeletesLastItem.get()) {
-                    clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it) }
+                if (prefs.clipboard.clearPrimaryClipAffectsHistoryIfUnpinned.get()) {
+                    clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it, onlyIfUnpinned = true) }
                 }
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)

@@ -701,9 +701,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
@@ -719,8 +717,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Auto clean sensitive items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Hide history on paste</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Hide history on next text field</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Clear primary clip affects history</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Clearing the primary clip also removes it from the history, if not pinned</string>
     <string name="send_to_clipboard__unknown_error">An unknown error occurred. Please try again!</string>
     <string name="send_to_clipboard__type_not_supported_error">This media type is not supported.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Copied below image to clipboard.</string>
@@ -927,6 +927,15 @@
 
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
+
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">No events</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">No events are synced in this direction. In this mode, sync excludes text content.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Only clear events</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Only events clearing clip data are synced in this direction. In this mode, sync excludes text content.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Only set events</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Only events setting clip data are synced in this direction. In this mode, sync includes text content.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">All events</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">Both events setting and clearing clip data are synced in this direction. In this mode, sync includes text content.</string>
 
     <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Red Green Blue</string>

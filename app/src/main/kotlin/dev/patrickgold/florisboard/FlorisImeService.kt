@@ -360,7 +360,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (info == null) return
         val editorInfo = FlorisEditorInfo.wrap(info)
         activeState.batchEdit {
-            activeState.imeUiMode = ImeUiMode.TEXT
+            if (activeState.imeUiMode != ImeUiMode.CLIPBOARD || prefs.clipboard.historyHideOnNextTextField.get()) {
+                activeState.imeUiMode = ImeUiMode.TEXT
+            }
             activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
             editorInstance.handleStartInputView(editorInfo, isRestart = restarting)
         }
@@ -428,6 +430,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
         isWindowShown = false
         activeState.batchEdit {
+            activeState.imeUiMode = ImeUiMode.TEXT
             activeState.isActionsOverflowVisible = false
             activeState.isActionsEditorVisible = false
         }

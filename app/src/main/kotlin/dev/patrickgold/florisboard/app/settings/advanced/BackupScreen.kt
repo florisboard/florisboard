@@ -194,7 +194,8 @@ fun BackupScreen() = FlorisScreen {
         }
 
         if (backupFilesSelector.provideClipboardItems()) {
-            val clipboardHistory = context.clipboardManager().value.history().all
+            val clipboardManager by context.clipboardManager()
+            val clipboardHistory = clipboardManager.currentHistory.all
             val clipboardFilesDir = workspace.inputDir.subDir("clipboard")
             clipboardFilesDir.mkdir()
             if (backupFilesSelector.clipboardTextItems) {

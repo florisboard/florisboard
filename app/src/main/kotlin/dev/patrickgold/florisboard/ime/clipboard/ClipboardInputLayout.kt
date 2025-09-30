@@ -63,13 +63,14 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material.icons.outlined.ContentPaste
+import androidx.compose.material.icons.outlined.ContentPasteGo
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
@@ -102,7 +103,6 @@ import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -151,14 +151,14 @@ fun ClipboardInputLayout(
     var isFilterRowShown by remember { mutableStateOf(false) }
     val activeFilterTypes = remember { mutableStateSetOf<ItemType>() }
 
-    val unfilteredHistory by clipboardManager.history.observeAsNonNullState()
+    val unfilteredHistory by clipboardManager.historyFlow.collectAsState()
     val filteredHistory = remember(unfilteredHistory, activeFilterTypes.toSet()) {
         if (activeFilterTypes.isEmpty()) {
             unfilteredHistory
         } else {
             unfilteredHistory.all
                 .filter { activeFilterTypes.contains(it.type) }
-                .let { ClipboardManager.ClipboardHistory(it) }
+                .let { ClipboardHistory(it) }
         }
     }
 
@@ -370,7 +370,7 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
         ) {
             val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
-            val staggeredGridCells by prefs.clipboard.numHistoryGridColumns()
+            val staggeredGridCells by prefs.clipboard.historyNumGridColumns()
                 .observeAsTransformingState { numGridColumns ->
                     if (numGridColumns == CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO) {
                         StaggeredGridCells.Adaptive(160.dp)
@@ -498,7 +498,9 @@ fun ClipboardInputLayout(
                     SnyggColumn(modifier = Modifier.weight(0.5f)) {
                         ClipItemView(
                             elementName = FlorisImeUi.ClipboardItemPopup.elementName,
-                            modifier = Modifier.widthIn(max = ItemWidth),
+                            modifier = Modifier
+                                .widthIn(max = ItemWidth)
+                                .weight(1f, fill = false),
                             item = popupItem!!,
                             contentScrollInsteadOfClip = true,
                         )
@@ -531,11 +533,11 @@ fun ClipboardInputLayout(
                                 icon = Icons.Default.Delete,
                                 text = stringRes(R.string.clip__delete_item),
                             ) {
-                                clipboardManager.deleteClip(popupItem!!)
+                                clipboardManager.deleteClip(popupItem!!, onlyIfUnpinned = false)
                                 popupItem = null
                             }
                             PopupAction(
-                                icon = Icons.Outlined.ContentPaste,
+                                icon = Icons.Outlined.ContentPasteGo,
                                 text = stringRes(R.string.clip__paste_item),
                             ) {
                                 clipboardManager.pasteItem(popupItem!!)
