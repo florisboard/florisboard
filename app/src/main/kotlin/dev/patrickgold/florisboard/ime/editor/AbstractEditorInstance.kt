@@ -301,8 +301,23 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     private fun InputConnection.setComposingRegion(composing: EditorRange) {
+        // Guard against sending composing regions that are out of bounds for the editor's current text.
+        // Some target apps may throw IllegalArgumentException when given invalid offsets. Instead of
+        // propagating such exceptions, finish the composing text which is a safe fallback.
+        val safeBounds = activeContent.safeEditorBounds
         if (composing.isValid) {
-            this.setComposingRegion(composing.start, composing.end)
+            // Only set the composing region if it fully fits into the known safe editor bounds.
+            if (composing.start >= safeBounds.start && composing.end <= safeBounds.end) {
+                try {
+                    this.setComposingRegion(composing.start, composing.end)
+                } catch (e: IllegalArgumentException) {
+                    // In case the target InputConnection still rejects the range, fall back safely.
+                    this.finishComposingText()
+                }
+            } else {
+                // Out-of-bounds: finish composing instead of sending invalid indices to the app.
+                this.finishComposingText()
+            }
         } else {
             this.finishComposingText()
         }
@@ -374,9 +389,16 @@ abstract class AbstractEditorInstance(context: Context) {
             )
             expectedContentQueue.push(newContent)
             // Utilize composing region to replace previous chars without using delete. This avoids flickering in the
-            // target editor and improves the UX
+            // target editor and improves the UX. Guard against platform/input-connection implementations which may
+            // throw when given unexpected ranges/text.
             ic.setComposingRegion(content.selection.start - rm, content.selection.start)
-            ic.setComposingText(finalText, 1)
+            try {
+                ic.setComposingText(finalText, 1)
+            } catch (e: IllegalArgumentException) {
+                // Fall back: finish composing and commit the intended text to avoid crashes in target apps.
+                ic.finishComposingText()
+                ic.commitText(finalText, 1)
+            }
             // Now set the proper composing region we expect
             ic.setComposingRegion(newContent.composing)
             ic.endBatchEdit()
@@ -430,7 +452,13 @@ abstract class AbstractEditorInstance(context: Context) {
                 selectedText = "",
             )
             expectedContentQueue.push(newContent)
-            ic.setComposingText(text, 1)
+            try {
+                ic.setComposingText(text, 1)
+            } catch (e: IllegalArgumentException) {
+                // Some apps reject composing ranges/text; commit the text and continue.
+                ic.finishComposingText()
+                ic.commitText(text, 1)
+            }
             ic.finishComposingText()
             _lastCommitPosition.handleCommit(newContent.selection)
         }
