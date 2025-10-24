@@ -31,6 +31,9 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.kotlin.map
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FlorisSpellCheckerService : SpellCheckerService() {
     private val prefs by FlorisPreferenceStore
@@ -42,7 +45,9 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         flogInfo(LogTopic.SPELL_EVENTS)
 
         super.onCreate()
-        dictionaryManager.loadUserDictionariesIfNecessary()
+        CoroutineScope(Dispatchers.IO).launch {
+            dictionaryManager.loadUserDictionariesIfNecessary()
+        }
     }
 
     override fun createSession(): Session {
