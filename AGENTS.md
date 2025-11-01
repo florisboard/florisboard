@@ -68,7 +68,8 @@ Here is a summary of the changes I have made:
         *   Added an `isRecording` flag to track the recording state.
         *   Implemented the `startWhisperVoiceInput()` and `stopAndTranscribe()` functions.
         *   Changed the `OPENAI_API_KEY` variable to be loaded from `BuildConfig`.
-    *   **Why:** To encapsulate the logic for recording audio, sending it to the Whisper API, and handling the transcription response. The change to `BuildConfig` was made to improve security and make the API key configurable.
+        *   Corrected the class structure to fix a build error.
+    *   **Why:** To encapsulate the logic for recording audio, sending it to the Whisper API, and handling the transcription response. The change to `BuildConfig` was made to improve security and make the API key configurable. The structural correction was to fix a build error caused by incorrect placement of the companion object.
 
 *   **`app/src/main/kotlin/dev/patrickgold/florisboard/ime/keyboard/KeyboardManager.kt`:**
     *   **What:** Changed the action for `KeyCode.VOICE_INPUT` in the `onInputKeyUp` function to call `FlorisImeService.startWhisperVoiceInput()`.
