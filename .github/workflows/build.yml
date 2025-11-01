@@ -24,6 +24,8 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       run: ./gradlew assembleDebug
 
     - name: Upload APK as artifact

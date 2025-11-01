@@ -94,3 +94,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Restore the `FlorisImeService` companion helper methods so other modules can compile, reinstate the Whisper recording and transcription workflow, and clean up the temporary resources lifecycle.
 * **Changes:** Re-added the missing imports, rebuilt the `companion object` with shared helpers and a `startWhisperVoiceInput()` bridge, rewrote the recording/transcription helpers with better error handling and cleanup, and ensured `onDestroy()` tears down any pending recorder or temp files.
 * **Attempts:** `./gradlew compileDebugKotlin` *(fails: Android SDK is unavailable in the execution environment).* 
+
+### 2025-02-14 – gpt-5-codex
+* **Plan:** Resolve the `OPENAI_API_KEY` unresolved reference by inlining the user-provided key for debugging, per the latest request.
+* **Changes:** Removed the `BuildConfig` dependency and hardcoded the supplied key inside `FlorisImeService` so the project no longer requires a Gradle property for compilation.
+* **Attempts:** Not run (Android tooling unavailable in the current environment).
