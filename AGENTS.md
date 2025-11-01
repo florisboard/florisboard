@@ -1,5 +1,8 @@
-
 # Project: FlorisBoard with Whisper API Integration
+
+## Agent Protocol
+
+**IMPORTANT:** All agents working on this project are required to document their plans, thought processes, and attempts after every change made to the code or pivots in plans. This is to ensure that all collaborators (human and AI) stay on the same page. This documentation should be added to this `AGENTS.md` file.
 
 ## 1. Project Overview
 
@@ -64,17 +67,22 @@ Here is a summary of the changes I have made:
         *   Added a `MediaRecorder` instance and a `File` object for audio recording.
         *   Added an `isRecording` flag to track the recording state.
         *   Implemented the `startWhisperVoiceInput()` and `stopAndTranscribe()` functions.
-    *   **Why:** To encapsulate the logic for recording audio, sending it to the Whisper API, and handling the transcription response.
+        *   Changed the `OPENAI_API_KEY` variable to be loaded from `BuildConfig`.
+    *   **Why:** To encapsulate the logic for recording audio, sending it to the Whisper API, and handling the transcription response. The change to `BuildConfig` was made to improve security and make the API key configurable.
 
 *   **`app/src/main/kotlin/dev/patrickgold/florisboard/ime/keyboard/KeyboardManager.kt`:**
     *   **What:** Changed the action for `KeyCode.VOICE_INPUT` in the `onInputKeyUp` function to call `FlorisImeService.startWhisperVoiceInput()`.
     *   **Why:** To trigger the new voice input functionality when the microphone button is pressed.
 
+*   **`.gitignore`:**
+    *   **What:** Added `local.properties` to the `.gitignore` file.
+    *   **Why:** To prevent the user's API key from being committed to the repository.
+
 ## 6. Future Work and Considerations
 
 For a future agent, here are some things to consider to move this project from a POC to a more robust implementation:
 
-*   **API Key Security:** The API key is currently hardcoded. It should be moved to a more secure location, such as the `local.properties` file, to avoid exposing it in version control.
+*   **API Key Security:** The API key is now loaded from `BuildConfig`, which is a good practice. The user is responsible for creating the `local.properties` file with their key.
 *   **UI/UX for Recording:** The current implementation uses toasts to indicate the recording status. A more user-friendly approach would be to provide visual feedback directly on the keyboard, such as changing the microphone icon's appearance.
 *   **Error Handling:** The current error handling is minimal. More robust error handling should be added for network failures, API errors, and microphone access issues.
 *   **State Management:** The `isRecording` flag is a simple way to manage the recording state. A more robust state management solution would be beneficial, especially if more complex features are added in the future.
