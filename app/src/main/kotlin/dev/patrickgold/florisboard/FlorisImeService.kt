@@ -136,57 +136,7 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * of [FlorisImeService], which provide a safe and memory-leak-free way of performing certain actions on the Floris
  * input method service instance.
  */
-import android.media.MediaRecorder
-import android.widget.Toast
-import dev.patrickgold.florisboard.BuildConfig
-import java.io.File
-import java.io.IOException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.asRequestBody
-import org.json.JSONObject
-
-private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
-
-/**
- * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
- * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
- */
-class FlorisImeService : LifecycleInputMethodService() {
-    private val OPENAI_API_KEY = BuildConfig.OPENAI_API_KEY
-
-    private var mediaRecorder: MediaRecorder? = null
-    private var audioFile: File? = null
-    private var isRecording = false
-
-    companion object {
-        // ... (existing companion object code)
-
-        fun startWhisperVoiceInput() {
-            FlorisImeServiceReference.get()?.startWhisperVoiceInput()
-        }
-
-        fun stopAndTranscribe() {
-            FlorisImeServiceReference.get()?.stopAndTranscribe()
-        }
-    }
-
-    // ... (existing class body)
-
-    private fun startWhisperVoiceInput() {
-        if (isRecording) {
-            stopAndTranscribe()
-            return
-        }
-
-        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Microphone permission not granted", Toast.LENGTH_SHORT).show()
+Microphone permission not granted"Microphone permission not granted", Toast.LENGTH_SHORT).show()
             return
         }
 
