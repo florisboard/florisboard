@@ -87,3 +87,10 @@ For a future agent, here are some things to consider to move this project from a
 *   **UI/UX for Recording:** The current implementation uses toasts to indicate the recording status. A more user-friendly approach would be to provide visual feedback directly on the keyboard, such as changing the microphone icon's appearance.
 *   **Error Handling:** The current error handling is minimal. More robust error handling should be added for network failures, API errors, and microphone access issues.
 *   **State Management:** The `isRecording` flag is a simple way to manage the recording state. A more robust state management solution would be beneficial, especially if more complex features are added in the future.
+
+## 7. Agent Activity Log
+
+### 2025-11-01 – gpt-5-codex
+* **Plan:** Restore the `FlorisImeService` companion helper methods so other modules can compile, reinstate the Whisper recording and transcription workflow, and clean up the temporary resources lifecycle.
+* **Changes:** Re-added the missing imports, rebuilt the `companion object` with shared helpers and a `startWhisperVoiceInput()` bridge, rewrote the recording/transcription helpers with better error handling and cleanup, and ensured `onDestroy()` tears down any pending recorder or temp files.
+* **Attempts:** `./gradlew compileDebugKotlin` *(fails: Android SDK is unavailable in the execution environment).* 
