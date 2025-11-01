@@ -16,11 +16,14 @@
 
 package dev.patrickgold.florisboard
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.inputmethodservice.ExtractEditText
+import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
@@ -39,6 +42,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -72,6 +76,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
@@ -103,6 +108,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
@@ -112,8 +118,19 @@ import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import java.io.File
+import java.io.IOException
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationLandscape
@@ -128,6 +145,7 @@ import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.json.JSONObject
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -142,6 +160,9 @@ class FlorisImeService : LifecycleInputMethodService() {
     private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null
     private var isRecording = false
+
+    companion object {
+        private var FlorisImeServiceReference: WeakReference<FlorisImeService?> = WeakReference(null)
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
 
@@ -227,7 +248,154 @@ class FlorisImeService : LifecycleInputMethodService() {
             return false
         }
 
+        fun startWhisperVoiceInput() {
+            FlorisImeServiceReference.get()?.toggleWhisperVoiceInput()
+        }
+    }
 
+    private fun toggleWhisperVoiceInput() {
+        if (isRecording) {
+            stopAndTranscribe()
+            return
+        }
+
+        val permissionGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.RECORD_AUDIO,
+        ) == PackageManager.PERMISSION_GRANTED
+        if (!permissionGranted) {
+            Toast.makeText(this, "Microphone permission not granted", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val file = try {
+            File.createTempFile("florisboard_whisper_", ".3gp", cacheDir)
+        } catch (e: IOException) {
+            flogError { "Unable to create temporary audio file: ${e.localizedMessage}" }
+            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        audioFile = file
+        val recorder = MediaRecorder()
+        mediaRecorder = recorder
+        try {
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            recorder.setOutputFile(file.absolutePath)
+            recorder.prepare()
+            recorder.start()
+            isRecording = true
+            Toast.makeText(this, "Recording...", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            flogError { "MediaRecorder prepare() failed: ${e.localizedMessage}" }
+            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
+            recorder.release()
+            mediaRecorder = null
+            isRecording = false
+            if (!file.delete()) {
+                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+            }
+            audioFile = null
+        } catch (e: IllegalStateException) {
+            flogError { "MediaRecorder start() failed: ${e.localizedMessage}" }
+            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
+            recorder.release()
+            mediaRecorder = null
+            isRecording = false
+            if (!file.delete()) {
+                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+            }
+            audioFile = null
+        }
+    }
+
+    private fun stopAndTranscribe() {
+        val recorder = mediaRecorder
+        val file = audioFile
+        mediaRecorder = null
+        audioFile = null
+
+        try {
+            recorder?.let {
+                try {
+                    it.stop()
+                } catch (e: RuntimeException) {
+                    flogWarning { "MediaRecorder stop() failed: ${e.localizedMessage}" }
+                } finally {
+                    it.release()
+                }
+            }
+        } finally {
+            isRecording = false
+        }
+
+        if (file == null || !file.exists()) {
+            flogError { "Audio file missing, unable to transcribe" }
+            return
+        }
+
+        Toast.makeText(this, "Transcription in progress...", Toast.LENGTH_SHORT).show()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val requestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.name, file.asRequestBody("audio/3gp".toMediaType()))
+                .addFormDataPart("model", "whisper-1")
+                .build()
+
+            val request = Request.Builder()
+                .url("https://api.openai.com/v1/audio/transcriptions")
+                .header("Authorization", "Bearer $OPENAI_API_KEY")
+                .post(requestBody)
+                .build()
+
+            val client = OkHttpClient()
+            try {
+                client.newCall(request).execute().use { response ->
+                    val bodyText = response.body?.string()
+                    if (response.isSuccessful && !bodyText.isNullOrEmpty()) {
+                        val text = runCatching { JSONObject(bodyText).optString("text") }.getOrNull()
+                        withContext(Dispatchers.Main) {
+                            if (!text.isNullOrEmpty()) {
+                                currentInputConnection?.commitText(text, 1)
+                            } else {
+                                Toast.makeText(
+                                    this@FlorisImeService,
+                                    "Transcription produced no text",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                        }
+                    } else {
+                        flogError {
+                            "Whisper API call failed: HTTP ${response.code} ${bodyText.orEmpty()}"
+                        }
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@FlorisImeService,
+                                "Transcription failed",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                flogError { "Whisper API call failed: ${e.message}" }
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@FlorisImeService,
+                        "Transcription failed",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            } finally {
+                if (!file.delete()) {
+                    flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+                }
+            }
+        }
     }
 
     private val prefs by FlorisPreferenceStore
@@ -317,6 +485,28 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onDestroy() {
+        mediaRecorder?.let {
+            try {
+                if (isRecording) {
+                    it.stop()
+                }
+            } catch (e: RuntimeException) {
+                flogWarning { "MediaRecorder stop() failed during onDestroy: ${e.localizedMessage}" }
+            } catch (e: IllegalStateException) {
+                flogWarning { "MediaRecorder state invalid during onDestroy: ${e.localizedMessage}" }
+            } finally {
+                it.release()
+            }
+        }
+        mediaRecorder = null
+        isRecording = false
+        audioFile?.let { file ->
+            if (file.exists() && !file.delete()) {
+                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+            }
+        }
+        audioFile = null
+
         super.onDestroy()
         unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
