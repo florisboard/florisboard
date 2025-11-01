@@ -136,71 +136,12 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * of [FlorisImeService], which provide a safe and memory-leak-free way of performing certain actions on the Floris
  * input method service instance.
  */
-Microphone permission not granted"Microphone permission not granted", Toast.LENGTH_SHORT).show()
-            return
-        }
+class FlorisImeService : LifecycleInputMethodService() {
+    private val OPENAI_API_KEY = BuildConfig.OPENAI_API_KEY
 
-        audioFile = File(cacheDir, "audio.3gp")
-        mediaRecorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            setOutputFile(audioFile?.absolutePath)
-            try {
-                prepare()
-                start()
-                isRecording = true
-                Toast.makeText(this@FlorisImeService, "Recording...", Toast.LENGTH_SHORT).show()
-            } catch (e: IOException) {
-                flogError { "MediaRecorder prepare() failed" }
-            }
-        }
-    }
-
-    private fun stopAndTranscribe() {
-        mediaRecorder?.apply {
-            stop()
-            release()
-        }
-        mediaRecorder = null
-        isRecording = false
-        Toast.makeText(this, "Transcription in progress...", Toast.LENGTH_SHORT).show()
-
-        audioFile?.let { file ->
-            CoroutineScope(Dispatchers.IO).launch {
-                val client = OkHttpClient()
-                val requestBody = MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("file", file.name, file.asRequestBody("audio/3gp".toMediaType()))
-                    .addFormDataPart("model", "whisper-1")
-                    .build()
-
-                val request = Request.Builder()
-                    .url("https://api.openai.com/v1/audio/transcriptions")
-                    .header("Authorization", "Bearer $OPENAI_API_KEY")
-                    .post(requestBody)
-                    .build()
-
-                try {
-                    val response = client.newCall(request).execute()
-                    if (response.isSuccessful) {
-                        val responseBody = response.body?.string()
-                        val text = JSONObject(responseBody).getString("text")
-                        withContext(Dispatchers.Main) {
-                            currentInputConnection?.commitText(text, 1)
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(this@FlorisImeService, "Transcription failed", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } catch (e: Exception) {
-                    flogError { "Whisper API call failed: ${e.message}" }
-                }
-            }
-        }
-    }
-    companion object {
+    private var mediaRecorder: MediaRecorder? = null
+    private var audioFile: File? = null
+    private var isRecording = false
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
 
@@ -286,28 +227,7 @@ Microphone permission not granted"Microphone permission not granted", Toast.LENG
             return false
         }
 
-        fun switchToVoiceInputMethod(): Boolean {
-            val ims = FlorisImeServiceReference.get() ?: return false
-            val imm = ims.systemServiceOrNull(InputMethodManager::class) ?: return false
-            val list: List<InputMethodInfo> = imm.enabledInputMethodList
-            for (el in list) {
-                for (i in 0 until el.subtypeCount) {
-                    if (el.getSubtypeAt(i).mode != "voice") continue
-                    if (AndroidVersion.ATLEAST_API28_P) {
-                        ims.switchInputMethod(el.id, el.getSubtypeAt(i))
-                        return true
-                    } else {
-                        ims.window.window?.let { window ->
-                            @Suppress("DEPRECATION")
-                            imm.setInputMethod(window.attributes.token, el.id)
-                            return true
-                        }
-                    }
-                }
-            }
-            ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
-            return false
-        }
+
     }
 
     private val prefs by FlorisPreferenceStore
