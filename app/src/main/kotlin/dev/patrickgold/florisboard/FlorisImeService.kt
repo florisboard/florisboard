@@ -159,7 +159,7 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
  */
 class FlorisImeService : LifecycleInputMethodService() {
-    private val OPENAI_API_KEY = "YOUR_API_KEY"
+    private val OPENAI_API_KEY = BuildConfig.OPENAI_API_KEY
 
     private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null

@@ -61,3 +61,6 @@ debug/
 target/
 **/*.rs.bk
 *.pdb
+
+# Local properties
+local.properties
