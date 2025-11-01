@@ -136,6 +136,22 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
  * of [FlorisImeService], which provide a safe and memory-leak-free way of performing certain actions on the Floris
  * input method service instance.
  */
+import android.media.MediaRecorder
+import android.widget.Toast
+import dev.patrickgold.florisboard.BuildConfig
+import java.io.File
+import java.io.IOException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONObject
+
 private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
 
 /**
@@ -143,6 +159,97 @@ private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
  */
 class FlorisImeService : LifecycleInputMethodService() {
+    private val OPENAI_API_KEY = "YOUR_API_KEY"
+
+    private var mediaRecorder: MediaRecorder? = null
+    private var audioFile: File? = null
+    private var isRecording = false
+
+    companion object {
+        // ... (existing companion object code)
+
+        fun startWhisperVoiceInput() {
+            FlorisImeServiceReference.get()?.startWhisperVoiceInput()
+        }
+
+        fun stopAndTranscribe() {
+            FlorisImeServiceReference.get()?.stopAndTranscribe()
+        }
+    }
+
+    // ... (existing class body)
+
+    private fun startWhisperVoiceInput() {
+        if (isRecording) {
+            stopAndTranscribe()
+            return
+        }
+
+        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Microphone permission not granted", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        audioFile = File(cacheDir, "audio.3gp")
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            setOutputFile(audioFile?.absolutePath)
+            try {
+                prepare()
+                start()
+                isRecording = true
+                Toast.makeText(this@FlorisImeService, "Recording...", Toast.LENGTH_SHORT).show()
+            } catch (e: IOException) {
+                flogError { "MediaRecorder prepare() failed" }
+            }
+        }
+    }
+
+    private fun stopAndTranscribe() {
+        mediaRecorder?.apply {
+            stop()
+            release()
+        }
+        mediaRecorder = null
+        isRecording = false
+        Toast.makeText(this, "Transcription in progress...", Toast.LENGTH_SHORT).show()
+
+        audioFile?.let { file ->
+            CoroutineScope(Dispatchers.IO).launch {
+                val client = OkHttpClient()
+                val requestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", file.name, file.asRequestBody("audio/3gp".toMediaType()))
+                    .addFormDataPart("model", "whisper-1")
+                    .build()
+
+                val request = Request.Builder()
+                    .url("https://api.openai.com/v1/audio/transcriptions")
+                    .header("Authorization", "Bearer $OPENAI_API_KEY")
+                    .post(requestBody)
+                    .build()
+
+                try {
+                    val response = client.newCall(request).execute()
+                    if (response.isSuccessful) {
+                        val responseBody = response.body?.string()
+                        val text = JSONObject(responseBody).getString("text")
+                        withContext(Dispatchers.Main) {
+                            currentInputConnection?.commitText(text, 1)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@FlorisImeService, "Transcription failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    flogError { "Whisper API call failed: ${e.message}" }
+                }
+            }
+        }
+    }
     companion object {
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)

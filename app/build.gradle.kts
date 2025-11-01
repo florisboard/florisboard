@@ -210,6 +210,7 @@ dependencies {
     ksp(libs.patrickgold.jetpref.datastore.model.processor)
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
+    implementation(libs.okhttp)
 
     implementation(project(":lib:android"))
     implementation(project(":lib:color"))
