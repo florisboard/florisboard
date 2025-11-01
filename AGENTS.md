@@ -93,7 +93,7 @@ For a future agent, here are some things to consider to move this project from a
 ### 2025-11-01 – gpt-5-codex
 * **Plan:** Restore the `FlorisImeService` companion helper methods so other modules can compile, reinstate the Whisper recording and transcription workflow, and clean up the temporary resources lifecycle.
 * **Changes:** Re-added the missing imports, rebuilt the `companion object` with shared helpers and a `startWhisperVoiceInput()` bridge, rewrote the recording/transcription helpers with better error handling and cleanup, and ensured `onDestroy()` tears down any pending recorder or temp files.
-* **Attempts:** `./gradlew compileDebugKotlin` *(fails: Android SDK is unavailable in the execution environment).*
+* **Attempts:** `./gradlew compileDebugKotlin` *(fails: Android SDK is unavailable in the execution environment).* 
 
 ### 2025-11-01 (Gemini)
 * **Plan:** Refactor the project to securely handle the OpenAI API key after a hardcoded key was blocked by GitHub's push protection. The new strategy uses a GitHub secret for CI/CD builds and the `local.properties` file for local development.
@@ -104,3 +104,8 @@ For a future agent, here are some things to consider to move this project from a
     *   Modified `.github/workflows/build.yml` to pass the `OPENAI_API_KEY` repository secret to the build step as an environment variable.
     *   Updated this `AGENTS.md` file to reflect the new, secure secret management strategy and remove the incorrect previous entry.
 * **Result:** The changes were successfully pushed, and the build process is now secure and functional for both remote and local environments.
+
+### 2025-11-01 – gpt-5-codex
+* **Plan:** Instrument the Whisper integration to expose misconfiguration, switch recording to an OpenAI-supported container/codec, harden the multipart request, and extend network timeouts so transcription succeeds reliably on-device.
+* **Changes:** Updated `FlorisImeService` to validate the API key at runtime, record AAC audio into an `.m4a` temp file, log and guard zero-byte captures, send multipart requests with explicit timeouts, and surface HTTP details plus parsed results back to the UI. Added helper utilities for recorder cleanup and client construction, along with verbose logging.
+* **Attempts:** `./gradlew testDebugUnitTest` *(skipped: Android SDK/toolchain not available in this environment).* 

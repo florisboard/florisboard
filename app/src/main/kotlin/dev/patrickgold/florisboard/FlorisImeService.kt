@@ -26,6 +26,7 @@ import android.inputmethodservice.ExtractEditText
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.Size
 import android.util.TypedValue
 import android.view.Gravity
@@ -119,7 +120,6 @@ import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.io.File
-import java.io.IOException
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -145,6 +145,7 @@ import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import java.util.concurrent.TimeUnit
 import org.json.JSONObject
 
 /**
@@ -155,13 +156,12 @@ import org.json.JSONObject
  * input method service instance.
  */
 class FlorisImeService : LifecycleInputMethodService() {
-    private val OPENAI_API_KEY = BuildConfig.OPENAI_API_KEY
-
-    private var mediaRecorder: MediaRecorder? = null
+    private var recorder: MediaRecorder? = null
     private var audioFile: File? = null
     private var isRecording = false
 
     companion object {
+        private const val TAG = "Whisper"
         private var FlorisImeServiceReference: WeakReference<FlorisImeService?> = WeakReference(null)
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
@@ -267,134 +267,164 @@ class FlorisImeService : LifecycleInputMethodService() {
             Toast.makeText(this, "Microphone permission not granted", Toast.LENGTH_SHORT).show()
             return
         }
+        startWhisperRecording()
+    }
 
-        val file = try {
-            File.createTempFile("florisboard_whisper_", ".3gp", cacheDir)
-        } catch (e: IOException) {
-            flogError { "Unable to create temporary audio file: ${e.localizedMessage}" }
-            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
+    private fun stopAndTranscribe() {
+        if (!isRecording) {
             return
         }
 
-        audioFile = file
-        val recorder = MediaRecorder()
-        mediaRecorder = recorder
+        val recorderInstance = recorder
+        val file = audioFile
+
         try {
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            recorder.setOutputFile(file.absolutePath)
-            recorder.prepare()
-            recorder.start()
-            isRecording = true
-            Toast.makeText(this, "Recording...", Toast.LENGTH_SHORT).show()
-        } catch (e: IOException) {
-            flogError { "MediaRecorder prepare() failed: ${e.localizedMessage}" }
-            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
-            recorder.release()
-            mediaRecorder = null
-            isRecording = false
-            if (!file.delete()) {
-                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+            recorderInstance?.let {
+                try {
+                    it.stop()
+                } catch (t: Throwable) {
+                    Log.e(TAG, "stop() threw", t)
+                }
             }
+        } finally {
+            cleanupRecorder()
+        }
+
+        if (file == null || !file.exists()) {
+            Toast.makeText(this, "No audio file produced", Toast.LENGTH_LONG).show()
+            Log.e(TAG, "Audio file missing")
             audioFile = null
-        } catch (e: IllegalStateException) {
-            flogError { "MediaRecorder start() failed: ${e.localizedMessage}" }
-            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
-            recorder.release()
-            mediaRecorder = null
-            isRecording = false
-            if (!file.delete()) {
-                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+            return
+        }
+        if (file.length() == 0L) {
+            Toast.makeText(this, "Empty recording (0 bytes)", Toast.LENGTH_LONG).show()
+            Log.e(TAG, "Zero-byte audio at ${file.absolutePath}")
+            audioFile = null
+            runCatching { file.delete() }
+            return
+        }
+
+        Toast.makeText(this, "Transcribing…", Toast.LENGTH_SHORT).show()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = transcribeWithWhisper(file)
+            withContext(Dispatchers.Main) {
+                if (!result.isNullOrEmpty()) {
+                    currentInputConnection?.commitText(result, 1)
+                    Toast.makeText(this@FlorisImeService, "Transcribed", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        this@FlorisImeService,
+                        "Transcription failed (see logs)",
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
             }
+            runCatching { file.delete() }
             audioFile = null
         }
     }
 
-    private fun stopAndTranscribe() {
-        val recorder = mediaRecorder
-        val file = audioFile
-        mediaRecorder = null
-        audioFile = null
+    private fun startWhisperRecording() {
+        if (isRecording) return
 
-        try {
-            recorder?.let {
-                try {
-                    it.stop()
-                } catch (e: RuntimeException) {
-                    flogWarning { "MediaRecorder stop() failed: ${e.localizedMessage}" }
-                } finally {
-                    it.release()
-                }
-            }
-        } finally {
-            isRecording = false
-        }
-
-        if (file == null || !file.exists()) {
-            flogError { "Audio file missing, unable to transcribe" }
+        val keyPresent = apiKeyOrNull() != null
+        if (!keyPresent) {
+            Toast.makeText(this, "Missing OpenAI API key in BuildConfig", Toast.LENGTH_LONG).show()
+            Log.e(TAG, "OPENAI_API_KEY is missing/invalid.")
             return
         }
 
-        Toast.makeText(this, "Transcription in progress...", Toast.LENGTH_SHORT).show()
+        try {
+            audioFile = File.createTempFile("floris_whisper_", ".m4a", cacheDir)
+        } catch (t: Throwable) {
+            Log.e(TAG, "Unable to create temporary audio file", t)
+            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_LONG).show()
+            audioFile = null
+            return
+        }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val requestBody = MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("file", file.name, file.asRequestBody("audio/3gp".toMediaType()))
-                .addFormDataPart("model", "whisper-1")
-                .build()
+        val file = audioFile ?: return
+        val newRecorder = MediaRecorder()
+        recorder = newRecorder
+        try {
+            newRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+            newRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            newRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            newRecorder.setAudioSamplingRate(16_000)
+            newRecorder.setAudioEncodingBitRate(64_000)
+            newRecorder.setOutputFile(file.absolutePath)
+            newRecorder.prepare()
+            newRecorder.start()
+            isRecording = true
+            Toast.makeText(this, "Recording… tap again to stop", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "Recording to ${file.absolutePath}")
+        } catch (t: Throwable) {
+            Log.e(TAG, "startWhisperRecording failed", t)
+            Toast.makeText(this, "Recorder failed: ${t.message}", Toast.LENGTH_LONG).show()
+            cleanupRecorder(resetFile = true)
+            runCatching { file.delete() }
+        }
+    }
 
-            val request = Request.Builder()
-                .url("https://api.openai.com/v1/audio/transcriptions")
-                .header("Authorization", "Bearer $OPENAI_API_KEY")
-                .post(requestBody)
-                .build()
+    private fun apiKeyOrNull(): String? {
+        val key = BuildConfig.OPENAI_API_KEY.trim()
+        return if (key.startsWith("sk-") && key.length > 20) key else null
+    }
 
-            val client = OkHttpClient()
-            try {
-                client.newCall(request).execute().use { response ->
-                    val bodyText = response.body?.string()
-                    if (response.isSuccessful && !bodyText.isNullOrEmpty()) {
-                        val text = runCatching { JSONObject(bodyText).optString("text") }.getOrNull()
-                        withContext(Dispatchers.Main) {
-                            if (!text.isNullOrEmpty()) {
-                                currentInputConnection?.commitText(text, 1)
-                            } else {
-                                Toast.makeText(
-                                    this@FlorisImeService,
-                                    "Transcription produced no text",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                            }
-                        }
-                    } else {
-                        flogError {
-                            "Whisper API call failed: HTTP ${response.code} ${bodyText.orEmpty()}"
-                        }
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                this@FlorisImeService,
-                                "Transcription failed",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                flogError { "Whisper API call failed: ${e.message}" }
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@FlorisImeService,
-                        "Transcription failed",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
-            } finally {
-                if (!file.delete()) {
-                    flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+    private fun cleanupRecorder(resetFile: Boolean = false) {
+        runCatching { recorder?.reset() }
+        runCatching { recorder?.release() }
+        recorder = null
+        isRecording = false
+        if (resetFile) {
+            audioFile?.let { runCatching { it.delete() } }
+            audioFile = null
+        }
+    }
+
+    private fun makeClient(): OkHttpClient =
+        OkHttpClient.Builder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .build()
+
+    private fun transcribeWithWhisper(file: File): String? {
+        val key = apiKeyOrNull() ?: return null
+        Log.d(TAG, "Uploading file ${file.name} (${file.length()} bytes)")
+
+        val mime = "audio/m4a".toMediaType()
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("file", file.name, file.asRequestBody(mime))
+            .addFormDataPart("model", "whisper-1")
+            .build()
+
+        val request = Request.Builder()
+            .url("https://api.openai.com/v1/audio/transcriptions")
+            .header("Authorization", "Bearer $key")
+            .post(requestBody)
+            .build()
+
+        return try {
+            makeClient().newCall(request).execute().use { resp ->
+                val body = resp.body?.string().orEmpty()
+                Log.d(TAG, "HTTP ${resp.code}: ${body.take(500)}")
+
+                if (!resp.isSuccessful) {
+                    Log.e(TAG, "Whisper API error ${resp.code}: ${body.take(500)}")
+                    null
+                } else {
+                    runCatching { JSONObject(body).optString("text") }
+                        .onFailure { Log.e(TAG, "Failed to parse Whisper response", it) }
+                        .getOrNull()
+                        ?.takeIf { it.isNotBlank() }
                 }
             }
+        } catch (t: Throwable) {
+            Log.e(TAG, "Network/parse error", t)
+            null
         }
     }
 
@@ -485,21 +515,13 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onDestroy() {
-        mediaRecorder?.let {
-            try {
-                if (isRecording) {
-                    it.stop()
+        if (isRecording) {
+            runCatching { recorder?.stop() }
+                .onFailure {
+                    flogWarning { "MediaRecorder stop() failed during onDestroy: ${it.localizedMessage}" }
                 }
-            } catch (e: RuntimeException) {
-                flogWarning { "MediaRecorder stop() failed during onDestroy: ${e.localizedMessage}" }
-            } catch (e: IllegalStateException) {
-                flogWarning { "MediaRecorder state invalid during onDestroy: ${e.localizedMessage}" }
-            } finally {
-                it.release()
-            }
         }
-        mediaRecorder = null
-        isRecording = false
+        cleanupRecorder()
         audioFile?.let { file ->
             if (file.exists() && !file.delete()) {
                 flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
