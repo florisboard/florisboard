@@ -188,7 +188,14 @@ android {
     }
 }
 
+val enforceOpenAiKey = (
+    (project.findProperty("ciEnforceOpenAiKey") as String?)?.toBoolean()
+        ?: System.getenv("CI_ENFORCE_OPENAI_KEY")?.toBoolean()
+        ?: false
+)
+
 val assertOpenAIKey = tasks.register("assertOpenAIKey") {
+    onlyIf { enforceOpenAiKey }
     doLast {
         val candidate = (
             (project.findProperty("OPENAI_API_KEY") as String?)?.takeUnless { it.isBlank() }
@@ -205,8 +212,10 @@ val assertOpenAIKey = tasks.register("assertOpenAIKey") {
     }
 }
 
-tasks.named("preBuild") {
-    dependsOn(assertOpenAIKey)
+if (enforceOpenAiKey) {
+    tasks.named("preBuild") {
+        dependsOn(assertOpenAIKey)
+    }
 }
 
 tasks.withType<Test> {

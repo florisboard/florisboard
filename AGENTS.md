@@ -114,3 +114,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Ensure builds fail fast when the OpenAI secret is missing or malformed and accept Gradle properties so CI can inject the key reliably.
 * **Changes:** Updated `app/build.gradle.kts` to read the key from a Gradle property before falling back to environment variables or `local.properties`, escaped the value before emitting it into `BuildConfig`, and added a `preBuild` guard task that rejects empty or malformed keys. Adjusted the CI workflow to pass the secret via `-POPENAI_API_KEY` so the new guard succeeds.
 * **Attempts:** Not run (`./gradlew` tasks require the Android toolchain, which is unavailable in this environment).
+
+### 2025-11-02 – gpt-5-codex
+* **Plan:** Update the CI workflow to use supported GitHub Actions, gate the API key assertion to trusted contexts, and keep forked pull requests building without secrets.
+* **Changes:** Switched the build workflow to `actions/upload-artifact@v4`, `actions/checkout@v4`, and `actions/setup-java@v4`, added fork-aware logic that only passes the OpenAI key on trusted runs while setting `ciEnforceOpenAiKey`, and taught `app/build.gradle.kts` to conditionally wire `assertOpenAIKey` via the new enforcement flag.
+* **Attempts:** Not run (Android tooling unavailable in the execution environment).
