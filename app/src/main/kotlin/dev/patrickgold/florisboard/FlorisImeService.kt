@@ -328,6 +328,16 @@ class FlorisImeService : LifecycleInputMethodService() {
     private fun startWhisperRecording() {
         if (isRecording) return
 
+        if (!BuildConfig.HAS_OPENAI_KEY) {
+            Toast.makeText(
+                this,
+                "This build has NO API key (PR build). Install an artifact named 'app-debug-with-key' from Actions.",
+                Toast.LENGTH_LONG,
+            ).show()
+            Log.w(TAG, "BuildConfig.HAS_OPENAI_KEY is false; aborting recording.")
+            return
+        }
+
         val keyPresent = apiKeyOrNull() != null
         if (!keyPresent) {
             Toast.makeText(this, "Missing OpenAI API key in BuildConfig", Toast.LENGTH_LONG).show()
@@ -368,6 +378,9 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     private fun apiKeyOrNull(): String? {
+        if (!BuildConfig.HAS_OPENAI_KEY) {
+            return null
+        }
         val key = BuildConfig.OPENAI_API_KEY.trim()
         return if (key.startsWith("sk-") && key.length > 20) key else null
     }
@@ -452,6 +465,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d("Whisper", "Key len=" + BuildConfig.OPENAI_API_KEY.length)
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->

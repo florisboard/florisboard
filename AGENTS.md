@@ -119,3 +119,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Update the CI workflow to use supported GitHub Actions, gate the API key assertion to trusted contexts, and keep forked pull requests building without secrets.
 * **Changes:** Switched the build workflow to `actions/upload-artifact@v4`, `actions/checkout@v4`, and `actions/setup-java@v4`, added fork-aware logic that only passes the OpenAI key on trusted runs while setting `ciEnforceOpenAiKey`, and taught `app/build.gradle.kts` to conditionally wire `assertOpenAIKey` via the new enforcement flag.
 * **Attempts:** Not run (Android tooling unavailable in the execution environment).
+
+### 2025-11-03 – gpt-5-codex
+* **Plan:** Consolidate CI into a single Android workflow, gate key injection for trusted contexts, and surface runtime diagnostics for missing API keys.
+* **Changes:** Removed the duplicate workflow, rewrote `android.yml` with fork-aware build/upload steps, taught `app/build.gradle.kts` to emit both the key string and a `HAS_OPENAI_KEY` flag while honoring `REQUIRE_OPENAI_KEY`, and updated `FlorisImeService` to log the key length, respect the new flag, and warn PR builds via toast.
+* **Attempts:** Not run (`./gradlew` tasks require the Android toolchain, which is unavailable in this environment).
