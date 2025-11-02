@@ -108,6 +108,8 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
+import dev.patrickgold.florisboard.diagnostics.WhisperLogger
+import dev.patrickgold.florisboard.diagnostics.WhisperNotify
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -251,6 +253,10 @@ class FlorisImeService : LifecycleInputMethodService() {
         fun startWhisperVoiceInput() {
             FlorisImeServiceReference.get()?.toggleWhisperVoiceInput()
         }
+
+        fun exportWhisperLogs() {
+            FlorisImeServiceReference.get()?.exportWhisperLogsInternal()
+        }
     }
 
     private fun toggleWhisperVoiceInput() {
@@ -265,6 +271,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         ) == PackageManager.PERMISSION_GRANTED
         if (!permissionGranted) {
             Toast.makeText(this, "Microphone permission not granted", Toast.LENGTH_SHORT).show()
+            WhisperLogger.log(this, "Microphone permission not granted")
             return
         }
         startWhisperRecording()
@@ -293,35 +300,94 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (file == null || !file.exists()) {
             Toast.makeText(this, "No audio file produced", Toast.LENGTH_LONG).show()
             Log.e(TAG, "Audio file missing")
+            WhisperLogger.log(this, "No audio file produced")
             audioFile = null
             return
         }
         if (file.length() == 0L) {
             Toast.makeText(this, "Empty recording (0 bytes)", Toast.LENGTH_LONG).show()
             Log.e(TAG, "Zero-byte audio at ${file.absolutePath}")
+            WhisperLogger.log(this, "Zero-byte audio at ${file.absolutePath}")
             audioFile = null
             runCatching { file.delete() }
             return
         }
 
         Toast.makeText(this, "Transcribing…", Toast.LENGTH_SHORT).show()
+        WhisperLogger.log(this, "Recording stop → ${file.absolutePath} (${file.length()} bytes)")
 
         CoroutineScope(Dispatchers.IO).launch {
-            val result = transcribeWithWhisper(file)
+            val outcome = transcribeWithWhisper(file)
             withContext(Dispatchers.Main) {
-                if (!result.isNullOrEmpty()) {
-                    currentInputConnection?.commitText(result, 1)
-                    Toast.makeText(this@FlorisImeService, "Transcribed", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(
-                        this@FlorisImeService,
-                        "Transcription failed (see logs)",
-                        Toast.LENGTH_LONG,
-                    ).show()
+                when {
+                    outcome.text != null -> {
+                        currentInputConnection?.commitText(outcome.text, 1)
+                        Toast.makeText(this@FlorisImeService, "Transcribed", Toast.LENGTH_SHORT).show()
+                    }
+                    outcome.httpCode != null -> {
+                        val body = outcome.body.orEmpty()
+                        WhisperNotify.showError(
+                            this@FlorisImeService,
+                            "Whisper failed (${outcome.httpCode})",
+                            body,
+                        )
+                        val masked = WhisperLogger.maskForUi(body)
+                        val toastText = if (body.isBlank()) {
+                            "Whisper ${outcome.httpCode}: (no response body)"
+                        } else {
+                            "Whisper ${outcome.httpCode}: ${masked.take(120)}"
+                        }
+                        Toast.makeText(
+                            this@FlorisImeService,
+                            toastText,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                    outcome.exceptionMessage != null -> {
+                        val message = outcome.exceptionMessage.orEmpty().ifBlank { "unknown" }
+                        val notifyTitle = if (message == "No text in response") {
+                            "Whisper failed"
+                        } else {
+                            "Whisper exception"
+                        }
+                        WhisperNotify.showError(this@FlorisImeService, notifyTitle, message)
+                        val masked = WhisperLogger.maskForUi(message)
+                        Toast.makeText(
+                            this@FlorisImeService,
+                            "Whisper error: ${masked.take(120)}",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                    else -> {
+                        Toast.makeText(
+                            this@FlorisImeService,
+                            "Transcription failed (see logs)",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
                 }
             }
             runCatching { file.delete() }
             audioFile = null
+        }
+    }
+
+    private fun exportWhisperLogsInternal() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            WhisperLogger.log(this@FlorisImeService, "Manual export requested")
+            val uri = WhisperLogger.exportToDownloads(this@FlorisImeService)
+            WhisperLogger.log(
+                this@FlorisImeService,
+                if (uri != null) "Exported logs to downloads" else "Export to downloads failed",
+            )
+            withContext(Dispatchers.Main) {
+                val messageRes = if (uri != null) {
+                    R.string.whisper_logs_export_success
+                } else {
+                    R.string.whisper_logs_export_failed
+                }
+                Toast.makeText(this@FlorisImeService, getString(messageRes), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -335,6 +401,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                 Toast.LENGTH_LONG,
             ).show()
             Log.w(TAG, "BuildConfig.HAS_OPENAI_KEY is false; aborting recording.")
+            WhisperLogger.log(this, "Build has no API key; aborting recording")
             return
         }
 
@@ -342,6 +409,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (!keyPresent) {
             Toast.makeText(this, "Missing OpenAI API key in BuildConfig", Toast.LENGTH_LONG).show()
             Log.e(TAG, "OPENAI_API_KEY is missing/invalid.")
+            WhisperLogger.log(this, "Missing OpenAI API key in BuildConfig")
             return
         }
 
@@ -350,6 +418,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         } catch (t: Throwable) {
             Log.e(TAG, "Unable to create temporary audio file", t)
             Toast.makeText(this, "Unable to start recording", Toast.LENGTH_LONG).show()
+            WhisperLogger.log(this, "Unable to create temporary audio file: ${t.message}")
             audioFile = null
             return
         }
@@ -369,9 +438,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             isRecording = true
             Toast.makeText(this, "Recording… tap again to stop", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "Recording to ${file.absolutePath}")
+            WhisperLogger.log(this, "Recording start → ${file.absolutePath}")
         } catch (t: Throwable) {
             Log.e(TAG, "startWhisperRecording failed", t)
             Toast.makeText(this, "Recorder failed: ${t.message}", Toast.LENGTH_LONG).show()
+            WhisperLogger.log(this, "Recorder failed: ${t.message}")
             cleanupRecorder(resetFile = true)
             runCatching { file.delete() }
         }
@@ -396,6 +467,13 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
+    private data class WhisperOutcome(
+        val text: String? = null,
+        val httpCode: Int? = null,
+        val body: String? = null,
+        val exceptionMessage: String? = null,
+    )
+
     private fun makeClient(): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -403,9 +481,13 @@ class FlorisImeService : LifecycleInputMethodService() {
             .readTimeout(60, TimeUnit.SECONDS)
             .build()
 
-    private fun transcribeWithWhisper(file: File): String? {
-        val key = apiKeyOrNull() ?: return null
+    private fun transcribeWithWhisper(file: File): WhisperOutcome {
+        val key = apiKeyOrNull() ?: run {
+            WhisperLogger.log(this, "Transcription aborted: missing API key")
+            return WhisperOutcome(exceptionMessage = "Missing API key")
+        }
         Log.d(TAG, "Uploading file ${file.name} (${file.length()} bytes)")
+        WhisperLogger.log(this, "Uploading ${file.name} (${file.length()} bytes) as audio/m4a")
 
         val mime = "audio/m4a".toMediaType()
         val requestBody = MultipartBody.Builder()
@@ -424,20 +506,34 @@ class FlorisImeService : LifecycleInputMethodService() {
             makeClient().newCall(request).execute().use { resp ->
                 val body = resp.body?.string().orEmpty()
                 Log.d(TAG, "HTTP ${resp.code}: ${body.take(500)}")
+                WhisperLogger.log(this, "HTTP ${resp.code}: ${body.take(500)}")
 
                 if (!resp.isSuccessful) {
                     Log.e(TAG, "Whisper API error ${resp.code}: ${body.take(500)}")
-                    null
+                    WhisperLogger.log(this, "Whisper API error ${resp.code}: ${body.take(500)}")
+                    return@use WhisperOutcome(httpCode = resp.code, body = body)
+                }
+
+                val text = runCatching { JSONObject(body).optString("text") }
+                    .onFailure {
+                        Log.e(TAG, "Failed to parse Whisper response", it)
+                        WhisperLogger.log(this, "Failed to parse Whisper response: ${it.message}")
+                    }
+                    .getOrNull()
+                    ?.takeIf { it.isNotBlank() }
+
+                if (text != null) {
+                    WhisperLogger.log(this, "Transcribed → ${text.take(120)}")
+                    WhisperOutcome(text = text)
                 } else {
-                    runCatching { JSONObject(body).optString("text") }
-                        .onFailure { Log.e(TAG, "Failed to parse Whisper response", it) }
-                        .getOrNull()
-                        ?.takeIf { it.isNotBlank() }
+                    WhisperLogger.log(this, "Whisper response missing text")
+                    WhisperOutcome(exceptionMessage = "No text in response")
                 }
             }
         } catch (t: Throwable) {
             Log.e(TAG, "Network/parse error", t)
-            null
+            WhisperLogger.log(this, "Network error: ${t.message ?: t::class.java.simpleName}")
+            WhisperOutcome(exceptionMessage = t.message ?: t::class.java.simpleName ?: "unknown")
         }
     }
 

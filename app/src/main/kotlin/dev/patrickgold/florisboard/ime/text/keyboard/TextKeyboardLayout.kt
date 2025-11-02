@@ -581,6 +581,11 @@ private class TextKeyboardLayoutController(
                             inputEventDispatcher.sendDownUp(TextKeyData.SYSTEM_INPUT_METHOD_PICKER)
                             true
                         }
+                        KeyCode.VOICE_INPUT -> {
+                            inputFeedbackController?.keyLongPress(key.computedData)
+                            FlorisImeService.exportWhisperLogs()
+                            true
+                        }
                         else -> {
                             if (popupUiController.isSuitableForPopups(key) && key.computedPopups.getPopupKeys(
                                     keyHintConfiguration
