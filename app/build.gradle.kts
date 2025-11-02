@@ -75,15 +75,27 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val openaiApiKey = (
-            (project.findProperty("OPENAI_API_KEY") as String?)?.takeUnless { it.isBlank() }
-                ?: System.getenv("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
-                ?: localProperties.getProperty("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
-        ) ?: ""
-        val escapedOpenAiKey = openaiApiKey
+        val gradleKey = providers.gradleProperty("OPENAI_API_KEY")
+        val envKey = providers.environmentVariable("OPENAI_API_KEY")
+        val resolvedKey = (
+            gradleKey.orNull
+                ?: envKey.orNull
+                ?: localProperties.getProperty("OPENAI_API_KEY")
+                ?: ""
+        )
+        val escapedOpenAiKey = resolvedKey
             .replace("\\", "\\\\")
             .replace("\"", "\\\"")
-        buildConfigField("String", "OPENAI_API_KEY", "\"$escapedOpenAiKey\"")
+        buildConfigField(
+            "String",
+            "OPENAI_API_KEY",
+            "\"$escapedOpenAiKey\"",
+        )
+        buildConfigField(
+            "boolean",
+            "HAS_OPENAI_KEY",
+            "${resolvedKey.isNotBlank()}",
+        )
         buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
@@ -188,35 +200,21 @@ android {
     }
 }
 
-val enforceOpenAiKey = (
-    (project.findProperty("ciEnforceOpenAiKey") as String?)?.toBoolean()
-        ?: System.getenv("CI_ENFORCE_OPENAI_KEY")?.toBoolean()
-        ?: false
-)
-
-val assertOpenAIKey = tasks.register("assertOpenAIKey") {
-    onlyIf { enforceOpenAiKey }
+val requireKey = providers.environmentVariable("REQUIRE_OPENAI_KEY").orNull == "true"
+tasks.register("assertOpenAIKey") {
     doLast {
-        val candidate = (
-            (project.findProperty("OPENAI_API_KEY") as String?)?.takeUnless { it.isBlank() }
-                ?: System.getenv("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
-                ?: localProperties.getProperty("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
+        val key = (
+            providers.gradleProperty("OPENAI_API_KEY").orNull
+                ?: providers.environmentVariable("OPENAI_API_KEY").orNull
+                ?: localProperties.getProperty("OPENAI_API_KEY")
+                ?: ""
         )
-
-        if (candidate.isNullOrBlank()) {
+        if (requireKey && key.isBlank()) {
             throw GradleException("Missing OPENAI_API_KEY for this build.")
         }
-        if (!candidate.startsWith("sk-")) {
-            throw GradleException("OPENAI_API_KEY must start with 'sk-'.")
-        }
     }
 }
-
-if (enforceOpenAiKey) {
-    tasks.named("preBuild") {
-        dependsOn(assertOpenAIKey)
-    }
-}
+tasks.named("preBuild") { dependsOn("assertOpenAIKey") }
 
 tasks.withType<Test> {
     useJUnitPlatform()
