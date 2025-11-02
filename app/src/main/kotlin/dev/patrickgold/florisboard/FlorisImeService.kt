@@ -375,16 +375,18 @@ class FlorisImeService : LifecycleInputMethodService() {
     private fun exportWhisperLogsInternal() {
         lifecycleScope.launch(Dispatchers.IO) {
             WhisperLogger.log(this@FlorisImeService, "Manual export requested")
-            val uri = WhisperLogger.exportToDownloads(this@FlorisImeService)
+            val uri = WhisperLogger.exportLogs(this@FlorisImeService)
             WhisperLogger.log(
                 this@FlorisImeService,
-                if (uri != null) "Exported logs to downloads" else "Export to downloads failed",
+                if (uri != null) "Exported logs for sharing" else "Export failed",
             )
             withContext(Dispatchers.Main) {
-                val messageRes = if (uri != null) {
+                val messageRes = if (uri == null) {
+                    R.string.whisper_logs_export_failed
+                } else if (Build.VERSION.SDK_INT >= 29) {
                     R.string.whisper_logs_export_success
                 } else {
-                    R.string.whisper_logs_export_failed
+                    R.string.whisper_log_saved
                 }
                 Toast.makeText(this@FlorisImeService, getString(messageRes), Toast.LENGTH_SHORT).show()
             }

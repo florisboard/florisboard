@@ -134,3 +134,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Add an on-device Whisper diagnostics pipeline with rotating log storage, surface failures via toasts/notifications, and expose quick export/share paths so debugging works without ADB.
 * **Changes:** Introduced `diagnostics/WhisperLogger` with masking, MediaStore export, and notification helpers; registered the broadcast receiver in the manifest; instrumented `FlorisImeService` with structured logging, failure notifications, toast snippets, and a manual export hook; wired a mic-key long-press to the exporter; and added the required UI strings.
 * **Attempts:** Not run (`./gradlew` tasks require the Android SDK, which is unavailable in this environment).
+
+### 2025-11-05 – gpt-5-codex
+* **Plan:** Update Whisper log exporting so Android 8–9 devices can share logs without requesting `WRITE_EXTERNAL_STORAGE`, while preserving the existing MediaStore flow on Android 10+ and keeping notification actions functional.
+* **Changes:** Added a dedicated FileProvider authority to the manifest and broadened `res/xml/file_paths.xml` to expose the app-scoped downloads directory; refactored `WhisperLogger` to choose between MediaStore and FileProvider exports, adjusted the broadcast receiver to consume the new API, and taught `FlorisImeService` to surface the right success message; added a helper string for pre-API 29 messaging.
+* **Attempts:** No automated builds were run (Android tooling unavailable in this environment).
