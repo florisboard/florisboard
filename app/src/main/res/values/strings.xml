@@ -1141,6 +1141,7 @@
     <string name="whisper_logs_save_action">Save to Downloads</string>
     <string name="whisper_logs_share_title">Share Whisper log</string>
     <string name="whisper_logs_unavailable">No Whisper logs available yet</string>
+    <string name="whisper_log_saved">Whisper log ready to share</string>
     <string name="whisper_logs_export_success">Saved: Download/FlorisBoard/whisper-*.log</string>
     <string name="whisper_logs_export_failed">Export failed</string>
 </resources>

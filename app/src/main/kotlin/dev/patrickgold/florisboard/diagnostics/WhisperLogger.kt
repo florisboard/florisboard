@@ -8,9 +8,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import java.io.File
 import java.text.SimpleDateFormat
@@ -42,27 +47,46 @@ object WhisperLogger {
         }
     }
 
-    fun exportToDownloads(ctx: Context): Uri? {
-        return runCatching {
-            val src = File(ctx.cacheDir, cacheFileName)
-            if (!src.exists() || src.length() == 0L) {
-                return@runCatching null
-            }
-            val resolver = ctx.contentResolver
-            val day = SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())
-            val name = "whisper-$day.log"
-            val values = ContentValues().apply {
-                put(MediaStore.Downloads.DISPLAY_NAME, name)
-                put(MediaStore.Downloads.MIME_TYPE, "text/plain")
-                put(MediaStore.Downloads.RELATIVE_PATH, "Download/FlorisBoard")
-            }
-            val dest = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values) ?: return@runCatching null
-            resolver.openOutputStream(dest, "w")!!.use { out ->
-                src.inputStream().use { it.copyTo(out) }
-            }
-            dest
-        }.getOrNull()
+    fun exportLogs(ctx: Context): Uri? {
+        return if (Build.VERSION.SDK_INT >= 29) {
+            exportViaMediaStore(ctx)
+        } else {
+            exportViaFileProvider(ctx)
+        }
     }
+
+    @RequiresApi(29)
+    private fun exportViaMediaStore(ctx: Context): Uri? = runCatching {
+        val src = File(ctx.cacheDir, cacheFileName)
+        if (!src.exists() || src.length() == 0L) return@runCatching null
+        val resolver = ctx.contentResolver
+        val day = SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())
+        val name = "whisper-$day.log"
+
+        val values = ContentValues().apply {
+            put(MediaStore.Downloads.DISPLAY_NAME, name)
+            put(MediaStore.Downloads.MIME_TYPE, "text/plain")
+            put(MediaStore.Downloads.RELATIVE_PATH, "Download/FlorisBoard")
+        }
+        val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values) ?: return@runCatching null
+        resolver.openOutputStream(uri, "w")!!.use { out ->
+            src.inputStream().use { it.copyTo(out) }
+        }
+        uri
+    }.getOrNull()
+
+    private fun exportViaFileProvider(ctx: Context): Uri? = runCatching {
+        val src = File(ctx.cacheDir, cacheFileName)
+        if (!src.exists() || src.length() == 0L) return@runCatching null
+
+        val day = SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())
+        val name = "whisper-$day.log"
+        val dstDir = ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) ?: return@runCatching null
+        val dst = File(dstDir, name)
+        src.copyTo(dst, overwrite = true)
+
+        FileProvider.getUriForFile(ctx, "${BuildConfig.APPLICATION_ID}.fileprovider", dst)
+    }.getOrNull()
 
     private fun timestamp(): String = synchronized(dateFormat) { dateFormat.format(Date()) }
 
@@ -77,7 +101,7 @@ class ShareWhisperLogReceiver : BroadcastReceiver() {
     override fun onReceive(ctx: Context, intent: Intent) {
         when (intent.action) {
             WhisperNotify.ACTION_SHARE -> {
-                val uri = WhisperLogger.exportToDownloads(ctx)
+                val uri = WhisperLogger.exportLogs(ctx)
                 if (uri == null) {
                     WhisperLogger.log(ctx, "Share logs requested but no log file available")
                     Toast.makeText(ctx, R.string.whisper_logs_unavailable, Toast.LENGTH_SHORT).show()
@@ -94,13 +118,18 @@ class ShareWhisperLogReceiver : BroadcastReceiver() {
                 }
             }
             WhisperNotify.ACTION_SAVE -> {
-                val uri = WhisperLogger.exportToDownloads(ctx)
+                val uri = WhisperLogger.exportLogs(ctx)
                 if (uri == null) {
                     WhisperLogger.log(ctx, "Save logs requested but export failed")
                     Toast.makeText(ctx, R.string.whisper_logs_export_failed, Toast.LENGTH_SHORT).show()
                 } else {
-                    WhisperLogger.log(ctx, "Logs saved to downloads")
-                    Toast.makeText(ctx, R.string.whisper_logs_export_success, Toast.LENGTH_SHORT).show()
+                    WhisperLogger.log(ctx, "Logs exported")
+                    val message = if (Build.VERSION.SDK_INT >= 29) {
+                        R.string.whisper_logs_export_success
+                    } else {
+                        R.string.whisper_log_saved
+                    }
+                    Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
