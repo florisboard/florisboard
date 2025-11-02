@@ -124,3 +124,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Consolidate CI into a single Android workflow, gate key injection for trusted contexts, and surface runtime diagnostics for missing API keys.
 * **Changes:** Removed the duplicate workflow, rewrote `android.yml` with fork-aware build/upload steps, taught `app/build.gradle.kts` to emit both the key string and a `HAS_OPENAI_KEY` flag while honoring `REQUIRE_OPENAI_KEY`, and updated `FlorisImeService` to log the key length, respect the new flag, and warn PR builds via toast.
 * **Attempts:** Not run (`./gradlew` tasks require the Android toolchain, which is unavailable in this environment).
+
+### 2025-11-03 – gpt-5-codex
+* **Plan:** Stabilize the unified Android CI by provisioning the native toolchain and pinning the Gradle-side versions so forked PR builds stop failing when CMake 4.0.2 is missing on runners.
+* **Changes:** Added Android SDK setup plus explicit CMake/NDK installation to `.github/workflows/android.yml`, taught `app/build.gradle.kts` to request the catalogued CMake version, and downgraded the catalog entry in `gradle/tools.versions.toml` to 3.31.1 so the workflow installs a matching toolchain.
+* **Attempts:** Not run (Android tooling is unavailable in this execution environment).

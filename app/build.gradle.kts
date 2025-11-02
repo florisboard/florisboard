@@ -52,6 +52,12 @@ android {
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
 
+    externalNativeBuild {
+        cmake {
+            version = tools.versions.cmake.get()
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
