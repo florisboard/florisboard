@@ -56,6 +56,10 @@
             <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
+        <receiver
+            android:name="dev.patrickgold.florisboard.diagnostics.ShareWhisperLogReceiver"
+            android:exported="false" />
+
         <!-- Spellchecker service -->
         <service
             android:name="dev.patrickgold.florisboard.FlorisSpellCheckerService"

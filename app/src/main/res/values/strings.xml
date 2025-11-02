@@ -1136,4 +1136,11 @@
         <item quantity="other">{v} candidates</item>
     </plurals>
 
+    <string name="whisper_logs_channel_name">Whisper Debug</string>
+    <string name="whisper_logs_share_action">Share logs</string>
+    <string name="whisper_logs_save_action">Save to Downloads</string>
+    <string name="whisper_logs_share_title">Share Whisper log</string>
+    <string name="whisper_logs_unavailable">No Whisper logs available yet</string>
+    <string name="whisper_logs_export_success">Saved: Download/FlorisBoard/whisper-*.log</string>
+    <string name="whisper_logs_export_failed">Export failed</string>
 </resources>

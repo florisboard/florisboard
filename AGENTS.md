@@ -129,3 +129,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Stabilize the unified Android CI by provisioning the native toolchain and pinning the Gradle-side versions so forked PR builds stop failing when CMake 4.0.2 is missing on runners.
 * **Changes:** Added Android SDK setup plus explicit CMake/NDK installation to `.github/workflows/android.yml`, taught `app/build.gradle.kts` to request the catalogued CMake version, and downgraded the catalog entry in `gradle/tools.versions.toml` to 3.31.1 so the workflow installs a matching toolchain.
 * **Attempts:** Not run (Android tooling is unavailable in this execution environment).
+
+### 2025-11-04 – gpt-5-codex
+* **Plan:** Add an on-device Whisper diagnostics pipeline with rotating log storage, surface failures via toasts/notifications, and expose quick export/share paths so debugging works without ADB.
+* **Changes:** Introduced `diagnostics/WhisperLogger` with masking, MediaStore export, and notification helpers; registered the broadcast receiver in the manifest; instrumented `FlorisImeService` with structured logging, failure notifications, toast snippets, and a manual export hook; wired a mic-key long-press to the exporter; and added the required UI strings.
+* **Attempts:** Not run (`./gradlew` tasks require the Android SDK, which is unavailable in this environment).
