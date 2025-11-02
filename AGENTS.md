@@ -139,3 +139,19 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Update Whisper log exporting so Android 8–9 devices can share logs without requesting `WRITE_EXTERNAL_STORAGE`, while preserving the existing MediaStore flow on Android 10+ and keeping notification actions functional.
 * **Changes:** Added a dedicated FileProvider authority to the manifest and broadened `res/xml/file_paths.xml` to expose the app-scoped downloads directory; refactored `WhisperLogger` to choose between MediaStore and FileProvider exports, adjusted the broadcast receiver to consume the new API, and taught `FlorisImeService` to surface the right success message; added a helper string for pre-API 29 messaging.
 * **Attempts:** No automated builds were run (Android tooling unavailable in this environment).
+
+### 2025-11-02 – gpt-5-codex
+* **Plan:** Freeze the current Whisper-working build, document the stability point, and inventory theming capabilities without modifying runtime code.
+* **Changes:** Created the `v0.1-whisper-ok` annotated tag and `stable/whisper-ok` branch at commit `ee6c7a0`, appended a Stable Snapshots note plus protection checklist, and gathered theming reconnaissance for reporting.
+* **Attempts:** `git push origin stable/whisper-ok` *(fails: repository has no `origin` remote in this workspace).*; `git push origin v0.1-whisper-ok` *(fails for the same reason).*
+
+## Stable Snapshots
+
+- **v0.1-whisper-ok** (`ee6c7a0`)
+  - Branch: `stable/whisper-ok`
+  - Latest with-key artifact run: https://github.com/yourowndog/keyboard/actions/runs/19015941667
+  - Notes: Whisper mic capture/transcription, diagnostics logging & export flows verified.
+
+### Protection Checklist
+
+- [ ] Protect `stable/whisper-ok` on GitHub (no force-push, PRs required)
