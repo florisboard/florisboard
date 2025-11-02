@@ -109,3 +109,8 @@ For a future agent, here are some things to consider to move this project from a
 * **Plan:** Instrument the Whisper integration to expose misconfiguration, switch recording to an OpenAI-supported container/codec, harden the multipart request, and extend network timeouts so transcription succeeds reliably on-device.
 * **Changes:** Updated `FlorisImeService` to validate the API key at runtime, record AAC audio into an `.m4a` temp file, log and guard zero-byte captures, send multipart requests with explicit timeouts, and surface HTTP details plus parsed results back to the UI. Added helper utilities for recorder cleanup and client construction, along with verbose logging.
 * **Attempts:** `./gradlew testDebugUnitTest` *(skipped: Android SDK/toolchain not available in this environment).* 
+
+### 2025-11-02 – gpt-5-codex
+* **Plan:** Ensure builds fail fast when the OpenAI secret is missing or malformed and accept Gradle properties so CI can inject the key reliably.
+* **Changes:** Updated `app/build.gradle.kts` to read the key from a Gradle property before falling back to environment variables or `local.properties`, escaped the value before emitting it into `BuildConfig`, and added a `preBuild` guard task that rejects empty or malformed keys. Adjusted the CI workflow to pass the secret via `-POPENAI_API_KEY` so the new guard succeeds.
+* **Attempts:** Not run (`./gradlew` tasks require the Android toolchain, which is unavailable in this environment).

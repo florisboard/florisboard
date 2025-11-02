@@ -16,6 +16,7 @@
 
 import java.io.ByteArrayOutputStream
 import java.util.Properties
+import org.gradle.api.GradleException
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -74,8 +75,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val openaiApiKey = System.getenv("OPENAI_API_KEY") ?: localProperties.getProperty("OPENAI_API_KEY") ?: ""
-        buildConfigField("String", "OPENAI_API_KEY", "\"$openaiApiKey\"")
+        val openaiApiKey = (
+            (project.findProperty("OPENAI_API_KEY") as String?)?.takeUnless { it.isBlank() }
+                ?: System.getenv("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
+                ?: localProperties.getProperty("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
+        ) ?: ""
+        val escapedOpenAiKey = openaiApiKey
+            .replace("\\", "\\\\")
+            .replace("\"", "\\\"")
+        buildConfigField("String", "OPENAI_API_KEY", "\"$escapedOpenAiKey\"")
         buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
@@ -178,6 +186,27 @@ android {
             it.useJUnitPlatform()
         }
     }
+}
+
+val assertOpenAIKey = tasks.register("assertOpenAIKey") {
+    doLast {
+        val candidate = (
+            (project.findProperty("OPENAI_API_KEY") as String?)?.takeUnless { it.isBlank() }
+                ?: System.getenv("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
+                ?: localProperties.getProperty("OPENAI_API_KEY")?.takeUnless { it.isBlank() }
+        )
+
+        if (candidate.isNullOrBlank()) {
+            throw GradleException("Missing OPENAI_API_KEY for this build.")
+        }
+        if (!candidate.startsWith("sk-")) {
+            throw GradleException("OPENAI_API_KEY must start with 'sk-'.")
+        }
+    }
+}
+
+tasks.named("preBuild") {
+    dependsOn(assertOpenAIKey)
 }
 
 tasks.withType<Test> {

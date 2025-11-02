@@ -26,7 +26,7 @@ jobs:
     - name: Build with Gradle
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      run: ./gradlew assembleDebug
+      run: ./gradlew :app:assembleDebug -POPENAI_API_KEY="$OPENAI_API_KEY"
 
     - name: Upload APK as artifact
       uses: actions/upload-artifact@v3
