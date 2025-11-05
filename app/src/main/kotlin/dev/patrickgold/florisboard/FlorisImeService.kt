@@ -23,8 +23,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.inputmethodservice.ExtractEditText
-import android.media.AudioFormat
-import android.media.AudioRecord
+import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
@@ -84,7 +83,6 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.SpeechCaptureService
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
 import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
 import dev.patrickgold.florisboard.ime.core.isSubtypeSelectionShowing
@@ -148,12 +146,6 @@ import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.json.JSONObject
-import java.io.OutputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.io.OutputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -165,28 +157,9 @@ import java.nio.ByteOrder
 class FlorisImeService : LifecycleInputMethodService() {
     private val OPENAI_API_KEY = BuildConfig.OPENAI_API_KEY
 
+    private var mediaRecorder: MediaRecorder? = null
     private var audioFile: File? = null
     private var isRecording = false
-
-    private fun writeWavHeader(output: OutputStream, totalAudioLen: Long, sampleRate: Int = 16000) {
-        val channels = 1
-        val byteRate = 16 * sampleRate * channels / 8
-        val dataLen = totalAudioLen + 36
-        val header = ByteBuffer.allocate(44).order(ByteOrder.LITTLE_ENDIAN)
-        header.put("RIFF".toByteArray())
-        header.putInt(dataLen.toInt())
-        header.put("WAVEfmt ".toByteArray())
-        header.putInt(16) // PCM
-        header.putShort(1) // format
-        header.putShort(channels.toShort())
-        header.putInt(sampleRate)
-        header.putInt(byteRate)
-        header.putShort((2 * channels).toShort())
-        header.putShort(16)
-        header.put("data".toByteArray())
-        header.putInt(totalAudioLen.toInt())
-        output.write(header.array())
-    }
 
     companion object {
         private var FlorisImeServiceReference: WeakReference<FlorisImeService?> = WeakReference(null)
@@ -295,110 +268,80 @@ class FlorisImeService : LifecycleInputMethodService() {
             return
         }
 
-        val intent = Intent(this, SpeechCaptureService::class.java)
-        startForegroundService(intent)
-
         val file = try {
-            File.createTempFile("florisboard_whisper_", ".wav", cacheDir)
+            File.createTempFile("florisboard_whisper_", ".3gp", cacheDir)
         } catch (e: IOException) {
             flogError { "Unable to create temporary audio file: ${e.localizedMessage}" }
             Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
-            stopService(intent)
             return
         }
 
         audioFile = file
-        isRecording = true
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val sampleRate = 16000
-                val minBuffer = AudioRecord.getMinBufferSize(
-                    sampleRate,
-                    AudioFormat.CHANNEL_IN_MONO,
-                    AudioFormat.ENCODING_PCM_16BIT
-                )
-                val recorder = AudioRecord(
-                    MediaRecorder.AudioSource.VOICE_RECOGNITION,
-                    sampleRate,
-                    AudioFormat.CHANNEL_IN_MONO,
-                    AudioFormat.ENCODING_PCM_16BIT,
-                    minBuffer
-                )
-
-                if (recorder.state != AudioRecord.STATE_INITIALIZED) {
-                    flogError { "AudioRecord failed to initialize, retrying with 44100 Hz" }
-                    // Retry logic would go here, for now just log
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(this@FlorisImeService, "AudioRecord failed to initialize", Toast.LENGTH_SHORT).show()
-                    }
-                    isRecording = false
-                    stopService(intent)
-                    return@launch
-                }
-
-                val buffer = ByteArray(minBuffer)
-                file.outputStream().use { out ->
-                    // Write a placeholder header, we'll update it later
-                    writeWavHeader(out, 0, sampleRate)
-                    var bytesRecorded = 0L
-
-                    recorder.startRecording()
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(this@FlorisImeService, "Recording...", Toast.LENGTH_SHORT).show()
-                    }
-
-                    while (isRecording) {
-                        val read = recorder.read(buffer, 0, buffer.size)
-                        if (read > 0) {
-                            out.write(buffer, 0, read)
-                            bytesRecorded += read
-                        }
-                    }
-
-                    recorder.stop()
-                    recorder.release()
-
-                    // Now that we know the total size, rewrite the header
-                    file.outputStream().use { raf ->
-                        writeWavHeader(raf, bytesRecorded, sampleRate)
-                    }
-
-                    val durationMs = bytesRecorded / 2 / sampleRate * 1000
-                    flogInfo { "Captured $bytesRecorded bytes, $durationMs ms" }
-                }
-            } catch (e: Exception) {
-                flogError { "Recording failed: ${e.message}" }
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@FlorisImeService, "Recording failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-                isRecording = false
-                stopService(intent)
+        val recorder = MediaRecorder()
+        mediaRecorder = recorder
+        try {
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            recorder.setOutputFile(file.absolutePath)
+            recorder.prepare()
+            recorder.start()
+            isRecording = true
+            Toast.makeText(this, "Recording...", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            flogError { "MediaRecorder prepare() failed: ${e.localizedMessage}" }
+            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
+            recorder.release()
+            mediaRecorder = null
+            isRecording = false
+            if (!file.delete()) {
+                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
             }
+            audioFile = null
+        } catch (e: IllegalStateException) {
+            flogError { "MediaRecorder start() failed: ${e.localizedMessage}" }
+            Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
+            recorder.release()
+            mediaRecorder = null
+            isRecording = false
+            if (!file.delete()) {
+                flogWarning { "Unable to delete temporary audio file ${file.absolutePath}" }
+            }
+            audioFile = null
         }
     }
 
     private fun stopAndTranscribe() {
-        isRecording = false
+        val recorder = mediaRecorder
         val file = audioFile
+        mediaRecorder = null
         audioFile = null
 
-        val intent = Intent(this, SpeechCaptureService::class.java)
-        stopService(intent)
+        try {
+            recorder?.let {
+                try {
+                    it.stop()
+                } catch (e: RuntimeException) {
+                    flogWarning { "MediaRecorder stop() failed: ${e.localizedMessage}" }
+                } finally {
+                    it.release()
+                }
+            }
+        } finally {
+            isRecording = false
+        }
 
-        if (file == null || !file.exists() || file.length() == 0L) {
-            flogError { "Audio file missing or empty, unable to transcribe" }
-            Toast.makeText(this, "Transcription failed: No audio recorded", Toast.LENGTH_SHORT).show()
+        if (file == null || !file.exists()) {
+            flogError { "Audio file missing, unable to transcribe" }
             return
         }
 
         Toast.makeText(this, "Transcription in progress...", Toast.LENGTH_SHORT).show()
 
         CoroutineScope(Dispatchers.IO).launch {
-            flogInfo { "Transcribing with OpenAI. Key empty: ${OPENAI_API_KEY.isEmpty()}" }
             val requestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", file.name, file.asRequestBody("audio/wav".toMediaType()))
+                .addFormDataPart("file", file.name, file.asRequestBody("audio/3gp".toMediaType()))
                 .addFormDataPart("model", "whisper-1")
                 .build()
 
@@ -426,23 +369,24 @@ class FlorisImeService : LifecycleInputMethodService() {
                             }
                         }
                     } else {
-                        val errorBody = bodyText.orEmpty()
-                        flogError { "Whisper API call failed: HTTP ${response.code} $errorBody" }
+                        flogError {
+                            "Whisper API call failed: HTTP ${response.code} ${bodyText.orEmpty()}"
+                        }
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
                                 this@FlorisImeService,
-                                "Transcription failed: ${response.code} $errorBody",
-                                Toast.LENGTH_LONG,
+                                "Transcription failed",
+                                Toast.LENGTH_SHORT,
                             ).show()
                         }
                     }
                 }
             } catch (e: Exception) {
-                flogError(e) { "Whisper API call failed: ${e.message}" }
+                flogError { "Whisper API call failed: ${e.message}" }
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@FlorisImeService,
-                        "Transcription failed: ${e.message}",
+                        "Transcription failed",
                         Toast.LENGTH_SHORT,
                     ).show()
                 }

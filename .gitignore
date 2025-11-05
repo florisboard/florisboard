@@ -64,6 +64,3 @@ target/
 
 # Local properties
 local.properties
-
-.gemini/
-gha-creds-*.json

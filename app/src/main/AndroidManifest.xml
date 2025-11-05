@@ -7,8 +7,6 @@
 
     <!-- Permission needed to record audio for voice input -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
 
     <!-- Permission needed to connect to the internet for voice input -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -57,12 +55,6 @@
             </intent-filter>
             <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
-
-        <!-- Speech capture service -->
-        <service
-            android:name="dev.patrickgold.florisboard.ime.SpeechCaptureService"
-            android:exported="false"
-            android:foregroundServiceType="microphone" />
 
         <!-- Spellchecker service -->
         <service
