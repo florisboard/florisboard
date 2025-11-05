@@ -269,7 +269,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
 
         val file = try {
-            File.createTempFile("florisboard_whisper_", ".3gp", cacheDir)
+            File.createTempFile("florisboard_whisper_", ".m4a", cacheDir)
         } catch (e: IOException) {
             flogError { "Unable to create temporary audio file: ${e.localizedMessage}" }
             Toast.makeText(this, "Unable to start recording", Toast.LENGTH_SHORT).show()
@@ -281,8 +281,10 @@ class FlorisImeService : LifecycleInputMethodService() {
         mediaRecorder = recorder
         try {
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            recorder.setAudioEncodingBitRate(128000)
+            recorder.setAudioSamplingRate(44100)
             recorder.setOutputFile(file.absolutePath)
             recorder.prepare()
             recorder.start()
@@ -341,7 +343,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         CoroutineScope(Dispatchers.IO).launch {
             val requestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", file.name, file.asRequestBody("audio/3gp".toMediaType()))
+                .addFormDataPart("file", file.name, file.asRequestBody("audio/mp4".toMediaType()))
                 .addFormDataPart("model", "whisper-1")
                 .build()
 
