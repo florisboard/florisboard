@@ -1,35 +1,56 @@
-
 name: Build Android App
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - 'rehydrate/**'
+  workflow_dispatch: {}   # manual run from Actions UI
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-    - name: Build with Gradle
-      env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      run: ./gradlew assembleDebug
+      - name: Write local.properties from repo secret (hidden)
+        # this writes the OPENAI_API_KEY into local.properties on the runner only
+        run: |
+          # create local.properties with secret; secrets are masked in logs by GitHub
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > local.properties
+          echo "WHISPER_MODEL=whisper-1" >> local.properties
+        # no env printout here — secret itself is never echoed to logs
 
-    - name: Upload APK as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: florisboard-debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Verify secret written (presence only — value hidden)
+        run: |
+          if [ -f local.properties ] && grep -q '^OPENAI_API_KEY=' local.properties; then
+            echo "local.properties has OPENAI_API_KEY (value hidden)"
+          else
+            echo "Missing OPENAI_API_KEY in local.properties — aborting"
+            exit 1
+          fi
+
+      - name: Build with Gradle
+        env:
+          # not strictly necessary because we wrote local.properties, but keep in case your gradle build reads env
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: ./gradlew --no-daemon assembleDebug
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: florisboard-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
