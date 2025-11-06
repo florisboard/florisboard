@@ -18,6 +18,9 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
+      - name: Set up CMake and Ninja
+        uses: lukka/get-cmake@v4.0.2
+
       - name: Gradle cache
         uses: actions/cache@v4
         with:
