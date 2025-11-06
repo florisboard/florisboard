@@ -122,7 +122,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private fun requestAudioPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (appContext.checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                appContext.showLongToast("Please grant microphone permission to use voice input.")
+                scope.launch {
+                    appContext.showLongToast("Please grant microphone permission to use voice input.")
+                }
             }
         }
     }
@@ -132,21 +134,29 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             recorder = Recorder(context)
         }
         recorder?.start()
-        appContext.showShortToast("Recording started")
+        scope.launch {
+            appContext.showShortToast("Recording started")
+        }
     }
 
     private fun stopVoiceCapture(context: Context) {
         val audioFile = recorder?.stop()
-        appContext.showShortToast("Recording stopped")
+        scope.launch {
+            appContext.showShortToast("Recording stopped")
+        }
         if (audioFile != null) {
             scope.launch {
                 appContext.showShortToast("Transcribing...")
                 val result = WhisperClient.transcribe(audioFile)
                 result.onSuccess {
                     editorInstance.commitText(it)
-                    appContext.showShortToast("Transcription: $it")
+                    scope.launch { 
+                        appContext.showShortToast("Transcription: $it")
+                    }
                 }.onFailure {
-                    appContext.showShortToast("Transcription failed: ${it.message}")
+                    scope.launch {
+                        appContext.showShortToast("Transcription failed: ${it.message}")
+                    }
                 }
             }
         }
