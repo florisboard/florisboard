@@ -7,6 +7,8 @@
 
     <!-- Permission needed to record audio for voice input -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
 
     <!-- Permission needed to connect to the internet for voice input -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -56,19 +58,11 @@
             <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
-        <receiver
-            android:name="dev.patrickgold.florisboard.diagnostics.ShareWhisperLogReceiver"
-            android:exported="false" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+        <!-- Speech capture service -->
+        <service
+            android:name="dev.patrickgold.florisboard.ime.SpeechCaptureService"
             android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+            android:foregroundServiceType="microphone" />
 
         <!-- Spellchecker service -->
         <service

@@ -17,7 +17,10 @@
 package dev.patrickgold.florisboard
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
+import android.os.Build
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -87,6 +90,16 @@ class FlorisApplication : Application() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
         try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val notificationManager = getSystemService(NotificationManager::class.java)
+                val channel = NotificationChannel(
+                    "speech_capture",
+                    "Speech Capture",
+                    NotificationManager.IMPORTANCE_LOW
+                )
+                notificationManager.createNotificationChannel(channel)
+            }
+
             Flog.install(
                 context = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
