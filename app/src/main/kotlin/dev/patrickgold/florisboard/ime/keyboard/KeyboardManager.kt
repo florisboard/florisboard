@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
-import android.content.Context
 import android.util.Log
+import dev.patrickgold.florisboard.audio.Recorder
 
 import android.icu.lang.UCharacter
 import android.view.KeyEvent
@@ -105,6 +105,21 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val activeState = ObservableKeyboardState.new()
     var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
+
+
+
+
+
+    private var isRecording = false
+    private var recorder: Recorder? = null
+
+    private fun startVoiceCapture(context: Context) {
+        Log.i("Whisper", "startVoiceCapture()")
+    }
+
+    private fun stopVoiceCapture(context: Context) {
+        Log.i("Whisper", "stopVoiceCapture()")
+    }
 
 
 
@@ -752,7 +767,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
             KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
             KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
-            KeyCode.VOICE_INPUT -> FlorisImeService.switchToVoiceInputMethod()
+            KeyCode.VOICE_INPUT -> {
+                if (isRecording) {
+                    stopVoiceCapture(appContext)
+                    isRecording = false
+                } else {
+                    startVoiceCapture(appContext)
+                    isRecording = true
+                }
+            }
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
