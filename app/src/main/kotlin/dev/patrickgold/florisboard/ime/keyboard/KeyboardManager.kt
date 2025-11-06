@@ -17,8 +17,14 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import dev.patrickgold.florisboard.audio.Recorder
+import dev.patrickgold.florisboard.net.WhisperClient
+import kotlinx.coroutines.launch
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showLongToast
+
 
 import android.icu.lang.UCharacter
 import android.view.KeyEvent
@@ -113,12 +119,37 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private var isRecording = false
     private var recorder: Recorder? = null
 
+    private fun requestAudioPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (appContext.checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                appContext.showLongToast("Please grant microphone permission to use voice input.")
+            }
+        }
+    }
+
     private fun startVoiceCapture(context: Context) {
-        Log.i("Whisper", "startVoiceCapture()")
+        if (recorder == null) {
+            recorder = Recorder(context)
+        }
+        recorder?.start()
+        appContext.showShortToast("Recording started")
     }
 
     private fun stopVoiceCapture(context: Context) {
-        Log.i("Whisper", "stopVoiceCapture()")
+        val audioFile = recorder?.stop()
+        appContext.showShortToast("Recording stopped")
+        if (audioFile != null) {
+            scope.launch {
+                appContext.showShortToast("Transcribing...")
+                val result = WhisperClient.transcribe(audioFile)
+                result.onSuccess {
+                    editorInstance.commitText(it)
+                    appContext.showShortToast("Transcription: $it")
+                }.onFailure {
+                    appContext.showShortToast("Transcription failed: ${it.message}")
+                }
+            }
+        }
     }
 
 
@@ -768,6 +799,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.IME_UI_MODE_MEDIA -> activeState.imeUiMode = ImeUiMode.MEDIA
             KeyCode.IME_UI_MODE_CLIPBOARD -> activeState.imeUiMode = ImeUiMode.CLIPBOARD
             KeyCode.VOICE_INPUT -> {
+                requestAudioPermission()
                 if (isRecording) {
                     stopVoiceCapture(appContext)
                     isRecording = false
