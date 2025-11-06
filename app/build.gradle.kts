@@ -16,6 +16,7 @@
 
 import java.io.ByteArrayOutputStream
 import java.util.Properties
+import org.gradle.api.GradleException
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -51,6 +52,12 @@ android {
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
 
+    externalNativeBuild {
+        cmake {
+            version = tools.versions.cmake.get()
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -74,8 +81,27 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val openaiApiKey = System.getenv("OPENAI_API_KEY") ?: localProperties.getProperty("OPENAI_API_KEY") ?: ""
-        buildConfigField("String", "OPENAI_API_KEY", "\"$openaiApiKey\"")
+        val gradleKey = providers.gradleProperty("OPENAI_API_KEY")
+        val envKey = providers.environmentVariable("OPENAI_API_KEY")
+        val resolvedKey = (
+            gradleKey.orNull
+                ?: envKey.orNull
+                ?: localProperties.getProperty("OPENAI_API_KEY")
+                ?: ""
+        )
+        val escapedOpenAiKey = resolvedKey
+            .replace("\\", "\\\\")
+            .replace("\"", "\\\"")
+        buildConfigField(
+            "String",
+            "OPENAI_API_KEY",
+            "\"$escapedOpenAiKey\"",
+        )
+        buildConfigField(
+            "boolean",
+            "HAS_OPENAI_KEY",
+            "${resolvedKey.isNotBlank()}",
+        )
         buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
@@ -179,6 +205,22 @@ android {
         }
     }
 }
+
+val requireKey = providers.environmentVariable("REQUIRE_OPENAI_KEY").orNull == "true"
+tasks.register("assertOpenAIKey") {
+    doLast {
+        val key = (
+            providers.gradleProperty("OPENAI_API_KEY").orNull
+                ?: providers.environmentVariable("OPENAI_API_KEY").orNull
+                ?: localProperties.getProperty("OPENAI_API_KEY")
+                ?: ""
+        )
+        if (requireKey && key.isBlank()) {
+            throw GradleException("Missing OPENAI_API_KEY for this build.")
+        }
+    }
+}
+tasks.named("preBuild") { dependsOn("assertOpenAIKey") }
 
 tasks.withType<Test> {
     useJUnitPlatform()

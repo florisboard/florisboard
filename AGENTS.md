@@ -93,7 +93,7 @@ For a future agent, here are some things to consider to move this project from a
 ### 2025-11-01 – gpt-5-codex
 * **Plan:** Restore the `FlorisImeService` companion helper methods so other modules can compile, reinstate the Whisper recording and transcription workflow, and clean up the temporary resources lifecycle.
 * **Changes:** Re-added the missing imports, rebuilt the `companion object` with shared helpers and a `startWhisperVoiceInput()` bridge, rewrote the recording/transcription helpers with better error handling and cleanup, and ensured `onDestroy()` tears down any pending recorder or temp files.
-* **Attempts:** `./gradlew compileDebugKotlin` *(fails: Android SDK is unavailable in the execution environment).*
+* **Attempts:** `./gradlew compileDebugKotlin` *(fails: Android SDK is unavailable in the execution environment).* 
 
 ### 2025-11-01 (Gemini)
 * **Plan:** Refactor the project to securely handle the OpenAI API key after a hardcoded key was blocked by GitHub's push protection. The new strategy uses a GitHub secret for CI/CD builds and the `local.properties` file for local development.
@@ -104,3 +104,54 @@ For a future agent, here are some things to consider to move this project from a
     *   Modified `.github/workflows/build.yml` to pass the `OPENAI_API_KEY` repository secret to the build step as an environment variable.
     *   Updated this `AGENTS.md` file to reflect the new, secure secret management strategy and remove the incorrect previous entry.
 * **Result:** The changes were successfully pushed, and the build process is now secure and functional for both remote and local environments.
+
+### 2025-11-01 – gpt-5-codex
+* **Plan:** Instrument the Whisper integration to expose misconfiguration, switch recording to an OpenAI-supported container/codec, harden the multipart request, and extend network timeouts so transcription succeeds reliably on-device.
+* **Changes:** Updated `FlorisImeService` to validate the API key at runtime, record AAC audio into an `.m4a` temp file, log and guard zero-byte captures, send multipart requests with explicit timeouts, and surface HTTP details plus parsed results back to the UI. Added helper utilities for recorder cleanup and client construction, along with verbose logging.
+* **Attempts:** `./gradlew testDebugUnitTest` *(skipped: Android SDK/toolchain not available in this environment).* 
+
+### 2025-11-02 – gpt-5-codex
+* **Plan:** Ensure builds fail fast when the OpenAI secret is missing or malformed and accept Gradle properties so CI can inject the key reliably.
+* **Changes:** Updated `app/build.gradle.kts` to read the key from a Gradle property before falling back to environment variables or `local.properties`, escaped the value before emitting it into `BuildConfig`, and added a `preBuild` guard task that rejects empty or malformed keys. Adjusted the CI workflow to pass the secret via `-POPENAI_API_KEY` so the new guard succeeds.
+* **Attempts:** Not run (`./gradlew` tasks require the Android toolchain, which is unavailable in this environment).
+
+### 2025-11-02 – gpt-5-codex
+* **Plan:** Update the CI workflow to use supported GitHub Actions, gate the API key assertion to trusted contexts, and keep forked pull requests building without secrets.
+* **Changes:** Switched the build workflow to `actions/upload-artifact@v4`, `actions/checkout@v4`, and `actions/setup-java@v4`, added fork-aware logic that only passes the OpenAI key on trusted runs while setting `ciEnforceOpenAiKey`, and taught `app/build.gradle.kts` to conditionally wire `assertOpenAIKey` via the new enforcement flag.
+* **Attempts:** Not run (Android tooling unavailable in the execution environment).
+
+### 2025-11-03 – gpt-5-codex
+* **Plan:** Consolidate CI into a single Android workflow, gate key injection for trusted contexts, and surface runtime diagnostics for missing API keys.
+* **Changes:** Removed the duplicate workflow, rewrote `android.yml` with fork-aware build/upload steps, taught `app/build.gradle.kts` to emit both the key string and a `HAS_OPENAI_KEY` flag while honoring `REQUIRE_OPENAI_KEY`, and updated `FlorisImeService` to log the key length, respect the new flag, and warn PR builds via toast.
+* **Attempts:** Not run (`./gradlew` tasks require the Android toolchain, which is unavailable in this environment).
+
+### 2025-11-03 – gpt-5-codex
+* **Plan:** Stabilize the unified Android CI by provisioning the native toolchain and pinning the Gradle-side versions so forked PR builds stop failing when CMake 4.0.2 is missing on runners.
+* **Changes:** Added Android SDK setup plus explicit CMake/NDK installation to `.github/workflows/android.yml`, taught `app/build.gradle.kts` to request the catalogued CMake version, and downgraded the catalog entry in `gradle/tools.versions.toml` to 3.31.1 so the workflow installs a matching toolchain.
+* **Attempts:** Not run (Android tooling is unavailable in this execution environment).
+
+### 2025-11-04 – gpt-5-codex
+* **Plan:** Add an on-device Whisper diagnostics pipeline with rotating log storage, surface failures via toasts/notifications, and expose quick export/share paths so debugging works without ADB.
+* **Changes:** Introduced `diagnostics/WhisperLogger` with masking, MediaStore export, and notification helpers; registered the broadcast receiver in the manifest; instrumented `FlorisImeService` with structured logging, failure notifications, toast snippets, and a manual export hook; wired a mic-key long-press to the exporter; and added the required UI strings.
+* **Attempts:** Not run (`./gradlew` tasks require the Android SDK, which is unavailable in this environment).
+
+### 2025-11-05 – gpt-5-codex
+* **Plan:** Update Whisper log exporting so Android 8–9 devices can share logs without requesting `WRITE_EXTERNAL_STORAGE`, while preserving the existing MediaStore flow on Android 10+ and keeping notification actions functional.
+* **Changes:** Added a dedicated FileProvider authority to the manifest and broadened `res/xml/file_paths.xml` to expose the app-scoped downloads directory; refactored `WhisperLogger` to choose between MediaStore and FileProvider exports, adjusted the broadcast receiver to consume the new API, and taught `FlorisImeService` to surface the right success message; added a helper string for pre-API 29 messaging.
+* **Attempts:** No automated builds were run (Android tooling unavailable in this environment).
+
+### 2025-11-02 – gpt-5-codex
+* **Plan:** Freeze the current Whisper-working build, document the stability point, and inventory theming capabilities without modifying runtime code.
+* **Changes:** Created the `v0.1-whisper-ok` annotated tag and `stable/whisper-ok` branch at commit `ee6c7a0`, appended a Stable Snapshots note plus protection checklist, and gathered theming reconnaissance for reporting.
+* **Attempts:** `git push origin stable/whisper-ok` *(fails: repository has no `origin` remote in this workspace).*; `git push origin v0.1-whisper-ok` *(fails for the same reason).*
+
+## Stable Snapshots
+
+- **v0.1-whisper-ok** (`ee6c7a0`)
+  - Branch: `stable/whisper-ok`
+  - Latest with-key artifact run: https://github.com/yourowndog/keyboard/actions/runs/19015941667
+  - Notes: Whisper mic capture/transcription, diagnostics logging & export flows verified.
+
+### Protection Checklist
+
+- [ ] Protect `stable/whisper-ok` on GitHub (no force-push, PRs required)

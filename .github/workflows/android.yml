@@ -1,41 +1,63 @@
-name: FlorisBoard CI
-
+name: Android CI
 on:
   push:
     branches: [ main ]
-    paths-ignore:
-      - ".github/ISSUE_TEMPLATE/**"
-      - ".github/FUNDING.yml"
-      - ".editorconfig"
-      - "fastlane/**"
-      - "CONTRIBUTING.md"
-      - "CODE_OF_CONDUCT.md"
-      - "LICENSE"
-      - "README.md"
-      - "ROADMAP.md"
   pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
       - uses: gradle/actions/wrapper-validation@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: 17
           distribution: temurin
-      - name: Set up CMake and Ninja
-        uses: lukka/get-cmake@v4.0.2
-      - name: Build with Gradle
-        run: ./gradlew clean assembleDebug
-      - uses: actions/upload-artifact@v4
+          java-version: 17
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK components (CMake + NDK)
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0" \
+            "cmake;3.31.1" \
+            "ndk;26.1.10909125"
+
+      - name: chmod gradlew
+        run: chmod +x gradlew
+
+      # Trusted runs: embed key
+      - name: Build (trusted, embed key)
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          REQUIRE_OPENAI_KEY: "true"
+        run: ./gradlew :app:assembleDebug -POPENAI_API_KEY="$OPENAI_API_KEY"
+
+      # Untrusted PRs: no secret, still build
+      - name: Build (PR from fork, no key)
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true }}
+        run: ./gradlew :app:assembleDebug
+
+      - name: Upload APK (trusted)
+        if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false }}
+        uses: actions/upload-artifact@v4
         with:
-          name: app-debug.apk
+          name: app-debug-with-key
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload APK (no key)
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-NO-KEY
           path: app/build/outputs/apk/debug/app-debug.apk
