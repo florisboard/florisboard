@@ -12,7 +12,7 @@ class SpeechCaptureService : Service() {
             1,
             NotificationCompat.Builder(this, "speech_capture")
                 .setContentTitle("Recording audio")
-                .setSmallIcon(R.drawable.ic_mic)
+                .setSmallIcon(android.R.drawable.ic_btn_speak_now)
                 .build(),
             ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
         )

@@ -410,7 +410,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     }
                 }
             } catch (e: Exception) {
-                flogError(e) { "Whisper API call failed: ${e.message}" }
+                flogError { "Whisper API call failed: ${e.message}" }
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@FlorisImeService,
@@ -656,5 +656,326 @@ class FlorisImeService : LifecycleInputMethodService() {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
         // ... (rest of the file is boilerplate, not relevant to the change)
+    private fun updateSoftInputWindowLayoutParameters() {
+        val w = window?.window ?: return
+        // TODO: Verify that this doesn't give us a padding problem
+        WindowCompat.setDecorFitsSystemWindows(w, false)
+        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
+        val layoutHeight = if (isFullscreenUiMode) {
+            WindowManager.LayoutParams.WRAP_CONTENT
+        } else {
+            WindowManager.LayoutParams.MATCH_PARENT
+        }
+        val inputArea = w.findViewById<View>(android.R.id.inputArea) ?: return
+        ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
+        ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
+        val inputWindowView = inputWindowView ?: return
+        ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
+    }
+
+    override fun getTextForImeAction(imeOptions: Int): String? {
+        return try {
+            when (imeOptions and EditorInfo.IME_MASK_ACTION) {
+                EditorInfo.IME_ACTION_NONE -> null
+                EditorInfo.IME_ACTION_GO -> resourcesContext.getString(AndroidInternalR.string.ime_action_go)
+                EditorInfo.IME_ACTION_SEARCH -> resourcesContext.getString(AndroidInternalR.string.ime_action_search)
+                EditorInfo.IME_ACTION_SEND -> resourcesContext.getString(AndroidInternalR.string.ime_action_send)
+                EditorInfo.IME_ACTION_NEXT -> resourcesContext.getString(AndroidInternalR.string.ime_action_next)
+                EditorInfo.IME_ACTION_DONE -> resourcesContext.getString(AndroidInternalR.string.ime_action_done)
+                EditorInfo.IME_ACTION_PREVIOUS -> resourcesContext.getString(AndroidInternalR.string.ime_action_previous)
+                else -> resourcesContext.getString(AndroidInternalR.string.ime_action_default)
+            }
+        } catch (_: Throwable) {
+            super.getTextForImeAction(imeOptions)?.toString()
+        }
+    }
+
+    @Composable
+    private fun ImeUiWrapper() {
+        ProvideLocalizedResources(
+            resourcesContext,
+            appName = R.string.app_name,
+        ) {
+            ProvideKeyboardRowBaseHeight {
+                CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
+                    FlorisImeTheme {
+                        // Do not apply system bar padding here yet, we want to draw it ourselves
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            if (!(isFullscreenUiMode && isExtractUiShown)) {
+                                DevtoolsOverlay(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f),
+                                )
+                            }
+                            ImeUi()
+                            SystemUiIme()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalComposeUiApi::class)
+    @Composable
+    private fun ImeUi() {
+        val state by keyboardManager.activeState.collectAsState()
+        val attributes = mapOf(
+            FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
+            FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
+        )
+        val layoutDirection = LocalLayoutDirection.current
+        LaunchedEffect(layoutDirection) {
+            keyboardManager.activeState.layoutDirection = layoutDirection
+        }
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+            SnyggBox(
+                elementName = FlorisImeUi.Window.elementName,
+                attributes = attributes,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .onGloballyPositioned { coords -> inputViewSize = coords.size },
+                clickAndSemanticsModifier = Modifier
+                    // Do not remove below line or touch input may get stuck
+                    .pointerInteropFilter { false },
+                supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
+                allowClip = false,
+            ) {
+                // The SurfaceView is used to render the background image under inline-autofill chips. These are only
+                // available on Android >=11, and SurfaceView causes trouble on Android 8/9, thus we render the image
+                // in the SurfaceView for Android >=11, and in the Compose View Tree for Android <=10.
+                if (AndroidVersion.ATLEAST_API30_R) {
+                    SnyggSurfaceView(
+                        elementName = FlorisImeUi.Window.elementName,
+                        attributes = attributes,
+                        modifier = Modifier.matchParentSize(),
+                    )
+                }
+                val configuration = LocalConfiguration.current
+                val bottomOffset by if (configuration.isOrientationPortrait()) {
+                    prefs.keyboard.bottomOffsetPortrait
+                } else {
+                    prefs.keyboard.bottomOffsetLandscape
+                }.observeAsTransformingState { it.dp }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        // Apply system bars padding here (we already drew our keyboard background)
+                        .safeDrawingPadding()
+                        .padding(bottom = bottomOffset),
+                ) {
+                    val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                    val oneHandedModeEnabled by prefs.keyboard.oneHandedModeEnabled.observeAsState()
+                    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
+                    val keyboardWeight = when {
+                        !oneHandedModeEnabled || configuration.isOrientationLandscape() -> 1f
+                        else -> oneHandedModeScaleFactor / 100f
+                    }
+                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.START,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
+                    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
+                        Box(
+                            modifier = Modifier
+                                .weight(keyboardWeight)
+                                .wrapContentHeight(),
+                        ) {
+                            when (state.imeUiMode) {
+                                ImeUiMode.TEXT -> TextInputLayout()
+                                ImeUiMode.MEDIA -> MediaInputLayout()
+                                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                            }
+                        }
+                    }
+                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
+                        OneHandedPanel(
+                            panelSide = OneHandedMode.END,
+                            weight = 1f - keyboardWeight,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return keyboardManager.onHardwareKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
+    }
+
+    private inner class ComposeInputView : AbstractComposeView(this) {
+        init {
+            isHapticFeedbackEnabled = true
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        }
+
+        @Composable
+        override fun Content() {
+            ImeUiWrapper()
+        }
+
+        override fun getAccessibilityClassName(): CharSequence {
+            return javaClass.name
+        }
+
+        override fun onAttachedToWindow() {
+            super.onAttachedToWindow()
+            updateSoftInputWindowLayoutParameters()
+        }
+    }
+
+    private inner class FlorisBottomSheetHostUiView : AbstractComposeView(this) {
+        init {
+            isHapticFeedbackEnabled = true
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        }
+
+        @Composable
+        override fun Content() {
+            val context = LocalContext.current
+            val keyboardManager by context.keyboardManager()
+            val state by keyboardManager.activeState.collectAsState()
+
+            ProvideLocalizedResources(
+                resourcesContext,
+                appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
+            ) {
+                FlorisImeTheme {
+                    BottomSheetHostUi(
+                        isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
+                        onHide = {
+                            if (state.isBottomSheetShowing()) {
+                                keyboardManager.activeState.isActionsEditorVisible = false
+                            }
+                            if (state.isSubtypeSelectionShowing()) {
+                                keyboardManager.activeState.isSubtypeSelectionVisible = false
+                            }
+                        },
+                    ) {
+                        if (state.isBottomSheetShowing()) {
+                            QuickActionsEditorPanel()
+                        }
+                        if (state.isSubtypeSelectionShowing()) {
+                            SelectSubtypePanel()
+                        }
+                    }
+                }
+            }
+        }
+
+        override fun getAccessibilityClassName(): CharSequence {
+            return javaClass.name
+        }
+    }
+
+    private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {
+        val composeView: ComposeView
+        val extractEditText: ExtractEditText
+
+        init {
+            isHapticFeedbackEnabled = true
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+
+            extractEditText = (eet ?: ExtractEditText(context)).also {
+                it.id = android.R.id.inputExtractEditText
+                it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+                it.background = null
+                it.gravity = Gravity.TOP
+                it.isVerticalScrollBarEnabled = true
+            }
+            addView(extractEditText)
+
+            composeView = ComposeView(context).also { it.setContent { Content() } }
+            addView(composeView)
+        }
+
+        @Composable
+        fun Content() {
+            ProvideLocalizedResources(
+                resourcesContext,
+                appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
+            ) {
+                FlorisImeTheme {
+                    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
+                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
+                        SnyggRow(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            SnyggBox(
+                                elementName = FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .weight(1f),
+                            ) {
+                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField.elementName)
+                                val foreground = fieldStyle.foreground()
+                                AndroidView(
+                                    factory = { extractEditText },
+                                    update = { view ->
+                                        view.background = null
+                                        view.backgroundTintList = null
+                                        view.foregroundTintList = null
+                                        view.setTextColor(foreground.toArgb())
+                                        view.setHintTextColor(foreground.copy(foreground.alpha * 0.6f).toArgb())
+                                        view.setTextSize(
+                                            TypedValue.COMPLEX_UNIT_SP,
+                                            fieldStyle.fontSize(default = 16.sp).value,
+                                        )
+                                    },
+                                )
+                            }
+                            SnyggButton(
+                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
+                                onClick = {n                                    if (activeEditorInfo.extractedActionId != 0) {
+                                        currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
+                                    } else {
+                                        editorInstance.performEnterAction(activeEditorInfo.imeOptions.action)
+                                    }
+                                },
+                                modifier = Modifier.padding(horizontal = 8.dp),
+                            ) {
+                                SnyggText(
+                                    text = activeEditorInfo.extractedActionLabel
+                                        ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
+                                        ?: "ACTION",
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        override fun getAccessibilityClassName(): CharSequence {
+            return javaClass.name
+        }
+
+        override fun onAttachedToWindow() {
+            removeView(extractEditText)
+            super.onAttachedToWindow()
+            try {
+                (parent as LinearLayout).let { extractEditLayout ->
+                    extractEditLayout.layoutParams = LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                    ).also { it.setMargins(0, 0, 0, 0) }
+                    extractEditLayout.setPadding(0, 0, 0, 0)
+                }
+            } catch (e: Throwable) {
+                flogError { e.message.toString() }
+            }
+        }
     }
 }
