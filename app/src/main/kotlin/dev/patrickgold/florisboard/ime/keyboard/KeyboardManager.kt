@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.content.Context
+import android.util.Log
+
 import android.icu.lang.UCharacter
 import android.view.KeyEvent
 import android.widget.Toast
@@ -82,6 +85,7 @@ import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicInteger
 
+
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
@@ -101,6 +105,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val activeState = ObservableKeyboardState.new()
     var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
+
+
+
+
 
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion = AtomicInteger(0)
@@ -822,6 +830,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             }
         }
     }
+
+
 
     override fun onInputKeyCancel(data: KeyData) {
         when (data.code) {

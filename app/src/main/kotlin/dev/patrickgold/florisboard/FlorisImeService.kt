@@ -129,6 +129,7 @@ import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
+
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
  * another input method, getting the editor instance / input connection, etc.) can only be performed by an IME

@@ -15,6 +15,7 @@
  */
 
 import java.io.ByteArrayOutputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -36,6 +37,14 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
     } else {
         suffix
     }
+}
+
+val localProperties = Properties().apply {
+    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+}
+
+fun getLocalOrEnv(key: String, default: String? = null): String {
+    return localProperties.getProperty(key) ?: System.getenv(key) ?: default ?: ""
 }
 
 android {
@@ -70,6 +79,8 @@ android {
         buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
+        buildConfigField("String", "OPENAI_API_KEY", "\"${getLocalOrEnv("OPENAI_API_KEY")}\"")
+        buildConfigField("String", "WHISPER_MODEL", "\"${getLocalOrEnv("WHISPER_MODEL", "whisper-1")}\"")
 
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
@@ -210,6 +221,7 @@ dependencies {
     ksp(libs.patrickgold.jetpref.datastore.model.processor)
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
+    implementation(libs.okhttp)
 
     implementation(project(":lib:android"))
     implementation(project(":lib:color"))
