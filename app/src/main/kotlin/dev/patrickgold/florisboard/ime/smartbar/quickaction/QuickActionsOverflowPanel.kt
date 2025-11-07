@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.smartbar.quickaction
+package dev.silo.omniboard.ime.smartbar.quickaction
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,20 +29,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggButton
-import org.florisboard.lib.snygg.ui.SnyggText
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.keyboard.OmniImeSizing
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.keyboardManager
+import dev.silo.jetpref.datastore.model.observeAsState
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.snygg.ui.SnyggBox
+import org.omniboard.lib.snygg.ui.SnyggButton
+import org.omniboard.lib.snygg.ui.SnyggText
 
 @Composable
 fun QuickActionsOverflowPanel() {
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
@@ -61,15 +61,15 @@ fun QuickActionsOverflowPanel() {
     }
 
     SnyggBox(
-        elementName = FlorisImeUi.SmartbarActionsOverflow.elementName,
+        elementName = OmniImeUi.SmartbarActionsOverflow.elementName,
         modifier = Modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardUiHeight()),
+            .height(OmniImeSizing.keyboardUiHeight()),
     ) {
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth(),
-            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight * 2.2f),
+            columns = GridCells.Adaptive(OmniImeSizing.smartbarHeight * 2.2f),
         ) {
             items(visibleActions) { action ->
                 QuickActionButton(
@@ -80,7 +80,7 @@ fun QuickActionsOverflowPanel() {
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 SnyggButton(
-                    elementName = FlorisImeUi.SmartbarActionsOverflowCustomizeButton.elementName,
+                    elementName = OmniImeUi.SmartbarActionsOverflowCustomizeButton.elementName,
                     onClick = { keyboardManager.activeState.isActionsEditorVisible = true },
                     modifier = Modifier
                         .wrapContentWidth(),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.keyboard
+package dev.silo.omniboard.ime.keyboard
 
 import android.content.Context
 import android.content.res.Resources
@@ -35,22 +35,22 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsCompat
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.util.ViewUtils
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.isOrientationLandscape
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.smartbar.ExtendedActionsPlacement
+import dev.silo.omniboard.ime.smartbar.SmartbarLayout
+import dev.silo.omniboard.ime.text.keyboard.TextKeyboard
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.observeAsTransformingState
+import dev.silo.omniboard.lib.util.ViewUtils
+import dev.silo.jetpref.datastore.model.observeAsState
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.android.isOrientationLandscape
 
 private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
 private val LocalSmartbarHeight = staticCompositionLocalOf { 40.dp }
 
-object FlorisImeSizing {
+object OmniImeSizing {
     val keyboardRowBaseHeight: Dp
         @Composable
         @ReadOnlyComposable
@@ -79,7 +79,7 @@ object FlorisImeSizing {
 
     @Composable
     fun smartbarUiHeight(): Dp {
-        val prefs by FlorisPreferenceStore
+        val prefs by OmniPreferenceStore
         val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
         val smartbarLayout by prefs.smartbar.layout.observeAsState()
         val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
@@ -112,7 +112,7 @@ object FlorisImeSizing {
 
 @Composable
 fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val resources = LocalContext.current.resources
     val configuration = LocalConfiguration.current
 
@@ -139,8 +139,8 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
     val smartbarHeight = baseRowHeight * 0.753f
 
     SideEffect {
-        FlorisImeSizing.Static.keyboardRowBaseHeightPx = baseRowHeight.toInt()
-        FlorisImeSizing.Static.smartbarHeightPx = smartbarHeight.toInt()
+        OmniImeSizing.Static.keyboardRowBaseHeightPx = baseRowHeight.toInt()
+        OmniImeSizing.Static.smartbarHeightPx = smartbarHeight.toInt()
     }
 
     CompositionLocalProvider(

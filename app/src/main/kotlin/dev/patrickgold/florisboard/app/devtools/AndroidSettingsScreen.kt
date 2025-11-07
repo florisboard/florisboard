@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.devtools
+package dev.silo.omniboard.app.devtools
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,15 +26,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import org.florisboard.lib.android.AndroidSettings
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import org.omniboard.lib.android.AndroidSettings
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun AndroidSettingsScreen(name: String?) = FlorisScreen {
+fun AndroidSettingsScreen(name: String?) = OmniScreen {
     title = when (name) {
         AndroidSettings.Global.groupId -> stringRes(R.string.devtools__android_settings_global__title)
         AndroidSettings.Secure.groupId -> stringRes(R.string.devtools__android_settings_secure__title)

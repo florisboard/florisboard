@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.keyboard
+package dev.silo.omniboard.ime.text.keyboard
 
-import dev.patrickgold.florisboard.ime.keyboard.Key
-import dev.patrickgold.florisboard.ime.keyboard.Keyboard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.popup.PopupMapping
+import dev.silo.omniboard.ime.keyboard.Key
+import dev.silo.omniboard.ime.keyboard.Keyboard
+import dev.silo.omniboard.ime.keyboard.KeyboardMode
+import dev.silo.omniboard.ime.popup.PopupMapping
 import kotlin.math.abs
 
 class TextKeyboard(

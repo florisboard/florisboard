@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.localization
+package dev.silo.omniboard.app.settings.localization
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -36,26 +36,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.keyboard.LayoutType
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
-import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.app.enumDisplayEntriesOf
+import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
+import dev.silo.omniboard.ime.core.Subtype
+import dev.silo.omniboard.ime.keyboard.LayoutType
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.observeAsNonNullState
+import dev.silo.omniboard.subtypeManager
+import dev.silo.jetpref.datastore.model.observeAsState
+import dev.silo.jetpref.datastore.ui.ListPreference
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.datastore.ui.PreferenceGroup
+import dev.silo.jetpref.datastore.ui.SwitchPreference
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.compose.FlorisWarningCard
-import org.florisboard.lib.compose.stringRes
+import org.omniboard.lib.compose.OmniWarningCard
+import org.omniboard.lib.compose.stringRes
 
 internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
     save = {
@@ -68,7 +68,7 @@ internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LocalizationScreen() = FlorisScreen {
+fun LocalizationScreen() = OmniScreen {
     title = stringRes(R.string.settings__localization__title)
     previewFieldVisible = true
     iconSpaceReserved = false
@@ -117,7 +117,7 @@ fun LocalizationScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
             val subtypes by subtypeManager.subtypesFlow.collectAsState()
             if (subtypes.isEmpty()) {
-                FlorisWarningCard(
+                OmniWarningCard(
                     modifier = Modifier.padding(all = 8.dp),
                     text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),
                 )

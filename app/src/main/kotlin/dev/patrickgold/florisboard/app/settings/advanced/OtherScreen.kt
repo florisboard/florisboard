@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.advanced
+package dev.silo.omniboard.app.settings.advanced
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Adb
@@ -30,29 +30,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppTheme
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.color.ColorMappings
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.AppTheme
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.app.enumDisplayEntriesOf
+import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
+import dev.silo.omniboard.lib.OmniLocale
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.model.observeAsState
+import dev.silo.jetpref.datastore.ui.ColorPickerPreference
+import dev.silo.jetpref.datastore.ui.ListPreference
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.datastore.ui.PreferenceGroup
+import dev.silo.jetpref.datastore.ui.SwitchPreference
+import dev.silo.jetpref.datastore.ui.isMaterialYou
+import dev.silo.jetpref.datastore.ui.listPrefEntries
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.color.ColorMappings
+import org.omniboard.lib.compose.stringRes
 
 
 @Composable
-fun OtherScreen() = FlorisScreen {
+fun OtherScreen() = OmniScreen {
     title = stringRes(R.string.settings__other__title)
     previewFieldVisible = false
 
@@ -137,7 +137,7 @@ fun OtherScreen() = FlorisScreen {
                         )
                     } else {
                         val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
-                        val locale = FlorisLocale.fromTag(languageTag)
+                        val locale = OmniLocale.fromTag(languageTag)
                         entry(locale.languageTag(), when (displayLanguageNamesIn) {
                             DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
                             DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)

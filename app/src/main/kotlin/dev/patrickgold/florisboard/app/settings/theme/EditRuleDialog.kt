@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.theme
+package dev.silo.omniboard.app.settings.theme
 
 import android.icu.lang.UCharacter
 import android.widget.Toast
@@ -68,43 +68,43 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.Key
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.Keyboard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
-import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
-import dev.patrickgold.florisboard.lib.util.InputMethodUtils
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
-import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldDefaults
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.showShortToastSync
-import org.florisboard.lib.android.stringRes
-import org.florisboard.lib.compose.FlorisChip
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.florisHorizontalScroll
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.curlyFormat
-import org.florisboard.lib.snygg.SnyggAnnotationRule
-import org.florisboard.lib.snygg.SnyggAttributes
-import org.florisboard.lib.snygg.SnyggElementRule
-import org.florisboard.lib.snygg.SnyggRule
-import org.florisboard.lib.snygg.SnyggSelector
-import org.florisboard.lib.snygg.ui.NonNullSaver
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.enumDisplayEntriesOf
+import dev.silo.omniboard.ime.input.InputKeyEventReceiver
+import dev.silo.omniboard.ime.input.InputShiftState
+import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
+import dev.silo.omniboard.ime.keyboard.DefaultComputingEvaluator
+import dev.silo.omniboard.ime.keyboard.Key
+import dev.silo.omniboard.ime.keyboard.KeyData
+import dev.silo.omniboard.ime.keyboard.Keyboard
+import dev.silo.omniboard.ime.keyboard.KeyboardMode
+import dev.silo.omniboard.ime.keyboard.computeImageVector
+import dev.silo.omniboard.ime.keyboard.computeLabel
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.NATIVE_NULLPTR
+import dev.silo.omniboard.lib.compose.OmniHyperlinkText
+import dev.silo.omniboard.lib.util.InputMethodUtils
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import dev.silo.jetpref.material.ui.JetPrefDropdown
+import dev.silo.jetpref.material.ui.JetPrefTextField
+import dev.silo.jetpref.material.ui.JetPrefTextFieldDefaults
+import org.omniboard.lib.android.showShortToast
+import org.omniboard.lib.android.showShortToastSync
+import org.omniboard.lib.android.stringRes
+import org.omniboard.lib.compose.OmniChip
+import org.omniboard.lib.compose.OmniIconButton
+import org.omniboard.lib.compose.omniHorizontalScroll
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.kotlin.curlyFormat
+import org.omniboard.lib.snygg.SnyggAnnotationRule
+import org.omniboard.lib.snygg.SnyggAttributes
+import org.omniboard.lib.snygg.SnyggElementRule
+import org.omniboard.lib.snygg.SnyggRule
+import org.omniboard.lib.snygg.SnyggSelector
+import org.omniboard.lib.snygg.ui.NonNullSaver
 import kotlin.reflect.KClass
 
 private val TransparentTextSelectionColors = TextSelectionColors(
@@ -131,7 +131,7 @@ internal fun EditRuleDialog(
         buildList {
             add(SnyggEmptyRuleForAdding)
             add(SnyggAnnotationRule.Font(fontName = ""))
-            FlorisImeUi.elementNames.forEach { name ->
+            OmniImeUi.elementNames.forEach { name ->
                 add(SnyggElementRule(name))
             }
         }
@@ -245,11 +245,11 @@ internal fun EditRuleDialog(
                 }
                 DialogProperty(text = stringRes(R.string.settings__theme_editor__rule_selectors)) {
                     Row(
-                        modifier = Modifier.florisHorizontalScroll(),
+                        modifier = Modifier.omniHorizontalScroll(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         // TODO: avoid code duplication
-                        FlorisChip(
+                        OmniChip(
                             onClick = { updateCurrentRule(SnyggSelector.PRESSED) },
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.PRESSED.id
@@ -257,7 +257,7 @@ internal fun EditRuleDialog(
                             },
                             selected = selector == SnyggSelector.PRESSED,
                         )
-                        FlorisChip(
+                        OmniChip(
                             onClick = { updateCurrentRule(SnyggSelector.FOCUS) },
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.FOCUS.id
@@ -265,7 +265,7 @@ internal fun EditRuleDialog(
                             },
                             selected = selector == SnyggSelector.FOCUS,
                         )
-                        FlorisChip(
+                        OmniChip(
                             onClick = { updateCurrentRule(SnyggSelector.HOVER) },
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.HOVER.id
@@ -273,7 +273,7 @@ internal fun EditRuleDialog(
                             },
                             selected = selector == SnyggSelector.HOVER,
                         )
-                        FlorisChip(
+                        OmniChip(
                             onClick = { updateCurrentRule(SnyggSelector.DISABLED) },
                             text = when (level) {
                                 SnyggLevel.DEVELOPER -> SnyggSelector.DISABLED.id
@@ -285,7 +285,7 @@ internal fun EditRuleDialog(
                 }
 
                 val codes = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.Code] ?: emptyList()
+                    attributes[OmniImeUi.Attr.Code] ?: emptyList()
                 }
                 var editCodeDialogValue by rememberSaveable { mutableStateOf<String?>(null) }
                 val initCodeValue = editCodeDialogValue
@@ -295,12 +295,12 @@ internal fun EditRuleDialog(
                         checkExisting = { codes.contains(it) },
                         onAdd = {
                             currentRule = copy(
-                                attributes = attributes.including(FlorisImeUi.Attr.Code to it)
+                                attributes = attributes.including(OmniImeUi.Attr.Code to it)
                             )
                         },
                         onDelete = {
                             currentRule = copy(
-                                attributes = attributes.excluding(FlorisImeUi.Attr.Code to it)
+                                attributes = attributes.excluding(OmniImeUi.Attr.Code to it)
                             )
                         },
                         onDismiss = { editCodeDialogValue = null },
@@ -309,7 +309,7 @@ internal fun EditRuleDialog(
                 DialogProperty(
                     text = stringRes(R.string.settings__theme_editor__rule_codes),
                     trailingIconTitle = {
-                        FlorisIconButton(
+                        OmniIconButton(
                             onClick = { editCodeDialogValue = KeyCode.UNSPECIFIED.toString() },
                             modifier = Modifier.offset(x = 12.dp),
                             icon = Icons.Default.Add,
@@ -324,7 +324,7 @@ internal fun EditRuleDialog(
                     }
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         for (code in codes) {
-                            FlorisChip(
+                            OmniChip(
                                 onClick = { editCodeDialogValue = code },
                                 text = code,
                                 selected = editCodeDialogValue == code,
@@ -337,7 +337,7 @@ internal fun EditRuleDialog(
                 EnumLikeAttributeBox(
                     text = stringRes(R.string.settings__theme_editor__rule_modes),
                     enumClass = KeyboardMode::class,
-                    attribute = FlorisImeUi.Attr.Mode,
+                    attribute = OmniImeUi.Attr.Mode,
                     attributes = attributes,
                     setAttributes = { currentRule = copy(attributes = it) },
                     level = level,
@@ -346,7 +346,7 @@ internal fun EditRuleDialog(
                 EnumLikeAttributeBox(
                     text = stringRes(R.string.settings__theme_editor__rule_shift_states),
                     enumClass = InputShiftState::class,
-                    attribute = FlorisImeUi.Attr.ShiftState,
+                    attribute = OmniImeUi.Attr.ShiftState,
                     attributes = attributes,
                     setAttributes = { currentRule = copy(attributes = it) },
                     level = level,
@@ -382,8 +382,8 @@ private fun EditCodeValueDialog(
     var errorId by rememberSaveable(codeValue) { mutableIntStateOf(NATIVE_NULLPTR.toInt()) }
 
     val focusRequester = remember { FocusRequester() }
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+    val isOmniBoardEnabled by InputMethodUtils.observeIsOmniboardEnabled(foregroundOnly = true)
+    val isOmniBoardSelected by InputMethodUtils.observeIsOmniboardSelected(foregroundOnly = true)
 
     var isRecordingKey by remember { mutableStateOf(false) }
     var lastRecordingToast by remember { mutableStateOf<Toast?>(null) }
@@ -405,11 +405,11 @@ private fun EditCodeValueDialog(
             isRecordingKey = false
             return
         }
-        if (!isFlorisBoardEnabled || !isFlorisBoardSelected) {
+        if (!isOmniBoardEnabled || !isOmniBoardSelected) {
             lastRecordingToast?.cancel()
             lastRecordingToast = context.showShortToastSync(
-                R.string.settings__theme_editor__code_recording_requires_default_ime_floris,
-                "app_name" to context.stringRes(R.string.floris_app_name),
+                R.string.settings__theme_editor__code_recording_requires_default_ime_omni,
+                "app_name" to context.stringRes(R.string.omni_app_name),
             )
             InputMethodUtils.showImePicker(context)
             return
@@ -497,7 +497,7 @@ private fun EditCodeValueDialog(
             onDismiss()
         },
         trailingIconTitle = {
-            FlorisIconButton(
+            OmniIconButton(
                 onClick = { showKeyCodesHelp = !showKeyCodesHelp },
                 modifier = Modifier.offset(x = 12.dp),
                 icon = Icons.AutoMirrored.Filled.HelpOutline,
@@ -509,13 +509,13 @@ private fun EditCodeValueDialog(
                 Column(modifier = Modifier.padding(bottom = 16.dp)) {
                     Text(text = stringRes(R.string.settings__theme_editor__code_recording_help_text))
                     Text(text = stringRes(R.string.settings__theme_editor__code_help_text))
-                    FlorisHyperlinkText(
+                    OmniHyperlinkText(
                         text = "Characters (unicode-table.com)",
-                        url = stringRes(R.string.florisboard__character_key_codes_url),
+                        url = stringRes(R.string.omniboard__character_key_codes_url),
                     )
-                    FlorisHyperlinkText(
+                    OmniHyperlinkText(
                         text = "Internal (github.com)",
-                        url = stringRes(R.string.florisboard__internal_key_codes_url),
+                        url = stringRes(R.string.omniboard__internal_key_codes_url),
                     )
                 }
             }
@@ -566,7 +566,7 @@ private fun EditCodeValueDialog(
                             }
                         ),
                         trailingIcon = {
-                            FlorisIconButton(
+                            OmniIconButton(
                                 onClick = { requestStartRecording() },
                                 icon = Icons.Default.Pageview,
                                 iconColor = recordingKeyColor,
@@ -681,7 +681,7 @@ private fun <V : Any> EnumLikeAttributeBox(
     DialogProperty(
         text = text,
         trailingIconTitle = {
-            FlorisIconButton(
+            OmniIconButton(
                 onClick = { showAddDialog = true },
                 modifier = Modifier.offset(x = 12.dp),
                 icon = Icons.Default.Add,
@@ -690,7 +690,7 @@ private fun <V : Any> EnumLikeAttributeBox(
     ) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             for (entry in alreadyAddedEntries) {
-                FlorisChip(
+                OmniChip(
                     onClick = {
                         setAttributes(attributes.excluding(attribute to entry.key.toString()))
                     },
@@ -714,7 +714,7 @@ private fun <V : Any> EnumLikeAttributeBox(
         ) {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 for (entry in notYetAddedEntries) {
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             setAttributes(attributes.including(attribute to entry.key.toString()))
                             showAddDialog = false

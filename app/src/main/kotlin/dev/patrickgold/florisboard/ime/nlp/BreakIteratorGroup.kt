@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,36 +14,36 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.nlp
+package dev.silo.omniboard.ime.nlp
 
 import android.icu.text.BreakIterator
-import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.silo.omniboard.lib.OmniLocale
 import io.github.reactivecircus.cache4k.Cache
-import org.florisboard.lib.kotlin.GuardedByLock
-import org.florisboard.lib.kotlin.guardedByLock
+import org.omniboard.lib.kotlin.GuardedByLock
+import org.omniboard.lib.kotlin.guardedByLock
 
 open class BreakIteratorGroup {
-    private val charInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
+    private val charInstances = Cache.Builder().build<OmniLocale, GuardedByLock<BreakIterator>>()
 
-    private val wordInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
+    private val wordInstances = Cache.Builder().build<OmniLocale, GuardedByLock<BreakIterator>>()
 
-    private val sentenceInstances = Cache.Builder().build<FlorisLocale, GuardedByLock<BreakIterator>>()
+    private val sentenceInstances = Cache.Builder().build<OmniLocale, GuardedByLock<BreakIterator>>()
 
-    suspend fun <R> character(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+    suspend fun <R> character(locale: OmniLocale, action: (BreakIterator) -> R): R {
         val instance = charInstances.get(locale) {
             guardedByLock { BreakIterator.getCharacterInstance(locale.base) }
         }
         return instance.withLock(null, action)
     }
 
-    suspend fun <R> word(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+    suspend fun <R> word(locale: OmniLocale, action: (BreakIterator) -> R): R {
         val instance = wordInstances.get(locale) {
             guardedByLock { BreakIterator.getWordInstance(locale.base) }
         }
         return instance.withLock(null, action)
     }
 
-    suspend fun <R> sentence(locale: FlorisLocale, action: (BreakIterator) -> R): R {
+    suspend fun <R> sentence(locale: OmniLocale, action: (BreakIterator) -> R): R {
         val instance = sentenceInstances.get(locale) {
             guardedByLock { BreakIterator.getSentenceInstance(locale.base) }
         }
@@ -53,7 +53,7 @@ open class BreakIteratorGroup {
     suspend fun measureUChars(
         text: String,
         numUnicodeChars: Int,
-        locale: FlorisLocale = FlorisLocale.default(),
+        locale: OmniLocale = OmniLocale.default(),
     ): Int {
         return character(locale) {
             it.setText(text)
@@ -70,7 +70,7 @@ open class BreakIteratorGroup {
     suspend fun measureLastUChars(
         text: String,
         numUnicodeChars: Int,
-        locale: FlorisLocale = FlorisLocale.default(),
+        locale: OmniLocale = OmniLocale.default(),
     ): Int {
         return character(locale) {
             it.setText(text)
@@ -87,7 +87,7 @@ open class BreakIteratorGroup {
     suspend fun measureUWords(
         text: String,
         numUnicodeWords: Int,
-        locale: FlorisLocale = FlorisLocale.default(),
+        locale: OmniLocale = OmniLocale.default(),
     ): Int {
         return word(locale) {
             it.setText(text)
@@ -105,7 +105,7 @@ open class BreakIteratorGroup {
     suspend fun measureLastUWords(
         text: String,
         numUnicodeWords: Int,
-        locale: FlorisLocale = FlorisLocale.default(),
+        locale: OmniLocale = OmniLocale.default(),
     ): Int {
         return word(locale) {
             it.setText(text)

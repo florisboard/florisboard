@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.android
+package org.omniboard.lib.android
 
-import org.florisboard.lib.kotlin.io.FsDir
-import org.florisboard.lib.kotlin.io.FsFile
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.io.subFile
+import org.omniboard.lib.kotlin.io.FsDir
+import org.omniboard.lib.kotlin.io.FsFile
+import org.omniboard.lib.kotlin.io.subDir
+import org.omniboard.lib.kotlin.io.subFile
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.Reader
@@ -27,7 +27,7 @@ import java.nio.charset.Charset
 
 /**
  * Public typealias for the Android AssetManager class, which provides a basic API to read files which are statically
- * shipped in the APK assets. The typealias is used to allow both the FlorisBoard and Android asset managers to coexist
+ * shipped in the APK assets. The typealias is used to allow both the OmniBoard and Android asset managers to coexist
  * without name clashes.
  */
 typealias AndroidAssetManager = android.content.res.AssetManager

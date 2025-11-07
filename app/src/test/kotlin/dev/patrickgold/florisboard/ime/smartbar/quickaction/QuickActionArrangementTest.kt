@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.smartbar.quickaction
+package dev.silo.omniboard.ime.smartbar.quickaction
 
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
 import org.junit.jupiter.api.assertAll
 import kotlin.test.Test
 import kotlin.test.assertEquals

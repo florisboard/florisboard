@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.keyboard
+package dev.silo.omniboard.ime.text.keyboard
 
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.Key
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
-import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
-import dev.patrickgold.florisboard.ime.popup.PopupMapping
-import dev.patrickgold.florisboard.ime.popup.PopupSet
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.lib.lowercase
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.keyboard.AbstractKeyData
+import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
+import dev.silo.omniboard.ime.keyboard.Key
+import dev.silo.omniboard.ime.keyboard.KeyData
+import dev.silo.omniboard.ime.keyboard.KeyboardMode
+import dev.silo.omniboard.ime.keyboard.computeImageVector
+import dev.silo.omniboard.ime.keyboard.computeLabel
+import dev.silo.omniboard.ime.popup.MutablePopupSet
+import dev.silo.omniboard.ime.popup.PopupMapping
+import dev.silo.omniboard.ime.popup.PopupSet
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.key.KeyType
+import dev.silo.omniboard.ime.text.key.KeyVariation
+import dev.silo.omniboard.lib.lowercase
 
 class TextKey(override val data: AbstractKeyData) : Key(data) {
     var computedData: KeyData = TextKeyData.UNSPECIFIED
@@ -246,7 +246,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 else -> null
             }
         } else if (!data.isSpaceKey() || data.type == KeyType.NUMERIC) {
-            val prefs by FlorisPreferenceStore
+            val prefs by OmniPreferenceStore
             computedPopups.getPopupKeys(prefs.keyboard.keyHintConfiguration()).hint.let { hintData ->
                 if (hintData?.isSpaceKey() == false) {
                     hintedLabel = hintData.asString(isForDisplay = true)

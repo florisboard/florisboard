@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.nlp
+package dev.silo.omniboard.ime.nlp
 
 import android.content.Context
 import android.os.SystemClock
 import android.util.LruCache
 import androidx.lifecycle.MutableLiveData
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.editor.EditorRange
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.util.NetworkUtils
-import dev.patrickgold.florisboard.subtypeManager
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.clipboardManager
+import dev.silo.omniboard.editorInstance
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
+import dev.silo.omniboard.ime.clipboard.provider.ItemType
+import dev.silo.omniboard.ime.core.Subtype
+import dev.silo.omniboard.ime.editor.EditorContent
+import dev.silo.omniboard.ime.editor.EditorRange
+import dev.silo.omniboard.ime.media.emoji.EmojiSuggestionProvider
+import dev.silo.omniboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.silo.omniboard.ime.nlp.latin.LatinLanguageProvider
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.util.NetworkUtils
+import dev.silo.omniboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -43,8 +43,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.kotlin.guardedByLock
-import org.florisboard.lib.kotlin.collectLatestIn
+import org.omniboard.lib.kotlin.guardedByLock
+import org.omniboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
@@ -54,7 +54,7 @@ private const val BLANK_STR_PATTERN = "^\\s*$"
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
 
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
@@ -354,7 +354,7 @@ class NlpManager(context: Context) {
     inner class ClipboardSuggestionProvider internal constructor(private val context: Context) : SuggestionProvider {
         private var lastClipboardItemId: Long = -1
 
-        override val providerId = "org.florisboard.nlp.providers.clipboard"
+        override val providerId = "org.omniboard.nlp.providers.clipboard"
 
         override suspend fun create() {
             // Do nothing

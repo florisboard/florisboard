@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import android.provider.OpenableColumns
 import androidx.activity.compose.BackHandler
@@ -46,26 +46,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.silo.omniboard.R
+import dev.silo.omniboard.lib.cache.CacheManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import dev.silo.jetpref.material.ui.JetPrefTextField
 import java.io.File
 import java.util.*
-import org.florisboard.lib.android.query
-import org.florisboard.lib.android.readToFile
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.showShortToastSync
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.io.parentDir
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.kotlin.mimeTypeFilterOf
+import org.omniboard.lib.android.query
+import org.omniboard.lib.android.readToFile
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.android.showLongToastSync
+import org.omniboard.lib.android.showShortToast
+import org.omniboard.lib.android.showShortToastSync
+import org.omniboard.lib.compose.OmniIconButton
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.kotlin.io.parentDir
+import org.omniboard.lib.kotlin.io.subDir
+import org.omniboard.lib.kotlin.io.subFile
+import org.omniboard.lib.kotlin.mimeTypeFilterOf
 
 const val FONTS = "fonts"
 const val IMAGES = "images"
@@ -84,7 +84,7 @@ val MIME_TYPES = mapOf(
 )
 
 @Composable
-fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
+fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = OmniScreen {
     title = stringRes(R.string.ext__editor__files__title)
 
     fun handleBackPress() {
@@ -92,7 +92,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
     }
 
     navigationIcon {
-        FlorisIconButton(
+        OmniIconButton(
             onClick = { handleBackPress() },
             icon = Icons.Default.Close,
         )

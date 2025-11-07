@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg
+package org.omniboard.lib.snygg
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
-import org.florisboard.lib.kotlin.io.writeJson
-import org.florisboard.lib.kotlin.simpleNameOrEnclosing
-import org.florisboard.lib.snygg.value.SnyggKeywordValueSpec
-import org.florisboard.lib.snygg.value.SnyggValueEncoder
-import org.florisboard.lib.snygg.value.SnyggValueSpec
+import org.omniboard.lib.kotlin.io.writeJson
+import org.omniboard.lib.kotlin.simpleNameOrEnclosing
+import org.omniboard.lib.snygg.value.SnyggKeywordValueSpec
+import org.omniboard.lib.snygg.value.SnyggValueEncoder
+import org.omniboard.lib.snygg.value.SnyggValueSpec
 import java.io.File
 
 object SnyggJsonSchemaGenerator {

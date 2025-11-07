@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,61 +14,61 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.color
+package org.omniboard.lib.color
 
 import android.content.Context
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.color.schemes.amberDarkScheme
-import org.florisboard.lib.color.schemes.amberLightScheme
-import org.florisboard.lib.color.schemes.blueDarkScheme
-import org.florisboard.lib.color.schemes.blueGrayDarkScheme
-import org.florisboard.lib.color.schemes.blueGrayLightScheme
-import org.florisboard.lib.color.schemes.blueLightScheme
-import org.florisboard.lib.color.schemes.brownDarkScheme
-import org.florisboard.lib.color.schemes.brownLightScheme
-import org.florisboard.lib.color.schemes.cyanDarkScheme
-import org.florisboard.lib.color.schemes.cyanLightScheme
-import org.florisboard.lib.color.schemes.deepPurpleDarkScheme
-import org.florisboard.lib.color.schemes.deepPurpleLightScheme
-import org.florisboard.lib.color.schemes.florisDefaultKeyboardDarkScheme
-import org.florisboard.lib.color.schemes.florisDefaultKeyboardLightScheme
-import org.florisboard.lib.color.schemes.florisDefaultSettingsDarkScheme
-import org.florisboard.lib.color.schemes.florisDefaultSettingsLightScheme
-import org.florisboard.lib.color.schemes.grayDarkScheme
-import org.florisboard.lib.color.schemes.grayLightScheme
-import org.florisboard.lib.color.schemes.indigoDarkScheme
-import org.florisboard.lib.color.schemes.indigoLightScheme
-import org.florisboard.lib.color.schemes.lightBlueDarkScheme
-import org.florisboard.lib.color.schemes.lightBlueLightScheme
-import org.florisboard.lib.color.schemes.lightGreenDarkScheme
-import org.florisboard.lib.color.schemes.lightGreenLightScheme
-import org.florisboard.lib.color.schemes.lightPinkDarkScheme
-import org.florisboard.lib.color.schemes.lightPinkLightScheme
-import org.florisboard.lib.color.schemes.limeDarkScheme
-import org.florisboard.lib.color.schemes.limeLightScheme
-import org.florisboard.lib.color.schemes.orangeDarkScheme
-import org.florisboard.lib.color.schemes.orangeLightScheme
-import org.florisboard.lib.color.schemes.pinkDarkScheme
-import org.florisboard.lib.color.schemes.pinkLightScheme
-import org.florisboard.lib.color.schemes.purpleDarkScheme
-import org.florisboard.lib.color.schemes.purpleLightScheme
-import org.florisboard.lib.color.schemes.redDarkScheme
-import org.florisboard.lib.color.schemes.redLightScheme
-import org.florisboard.lib.color.schemes.tealDarkScheme
-import org.florisboard.lib.color.schemes.tealLightScheme
-import org.florisboard.lib.color.schemes.yellowDarkScheme
-import org.florisboard.lib.color.schemes.yellowLightScheme
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.color.schemes.amberDarkScheme
+import org.omniboard.lib.color.schemes.amberLightScheme
+import org.omniboard.lib.color.schemes.blueDarkScheme
+import org.omniboard.lib.color.schemes.blueGrayDarkScheme
+import org.omniboard.lib.color.schemes.blueGrayLightScheme
+import org.omniboard.lib.color.schemes.blueLightScheme
+import org.omniboard.lib.color.schemes.brownDarkScheme
+import org.omniboard.lib.color.schemes.brownLightScheme
+import org.omniboard.lib.color.schemes.cyanDarkScheme
+import org.omniboard.lib.color.schemes.cyanLightScheme
+import org.omniboard.lib.color.schemes.deepPurpleDarkScheme
+import org.omniboard.lib.color.schemes.deepPurpleLightScheme
+import org.omniboard.lib.color.schemes.omniDefaultKeyboardDarkScheme
+import org.omniboard.lib.color.schemes.omniDefaultKeyboardLightScheme
+import org.omniboard.lib.color.schemes.omniDefaultSettingsDarkScheme
+import org.omniboard.lib.color.schemes.omniDefaultSettingsLightScheme
+import org.omniboard.lib.color.schemes.grayDarkScheme
+import org.omniboard.lib.color.schemes.grayLightScheme
+import org.omniboard.lib.color.schemes.indigoDarkScheme
+import org.omniboard.lib.color.schemes.indigoLightScheme
+import org.omniboard.lib.color.schemes.lightBlueDarkScheme
+import org.omniboard.lib.color.schemes.lightBlueLightScheme
+import org.omniboard.lib.color.schemes.lightGreenDarkScheme
+import org.omniboard.lib.color.schemes.lightGreenLightScheme
+import org.omniboard.lib.color.schemes.lightPinkDarkScheme
+import org.omniboard.lib.color.schemes.lightPinkLightScheme
+import org.omniboard.lib.color.schemes.limeDarkScheme
+import org.omniboard.lib.color.schemes.limeLightScheme
+import org.omniboard.lib.color.schemes.orangeDarkScheme
+import org.omniboard.lib.color.schemes.orangeLightScheme
+import org.omniboard.lib.color.schemes.pinkDarkScheme
+import org.omniboard.lib.color.schemes.pinkLightScheme
+import org.omniboard.lib.color.schemes.purpleDarkScheme
+import org.omniboard.lib.color.schemes.purpleLightScheme
+import org.omniboard.lib.color.schemes.redDarkScheme
+import org.omniboard.lib.color.schemes.redLightScheme
+import org.omniboard.lib.color.schemes.tealDarkScheme
+import org.omniboard.lib.color.schemes.tealLightScheme
+import org.omniboard.lib.color.schemes.yellowDarkScheme
+import org.omniboard.lib.color.schemes.yellowLightScheme
 
 val DEFAULT_GREEN = Color(0xFF4CAF50)
 
 @Immutable
 data class ColorMappings(val light: ColorScheme, val dark: ColorScheme) {
     companion object {
-        val default = ColorMappings(florisDefaultKeyboardLightScheme, florisDefaultKeyboardDarkScheme)
+        val default = ColorMappings(omniDefaultKeyboardLightScheme, omniDefaultKeyboardDarkScheme)
         private val red = ColorMappings(redLightScheme, redDarkScheme)
         private val pink = ColorMappings(pinkLightScheme, pinkDarkScheme)
         private val lightPink = ColorMappings(lightPinkLightScheme, lightPinkDarkScheme)
@@ -119,9 +119,9 @@ data class ColorMappings(val light: ColorScheme, val dark: ColorScheme) {
         ): ColorScheme {
             if (settings && color == DEFAULT_GREEN) {
                 return if (isDark) {
-                    florisDefaultSettingsDarkScheme
+                    omniDefaultSettingsDarkScheme
                 } else {
-                    florisDefaultSettingsLightScheme
+                    omniDefaultSettingsLightScheme
                 }
             }
             return schemes

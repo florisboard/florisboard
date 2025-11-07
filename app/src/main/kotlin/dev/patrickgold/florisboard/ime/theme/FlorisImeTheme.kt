@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme
+package dev.silo.omniboard.ime.theme
 
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -27,16 +27,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.snygg.ui.ProvideSnyggTheme
-import org.florisboard.lib.snygg.ui.rememberSnyggTheme
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.themeManager
+import dev.silo.jetpref.datastore.model.observeAsState
+import org.omniboard.lib.snygg.ui.ProvideSnyggTheme
+import org.omniboard.lib.snygg.ui.rememberSnyggTheme
 
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionComponent> { error("not init") }
 
-object FlorisImeTheme {
+object OmniImeTheme {
     val config: ThemeExtensionComponent
         @Composable
         @ReadOnlyComposable
@@ -44,12 +44,12 @@ object FlorisImeTheme {
 }
 
 @Composable
-fun FlorisImeTheme(content: @Composable () -> Unit) {
+fun OmniImeTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
 
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val accentColor by prefs.theme.accentColor.observeAsState()
 
     val activeThemeInfo by themeManager.activeThemeInfo.collectAsState()
@@ -57,15 +57,15 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val activeStyle = remember(activeThemeInfo) { activeThemeInfo.stylesheet }
 
     val assetResolver = remember(activeThemeInfo) {
-        FlorisAssetResolver(context, activeThemeInfo)
+        OmniAssetResolver(context, activeThemeInfo)
     }
     val snyggTheme = rememberSnyggTheme(activeStyle, assetResolver)
     val fontSizeMultiplier = prefs.keyboard.fontSizeMultiplier()
 
     val state by keyboardManager.activeState.collectAsState()
     val attributes = mapOf(
-        FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
-        FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
+        OmniImeUi.Attr.Mode to state.keyboardMode.toString(),
+        OmniImeUi.Attr.ShiftState to state.inputShiftState.toString(),
     )
 
     MaterialTheme {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The FlorisBoard Contributors
+ * Copyright (C) 2020-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.io
+package dev.silo.omniboard.lib.io
 
 import android.content.Context
-import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
-import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
-import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
-import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.LayoutDirectionSelector
-import dev.patrickgold.florisboard.ime.keyboard.ShiftStateSelector
-import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
-import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import org.florisboard.lib.android.reader
+import dev.silo.omniboard.ime.keyboard.AbstractKeyData
+import dev.silo.omniboard.ime.keyboard.CaseSelector
+import dev.silo.omniboard.ime.keyboard.CharWidthSelector
+import dev.silo.omniboard.ime.keyboard.KanaSelector
+import dev.silo.omniboard.ime.keyboard.KeyData
+import dev.silo.omniboard.ime.keyboard.LayoutDirectionSelector
+import dev.silo.omniboard.ime.keyboard.ShiftStateSelector
+import dev.silo.omniboard.ime.keyboard.VariationSelector
+import dev.silo.omniboard.ime.text.keyboard.AutoTextKeyData
+import dev.silo.omniboard.ime.text.keyboard.MultiTextKeyData
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import org.omniboard.lib.android.reader
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import org.florisboard.lib.kotlin.resultErr
-import org.florisboard.lib.kotlin.resultErrStr
-import org.florisboard.lib.kotlin.resultOk
+import org.omniboard.lib.kotlin.resultErr
+import org.omniboard.lib.kotlin.resultErrStr
+import org.omniboard.lib.kotlin.resultOk
 import java.io.File
 
 val DefaultJsonConfig = Json {
@@ -65,7 +65,7 @@ val DefaultJsonConfig = Json {
     }
 }
 
-fun FlorisRef.delete(context: Context) {
+fun OmniRef.delete(context: Context) {
     when {
         isCache || isInternal -> {
             absoluteFile(context).delete()
@@ -74,7 +74,7 @@ fun FlorisRef.delete(context: Context) {
     }
 }
 
-fun FlorisRef.hasAsset(context: Context): Boolean {
+fun OmniRef.hasAsset(context: Context): Boolean {
     return when {
         isAssets -> {
             try {
@@ -93,13 +93,13 @@ fun FlorisRef.hasAsset(context: Context): Boolean {
     }
 }
 
-fun FlorisRef.list(context: Context) = list(context, files = true, dirs = true)
+fun OmniRef.list(context: Context) = list(context, files = true, dirs = true)
 
-fun FlorisRef.listFiles(context: Context) = list(context, files = true, dirs = false)
+fun OmniRef.listFiles(context: Context) = list(context, files = true, dirs = false)
 
-fun FlorisRef.listDirs(context: Context) = list(context, files = false, dirs = true)
+fun OmniRef.listDirs(context: Context) = list(context, files = false, dirs = true)
 
-private fun FlorisRef.list(appContext: Context, files: Boolean, dirs: Boolean) = runCatching<List<FlorisRef>> {
+private fun OmniRef.list(appContext: Context, files: Boolean, dirs: Boolean) = runCatching<List<OmniRef>> {
     when {
         !files && !dirs -> listOf()
         isAssets -> {
@@ -126,11 +126,11 @@ private fun FlorisRef.list(appContext: Context, files: Boolean, dirs: Boolean) =
                 listOf()
             }
         }
-        else -> error("Unsupported FlorisRef source!")
+        else -> error("Unsupported OmniRef source!")
     }
 }
 
-fun <T> FlorisRef.loadJsonAsset(
+fun <T> OmniRef.loadJsonAsset(
     context: Context,
     serializer: KSerializer<T>,
     jsonConfig: Json = DefaultJsonConfig,
@@ -151,7 +151,7 @@ fun <T> loadJsonAsset(
     jsonConfig.decodeFromString(serializer, jsonStr)
 }
 
-fun FlorisRef.loadTextAsset(context: Context): Result<String> {
+fun OmniRef.loadTextAsset(context: Context): Result<String> {
     return when {
         isAssets -> runCatching {
             context.assets.reader(relativePath).use { it.readText() }

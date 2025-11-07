@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The FlorisBoard Contributors
+ * Copyright (C) 2024-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.smartbar
+package dev.silo.omniboard.ime.smartbar
 
 import android.os.Build
 import android.view.View
@@ -34,19 +34,19 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.viewinterop.AndroidView
-import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
-import dev.patrickgold.florisboard.ime.popup.GlobalStateNumPopupsShowing
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.toIntOffset
-import org.florisboard.lib.compose.florisHorizontalScroll
-import org.florisboard.lib.snygg.SnyggSinglePropertySet
-import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import dev.silo.omniboard.ime.nlp.NlpInlineAutofillSuggestion
+import dev.silo.omniboard.ime.popup.GlobalStateNumPopupsShowing
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.lib.toIntOffset
+import org.omniboard.lib.compose.omniHorizontalScroll
+import org.omniboard.lib.snygg.SnyggSinglePropertySet
+import org.omniboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 var CachedInlineSuggestionsChipStyleSet: SnyggSinglePropertySet? = null
 
 @Composable
 fun InlineSuggestionsStyleCache() {
-    val chipStyleSet = rememberSnyggThemeQuery(FlorisImeUi.InlineAutofillChip.elementName)
+    val chipStyleSet = rememberSnyggThemeQuery(OmniImeUi.InlineAutofillChip.elementName)
     LaunchedEffect(chipStyleSet) {
         CachedInlineSuggestionsChipStyleSet = chipStyleSet
     }
@@ -65,7 +65,7 @@ fun InlineSuggestionsUi(
     Row(
         modifier
             .fillMaxSize()
-            .florisHorizontalScroll(
+            .omniHorizontalScroll(
                 state = scrollState,
                 scrollbarHeight = CandidatesRowScrollbarHeight,
             ),

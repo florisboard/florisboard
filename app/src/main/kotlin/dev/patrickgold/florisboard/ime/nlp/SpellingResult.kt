@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.nlp
+package dev.silo.omniboard.ime.nlp
 
 import android.view.textservice.SuggestionsInfo
-import org.florisboard.lib.android.AndroidVersion
+import org.omniboard.lib.android.AndroidVersion
 
 /**
  * Inline value class wrapping the Android spelling [SuggestionsInfo] class with helpers.

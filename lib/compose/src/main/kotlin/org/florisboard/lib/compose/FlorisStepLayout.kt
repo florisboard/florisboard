@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package org.omniboard.lib.compose
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -66,13 +66,13 @@ private val StepHeaderNumberBoxPaddingEnd = 16.dp
 private val StepHeaderTextBoxHeight = 32.dp
 private val StepHeaderTextInnerPaddingHorizontal = 16.dp
 
-data class FlorisStep(
+data class OmniStep(
     val id: Int,
     val title: String,
-    val content: @Composable FlorisStepLayoutScope.() -> Unit,
+    val content: @Composable OmniStepLayoutScope.() -> Unit,
 )
 
-class FlorisStepLayoutScope(
+class OmniStepLayoutScope(
     columnScope: ColumnScope,
     private val primaryColor: Color,
 ) : ColumnScope by columnScope {
@@ -112,19 +112,19 @@ class FlorisStepLayoutScope(
 }
 
 @Suppress("unused")
-class FlorisStepState private constructor(
+class OmniStepState private constructor(
     private val currentAuto: MutableState<Int>,
     private val currentManual: MutableState<Int> = mutableIntStateOf(-1),
 ) {
     companion object {
-        fun new(init: Int) = FlorisStepState(mutableIntStateOf(init))
+        fun new(init: Int) = OmniStepState(mutableIntStateOf(init))
 
-        val Saver = Saver<FlorisStepState, ArrayList<Int>>(
+        val Saver = Saver<OmniStepState, ArrayList<Int>>(
             save = {
                 arrayListOf(it.currentAuto.value, it.currentManual.value)
             },
             restore = {
-                FlorisStepState(mutableIntStateOf(it[0]), mutableIntStateOf(it[1]))
+                OmniStepState(mutableIntStateOf(it[0]), mutableIntStateOf(it[1]))
             },
         )
     }
@@ -155,18 +155,18 @@ class FlorisStepState private constructor(
 }
 
 @Composable
-fun FlorisStepLayout(
-    stepState: FlorisStepState,
-    steps: List<FlorisStep>,
+fun OmniStepLayout(
+    stepState: OmniStepState,
+    steps: List<OmniStep>,
     modifier: Modifier = Modifier,
     primaryColor: Color = MaterialTheme.colorScheme.primary,
-    header: @Composable FlorisStepLayoutScope.() -> Unit = { },
-    footer: @Composable FlorisStepLayoutScope.() -> Unit = { },
+    header: @Composable OmniStepLayoutScope.() -> Unit = { },
+    footer: @Composable OmniStepLayoutScope.() -> Unit = { },
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        val scope = FlorisStepLayoutScope(this, primaryColor)
+        val scope = OmniStepLayoutScope(this, primaryColor)
         header(scope)
         for ((index, step) in steps.withIndex()) {
             key(step.id) {
@@ -177,7 +177,7 @@ fun FlorisStepLayout(
                     title = step.title,
                     primaryColor = primaryColor,
                 ) {
-                    step.content(FlorisStepLayoutScope(this, primaryColor))
+                    step.content(OmniStepLayoutScope(this, primaryColor))
                 }
             }
         }
@@ -190,7 +190,7 @@ fun FlorisStepLayout(
 private fun ColumnScope.Step(
     ownStepId: Int,
     index: Int,
-    stepState: FlorisStepState,
+    stepState: OmniStepState,
     title: String,
     primaryColor: Color,
     content: @Composable ColumnScope.() -> Unit,
@@ -244,7 +244,7 @@ private fun ColumnScope.Step(
         ) {
             Column(modifier = Modifier
                 .fillMaxSize()
-                .florisVerticalScroll()
+                .omniVerticalScroll()
                 .padding(end = 8.dp),
             ) {
                 content()

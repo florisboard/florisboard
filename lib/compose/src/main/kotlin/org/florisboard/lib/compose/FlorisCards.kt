@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package org.omniboard.lib.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -53,7 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-object FlorisCardDefaults {
+object OmniCardDefaults {
     val IconRequiredSize = 24.dp
     val IconSpacing = 12.dp
 
@@ -67,13 +67,13 @@ object BoxDefaults {
 }
 
 @Composable
-fun FlorisSimpleCard(
+fun OmniSimpleCard(
     modifier: Modifier = Modifier,
     text: String,
     secondaryText: String? = null,
     backgroundColor: Color = MaterialTheme.colorScheme.surfaceContainer,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
+    contentPadding: PaddingValues = OmniCardDefaults.ContentPadding,
     icon: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
@@ -120,22 +120,22 @@ fun FlorisSimpleCard(
 }
 
 @Composable
-fun FlorisErrorCard(
+fun OmniErrorCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
+    contentPadding: PaddingValues = OmniCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
-    FlorisSimpleCard(
+    OmniSimpleCard(
         modifier = modifier,
         backgroundColor = Color.Red,
         contentColor = Color.White,
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(all = FlorisCardDefaults.IconSpacing)
-                .requiredSize(FlorisCardDefaults.IconRequiredSize),
+                .padding(all = OmniCardDefaults.IconSpacing)
+                .requiredSize(OmniCardDefaults.IconRequiredSize),
             imageVector = Icons.Default.ErrorOutline,
             contentDescription = null,
         ) }) else null,
@@ -145,22 +145,22 @@ fun FlorisErrorCard(
 }
 
 @Composable
-fun FlorisWarningCard(
+fun OmniWarningCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
+    contentPadding: PaddingValues = OmniCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
-    FlorisSimpleCard(
+    OmniSimpleCard(
         modifier = modifier,
         backgroundColor = Color.Yellow,
         contentColor = Color.Black,
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(all = FlorisCardDefaults.IconSpacing)
-                .requiredSize(FlorisCardDefaults.IconRequiredSize),
+                .padding(all = OmniCardDefaults.IconSpacing)
+                .requiredSize(OmniCardDefaults.IconRequiredSize),
             imageVector = Icons.Outlined.Warning,
             contentDescription = null,
         ) }) else null,
@@ -170,20 +170,20 @@ fun FlorisWarningCard(
 }
 
 @Composable
-fun FlorisInfoCard(
+fun OmniInfoCard(
     text: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
-    contentPadding: PaddingValues = FlorisCardDefaults.ContentPadding,
+    contentPadding: PaddingValues = OmniCardDefaults.ContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
-    FlorisSimpleCard(
+    OmniSimpleCard(
         modifier = modifier,
         onClick = onClick,
         icon = if (showIcon) ({ Icon(
             modifier = Modifier
-                .padding(all = FlorisCardDefaults.IconSpacing)
-                .requiredSize(FlorisCardDefaults.IconRequiredSize),
+                .padding(all = OmniCardDefaults.IconSpacing)
+                .requiredSize(OmniCardDefaults.IconRequiredSize),
             imageVector = Icons.Default.Info,
             contentDescription = null,
         ) }) else null,
@@ -193,7 +193,7 @@ fun FlorisInfoCard(
 }
 
 @Composable
-fun FlorisOutlinedBox(
+fun OmniOutlinedBox(
     modifier: Modifier = Modifier,
     title: String,
     onTitleClick: (() -> Unit)? = null,
@@ -205,7 +205,7 @@ fun FlorisOutlinedBox(
     contentPadding: PaddingValues = BoxDefaults.ContentPadding,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    FlorisOutlinedBox(
+    OmniOutlinedBox(
         modifier = modifier,
         title = {
             Text(
@@ -240,10 +240,10 @@ fun FlorisOutlinedBox(
     )
 }
 
-// TODO: Rework internal implementation (with same API and visual appearance) of FlorisOutlinedBox
+// TODO: Rework internal implementation (with same API and visual appearance) of OmniOutlinedBox
 //  to avoid too much nesting and improve performance
 @Composable
-fun FlorisOutlinedBox(
+fun OmniOutlinedBox(
     modifier: Modifier = Modifier,
     title: (@Composable () -> Unit)? = null,
     onTitleClick: (() -> Unit)? = null,
@@ -301,7 +301,7 @@ fun FlorisOutlinedBox(
     }
 }
 
-fun Modifier.defaultFlorisOutlinedBox(): Modifier {
+fun Modifier.defaultOmniOutlinedBox(): Modifier {
     return this
         .fillMaxWidth()
         .padding(vertical = 8.dp, horizontal = 16.dp)

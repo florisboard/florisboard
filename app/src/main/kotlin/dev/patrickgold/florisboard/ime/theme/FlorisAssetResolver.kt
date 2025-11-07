@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme
+package dev.silo.omniboard.ime.theme
 
 import android.content.Context
-import dev.patrickgold.florisboard.lib.devtools.flogError
-import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.snygg.value.SnyggAssetResolver
+import dev.silo.omniboard.lib.devtools.flogError
+import org.omniboard.lib.kotlin.io.subFile
+import org.omniboard.lib.snygg.value.SnyggAssetResolver
 import java.net.URI
 
-class FlorisAssetResolver(val context: Context, val themeInfo: ThemeManager.ThemeInfo) : SnyggAssetResolver {
+class OmniAssetResolver(val context: Context, val themeInfo: ThemeManager.ThemeInfo) : SnyggAssetResolver {
     override fun resolveAbsolutePath(uri: String) = runCatching {
         val uri = URI.create(uri)
         require(uri.scheme == "flex")
@@ -42,6 +42,6 @@ class FlorisAssetResolver(val context: Context, val themeInfo: ThemeManager.Them
         }
         canonicalPath
     }.onFailure { exception ->
-        flogError { "FlorisAssetResolver failed to resolve URI '$uri'\n  error: ${exception.message}\n  with:  $themeInfo" }
+        flogError { "OmniAssetResolver failed to resolve URI '$uri'\n  error: ${exception.message}\n  with:  $themeInfo" }
     }
 }

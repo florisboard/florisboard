@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.theme
+package dev.silo.omniboard.app.settings.theme
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -69,51 +69,51 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.apptheme.Shapes
-import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
-import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
-import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.app.apptheme.Shapes
+import dev.silo.omniboard.app.ext.ExtensionComponentView
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.ime.theme.ThemeExtensionComponent
+import dev.silo.omniboard.ime.theme.ThemeExtensionComponentEditor
+import dev.silo.omniboard.ime.theme.ThemeExtensionEditor
+import dev.silo.omniboard.ime.theme.ThemeManager
+import dev.silo.omniboard.ime.theme.extPreviewTheme
+import dev.silo.omniboard.lib.cache.CacheManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.compose.PreviewKeyboardField
+import dev.silo.omniboard.lib.compose.Validation
+import dev.silo.omniboard.lib.compose.rememberPreviewFieldController
+import dev.silo.omniboard.lib.ext.ExtensionValidation
+import dev.silo.omniboard.lib.rememberValidationResult
+import dev.silo.omniboard.themeManager
+import dev.silo.jetpref.datastore.model.observeAsState
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import dev.silo.jetpref.material.ui.JetPrefListItem
+import dev.silo.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.florisVerticalScroll
-import org.florisboard.lib.compose.rippleClickable
-import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.snygg.SnyggAnnotationRule
-import org.florisboard.lib.snygg.SnyggElementRule
-import org.florisboard.lib.snygg.SnyggJsonConfiguration
-import org.florisboard.lib.snygg.SnyggMultiplePropertySetsEditor
-import org.florisboard.lib.snygg.SnyggRule
-import org.florisboard.lib.snygg.SnyggSelector
-import org.florisboard.lib.snygg.SnyggSinglePropertySetEditor
-import org.florisboard.lib.snygg.SnyggSpec
-import org.florisboard.lib.snygg.SnyggSpecDecl
-import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.SnyggStylesheetEditor
-import org.florisboard.lib.snygg.ui.Saver
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.compose.OmniIconButton
+import org.omniboard.lib.compose.OmniOutlinedBox
+import org.omniboard.lib.compose.defaultOmniOutlinedBox
+import org.omniboard.lib.compose.omniVerticalScroll
+import org.omniboard.lib.compose.rippleClickable
+import org.omniboard.lib.android.showLongToastSync
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.kotlin.io.subFile
+import org.omniboard.lib.snygg.SnyggAnnotationRule
+import org.omniboard.lib.snygg.SnyggElementRule
+import org.omniboard.lib.snygg.SnyggJsonConfiguration
+import org.omniboard.lib.snygg.SnyggMultiplePropertySetsEditor
+import org.omniboard.lib.snygg.SnyggRule
+import org.omniboard.lib.snygg.SnyggSelector
+import org.omniboard.lib.snygg.SnyggSinglePropertySetEditor
+import org.omniboard.lib.snygg.SnyggSpec
+import org.omniboard.lib.snygg.SnyggSpecDecl
+import org.omniboard.lib.snygg.SnyggStylesheet
+import org.omniboard.lib.snygg.SnyggStylesheetEditor
+import org.omniboard.lib.snygg.ui.Saver
 import kotlin.Boolean
 import kotlin.String
 
@@ -142,11 +142,11 @@ private enum class StylesheetLoadingStrategy {
 fun ThemeEditorScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
     editor: ThemeExtensionComponentEditor,
-) = FlorisScreen {
+) = OmniScreen {
     title = stringRes(R.string.ext__editor__edit_component__title_theme)
     scrollable = false
 
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val themeManager by context.themeManager()
@@ -222,14 +222,14 @@ fun ThemeEditorScreen(
     }
 
     navigationIcon {
-        FlorisIconButton(
+        OmniIconButton(
             onClick = { handleBackPress() },
             icon = Icons.Default.Close,
         )
     }
 
     actions {
-        FlorisIconButton(
+        OmniIconButton(
             onClick = { showFineTuneDialog = true },
             icon = Icons.Default.Tune,
         )
@@ -322,17 +322,17 @@ fun ThemeEditorScreen(
         }
 
         // TODO: (priority = low)
-        //  Floris scrollbar does not like lazy lists with non-constant item heights.
+        //  Omni scrollbar does not like lazy lists with non-constant item heights.
         //  Consider building a custom scrollbar tailored for this list specifically.
         val lazyListState = rememberLazyListState()
         LazyColumn(
-            //modifier = Modifier.florisScrollbar(lazyListState, isVertical = true),
+            //modifier = Modifier.omniScrollbar(lazyListState, isVertical = true),
             state = lazyListState,
         ) {
             item {
                 Column {
                     ExtensionComponentView(
-                        modifier = Modifier.defaultFlorisOutlinedBox(),
+                        modifier = Modifier.defaultOmniOutlinedBox(),
                         meta = workspace.editor!!.meta,
                         component = editor,
                         onEditBtnClick = { showEditComponentMetaDialog = true },
@@ -352,7 +352,7 @@ fun ThemeEditorScreen(
             items(stylesheetEditor.rules.toList()) { (rule, propertySet) -> key(rule) {
                 val propertySetSpec = SnyggSpec.propertySetSpecOf(rule)
                 val isVariablesRule = rule == SnyggAnnotationRule.Defines
-                FlorisOutlinedBox(
+                OmniOutlinedBox(
                     modifier = Modifier
                         .padding(vertical = 8.dp, horizontal = 16.dp)
                         .fillMaxWidth(),
@@ -396,7 +396,7 @@ fun ThemeEditorScreen(
                         ) {
                             for ((propertyName, propertySpec) in propertySetSpec?.properties.orEmpty()) {
                                 if (propertySpec.required && !propertySet.properties.containsKey(propertyName)) {
-                                    FlorisOutlinedBox(title = "Errors", modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
+                                    OmniOutlinedBox(title = "Errors", modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
                                         Text(
                                             modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
                                             text = "Required property '$propertyName' does not exist",
@@ -429,13 +429,13 @@ fun ThemeEditorScreen(
                                 val sets = propertySet.sets
                                 sets.forEachIndexed { propertySetIndex, propertySet ->
                                     key(propertySet.uuid) {
-                                        FlorisOutlinedBox(Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
+                                        OmniOutlinedBox(Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
                                             Row {
                                                 Text("Source set", Modifier
                                                     .padding(start = 16.dp)
                                                     .align(Alignment.CenterVertically))
                                                 Spacer(Modifier.weight(1f))
-                                                FlorisIconButton(
+                                                OmniIconButton(
                                                     onClick = {
                                                         workspace.update {
                                                             if (propertySetIndex > 0) {
@@ -449,7 +449,7 @@ fun ThemeEditorScreen(
                                                     iconModifier = Modifier.size(ButtonDefaults.IconSize),
                                                     enabled = propertySetIndex > 0,
                                                 )
-                                                FlorisIconButton(
+                                                OmniIconButton(
                                                     onClick = {
                                                         workspace.update {
                                                             if (propertySetIndex + 1 < sets.size) {
@@ -463,7 +463,7 @@ fun ThemeEditorScreen(
                                                     iconModifier = Modifier.size(ButtonDefaults.IconSize),
                                                     enabled = propertySetIndex + 1 < sets.size,
                                                 )
-                                                FlorisIconButton(
+                                                OmniIconButton(
                                                     onClick = {
                                                         workspace.update {
                                                             sets.removeAt(propertySetIndex)
@@ -473,7 +473,7 @@ fun ThemeEditorScreen(
                                                     iconColor = MaterialTheme.colorScheme.primary,
                                                     iconModifier = Modifier.size(ButtonDefaults.IconSize),
                                                 )
-                                                FlorisIconButton(
+                                                OmniIconButton(
                                                     onClick = {
                                                         snyggPropertySetForEditing = propertySet
                                                         snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
@@ -648,7 +648,7 @@ private fun ComponentMetaEditorDialog(
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
-        scrollModifier = Modifier.florisVerticalScroll(),
+        scrollModifier = Modifier.omniVerticalScroll(),
     ) {
         Column {
             DialogProperty(text = stringRes(R.string.ext__meta__id)) {
@@ -796,14 +796,14 @@ private fun SnyggRuleRow(
             }
         }
         if (showEditBtn) {
-            FlorisIconButton(
+            OmniIconButton(
                 onClick = onEditRuleBtnClick,
                 icon = Icons.Default.Edit,
                 iconColor = MaterialTheme.colorScheme.primary,
                 iconModifier = Modifier.size(ButtonDefaults.IconSize),
             )
         }
-        FlorisIconButton(
+        OmniIconButton(
             onClick = onAddPropertyBtnClick,
             icon = Icons.Default.Add,
             iconColor = MaterialTheme.colorScheme.secondary,
@@ -840,8 +840,8 @@ private object CustomRuleComparator : Comparator<SnyggRule> {
         return if (a !is SnyggElementRule || b !is SnyggElementRule || a.elementName == b.elementName) {
             a.compareTo(b)
         } else {
-            val aOrdinal = FlorisImeUi.elementNamesToOrdinals[a.elementName]
-            val bOrdinal = FlorisImeUi.elementNamesToOrdinals[b.elementName]
+            val aOrdinal = OmniImeUi.elementNamesToOrdinals[a.elementName]
+            val bOrdinal = OmniImeUi.elementNamesToOrdinals[b.elementName]
             if (aOrdinal == null && bOrdinal == null) {
                 a.elementName.compareTo(b.elementName)
             } else if (bOrdinal == null) {

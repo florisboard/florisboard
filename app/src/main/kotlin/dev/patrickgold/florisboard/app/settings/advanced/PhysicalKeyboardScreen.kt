@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.advanced
+package dev.silo.omniboard.app.settings.advanced
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -26,14 +26,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.datastore.ui.SwitchPreference
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun PhysicalKeyboardScreen() = FlorisScreen {
+fun PhysicalKeyboardScreen() = OmniScreen {
     title = stringRes(R.string.physical_keyboard__title)
 
     val context = LocalContext.current

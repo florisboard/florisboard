@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ val projectMinSdk: String by project
 val projectCompileSdk: String by project
 
 android {
-    namespace = "org.florisboard.lib.compose"
+    namespace = "org.omniboard.lib.compose"
     compileSdk = projectCompileSdk.toInt()
 
     defaultConfig {
@@ -82,7 +82,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.patrickgold.jetpref.material.ui)
+    implementation(libs.silo.jetpref.material.ui)
 
     testImplementation(libs.kotlin.test.junit5)
 }

@@ -1,4 +1,4 @@
-package org.florisboard.lib.snygg.value
+package org.omniboard.lib.snygg.value
 
 import androidx.compose.ui.graphics.Color
 import org.junit.jupiter.api.Nested

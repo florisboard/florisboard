@@ -1,4 +1,4 @@
-package org.florisboard.lib.snygg.value
+package org.omniboard.lib.snygg.value
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.dp

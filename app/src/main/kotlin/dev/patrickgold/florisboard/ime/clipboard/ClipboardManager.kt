@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.clipboard
+package dev.silo.omniboard.ime.clipboard
 
 import android.content.ClipData
 import android.content.Context
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.appContext
+import dev.silo.omniboard.editorInstance
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardHistoryDao
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardHistoryDatabase
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
+import dev.silo.omniboard.ime.clipboard.provider.ItemType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -37,13 +37,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.florisboard.lib.android.AndroidClipboardManager
-import org.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
-import org.florisboard.lib.android.clearPrimaryClipAnyApi
-import org.florisboard.lib.android.setOrClearPrimaryClip
-import org.florisboard.lib.android.showShortToastSync
-import org.florisboard.lib.android.systemService
-import org.florisboard.lib.kotlin.tryOrNull
+import org.omniboard.lib.android.AndroidClipboardManager
+import org.omniboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
+import org.omniboard.lib.android.clearPrimaryClipAnyApi
+import org.omniboard.lib.android.setOrClearPrimaryClip
+import org.omniboard.lib.android.showShortToastSync
+import org.omniboard.lib.android.systemService
+import org.omniboard.lib.kotlin.tryOrNull
 import java.io.Closeable
 
 /**
@@ -88,7 +88,7 @@ class ClipboardManager(
         }
     }
 
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val appContext by context.appContext()
     private val editorInstance by context.editorInstance()
     private val systemClipboardManager = context.systemService(AndroidClipboardManager::class)
@@ -165,7 +165,7 @@ class ClipboardManager(
      * Called by system clipboard when the system primary clip has changed.
      */
     override fun onPrimaryClipChanged() {
-        val syncBehavior = prefs.clipboard.syncToFloris.get()
+        val syncBehavior = prefs.clipboard.syncToOmni.get()
         if (!prefs.clipboard.useInternalClipboard.get() || syncBehavior != ClipboardSyncBehavior.NO_EVENTS) {
             val systemPrimaryClip = systemClipboardManager.primaryClip
             ioScope.launch {

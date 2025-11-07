@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.nlp.latin
+package dev.silo.omniboard.ime.nlp.latin
 
 import android.content.Context
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
-import dev.patrickgold.florisboard.ime.nlp.SpellingResult
-import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.silo.omniboard.appContext
+import dev.silo.omniboard.ime.core.Subtype
+import dev.silo.omniboard.ime.editor.EditorContent
+import dev.silo.omniboard.ime.nlp.SpellingProvider
+import dev.silo.omniboard.ime.nlp.SpellingResult
+import dev.silo.omniboard.ime.nlp.SuggestionCandidate
+import dev.silo.omniboard.ime.nlp.SuggestionProvider
+import dev.silo.omniboard.lib.devtools.flogDebug
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.android.readText
-import org.florisboard.lib.kotlin.guardedByLock
+import org.omniboard.lib.android.readText
+import org.omniboard.lib.kotlin.guardedByLock
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
         // Default user ID used for all subtypes, unless otherwise specified.
         // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
-        const val ProviderId = "org.florisboard.nlp.providers.latin"
+        const val ProviderId = "org.omniboard.nlp.providers.latin"
     }
 
     private val appContext by context.appContext()

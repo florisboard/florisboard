@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.keyboard
+package dev.silo.omniboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
-import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import org.florisboard.lib.android.systemVibratorOrNull
-import org.florisboard.lib.android.vibrate
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.enumDisplayEntriesOf
+import dev.silo.omniboard.ime.input.HapticVibrationMode
+import dev.silo.omniboard.ime.input.InputFeedbackActivationMode
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.DialogSliderPreference
+import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.silo.jetpref.datastore.ui.ListPreference
+import dev.silo.jetpref.datastore.ui.PreferenceGroup
+import dev.silo.jetpref.datastore.ui.SwitchPreference
+import org.omniboard.lib.android.systemVibratorOrNull
+import org.omniboard.lib.android.vibrate
+import org.omniboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun InputFeedbackScreen() = FlorisScreen {
+fun InputFeedbackScreen() = OmniScreen {
     title = stringRes(R.string.settings__input_feedback__title)
     previewFieldVisible = true
     iconSpaceReserved = false

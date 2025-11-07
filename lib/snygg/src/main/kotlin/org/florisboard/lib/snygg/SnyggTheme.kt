@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg
+package org.omniboard.lib.snygg
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import org.florisboard.lib.color.getColor
-import org.florisboard.lib.snygg.value.SnyggAssetResolver
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
-import org.florisboard.lib.snygg.value.SnyggFontStyleValue
-import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.omniboard.lib.color.getColor
+import org.omniboard.lib.snygg.value.SnyggAssetResolver
+import org.omniboard.lib.snygg.value.SnyggDefinedVarValue
+import org.omniboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.omniboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.omniboard.lib.snygg.value.SnyggDefaultAssetResolver
+import org.omniboard.lib.snygg.value.SnyggFontStyleValue
+import org.omniboard.lib.snygg.value.SnyggFontWeightValue
+import org.omniboard.lib.snygg.value.SnyggUndefinedValue
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.snygg.value.SnyggUriValue
 import java.io.File
 
 /**

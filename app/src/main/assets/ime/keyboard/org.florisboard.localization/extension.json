@@ -1,17 +1,17 @@
 {
   "$": "ime.extension.keyboard",
   "meta": {
-    "id": "org.florisboard.localization",
+    "id": "org.omniboard.localization",
     "version": "0.2.0",
     "title": "Default subtype presets / popup mappings",
     "description": "Default subtype presets and popup mappings which are always available.",
-    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "maintainers": [ "silo <patrick@silo.dev>" ],
     "license": "apache-2.0"
   },
   "dependencies": [
-    "org.florisboard.composers",
-    "org.florisboard.currencysets",
-    "org.florisboard.layouts"
+    "org.omniboard.composers",
+    "org.omniboard.currencysets",
+    "org.omniboard.layouts"
   ],
   "punctuationRules": [
     {
@@ -25,7 +25,7 @@
     }
   ],
   "popupMappings": [
-    { "id": "default", "authors": [ "patrickgold" ] },
+    { "id": "default", "authors": [ "silo" ] },
     { "id": "ar", "authors": [ "HeiWiper" ] },
     { "id": "ast", "authors": [ "Softastur" ] },
     { "id": "bg", "authors": [ "iorvethe" ] },
@@ -34,722 +34,722 @@
     { "id": "cjk", "authors": [ "moonbeamcelery" ] },
     { "id": "ckb", "authors": [ "GoRaN" ] },
     { "id": "cs", "authors": [ "stefan-misik" ] },
-    { "id": "da", "authors": [ "patrickgold" ] },
-    { "id": "de", "authors": [ "patrickgold" ] },
+    { "id": "da", "authors": [ "silo" ] },
+    { "id": "de", "authors": [ "silo" ] },
     { "id": "de-DE-neobone", "authors": [ "ostrya" ] },
     { "id": "el", "authors": [ "tsiflimagas" ] },
-    { "id": "en", "authors": [ "patrickgold" ] },
+    { "id": "en", "authors": [ "silo" ] },
     { "id": "eo", "authors": [ "jeremiah-miller" ] },
-    { "id": "es", "authors": [ "patrickgold" ] },
+    { "id": "es", "authors": [ "silo" ] },
     { "id": "et", "authors": [ "OneSheepy" ] },
     { "id": "fa", "authors": [ "PHELAT" ] },
     { "id": "fa2", "authors": [ "M-Koushan" ] },
     { "id": "fa3", "authors": [ "SaeID-Rz" ] },
-    { "id": "fi", "authors": [ "patrickgold" ] },
+    { "id": "fi", "authors": [ "silo" ] },
     { "id": "fo", "authors": [ "BinFlush" ] },
-    { "id": "fr", "authors": [ "patrickgold" ] },
+    { "id": "fr", "authors": [ "silo" ] },
     { "id": "hi-IN", "authors": [ "npnpatidar" ] },
     { "id": "hr", "authors": [ "hedidnothingwrong" ] },
     { "id": "hu", "authors": [ "zoli111, gabik65" ] },
     { "id": "hy", "authors": [ "PJTSearch" ] },
     { "id": "id", "authors": [ "Linerly" ] },
-    { "id": "is", "authors": [ "patrickgold" ] },
-    { "id": "it", "authors": [ "patrickgold" ] },
+    { "id": "is", "authors": [ "silo" ] },
+    { "id": "it", "authors": [ "silo" ] },
     { "id": "iw", "authors": [ "Antony" ] },
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
     { "id": "kab", "authors": [ "yanis867" ] },
-    { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
+    { "id": "ko", "authors": [ "silo", "Hayleia" ] },
     { "id": "ko-KR", "authors": [ "Shunnuo" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
-    { "id": "lt", "authors": [ "patrickgold" ] },
-    { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
-    { "id": "nb", "authors": [ "patrickgold" ] },
-    { "id": "nn", "authors": [ "patrickgold" ] },
+    { "id": "lt", "authors": [ "silo" ] },
+    { "id": "lv", "authors": [ "silo", "eandersons" ] },
+    { "id": "nb", "authors": [ "silo" ] },
+    { "id": "nn", "authors": [ "silo" ] },
     { "id": "pl", "authors": [ "Mikołaj Biel" ] },
-    { "id": "pt", "authors": [ "patrickgold" ] },
+    { "id": "pt", "authors": [ "silo" ] },
     { "id": "pt-BR", "authors": [ "rickym7" ] },
     { "id": "ro", "authors": [ "bertin0" ] },
     { "id": "ru", "authors": [ "williamtheaker", "33kk" ] },
     { "id": "rue", "authors": [ "svvvst" ] },
     { "id": "sk", "authors": [ "stefan-misik", "majso" ] },
     { "id": "sr", "authors": [ "hedidnothingwrong", "GrbavaCigla" ] },
-    { "id": "sv", "authors": [ "patrickgold" ] },
-    { "id": "tr", "authors": [ "kisekinopureya", "patrickgold", "dvrnynr" ] },
+    { "id": "sv", "authors": [ "silo" ] },
+    { "id": "tr", "authors": [ "kisekinopureya", "silo", "dvrnynr" ] },
     { "id": "udm", "authors": [ "vorgoron" ] },
     { "id": "uk", "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ] },
     { "id": "uk-cyr-ext", "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ] },
     { "id": "ur-PK", "authors": [ "mubashir-rehman", "mirfatif" ] },
-    { "id": "vi-VN", "authors": [ "patrickgold", "Hayleia" ] }
+    { "id": "vi-VN", "authors": [ "silo", "Hayleia" ] }
   ],
   "subtypePresets": [
     {
       "languageTag": "en-US",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:en",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:en",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "en-UK",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:pound",
-      "popupMapping": "org.florisboard.localization:en",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:pound",
+      "popupMapping": "org.omniboard.localization:en",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "en-CA",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:en",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:en",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "en-AU",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:en",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:en",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "de-DE",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:de",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:de",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwertz"
+        "characters": "org.omniboard.layouts:qwertz"
       }
     },
     {
       "languageTag": "de-AT",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:de",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:de",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwertz"
+        "characters": "org.omniboard.layouts:qwertz"
       }
     },
     {
       "languageTag": "de-CH",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:de",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:de",
       "preferred": {
-        "characters": "org.florisboard.layouts:swiss_german"
+        "characters": "org.omniboard.layouts:swiss_german"
       }
     },
     {
       "languageTag": "de-DE-neobone",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:de-DE-neobone",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:de-DE-neobone",
       "preferred": {
-        "characters": "org.florisboard.layouts:neo2",
-        "symbols": "org.florisboard.layouts:neo2",
-        "numericRow": "org.florisboard.layouts:neo2"
+        "characters": "org.omniboard.layouts:neo2",
+        "symbols": "org.omniboard.layouts:neo2",
+        "numericRow": "org.omniboard.layouts:neo2"
       }
     },
     {
       "languageTag": "fr-FR",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:fr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:fr",
       "preferred": {
-        "characters": "org.florisboard.layouts:azerty"
+        "characters": "org.omniboard.layouts:azerty"
       }
     },
     {
       "languageTag": "fr-CA",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:fr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:fr",
       "preferred": {
-        "characters": "org.florisboard.layouts:canadian_french"
+        "characters": "org.omniboard.layouts:canadian_french"
       }
     },
     {
       "languageTag": "fr-CH",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:fr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:fr",
       "preferred": {
-        "characters": "org.florisboard.layouts:swiss_french"
+        "characters": "org.omniboard.layouts:swiss_french"
       }
     },
     {
       "languageTag": "it-IT",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:it",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:it",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "it-CH",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:it",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:it",
       "preferred": {
-        "characters": "org.florisboard.layouts:swiss_italian"
+        "characters": "org.omniboard.layouts:swiss_italian"
       }
     },
     {
       "languageTag": "es-ES",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:es",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:es",
       "preferred": {
-        "characters": "org.florisboard.layouts:spanish"
+        "characters": "org.omniboard.layouts:spanish"
       }
     },
     {
       "languageTag": "es-US",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:es",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:es",
       "preferred": {
-        "characters": "org.florisboard.layouts:spanish"
+        "characters": "org.omniboard.layouts:spanish"
       }
     },
     {
       "languageTag": "es-419",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:es",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:es",
       "preferred": {
-        "characters": "org.florisboard.layouts:spanish"
+        "characters": "org.omniboard.layouts:spanish"
       }
     },
     {
       "languageTag": "pt-PT",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:pt",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:pt",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "pt-BR",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:pt-BR",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:pt-BR",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "nb-NO",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:nb",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:nb",
       "preferred": {
-        "characters": "org.florisboard.layouts:norwegian"
+        "characters": "org.omniboard.layouts:norwegian"
       }
     },
     {
       "languageTag": "nn-NO",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:nn",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:nn",
       "preferred": {
-        "characters": "org.florisboard.layouts:norwegian"
+        "characters": "org.omniboard.layouts:norwegian"
       }
     },
     {
       "languageTag": "sv-SE",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:sv",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:sv",
       "preferred": {
-        "characters": "org.florisboard.layouts:swedish_finnish"
+        "characters": "org.omniboard.layouts:swedish_finnish"
       }
     },
     {
       "languageTag": "fi-FI",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:fi",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:fi",
       "preferred": {
-        "characters": "org.florisboard.layouts:swedish_finnish"
+        "characters": "org.omniboard.layouts:swedish_finnish"
       }
     },
     {
       "languageTag": "da-DK",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:da",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:da",
       "preferred": {
-        "characters": "org.florisboard.layouts:danish"
+        "characters": "org.omniboard.layouts:danish"
       }
     },
     {
       "languageTag": "id",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:id",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:id",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "is-IS",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:is",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:is",
       "preferred": {
-        "characters": "org.florisboard.layouts:icelandic"
+        "characters": "org.omniboard.layouts:icelandic"
       }
     },
     {
       "languageTag": "fo",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:fo",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:fo",
       "preferred": {
-        "characters": "org.florisboard.layouts:faroese"
+        "characters": "org.omniboard.layouts:faroese"
       }
     },
     {
       "languageTag": "fa-FA",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:rial",
-      "popupMapping": "org.florisboard.localization:fa",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:rial",
+      "popupMapping": "org.omniboard.localization:fa",
       "preferred": {
-        "characters": "org.florisboard.layouts:persian",
-        "symbols": "org.florisboard.layouts:persian",
-        "symbols2": "org.florisboard.layouts:persian",
-        "numericRow": "org.florisboard.layouts:persian"
+        "characters": "org.omniboard.layouts:persian",
+        "symbols": "org.omniboard.layouts:persian",
+        "symbols2": "org.omniboard.layouts:persian",
+        "numericRow": "org.omniboard.layouts:persian"
       }
     },
     {
       "languageTag": "fa-FA",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:rial",
-      "popupMapping": "org.florisboard.localization:fa2",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:rial",
+      "popupMapping": "org.omniboard.localization:fa2",
       "preferred": {
-        "characters": "org.florisboard.layouts:persian2",
-        "symbols": "org.florisboard.layouts:persian",
-        "symbols2": "org.florisboard.layouts:persian",
-        "numericRow": "org.florisboard.layouts:persian"
+        "characters": "org.omniboard.layouts:persian2",
+        "symbols": "org.omniboard.layouts:persian",
+        "symbols2": "org.omniboard.layouts:persian",
+        "numericRow": "org.omniboard.layouts:persian"
       }
     },
     {
       "languageTag": "fa-FA",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:rial",
-      "popupMapping": "org.florisboard.localization:fa3",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:rial",
+      "popupMapping": "org.omniboard.localization:fa3",
       "preferred": {
-        "characters": "org.florisboard.layouts:persian3",
-        "symbols": "org.florisboard.layouts:persian",
-        "symbols2": "org.florisboard.layouts:persian",
-        "numericRow": "org.florisboard.layouts:western_arabic"
+        "characters": "org.omniboard.layouts:persian3",
+        "symbols": "org.omniboard.layouts:persian",
+        "symbols2": "org.omniboard.layouts:persian",
+        "numericRow": "org.omniboard.layouts:western_arabic"
       }
     },
     {
       "languageTag": "ar",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:rial",
-      "popupMapping": "org.florisboard.localization:ar",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:rial",
+      "popupMapping": "org.omniboard.localization:ar",
       "preferred": {
-        "characters": "org.florisboard.layouts:arabic",
-        "symbols": "org.florisboard.layouts:eastern",
-        "symbols2": "org.florisboard.layouts:eastern",
-        "numericRow": "org.florisboard.layouts:eastern_arabic"
+        "characters": "org.omniboard.layouts:arabic",
+        "symbols": "org.omniboard.layouts:eastern",
+        "symbols2": "org.omniboard.layouts:eastern",
+        "numericRow": "org.omniboard.layouts:eastern_arabic"
       }
     },
     {
       "languageTag": "az",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:azerbaijani_manat",
-      "popupMapping": "org.florisboard.localization:tr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:azerbaijani_manat",
+      "popupMapping": "org.omniboard.localization:tr",
       "preferred": {
-        "characters": "org.florisboard.layouts:azerbaijani"
+        "characters": "org.omniboard.layouts:azerbaijani"
       }
     },
     {
       "languageTag": "hu",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:hu",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:hu",
       "preferred": {
-        "characters": "org.florisboard.layouts:hungarian"
+        "characters": "org.omniboard.layouts:hungarian"
       }
     },
     {
       "languageTag": "eo",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:eo",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:eo",
       "preferred": {
-        "characters": "org.florisboard.layouts:esperanto"
+        "characters": "org.omniboard.layouts:esperanto"
       }
     },
     {
       "languageTag": "hr",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:hr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:hr",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwertz"
+        "characters": "org.omniboard.layouts:qwertz"
       }
     },
     {
       "languageTag": "hy",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:armenian_dram",
-      "popupMapping": "org.florisboard.localization:hy",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:armenian_dram",
+      "popupMapping": "org.omniboard.localization:hy",
       "preferred": {
-        "characters": "org.florisboard.layouts:armenian_alt_phonetic",
-        "symbols": "org.florisboard.layouts:armenian"
+        "characters": "org.omniboard.layouts:armenian_alt_phonetic",
+        "symbols": "org.omniboard.layouts:armenian"
       }
     },
     {
       "languageTag": "hy",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:armenian_dram",
-      "popupMapping": "org.florisboard.localization:hy",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:armenian_dram",
+      "popupMapping": "org.omniboard.localization:hy",
       "preferred": {
-        "characters": "org.florisboard.layouts:western_armenian",
-        "symbols": "org.florisboard.layouts:armenian"
+        "characters": "org.omniboard.layouts:western_armenian",
+        "symbols": "org.omniboard.layouts:armenian"
       }
     },
     {
       "languageTag": "hy",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:armenian_dram",
-      "popupMapping": "org.florisboard.localization:hy",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:armenian_dram",
+      "popupMapping": "org.omniboard.localization:hy",
       "preferred": {
-        "characters": "org.florisboard.layouts:eastern_armenian",
-        "symbols": "org.florisboard.layouts:armenian"
+        "characters": "org.omniboard.layouts:eastern_armenian",
+        "symbols": "org.omniboard.layouts:armenian"
       }
     },
     {
       "languageTag": "ru",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:ru",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:russian_ruble",
+      "popupMapping": "org.omniboard.localization:ru",
       "preferred": {
-        "characters": "org.florisboard.layouts:jcuken_russian"
+        "characters": "org.omniboard.layouts:jcuken_russian"
       }
     },
     {
       "languageTag": "rue",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:rue",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:rue",
       "preferred": {
-        "characters": "org.florisboard.layouts:rusyn"
+        "characters": "org.omniboard.layouts:rusyn"
       }
     },
     {
       "languageTag": "uk",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:ukrainian_hryvnia",
-      "popupMapping": "org.florisboard.localization:uk",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:ukrainian_hryvnia",
+      "popupMapping": "org.omniboard.localization:uk",
       "preferred": {
-        "characters": "org.florisboard.layouts:jcuken_ukrainian"
+        "characters": "org.omniboard.layouts:jcuken_ukrainian"
       }
     },
     {
       "languageTag": "el",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:el",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:el",
       "preferred": {
-        "characters": "org.florisboard.layouts:greek"
+        "characters": "org.omniboard.layouts:greek"
       }
     },
     {
       "languageTag": "ro",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:ro",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:ro",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "pl",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:pl",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:pl",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "bg-bg",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:bg",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:bg",
       "preferred": {
-        "characters": "org.florisboard.layouts:bulgarian_phonetic"
+        "characters": "org.omniboard.layouts:bulgarian_phonetic"
       }
     },
     {
       "languageTag": "tr",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:turkish_lira",
-      "popupMapping": "org.florisboard.localization:tr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:turkish_lira",
+      "popupMapping": "org.omniboard.localization:tr",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "iw-IL",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:israeli_new_shekel",
-      "popupMapping": "org.florisboard.localization:iw",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:israeli_new_shekel",
+      "popupMapping": "org.omniboard.localization:iw",
       "preferred": {
-        "characters": "org.florisboard.layouts:hebrew"
+        "characters": "org.omniboard.layouts:hebrew"
       }
     },
     {
       "languageTag": "ckb",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:ckb",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:ckb",
       "preferred": {
-        "characters": "org.florisboard.layouts:kurdish",
-        "symbols": "org.florisboard.layouts:eastern",
-        "symbols2": "org.florisboard.layouts:eastern",
-        "numericRow": "org.florisboard.layouts:eastern_arabic"
+        "characters": "org.omniboard.layouts:kurdish",
+        "symbols": "org.omniboard.layouts:eastern",
+        "symbols2": "org.omniboard.layouts:eastern",
+        "numericRow": "org.omniboard.layouts:eastern_arabic"
       }
     },
     {
       "languageTag": "sr-RS",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:sr",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:sr",
       "preferred": {
-        "characters": "org.florisboard.layouts:serbian_cyrillic"
+        "characters": "org.omniboard.layouts:serbian_cyrillic"
       }
     },
     {
       "languageTag": "sl-SI",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:sl-SI",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:sl-SI",
       "preferred": {
-        "characters": "org.florisboard.layouts:slovenian"
+        "characters": "org.omniboard.layouts:slovenian"
       }
     },
     {
       "languageTag": "lv-LV",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:lv",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:lv",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "ku",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
-      "popupMapping": "org.florisboard.localization:ku",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
+      "popupMapping": "org.omniboard.localization:ku",
       "preferred": {
-        "characters": "org.florisboard.layouts:kurdish_kurmanci"
+        "characters": "org.omniboard.layouts:kurdish_kurmanci"
       }
     },
     {
       "languageTag": "ca",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:ca",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:ca",
       "preferred": {
-        "characters": "org.florisboard.layouts:catalan"
+        "characters": "org.omniboard.layouts:catalan"
       }
     },
     {
       "languageTag": "IPA-IPA",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:dollar",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:dollar",
       "preferred": {
-        "characters": "org.florisboard.layouts:ipa",
-        "symbols": "org.florisboard.layouts:ipa",
-        "symbols2": "org.florisboard.layouts:ipa"
+        "characters": "org.omniboard.layouts:ipa",
+        "symbols": "org.omniboard.layouts:ipa",
+        "symbols2": "org.omniboard.layouts:ipa"
       }
     },
     {
       "languageTag": "sk",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:sk",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:sk",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwertz"
+        "characters": "org.omniboard.layouts:qwertz"
       }
     },
     {
       "languageTag": "cs",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:cs",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:cs",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwertz"
+        "characters": "org.omniboard.layouts:qwertz"
       }
     },
     {
       "languageTag": "ko",
-      "composer": "org.florisboard.composers:hangul-unicode",
-      "currencySet": "org.florisboard.currencysets:south_korean_won",
-      "popupMapping": "org.florisboard.localization:ko",
+      "composer": "org.omniboard.composers:hangul-unicode",
+      "currencySet": "org.omniboard.currencysets:south_korean_won",
+      "popupMapping": "org.omniboard.localization:ko",
       "preferred": {
-        "characters": "org.florisboard.layouts:korean"
+        "characters": "org.omniboard.layouts:korean"
       }
     },
     {
       "languageTag": "ko-KR",
-      "composer": "org.florisboard.composers:hangul-unicode",
-      "currencySet": "org.florisboard.currencysets:south_korean_won",
-      "popupMapping": "org.florisboard.localization:ko",
+      "composer": "org.omniboard.composers:hangul-unicode",
+      "currencySet": "org.omniboard.currencysets:south_korean_won",
+      "popupMapping": "org.omniboard.localization:ko",
       "preferred": {
-        "characters": "org.florisboard.layouts:korean_phonetic"
+        "characters": "org.omniboard.layouts:korean_phonetic"
       }
     },
     {
       "languageTag": "lt-LT",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:lt",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:lt",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "ja-JP-jis",
-      "composer": "org.florisboard.composers:kana-unicode",
-      "currencySet": "org.florisboard.currencysets:yen",
-      "popupMapping": "org.florisboard.localization:ja-JP-jis",
+      "composer": "org.omniboard.composers:kana-unicode",
+      "currencySet": "org.omniboard.currencysets:yen",
+      "popupMapping": "org.omniboard.localization:ja-JP-jis",
       "preferred": {
-        "characters": "org.florisboard.layouts:jis",
-        "symbols": "org.florisboard.layouts:cjk",
-        "symbols2": "org.florisboard.layouts:cjk",
-        "numericRow": "org.florisboard.layouts:cjk"
+        "characters": "org.omniboard.layouts:jis",
+        "symbols": "org.omniboard.layouts:cjk",
+        "symbols2": "org.omniboard.layouts:cjk",
+        "numericRow": "org.omniboard.layouts:cjk"
       }
     },
     {
       "languageTag": "th-kd",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:thai_baht",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:thai_baht",
       "preferred": {
-        "characters": "org.florisboard.layouts:thai_kedmanee",
-        "numericRow": "org.florisboard.layouts:thai"
+        "characters": "org.omniboard.layouts:thai_kedmanee",
+        "numericRow": "org.omniboard.layouts:thai"
       }
     },
     {
       "languageTag": "vi-VN",
-      "composer": "org.florisboard.composers:telex",
-      "currencySet": "org.florisboard.currencysets:vietnamese_dong",
-      "popupMapping": "org.florisboard.localization:vi-VN",
+      "composer": "org.omniboard.composers:telex",
+      "currencySet": "org.omniboard.currencysets:vietnamese_dong",
+      "popupMapping": "org.omniboard.localization:vi-VN",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "ig-NG",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:nigerian_naira",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:nigerian_naira",
       "preferred": {
-        "characters": "org.florisboard.layouts:igbo"
+        "characters": "org.omniboard.layouts:igbo"
       }
     },
     {
       "languageTag": "hoc",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:indian_rupee",
       "preferred": {
-        "characters": "org.florisboard.layouts:warang_citi",
-        "numericRow": "org.florisboard.layouts:warang_citi"
+        "characters": "org.omniboard.layouts:warang_citi",
+        "numericRow": "org.omniboard.layouts:warang_citi"
       }
     },
     {
       "languageTag": "udm",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:udm",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:russian_ruble",
+      "popupMapping": "org.omniboard.localization:udm",
       "preferred": {
-        "characters": "org.florisboard.layouts:udmurt_extended"
+        "characters": "org.omniboard.layouts:udmurt_extended"
       }
     },
     {
       "languageTag": "ur-PK",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:pakistani_rupee",
-      "popupMapping": "org.florisboard.localization:ur-PK",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:pakistani_rupee",
+      "popupMapping": "org.omniboard.localization:ur-PK",
       "preferred": {
-        "characters": "org.florisboard.layouts:urdu_phonetic"
+        "characters": "org.omniboard.layouts:urdu_phonetic"
       }
     },
     {
       "languageTag": "zh-CN-zhengma",
-      "composer": "org.florisboard.composers:appender",
+      "composer": "org.omniboard.composers:appender",
       "nlpProviders": {
-        "spelling": "org.florisboard.nlp.providers.han.shape",
-        "suggestion": "org.florisboard.nlp.providers.han.shape"
+        "spelling": "org.omniboard.nlp.providers.han.shape",
+        "suggestion": "org.omniboard.nlp.providers.han.shape"
       },
-      "currencySet": "org.florisboard.currencysets:yen",
-      "popupMapping": "org.florisboard.localization:cjk",
+      "currencySet": "org.omniboard.currencysets:yen",
+      "popupMapping": "org.omniboard.localization:cjk",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty",
-        "symbols": "org.florisboard.layouts:cjk",
-        "symbols2": "org.florisboard.layouts:cjk"
+        "characters": "org.omniboard.layouts:qwerty",
+        "symbols": "org.omniboard.layouts:cjk",
+        "symbols2": "org.omniboard.layouts:cjk"
       }
     },
 	  {
       "languageTag": "bn-BD",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:bangladeshi_taka",
-      "popupMapping": "org.florisboard.localization:bn-BD",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:bangladeshi_taka",
+      "popupMapping": "org.omniboard.localization:bn-BD",
       "preferred": {
-        "characters": "org.florisboard.layouts:bengali_bd",
-        "numericRow": "org.florisboard.layouts:bengali",
-        "numericAdvanced": "org.florisboard.layouts:bengali"
+        "characters": "org.omniboard.layouts:bengali_bd",
+        "numericRow": "org.omniboard.layouts:bengali",
+        "numericAdvanced": "org.omniboard.layouts:bengali"
       }
     },
     {
       "languageTag": "hi-IN",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:indian_rupee",
-      "popupMapping": "org.florisboard.localization:hi-IN",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:indian_rupee",
+      "popupMapping": "org.omniboard.localization:hi-IN",
       "preferred": {
-        "characters": "org.florisboard.layouts:hindi_in",
-        "numericRow": "org.florisboard.layouts:devanagari"
+        "characters": "org.omniboard.layouts:hindi_in",
+        "numericRow": "org.omniboard.layouts:devanagari"
       }
     },
     {
       "languageTag": "ast",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:ast",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:ast",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     },
     {
       "languageTag": "ta-lk",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:indian_rupee",
       "preferred": {
-        "characters": "org.florisboard.layouts:tamil"
+        "characters": "org.omniboard.layouts:tamil"
       }
     },
     {
       "languageTag": "kab",
-      "composer": "org.florisboard.composers:appender",
-      "currencySet": "org.florisboard.currencysets:euro",
-      "popupMapping": "org.florisboard.localization:kab",
+      "composer": "org.omniboard.composers:appender",
+      "currencySet": "org.omniboard.currencysets:euro",
+      "popupMapping": "org.omniboard.localization:kab",
       "preferred": {
-        "characters": "org.florisboard.layouts:qwerty"
+        "characters": "org.omniboard.layouts:qwerty"
       }
     }
   ]

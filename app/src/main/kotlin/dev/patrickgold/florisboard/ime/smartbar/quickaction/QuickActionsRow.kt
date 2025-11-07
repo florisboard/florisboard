@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.smartbar.quickaction
+package dev.silo.omniboard.ime.smartbar.quickaction
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -29,12 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.snygg.ui.SnyggRow
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.smartbar.SmartbarLayout
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import dev.silo.omniboard.keyboardManager
+import dev.silo.jetpref.datastore.model.observeAsState
+import org.omniboard.lib.snygg.ui.SnyggRow
 
 internal val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
 
@@ -44,7 +44,7 @@ fun QuickActionsRow(
     elementName: String,
     modifier: Modifier = Modifier,
 ) = with(LocalDensity.current) {
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 

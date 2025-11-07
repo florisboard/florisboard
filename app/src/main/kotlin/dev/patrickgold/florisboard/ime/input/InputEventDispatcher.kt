@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.input
+package dev.silo.omniboard.ime.input
 
 import android.os.SystemClock
 import android.view.ViewConfiguration
 import androidx.collection.SparseArrayCompat
 import androidx.collection.isNotEmpty
 import androidx.collection.set
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import org.florisboard.lib.android.removeAndReturn
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.keyboard.KeyData
+import dev.silo.omniboard.ime.text.gestures.SwipeAction
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import org.omniboard.lib.android.removeAndReturn
+import dev.silo.omniboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,7 +38,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.florisboard.lib.kotlin.guardedByLock
+import org.omniboard.lib.kotlin.guardedByLock
 
 class InputEventDispatcher private constructor(private val repeatableKeyCodes: IntArray) {
     companion object {
@@ -48,7 +48,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
         fun new(repeatableKeyCodes: IntArray = intArrayOf()) = InputEventDispatcher(repeatableKeyCodes.clone())
     }
 
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     private val pressedKeys = guardedByLock { SparseArrayCompat<PressedKeyInfo>() }

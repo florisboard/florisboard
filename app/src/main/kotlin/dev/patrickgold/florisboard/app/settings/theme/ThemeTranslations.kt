@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,46 +14,46 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.theme
+package dev.silo.omniboard.app.settings.theme
 
 import android.content.Context
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.UnicodeCtrlChar
-import dev.patrickgold.jetpref.material.ui.ColorRepresentation
-import org.florisboard.lib.kotlin.simpleNameOrEnclosing
-import org.florisboard.lib.snygg.Snygg
-import org.florisboard.lib.snygg.SnyggElementRule
-import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
-import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggFontStyleValue
-import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggInheritValue
-import org.florisboard.lib.snygg.value.SnyggNoValue
-import org.florisboard.lib.snygg.value.SnyggContentScaleValue
-import org.florisboard.lib.snygg.value.SnyggPaddingValue
-import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
-import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggTextAlignValue
-import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
-import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
-import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
-import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
-import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.SnyggValueEncoder
-import org.florisboard.lib.snygg.value.SnyggYesValue
+import dev.silo.omniboard.R
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.lib.UnicodeCtrlChar
+import dev.silo.jetpref.material.ui.ColorRepresentation
+import org.omniboard.lib.kotlin.simpleNameOrEnclosing
+import org.omniboard.lib.snygg.Snygg
+import org.omniboard.lib.snygg.SnyggElementRule
+import org.omniboard.lib.snygg.value.SnyggCircleShapeValue
+import org.omniboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggDefinedVarValue
+import org.omniboard.lib.snygg.value.SnyggDpSizeValue
+import org.omniboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.omniboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.omniboard.lib.snygg.value.SnyggFontStyleValue
+import org.omniboard.lib.snygg.value.SnyggFontWeightValue
+import org.omniboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.omniboard.lib.snygg.value.SnyggInheritValue
+import org.omniboard.lib.snygg.value.SnyggNoValue
+import org.omniboard.lib.snygg.value.SnyggContentScaleValue
+import org.omniboard.lib.snygg.value.SnyggPaddingValue
+import org.omniboard.lib.snygg.value.SnyggPercentageSizeValue
+import org.omniboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggSpSizeValue
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.snygg.value.SnyggTextAlignValue
+import org.omniboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.omniboard.lib.snygg.value.SnyggTextMaxLinesValue
+import org.omniboard.lib.snygg.value.SnyggTextOverflowValue
+import org.omniboard.lib.snygg.value.SnyggUndefinedValue
+import org.omniboard.lib.snygg.value.SnyggUriValue
+import org.omniboard.lib.snygg.value.SnyggValue
+import org.omniboard.lib.snygg.value.SnyggValueEncoder
+import org.omniboard.lib.snygg.value.SnyggYesValue
 
 internal fun Context.translateElementName(rule: SnyggElementRule, level: SnyggLevel): String {
     return translateElementName(rule.elementName, level) ?: rule.elementName
@@ -62,7 +62,7 @@ internal fun Context.translateElementName(rule: SnyggElementRule, level: SnyggLe
 internal fun Context.translateElementName(element: String, level: SnyggLevel): String? {
     return when (level) {
         SnyggLevel.DEVELOPER -> null
-        else -> FlorisImeUi.elementNamesToTranslation[element]?.let { getString(it) }
+        else -> OmniImeUi.elementNamesToTranslation[element]?.let { getString(it) }
     }
 }
 

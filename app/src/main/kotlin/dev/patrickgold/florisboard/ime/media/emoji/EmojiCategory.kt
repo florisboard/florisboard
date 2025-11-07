@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.media.emoji
+package dev.silo.omniboard.ime.media.emoji
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiEmotions
@@ -28,7 +28,7 @@ import androidx.compose.material.icons.filled.EmojiSymbols
 import androidx.compose.material.icons.filled.EmojiTransportation
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.patrickgold.florisboard.R
+import dev.silo.omniboard.R
 
 enum class EmojiCategory(val id: String) {
     RECENTLY_USED("recently_used"),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.editor
+package dev.silo.omniboard.ime.editor
 
 import android.content.ClipDescription
 import android.content.ContentUris
@@ -22,35 +22,35 @@ import android.content.Context
 import android.view.KeyEvent
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
-import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.text.composing.Appender
-import dev.patrickgold.florisboard.ime.text.composing.Composer
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.florisboard.subtypeManager
+import dev.silo.omniboard.OmniImeService
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.appContext
+import dev.silo.omniboard.clipboardManager
+import dev.silo.omniboard.ime.ImeUiMode
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
+import dev.silo.omniboard.ime.clipboard.provider.ItemType
+import dev.silo.omniboard.ime.input.InputShiftState
+import dev.silo.omniboard.ime.keyboard.IncognitoMode
+import dev.silo.omniboard.ime.keyboard.KeyboardMode
+import dev.silo.omniboard.ime.nlp.SuggestionCandidate
+import dev.silo.omniboard.ime.text.composing.Appender
+import dev.silo.omniboard.ime.text.composing.Composer
+import dev.silo.omniboard.ime.text.key.KeyVariation
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.ext.ExtensionComponentName
+import dev.silo.omniboard.nlpManager
+import dev.silo.omniboard.subtypeManager
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.android.showShortToastSync
+import org.omniboard.lib.android.showShortToastSync
 
 class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     companion object {
         private const val SPACE = " "
     }
 
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val keyboardManager by context.keyboardManager()
@@ -62,9 +62,9 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     val phantomSpace = PhantomSpaceState()
     val massSelection = MassSelectionState()
 
-    private fun currentInputConnection() = FlorisImeService.currentInputConnection()
+    private fun currentInputConnection() = OmniImeService.currentInputConnection()
 
-    override fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+    override fun handleStartInputView(editorInfo: OmniEditorInfo, isRestart: Boolean) {
         if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
@@ -145,7 +145,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         return keyboardManager.resources.composers.value?.get(composerName) ?: Appender
     }
 
-    override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
+    override fun shouldDetermineComposingRegion(editorInfo: OmniEditorInfo): Boolean {
         return super.shouldDetermineComposingRegion(editorInfo) &&
             (phantomSpace.isInactive || phantomSpace.showComposingRegion)
     }

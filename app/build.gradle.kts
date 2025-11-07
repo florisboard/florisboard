@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ fun getLocalOrEnv(key: String, default: String? = null): String {
 }
 
 android {
-    namespace = "dev.patrickgold.florisboard"
+    namespace = "dev.silo.omniboard"
     compileSdk = projectCompileSdk.toInt()
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
@@ -68,7 +68,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "dev.patrickgold.florisboard"
+        applicationId = "dev.silo.omniboard"
         minSdk = projectMinSdk.toInt()
         targetSdk = projectTargetSdk.toInt()
         versionCode = projectVersionCode.toInt()
@@ -78,7 +78,7 @@ android {
 
         buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
-        buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
+        buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.omniboard.org\"")
         buildConfigField("String", "OPENAI_API_KEY", "\"${getLocalOrEnv("OPENAI_API_KEY")}\"")
         buildConfigField("String", "WHISPER_MODEL", "\"${getLocalOrEnv("WHISPER_MODEL", "whisper-1")}\"")
 
@@ -102,7 +102,7 @@ android {
 
     bundle {
         language {
-            // We disable language split because FlorisBoard does not use
+            // We disable language split because OmniBoard does not use
             // runtime Google Play Service APIs and thus cannot dynamically
             // request to download the language resources for a specific locale.
             enableSplit = false
@@ -122,10 +122,10 @@ android {
             isDebuggable = true
             isJniDebuggable = false
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_debug_foreground")
-            resValue("string", "floris_app_name", "FlorisBoard Debug")
+            resValue("mipmap", "omni_app_icon", "@mipmap/ic_app_icon_debug")
+            resValue("mipmap", "omni_app_icon_round", "@mipmap/ic_app_icon_debug_round")
+            resValue("drawable", "omni_app_icon_foreground", "@drawable/ic_app_icon_debug_foreground")
+            resValue("string", "omni_app_name", "OmniBoard Debug")
         }
 
         create("beta") {
@@ -136,10 +136,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_beta_foreground")
-            resValue("string", "floris_app_name", "FlorisBoard Beta")
+            resValue("mipmap", "omni_app_icon", "@mipmap/ic_app_icon_beta")
+            resValue("mipmap", "omni_app_icon_round", "@mipmap/ic_app_icon_beta_round")
+            resValue("drawable", "omni_app_icon_foreground", "@drawable/ic_app_icon_beta_foreground")
+            resValue("string", "omni_app_name", "OmniBoard Beta")
         }
 
         named("release") {
@@ -149,10 +149,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
-            resValue("string", "floris_app_name", "@string/app_name")
+            resValue("mipmap", "omni_app_icon", "@mipmap/ic_app_icon_stable")
+            resValue("mipmap", "omni_app_icon_round", "@mipmap/ic_app_icon_stable_round")
+            resValue("drawable", "omni_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
+            resValue("string", "omni_app_name", "@string/app_name")
         }
 
         create("benchmark") {
@@ -216,11 +216,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
-    implementation(libs.patrickgold.compose.tooltip)
-    implementation(libs.patrickgold.jetpref.datastore.model)
-    ksp(libs.patrickgold.jetpref.datastore.model.processor)
-    implementation(libs.patrickgold.jetpref.datastore.ui)
-    implementation(libs.patrickgold.jetpref.material.ui)
+    implementation(libs.silo.compose.tooltip)
+    implementation(libs.silo.jetpref.datastore.model)
+    ksp(libs.silo.jetpref.datastore.model.processor)
+    implementation(libs.silo.jetpref.datastore.ui)
+    implementation(libs.silo.jetpref.material.ui)
     implementation(libs.okhttp)
 
     implementation(project(":lib:android"))

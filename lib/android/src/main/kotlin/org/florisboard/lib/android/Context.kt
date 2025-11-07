@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 @file:Suppress("NOTHING_TO_INLINE")
 
-package org.florisboard.lib.android
+package org.omniboard.lib.android
 
 import android.content.Context
 import androidx.annotation.StringRes
-import org.florisboard.lib.kotlin.CurlyArg
-import org.florisboard.lib.kotlin.curlyFormat
+import org.omniboard.lib.kotlin.CurlyArg
+import org.omniboard.lib.kotlin.curlyFormat
 import kotlin.reflect.KClass
 
 /**

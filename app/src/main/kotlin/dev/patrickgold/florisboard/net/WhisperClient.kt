@@ -1,6 +1,6 @@
-package dev.patrickgold.florisboard.net
+package dev.silo.omniboard.net
 
-import dev.patrickgold.florisboard.BuildConfig
+import dev.silo.omniboard.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType

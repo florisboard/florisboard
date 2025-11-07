@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.keyboard
+package dev.silo.omniboard.ime.keyboard
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
@@ -46,24 +46,24 @@ import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
-import dev.patrickgold.florisboard.ime.editor.ImeOptions
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.vectorResource
-import org.florisboard.lib.compose.icons.ForwardDelete
+import dev.silo.omniboard.R
+import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
+import dev.silo.omniboard.ime.core.Subtype
+import dev.silo.omniboard.ime.editor.OmniEditorInfo
+import dev.silo.omniboard.ime.editor.ImeOptions
+import dev.silo.omniboard.ime.input.InputShiftState
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.key.KeyType
+import dev.silo.omniboard.lib.OmniLocale
+import dev.silo.omniboard.lib.compose.vectorResource
+import org.omniboard.lib.compose.icons.ForwardDelete
 
 interface ComputingEvaluator {
     val version: Int
 
     val keyboard: Keyboard
 
-    val editorInfo: FlorisEditorInfo
+    val editorInfo: OmniEditorInfo
 
     val state: KeyboardState
 
@@ -87,7 +87,7 @@ object DefaultComputingEvaluator : ComputingEvaluator {
 
     override val keyboard = PlaceholderLoadingKeyboard
 
-    override val editorInfo = FlorisEditorInfo.Unspecified
+    override val editorInfo = OmniEditorInfo.Unspecified
 
     override val state = KeyboardState.new()
 
@@ -106,7 +106,7 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun slotData(data: KeyData): KeyData? = null
 }
 
-private var cachedDisplayNameState = Triple(FlorisLocale.ROOT, DisplayLanguageNamesIn.SYSTEM_LOCALE, "")
+private var cachedDisplayNameState = Triple(OmniLocale.ROOT, DisplayLanguageNamesIn.SYSTEM_LOCALE, "")
 
 /**
  * Compute language name with a cache to prevent repetitive calling of `locale.displayName()`, which invokes the
@@ -114,7 +114,7 @@ private var cachedDisplayNameState = Triple(FlorisLocale.ROOT, DisplayLanguageNa
  * language name. This only caches the last display name, but that's more than enough, as a one-time re-computation when
  * the subtype changes does not hurt, the repetitive computation for the same language hurts.
  */
-private fun computeLanguageDisplayName(locale: FlorisLocale, displayLanguageNamesIn: DisplayLanguageNamesIn): String {
+private fun computeLanguageDisplayName(locale: OmniLocale, displayLanguageNamesIn: DisplayLanguageNamesIn): String {
     val (cachedLocale, cachedDisplayLanguageNamesIn, cachedDisplayName) = cachedDisplayNameState
     if (cachedLocale == locale && cachedDisplayLanguageNamesIn == displayLanguageNamesIn) {
         return cachedDisplayName

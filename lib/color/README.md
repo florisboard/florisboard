@@ -1,4 +1,4 @@
-# FlorisBoard Color Library
+# OmniBoard Color Library
 
 This library manages the color schemes for the settings and snygg material you themes.
 

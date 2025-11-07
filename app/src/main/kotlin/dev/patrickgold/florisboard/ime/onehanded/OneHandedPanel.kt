@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.onehanded
+package dev.silo.omniboard.ime.onehanded
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.RowScope
@@ -29,16 +29,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.input.LocalInputFeedbackController
+import dev.silo.omniboard.ime.keyboard.OmniImeSizing
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import org.omniboard.lib.compose.stringRes
 import kotlinx.coroutines.launch
-import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggIcon
-import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.omniboard.lib.snygg.ui.SnyggColumn
+import org.omniboard.lib.snygg.ui.SnyggIcon
+import org.omniboard.lib.snygg.ui.SnyggIconButton
 
 @Composable
 fun RowScope.OneHandedPanel(
@@ -46,20 +46,20 @@ fun RowScope.OneHandedPanel(
     panelSide: OneHandedMode,
     weight: Float,
 ) {
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val scope = rememberCoroutineScope()
     val inputFeedbackController = LocalInputFeedbackController.current
 
     SnyggColumn(
-        FlorisImeUi.OneHandedPanel.elementName,
+        OmniImeUi.OneHandedPanel.elementName,
         modifier = modifier
             .weight(weight)
-            .height(FlorisImeSizing.imeUiHeight()),
+            .height(OmniImeSizing.imeUiHeight()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
         SnyggIconButton(
-            FlorisImeUi.OneHandedPanelButton.elementName,
+            OmniImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 scope.launch {
                     inputFeedbackController.keyPress()
@@ -77,7 +77,7 @@ fun RowScope.OneHandedPanel(
             )
         }
         SnyggIconButton(
-            FlorisImeUi.OneHandedPanelButton.elementName,
+            OmniImeUi.OneHandedPanelButton.elementName,
             onClick = {
                 scope.launch {
                     inputFeedbackController.keyPress()

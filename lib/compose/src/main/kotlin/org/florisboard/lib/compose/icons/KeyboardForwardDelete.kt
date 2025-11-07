@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose.icons
+package org.omniboard.lib.compose.icons
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon

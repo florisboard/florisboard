@@ -63,8 +63,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">پیشفرض</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
     <string name="settings__home__title" comment="Title of the Home screen">خوش آمدید به {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">زبان ها &amp; چیدمان ها</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">نام زبان ها را به این صورت نمایش بده</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">زیرنوع ها</string>
@@ -128,7 +128,7 @@
     <string name="settings__theme_editor__code_recording_help_text">برای یافتن کد یک کلید، از دکمه کنار فیلد ورودی کد استفاده کنید. وقتی که فعال شود، کلید فعال شده بعدی را ضبط کرده و کد آن را وارد فیلد ورودی می کند.</string>
     <string name="settings__theme_editor__code_recording_started">ضبط کد کلید شروع شد</string>
     <string name="settings__theme_editor__code_recording_stopped">ضبط کد کلید پایان یافت</string>
-    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} باید به عنوان کیبورد پیشفرض انتخاب شود تا کد کلید را بتوان ضبط کرد</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_omni">{app_name} باید به عنوان کیبورد پیشفرض انتخاب شود تا کد کلید را بتوان ضبط کرد</string>
     <string name="settings__theme_editor__code_recording_placeholder">در حال ضبط...</string>
     <string name="settings__theme_editor__add_property">افزودن ویژگی</string>
     <string name="settings__theme_editor__edit_property">ویرایش ویژگی</string>
@@ -185,9 +185,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات برای سیستم لغتنامه کاربر</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">فعالسازی لغتنامه کاربر داخلی</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">پیشنهاد دادن کلمات ذخیره شده در لغتنامه داخلی کاربر</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">مدیریت لغتنامه داخلی کاربر</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات از لغتنامه داخلی کاربر</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">لغتنامه داخلی کاربر</string>
+    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">مدیریت لغتنامه داخلی کاربر</string>
+    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات از لغتنامه داخلی کاربر</string>
+    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">لغتنامه داخلی کاربر</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">لغتنامه سیستم کاربر</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">برای همه زبان ها</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">بازکردن مدیریت سیستم رابط کاربری</string>

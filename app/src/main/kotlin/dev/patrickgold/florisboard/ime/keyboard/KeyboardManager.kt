@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.keyboard
+package dev.silo.omniboard.ime.keyboard
 
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import dev.patrickgold.florisboard.audio.Recorder
-import dev.patrickgold.florisboard.net.WhisperClient
+import dev.silo.omniboard.audio.Recorder
+import dev.silo.omniboard.net.WhisperClient
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showShortToast
-import org.florisboard.lib.android.showLongToast
+import org.omniboard.lib.android.showShortToast
+import org.omniboard.lib.android.showLongToast
 
 
 import android.icu.lang.UCharacter
@@ -33,46 +33,46 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
-import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.SubtypePreset
-import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
-import dev.patrickgold.florisboard.ime.editor.ImeOptions
-import dev.patrickgold.florisboard.ime.editor.InputAttributes
-import dev.patrickgold.florisboard.ime.editor.OperationUnit
-import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
-import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
-import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
-import dev.patrickgold.florisboard.ime.text.composing.Composer
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
-import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.titlecase
-import dev.patrickgold.florisboard.lib.uppercase
-import dev.patrickgold.florisboard.lib.util.InputMethodUtils
-import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.florisboard.subtypeManager
+import dev.silo.omniboard.OmniImeService
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.appContext
+import dev.silo.omniboard.clipboardManager
+import dev.silo.omniboard.editorInstance
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.ime.ImeUiMode
+import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
+import dev.silo.omniboard.ime.core.Subtype
+import dev.silo.omniboard.ime.core.SubtypePreset
+import dev.silo.omniboard.ime.editor.EditorContent
+import dev.silo.omniboard.ime.editor.OmniEditorInfo
+import dev.silo.omniboard.ime.editor.ImeOptions
+import dev.silo.omniboard.ime.editor.InputAttributes
+import dev.silo.omniboard.ime.editor.OperationUnit
+import dev.silo.omniboard.ime.input.CapitalizationBehavior
+import dev.silo.omniboard.ime.input.InputEventDispatcher
+import dev.silo.omniboard.ime.input.InputKeyEventReceiver
+import dev.silo.omniboard.ime.input.InputShiftState
+import dev.silo.omniboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.silo.omniboard.ime.nlp.PunctuationRule
+import dev.silo.omniboard.ime.nlp.SuggestionCandidate
+import dev.silo.omniboard.ime.onehanded.OneHandedMode
+import dev.silo.omniboard.ime.popup.PopupMappingComponent
+import dev.silo.omniboard.ime.text.composing.Composer
+import dev.silo.omniboard.ime.text.gestures.SwipeAction
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.key.KeyType
+import dev.silo.omniboard.ime.text.key.UtilityKeyAction
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import dev.silo.omniboard.ime.text.keyboard.TextKeyboardCache
+import dev.silo.omniboard.lib.devtools.LogTopic
+import dev.silo.omniboard.lib.devtools.flogError
+import dev.silo.omniboard.lib.ext.ExtensionComponentName
+import dev.silo.omniboard.lib.titlecase
+import dev.silo.omniboard.lib.uppercase
+import dev.silo.omniboard.lib.util.InputMethodUtils
+import dev.silo.omniboard.nlpManager
+import dev.silo.omniboard.subtypeManager
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -82,20 +82,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.android.AndroidKeyguardManager
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.android.showShortToastSync
-import org.florisboard.lib.android.systemService
-import org.florisboard.lib.kotlin.collectIn
-import org.florisboard.lib.kotlin.collectLatestIn
+import org.omniboard.lib.android.AndroidKeyguardManager
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.android.showLongToastSync
+import org.omniboard.lib.android.showShortToastSync
+import org.omniboard.lib.android.systemService
+import org.omniboard.lib.kotlin.collectIn
+import org.omniboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicInteger
 
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
@@ -535,13 +535,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     /**
      * Handles a [KeyCode.LANGUAGE_SWITCH] event. Also handles if the language switch should cycle
-     * FlorisBoard internal or system-wide.
+     * OmniBoard internal or system-wide.
      */
     private fun handleLanguageSwitch() {
         when (prefs.keyboard.utilityKeyAction.get()) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
             UtilityKeyAction.SWITCH_LANGUAGE -> subtypeManager.switchToNextSubtype()
-            else -> FlorisImeService.switchToNextInputMethod()
+            else -> OmniImeService.switchToNextInputMethod()
         }
     }
 
@@ -658,12 +658,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             if (newState) {
                 appContext.showLongToast(
                     R.string.incognito_mode__toast_after_enabled,
-                    "app_name" to appContext.getString(R.string.floris_app_name),
+                    "app_name" to appContext.getString(R.string.omni_app_name),
                 )
             } else {
                 appContext.showLongToast(
                     R.string.incognito_mode__toast_after_disabled,
-                    "app_name" to appContext.getString(R.string.floris_app_name),
+                    "app_name" to appContext.getString(R.string.omni_app_name),
                 )
             }
         )
@@ -801,8 +801,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.ENTER -> handleEnter()
             KeyCode.FORWARD_DELETE -> handleForwardDelete(OperationUnit.CHARACTERS)
             KeyCode.FORWARD_DELETE_WORD -> handleForwardDelete(OperationUnit.WORDS)
-            KeyCode.IME_SHOW_UI -> FlorisImeService.showUi()
-            KeyCode.IME_HIDE_UI -> FlorisImeService.hideUi()
+            KeyCode.IME_SHOW_UI -> OmniImeService.showUi()
+            KeyCode.IME_HIDE_UI -> OmniImeService.hideUi()
             KeyCode.IME_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
             KeyCode.IME_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
             KeyCode.IME_UI_MODE_TEXT -> activeState.imeUiMode = ImeUiMode.TEXT
@@ -824,15 +824,15 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.KANA_HALF_KATA -> handleKanaHalfKata()
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.REDO -> editorInstance.performRedo()
-            KeyCode.SETTINGS -> FlorisImeService.launchSettings()
+            KeyCode.SETTINGS -> OmniImeService.launchSettings()
             KeyCode.SHIFT -> handleShiftUp(data)
             KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)
             KeyCode.SHOW_SUBTYPE_PICKER -> {
                 appContext.keyboardManager.value.activeState.isSubtypeSelectionVisible = true
             }
-            KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
-            KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
+            KeyCode.SYSTEM_PREV_INPUT_METHOD -> OmniImeService.switchToPrevInputMethod()
+            KeyCode.SYSTEM_NEXT_INPUT_METHOD -> OmniImeService.switchToNextInputMethod()
             KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> scope.launch {
                 prefs.smartbar.enabled.let { it.set(!it.get()) }
             }
@@ -915,7 +915,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyRepeat(data: KeyData) {
-        FlorisImeService.inputFeedbackController()?.keyRepeatedAction(data)
+        OmniImeService.inputFeedbackController()?.keyRepeatedAction(data)
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -1037,7 +1037,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private inner class ComputingEvaluatorImpl(
         override val version: Int,
         override val keyboard: Keyboard,
-        override val editorInfo: FlorisEditorInfo,
+        override val editorInfo: OmniEditorInfo,
         override val state: KeyboardState,
         override val subtype: Subtype,
     ) : ComputingEvaluator {

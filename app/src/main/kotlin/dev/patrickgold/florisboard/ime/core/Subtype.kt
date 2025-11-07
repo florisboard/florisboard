@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.silo.omniboard.ime.core
 
-import dev.patrickgold.florisboard.ime.keyboard.LayoutType
-import dev.patrickgold.florisboard.ime.keyboard.LayoutTypeId
-import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
-import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
-import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
-import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
-import dev.patrickgold.florisboard.ime.keyboard.extCorePunctuationRule
-import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
-import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
-import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.silo.omniboard.ime.keyboard.LayoutType
+import dev.silo.omniboard.ime.keyboard.LayoutTypeId
+import dev.silo.omniboard.ime.keyboard.extCoreComposer
+import dev.silo.omniboard.ime.keyboard.extCoreCurrencySet
+import dev.silo.omniboard.ime.keyboard.extCoreLayout
+import dev.silo.omniboard.ime.keyboard.extCorePopupMapping
+import dev.silo.omniboard.ime.keyboard.extCorePunctuationRule
+import dev.silo.omniboard.ime.nlp.latin.LatinLanguageProvider
+import dev.silo.omniboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.silo.omniboard.lib.OmniLocale
+import dev.silo.omniboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -47,8 +47,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Subtype(
     val id: Long,
-    val primaryLocale: FlorisLocale,
-    val secondaryLocales: List<FlorisLocale>,
+    val primaryLocale: OmniLocale,
+    val secondaryLocales: List<OmniLocale>,
     val nlpProviders: SubtypeNlpProviderMap = SubtypeNlpProviderMap(),
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
@@ -62,7 +62,7 @@ data class Subtype(
          */
         val DEFAULT = Subtype(
             id = -1,
-            primaryLocale = FlorisLocale.from("en", "US"),
+            primaryLocale = OmniLocale.from("en", "US"),
             secondaryLocales = emptyList(),
             nlpProviders = SubtypeNlpProviderMap(),
             composer = extCoreComposer("appender"),
@@ -76,7 +76,7 @@ data class Subtype(
     /**
      * Returns an accumulated list of all locales of this subtype.
      */
-    fun locales(): List<FlorisLocale> {
+    fun locales(): List<OmniLocale> {
         val locales = mutableListOf(primaryLocale)
         locales.addAll(secondaryLocales)
         return locales
@@ -235,9 +235,9 @@ data class SubtypeNlpProviderMap(
  */
 @Serializable
 data class SubtypePreset(
-    @Serializable(with = FlorisLocale.Serializer::class)
+    @Serializable(with = OmniLocale.Serializer::class)
     @SerialName("languageTag")
-    val locale: FlorisLocale,
+    val locale: OmniLocale,
     val nlpProviders: SubtypeNlpProviderMap = SubtypeNlpProviderMap(),
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,

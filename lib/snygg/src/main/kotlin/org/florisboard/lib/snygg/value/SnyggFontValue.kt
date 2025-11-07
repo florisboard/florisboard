@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.value
+package org.omniboard.lib.snygg.value
 
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import org.florisboard.lib.snygg.value.SnyggFontValue.Companion.FontNameRegex
+import org.omniboard.lib.snygg.value.SnyggFontValue.Companion.FontNameRegex
 
 sealed interface SnyggFontValue : SnyggValue {
     companion object {

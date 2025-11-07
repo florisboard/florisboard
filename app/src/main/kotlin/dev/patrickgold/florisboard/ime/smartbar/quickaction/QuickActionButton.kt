@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.smartbar.quickaction
+package dev.silo.omniboard.ime.smartbar.quickaction
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -34,17 +34,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.compose.tooltip.PlainTooltip
-import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
-import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import org.florisboard.lib.snygg.SnyggSelector
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggIcon
-import org.florisboard.lib.snygg.ui.SnyggText
+import dev.silo.compose.tooltip.PlainTooltip
+import dev.silo.omniboard.OmniImeService
+import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
+import dev.silo.omniboard.ime.keyboard.computeImageVector
+import dev.silo.omniboard.ime.keyboard.computeLabel
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import org.omniboard.lib.snygg.SnyggSelector
+import org.omniboard.lib.snygg.ui.SnyggBox
+import org.omniboard.lib.snygg.ui.SnyggIcon
+import org.omniboard.lib.snygg.ui.SnyggText
 
 enum class QuickActionBarType {
     INTERACTIVE_BUTTON,
@@ -60,17 +60,17 @@ fun QuickActionButton(
     type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
     val context = LocalContext.current
-    // Get the inputFeedbackController through the FlorisImeService companion-object.
-    val inputFeedbackController = FlorisImeService.inputFeedbackController()
+    // Get the inputFeedbackController through the OmniImeService companion-object.
+    val inputFeedbackController = OmniImeService.inputFeedbackController()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val isEnabled = type == QuickActionBarType.EDITOR_TILE || evaluator.evaluateEnabled(action.keyData())
     val elementName = when (type) {
-        QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
-        QuickActionBarType.INTERACTIVE_TILE -> FlorisImeUi.SmartbarActionTile
-        QuickActionBarType.EDITOR_TILE -> FlorisImeUi.SmartbarActionsEditorTile
+        QuickActionBarType.INTERACTIVE_BUTTON -> OmniImeUi.SmartbarActionKey
+        QuickActionBarType.INTERACTIVE_TILE -> OmniImeUi.SmartbarActionTile
+        QuickActionBarType.EDITOR_TILE -> OmniImeUi.SmartbarActionsEditorTile
     }.elementName
-    val attributes = mapOf(FlorisImeUi.Attr.Code to action.keyData().code)
+    val attributes = mapOf(OmniImeUi.Attr.Code to action.keyData().code)
     val selector = when {
         isPressed -> SnyggSelector.PRESSED
         !isEnabled -> SnyggSelector.DISABLED

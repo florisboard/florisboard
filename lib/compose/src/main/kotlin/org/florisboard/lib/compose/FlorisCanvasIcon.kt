@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package org.omniboard.lib.compose
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
@@ -28,7 +28,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 
 @Composable
-fun FlorisCanvasIcon(
+fun OmniCanvasIcon(
     @DrawableRes iconId: Int,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
@@ -38,7 +38,7 @@ fun FlorisCanvasIcon(
         iconId,
         null,
     )?.let { drawable ->
-        FlorisCanvasIcon(
+        OmniCanvasIcon(
             drawable = drawable,
             modifier = modifier,
             contentDescription = contentDescription,
@@ -47,7 +47,7 @@ fun FlorisCanvasIcon(
 }
 
 @Composable
-fun FlorisCanvasIcon(
+fun OmniCanvasIcon(
     drawable: Drawable,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,

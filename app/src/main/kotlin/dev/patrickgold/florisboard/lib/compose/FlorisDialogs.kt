@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package dev.silo.omniboard.lib.compose
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun FlorisConfirmDeleteDialog(
+fun OmniConfirmDeleteDialog(
     modifier: Modifier = Modifier,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
@@ -43,7 +43,7 @@ fun FlorisConfirmDeleteDialog(
 }
 
 @Composable
-fun FlorisUnsavedChangesDialog(
+fun OmniUnsavedChangesDialog(
     modifier: Modifier = Modifier,
     onSave: () -> Unit,
     onDiscard: () -> Unit,

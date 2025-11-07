@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.clipboard
+package dev.silo.omniboard.ime.clipboard
 
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
 
 data class ClipboardHistory(val all: List<ClipboardItem>) {
     companion object {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Keyboard
@@ -22,16 +22,16 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.Preference
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun ExtensionHomeScreen() = FlorisScreen {
+fun ExtensionHomeScreen() = OmniScreen {
     title = stringRes(R.string.ext__home__title)
     previewFieldVisible = false
 

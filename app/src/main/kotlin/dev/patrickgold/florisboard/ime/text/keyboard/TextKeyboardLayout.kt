@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.keyboard
+package dev.silo.omniboard.ime.text.keyboard
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -55,46 +55,46 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.glideTypingManager
-import dev.patrickgold.florisboard.ime.editor.OperationScope
-import dev.patrickgold.florisboard.ime.editor.OperationUnit
-import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
-import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
-import dev.patrickgold.florisboard.ime.popup.PopupUiController
-import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
-import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.FlorisRect
-import dev.patrickgold.florisboard.lib.Pointer
-import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.toIntOffset
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.silo.omniboard.OmniImeService
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.editorInstance
+import dev.silo.omniboard.glideTypingManager
+import dev.silo.omniboard.ime.editor.OperationScope
+import dev.silo.omniboard.ime.editor.OperationUnit
+import dev.silo.omniboard.ime.input.InputEventDispatcher
+import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
+import dev.silo.omniboard.ime.keyboard.OmniImeSizing
+import dev.silo.omniboard.ime.keyboard.KeyboardMode
+import dev.silo.omniboard.ime.keyboard.SpaceBarMode
+import dev.silo.omniboard.ime.popup.ExceptionsForKeyCodes
+import dev.silo.omniboard.ime.popup.PopupUiController
+import dev.silo.omniboard.ime.popup.rememberPopupUiController
+import dev.silo.omniboard.ime.text.gestures.GlideTypingGesture
+import dev.silo.omniboard.ime.text.gestures.SwipeAction
+import dev.silo.omniboard.ime.text.gestures.SwipeGesture
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.key.KeyType
+import dev.silo.omniboard.ime.text.key.KeyVariation
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.OmniRect
+import dev.silo.omniboard.lib.Pointer
+import dev.silo.omniboard.lib.PointerMap
+import dev.silo.omniboard.lib.devtools.LogTopic
+import dev.silo.omniboard.lib.devtools.flogDebug
+import dev.silo.omniboard.lib.observeAsTransformingState
+import dev.silo.omniboard.lib.toIntOffset
+import dev.silo.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
-import org.florisboard.lib.android.isOrientationLandscape
-import org.florisboard.lib.compose.DisposableLifecycleEffect
-import org.florisboard.lib.snygg.SnyggSelector
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggIcon
-import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.omniboard.lib.android.isOrientationLandscape
+import org.omniboard.lib.compose.DisposableLifecycleEffect
+import org.omniboard.lib.snygg.SnyggSelector
+import org.omniboard.lib.snygg.ui.SnyggBox
+import org.omniboard.lib.snygg.ui.SnyggIcon
+import org.omniboard.lib.snygg.ui.SnyggText
+import org.omniboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -106,7 +106,7 @@ fun TextKeyboardLayout(
     evaluator: ComputingEvaluator,
     isPreview: Boolean = false,
 ): Unit = with(LocalDensity.current) {
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val glideTypingManager by context.glideTypingManager()
@@ -116,7 +116,7 @@ fun TextKeyboardLayout(
     val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
         evaluator.state.keyVariation != KeyVariation.PASSWORD
     val glideShowTrail by prefs.glide.showTrail.observeAsState()
-    val glideTrailStyle = rememberSnyggThemeQuery(FlorisImeUi.GlideTrail.elementName)
+    val glideTrailStyle = rememberSnyggThemeQuery(OmniImeUi.GlideTrail.elementName)
     val glideTrailColor = glideTrailStyle.foreground(default = Color.Green)
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
@@ -157,7 +157,7 @@ fun TextKeyboardLayout(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardUiHeight())
+            .height(OmniImeSizing.keyboardUiHeight())
             .onGloballyPositioned { coords ->
                 controller.size = coords.size.toSize()
             }
@@ -214,7 +214,7 @@ fun TextKeyboardLayout(
         val keyboardHeight = constraints.maxHeight.toFloat()
         val keyMarginH by prefs.keyboard.keySpacingHorizontal.observeAsTransformingState { it.dp.toPx() }
         val keyMarginV by prefs.keyboard.keySpacingVertical.observeAsTransformingState { it.dp.toPx() }
-        val keyboardRowBaseHeight = FlorisImeSizing.keyboardRowBaseHeight
+        val keyboardRowBaseHeight = OmniImeSizing.keyboardRowBaseHeight
 
         val desiredKey = remember(
             keyboard, keyboardWidth, keyboardHeight, keyMarginH, keyMarginV,
@@ -256,7 +256,7 @@ fun TextKeyboardLayout(
                     }
                 }
                 val keyPopupDiffX = (key.visibleBounds.width - keyPopupWidth) / 2.0f
-                FlorisRect.new().apply {
+                OmniRect.new().apply {
                     left = key.visibleBounds.left + keyPopupDiffX
                     top = key.visibleBounds.bottom - keyPopupHeight
                     right = left + keyPopupWidth
@@ -315,9 +315,9 @@ private fun TextKeyButton(
     debugShowTouchBoundaries: Boolean,
 ) = with(LocalDensity.current) {
     val attributes = mapOf(
-        FlorisImeUi.Attr.Code to key.computedData.code,
-        FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
-        FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
+        OmniImeUi.Attr.Code to key.computedData.code,
+        OmniImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
+        OmniImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
     )
     val selector = when {
         !key.isEnabled -> SnyggSelector.DISABLED
@@ -328,7 +328,7 @@ private fun TextKeyButton(
         key.visibleBounds.size.toDpSize()
     }
     SnyggBox(
-        FlorisImeUi.Key.elementName,
+        OmniImeUi.Key.elementName,
         attributes = attributes,
         selector = selector,
         modifier = Modifier
@@ -339,7 +339,7 @@ private fun TextKeyButton(
         key.label?.let { label ->
             var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
-                val prefs by FlorisPreferenceStore
+                val prefs by OmniPreferenceStore
                 val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
                 when (spaceBarMode) {
                     SpaceBarMode.NOTHING -> return@let
@@ -356,7 +356,7 @@ private fun TextKeyButton(
         }
         key.hintedLabel?.let { hintedLabel ->
             SnyggText(
-                elementName = FlorisImeUi.KeyHint.elementName,
+                elementName = OmniImeUi.KeyHint.elementName,
                 attributes = attributes,
                 selector = selector,
                 modifier = Modifier
@@ -387,12 +387,12 @@ private fun TextKeyButton(
 private class TextKeyboardLayoutController(
     context: Context,
 ) : SwipeGesture.Listener, GlideTypingGesture.Listener {
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
 
     private val inputEventDispatcher get() = keyboardManager.inputEventDispatcher
-    private val inputFeedbackController get() = FlorisImeService.inputFeedbackController()
+    private val inputFeedbackController get() = OmniImeService.inputFeedbackController()
     private val keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
     private val pointerMap: PointerMap<TouchPointer> = PointerMap { TouchPointer() }
     lateinit var popupUiController: PopupUiController

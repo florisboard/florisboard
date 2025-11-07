@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.util
+package dev.silo.omniboard.lib.util
 
-import org.florisboard.lib.android.AndroidVersion
+import org.omniboard.lib.android.AndroidVersion
 
 /**
  * Helper object containing methods to validate and extract network names and components from strings.

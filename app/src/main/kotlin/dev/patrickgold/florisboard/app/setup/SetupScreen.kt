@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.setup
+package dev.silo.omniboard.app.setup
 
 import android.content.Context
 import android.content.Intent
@@ -40,31 +40,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisAppActivity
-import dev.patrickgold.florisboard.app.FlorisPreferenceModel
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
-import dev.patrickgold.florisboard.lib.util.InputMethodUtils
-import dev.patrickgold.florisboard.lib.util.launchActivity
-import dev.patrickgold.florisboard.lib.util.launchUrl
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniAppActivity
+import dev.silo.omniboard.app.OmniPreferenceModel
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.compose.OmniScreenScope
+import dev.silo.omniboard.lib.util.InputMethodUtils
+import dev.silo.omniboard.lib.util.launchActivity
+import dev.silo.omniboard.lib.util.launchUrl
+import dev.silo.jetpref.datastore.model.observeAsState
+import dev.silo.jetpref.datastore.ui.PreferenceUiScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.compose.FlorisBulletSpacer
-import org.florisboard.lib.compose.FlorisStep
-import org.florisboard.lib.compose.FlorisStepLayout
-import org.florisboard.lib.compose.FlorisStepState
-import org.florisboard.lib.compose.stringRes
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.compose.OmniBulletSpacer
+import org.omniboard.lib.compose.OmniStep
+import org.omniboard.lib.compose.OmniStepLayout
+import org.omniboard.lib.compose.OmniStepState
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun SetupScreen() = FlorisScreen {
+fun SetupScreen() = OmniScreen {
     title = stringRes(R.string.setup__title)
     navigationIconVisible = false
     scrollable = false
@@ -72,11 +72,11 @@ fun SetupScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val scope = rememberCoroutineScope()
 
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+    val isOmniBoardEnabled by InputMethodUtils.observeIsOmniboardEnabled(foregroundOnly = true)
+    val isOmniBoardSelected by InputMethodUtils.observeIsOmniboardSelected(foregroundOnly = true)
     val hasNotificationPermission by prefs.internal.notificationPermissionState.observeAsState()
 
     val requestNotification =
@@ -91,8 +91,8 @@ fun SetupScreen() = FlorisScreen {
         }
 
     content(
-        isFlorisBoardEnabled,
-        isFlorisBoardSelected,
+        isOmniBoardEnabled,
+        isOmniBoardSelected,
         context,
         navController,
         requestNotification,
@@ -102,9 +102,9 @@ fun SetupScreen() = FlorisScreen {
 }
 
 @Composable
-private fun FlorisScreenScope.content(
-    isFlorisBoardEnabled: Boolean,
-    isFlorisBoardSelected: Boolean,
+private fun OmniScreenScope.content(
+    isOmniBoardEnabled: Boolean,
+    isOmniBoardSelected: Boolean,
     context: Context,
     navController: NavController,
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
@@ -112,22 +112,22 @@ private fun FlorisScreenScope.content(
     scope: CoroutineScope,
 ) {
 
-    val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
+    val stepState = rememberSaveable(saver = OmniStepState.Saver) {
         val initStep = when {
-            !isFlorisBoardEnabled -> Steps.EnableIme.id
-            !isFlorisBoardSelected -> Steps.SelectIme.id
+            !isOmniBoardEnabled -> Steps.EnableIme.id
+            !isOmniBoardSelected -> Steps.SelectIme.id
             hasNotificationPermission == NotificationPermissionState.NOT_SET && AndroidVersion.ATLEAST_API33_T -> Steps.SelectNotification.id
             else -> Steps.FinishUp.id
         }
-        FlorisStepState.new(init = initStep)
+        OmniStepState.new(init = initStep)
     }
 
     content {
-        LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
+        LaunchedEffect(isOmniBoardEnabled, isOmniBoardSelected, hasNotificationPermission) {
             stepState.setCurrentAuto(
                 when {
-                    !isFlorisBoardEnabled -> Steps.EnableIme.id
-                    !isFlorisBoardSelected -> Steps.SelectIme.id
+                    !isOmniBoardEnabled -> Steps.EnableIme.id
+                    !isOmniBoardSelected -> Steps.SelectIme.id
                     hasNotificationPermission == NotificationPermissionState.NOT_SET && AndroidVersion.ATLEAST_API33_T -> Steps.SelectNotification.id
                     else -> Steps.FinishUp.id
                 }
@@ -139,15 +139,15 @@ private fun FlorisScreenScope.content(
         LaunchedEffect(Unit) {
             while (true) {
                 delay(200L)
-                val isEnabled = InputMethodUtils.isFlorisboardEnabled(context)
+                val isEnabled = InputMethodUtils.isOmniboardEnabled(context)
                 if (stepState.getCurrentAuto().value == Steps.EnableIme.id &&
                     stepState.getCurrentManual().value == -1 &&
-                    !isFlorisBoardEnabled &&
-                    !isFlorisBoardSelected &&
+                    !isOmniBoardEnabled &&
+                    !isOmniBoardSelected &&
                     hasNotificationPermission == NotificationPermissionState.NOT_SET &&
                     isEnabled
                 ) {
-                    context.launchActivity(FlorisAppActivity::class) {
+                    context.launchActivity(OmniAppActivity::class) {
                         it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                             or Intent.FLAG_ACTIVITY_SINGLE_TOP
                             or Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -155,7 +155,7 @@ private fun FlorisScreenScope.content(
                 }
             }
         }
-        FlorisStepLayout(
+        OmniStepLayout(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
@@ -183,12 +183,12 @@ private fun footer(context: Context) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
+        val privacyPolicyUrl = stringRes(R.string.omniboard__privacy_policy_url)
         TextButton(onClick = { context.launchUrl(privacyPolicyUrl) }) {
             Text(text = stringRes(R.string.setup__footer__privacy_policy))
         }
-        FlorisBulletSpacer()
-        val repositoryUrl = stringRes(R.string.florisboard__repo_url)
+        OmniBulletSpacer()
+        val repositoryUrl = stringRes(R.string.omniboard__repo_url)
         TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
             Text(text = stringRes(R.string.setup__footer__repository))
         }
@@ -196,15 +196,15 @@ private fun footer(context: Context) {
 }
 
 @Composable
-private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
+private fun PreferenceUiScope<OmniPreferenceModel>.steps(
     context: Context,
     navController: NavController,
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
     scope: CoroutineScope,
-): List<FlorisStep> {
+): List<OmniStep> {
 
     return listOfNotNull(
-        FlorisStep(
+        OmniStep(
             id = Steps.EnableIme.id,
             title = stringRes(R.string.setup__enable_ime__title),
         ) {
@@ -213,7 +213,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
                 InputMethodUtils.showImeEnablerActivity(context)
             }
         },
-        FlorisStep(
+        OmniStep(
             id = Steps.SelectIme.id,
             title = stringRes(R.string.setup__select_ime__title),
         ) {
@@ -223,7 +223,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             }
         },
         if (AndroidVersion.ATLEAST_API33_T) {
-            FlorisStep(
+            OmniStep(
                 id = Steps.SelectNotification.id,
                 title = stringRes(R.string.setup__grant_notification_permission__title),
             ) {
@@ -233,7 +233,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
                 }
             }
         } else null,
-        FlorisStep(
+        OmniStep(
             id = Steps.FinishUp.id,
             title = stringRes(R.string.setup__finish_up__title),
         ) {

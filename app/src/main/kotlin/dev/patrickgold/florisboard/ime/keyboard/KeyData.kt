@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.keyboard
+package dev.silo.omniboard.ime.keyboard
 
 import androidx.compose.ui.unit.LayoutDirection
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.popup.PopupSet
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.silo.omniboard.ime.input.InputShiftState
+import dev.silo.omniboard.ime.popup.PopupSet
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.key.KeyType
+import dev.silo.omniboard.ime.text.key.KeyVariation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg
+package org.omniboard.lib.snygg
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
@@ -29,35 +29,35 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isSpecified
-import org.florisboard.lib.snygg.value.RgbaColor
-import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggFontStyleValue
-import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggInheritValue
-import org.florisboard.lib.snygg.value.SnyggNoValue
-import org.florisboard.lib.snygg.value.SnyggPaddingValue
-import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
-import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggTextAlignValue
-import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
-import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
-import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
-import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.SnyggYesValue
-import org.florisboard.lib.snygg.value.isInherit
-import org.florisboard.lib.snygg.value.isUndefined
+import org.omniboard.lib.snygg.value.RgbaColor
+import org.omniboard.lib.snygg.value.SnyggCircleShapeValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggDefinedVarValue
+import org.omniboard.lib.snygg.value.SnyggDpSizeValue
+import org.omniboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.omniboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.omniboard.lib.snygg.value.SnyggFontStyleValue
+import org.omniboard.lib.snygg.value.SnyggFontWeightValue
+import org.omniboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.omniboard.lib.snygg.value.SnyggInheritValue
+import org.omniboard.lib.snygg.value.SnyggNoValue
+import org.omniboard.lib.snygg.value.SnyggPaddingValue
+import org.omniboard.lib.snygg.value.SnyggPercentageSizeValue
+import org.omniboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggSpSizeValue
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.snygg.value.SnyggTextAlignValue
+import org.omniboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.omniboard.lib.snygg.value.SnyggTextMaxLinesValue
+import org.omniboard.lib.snygg.value.SnyggTextOverflowValue
+import org.omniboard.lib.snygg.value.SnyggUriValue
+import org.omniboard.lib.snygg.value.SnyggValue
+import org.omniboard.lib.snygg.value.SnyggYesValue
+import org.omniboard.lib.snygg.value.isInherit
+import org.omniboard.lib.snygg.value.isUndefined
 import java.util.UUID
 
 sealed interface SnyggPropertySetEditor {

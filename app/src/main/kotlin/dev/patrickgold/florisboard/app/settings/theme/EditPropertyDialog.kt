@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.theme
+package dev.silo.omniboard.app.settings.theme
 
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
@@ -72,66 +72,66 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.ext.FONTS
-import dev.patrickgold.florisboard.app.ext.IMAGES
-import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
-import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.jetpref.material.ui.ColorRepresentation
-import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
-import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
-import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.ext.FONTS
+import dev.silo.omniboard.app.ext.IMAGES
+import dev.silo.omniboard.lib.ValidationResult
+import dev.silo.omniboard.lib.cache.CacheManager
+import dev.silo.omniboard.lib.compose.Validation
+import dev.silo.omniboard.lib.ext.ExtensionValidation
+import dev.silo.omniboard.lib.rememberValidationResult
+import dev.silo.jetpref.material.ui.ColorRepresentation
+import dev.silo.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import dev.silo.jetpref.material.ui.JetPrefColorPicker
+import dev.silo.jetpref.material.ui.JetPrefDropdown
+import dev.silo.jetpref.material.ui.JetPrefListItem
+import dev.silo.jetpref.material.ui.JetPrefTextField
+import dev.silo.jetpref.material.ui.rememberJetPrefColorPickerState
 import java.io.File
-import org.florisboard.lib.color.ColorPalette
-import org.florisboard.lib.compose.DpSizeSaver
-import org.florisboard.lib.compose.FlorisChip
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.FlorisTextButton
-import org.florisboard.lib.compose.florisVerticalScroll
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.curlyFormat
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.toStringWithoutDotZero
-import org.florisboard.lib.snygg.SnyggAnnotationRule
-import org.florisboard.lib.snygg.SnyggRule
-import org.florisboard.lib.snygg.SnyggSpec
-import org.florisboard.lib.snygg.value.SnyggContentScaleValue
-import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggEnumLikeValueEncoder
-import org.florisboard.lib.snygg.value.SnyggFontStyleValue
-import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggPaddingValue
-import org.florisboard.lib.snygg.value.SnyggPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggPercentageSizeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggTextAlignValue
-import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
-import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
-import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
-import org.florisboard.lib.snygg.value.SnyggUndefinedValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
-import org.florisboard.lib.snygg.value.SnyggValue
-import org.florisboard.lib.snygg.value.SnyggValueEncoder
+import org.omniboard.lib.color.ColorPalette
+import org.omniboard.lib.compose.DpSizeSaver
+import org.omniboard.lib.compose.OmniChip
+import org.omniboard.lib.compose.OmniIconButton
+import org.omniboard.lib.compose.OmniTextButton
+import org.omniboard.lib.compose.omniVerticalScroll
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.kotlin.curlyFormat
+import org.omniboard.lib.kotlin.io.subDir
+import org.omniboard.lib.kotlin.toStringWithoutDotZero
+import org.omniboard.lib.snygg.SnyggAnnotationRule
+import org.omniboard.lib.snygg.SnyggRule
+import org.omniboard.lib.snygg.SnyggSpec
+import org.omniboard.lib.snygg.value.SnyggContentScaleValue
+import org.omniboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggDefinedVarValue
+import org.omniboard.lib.snygg.value.SnyggDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggDpSizeValue
+import org.omniboard.lib.snygg.value.SnyggDynamicColorValue
+import org.omniboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.omniboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.omniboard.lib.snygg.value.SnyggEnumLikeValueEncoder
+import org.omniboard.lib.snygg.value.SnyggFontStyleValue
+import org.omniboard.lib.snygg.value.SnyggFontWeightValue
+import org.omniboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.omniboard.lib.snygg.value.SnyggPaddingValue
+import org.omniboard.lib.snygg.value.SnyggPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggPercentageSizeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggShapeValue
+import org.omniboard.lib.snygg.value.SnyggSpSizeValue
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.snygg.value.SnyggTextAlignValue
+import org.omniboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.omniboard.lib.snygg.value.SnyggTextMaxLinesValue
+import org.omniboard.lib.snygg.value.SnyggTextOverflowValue
+import org.omniboard.lib.snygg.value.SnyggUndefinedValue
+import org.omniboard.lib.snygg.value.SnyggUriValue
+import org.omniboard.lib.snygg.value.SnyggValue
+import org.omniboard.lib.snygg.value.SnyggValueEncoder
 
 internal val SnyggEmptyPropertyInfoForAdding = PropertyInfo(
     rule = SnyggEmptyRuleForAdding,
@@ -674,7 +674,7 @@ private fun PropertyValueEditor(
                             showSelectFileDialog = false
                         },
                         contentPadding = PaddingValues(horizontal = 8.dp),
-                        scrollModifier = Modifier.florisVerticalScroll(),
+                        scrollModifier = Modifier.omniVerticalScroll(),
                     ) {
                         Column {
                             if (fontFiles.isNotEmpty()) {
@@ -700,7 +700,7 @@ private fun PropertyValueEditor(
                     isError = isError,
                     enabled = false,
                     trailingIcon = {
-                        FlorisIconButton(
+                        OmniIconButton(
                             onClick = { showSelectFileDialog = true },
                             icon = Icons.AutoMirrored.Filled.ManageSearch,
                         )
@@ -823,7 +823,7 @@ private fun PaddingValueEditor(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = alignment,
         ) {
-            FlorisChip(
+            OmniChip(
                 onClick = onClick,
                 text = text,
                 shape = MaterialTheme.shapes.medium,
@@ -921,7 +921,7 @@ private fun PaddingValueEditor(
                     onValueChange = { size = it },
                 )
                 Validation(showValidationErrors, sizeValidation)
-                FlorisTextButton(
+                OmniTextButton(
                     onClick = {
                         if (sizeValidation.isInvalid()) {
                             showValidationErrors = true
@@ -998,7 +998,7 @@ private fun ShapeValueEditor(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 Column {
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitDp = topStart
                             showDialogForCorner = ShapeCorner.TOP_START
@@ -1006,7 +1006,7 @@ private fun ShapeValueEditor(
                         text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topStart.value.toStringWithoutDotZero()),
                         shape = MaterialTheme.shapes.medium,
                     )
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitDp = bottomStart
                             showDialogForCorner = ShapeCorner.BOTTOM_START
@@ -1021,7 +1021,7 @@ private fun ShapeValueEditor(
                         .border(1.dp, MaterialTheme.colorScheme.onBackground, shape),
                 )
                 Column {
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitDp = topEnd
                             showDialogForCorner = ShapeCorner.TOP_END
@@ -1029,7 +1029,7 @@ private fun ShapeValueEditor(
                         text = stringRes(R.string.unit__display_pixel__symbol).curlyFormat("v" to topEnd.value.toStringWithoutDotZero()),
                         shape = MaterialTheme.shapes.medium,
                     )
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitDp = bottomEnd
                             showDialogForCorner = ShapeCorner.BOTTOM_END
@@ -1074,7 +1074,7 @@ private fun ShapeValueEditor(
                             onValueChange = { size = it },
                         )
                         Validation(showValidationErrors, sizeValidation)
-                        FlorisTextButton(
+                        OmniTextButton(
                             onClick = {
                                 if (sizeValidation.isInvalid()) {
                                     showValidationErrors = true
@@ -1144,7 +1144,7 @@ private fun ShapeValueEditor(
                 horizontalArrangement = Arrangement.SpaceAround,
             ) {
                 Column {
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitPercentage = topStart
                             showDialogForCorner = ShapeCorner.TOP_START
@@ -1152,7 +1152,7 @@ private fun ShapeValueEditor(
                         text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topStart),
                         shape = MaterialTheme.shapes.medium,
                     )
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitPercentage = bottomStart
                             showDialogForCorner = ShapeCorner.BOTTOM_START
@@ -1167,7 +1167,7 @@ private fun ShapeValueEditor(
                         .border(1.dp, MaterialTheme.colorScheme.onBackground, shape),
                 )
                 Column {
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitPercentage = topEnd
                             showDialogForCorner = ShapeCorner.TOP_END
@@ -1175,7 +1175,7 @@ private fun ShapeValueEditor(
                         text = stringRes(R.string.unit__percent__symbol).curlyFormat("v" to topEnd),
                         shape = MaterialTheme.shapes.medium,
                     )
-                    FlorisChip(
+                    OmniChip(
                         onClick = {
                             showDialogInitPercentage = bottomEnd
                             showDialogForCorner = ShapeCorner.BOTTOM_END
@@ -1221,7 +1221,7 @@ private fun ShapeValueEditor(
                             onValueChange = { size = it },
                         )
                         Validation(showValidationErrors, sizeValidation)
-                        FlorisTextButton(
+                        OmniTextButton(
                             onClick = {
                                 if (sizeValidation.isInvalid()) {
                                     showValidationErrors = true

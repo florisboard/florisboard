@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.value
+package org.omniboard.lib.snygg.value
 
 import androidx.compose.ui.layout.ContentScale
 import java.net.URI
@@ -75,10 +75,10 @@ data class SnyggContentScaleValue(val contentScale: ContentScale) : SnyggValue {
  * The assert resolver for [SnyggUriValue].
  *
  * Implement this interface if you want to use [SnyggUriValue] (image and custom font-family support)
- * and pass the instance to [org.florisboard.lib.snygg.ui.ProvideSnyggTheme]
+ * and pass the instance to [org.omniboard.lib.snygg.ui.ProvideSnyggTheme]
  *
  * @since 0.5.0-alpha01
- * @see [org.florisboard.lib.snygg.ui.ProvideSnyggTheme]
+ * @see [org.omniboard.lib.snygg.ui.ProvideSnyggTheme]
  */
 interface SnyggAssetResolver {
     /**

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">FlorisBoard</string>
+    <string name="app_name">OmniBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">일시정지</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">대기</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">삼점 아이콘입니다. 이 아이콘이 보인다면 길게 눌러서 더 많은 글자를 사용할 수 있습니다.</string>
@@ -102,8 +102,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">기본값</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">시스템 기본값</string>
     <string name="settings__home__title" comment="Title of the Home screen">{app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">앱이 시스템 설정에서 켜져 있지 않아 입력 방법으로 선택할 수 없습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">앱이 기본 입력 방법으로 선택되어 있지 않습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">앱이 시스템 설정에서 켜져 있지 않아 입력 방법으로 선택할 수 없습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">앱이 기본 입력 방법으로 선택되어 있지 않습니다. 여기를 눌러 문제를 해결할 수 있습니다.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">언어 및 레이아웃</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">언어 표시 방식</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">하위 유형</string>
@@ -167,7 +167,7 @@
     <string name="settings__theme_editor__code_recording_help_text">키의 코드를 찾으려면 코드 입력 필드 옆의 버튼을 사용하세요. 버튼을 누르면 다음 키 입력을 추적하여 해당 코드가 필드에 입력됩니다.</string>
     <string name="settings__theme_editor__code_recording_started">키 코드 추적을 시작했습니다.</string>
     <string name="settings__theme_editor__code_recording_stopped">키 코드 추적을 중지했습니다.</string>
-    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">키 코드를 추적하려면 {app_name} 앱을 기본 키보드로 지정해야 합니다.</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_omni">키 코드를 추적하려면 {app_name} 앱을 기본 키보드로 지정해야 합니다.</string>
     <string name="settings__theme_editor__code_recording_placeholder">추적 중…</string>
     <string name="settings__theme_editor__add_property">속성 추가</string>
     <string name="settings__theme_editor__edit_property">속성 편집</string>
@@ -264,9 +264,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">시스템 사용자 사전 항목 확인, 추가 및 제거</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">앱 내장 사용자 사전 사용</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">앱 내장 사용자 사전에 저장된 단어 추천</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">앱 내장 사용자 사전 관리</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">앱 내장 사용자 사전 항목 확인, 추가 및 제거</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">앱 내장 사용자 사전</string>
+    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">앱 내장 사용자 사전 관리</string>
+    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">앱 내장 사용자 사전 항목 확인, 추가 및 제거</string>
+    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">앱 내장 사용자 사전</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">시스템 사용자 사전</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">이 사용자 사전에는 저장된 단어가 없습니다.</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">시스템 관리자 UI 열기</string>
@@ -425,7 +425,7 @@
     <string name="ext__export__failure">확장 기능을 내보낼 수 없습니다: {error_message}</string>
     <string name="ext__import__success">확장 기능을 잘 가져왔습니다!</string>
     <string name="ext__import__failure">확장 기능을 가져올 수 없습니다: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">확장 기능 가져오기</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">확장 기능 가져오기</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">키보드 확장 기능 가져오기</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">테마 확장 기능 가져오기</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">언어 팩 확장 기능 가져오기</string>

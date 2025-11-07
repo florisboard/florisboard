@@ -1,18 +1,18 @@
-package org.florisboard.lib.snygg
+package org.omniboard.lib.snygg
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.serialization.SerializationException
-import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
-import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggUriValue
-import org.florisboard.lib.snygg.value.SnyggValue
+import org.omniboard.lib.snygg.value.SnyggCircleShapeValue
+import org.omniboard.lib.snygg.value.SnyggDefinedVarValue
+import org.omniboard.lib.snygg.value.SnyggDpSizeValue
+import org.omniboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggSpSizeValue
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.snygg.value.SnyggUriValue
+import org.omniboard.lib.snygg.value.SnyggValue
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.assertThrows
@@ -22,7 +22,7 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 class SnyggStylesheetTest {
-    private val SCHEMA_LINE = """"${'$'}schema": "https://schemas.florisboard.org/snygg/v2/stylesheet""""
+    private val SCHEMA_LINE = """"${'$'}schema": "https://schemas.omniboard.org/snygg/v2/stylesheet""""
 
     @Nested
     inner class BasicTests {
@@ -48,7 +48,7 @@ class SnyggStylesheetTest {
         @Test
         fun `basic deserialization`() {
             val stylesheet = SnyggStylesheet.fromJson(BasicStylesheetJson).getOrThrow()
-            assertEquals("https://schemas.florisboard.org/snygg/v2/stylesheet", stylesheet.schema)
+            assertEquals("https://schemas.omniboard.org/snygg/v2/stylesheet", stylesheet.schema)
             assertEquals(3, stylesheet.rules.size)
 
             val defines = stylesheet.rules[SnyggAnnotationRule.Defines]
@@ -164,7 +164,7 @@ class SnyggStylesheetTest {
         @Test
         fun `basic serialization`() {
             val stylesheet = SnyggStylesheet(
-                schema = "https://schemas.florisboard.org/snygg/v2/stylesheet",
+                schema = "https://schemas.omniboard.org/snygg/v2/stylesheet",
                 rules = mapOf(
                     SnyggElementRule("smartbar") to SnyggSinglePropertySet(
                         mapOf(
@@ -181,7 +181,7 @@ class SnyggStylesheetTest {
             )
             @Language("json")
             val expectedJson =
-                """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","smartbar":{"background":"rgba(255,0,0,1)","shape":"rectangle()"},"key:pressed":{"shape":"circle()"}}"""
+                """{"${'$'}schema":"https://schemas.omniboard.org/snygg/v2/stylesheet","smartbar":{"background":"rgba(255,0,0,1)","shape":"rectangle()"},"key:pressed":{"shape":"circle()"}}"""
             val actualJson = stylesheet.toJson().getOrThrow()
             assertEquals(expectedJson, actualJson)
         }
@@ -434,7 +434,7 @@ class SnyggStylesheetTest {
             }
             @Language("json")
             val expectedJson =
-                """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"}]}"""
+                """{"${'$'}schema":"https://schemas.omniboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"}]}"""
             val actualJson = stylesheet.toJson().getOrThrow()
             assertEquals(expectedJson, actualJson)
         }
@@ -453,7 +453,7 @@ class SnyggStylesheetTest {
             }
             @Language("json")
             val expectedJson =
-                """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"},{"src":"uri(`flex:/path/to/font2.ttf`)"}]}"""
+                """{"${'$'}schema":"https://schemas.omniboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"},{"src":"uri(`flex:/path/to/font2.ttf`)"}]}"""
             val actualJson = stylesheet.toJson().getOrThrow()
             assertEquals(expectedJson, actualJson)
         }
@@ -521,7 +521,7 @@ class SnyggStylesheetTest {
         fun `deserialization with unsupported schema but ignoreUnsupportedSchema=true should succeed`() {
             val json = """
             {
-              "${'$'}schema": "https://schemas.florisboard.org/snygg/v1/stylesheet",
+              "${'$'}schema": "https://schemas.omniboard.org/snygg/v1/stylesheet",
               "@defines": {
                 "--test": "transparent"
               },

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.localization
+package dev.silo.omniboard.app.settings.localization
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
@@ -40,28 +40,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
-import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.FlorisTextButton
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.rippleClickable
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.android.showLongToastSync
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.app.ext.ExtensionImportScreenType
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.ime.nlp.LanguagePackComponent
+import dev.silo.omniboard.lib.compose.OmniConfirmDeleteDialog
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.ext.Extension
+import dev.silo.omniboard.lib.ext.ExtensionComponentName
+import dev.silo.omniboard.lib.observeAsNonNullState
+import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.material.ui.JetPrefListItem
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.compose.OmniOutlinedBox
+import org.omniboard.lib.compose.OmniTextButton
+import org.omniboard.lib.compose.defaultOmniOutlinedBox
+import org.omniboard.lib.compose.rippleClickable
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.android.showLongToastSync
 
 enum class LanguagePackManagerScreenAction(val id: String) {
     MANAGE("manage-installed-language-packs");
@@ -70,13 +70,13 @@ enum class LanguagePackManagerScreenAction(val id: String) {
 // TODO: this file is based on ThemeManagerScreen.kt and can arguably be merged.
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = FlorisScreen {
+fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = OmniScreen {
     title = stringRes(when (action) {
         LanguagePackManagerScreenAction.MANAGE -> R.string.settings__localization__language_pack_title
         else -> error("LanguagePack manager screen action must not be null")
     })
 
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
@@ -110,8 +110,8 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
     content {
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         if (action == LanguagePackManagerScreenAction.MANAGE) {
-            FlorisOutlinedBox(
-                modifier = Modifier.defaultFlorisOutlinedBox(),
+            OmniOutlinedBox(
+                modifier = Modifier.defaultOmniOutlinedBox(),
             ) {
                 Preference(
                     onClick = { navController.navigate(
@@ -124,8 +124,8 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
         }
         for ((extensionId, configs) in extGroupedLanguagePacks) key(extensionId) {
             val ext = extensionManager.getExtensionById(extensionId)!!
-            FlorisOutlinedBox(
-                modifier = Modifier.defaultFlorisOutlinedBox(),
+            OmniOutlinedBox(
+                modifier = Modifier.defaultOmniOutlinedBox(),
                 title = ext.meta.title,
                 onTitleClick = { navController.navigate(Routes.Ext.View(extensionId)) },
                 subtitle = extensionId,
@@ -171,7 +171,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
                             .fillMaxWidth()
                             .padding(horizontal = 6.dp),
                     ) {
-                        FlorisTextButton(
+                        OmniTextButton(
                             onClick = {
                                 languagePackExtToDelete = ext
                             },
@@ -182,7 +182,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
                             ),
                         )
                         Spacer(modifier = Modifier.weight(1f))
-//                        FlorisTextButton(
+//                        OmniTextButton(
 //                            onClick = {
 //                                navController.navigate(Routes.Ext.Edit(ext.meta.id))
 //                            },
@@ -195,7 +195,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
         }
 
         if (languagePackExtToDelete != null) {
-            FlorisConfirmDeleteDialog(
+            OmniConfirmDeleteDialog(
                 onConfirm = {
                     runCatching {
                         extensionManager.delete(languagePackExtToDelete!!)

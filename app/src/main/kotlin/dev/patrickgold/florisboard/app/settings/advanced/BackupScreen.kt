@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.advanced
+package dev.silo.omniboard.app.settings.advanced
 
 import android.content.ContentUris
 import android.content.Intent
@@ -40,38 +40,38 @@ import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceModel
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
-import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.io.FileRegistry
-import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
-import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import dev.silo.omniboard.BuildConfig
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceModel
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.cacheManager
+import dev.silo.omniboard.clipboardManager
+import dev.silo.omniboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.silo.omniboard.ime.clipboard.provider.ItemType
+import dev.silo.omniboard.lib.cache.CacheManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.devtools.flogError
+import dev.silo.omniboard.lib.ext.ExtensionManager
+import dev.silo.omniboard.lib.io.FileRegistry
+import dev.silo.omniboard.lib.io.ZipUtils
+import dev.silo.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.silo.jetpref.datastore.runtime.FileBasedStorage
+import dev.silo.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.android.writeFromFile
-import org.florisboard.lib.compose.FlorisButtonBar
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.rippleClickable
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.kotlin.io.writeJson
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.android.showLongToastSync
+import org.omniboard.lib.android.writeFromFile
+import org.omniboard.lib.compose.OmniButtonBar
+import org.omniboard.lib.compose.OmniOutlinedBox
+import org.omniboard.lib.compose.defaultOmniOutlinedBox
+import org.omniboard.lib.compose.rippleClickable
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.kotlin.io.subDir
+import org.omniboard.lib.kotlin.io.subFile
+import org.omniboard.lib.kotlin.io.writeJson
 
 object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
@@ -135,7 +135,7 @@ object Backup {
 }
 
 @Composable
-fun BackupScreen() = FlorisScreen {
+fun BackupScreen() = OmniScreen {
     title = stringRes(R.string.backup_and_restore__back_up__title)
     previewFieldVisible = false
 
@@ -177,9 +177,9 @@ fun BackupScreen() = FlorisScreen {
         if (backupFilesSelector.jetprefDatastore) {
             val fileBasedStorage = workspace.inputDir
                 .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
-                .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+                .subFile("${OmniPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
                 .let { FileBasedStorage(it.path) }
-            FlorisPreferenceStore.export(fileBasedStorage).getOrThrow()
+            OmniPreferenceStore.export(fileBasedStorage).getOrThrow()
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
         if (backupFilesSelector.imeKeyboard) {
@@ -264,7 +264,7 @@ fun BackupScreen() = FlorisScreen {
     }
 
     bottomBar {
-        FlorisButtonBar {
+        OmniButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(
                 onClick = {
@@ -284,8 +284,8 @@ fun BackupScreen() = FlorisScreen {
     }
 
     content {
-        FlorisOutlinedBox(
-            modifier = Modifier.defaultFlorisOutlinedBox(),
+        OmniOutlinedBox(
+            modifier = Modifier.defaultOmniOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__back_up__destination),
         ) {
             RadioListItem(
@@ -316,8 +316,8 @@ internal fun BackupFilesSelector(
     filesSelector: Backup.FilesSelector,
     title: String,
 ) {
-    FlorisOutlinedBox(
-        modifier = modifier.defaultFlorisOutlinedBox(),
+    OmniOutlinedBox(
+        modifier = modifier.defaultOmniOutlinedBox(),
         title = title,
     ) {
         CheckboxListItem(

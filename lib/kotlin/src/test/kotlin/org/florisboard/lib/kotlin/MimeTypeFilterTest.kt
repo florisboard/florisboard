@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.kotlin
+package org.omniboard.lib.kotlin
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
@@ -100,7 +100,7 @@ class MimeTypeFilterTest {
 
         @Test
         fun `legacy otf file should work with wildcard filters`() {
-            // https://github.com/florisboard/florisboard/issues/2957
+            // https://github.com/omniboard/omniboard/issues/2957
             val filter = mimeTypeFilterOf(
                 "font/*",
                 "application/font-*",

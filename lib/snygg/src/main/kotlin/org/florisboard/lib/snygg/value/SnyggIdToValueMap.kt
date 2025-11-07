@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.value
+package org.omniboard.lib.snygg.value
 
-import org.florisboard.lib.kotlin.toStringWithoutDotZero
+import org.omniboard.lib.kotlin.toStringWithoutDotZero
 
 typealias SnyggIdToValueMap = MutableMap<String, String>
 

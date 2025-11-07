@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.util
+package dev.silo.omniboard.lib.util
 
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.annotation.StringRes
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.io.FlorisRef
-import org.florisboard.lib.android.stringRes
-import org.florisboard.lib.kotlin.CurlyArg
+import dev.silo.omniboard.R
+import dev.silo.omniboard.lib.devtools.flogError
+import dev.silo.omniboard.lib.io.OmniRef
+import org.omniboard.lib.android.stringRes
+import org.omniboard.lib.kotlin.CurlyArg
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
@@ -33,7 +33,7 @@ import kotlin.reflect.KClass
 fun Context.launchUrl(url: String) {
     val intent = Intent().also {
         it.action = Intent.ACTION_VIEW
-        it.data = FlorisRef.fromUrl(url).uri
+        it.data = OmniRef.fromUrl(url).uri
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
     try {

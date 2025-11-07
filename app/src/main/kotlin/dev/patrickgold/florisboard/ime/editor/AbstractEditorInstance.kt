@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.editor
+package dev.silo.omniboard.ime.editor
 
 import android.content.Context
 import android.inputmethodservice.InputMethodService
@@ -24,19 +24,19 @@ import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
-import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
-import dev.patrickgold.florisboard.ime.text.composing.Composer
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.florisboard.subtypeManager
+import dev.silo.omniboard.OmniImeService
+import dev.silo.omniboard.ime.nlp.BreakIteratorGroup
+import dev.silo.omniboard.ime.text.composing.Composer
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.ext.ExtensionComponentName
+import dev.silo.omniboard.nlpManager
+import dev.silo.omniboard.subtypeManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.kotlin.guardedByLock
+import org.omniboard.lib.kotlin.guardedByLock
 import kotlin.math.max
 import kotlin.math.min
 
@@ -69,9 +69,9 @@ abstract class AbstractEditorInstance(context: Context) {
     private val scope = MainScope()
     protected val breakIterators = BreakIteratorGroup()
 
-    private val _activeInfoFlow = MutableStateFlow(FlorisEditorInfo.Unspecified)
+    private val _activeInfoFlow = MutableStateFlow(OmniEditorInfo.Unspecified)
     val activeInfoFlow = _activeInfoFlow.asStateFlow()
-    inline var activeInfo: FlorisEditorInfo
+    inline var activeInfo: OmniEditorInfo
         get() = activeInfoFlow.value
         private set(v) {
             _activeInfoFlow.value = v
@@ -101,16 +101,16 @@ abstract class AbstractEditorInstance(context: Context) {
         return runBlocking { expectedContentQueue.peekNewestOrNull() }
     }
 
-    private fun currentInputConnection() = FlorisImeService.currentInputConnection()
+    private fun currentInputConnection() = OmniImeService.currentInputConnection()
 
-    open fun handleStartInput(editorInfo: FlorisEditorInfo) {
+    open fun handleStartInput(editorInfo: OmniEditorInfo) {
         activeInfo = editorInfo
         activeCursorCapsMode = editorInfo.initialCapsMode
         activeContent = EditorContent.Unspecified
         currentInputConnection()?.requestCursorUpdates(CursorUpdateAll)
     }
 
-    open fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
+    open fun handleStartInputView(editorInfo: OmniEditorInfo, isRestart: Boolean) {
         if (isRestart) {
             reset() // Just to make sure our state is correct after a restart
         }
@@ -219,7 +219,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     protected open fun reset() {
-        activeInfo = FlorisEditorInfo.Unspecified
+        activeInfo = OmniEditorInfo.Unspecified
         activeCursorCapsMode = InputAttributes.CapsMode.NONE
         activeContent = EditorContent.Unspecified
         runBlocking { expectedContentQueue.clear() }
@@ -227,7 +227,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     private suspend fun generateContent(
-        editorInfo: FlorisEditorInfo,
+        editorInfo: OmniEditorInfo,
         selection: EditorRange,
         textBeforeSelection: CharSequence,
         textAfterSelection: CharSequence,
@@ -264,7 +264,7 @@ abstract class AbstractEditorInstance(context: Context) {
     }
 
     private suspend fun EditorContent.generateCopy(
-        editorInfo: FlorisEditorInfo = activeInfo,
+        editorInfo: OmniEditorInfo = activeInfo,
         selection: EditorRange = this.selection,
         textBeforeSelection: CharSequence = this.textBeforeSelection,
         textAfterSelection: CharSequence = this.textAfterSelection,
@@ -290,7 +290,7 @@ abstract class AbstractEditorInstance(context: Context) {
 
     abstract fun determineComposer(composerName: ExtensionComponentName): Composer
 
-    protected open fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
+    protected open fun shouldDetermineComposingRegion(editorInfo: OmniEditorInfo): Boolean {
         return editorInfo.isRichInputEditor && !editorInfo.inputAttributes.flagTextNoSuggestions
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.ext
+package dev.silo.omniboard.lib.ext
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -22,7 +22,7 @@ import kotlinx.serialization.json.JsonNames
 
 /**
  * Class for an `extension.json` file, which serves as a configuration of an extension
- * package for FlorisBoard (`.flex` archive files).
+ * package for OmniBoard (`.flex` archive files).
  *
  * Files which are always read (case sensitive):
  *  - extension.json (this file)

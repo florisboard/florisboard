@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.gestures
+package dev.silo.omniboard.ime.text.gestures
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.florisboard.subtypeManager
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.nlp.WordSuggestionCandidate
+import dev.silo.omniboard.ime.text.keyboard.TextKey
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.nlpManager
+import dev.silo.omniboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -39,7 +39,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
         private const val MAX_SUGGESTION_COUNT = 8
     }
 
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val keyboardManager by context.keyboardManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()

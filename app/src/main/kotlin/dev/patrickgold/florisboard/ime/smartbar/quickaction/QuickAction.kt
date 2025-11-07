@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.smartbar.quickaction
+package dev.silo.omniboard.ime.smartbar.quickaction
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.keyboardManager
+import dev.silo.omniboard.R
+import dev.silo.omniboard.editorInstance
+import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
+import dev.silo.omniboard.ime.keyboard.KeyData
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import dev.silo.omniboard.keyboardManager
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.florisboard.lib.compose.stringRes
+import org.omniboard.lib.compose.stringRes
 
 @Serializable
 sealed class QuickAction {

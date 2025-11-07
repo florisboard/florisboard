@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,31 +14,31 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.gestures
+package dev.silo.omniboard.app.settings.gestures
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import org.florisboard.lib.compose.FlorisInfoCard
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.enumDisplayEntriesOf
+import dev.silo.omniboard.ime.text.gestures.SwipeAction
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.DialogSliderPreference
+import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.silo.jetpref.datastore.ui.ListPreference
+import dev.silo.jetpref.datastore.ui.PreferenceGroup
+import org.omniboard.lib.compose.OmniInfoCard
+import org.omniboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun GesturesScreen() = FlorisScreen {
+fun GesturesScreen() = OmniScreen {
     title = stringRes(R.string.settings__gestures__title)
     previewFieldVisible = true
 
     content {
-        FlorisInfoCard(
+        OmniInfoCard(
             modifier = Modifier.padding(8.dp),
             text = """
                 Glide typing is currently not available and will be re-implemented from the ground up with word suggestions & the new keyboard layout engine. DO NOT file an issue for this missing functionality.

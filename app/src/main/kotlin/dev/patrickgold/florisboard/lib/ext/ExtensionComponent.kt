@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.ext
+package dev.silo.omniboard.lib.ext
 
 import androidx.compose.runtime.saveable.Saver
-import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import dev.silo.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import org.florisboard.lib.kotlin.tryOrNull
+import org.omniboard.lib.kotlin.tryOrNull
 
 /**
  * An extension component, typically a layout, theme, file, etc. descriptor.
@@ -40,7 +40,7 @@ interface ExtensionComponent {
  * based on an [extensionId] and an [componentId] for a component type.
  *
  * Example component name:
- *  `org.florisboard.layouts:qwerty`
+ *  `org.omniboard.layouts:qwerty`
  */
 @Serializable(with = ExtensionComponentName.Serializer::class)
 data class ExtensionComponentName(

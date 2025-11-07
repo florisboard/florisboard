@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.input
+package dev.silo.omniboard.ime.input
 
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.staticCompositionLocalOf
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.android.systemVibratorOrNull
-import org.florisboard.lib.android.vibrate
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.keyboard.KeyData
+import dev.silo.omniboard.ime.text.key.KeyCode
+import dev.silo.omniboard.ime.text.keyboard.TextKeyData
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.android.systemServiceOrNull
+import org.omniboard.lib.android.systemVibratorOrNull
+import org.omniboard.lib.android.vibrate
+import dev.silo.omniboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -39,14 +39,14 @@ val LocalInputFeedbackController = staticCompositionLocalOf<InputFeedbackControl
 
 /**
  * Input feedback controller is responsible to process and perform audio and haptic
- * feedback for user interactions based on the system and floris preferences.
+ * feedback for user interactions based on the system and omni preferences.
  */
 class InputFeedbackController private constructor(private val ims: InputMethodService) {
     companion object {
         fun new(ims: InputMethodService) = InputFeedbackController(ims)
     }
 
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
 
     private val audioManager = ims.systemServiceOrNull(AudioManager::class)
     private val vibrator = ims.systemVibratorOrNull()

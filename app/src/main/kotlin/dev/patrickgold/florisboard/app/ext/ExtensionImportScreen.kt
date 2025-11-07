@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import android.text.format.Formatter
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -42,26 +42,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.io.FileRegistry
-import org.florisboard.lib.compose.FlorisBulletSpacer
-import org.florisboard.lib.compose.FlorisButtonBar
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.FlorisOutlinedButton
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.florisHorizontalScroll
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.kotlin.resultOk
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.cacheManager
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.ime.keyboard.KeyboardExtension
+import dev.silo.omniboard.ime.nlp.LanguagePackExtension
+import dev.silo.omniboard.ime.theme.ThemeExtension
+import dev.silo.omniboard.lib.NATIVE_NULLPTR
+import dev.silo.omniboard.lib.cache.CacheManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.io.FileRegistry
+import org.omniboard.lib.compose.OmniBulletSpacer
+import org.omniboard.lib.compose.OmniButtonBar
+import org.omniboard.lib.compose.OmniOutlinedBox
+import org.omniboard.lib.compose.OmniOutlinedButton
+import org.omniboard.lib.compose.defaultOmniOutlinedBox
+import org.omniboard.lib.compose.omniHorizontalScroll
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.android.showLongToastSync
+import org.omniboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
     val id: String,
@@ -91,7 +91,7 @@ enum class ExtensionImportScreenType(
 }
 
 @Composable
-fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = FlorisScreen {
+fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = OmniScreen {
     title = stringRes(type.titleResId)
 
     val navController = LocalNavController.current
@@ -147,7 +147,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     )
 
     bottomBar {
-        FlorisButtonBar {
+        OmniButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(
                 text = stringRes(R.string.action__cancel),
@@ -199,7 +199,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
 
     content {
         if (initUuid == null) {
-            FlorisOutlinedButton(
+            OmniOutlinedButton(
                 onClick = {
                     importLauncher.launch("*/*")
                 },
@@ -237,7 +237,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                 SelectionContainer {
                     Text(
                         modifier = Modifier
-                            .florisHorizontalScroll()
+                            .omniHorizontalScroll()
                             .padding(horizontal = 16.dp),
                         text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
                         style = MaterialTheme.typography.bodyMedium,
@@ -254,8 +254,8 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
 private fun FileInfoView(
     fileInfo: CacheManager.FileInfo,
 ) {
-    FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
+    OmniOutlinedBox(
+        modifier = Modifier.defaultOmniOutlinedBox(),
         title = fileInfo.file.name,
         subtitle = fileInfo.mediaType ?: "application/unknown",
     ) {
@@ -273,13 +273,13 @@ private fun FileInfoView(
                     color = grayColor,
                 )
                 if (ext != null) {
-                    FlorisBulletSpacer()
+                    OmniBulletSpacer()
                     Text(
                         text = ext.meta.id,
                         style = MaterialTheme.typography.bodyMedium,
                         color = grayColor,
                     )
-                    FlorisBulletSpacer()
+                    OmniBulletSpacer()
                     Text(
                         text = ext.meta.version,
                         style = MaterialTheme.typography.bodyMedium,

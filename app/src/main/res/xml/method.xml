@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:settingsActivity="dev.patrickgold.florisboard.SettingsLauncherAlias"
+    android:settingsActivity="dev.silo.omniboard.SettingsLauncherAlias"
     android:supportsInlineSuggestions="true"
     android:supportsSwitchingToNextInputMethod="true"
     tools:targetApi="r">
 
     <!-- Add default system subtype so we can properly set the icon and label -->
     <subtype
-        android:label="@string/floris_app_name"
-        android:icon="@mipmap/floris_app_icon"
+        android:label="@string/omni_app_name"
+        android:icon="@mipmap/omni_app_icon"
         android:imeSubtypeMode="keyboard"
         android:imeSubtypeExtraValue="AsciiCapable"
         android:isAsciiCapable="true"

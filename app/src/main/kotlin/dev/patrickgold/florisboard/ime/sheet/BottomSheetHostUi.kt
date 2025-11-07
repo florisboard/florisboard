@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.sheet
+package dev.silo.omniboard.ime.sheet
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -30,8 +30,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import org.florisboard.lib.compose.conditional
+import dev.silo.omniboard.ime.keyboard.KeyboardState
+import org.omniboard.lib.compose.conditional
 
 private val SheetOutOfBoundsBgColorInactive = Color(0x00000000)
 private val SheetOutOfBoundsBgColorActive = Color(0x52000000)

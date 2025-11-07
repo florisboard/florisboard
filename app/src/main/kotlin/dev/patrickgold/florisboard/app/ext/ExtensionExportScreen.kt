@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.extensionManager
-import org.florisboard.lib.android.showLongToast
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
-import org.florisboard.lib.android.showLongToastSync
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.extensionManager
+import org.omniboard.lib.android.showLongToast
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.ext.Extension
+import dev.silo.omniboard.lib.ext.ExtensionDefaults
+import org.omniboard.lib.android.showLongToastSync
 
 @Composable
 fun ExtensionExportScreen(id: String) {
@@ -43,7 +43,7 @@ fun ExtensionExportScreen(id: String) {
 }
 
 @Composable
-private fun ExportScreen(ext: Extension) = FlorisScreen {
+private fun ExportScreen(ext: Extension) = OmniScreen {
     title = ext.meta.title
     scrollable = false
 

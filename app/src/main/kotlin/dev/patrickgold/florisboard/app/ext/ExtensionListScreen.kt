@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The FlorisBoard Contributors
+ * Copyright (C) 2024-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
@@ -47,19 +47,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.FlorisTextButton
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.florisScrollbar
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.ime.theme.ThemeExtension
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.ext.ExtensionManager
+import dev.silo.omniboard.lib.observeAsNonNullState
+import org.omniboard.lib.compose.OmniOutlinedBox
+import org.omniboard.lib.compose.OmniTextButton
+import org.omniboard.lib.compose.defaultOmniOutlinedBox
+import org.omniboard.lib.compose.omniScrollbar
+import org.omniboard.lib.compose.stringRes
 
 enum class ExtensionListScreenType(
     val id: String,
@@ -88,7 +88,7 @@ enum class ExtensionListScreenType(
 }
 
 @Composable
-fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = FlorisScreen {
+fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = OmniScreen {
     title = stringRes(type.titleResId)
     previewFieldVisible = false
     scrollable = false
@@ -108,7 +108,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .florisScrollbar(state = listState, isVertical = true),
+                .omniScrollbar(state = listState, isVertical = true),
             state = listState,
             contentPadding = PaddingValues(bottom = fabHeightDp),
         ) {
@@ -121,8 +121,8 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                 }
             }
             items(extensionIndex) { ext ->
-                FlorisOutlinedBox(
-                    modifier = Modifier.defaultFlorisOutlinedBox(),
+                OmniOutlinedBox(
+                    modifier = Modifier.defaultOmniOutlinedBox(),
                     title = ext.meta.title,
                     subtitle = ext.meta.id,
                 ) {
@@ -136,7 +136,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                             .fillMaxWidth()
                             .padding(horizontal = 6.dp),
                     ) {
-                        FlorisTextButton(
+                        OmniTextButton(
                             onClick = {
                                 navController.navigate(Routes.Ext.View(ext.meta.id))
                             },
@@ -145,7 +145,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
                             colors = ButtonDefaults.textButtonColors(),
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        FlorisTextButton(
+                        OmniTextButton(
                             onClick = {
                                 navController.navigate(Routes.Ext.Edit(ext.meta.id))
                             },

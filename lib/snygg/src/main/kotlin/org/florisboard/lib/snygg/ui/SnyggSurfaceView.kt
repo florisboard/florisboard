@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.snygg.ui
+package org.omniboard.lib.snygg.ui
 
 import android.graphics.Canvas
 import android.graphics.PixelFormat
@@ -52,14 +52,14 @@ import coil3.request.allowHardware
 import coil3.toBitmap
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.SnyggQueryAttributes
-import org.florisboard.lib.snygg.SnyggSelector
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.snygg.SnyggQueryAttributes
+import org.omniboard.lib.snygg.SnyggSelector
 
 /**
  * Specialized layout composable rendering a background color/image to a [SurfaceView].
  *
- * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
+ * This composable infers its style from the current [SnyggTheme][org.omniboard.lib.snygg.SnyggTheme], which is
  * required to be provided by [ProvideSnyggTheme].
  *
  * @param elementName The name of this element. If `null` the style will be inherited from the parent element.

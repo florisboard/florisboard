@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">FlorisBoard</string>
+    <string name="app_name">OmniBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Posar</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Espera</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">L\'iconu de tres puntos. Si apaez, indica que se puen usar más lletres al tener primío.</string>
@@ -180,7 +180,7 @@
     <string name="setup__select_ime__switch_keyboard_btn">Cambiar de tecláu</string>
     <string name="setup__grant_notification_permission__title">Avisos pa informar de casques</string>
     <string name="setup__grant_notification_permission__description">A partir d\'Android 13, les aplicaciones tienen de pidir
-        permisu pa unviar avisos. En FlorisBoard, esti permisu namás s\'usa p\'abrir la pantalla d\'informar casques al producise dalgún.
+        permisu pa unviar avisos. En OmniBoard, esti permisu namás s\'usa p\'abrir la pantalla d\'informar casques al producise dalgún.
         Pues camudar esti permisu cuando quieras na configuración del sistema.
     </string>
     <string name="setup__grant_notification_permission__btn">Conceder el permisu</string>
@@ -200,8 +200,8 @@
     <string name="backup_and_restore__restore__failure">La restauración de los datos falló: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zarrar</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard dexó de funcionar…</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Paez que FlorisBoard dexa de funcionar de contino…</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard dexó de funcionar…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Paez que OmniBoard dexa de funcionar de contino…</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Cartafueyu</string>
     <string name="clipboard__disabled__message">L\'historial del cartafueyu de {app_name} permítete atroxar y acceder aína al testu y a les imáxenes que copies, cola capacidá de fixar elementos, configurar la llimpieza automática y afitar un númberu máximu d\'elementos.</string>

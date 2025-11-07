@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.clipboard.provider
+package dev.silo.omniboard.ime.clipboard.provider
 
 import android.content.ClipData
 import android.content.ClipDescription.EXTRA_IS_REMOTE_DEVICE
@@ -46,15 +46,15 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
 import androidx.room.migration.AutoMigrationSpec
-import dev.patrickgold.florisboard.R
+import dev.silo.omniboard.R
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.UriSerializer
-import org.florisboard.lib.android.query
-import org.florisboard.lib.android.stringRes
-import org.florisboard.lib.kotlin.tryOrNull
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.android.UriSerializer
+import org.omniboard.lib.android.query
+import org.omniboard.lib.android.stringRes
+import org.omniboard.lib.kotlin.tryOrNull
 import androidx.core.net.toUri
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
@@ -105,7 +105,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
         private val TEXT_PLAIN = listOf("text/plain")
         private val MEDIA_PROJECTION = arrayOf(OpenableColumns.DISPLAY_NAME)
 
-        const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
+        const val FLORIS_CLIP_LABEL = "omniboard/clipboard_item"
 
         fun text(text: String): ClipboardItem {
             return ClipboardItem(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme
+package dev.silo.omniboard.ime.theme
 
-import dev.patrickgold.florisboard.R
+import dev.silo.omniboard.R
 
-enum class FlorisImeUi(val elementName: String, val resId: Int?) {
+enum class OmniImeUi(val elementName: String, val resId: Int?) {
     Root(
         elementName = "root",
         resId = R.string.snygg__rule_element__root,

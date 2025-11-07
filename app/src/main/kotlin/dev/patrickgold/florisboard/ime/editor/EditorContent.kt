@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.editor
+package dev.silo.omniboard.ime.editor
 
-import org.florisboard.lib.kotlin.safeSubstring
+import org.omniboard.lib.kotlin.safeSubstring
 
 /**
  * A snapshot window of an input editor content around the selection/cursor.

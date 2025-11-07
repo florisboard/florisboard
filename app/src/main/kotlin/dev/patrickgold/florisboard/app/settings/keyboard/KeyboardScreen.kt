@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.keyboard
+package dev.silo.omniboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
-import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
-import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.app.enumDisplayEntriesOf
+import dev.silo.omniboard.ime.input.CapitalizationBehavior
+import dev.silo.omniboard.ime.keyboard.SpaceBarMode
+import dev.silo.omniboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.silo.omniboard.ime.onehanded.OneHandedMode
+import dev.silo.omniboard.ime.smartbar.IncognitoDisplayMode
+import dev.silo.omniboard.ime.text.key.KeyHintMode
+import dev.silo.omniboard.ime.text.key.UtilityKeyAction
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.ui.DialogSliderPreference
+import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.silo.jetpref.datastore.ui.ListPreference
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.datastore.ui.PreferenceGroup
+import dev.silo.jetpref.datastore.ui.SwitchPreference
+import org.omniboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun KeyboardScreen() = FlorisScreen {
+fun KeyboardScreen() = OmniScreen {
     title = stringRes(R.string.settings__keyboard__title)
     previewFieldVisible = true
 

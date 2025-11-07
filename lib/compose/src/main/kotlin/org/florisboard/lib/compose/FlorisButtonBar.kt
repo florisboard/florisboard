@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package org.omniboard.lib.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun FlorisButtonBar(content: @Composable FlorisButtonBarScope.() -> Unit) {
+fun OmniButtonBar(content: @Composable OmniButtonBarScope.() -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background,
@@ -55,14 +55,14 @@ fun FlorisButtonBar(content: @Composable FlorisButtonBarScope.() -> Unit) {
                     .padding(top = 4.dp, bottom = 4.dp, start = 0.dp, end = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val scope = FlorisButtonBarScope(this)
+                val scope = OmniButtonBarScope(this)
                 content(scope)
             }
         }
     }
 }
 
-class FlorisButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
+class OmniButtonBarScope(rowScope: RowScope) : RowScope by rowScope {
     @Composable
     fun ButtonBarButton(
         text: String,

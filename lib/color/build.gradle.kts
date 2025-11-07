@@ -7,7 +7,7 @@ val projectMinSdk: String by project
 val projectCompileSdk: String by project
 
 android {
-    namespace = "org.florisboard.lib.color"
+    namespace = "org.omniboard.lib.color"
     compileSdk = projectCompileSdk.toInt()
 
     defaultConfig {

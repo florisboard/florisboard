@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package dev.silo.omniboard.lib.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme
@@ -24,10 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import dev.patrickgold.florisboard.lib.util.launchUrl
+import dev.silo.omniboard.lib.util.launchUrl
 
 @Composable
-fun FlorisHyperlinkText(
+fun OmniHyperlinkText(
     text: String,
     url: String,
     modifier: Modifier = Modifier,

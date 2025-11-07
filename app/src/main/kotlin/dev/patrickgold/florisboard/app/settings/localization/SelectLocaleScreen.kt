@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.localization
+package dev.silo.omniboard.app.settings.localization
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -43,32 +43,32 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import org.florisboard.lib.compose.florisScrollbar
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
+import dev.silo.omniboard.lib.OmniLocale
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.model.observeAsState
+import dev.silo.jetpref.material.ui.JetPrefListItem
+import org.omniboard.lib.compose.omniScrollbar
+import org.omniboard.lib.compose.stringRes
 
 const val SelectLocaleScreenResultLanguageTag = "SelectLocaleScreen.languageTag"
 
 @Composable
-fun SelectLocaleScreen() = FlorisScreen {
+fun SelectLocaleScreen() = OmniScreen {
     title = stringRes(R.string.settings__localization__subtype_select_locale)
     scrollable = false
 
-    val prefs by FlorisPreferenceStore
+    val prefs by OmniPreferenceStore
     val navController = LocalNavController.current
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
     var searchTermValue by remember { mutableStateOf(TextFieldValue()) }
     val context = LocalContext.current
     val systemLocales =
-        FlorisLocale.extendedAvailableLocales(context).sortedBy { locale ->
+        OmniLocale.extendedAvailableLocales(context).sortedBy { locale ->
             when (displayLanguageNamesIn) {
                 DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
                 DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
@@ -83,7 +83,7 @@ fun SelectLocaleScreen() = FlorisScreen {
             systemLocales.filter { locale ->
                 locale.displayName().lowercase().contains(term) ||
                     locale.displayName(locale).lowercase().contains(term) ||
-                    locale.displayName(FlorisLocale.ENGLISH).lowercase().contains(term) ||
+                    locale.displayName(OmniLocale.ENGLISH).lowercase().contains(term) ||
                     locale.languageTag().lowercase().startsWith(term) ||
                     locale.localeTag().lowercase().startsWith(term)
             }
@@ -127,7 +127,7 @@ fun SelectLocaleScreen() = FlorisScreen {
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
-                    .florisScrollbar(state, isVertical = true),
+                    .omniScrollbar(state, isVertical = true),
                 state = state,
             ) {
                 items(filteredSystemLocales) { systemLocale ->

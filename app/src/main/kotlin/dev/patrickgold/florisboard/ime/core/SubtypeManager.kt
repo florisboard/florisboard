@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.silo.omniboard.ime.core
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.ime.keyboard.CurrencySet
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.lib.OmniLocale
+import dev.silo.omniboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.kotlin.collectLatestIn
+import org.omniboard.lib.kotlin.collectLatestIn
 
 val SubtypeJsonConfig = Json {
     encodeDefaults = true
@@ -41,7 +41,7 @@ val SubtypeJsonConfig = Json {
  * helper methods for the in-keyboard language switch process.
  */
 class SubtypeManager(context: Context) {
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val keyboardManager by context.keyboardManager()
     private val scope = CoroutineScope(Dispatchers.Default)
 
@@ -137,7 +137,7 @@ class SubtypeManager(context: Context) {
      * @return The default system locale or null, if no matching default system subtype could be
      *  found.
      */
-    fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
+    fun getSubtypePresetForLocale(locale: OmniLocale): SubtypePreset? {
         val presets = keyboardManager.resources.subtypePresets.value
         return presets?.find { it.locale == locale } ?: presets?.find { it.locale.language == locale.language }
     }

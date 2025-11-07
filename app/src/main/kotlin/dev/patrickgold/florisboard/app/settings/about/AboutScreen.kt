@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.about
+package dev.silo.omniboard.app.settings.about
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -36,20 +36,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.util.launchUrl
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import org.florisboard.lib.android.stringRes
-import org.florisboard.lib.compose.FlorisCanvasIcon
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.BuildConfig
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.clipboardManager
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.util.launchUrl
+import dev.silo.jetpref.datastore.ui.Preference
+import org.omniboard.lib.android.stringRes
+import org.omniboard.lib.compose.OmniCanvasIcon
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun AboutScreen() = FlorisScreen {
+fun AboutScreen() = OmniScreen {
     title = stringRes(R.string.about__title)
 
     val navController = LocalNavController.current
@@ -66,13 +66,13 @@ fun AboutScreen() = FlorisScreen {
                 .fillMaxWidth()
                 .padding(top = 24.dp, bottom = 32.dp)
         ) {
-            FlorisCanvasIcon(
+            OmniCanvasIcon(
                 modifier = Modifier.requiredSize(64.dp),
-                iconId = R.mipmap.floris_app_icon,
-                contentDescription = "FlorisBoard app icon",
+                iconId = R.mipmap.omni_app_icon,
+                contentDescription = "OmniBoard app icon",
             )
             Text(
-                text = stringRes(R.string.floris_app_name),
+                text = stringRes(R.string.omni_app_name),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 16.dp),
@@ -99,19 +99,19 @@ fun AboutScreen() = FlorisScreen {
             icon = Icons.Default.History,
             title = stringRes(R.string.about__changelog__title),
             summary = stringRes(R.string.about__changelog__summary),
-            onClick = { context.launchUrl(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
+            onClick = { context.launchUrl(R.string.omniboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
         )
         Preference(
             icon = Icons.Default.Code,
             title = stringRes(R.string.about__repository__title),
             summary = stringRes(R.string.about__repository__summary),
-            onClick = { context.launchUrl(R.string.florisboard__repo_url) },
+            onClick = { context.launchUrl(R.string.omniboard__repo_url) },
         )
         Preference(
             icon = Icons.Outlined.Policy,
             title = stringRes(R.string.about__privacy_policy__title),
             summary = stringRes(R.string.about__privacy_policy__summary),
-            onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
+            onClick = { context.launchUrl(R.string.omniboard__privacy_policy_url) },
         )
         Preference(
             icon = Icons.Outlined.Description,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package org.omniboard.lib.compose
 
 import android.content.Context
 import android.view.View
@@ -31,15 +31,15 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
-import org.florisboard.lib.kotlin.CurlyArg
-import org.florisboard.lib.kotlin.curlyFormat
+import org.omniboard.lib.kotlin.CurlyArg
+import org.omniboard.lib.kotlin.curlyFormat
 
 private val LocalResourcesContext = staticCompositionLocalOf<Context> {
     error("resources context not initialized!!")
 }
 
 private val LocalAppNameString = staticCompositionLocalOf {
-    "FlorisBoard"
+    "OmniBoard"
 }
 
 val LocalLocalizedDateTimeFormatter = staticCompositionLocalOf {

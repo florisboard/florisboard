@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib
+package dev.silo.omniboard.lib
 
 import android.content.Context
-import dev.patrickgold.florisboard.extensionManager
+import dev.silo.omniboard.extensionManager
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -35,12 +35,12 @@ import java.util.*
  * This class would be ideal for Kotlin's value classes, though AndroidX.Room
  * does not like this at all, so this is a "normal" class.
  *
- * To construct a FlorisLocale, use one of the many from() methods provided.
+ * To construct a OmniLocale, use one of the many from() methods provided.
  *
  * @see java.util.Locale
  */
-@Serializable(with = FlorisLocale.Serializer::class)
-class FlorisLocale private constructor(val base: Locale) {
+@Serializable(with = OmniLocale.Serializer::class)
+class OmniLocale private constructor(val base: Locale) {
     companion object {
         /** Delimiter for a language tag. */
         private const val DELIMITER_LANGUAGE_TAG = '-'
@@ -57,48 +57,48 @@ class FlorisLocale private constructor(val base: Locale) {
         val ENGLISH = from("en", "", "")
 
         /**
-         * Wraps a [java.util.Locale] and returns the [FlorisLocale].
+         * Wraps a [java.util.Locale] and returns the [OmniLocale].
          *
          * @return The wrapped locale.
          */
-        fun from(javaLocale: Locale) = FlorisLocale(javaLocale)
+        fun from(javaLocale: Locale) = OmniLocale(javaLocale)
 
         /**
-         * Constructs a new [FlorisLocale] with given [language].
+         * Constructs a new [OmniLocale] with given [language].
          *
          * @param language A two-letter language code.
          *
-         * @return A new [FlorisLocale].
+         * @return A new [OmniLocale].
          */
         fun from(language: String) = from(Locale(language))
 
         /**
-         * Constructs a new [FlorisLocale] with given [language] and [country].
+         * Constructs a new [OmniLocale] with given [language] and [country].
          *
          * @param language A two-letter language code.
          * @param country A two-letter country code.
          *
-         * @return A new [FlorisLocale].
+         * @return A new [OmniLocale].
          */
         fun from(language: String, country: String) = from(Locale(language, country))
 
         /**
-         * Constructs a new [FlorisLocale] with given [language], [country] and [variant].
+         * Constructs a new [OmniLocale] with given [language], [country] and [variant].
          *
          * @param language A two-letter language code.
          * @param country A two-letter country code.
          * @param variant A two-letter variant code.
          *
-         * @return A new [FlorisLocale].
+         * @return A new [OmniLocale].
          */
         fun from(language: String, country: String, variant: String) = from(Locale(language, country, variant))
 
         /**
-         * Constructs a new [FlorisLocale] from given [str].
+         * Constructs a new [OmniLocale] from given [str].
          *
          * @param str Either a language or locale tag in string form.
          *
-         * @return A new [FlorisLocale].
+         * @return A new [OmniLocale].
          */
         fun fromTag(str: String) = when {
             str.contains(DELIMITER_SPLITTER) -> {
@@ -118,20 +118,20 @@ class FlorisLocale private constructor(val base: Locale) {
          *
          * @see java.util.Locale.getDefault
          */
-        fun default() = FlorisLocale(Locale.getDefault())
+        fun default() = OmniLocale(Locale.getDefault())
 
         /**
          * Returns a list of all installed locales.
          *
          * @see java.util.Locale.getAvailableLocales
          */
-        fun installedSystemLocales(): List<FlorisLocale> = Locale.getAvailableLocales().map { from(it) }
+        fun installedSystemLocales(): List<OmniLocale> = Locale.getAvailableLocales().map { from(it) }
 
         /**
          * Returns a list of all installed locales and custom locales.
          *
          */
-        fun extendedAvailableLocales(context: Context): List<FlorisLocale> {
+        fun extendedAvailableLocales(context: Context): List<OmniLocale> {
             val systemLocales = installedSystemLocales()
             val extensionManager by context.extensionManager()
             val systemLocalesSet = buildSet {
@@ -262,7 +262,7 @@ class FlorisLocale private constructor(val base: Locale) {
      *
      * @see java.util.Locale.getDisplayLanguage
      */
-    fun displayLanguage(locale: FlorisLocale = default()): String {
+    fun displayLanguage(locale: OmniLocale = default()): String {
         return base.getDisplayLanguage(locale.base).titlecase(locale)
     }
 
@@ -271,7 +271,7 @@ class FlorisLocale private constructor(val base: Locale) {
      *
      * @see java.util.Locale.getDisplayCountry
      */
-    fun displayCountry(locale: FlorisLocale = default()): String = base.getDisplayCountry(locale.base)
+    fun displayCountry(locale: OmniLocale = default()): String = base.getDisplayCountry(locale.base)
 
     /**
      * Returns a name for the locale's variant code that is appropriate for
@@ -279,7 +279,7 @@ class FlorisLocale private constructor(val base: Locale) {
      *
      * @see java.util.Locale.getDisplayVariant
      */
-    fun displayVariant(locale: FlorisLocale = default()): String = base.getDisplayVariant(locale.base)
+    fun displayVariant(locale: OmniLocale = default()): String = base.getDisplayVariant(locale.base)
 
     /**
      * Returns the display name for this locale, localized to [locale] in
@@ -291,7 +291,7 @@ class FlorisLocale private constructor(val base: Locale) {
      * @return The display name for this locale. May be an empty string if
      *  [language], [country] and [variant] are not specified.
      */
-    fun displayName(locale: FlorisLocale = default()) = buildString {
+    fun displayName(locale: OmniLocale = default()) = buildString {
         val languageName = displayLanguage(locale).ifBlank { base.language }
         val countryName = displayCountry(locale).ifBlank { base.country }
         val variantName = displayVariant(locale).ifBlank { base.variant }
@@ -321,7 +321,7 @@ class FlorisLocale private constructor(val base: Locale) {
      *
      * @return The debug representation of this locale.
      */
-    override fun toString() = "FlorisLocale { l=${base.language} c=${base.country} v=${base.variant} }"
+    override fun toString() = "OmniLocale { l=${base.language} c=${base.country} v=${base.variant} }"
 
     /**
      * Equality check for this locale.
@@ -330,7 +330,7 @@ class FlorisLocale private constructor(val base: Locale) {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as FlorisLocale
+        other as OmniLocale
 
         if (base != other.base) return false
 
@@ -345,29 +345,29 @@ class FlorisLocale private constructor(val base: Locale) {
     }
 
     /**
-     * The JSON (de)serializer for FlorisLocale.
+     * The JSON (de)serializer for OmniLocale.
      */
-    class Serializer : KSerializer<FlorisLocale> {
+    class Serializer : KSerializer<OmniLocale> {
         override val descriptor: SerialDescriptor =
-            PrimitiveSerialDescriptor("FlorisLocale", PrimitiveKind.STRING)
+            PrimitiveSerialDescriptor("OmniLocale", PrimitiveKind.STRING)
 
-        override fun serialize(encoder: Encoder, value: FlorisLocale) {
+        override fun serialize(encoder: Encoder, value: OmniLocale) {
             encoder.encodeString(value.languageTag())
         }
 
-        override fun deserialize(decoder: Decoder): FlorisLocale {
+        override fun deserialize(decoder: Decoder): OmniLocale {
             return fromTag(decoder.decodeString())
         }
     }
 }
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(locale.base)
+inline fun String.lowercase(locale: OmniLocale): String = this.lowercase(locale.base)
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
+inline fun String.uppercase(locale: OmniLocale): String = this.uppercase(locale.base)
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun String.titlecase(locale: FlorisLocale = FlorisLocale.ROOT): String {
+inline fun String.titlecase(locale: OmniLocale = OmniLocale.ROOT): String {
     return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale.base) else it.toString() }
 }

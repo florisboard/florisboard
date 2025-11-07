@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package org.omniboard.lib.compose
 
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -50,33 +50,33 @@ private val DefaultScrollbarSize = 4.dp
 // IgnoreInVeryFastOut (basically)
 private val ScrollbarAnimationEasing = CubicBezierEasing(1f, 0f, 0.82f, -0.13f)
 
-fun Modifier.florisVerticalScroll(
+fun Modifier.omniVerticalScroll(
     state: ScrollState? = null,
     showScrollbar: Boolean = true,
     scrollbarWidth: Dp = DefaultScrollbarSize,
 ) = composed {
     val scrollState = state ?: rememberScrollState()
     if (showScrollbar) {
-        verticalScroll(scrollState).florisScrollbar(scrollState, scrollbarWidth, isVertical = true)
+        verticalScroll(scrollState).omniScrollbar(scrollState, scrollbarWidth, isVertical = true)
     } else {
         verticalScroll(scrollState)
     }
 }
 
-fun Modifier.florisHorizontalScroll(
+fun Modifier.omniHorizontalScroll(
     state: ScrollState? = null,
     showScrollbar: Boolean = true,
     scrollbarHeight: Dp = DefaultScrollbarSize,
 ) = composed {
     val scrollState = state ?: rememberScrollState()
     if (showScrollbar) {
-        horizontalScroll(scrollState).florisScrollbar(scrollState, scrollbarHeight, isVertical = false)
+        horizontalScroll(scrollState).omniScrollbar(scrollState, scrollbarHeight, isVertical = false)
     } else {
         horizontalScroll(scrollState)
     }
 }
 
-fun Modifier.florisScrollbar(
+fun Modifier.omniScrollbar(
     state: ScrollState,
     scrollbarSize: Dp = DefaultScrollbarSize,
     isVertical: Boolean,
@@ -131,7 +131,7 @@ fun Modifier.florisScrollbar(
     }
 }
 
-fun Modifier.florisScrollbar(
+fun Modifier.omniScrollbar(
     state: LazyListState,
     size: Dp = DefaultScrollbarSize,
     color: Color = Color.Unspecified,
@@ -187,7 +187,7 @@ fun Modifier.florisScrollbar(
     }
 }
 
-fun Modifier.florisScrollbar(
+fun Modifier.omniScrollbar(
     state: LazyGridState,
     size: Dp = DefaultScrollbarSize,
     color: Color = Color.Unspecified,

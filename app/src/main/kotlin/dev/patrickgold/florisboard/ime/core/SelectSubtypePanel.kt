@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.silo.omniboard.ime.core
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,17 +31,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.subtypeManager
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggColumn
-import org.florisboard.lib.snygg.ui.SnyggListItem
-import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggText
+import dev.silo.omniboard.R
+import dev.silo.omniboard.ime.keyboard.KeyboardState
+import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.silo.omniboard.keyboardManager
+import dev.silo.omniboard.subtypeManager
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.snygg.ui.SnyggBox
+import org.omniboard.lib.snygg.ui.SnyggColumn
+import org.omniboard.lib.snygg.ui.SnyggListItem
+import org.omniboard.lib.snygg.ui.SnyggRow
+import org.omniboard.lib.snygg.ui.SnyggText
 
 @Composable
 fun SelectSubtypePanel(modifier: Modifier = Modifier) {
@@ -54,9 +54,9 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
 
     val currentlySelected = subtypeManager.activeSubtype.id
 
-    SnyggColumn(FlorisImeUi.SubtypePanel.elementName, modifier = modifier.safeDrawingPadding()) {
+    SnyggColumn(OmniImeUi.SubtypePanel.elementName, modifier = modifier.safeDrawingPadding()) {
         SnyggRow(
-            elementName = FlorisImeUi.SubtypePanelHeader.elementName,
+            elementName = OmniImeUi.SubtypePanelHeader.elementName,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -68,7 +68,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             )
         }
 
-        SnyggBox(FlorisImeUi.SubtypePanelList.elementName) {
+        SnyggBox(OmniImeUi.SubtypePanelList.elementName) {
             LazyColumn(
                 state = listState,
             ) {
@@ -79,7 +79,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                     }
                 ) {
                     SnyggListItem(
-                        elementName = FlorisImeUi.SubtypePanelListItem.elementName,
+                        elementName = OmniImeUi.SubtypePanelListItem.elementName,
                         onClick = {
                             subtypeManager.switchToSubtypeById(it.id)
                             keyboardManager.activeState.isSubtypeSelectionVisible = false

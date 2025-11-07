@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,24 +31,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
-import dev.patrickgold.florisboard.lib.util.launchUrl
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.FlorisTextButton
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.curlyFormat
+import dev.silo.omniboard.BuildConfig
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.lib.ext.Extension
+import dev.silo.omniboard.lib.ext.generateUpdateUrl
+import dev.silo.omniboard.lib.util.launchUrl
+import org.omniboard.lib.compose.OmniOutlinedBox
+import org.omniboard.lib.compose.OmniTextButton
+import org.omniboard.lib.compose.defaultOmniOutlinedBox
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.kotlin.curlyFormat
 
 @Composable
 fun ImportExtensionBox(navController: NavController) {
     val context = LocalContext.current
-    FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
+    OmniOutlinedBox(
+        modifier = Modifier.defaultOmniOutlinedBox(),
     ) {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
@@ -60,7 +60,7 @@ fun ImportExtensionBox(navController: NavController) {
                 .fillMaxWidth()
                 .padding(horizontal = 6.dp),
         ) {
-            FlorisTextButton(
+            OmniTextButton(
                 onClick = {
                     context.launchUrl("https://${BuildConfig.FLADDONS_STORE_URL}/")
                 },
@@ -68,7 +68,7 @@ fun ImportExtensionBox(navController: NavController) {
                 text = stringRes(id = R.string.ext__home__visit_store),
             )
             Spacer(modifier = Modifier.weight(1f))
-            FlorisTextButton(
+            OmniTextButton(
                 onClick = {
                     navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, null))
                 },
@@ -82,8 +82,8 @@ fun ImportExtensionBox(navController: NavController) {
 @Composable
 fun UpdateBox(extensionIndex: List<Extension>) {
     val context = LocalContext.current
-    FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
+    OmniOutlinedBox(
+        modifier = Modifier.defaultOmniOutlinedBox(),
     ) {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 4.dp),
@@ -95,7 +95,7 @@ fun UpdateBox(extensionIndex: List<Extension>) {
                 .fillMaxWidth()
                 .padding(horizontal = 6.dp),
         ) {
-            FlorisTextButton(
+            OmniTextButton(
                 onClick = {
                     context.launchUrl(extensionIndex.generateUpdateUrl())
                 },
@@ -113,8 +113,8 @@ fun AddonManagementReferenceBox(
 ) {
     val navController = LocalNavController.current
 
-    FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
+    OmniOutlinedBox(
+        modifier = Modifier.defaultOmniOutlinedBox(),
         title = stringRes(id = R.string.ext__addon_management_box__managing_placeholder).curlyFormat(
             "extensions" to type.let { stringRes(id = it.titleResId).lowercase() }
         )
@@ -130,7 +130,7 @@ fun AddonManagementReferenceBox(
                 .padding(horizontal = 6.dp),
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            FlorisTextButton(
+            OmniTextButton(
                 onClick = {
                     val route = Routes.Ext.List(type, showUpdate = true)
                     navController.navigate(

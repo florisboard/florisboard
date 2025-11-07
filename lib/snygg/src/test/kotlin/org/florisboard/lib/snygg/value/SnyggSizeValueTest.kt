@@ -1,4 +1,4 @@
-package org.florisboard.lib.snygg.value
+package org.omniboard.lib.snygg.value
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.devtools
+package dev.silo.omniboard.app.devtools
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,32 +22,32 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
-import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
-import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import org.florisboard.lib.android.AndroidSettings
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.Routes
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.ime.dictionary.DictionaryManager
+import dev.silo.omniboard.ime.dictionary.OmniUserDictionaryDatabase
+import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.silo.omniboard.lib.compose.OmniConfirmDeleteDialog
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.jetpref.datastore.model.observeAsState
+import dev.silo.jetpref.datastore.ui.Preference
+import dev.silo.jetpref.datastore.ui.PreferenceGroup
+import dev.silo.jetpref.datastore.ui.SwitchPreference
+import org.omniboard.lib.android.AndroidSettings
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.android.showLongToastSync
+import org.omniboard.lib.android.AndroidVersion
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.compose.stringRes
+import org.omniboard.lib.android.showLongToastSync
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
 )
 
 @Composable
-fun DevtoolsScreen() = FlorisScreen {
+fun DevtoolsScreen() = OmniScreen {
     title = stringRes(R.string.devtools__title)
     previewFieldVisible = true
 
@@ -218,16 +218,16 @@ fun DevtoolsScreen() = FlorisScreen {
         }
 
         if (showDialog) {
-            FlorisConfirmDeleteDialog(
+            OmniConfirmDeleteDialog(
                 onConfirm = {
                     DictionaryManager.default().let {
                         it.loadUserDictionariesIfNecessary()
-                        it.florisUserDictionaryDao()?.deleteAll()
+                        it.omniUserDictionaryDao()?.deleteAll()
                     }
                     setShowDialog(false)
                 },
                 onDismiss = { setShowDialog(false) },
-                what = FlorisUserDictionaryDatabase.DB_FILE_NAME,
+                what = OmniUserDictionaryDatabase.DB_FILE_NAME,
             )
         }
     }

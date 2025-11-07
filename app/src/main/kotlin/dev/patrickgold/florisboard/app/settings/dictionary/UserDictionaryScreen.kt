@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.dictionary
+package dev.silo.omniboard.app.settings.dictionary
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -45,45 +45,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
-import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MAX
-import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MIN
-import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
-import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
-import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryValidation
-import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.lib.util.launchActivity
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.LocalNavController
+import dev.silo.omniboard.app.settings.theme.DialogProperty
+import dev.silo.omniboard.ime.dictionary.DictionaryManager
+import dev.silo.omniboard.ime.dictionary.FREQUENCY_MAX
+import dev.silo.omniboard.ime.dictionary.FREQUENCY_MIN
+import dev.silo.omniboard.ime.dictionary.UserDictionaryDao
+import dev.silo.omniboard.ime.dictionary.UserDictionaryEntry
+import dev.silo.omniboard.ime.dictionary.UserDictionaryValidation
+import dev.silo.omniboard.lib.OmniLocale
+import dev.silo.omniboard.lib.compose.OmniScreen
+import dev.silo.omniboard.lib.compose.Validation
+import dev.silo.omniboard.lib.rememberValidationResult
+import dev.silo.omniboard.lib.util.launchActivity
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import dev.silo.jetpref.material.ui.JetPrefListItem
+import dev.silo.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.android.stringRes
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.rippleClickable
-import org.florisboard.lib.compose.stringRes
+import org.omniboard.lib.android.showLongToast
+import org.omniboard.lib.android.showLongToastSync
+import org.omniboard.lib.android.stringRes
+import org.omniboard.lib.compose.OmniIconButton
+import org.omniboard.lib.compose.rippleClickable
+import org.omniboard.lib.compose.stringRes
 
-private val AllLanguagesLocale = FlorisLocale.from(language = "zz")
+private val AllLanguagesLocale = OmniLocale.from(language = "zz")
 private val UserDictionaryEntryToAdd = UserDictionaryEntry(id = 0, "", 255, null, null)
 private const val SystemUserDictionaryUiIntentAction = "android.settings.USER_DICTIONARY_SETTINGS"
 
 enum class UserDictionaryType(val id: String) {
-    FLORIS("floris"),
+    FLORIS("omni"),
     SYSTEM("system");
 }
 
 @Composable
-fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
+fun UserDictionaryScreen(type: UserDictionaryType) = OmniScreen {
     title = stringRes(when (type) {
-        UserDictionaryType.FLORIS -> R.string.settings__udm__title_floris
+        UserDictionaryType.FLORIS -> R.string.settings__udm__title_omni
         UserDictionaryType.SYSTEM -> R.string.settings__udm__title_system
     })
     previewFieldVisible = false
@@ -94,19 +94,19 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     val dictionaryManager = DictionaryManager.default()
     val scope = rememberCoroutineScope()
 
-    var currentLocale by remember { mutableStateOf<FlorisLocale?>(null) }
-    var languageList by remember { mutableStateOf(emptyList<FlorisLocale>()) }
+    var currentLocale by remember { mutableStateOf<OmniLocale?>(null) }
+    var languageList by remember { mutableStateOf(emptyList<OmniLocale>()) }
     var wordList by remember { mutableStateOf(emptyList<UserDictionaryEntry>()) }
     var userDictionaryEntryForDialog by remember { mutableStateOf<UserDictionaryEntry?>(null) }
 
     fun userDictionaryDao(): UserDictionaryDao? {
         return when (type) {
-            UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDao()
+            UserDictionaryType.FLORIS -> dictionaryManager.omniUserDictionaryDao()
             UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDao()
         }
     }
 
-    fun getDisplayNameForLocale(locale: FlorisLocale): String {
+    fun getDisplayNameForLocale(locale: OmniLocale): String {
         return if (locale == AllLanguagesLocale) {
             context.stringRes(R.string.settings__udm__all_languages)
         } else {
@@ -140,7 +140,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             // by pressing the back button), so we don't display an error message here.
             if (uri == null) return@rememberLauncherForActivityResult
             val db = when (type) {
-                UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDatabase()
+                UserDictionaryType.FLORIS -> dictionaryManager.omniUserDictionaryDatabase()
                 UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
             }
             if (db == null) {
@@ -165,7 +165,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             // by pressing the back button), so we don't display an error message here.
             if (uri == null) return@rememberLauncherForActivityResult
             val db = when (type) {
-                UserDictionaryType.FLORIS -> dictionaryManager.florisUserDictionaryDatabase()
+                UserDictionaryType.FLORIS -> dictionaryManager.omniUserDictionaryDatabase()
                 UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
             }
             if (db == null) {
@@ -183,7 +183,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     )
 
     navigationIcon {
-        FlorisIconButton(
+        OmniIconButton(
             onClick = {
                 if (currentLocale != null) {
                     currentLocale = null
@@ -202,7 +202,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
 
     actions {
         var expanded by remember { mutableStateOf(false) }
-        FlorisIconButton(
+        OmniIconButton(
             onClick = { expanded = !expanded },
             icon = Icons.Default.MoreVert,
         )
@@ -339,7 +339,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                             shortcut = shortcut.trim().takeIf { it.isNotBlank() },
                             locale = locale.trim().takeIf { it.isNotBlank() }?.let {
                                 // Normalize tag
-                                FlorisLocale.fromTag(it).localeTag()
+                                OmniLocale.fromTag(it).localeTag()
                             },
                         )
                         if (isAddWord) {

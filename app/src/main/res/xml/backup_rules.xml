@@ -8,5 +8,5 @@
         path="ime"/>
     <include
         domain="database"
-        path="floris_user_dictionary"/>
+        path="omni_user_dictionary"/>
 </full-backup-content>

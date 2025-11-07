@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.clipboard.provider
+package dev.silo.omniboard.ime.clipboard.provider
 
 import android.content.ContentProvider
 import android.content.ContentResolver
@@ -28,13 +28,13 @@ import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import androidx.exifinterface.media.ExifInterface
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.silo.omniboard.BuildConfig
+import dev.silo.omniboard.lib.devtools.flogError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.florisboard.lib.kotlin.tryOrNull
+import org.omniboard.lib.kotlin.tryOrNull
 import androidx.core.net.toUri
 
 /**
@@ -110,8 +110,8 @@ class ClipboardMediaProvider : ContentProvider() {
             IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
                 cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.getOrNull(0)
             }
-            IMAGE_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.image_clip_table"
-            VIDEO_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.video_clip_table"
+            IMAGE_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.omniboard.image_clip_table"
+            VIDEO_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.omniboard.video_clip_table"
             else -> null
         }
     }

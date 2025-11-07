@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib
+package dev.silo.omniboard.lib
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.geometry.Offset
@@ -24,31 +24,31 @@ import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.min
 
-class FlorisRect private constructor(
+class OmniRect private constructor(
     var left: Float,
     var top: Float,
     var right: Float,
     var bottom: Float,
 ) {
     companion object {
-        fun empty() = FlorisRect(0.0f, 0.0f, 0.0f, 0.0f)
+        fun empty() = OmniRect(0.0f, 0.0f, 0.0f, 0.0f)
 
         fun new(
             left: Float = 0.0f,
             top: Float = 0.0f,
             right: Float = 0.0f,
             bottom: Float = 0.0f,
-        ) = FlorisRect(left, top, right, bottom)
+        ) = OmniRect(left, top, right, bottom)
 
         fun new(
             width: Float,
             height: Float,
-        ) = FlorisRect(0.0f, 0.0f, width, height)
+        ) = OmniRect(0.0f, 0.0f, width, height)
 
-        fun from(r: FlorisRect) = FlorisRect(r.left, r.top, r.right, r.bottom)
+        fun from(r: OmniRect) = OmniRect(r.left, r.top, r.right, r.bottom)
     }
 
-    fun applyFrom(other: FlorisRect): FlorisRect {
+    fun applyFrom(other: OmniRect): OmniRect {
         left = other.left
         top = other.top
         right = other.right
@@ -64,15 +64,15 @@ class FlorisRect private constructor(
         return !isEmpty()
     }
 
-    fun intersectWith(other: FlorisRect) {
+    fun intersectWith(other: OmniRect) {
         left = max(left, other.left)
         top = max(top, other.top)
         right = min(right, other.right)
         bottom = min(bottom, other.bottom)
     }
 
-    fun intersectedWith(other: FlorisRect): FlorisRect {
-        return FlorisRect(
+    fun intersectedWith(other: OmniRect): OmniRect {
+        return OmniRect(
             max(left, other.left),
             max(top, other.top),
             min(right, other.right),
@@ -80,7 +80,7 @@ class FlorisRect private constructor(
         )
     }
 
-    fun overlaps(other: FlorisRect): Boolean {
+    fun overlaps(other: OmniRect): Boolean {
         if (right <= other.left || other.right <= left)
             return false
         if (bottom <= other.top || other.bottom <= top)
@@ -127,8 +127,8 @@ class FlorisRect private constructor(
         bottom += translateY
     }
 
-    fun translatedBy(offset: Offset): FlorisRect {
-        return FlorisRect(
+    fun translatedBy(offset: Offset): OmniRect {
+        return OmniRect(
             left = left + offset.x,
             top = top + offset.y,
             right = right + offset.x,
@@ -136,8 +136,8 @@ class FlorisRect private constructor(
         )
     }
 
-    fun translatedBy(translateX: Float, translateY: Float): FlorisRect {
-        return FlorisRect(
+    fun translatedBy(translateX: Float, translateY: Float): OmniRect {
+        return OmniRect(
             left = left + translateX,
             top = top + translateY,
             right = right + translateX,
@@ -159,8 +159,8 @@ class FlorisRect private constructor(
         bottom += deltaY
     }
 
-    fun inflatedBy(delta: Float): FlorisRect {
-        return FlorisRect(
+    fun inflatedBy(delta: Float): OmniRect {
+        return OmniRect(
             left = left - delta,
             top = top - delta,
             right = right + delta,
@@ -168,8 +168,8 @@ class FlorisRect private constructor(
         )
     }
 
-    fun inflatedBy(deltaX: Float, deltaY: Float): FlorisRect {
-        return FlorisRect(
+    fun inflatedBy(deltaX: Float, deltaY: Float): OmniRect {
+        return OmniRect(
             left = left - deltaX,
             top = top - deltaY,
             right = right + deltaX,
@@ -217,14 +217,14 @@ class FlorisRect private constructor(
     }
 
     override fun toString(): String {
-        return "FlorisRect(left = $left, top = $top, right = $right, bottom = $bottom)"
+        return "OmniRect(left = $left, top = $top, right = $right, bottom = $bottom)"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as FlorisRect
+        other as OmniRect
 
         if (left != other.left) return false
         if (top != other.top) return false

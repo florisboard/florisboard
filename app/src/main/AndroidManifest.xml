@@ -14,9 +14,9 @@
     <!-- Permission needed to connect to the internet for voice input -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
+    <!-- Android 11+ only: Define that OmniBoard requests to see all apps that
           ship with an IME or Spell Check service. This is used to guide the user
-          in the Settings Ui why FlorisBoard may not be working.
+          in the Settings Ui why OmniBoard may not be working.
      -->
     <queries>
         <intent>
@@ -28,16 +28,16 @@
     </queries>
 
     <application
-        android:name="dev.patrickgold.florisboard.FlorisApplication"
+        android:name="dev.silo.omniboard.OmniApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/backup_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/floris_app_icon"
-        android:label="@string/floris_app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/omni_app_name"
         android:enableOnBackInvokedCallback="true"
-        android:roundIcon="@mipmap/floris_app_icon_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/FlorisAppTheme"
+        android:theme="@style/OmniAppTheme"
         tools:targetApi="tiramisu">
 
         <!-- Allow app to be profiled for benchmarking and baseline profile generation -->
@@ -45,8 +45,8 @@
 
         <!-- IME service -->
         <service
-            android:name="dev.patrickgold.florisboard.FlorisImeService"
-            android:label="@string/floris_app_name"
+            android:name="dev.silo.omniboard.OmniImeService"
+            android:label="@string/omni_app_name"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:directBootAware="true"
             android:exported="true">
@@ -58,8 +58,8 @@
 
         <!-- Spellchecker service -->
         <service
-            android:name="dev.patrickgold.florisboard.FlorisSpellCheckerService"
-            android:label="@string/floris_app_name"
+            android:name="dev.silo.omniboard.OmniSpellCheckerService"
+            android:label="@string/omni_app_name"
             android:permission="android.permission.BIND_TEXT_SERVICE"
             android:exported="true">
             <intent-filter>
@@ -70,44 +70,44 @@
 
         <!-- Main App Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.app.FlorisAppActivity"
-            android:icon="@mipmap/floris_app_icon"
+            android:name="dev.silo.omniboard.app.OmniAppActivity"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/settings__title"
             android:launchMode="singleTask"
-            android:roundIcon="@mipmap/floris_app_icon_round"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/FlorisAppTheme.Splash"
+            android:theme="@style/OmniAppTheme.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="ui" android:host="florisboard" android:pathPrefix="/" />
+                <data android:scheme="ui" android:host="omniboard" android:pathPrefix="/" />
             </intent-filter>
             <intent-filter android:label="Import Extension">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="content"/>
-                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/vnd.omniboard.extension+zip"/>
                 <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
             <intent-filter android:label="Import Extension">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/vnd.omniboard.extension+zip"/>
                 <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
         </activity>
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias
-            android:name="dev.patrickgold.florisboard.SettingsLauncherAlias"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/floris_app_name"
+            android:name="dev.silo.omniboard.SettingsLauncherAlias"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/omni_app_name"
             android:launchMode="singleTask"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:targetActivity="dev.patrickgold.florisboard.app.FlorisAppActivity"
-            android:theme="@style/FlorisAppTheme.Splash"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:targetActivity="dev.silo.omniboard.app.OmniAppActivity"
+            android:theme="@style/OmniAppTheme.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -117,16 +117,16 @@
 
         <!-- Crash Dialog Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.lib.crashutility.CrashDialogActivity"
-            android:icon="@mipmap/floris_app_icon"
+            android:name="dev.silo.omniboard.lib.crashutility.CrashDialogActivity"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/crash_dialog__title"
             android:configChanges="orientation|screenSize"
             android:theme="@style/CrashDialogTheme"/>
 
         <!-- Copy to Clipboard Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.ime.clipboard.FlorisCopyToClipboardActivity"
-            android:theme="@style/FlorisAppTheme.Transparent"
+            android:name="dev.silo.omniboard.ime.clipboard.OmniCopyToClipboardActivity"
+            android:theme="@style/OmniAppTheme.Transparent"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
@@ -137,7 +137,7 @@
 
         <!-- Clipboard Media File Provider -->
         <provider
-            android:name="dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardMediaProvider"
+            android:name="dev.silo.omniboard.ime.clipboard.provider.ClipboardMediaProvider"
             android:authorities="${applicationId}.provider.clipboard"
             android:grantUriPermissions="true"
             android:exported="false">

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The FlorisBoard Contributors
+ * Copyright (C) 2020-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.gestures
+package dev.silo.omniboard.ime.text.gestures
 
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.lib.Pointer
-import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.util.ViewUtils
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.lib.Pointer
+import dev.silo.omniboard.lib.PointerMap
+import dev.silo.omniboard.lib.devtools.LogTopic
+import dev.silo.omniboard.lib.devtools.flogDebug
+import dev.silo.omniboard.lib.util.ViewUtils
 import kotlin.math.abs
 import kotlin.math.atan2
 
@@ -39,7 +39,7 @@ abstract class SwipeGesture {
      * @property listener The listener to report detected swipes to.
      */
     class Detector(private val listener: Listener) {
-        private val prefs by FlorisPreferenceStore
+        private val prefs by OmniPreferenceStore
 
         var isEnabled: Boolean = true
         private var pointerMap: PointerMap<GesturePointer> = PointerMap { GesturePointer() }

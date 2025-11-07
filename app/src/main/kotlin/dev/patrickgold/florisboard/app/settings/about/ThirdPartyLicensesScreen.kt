@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.about
+package dev.silo.omniboard.app.settings.about
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -24,13 +24,13 @@ import androidx.compose.ui.Modifier
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.m3.libraryColors
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import org.florisboard.lib.compose.florisScrollbar
-import org.florisboard.lib.compose.stringRes
+import dev.silo.omniboard.R
+import dev.silo.omniboard.lib.compose.OmniScreen
+import org.omniboard.lib.compose.omniScrollbar
+import org.omniboard.lib.compose.stringRes
 
 @Composable
-fun ThirdPartyLicensesScreen() = FlorisScreen {
+fun ThirdPartyLicensesScreen() = OmniScreen {
     title = stringRes(R.string.about__third_party_licenses__title)
     scrollable = false
     iconSpaceReserved = false
@@ -41,7 +41,7 @@ fun ThirdPartyLicensesScreen() = FlorisScreen {
         LibrariesContainer(
             modifier = Modifier
                 .fillMaxSize()
-                .florisScrollbar(lazyListState, isVertical = true),
+                .omniScrollbar(lazyListState, isVertical = true),
             colors = LibraryDefaults.libraryColors(
                 backgroundColor = MaterialTheme.colorScheme.background,
                 badgeBackgroundColor = MaterialTheme.colorScheme.primaryContainer,

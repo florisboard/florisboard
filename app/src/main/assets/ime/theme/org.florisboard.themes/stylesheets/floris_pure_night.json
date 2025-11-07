@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.florisboard.org/snygg/v2/stylesheet",
+  "$schema": "https://schemas.omniboard.org/snygg/v2/stylesheet",
   "@defines": {
     "--primary": "#388e3c",
     "--primary-variant": "#306d32",

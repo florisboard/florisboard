@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme
+package dev.silo.omniboard.ime.theme
 
 /*
-import org.florisboard.lib.snygg.Snygg
-import org.florisboard.lib.snygg.SnyggLevel
-import org.florisboard.lib.snygg.SnyggPropertySetSpecDeclBuilder
-import org.florisboard.lib.snygg.SnyggSpecDecl
-import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
-import org.florisboard.lib.snygg.value.SnyggDynamicColorLightColorValue
-import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.omniboard.lib.snygg.Snygg
+import org.omniboard.lib.snygg.SnyggLevel
+import org.omniboard.lib.snygg.SnyggPropertySetSpecDeclBuilder
+import org.omniboard.lib.snygg.SnyggSpecDecl
+import org.omniboard.lib.snygg.value.SnyggCircleShapeValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggDpSizeValue
+import org.omniboard.lib.snygg.value.SnyggDynamicColorDarkColorValue
+import org.omniboard.lib.snygg.value.SnyggDynamicColorLightColorValue
+import org.omniboard.lib.snygg.value.SnyggRectangleShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.omniboard.lib.snygg.value.SnyggRoundedCornerPercentShapeValue
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.snygg.value.SnyggSpSizeValue
 
 fun SnyggPropertySetSpecDeclBuilder.background() {
     property(
@@ -88,11 +88,11 @@ fun SnyggPropertySetSpecDeclBuilder.shape() {
     )
 }
 
-object FlorisImeUiSpec : SnyggSpecDecl({
-    element(FlorisImeUi.Keyboard) {
+object OmniImeUiSpec : SnyggSpecDecl({
+    element(OmniImeUi.Keyboard) {
         background()
     }
-    element(FlorisImeUi.Key) {
+    element(OmniImeUi.Key) {
         background()
         foreground()
         font()
@@ -100,13 +100,13 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         shadow()
         border()
     }
-    element(FlorisImeUi.KeyHint) {
+    element(OmniImeUi.KeyHint) {
         background()
         foreground()
         font()
         shape()
     }
-    element(FlorisImeUi.KeyPopup) {
+    element(OmniImeUi.KeyPopup) {
         background()
         foreground()
         font()
@@ -115,38 +115,30 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         border()
     }
 
-    element(FlorisImeUi.Smartbar) {
+    element(OmniImeUi.Smartbar) {
         background()
     }
-    element(FlorisImeUi.SmartbarSharedActionsRow) {
+    element(OmniImeUi.SmartbarSharedActionsRow) {
         background()
     }
-    element(FlorisImeUi.SmartbarSharedActionsToggle) {
-        background()
-        foreground()
-        shape()
-        shadow()
-        border()
-    }
-    element(FlorisImeUi.SmartbarExtendedActionsRow) {
-        background()
-    }
-    element(FlorisImeUi.SmartbarExtendedActionsToggle) {
+    element(OmniImeUi.SmartbarSharedActionsToggle) {
         background()
         foreground()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarActionKey) {
+    element(OmniImeUi.SmartbarExtendedActionsRow) {
+        background()
+    }
+    element(OmniImeUi.SmartbarExtendedActionsToggle) {
         background()
         foreground()
-        font()
         shape()
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarActionTile) {
+    element(OmniImeUi.SmartbarActionKey) {
         background()
         foreground()
         font()
@@ -154,7 +146,7 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarActionsOverflowCustomizeButton) {
+    element(OmniImeUi.SmartbarActionTile) {
         background()
         foreground()
         font()
@@ -162,55 +154,55 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         shadow()
         border()
     }
-    element(FlorisImeUi.SmartbarActionsOverflow) {
-        background()
-    }
-    element(FlorisImeUi.SmartbarActionsEditor) {
-        background()
-        shape()
-    }
-    element(FlorisImeUi.SmartbarActionsEditorHeader) {
-        background()
-        foreground()
-        font()
-    }
-    element(FlorisImeUi.SmartbarActionsEditorSubheader) {
-        foreground()
-        font()
-    }
-    element(FlorisImeUi.SmartbarCandidatesRow) {
-        background()
-    }
-    element(FlorisImeUi.SmartbarCandidateWord) {
+    element(OmniImeUi.SmartbarActionsOverflowCustomizeButton) {
         background()
         foreground()
         font()
         shape()
+        shadow()
+        border()
     }
-    element(FlorisImeUi.SmartbarCandidateClip) {
+    element(OmniImeUi.SmartbarActionsOverflow) {
+        background()
+    }
+    element(OmniImeUi.SmartbarActionsEditor) {
+        background()
+        shape()
+    }
+    element(OmniImeUi.SmartbarActionsEditorHeader) {
+        background()
+        foreground()
+        font()
+    }
+    element(OmniImeUi.SmartbarActionsEditorSubheader) {
+        foreground()
+        font()
+    }
+    element(OmniImeUi.SmartbarCandidatesRow) {
+        background()
+    }
+    element(OmniImeUi.SmartbarCandidateWord) {
         background()
         foreground()
         font()
         shape()
     }
-    element(FlorisImeUi.SmartbarCandidateSpacer) {
+    element(OmniImeUi.SmartbarCandidateClip) {
+        background()
+        foreground()
+        font()
+        shape()
+    }
+    element(OmniImeUi.SmartbarCandidateSpacer) {
         foreground()
     }
 
-    element(FlorisImeUi.ClipboardHeader) {
+    element(OmniImeUi.ClipboardHeader) {
         background()
         foreground()
         font()
     }
-    element(FlorisImeUi.ClipboardItem) {
-        background()
-        foreground()
-        font()
-        shape()
-        shadow()
-        border()
-    }
-    element(FlorisImeUi.ClipboardItemPopup) {
+    element(OmniImeUi.ClipboardItem) {
         background()
         foreground()
         font()
@@ -218,13 +210,7 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         shadow()
         border()
     }
-    element(FlorisImeUi.ClipboardEnableHistoryButton) {
-        background()
-        foreground()
-        shape()
-    }
-
-    element(FlorisImeUi.EmojiKey) {
+    element(OmniImeUi.ClipboardItemPopup) {
         background()
         foreground()
         font()
@@ -232,75 +218,89 @@ object FlorisImeUiSpec : SnyggSpecDecl({
         shadow()
         border()
     }
-    element(FlorisImeUi.EmojiKeyPopup) {
-        background()
-        foreground()
-        font()
-        shape()
-        shadow()
-        border()
-    }
-    element(FlorisImeUi.EmojiTab) {
-        foreground()
-    }
-
-    element(FlorisImeUi.ExtractedLandscapeInputLayout) {
-        background()
-    }
-    element(FlorisImeUi.ExtractedLandscapeInputField) {
-        background()
-        foreground()
-        font()
-        shape()
-        border()
-    }
-    element(FlorisImeUi.ExtractedLandscapeInputAction) {
+    element(OmniImeUi.ClipboardEnableHistoryButton) {
         background()
         foreground()
         shape()
     }
 
-    element(FlorisImeUi.GlideTrail) {
+    element(OmniImeUi.EmojiKey) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(OmniImeUi.EmojiKeyPopup) {
+        background()
+        foreground()
+        font()
+        shape()
+        shadow()
+        border()
+    }
+    element(OmniImeUi.EmojiTab) {
         foreground()
     }
 
-    element(FlorisImeUi.IncognitoModeIndicator) {
+    element(OmniImeUi.ExtractedLandscapeInputLayout) {
+        background()
+    }
+    element(OmniImeUi.ExtractedLandscapeInputField) {
+        background()
+        foreground()
+        font()
+        shape()
+        border()
+    }
+    element(OmniImeUi.ExtractedLandscapeInputAction) {
+        background()
+        foreground()
+        shape()
+    }
+
+    element(OmniImeUi.GlideTrail) {
         foreground()
     }
 
-    element(FlorisImeUi.OneHandedPanel) {
+    element(OmniImeUi.IncognitoModeIndicator) {
+        foreground()
+    }
+
+    element(OmniImeUi.OneHandedPanel) {
         background()
         foreground()
     }
 
-    element(FlorisImeUi.SystemNavBar) {
+    element(OmniImeUi.SystemNavBar) {
         background()
     }
 })
 
 Snygg.init(
-            stylesheetSpec = FlorisImeUiSpec,
+            stylesheetSpec = OmniImeUiSpec,
             rulePreferredElementSorting = listOf(
-                FlorisImeUi.Keyboard,
-                FlorisImeUi.Key,
-                FlorisImeUi.KeyHint,
-                FlorisImeUi.KeyPopup,
-                FlorisImeUi.Smartbar,
-                FlorisImeUi.SmartbarSharedActionsRow,
-                FlorisImeUi.SmartbarSharedActionsToggle,
-                FlorisImeUi.SmartbarExtendedActionsRow,
-                FlorisImeUi.SmartbarExtendedActionsToggle,
-                FlorisImeUi.SmartbarActionKey,
-                FlorisImeUi.SmartbarActionTile,
-                FlorisImeUi.SmartbarActionsOverflow,
-                FlorisImeUi.SmartbarActionsOverflowCustomizeButton,
-                FlorisImeUi.SmartbarActionsEditor,
-                FlorisImeUi.SmartbarActionsEditorHeader,
-                FlorisImeUi.SmartbarActionsEditorSubheader,
-                FlorisImeUi.SmartbarCandidatesRow,
-                FlorisImeUi.SmartbarCandidateWord,
-                FlorisImeUi.SmartbarCandidateClip,
-                FlorisImeUi.SmartbarCandidateSpacer,
+                OmniImeUi.Keyboard,
+                OmniImeUi.Key,
+                OmniImeUi.KeyHint,
+                OmniImeUi.KeyPopup,
+                OmniImeUi.Smartbar,
+                OmniImeUi.SmartbarSharedActionsRow,
+                OmniImeUi.SmartbarSharedActionsToggle,
+                OmniImeUi.SmartbarExtendedActionsRow,
+                OmniImeUi.SmartbarExtendedActionsToggle,
+                OmniImeUi.SmartbarActionKey,
+                OmniImeUi.SmartbarActionTile,
+                OmniImeUi.SmartbarActionsOverflow,
+                OmniImeUi.SmartbarActionsOverflowCustomizeButton,
+                OmniImeUi.SmartbarActionsEditor,
+                OmniImeUi.SmartbarActionsEditorHeader,
+                OmniImeUi.SmartbarActionsEditorSubheader,
+                OmniImeUi.SmartbarCandidatesRow,
+                OmniImeUi.SmartbarCandidateWord,
+                OmniImeUi.SmartbarCandidateClip,
+                OmniImeUi.SmartbarCandidateSpacer,
             ),
             rulePlaceholders = mapOf(
                 "c:delete" to KeyCode.DELETE,

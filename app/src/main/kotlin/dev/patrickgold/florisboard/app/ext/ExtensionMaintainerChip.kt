@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ext
+package dev.silo.omniboard.app.ext
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,10 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.lib.util.launchUrl
-import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import org.florisboard.lib.compose.FlorisChip
+import dev.silo.omniboard.lib.ext.ExtensionMaintainer
+import dev.silo.omniboard.lib.util.launchUrl
+import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import org.omniboard.lib.compose.OmniChip
 
 @Composable
 fun ExtensionMaintainerChip(
@@ -43,7 +43,7 @@ fun ExtensionMaintainerChip(
     val context = LocalContext.current
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
-    FlorisChip(
+    OmniChip(
         modifier = modifier,
         text = maintainer.name,
         trailingIcons = when {
@@ -67,7 +67,7 @@ fun ExtensionMaintainerChip(
         ) {
             Column {
                 if (maintainer.email != null) {
-                    FlorisChip(
+                    OmniChip(
                         onClick = { context.launchUrl("mailto:${maintainer.email}") },
                         text = maintainer.email.toString(),
                         leadingIcons = listOf(Icons.Outlined.Mail),
@@ -75,7 +75,7 @@ fun ExtensionMaintainerChip(
                     )
                 }
                 if (maintainer.url != null) {
-                    FlorisChip(
+                    OmniChip(
                         onClick = { context.launchUrl(maintainer.url.toString()) },
                         text = maintainer.url.toString(),
                         leadingIcons = listOf(Icons.Default.Link),

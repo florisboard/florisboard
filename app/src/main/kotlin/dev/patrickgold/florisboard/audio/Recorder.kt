@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.audio
+package dev.silo.omniboard.audio
 
 import android.content.Context
 import android.media.MediaRecorder

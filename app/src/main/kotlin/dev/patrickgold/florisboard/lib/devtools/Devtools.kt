@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.devtools
+package dev.silo.omniboard.lib.devtools
 
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
 import android.os.Debug
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceModel
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.lib.titlecase
-import dev.patrickgold.florisboard.lib.util.TimeUtils
-import dev.patrickgold.florisboard.lib.util.UnitUtils
-import dev.patrickgold.florisboard.subtypeManager
-import org.florisboard.lib.android.systemService
+import dev.silo.omniboard.BuildConfig
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceModel
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.lib.titlecase
+import dev.silo.omniboard.lib.util.TimeUtils
+import dev.silo.omniboard.lib.util.UnitUtils
+import dev.silo.omniboard.subtypeManager
+import org.omniboard.lib.android.systemService
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Devtools {
-    fun generateDebugLog(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLog(context: Context, prefs: OmniPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             append(generateDebugLogHeader(context, prefs))
             if (includeLogcat) {
@@ -45,7 +45,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogHeader(context: Context, prefs: FlorisPreferenceModel? = null): String {
+    fun generateDebugLogHeader(context: Context, prefs: OmniPreferenceModel? = null): String {
         return buildString {
             append(generateSystemInfoLog(context))
             appendLine()
@@ -61,7 +61,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogForGithub(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLogForGithub(context: Context, prefs: OmniPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             appendLine("<details>")
             appendLine("<summary>Detailed info (Debug log header)</summary>")
@@ -104,7 +104,7 @@ object Devtools {
         return buildString {
             if (withTitle) appendLine("======= APP INFO =======")
             append("Package             : ").appendLine(BuildConfig.APPLICATION_ID)
-            append("Name                : ").appendLine(context.resources.getString(R.string.floris_app_name))
+            append("Name                : ").appendLine(context.resources.getString(R.string.omni_app_name))
             append("Version             : ").appendLine("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
             append("Build type          : ").appendLine(BuildConfig.BUILD_TYPE)
             append("Build commit hash   : ").appendLine(BuildConfig.BUILD_COMMIT_HASH)
@@ -113,7 +113,7 @@ object Devtools {
         }
     }
 
-    fun generateFeatureConfigLog(prefs: FlorisPreferenceModel, withTitle: Boolean = true): String {
+    fun generateFeatureConfigLog(prefs: OmniPreferenceModel, withTitle: Boolean = true): String {
         return buildString {
             if (withTitle) appendLine("======= FEATURE CONFIG =======")
             append("Smartbar enabled            : ").appendLine(prefs.smartbar.enabled.get())

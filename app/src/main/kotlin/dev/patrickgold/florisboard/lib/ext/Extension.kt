@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.ext
+package dev.silo.omniboard.lib.ext
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.silo.omniboard.BuildConfig
+import dev.silo.omniboard.lib.io.OmniRef
+import dev.silo.omniboard.lib.io.ZipUtils
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import org.florisboard.lib.kotlin.io.FsDir
-import org.florisboard.lib.kotlin.io.FsFile
-import org.florisboard.lib.kotlin.resultErr
-import org.florisboard.lib.kotlin.resultOk
+import org.omniboard.lib.kotlin.io.FsDir
+import org.omniboard.lib.kotlin.io.FsFile
+import org.omniboard.lib.kotlin.resultErr
+import org.omniboard.lib.kotlin.resultOk
 
 /**
  * An extension container holding a parsed config, a working directory file
@@ -42,7 +42,7 @@ import org.florisboard.lib.kotlin.resultOk
 @Serializable
 abstract class Extension {
     @Transient var workingDir: FsDir? = null
-    @Transient var sourceRef: FlorisRef? = null
+    @Transient var sourceRef: OmniRef? = null
 
     abstract val meta: ExtensionMeta
     abstract val dependencies: List<String>?

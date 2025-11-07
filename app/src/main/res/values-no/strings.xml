@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">FlorisBoard</string>
+    <string name="app_name">OmniBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vent</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikon med tre prikker. Hvis synlig, indikerer det at flere bokstaver kan brukes hvis de trykkes lenger.</string>
@@ -83,8 +83,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
     <string name="settings__home__title" comment="Title of the Home screen">Velkommen til {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke aktivert i systemet og vil derfor ikke være tilgjengelig som inndatametode i inndatavelgeren. Klikk her for å løse dette problemet.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inndatametode. Klikk her for å løse dette problemet.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard er ikke aktivert i systemet og vil derfor ikke være tilgjengelig som inndatametode i inndatavelgeren. Klikk her for å løse dette problemet.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard er ikke valgt som standard inndatametode. Klikk her for å løse dette problemet.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Mål &amp; Oppsett</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Vis målnavn på</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Undertyper</string>
@@ -125,7 +125,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dag-tema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Natt-tema</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Handsam innlagte tema</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Ressurser</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">OmniBoard App Ressurser</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Intern Lagring</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ekstern Leverandør</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Velg dagtema</string>
@@ -148,7 +148,7 @@
     <string name="settings__theme_editor__code_recording_help_text">For å finne koden til en bestemt tast, bruk knappen ved siden av inndatafeltet. Når den er aktivert, registrerer den neste tastetrykk og setter inn koden i feltet.</string>
     <string name="settings__theme_editor__code_recording_started">Innspilling av tastekode startet</string>
     <string name="settings__theme_editor__code_recording_stopped">Innspilling av tastekode stoppet</string>
-    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">{app_name} må være standardtastatur for å spille inn en tastekode</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_omni">{app_name} må være standardtastatur for å spille inn en tastekode</string>
     <string name="settings__theme_editor__code_recording_placeholder">Spiller inn…</string>
     <string name="settings__theme_editor__add_property">Legg til egenskap</string>
     <string name="settings__theme_editor__edit_property">Rediger egenskap</string>
@@ -247,9 +247,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i system-brukerordlisten</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Aktiver intern brukerordliste</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Anbefal ord lagret i den interne brukerordlisten</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Rediger intern brukerordliste</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i den interne brukerordlisten</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Intern Brukerordliste</string>
+    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">Rediger intern brukerordliste</string>
+    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">Legg til, vis og fjern oppføringer i den interne brukerordlisten</string>
+    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">Intern Brukerordliste</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System Brukerordliste</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: {freq}</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvens: {freq} | Snarvei: {shortcut}</string>
@@ -291,7 +291,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Sveipedistanseterskel</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard\'s app ikon</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">OmniBoard\'s app ikon</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Åpen kildekode-lisenser</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Persovernerklæring</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kildekode</string>
@@ -306,7 +306,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Persovernerklæring</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Personvernærklæring for dette prosjektet</string>
     <string name="about__project_license__title" comment="Preference title">Prosjektlisens</string>
-    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard er lisensiert under {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">OmniBoard er lisensiert under {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Feil: Fikk ikke til å laste lisenstekst.\n-&gt; Årsak: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Referanse for aktivaforvalter er null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Tredjepartslisenser</string>
@@ -333,18 +333,18 @@
     <string name="backup_and_restore__back_up__destination_file_sys">Lokalt filsystem</string>
     <string name="backup_and_restore__restore__title">Gjenopprett data</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard feilmeldingsrapporter</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Beklager ulempen, men FlorisBoard har krasjet på grunn av en uventet feil.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Hvis du ønsker å rapportere denne feilen, sjekk først at krasjen ikke allerede er rapportert i sakssystemet GitHub.\nHvis den ikke er det, kopier den genererte krasjloggen og åpne en ny sak. Bruk \"%s\"-malen og fyll ut beskrivelsen, trinnene for å reprodusere, og lim inn den genererte krasjloggen på slutten. Dette er med på å gjøre FlorisBoard bedre og mer stabilt for alle. Takk skal du ha!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">OmniBoard feilmeldingsrapporter</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Beklager ulempen, men OmniBoard har krasjet på grunn av en uventet feil.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Hvis du ønsker å rapportere denne feilen, sjekk først at krasjen ikke allerede er rapportert i sakssystemet GitHub.\nHvis den ikke er det, kopier den genererte krasjloggen og åpne en ny sak. Bruk \"%s\"-malen og fyll ut beskrivelsen, trinnene for å reprodusere, og lim inn den genererte krasjloggen på slutten. Dette er med på å gjøre OmniBoard bedre og mer stabilt for alle. Takk skal du ha!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopier til systemutklippstavlen</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Kopiert til systemutklippstavlen</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Kan ikke kopiere til systemutklippstavlen: Utklippstavlebehandler ikke funnet</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Åpne sakssystem (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Lukk</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard feilmeldingsrapporter</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard har sluttet å fungere…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">OmniBoard feilmeldingsrapporter</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard har sluttet å fungere…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Klikk for å se feilmeldingsdetaljer</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard virker å stoppe å fungere gjentatte ganger…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">OmniBoard virker å stoppe å fungere gjentatte ganger…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Faller tilbake til forrige tastatur for å stoppe uendelig krasjloop. Klikk for å vise feilmeldingsdetaljer</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Utklippstavle</string>
@@ -368,9 +368,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Bruk intern utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Bruk en intern utklippstavle i steden for systemutklippstavlen</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synkroniser fra systemutklippstavlen</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Systemutklippstavlen oppdaterer også Floris-utklippstavlen</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Systemutklippstavlen oppdaterer også Omni-utklippstavlen</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synkroniser til systemutklippstavlen</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris-utklippstavlen oppdaterer også systemutklippstavlen</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Omni-utklippstavlen oppdaterer også systemutklippstavlen</string>
     <string name="pref__clipboard__group_clipboard_history__label">Utklippstavle-historie</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Skru på utklippstavle-historie</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Behold utklippstavleobjekter for rask tilgang</string>
@@ -416,7 +416,7 @@
     <string name="ext__editor__create_component__from_empty_warning">Opprettelse og konfigurering av tomme komponenter kan være vanskelig om du er ny til {app_name} eller ikke kjenner til detaljene. Dersom dette er tilfellet bør du vurdere å kopiere en eksisterende komponent og modifisere denne.</string>
     <string name="ext__export__failure">Eksport av utvidelse feilet: {error_message}</string>
     <string name="ext__import__failure">Import av utvidelse feilet: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importer utvidelse</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Importer utvidelse</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importer tastaturutvidelse</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importer temautvidelse</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importer språkpakkeutvidelse</string>

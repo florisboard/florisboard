@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The FlorisBoard Contributors
+ * Copyright (C) 2020-2025 The OmniBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme
+package dev.silo.omniboard.ime.theme
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -39,17 +39,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
-import dev.patrickgold.florisboard.lib.devtools.flogInfo
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
-import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.util.TimeUtils.javaLocalTime
-import dev.patrickgold.florisboard.lib.util.ViewUtils
+import dev.silo.omniboard.R
+import dev.silo.omniboard.app.OmniPreferenceStore
+import dev.silo.omniboard.appContext
+import dev.silo.omniboard.extensionManager
+import dev.silo.omniboard.ime.smartbar.CachedInlineSuggestionsChipStyleSet
+import dev.silo.omniboard.lib.devtools.flogInfo
+import dev.silo.omniboard.lib.ext.ExtensionComponentName
+import dev.silo.omniboard.lib.ext.ExtensionMeta
+import dev.silo.omniboard.lib.io.ZipUtils
+import dev.silo.omniboard.lib.util.TimeUtils.javaLocalTime
+import dev.silo.omniboard.lib.util.ViewUtils
 import java.time.LocalTime
 import java.util.*
 import kotlinx.coroutines.CoroutineScope
@@ -60,13 +60,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.kotlin.collectIn
-import org.florisboard.lib.kotlin.io.FsDir
-import org.florisboard.lib.kotlin.io.deleteContentsRecursively
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.snygg.SnyggStylesheet
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.omniboard.lib.kotlin.collectIn
+import org.omniboard.lib.kotlin.io.FsDir
+import org.omniboard.lib.kotlin.io.deleteContentsRecursively
+import org.omniboard.lib.kotlin.io.subDir
+import org.omniboard.lib.kotlin.io.subFile
+import org.omniboard.lib.snygg.SnyggStylesheet
+import org.omniboard.lib.snygg.value.SnyggStaticColorValue
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -74,7 +74,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * Settings Activities.
  */
 class ThemeManager(context: Context) {
-    private val prefs by FlorisPreferenceStore
+    private val prefs by OmniPreferenceStore
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
 
@@ -296,7 +296,7 @@ class ThemeManager(context: Context) {
             val DEFAULT = ThemeInfo(
                 name = extCoreTheme("base"),
                 config = ThemeExtensionComponentImpl(id = "base", label = "Base", authors = listOf()),
-                stylesheet = FlorisImeThemeBaseStyle,
+                stylesheet = OmniImeThemeBaseStyle,
                 loadedDir = null,
                 loadFailure = null,
             )
