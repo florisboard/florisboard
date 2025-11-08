@@ -85,7 +85,7 @@ class CrashDialogActivity : ComponentActivity() {
         }
         errorReport.apply {
             appendLine("#### Environment information")
-            appendLine("- FlorisBoard $versionName (${BuildConfig.VERSION_CODE})")
+            appendLine("- ${stringRes(R.string.floris_app_name)} $versionName (${BuildConfig.VERSION_CODE})")
             appendLine("- Device: ${Devtools.getDeviceName()}")
             appendLine("- Android: ${Devtools.getAndroidVersion()}")
             appendLine()
