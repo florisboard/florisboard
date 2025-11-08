@@ -8,7 +8,7 @@
 
     <!-- Add default system subtype so we can properly set the icon and label -->
     <subtype
-        android:label="@string/floris_app_name"
+        android:label="@string/floris_ime_label"
         android:icon="@mipmap/floris_app_icon"
         android:imeSubtypeMode="keyboard"
         android:imeSubtypeExtraValue="AsciiCapable"

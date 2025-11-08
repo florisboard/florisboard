@@ -46,7 +46,7 @@
         <!-- IME service -->
         <service
             android:name="dev.patrickgold.florisboard.FlorisImeService"
-            android:label="@string/floris_app_name"
+            android:label="@string/floris_ime_label"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:directBootAware="true"
             android:exported="true">

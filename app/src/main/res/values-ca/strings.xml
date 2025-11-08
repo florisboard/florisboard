@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">FlorisBoard</string>
+    <string name="app_name">OmniBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Espera</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Icona de tres punts. Si és visible, indica que es poden utilitzar més lletres si es prem més temps.</string>
@@ -110,8 +110,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Per defecte</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
     <string name="settings__home__title" comment="Title of the Home screen">Us donem la benvinguda a {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i, per tant, no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per a resoldre aquest problema.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per a resoldre aquest problema.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard no està habilitat en el sistema i, per tant, no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per a resoldre aquest problema.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per a resoldre aquest problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Llengües &amp; Disposicions</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Mostra els noms de les llengües en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Mostra les etiquetes del teclat en l\'idioma del subtipus</string>
@@ -158,7 +158,7 @@
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Color de ressalt (Temes Material You)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestiona els temes instal·lats</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions FlorisBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions OmniBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Emmagatzematge intern</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Selecciona el tema del dia</string>
@@ -440,7 +440,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Habilitat sempre a Android 10 i posteriors a conseqüència de les restriccions del sistema</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Quant a</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona de l\'aplicació de FlorisBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona de l\'aplicació de OmniBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Llicències de codi obert</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacitat</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codi font</string>
@@ -455,7 +455,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Política de privacitat</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacitat per a aquest projecte</string>
     <string name="about__project_license__title" comment="Preference title">Llicència del projecte</string>
-    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard està sota la llicència de {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">OmniBoard està sota la llicència de {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: No s\'ha pogut carregar la llicència.\n-&gt; Motiu: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">La referència al gestor de recursos és nul·la</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Llicències de tercers</string>
@@ -473,7 +473,7 @@
     <string name="setup__select_ime__switch_keyboard_btn">Canvia el teclat</string>
     <string name="setup__grant_notification_permission__title">Permet les notificacions d\'informes d\'errors</string>
     <string name="setup__grant_notification_permission__description">Des d\'Android 13 i posteriors les aplicacions han de demanar permís per
-        enviar notificacions. FlorisBoard només en fa ús per obrir una pantalla d\'informe d\'error en cas de fallada.
+        enviar notificacions. OmniBoard només en fa ús per obrir una pantalla d\'informe d\'error en cas de fallada.
         Aquest permís es pot modificar en qualsevol moment als paràmetres del sistema.
     </string>
     <string name="setup__grant_notification_permission__btn">Concedeix permís</string>
@@ -514,18 +514,18 @@
     <string name="backup_and_restore__restore__success">Les dades s\'han restaurat correctament!</string>
     <string name="backup_and_restore__restore__failure">Ha fallat en restaurar les dades: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">Informe d\'errors de FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Disculpa les molèsties, però FlorisBoard ha fallat a conseqüència d\'un error inesperat.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vols informar d\'aquest error, mira\'t primer si ja s\'ha informat al rastrejador d\'incidències de GitHub.\nSi no, copia el registre de l\'error i obre una incidència nova. Usa la plantilla %s i emplena-la amb la descripció, els passos per reproduir-lo i enganxa el registre d\'error generat al final. Això ens ajuda a millorar FlorisBoard i fer-lo més estable per a tothom. Gràcies!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">Informe d\'errors de OmniBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Disculpa les molèsties, però OmniBoard ha fallat a conseqüència d\'un error inesperat.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vols informar d\'aquest error, mira\'t primer si ja s\'ha informat al rastrejador d\'incidències de GitHub.\nSi no, copia el registre de l\'error i obre una incidència nova. Usa la plantilla %s i emplena-la amb la descripció, els passos per reproduir-lo i enganxa el registre d\'error generat al final. Això ens ajuda a millorar OmniBoard i fer-lo més estable per a tothom. Gràcies!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia al porta-retalls del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">S\'ha copiat al porta-retalls del sistema</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No es pot copiar al porta-retalls del sistema: No s\'ha trobat la instància d\'administració del porta-retalls</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Obre el rastrejador d\'incidències (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tanca</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes d\'error de FlorisBoard</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard ha deixat de funcionar…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes d\'error de OmniBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard ha deixat de funcionar…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Toca per veure els detalls de l\'error</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Sembla que FlorisBoard ha deixat de funcionar repetidament…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Sembla que OmniBoard ha deixat de funcionar repetidament…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Tornant al teclat anterior per aturar el bucle de fallada infinit. Toca per veure els detalls de l\'error</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Porta-retalls</string>
@@ -556,9 +556,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Usa el porta-retalls intern</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa un porta-retalls intern en lloc del porta-retalls del sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronitza des del porta-retalls del sistema</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Les actualitzacions al porta-retalls del sistema també s\'actualitzaran al port-retalls de Floris</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Les actualitzacions al porta-retalls del sistema també s\'actualitzaran al port-retalls de OmniBoard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronitza cap al porta-retalls del sistema</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Les actualitzacions al porta-retalls de Floris també s\'actualitzaran al port-retalls del sistema</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Les actualitzacions al porta-retalls de OmniBoard també s\'actualitzaran al port-retalls del sistema</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Suggeriments del porta-retalls</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggeriments del contingut del porta-retalls</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggereix continguts copiats prèviament al porta-retalls</string>
@@ -661,7 +661,7 @@
     <string name="ext__export__failure">Error en exportar l\'extensió: {error_message}</string>
     <string name="ext__import__success">L\'extensió s\'ha importat correctament!</string>
     <string name="ext__import__failure">Error en importar l\'extensió: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importa l\'extensió</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Importa l\'extensió</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importa l\'extensió de teclat</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importa l\'extensió de tema</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importa l\'extensió de paquet d\'idioma</string>
@@ -701,7 +701,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Gestionant {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Totes les tasques referides a la importació, exportació, creació, personalització i supressió d\'extensions es poden gestionar a través de l\'administrador de complements centralitzat.</string>
     <string name="ext__addon_management_box__go_to_page">Ves a {ext_home_title}</string>
-    <string name="ext__home__info">Pots descarregar i instal·lar les extensions des de la botiga de complements de FlorisBoard o importar qualsevol fitxer d\'extensió que hagis descarregat d\'internet.</string>
+    <string name="ext__home__info">Pots descarregar i instal·lar les extensions des de la botiga de complements de OmniBoard o importar qualsevol fitxer d\'extensió que hagis descarregat d\'internet.</string>
     <string name="ext__home__visit_store">Visita la botiga de complements</string>
     <string name="ext__home__manage_extensions">Administra les extensions instal·lades</string>
     <string name="ext__list__view_details">Visualitza els detalls</string>
