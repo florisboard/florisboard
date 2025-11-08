@@ -32,10 +32,10 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/backup_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/omni_icon"
         android:label="@string/omni_app_name"
         android:enableOnBackInvokedCallback="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/omni_icon"
         android:supportsRtl="true"
         android:theme="@style/OmniAppTheme"
         tools:targetApi="tiramisu">
@@ -71,10 +71,10 @@
         <!-- Main App Activity -->
         <activity
             android:name="dev.silo.omniboard.app.OmniAppActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/omni_icon"
             android:label="@string/settings__title"
             android:launchMode="singleTask"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/omni_icon"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/OmniAppTheme.Splash"
             android:exported="true">
@@ -102,10 +102,10 @@
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias
             android:name="dev.silo.omniboard.SettingsLauncherAlias"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/omni_icon"
             android:label="@string/omni_app_name"
             android:launchMode="singleTask"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/omni_icon"
             android:targetActivity="dev.silo.omniboard.app.OmniAppActivity"
             android:theme="@style/OmniAppTheme.Splash"
             android:exported="true">
@@ -118,7 +118,7 @@
         <!-- Crash Dialog Activity -->
         <activity
             android:name="dev.silo.omniboard.lib.crashutility.CrashDialogActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/omni_icon"
             android:label="@string/crash_dialog__title"
             android:configChanges="orientation|screenSize"
             android:theme="@style/CrashDialogTheme"/>

@@ -1,6 +1,4 @@
-
-### 2025-11-07 (Revert)
-* **Task:** [Performed a surgical revert of the initial rebranding commit. The automated rebranding script incorrectly modified build configuration files, causing a build failure.]
-* **Action:** [Reverted all `build.gradle.kts`, `settings.gradle.kts`, and `gradle.properties` files to their pre-commit state. User-facing changes (e.g., `strings.xml`, icons) were kept.]
-* **Reason:** [The build failed due to unresolved dependency references (`libs.silo.*`) in `app/build.gradle.kts` that were incorrectly modified by the script.]
-* **Files:** `[multiple build.gradle.kts]`, `[settings.gradle.kts]`, `[gradle.properties]`
+### 2025-11-07 (Fix)
+* **Task:** [Fixed a build failure caused by incorrect icon resource references in `AndroidManifest.xml`.]
+* **Action:** [Moved the new icon to the `res/drawable` directory and updated all `android:icon` and `android:roundIcon` attributes in `AndroidManifest.xml` to point directly to the new `@drawable/omni_icon` resource. This bypasses the adaptive icon system that was causing resource linking errors.]
+* **Files:** `[app/src/main/AndroidManifest.xml]`, `[app/src/main/res/drawable/omni_icon.png]`
