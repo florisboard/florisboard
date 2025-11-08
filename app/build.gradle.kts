@@ -122,9 +122,9 @@ android {
             isDebuggable = true
             isJniDebuggable = false
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_debug_foreground")
+            resValue("mipmap", "floris_app_icon", "@mipmap/omni_icon")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/omni_icon")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/omni_icon")
             resValue("string", "floris_app_name", "OmniBoard")
             resValue("string", "floris_ime_label", "OmniBoard Keys")
         }
@@ -137,9 +137,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_beta_foreground")
+            resValue("mipmap", "floris_app_icon", "@mipmap/omni_icon")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/omni_icon")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/omni_icon")
             resValue("string", "floris_app_name", "OmniBoard")
             resValue("string", "floris_ime_label", "OmniBoard Keys")
         }
@@ -151,9 +151,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
+            resValue("mipmap", "floris_app_icon", "@mipmap/omni_icon")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/omni_icon")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/omni_icon")
             resValue("string", "floris_app_name", "OmniBoard")
             resValue("string", "floris_ime_label", "OmniBoard Keys")
         }

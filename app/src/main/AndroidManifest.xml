@@ -32,10 +32,10 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/backup_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/floris_app_icon"
+        android:icon="@mipmap/omni_icon"
         android:label="@string/floris_app_name"
         android:enableOnBackInvokedCallback="true"
-        android:roundIcon="@mipmap/floris_app_icon_round"
+        android:roundIcon="@mipmap/omni_icon"
         android:supportsRtl="true"
         android:theme="@style/FlorisAppTheme"
         tools:targetApi="tiramisu">
