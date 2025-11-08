@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.popup
+package dev.patrickgold.florisboard.ime.popup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,17 +29,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import dev.silo.omniboard.ime.keyboard.Key
-import dev.silo.omniboard.ime.theme.OmniImeUi
+import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import org.omniboard.lib.snygg.SnyggQueryAttributes
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggColumn
-import org.omniboard.lib.snygg.ui.SnyggIcon
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.SnyggQueryAttributes
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
 
 val GlobalStateNumPopupsShowing = MutableStateFlow(0)
 
@@ -58,7 +58,7 @@ fun PopupBaseBox(
     }
 
     SnyggBox(
-        elementName = OmniImeUi.KeyPopupBox.elementName,
+        elementName = FlorisImeUi.KeyPopupBox.elementName,
         attributes = attributes,
         modifier = modifier,
     ) {
@@ -77,7 +77,7 @@ fun PopupBaseBox(
         }
         if (shouldIndicateExtendedPopups) {
             SnyggIcon(
-                elementName = OmniImeUi.KeyPopupExtendedIndicator.elementName,
+                elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
                 attributes = attributes,
                 modifier = Modifier.align(Alignment.CenterEnd),
                 imageVector = Icons.Default.MoreHoriz,
@@ -96,7 +96,7 @@ fun PopupExtBox(
     elemHeight: Dp,
     activeElementIndex: Int,
 ): Unit = with(LocalDensity.current) {
-    SnyggColumn(OmniImeUi.KeyPopupBox.elementName, attributes, modifier = modifier) {
+    SnyggColumn(FlorisImeUi.KeyPopupBox.elementName, attributes, modifier = modifier) {
         for (row in elements.asReversed()) {
             SnyggRow(
                 modifier = Modifier
@@ -111,7 +111,7 @@ fun PopupExtBox(
                         null
                     }
                     SnyggBox(
-                        elementName = OmniImeUi.KeyPopupElement.elementName,
+                        elementName = FlorisImeUi.KeyPopupElement.elementName,
                         attributes = attributes,
                         selector = selector,
                         modifier = Modifier.size(elemWidth, elemHeight),

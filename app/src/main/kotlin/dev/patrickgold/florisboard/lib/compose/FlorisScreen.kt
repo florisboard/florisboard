@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.compose
+package dev.patrickgold.florisboard.lib.compose
 
 import android.app.Activity
 import androidx.compose.foundation.layout.RowScope
@@ -37,31 +37,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import dev.silo.omniboard.app.OmniPreferenceModel
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.jetpref.datastore.ui.PreferenceLayout
-import dev.silo.jetpref.datastore.ui.PreferenceUiContent
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.compose.OmniAppBar
-import org.omniboard.lib.compose.OmniIconButton
-import org.omniboard.lib.compose.autoMirrorForRtl
-import org.omniboard.lib.compose.omniVerticalScroll
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
+import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisAppBar
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.autoMirrorForRtl
+import org.florisboard.lib.compose.florisVerticalScroll
 
 @Composable
-fun OmniScreen(builder: @Composable OmniScreenScope.() -> Unit) {
-    val scope = remember { OmniScreenScopeImpl() }
+fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
+    val scope = remember { FlorisScreenScopeImpl() }
     builder(scope)
     scope.Render()
 }
 
-typealias OmniScreenActions = @Composable RowScope.() -> Unit
-typealias OmniScreenBottomBar = @Composable () -> Unit
-typealias OmniScreenContent = PreferenceUiContent<OmniPreferenceModel>
-typealias OmniScreenFab = @Composable () -> Unit
-typealias OmniScreenNavigationIcon = @Composable () -> Unit
+typealias FlorisScreenActions = @Composable RowScope.() -> Unit
+typealias FlorisScreenBottomBar = @Composable () -> Unit
+typealias FlorisScreenContent = PreferenceUiContent<FlorisPreferenceModel>
+typealias FlorisScreenFab = @Composable () -> Unit
+typealias FlorisScreenNavigationIcon = @Composable () -> Unit
 
-interface OmniScreenScope {
+interface FlorisScreenScope {
     var title: String
 
     var navigationIconVisible: Boolean
@@ -72,54 +72,54 @@ interface OmniScreenScope {
 
     var iconSpaceReserved: Boolean
 
-    fun actions(actions: OmniScreenActions)
+    fun actions(actions: FlorisScreenActions)
 
-    fun bottomBar(bottomBar: OmniScreenBottomBar)
+    fun bottomBar(bottomBar: FlorisScreenBottomBar)
 
-    fun content(content: OmniScreenContent)
+    fun content(content: FlorisScreenContent)
 
-    fun floatingActionButton(fab: OmniScreenFab)
+    fun floatingActionButton(fab: FlorisScreenFab)
 
-    fun navigationIcon(navigationIcon: OmniScreenNavigationIcon)
+    fun navigationIcon(navigationIcon: FlorisScreenNavigationIcon)
 }
 
-private class OmniScreenScopeImpl : OmniScreenScope {
+private class FlorisScreenScopeImpl : FlorisScreenScope {
     override var title: String by mutableStateOf("")
     override var navigationIconVisible: Boolean by mutableStateOf(true)
     override var previewFieldVisible: Boolean by mutableStateOf(false)
     override var scrollable: Boolean by mutableStateOf(true)
     override var iconSpaceReserved: Boolean by mutableStateOf(true)
 
-    private var actions: OmniScreenActions = @Composable { }
-    private var bottomBar: OmniScreenBottomBar = @Composable { }
-    private var content: OmniScreenContent = @Composable { }
-    private var fab: OmniScreenFab = @Composable { }
-    private var navigationIcon: OmniScreenNavigationIcon = @Composable {
+    private var actions: FlorisScreenActions = @Composable { }
+    private var bottomBar: FlorisScreenBottomBar = @Composable { }
+    private var content: FlorisScreenContent = @Composable { }
+    private var fab: FlorisScreenFab = @Composable { }
+    private var navigationIcon: FlorisScreenNavigationIcon = @Composable {
         val navController = LocalNavController.current
-        OmniIconButton(
+        FlorisIconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier.autoMirrorForRtl(),
             icon = Icons.AutoMirrored.Filled.ArrowBack,
         )
     }
 
-    override fun actions(actions: OmniScreenActions) {
+    override fun actions(actions: FlorisScreenActions) {
         this.actions = actions
     }
 
-    override fun bottomBar(bottomBar: OmniScreenBottomBar) {
+    override fun bottomBar(bottomBar: FlorisScreenBottomBar) {
         this.bottomBar = bottomBar
     }
 
-    override fun content(content: OmniScreenContent) {
+    override fun content(content: FlorisScreenContent) {
         this.content = content
     }
 
-    override fun floatingActionButton(fab: OmniScreenFab) {
+    override fun floatingActionButton(fab: FlorisScreenFab) {
         this.fab = fab
     }
 
-    override fun navigationIcon(navigationIcon: OmniScreenNavigationIcon) {
+    override fun navigationIcon(navigationIcon: FlorisScreenNavigationIcon) {
         this.navigationIcon = navigationIcon
     }
 
@@ -146,17 +146,17 @@ private class OmniScreenScopeImpl : OmniScreenScope {
 
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = { OmniAppBar(title, navigationIcon.takeIf { navigationIconVisible }, actions, scrollBehavior) },
+            topBar = { FlorisAppBar(title, navigationIcon.takeIf { navigationIconVisible }, actions, scrollBehavior) },
             bottomBar = bottomBar,
             floatingActionButton = fab,
         ) { innerPadding ->
             val scrollModifier = if (scrollable) {
-                Modifier.omniVerticalScroll()
+                Modifier.florisVerticalScroll()
             } else {
                 Modifier
             }
             PreferenceLayout(
-                OmniPreferenceStore,
+                FlorisPreferenceStore,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxWidth()

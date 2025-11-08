@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.snygg.ui
+package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,14 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.omniboard.lib.snygg.SnyggQueryAttributes
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggQueryAttributes
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.SnyggStylesheet
 
 /**
  * Simple layout composable that places its children in a horizontal sequence.
  *
- * This composable infers its style from the current [SnyggTheme][org.omniboard.lib.snygg.SnyggTheme], which is
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
  * required to be provided by [ProvideSnyggTheme].
  *
  * @param elementName The name of this element. If `null` the style will be inherited from the parent element.

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.compose
+package org.florisboard.lib.compose
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -29,14 +29,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import dev.silo.jetpref.material.ui.JetPrefDropdownMenuDefaults
-import dev.silo.jetpref.material.ui.JetPrefTextField
-import dev.silo.jetpref.material.ui.JetPrefTextFieldAppearance
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldAppearance
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OmniDropdownLikeButton(
+fun FlorisDropdownLikeButton(
     item: String,
     modifier: Modifier = Modifier,
     isError: Boolean = false,

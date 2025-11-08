@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.color
+package org.florisboard.lib.color
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color

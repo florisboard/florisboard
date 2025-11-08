@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.theme
+package dev.patrickgold.florisboard.ime.theme
 
-import dev.silo.omniboard.lib.ext.ExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import org.omniboard.lib.snygg.SnyggStylesheetEditor
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import org.florisboard.lib.snygg.SnyggStylesheetEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCoreTheme(id: String) = ExtensionComponentName(
-    extensionId = "org.omniboard.themes",
+    extensionId = "org.florisboard.themes",
     componentId = id,
 )
 

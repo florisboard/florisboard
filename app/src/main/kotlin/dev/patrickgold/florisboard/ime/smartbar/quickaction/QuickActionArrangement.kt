@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.smartbar.quickaction
+package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.lib.io.DefaultJsonConfig
-import dev.silo.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule

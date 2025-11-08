@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.devtools
+package dev.patrickgold.florisboard.app.devtools
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -37,25 +37,25 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.clipboardManager
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.devtools.Devtools
-import org.omniboard.lib.android.showShortToast
-import org.omniboard.lib.compose.OmniButton
-import org.omniboard.lib.compose.omniHorizontalScroll
-import org.omniboard.lib.compose.omniScrollbar
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.android.showShortToastSync
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.devtools.Devtools
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.compose.FlorisButton
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.android.showShortToastSync
 
 // TODO: This screen is just a quick thrown-together thing and needs further enhancing in the UI
 @Composable
-fun ExportDebugLogScreen() = OmniScreen {
+fun ExportDebugLogScreen() = FlorisScreen {
     title = stringRes(R.string.devtools__debuglog__title)
     scrollable = false
 
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
 
@@ -72,7 +72,7 @@ fun ExportDebugLogScreen() = OmniScreen {
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            OmniButton(
+            FlorisButton(
                 onClick = {
                     clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
                     context.showShortToastSync(context.getString(R.string.devtools__debuglog__copied_to_clipboard))
@@ -81,7 +81,7 @@ fun ExportDebugLogScreen() = OmniScreen {
                 text = stringRes(R.string.devtools__debuglog__copy_log),
                 enabled = debugLog != null,
             )
-            OmniButton(
+            FlorisButton(
                 onClick = {
                     clipboardManager.addNewPlaintext(formattedDebugLog!!.joinToString("\n"))
                     context.showShortToastSync(context.getString(R.string.devtools__debuglog__copied_to_clipboard))
@@ -99,8 +99,8 @@ fun ExportDebugLogScreen() = OmniScreen {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .omniScrollbar(lazyListState, isVertical = true)
-                    .omniHorizontalScroll(),
+                    .florisScrollbar(lazyListState, isVertical = true)
+                    .florisHorizontalScroll(),
                 state = lazyListState,
             ) {
                 val log = debugLog

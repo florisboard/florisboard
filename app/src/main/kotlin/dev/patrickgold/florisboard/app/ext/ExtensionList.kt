@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.Routes
-import dev.silo.omniboard.lib.ext.Extension
-import dev.silo.jetpref.material.ui.JetPrefListItem
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 
 @Composable
 fun <T : Extension> ExtensionList(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.theme
+package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Brightness2
@@ -28,28 +28,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.Routes
-import dev.silo.omniboard.app.enumDisplayEntriesOf
-import dev.silo.omniboard.app.ext.AddonManagementReferenceBox
-import dev.silo.omniboard.app.ext.ExtensionListScreenType
-import dev.silo.omniboard.ime.theme.ThemeManager
-import dev.silo.omniboard.ime.theme.ThemeMode
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.themeManager
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.datastore.ui.ColorPickerPreference
-import dev.silo.jetpref.datastore.ui.ListPreference
-import dev.silo.jetpref.datastore.ui.LocalTimePickerPreference
-import dev.silo.jetpref.datastore.ui.Preference
-import dev.silo.jetpref.datastore.ui.isMaterialYou
-import org.omniboard.lib.color.ColorMappings
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.app.ext.AddonManagementReferenceBox
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
+import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.compose.stringRes
 
 @Composable
-fun ThemeScreen() = OmniScreen {
+fun ThemeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__theme__title)
     previewFieldVisible = true
 

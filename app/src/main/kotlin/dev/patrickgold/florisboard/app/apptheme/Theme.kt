@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.apptheme
+package dev.patrickgold.florisboard.app.apptheme
 
 import android.app.Activity
 import android.content.Context
@@ -28,10 +28,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import dev.silo.omniboard.app.AppTheme
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.jetpref.datastore.model.observeAsState
-import org.omniboard.lib.color.ColorMappings
+import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.color.ColorMappings
 
 /*private val AmoledDarkColorPalette = darkColorScheme(
     primary = Green500,
@@ -78,7 +78,7 @@ fun getColorScheme(
     context: Context,
     theme: AppTheme,
 ): ColorScheme {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val accentColor by prefs.other.accentColor.observeAsState()
     val isDark = isSystemInDarkTheme()
 
@@ -118,7 +118,7 @@ fun ColorScheme.amoled(): ColorScheme {
 }
 
 @Composable
-fun OmniAppTheme(
+fun FlorisAppTheme(
     theme: AppTheme,
     content: @Composable () -> Unit,
 ) {

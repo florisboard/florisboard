@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.ext
+package dev.patrickgold.florisboard.lib.ext
 
 import androidx.core.text.trimmedLength
-import dev.silo.omniboard.R
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponent
-import dev.silo.omniboard.lib.ValidationRule
-import org.omniboard.lib.snygg.SnyggStylesheet
-import dev.silo.omniboard.lib.validate
-import org.omniboard.lib.snygg.value.SnyggVarValue
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.lib.ValidationRule
+import org.florisboard.lib.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.lib.validate
+import org.florisboard.lib.snygg.value.SnyggVarValue
 
 object ExtensionValidation {
     private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*${'$'}""".toRegex()
@@ -153,13 +153,13 @@ object ExtensionValidation {
     }
 
     val SnyggStaticColorValue = ValidationRule<String> {
-        forKlass = org.omniboard.lib.snygg.value.SnyggStaticColorValue::class
+        forKlass = org.florisboard.lib.snygg.value.SnyggStaticColorValue::class
         forProperty = "color"
         validator { input ->
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_color)
-                org.omniboard.lib.snygg.value.SnyggStaticColorValue.deserialize(str).isFailure -> {
+                org.florisboard.lib.snygg.value.SnyggStaticColorValue.deserialize(str).isFailure -> {
                     resultInvalid(error = R.string.ext__validation__error_color)
                 }
                 else -> resultValid()
@@ -168,7 +168,7 @@ object ExtensionValidation {
     }
 
     val SnyggDpShapeValue = ValidationRule<String> {
-        forKlass = org.omniboard.lib.snygg.value.SnyggDpShapeValue::class
+        forKlass = org.florisboard.lib.snygg.value.SnyggDpShapeValue::class
         forProperty = "corner"
         validator { str ->
             val floatValue = str.toFloatOrNull()
@@ -182,7 +182,7 @@ object ExtensionValidation {
     }
 
     val SnyggPercentShapeValue = ValidationRule<String> {
-        forKlass = org.omniboard.lib.snygg.value.SnyggPercentShapeValue::class
+        forKlass = org.florisboard.lib.snygg.value.SnyggPercentShapeValue::class
         forProperty = "corner"
         validator { str ->
             val intValue = str.toIntOrNull()

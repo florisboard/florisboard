@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard
+package dev.patrickgold.florisboard
 
 import android.service.textservice.SpellCheckerService
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.dictionary.DictionaryManager
-import dev.silo.omniboard.ime.nlp.SpellingLanguageMode
-import dev.silo.omniboard.ime.nlp.SpellingResult
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.nlp.SpellingResult
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.omniboard.lib.kotlin.map
+import org.florisboard.lib.kotlin.map
 
-class OmniSpellCheckerService : SpellCheckerService() {
-    private val prefs by OmniPreferenceStore
+class FlorisSpellCheckerService : SpellCheckerService() {
+    private val prefs by FlorisPreferenceStore
     private val dictionaryManager get() = DictionaryManager.default()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
@@ -48,7 +48,7 @@ class OmniSpellCheckerService : SpellCheckerService() {
     override fun createSession(): Session {
         flogInfo(LogTopic.SPELL_EVENTS)
 
-        return OmniSpellCheckerSession()
+        return FlorisSpellCheckerSession()
     }
 
     override fun onDestroy() {
@@ -57,7 +57,7 @@ class OmniSpellCheckerService : SpellCheckerService() {
         super.onDestroy()
     }
 
-    private inner class OmniSpellCheckerSession : Session() {
+    private inner class FlorisSpellCheckerSession : Session() {
         private var cachedSpellingSubtype: Subtype? = null
 
         override fun onCreate() {
@@ -72,7 +72,7 @@ class OmniSpellCheckerService : SpellCheckerService() {
                     subtypeManager.activeSubtype
                 }
                 else -> {
-                    Subtype.DEFAULT.copy(primaryLocale = OmniLocale.default())
+                    Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())
                 }
             }
 

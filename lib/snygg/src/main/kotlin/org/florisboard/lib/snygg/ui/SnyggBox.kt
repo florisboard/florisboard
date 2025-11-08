@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.snygg.ui
+package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -28,14 +28,14 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.allowHardware
-import org.omniboard.lib.snygg.SnyggQueryAttributes
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggQueryAttributes
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.SnyggStylesheet
 
 /**
  * Simple layout composable with [content]
  *
- * This composable infers its style from the current [SnyggTheme][org.omniboard.lib.snygg.SnyggTheme], which is
+ * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
  * required to be provided by [ProvideSnyggTheme].
  *
  * @param elementName The name of this element. If `null` the style will be inherited from the parent element.

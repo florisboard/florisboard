@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.advanced
+package dev.patrickgold.florisboard.app.settings.advanced
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,52 +41,52 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.BuildConfig
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceModel
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.cacheManager
-import dev.silo.omniboard.clipboardManager
-import dev.silo.omniboard.ime.clipboard.provider.ClipboardFileStorage
-import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
-import dev.silo.omniboard.ime.clipboard.provider.ItemType
-import dev.silo.omniboard.lib.cache.CacheManager
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.ext.ExtensionManager
-import dev.silo.omniboard.lib.io.ZipUtils
-import dev.silo.jetpref.datastore.runtime.AndroidAppDataStorage
-import dev.silo.jetpref.datastore.runtime.FileBasedStorage
-import dev.silo.jetpref.datastore.runtime.ImportStrategy
-import dev.silo.jetpref.datastore.ui.Preference
+import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.ext.ExtensionManager
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
+import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import java.io.FileNotFoundException
 import java.text.DateFormat
 import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.omniboard.lib.android.readToFile
-import org.omniboard.lib.android.showLongToast
-import org.omniboard.lib.android.showLongToastSync
-import org.omniboard.lib.compose.OmniButtonBar
-import org.omniboard.lib.compose.OmniCardDefaults
-import org.omniboard.lib.compose.OmniOutlinedBox
-import org.omniboard.lib.compose.OmniOutlinedButton
-import org.omniboard.lib.compose.defaultOmniOutlinedBox
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.kotlin.io.deleteContentsRecursively
-import org.omniboard.lib.kotlin.io.readJson
-import org.omniboard.lib.kotlin.io.subDir
-import org.omniboard.lib.kotlin.io.subFile
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisCardDefaults
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.FlorisOutlinedButton
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 
 object Restore {
     const val MIN_VERSION_CODE = 64
-    const val PACKAGE_NAME = "dev.silo.omniboard"
+    const val PACKAGE_NAME = "dev.patrickgold.florisboard"
     const val BACKUP_ARCHIVE_FILE_NAME = "backup.zip"
 }
 
 @Composable
-fun RestoreScreen() = OmniScreen {
+fun RestoreScreen() = FlorisScreen {
     title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
@@ -150,10 +150,10 @@ fun RestoreScreen() = OmniScreen {
         if (restoreFilesSelector.jetprefDatastore) {
             val file = workspace.outputDir
                 .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
-                .subFile("${OmniPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+                .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
             if (file.exists()) {
                 val fileBasedStorage = FileBasedStorage(file.path)
-                OmniPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
+                FlorisPreferenceStore.import(importStrategy, fileBasedStorage).getOrThrow()
             }
         }
         val workspaceFilesDir = workspace.outputDir.subDir("files")
@@ -235,7 +235,7 @@ fun RestoreScreen() = OmniScreen {
     }
 
     bottomBar {
-        OmniButtonBar {
+        FlorisButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(
                 onClick = {
@@ -267,8 +267,8 @@ fun RestoreScreen() = OmniScreen {
     }
 
     content {
-        OmniOutlinedBox(
-            modifier = Modifier.defaultOmniOutlinedBox(),
+        FlorisOutlinedBox(
+            modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__restore__mode),
         ) {
             RadioListItem(
@@ -286,7 +286,7 @@ fun RestoreScreen() = OmniScreen {
                 text = stringRes(R.string.backup_and_restore__restore__mode_erase_and_overwrite),
             )
         }
-        OmniOutlinedButton(
+        FlorisOutlinedButton(
             onClick = {
                 runCatching {
                     restoreDataFromFileSystemLauncher.launch("*/*")
@@ -312,8 +312,8 @@ fun RestoreScreen() = OmniScreen {
                 fontStyle = FontStyle.Italic,
             )
         } else {
-            OmniOutlinedBox(
-                modifier = Modifier.defaultOmniOutlinedBox(),
+            FlorisOutlinedBox(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = stringRes(R.string.backup_and_restore__restore__metadata),
             ) {
                 Preference(
@@ -334,7 +334,7 @@ fun RestoreScreen() = OmniScreen {
                     },
                 )
                 if (workspace.restoreErrorId != null) {
-                    Column(modifier = Modifier.padding(OmniCardDefaults.ContentPadding)) {
+                    Column(modifier = Modifier.padding(FlorisCardDefaults.ContentPadding)) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -350,7 +350,7 @@ fun RestoreScreen() = OmniScreen {
                         )
                     }
                 } else if (workspace.restoreWarningId != null) {
-                    Column(modifier = Modifier.padding(OmniCardDefaults.ContentPadding)) {
+                    Column(modifier = Modifier.padding(FlorisCardDefaults.ContentPadding)) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()

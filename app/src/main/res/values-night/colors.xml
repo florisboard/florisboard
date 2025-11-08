@@ -4,5 +4,5 @@
     <color name="toolbarForegroundColor">#FFFFFF</color>
     <color name="windowBackground">#303030</color>
 
-    <color name="omniApp_windowBackground">#FF1F1F1F</color>
+    <color name="florisApp_windowBackground">#FF1F1F1F</color>
 </resources>

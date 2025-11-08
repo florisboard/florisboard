@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Duraklat</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Bekle</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Üç nokta simgesi. Görünürse, daha uzun basıldığında daha fazla harfin kullanılabileceğini gösterir.</string>
@@ -111,8 +111,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Varsayılan</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistem varsayılanı</string>
     <string name="settings__home__title" comment="Title of the Home screen">{app_name} Uygulamasına Hoş Geldiniz</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard sistemde etkin değil ve bu nedenle giriş yöntemi seçicisinde bir giriş yöntemi olarak kullanılamayacak. Bu sorunu çözmek için buraya tıklayın.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard varsayılan giriş yöntemi olarak seçilmemiş. Bu sorunu çözmek için buraya tıklayın.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard sistemde etkin değil ve bu nedenle giriş yöntemi seçicisinde bir giriş yöntemi olarak kullanılamayacak. Bu sorunu çözmek için buraya tıklayın.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard varsayılan giriş yöntemi olarak seçilmemiş. Bu sorunu çözmek için buraya tıklayın.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Diller &amp; Düzenler</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Dil adlarını şu dilde göster</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Klavye etiketlerini alt tür dilinde göster</string>
@@ -159,7 +159,7 @@
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Vurgu rengi (Material You temaları)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Yüklü temaları yönet</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">OmniBoard Uygulama Varlıkları</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Uygulama Varlıkları</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Dahili Depolama</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Harici Sağlayıcı</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Gündüz temasını seç</string>
@@ -189,7 +189,7 @@
     <string name="settings__theme_editor__code_recording_help_text">Bir tuşun kodunu bulmak için kod giriş alanının yanındaki düğmeyi kullanın. Etkinleştirildiğinde, bir sonraki tuşa basışı kaydedecek ve kodu giriş alanına ekleyecektir.</string>
     <string name="settings__theme_editor__code_recording_started">Tuş kodu kaydı başlatıldı</string>
     <string name="settings__theme_editor__code_recording_stopped">Tuş kodu kaydı durduruldu</string>
-    <string name="settings__theme_editor__code_recording_requires_default_ime_omni">Bir tuş kodunu kaydetmek için {app_name}\'in varsayılan klavye olması gerekir</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">Bir tuş kodunu kaydetmek için {app_name}\'in varsayılan klavye olması gerekir</string>
     <string name="settings__theme_editor__code_recording_placeholder">Kaydediliyor…</string>
     <string name="settings__theme_editor__add_property">Özellik ekle</string>
     <string name="settings__theme_editor__edit_property">Özelliği düzenle</string>
@@ -459,9 +459,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Sistem kullanıcı sözlüğü için girdiler ekle, görüntüle ve kaldır</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Dahili kullanıcı sözlüğünü etkinleştir</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Dahili kullanıcı sözlüğünde saklanan kelimeleri öner</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">Dahili kullanıcı sözlüğünü yönet</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">Dahili kullanıcı sözlüğü için girdiler ekle, görüntüle ve kaldır</string>
-    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">Dahili Kullanıcı Sözlüğü</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Dahili kullanıcı sözlüğünü yönet</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Dahili kullanıcı sözlüğü için girdiler ekle, görüntüle ve kaldır</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dahili Kullanıcı Sözlüğü</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Sistem Kullanıcı Sözlüğü</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Bu kullanıcı sözlüğü herhangi bir kelime içermiyor.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Sıklık: {freq}</string>
@@ -521,7 +521,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Sistem kısıtlamaları nedeniyle Android 10+ üzerinde her zaman etkindir</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">OmniBoard uygulama simgesi</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard uygulama simgesi</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Açık kaynak lisansları</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
@@ -536,7 +536,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Gizlilik politikası</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Bu projenin gizlilik politikası</string>
     <string name="about__project_license__title" comment="Preference title">Proje lisansı</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoard, {license_name} altında lisanslanmıştır</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard, {license_name} altında lisanslanmıştır</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hata: Lisans metni yüklenemedi.\n-&gt; Neden: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Varlık yöneticisi referansı boş</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Üçüncü taraf lisansları</string>
@@ -553,7 +553,7 @@
     <string name="setup__select_ime__description">{app_name} artık sisteminizde etkin. Aktif olarak kullanmak için giriş seçici diyaloğunda seçerek {app_name} uygulamasına geçin!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Klavyeyi Değiştir</string>
     <string name="setup__grant_notification_permission__title">Kilitlenme Raporu Bildirimlerine İzin Verin</string>
-    <string name="setup__grant_notification_permission__description">Android 13+ itibarıyla, uygulamalar bildirim göndermek için izin istemelidir. Omniboard\'da bu yalnızca bir kilitlenme durumunda kilitlenme raporu ekranını açmak için kullanılır. Bu izin sistem ayarlarından herhangi bir zamanda değiştirilebilir.</string>
+    <string name="setup__grant_notification_permission__description">Android 13+ itibarıyla, uygulamalar bildirim göndermek için izin istemelidir. Florisboard\'da bu yalnızca bir kilitlenme durumunda kilitlenme raporu ekranını açmak için kullanılır. Bu izin sistem ayarlarından herhangi bir zamanda değiştirilebilir.</string>
     <string name="setup__grant_notification_permission__btn">İzin Ver</string>
     <string name="setup__finish_up__title">Bitir</string>
     <string name="setup__finish_up__description_p1">{app_name} sistemde etkin ve özelleştirilmeye hazır.</string>
@@ -598,18 +598,18 @@
     <string name="backup_and_restore__restore__success">Veriler başarıyla geri yüklendi!</string>
     <string name="backup_and_restore__restore__failure">Veriler geri yüklenemedi: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">OmniBoard hata raporu</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Verdiğimiz rahatsızlıktan dolayı özür dileriz, ancak OmniBoard beklenmedik bir hata nedeniyle çöktü.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Bu hatayı bildirmek isterseniz, önce GitHub\'daki sorun izleyiciyi kontrol ederek çökmenizin daha önce bildirilip bildirilmediğini kontrol edin.\nBildirilmediyse, oluşturulan çökme günlüğünü kopyalayın ve yeni bir sorun açın. \"%s\" şablonunu kullanın ve açıklamayı, yeniden oluşturma adımlarını doldurun ve oluşturulan çökme günlüğünü sonuna yapıştırın. Bu, OmniBoard\'un herkes için daha iyi ve daha kararlı hale gelmesine yardımcı olur. Teşekkür ederiz!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Verdiğimiz rahatsızlıktan dolayı özür dileriz, ancak FlorisBoard beklenmedik bir hata nedeniyle çöktü.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Bu hatayı bildirmek isterseniz, önce GitHub\'daki sorun izleyiciyi kontrol ederek çökmenizin daha önce bildirilip bildirilmediğini kontrol edin.\nBildirilmediyse, oluşturulan çökme günlüğünü kopyalayın ve yeni bir sorun açın. \"%s\" şablonunu kullanın ve açıklamayı, yeniden oluşturma adımlarını doldurun ve oluşturulan çökme günlüğünü sonuna yapıştırın. Bu, FlorisBoard\'un herkes için daha iyi ve daha kararlı hale gelmesine yardımcı olur. Teşekkür ederiz!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Sistem panosuna kopyala</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Sistem panosuna kopyalandı</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Sistem panosuna kopyalanamıyor: Pano yöneticisi örneği bulunamadı</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Sorun izleyiciyi aç (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Kapat</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">OmniBoard hata raporları</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard çalışmayı durdurdu…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard hata raporları</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard çalışmayı durdurdu…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Hata ayrıntılarını görüntülemek için dokunun</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">OmniBoard tekrar tekrar çalışmayı durduruyor gibi görünüyor…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard tekrar tekrar çalışmayı durduruyor gibi görünüyor…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Sonsuz çökme döngüsünü durdurmak için önceki klavyeye geri dönülüyor. Hata ayrıntılarını görüntülemek için dokunun</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Pano</string>
@@ -642,9 +642,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Dahili panoyu kullan</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Sistem panosu yerine dahili bir pano kullan</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sistem panosundan senkronize et</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistem panosu güncellemeleri Omni panosunu da günceller</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistem panosu güncellemeleri Floris panosunu da günceller</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sistem panosuna senkronize et</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Omni panosu güncellemeleri sistem panosunu da günceller</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris panosu güncellemeleri sistem panosunu da günceller</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Pano önerileri</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Daha önce kopyalanan pano içeriğini öner</string>
@@ -747,7 +747,7 @@
     <string name="ext__export__failure">Eklenti dışa aktarılamadı: {error_message}</string>
     <string name="ext__import__success">Eklenti başarıyla içe aktarıldı!</string>
     <string name="ext__import__failure">Eklenti içe aktarılamadı: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Eklentiyi içe aktar</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Eklentiyi içe aktar</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Klavye eklentisini içe aktar</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Tema eklentisini içe aktar</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Dil paketi eklentisini içe aktar</string>
@@ -787,7 +787,7 @@
     <string name="ext__addon_management_box__managing_placeholder">{extensions} Yönetiliyor</string>
     <string name="ext__addon_management_box__addon_manager_info">Eklentileri içe aktarma, dışa aktarma, oluşturma, özelleştirme ve kaldırma ile ilgili tüm görevler merkezi eklenti yöneticisi aracılığıyla halledilebilir.</string>
     <string name="ext__addon_management_box__go_to_page">{ext_home_title} sayfasına git</string>
-    <string name="ext__home__info">OmniBoard Eklenti Mağazası\'ndan eklentiler indirebilir ve yükleyebilir veya internetten indirdiğiniz herhangi bir eklenti dosyasını içe aktarabilirsiniz.</string>
+    <string name="ext__home__info">FlorisBoard Eklenti Mağazası\'ndan eklentiler indirebilir ve yükleyebilir veya internetten indirdiğiniz herhangi bir eklenti dosyasını içe aktarabilirsiniz.</string>
     <string name="ext__home__visit_store">Eklenti Mağazasını Ziyaret Et</string>
     <string name="ext__home__manage_extensions">Yüklü eklentileri yönet</string>
     <string name="ext__list__view_details">Ayrıntıları görüntüle</string>

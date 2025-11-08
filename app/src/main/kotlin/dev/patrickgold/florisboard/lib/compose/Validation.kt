@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.compose
+package dev.patrickgold.florisboard.lib.compose
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import dev.silo.omniboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.ValidationResult
 
 @Composable
 fun Validation(

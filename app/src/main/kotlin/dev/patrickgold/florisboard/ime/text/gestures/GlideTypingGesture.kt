@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.text.gestures
+package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import android.view.MotionEvent
-import dev.silo.omniboard.R
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.keyboard.TextKey
-import dev.silo.omniboard.lib.devtools.flogDebug
-import dev.silo.omniboard.lib.util.ViewUtils
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlin.math.pow
 import kotlin.math.sqrt
 

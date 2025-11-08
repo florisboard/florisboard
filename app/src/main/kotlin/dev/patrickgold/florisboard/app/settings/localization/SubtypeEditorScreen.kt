@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.localization
+package dev.patrickgold.florisboard.app.settings.localization
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -58,36 +58,36 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.Routes
-import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.core.SubtypeJsonConfig
-import dev.silo.omniboard.ime.core.SubtypeLayoutMap
-import dev.silo.omniboard.ime.core.SubtypeNlpProviderMap
-import dev.silo.omniboard.ime.core.SubtypePreset
-import dev.silo.omniboard.ime.keyboard.LayoutArrangementComponent
-import dev.silo.omniboard.ime.keyboard.LayoutType
-import dev.silo.omniboard.ime.keyboard.extCorePopupMapping
-import dev.silo.omniboard.ime.nlp.han.HanShapeBasedLanguageProvider
-import dev.silo.omniboard.ime.nlp.latin.LatinLanguageProvider
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.observeAsNonNullState
-import dev.silo.omniboard.subtypeManager
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.material.ui.JetPrefAlertDialog
-import dev.silo.jetpref.material.ui.JetPrefDropdown
-import dev.silo.jetpref.material.ui.JetPrefDropdownMenuDefaults
-import dev.silo.jetpref.material.ui.JetPrefListItem
-import org.omniboard.lib.compose.OmniButtonBar
-import org.omniboard.lib.compose.OmniDropdownLikeButton
-import org.omniboard.lib.compose.omniScrollbar
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
+import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
+import dev.patrickgold.florisboard.ime.core.SubtypeNlpProviderMap
+import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.keyboard.LayoutArrangementComponent
+import dev.patrickgold.florisboard.ime.keyboard.LayoutType
+import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
+import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisDropdownLikeButton
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 
 
 private val SelectComponentName = ExtensionComponentName("00", "00")
@@ -105,7 +105,7 @@ private val SelectLayoutMap = SubtypeLayoutMap(
     phone = SelectComponentName,
     phone2 = SelectComponentName,
 )
-private val SelectLocale = OmniLocale.from("00", "00")
+private val SelectLocale = FlorisLocale.from("00", "00")
 private val SelectListKeys = listOf(SelectComponentName)
 
 private class SubtypeEditorState(init: Subtype?) {
@@ -133,8 +133,8 @@ private class SubtypeEditorState(init: Subtype?) {
     }
 
     val id: MutableState<Long> = mutableLongStateOf(init?.id ?: -1)
-    val primaryLocale: MutableState<OmniLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
-    val secondaryLocales: MutableState<List<OmniLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
+    val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
+    val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
     val nlpProviders: MutableState<SubtypeNlpProviderMap> = mutableStateOf(init?.nlpProviders ?: Subtype.DEFAULT.nlpProviders)
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
@@ -178,7 +178,7 @@ private class SubtypeEditorState(init: Subtype?) {
 }
 
 @Composable
-fun SubtypeEditorScreen(id: Long?) = OmniScreen {
+fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     title = stringRes(if (id == null) {
         R.string.settings__localization__subtype_add_title
     } else {
@@ -188,7 +188,7 @@ fun SubtypeEditorScreen(id: Long?) = OmniScreen {
     val selectValue = stringRes(R.string.settings__localization__subtype_select_placeholder)
     val selectListValues = remember(selectValue) { listOf(selectValue) }
 
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -224,7 +224,7 @@ fun SubtypeEditorScreen(id: Long?) = OmniScreen {
         ?.getLiveData<String>(SelectLocaleScreenResultLanguageTag)
     DisposableEffect(selectLocaleScreenResult, lifecycleOwner) {
         val observer = Observer<String> { languageTag ->
-            val locale = OmniLocale.fromTag(languageTag)
+            val locale = FlorisLocale.fromTag(languageTag)
             primaryLocale = locale
             val preset = subtypeManager.getSubtypePresetForLocale(locale)
             popupMapping = preset?.popupMapping ?: extCorePopupMapping("default")
@@ -269,7 +269,7 @@ fun SubtypeEditorScreen(id: Long?) = OmniScreen {
     }
 
     bottomBar {
-        OmniButtonBar {
+        FlorisButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
                 navController.popBackStack()
@@ -310,10 +310,10 @@ fun SubtypeEditorScreen(id: Long?) = OmniScreen {
                             overflow = TextOverflow.Ellipsis,
                         )
                         val systemLocales = remember {
-                            val list = mutableListOf<OmniLocale>()
+                            val list = mutableListOf<FlorisLocale>()
                             val localeList = configuration.locales
                             for (n in 0 until localeList.size()) {
-                                list.add(OmniLocale.from(localeList.get(n)))
+                                list.add(FlorisLocale.from(localeList.get(n)))
                             }
                             list
                         }
@@ -359,7 +359,7 @@ fun SubtypeEditorScreen(id: Long?) = OmniScreen {
             }
 
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_locale)) {
-                OmniDropdownLikeButton(
+                FlorisDropdownLikeButton(
                     item = if (primaryLocale == SelectLocale) selectValue else when (displayLanguageNamesIn) {
                         DisplayLanguageNamesIn.SYSTEM_LOCALE -> primaryLocale.displayName()
                         DisplayLanguageNamesIn.NATIVE_LOCALE -> primaryLocale.displayName(primaryLocale)
@@ -492,7 +492,7 @@ fun SubtypeEditorScreen(id: Long?) = OmniScreen {
                     val lazyListState = rememberLazyListState()
                     LazyColumn(
                         modifier = Modifier
-                            .omniScrollbar(lazyListState, isVertical = true).weight(1f),
+                            .florisScrollbar(lazyListState, isVertical = true).weight(1f),
                         state = lazyListState,
                     ) {
                         items(subtypePresets) { subtypePreset ->

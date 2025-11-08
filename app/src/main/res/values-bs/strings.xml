@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Čekaj</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikonica sa tri tačke. Ako je prikazana, znači da se dodatna slova mogu upisati dugim pritiskom na dugme.</string>
@@ -53,7 +53,7 @@
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Prevuci desno</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informacije o...</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikonica OmniBoard aplikacije</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikonica FlorisBoard aplikacije</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Izvorni kod</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Dobrodošli!</string>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.snygg
+package org.florisboard.lib.snygg
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
@@ -47,9 +47,9 @@ data class SnyggStylesheet internal constructor(
     }
 
     companion object {
-        const val SCHEMA_V2 = "https://schemas.omniboard.org/snygg/v2/stylesheet"
+        const val SCHEMA_V2 = "https://schemas.florisboard.org/snygg/v2/stylesheet"
 
-        private val SCHEMA_PATTERN = """^https://schemas.omniboard.org/snygg/v[0-9]+/stylesheet$""".toRegex()
+        private val SCHEMA_PATTERN = """^https://schemas.florisboard.org/snygg/v[0-9]+/stylesheet$""".toRegex()
 
         fun v2(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
             val builder = SnyggStylesheetEditor(SCHEMA_V2)

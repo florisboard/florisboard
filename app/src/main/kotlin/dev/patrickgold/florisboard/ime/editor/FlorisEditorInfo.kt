@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.editor
+package dev.patrickgold.florisboard.ime.editor
 
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.emoji2.text.EmojiCompat
 
-class OmniEditorInfo private constructor(val base: EditorInfo) {
+class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val inputAttributes = InputAttributes.wrap(base.inputType)
 
     val imeOptions = ImeOptions.wrap(base.imeOptions)
@@ -62,7 +62,7 @@ class OmniEditorInfo private constructor(val base: EditorInfo) {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as OmniEditorInfo
+        other as FlorisEditorInfo
 
         if (inputAttributes.raw != other.inputAttributes.raw) return false
         if (imeOptions.raw != other.imeOptions.raw) return false
@@ -102,8 +102,8 @@ class OmniEditorInfo private constructor(val base: EditorInfo) {
         get() = base.extras?.getBoolean(EmojiCompat.EDITOR_INFO_REPLACE_ALL_KEY, false) ?: false
 
     companion object {
-        val Unspecified = OmniEditorInfo(EditorInfo())
+        val Unspecified = FlorisEditorInfo(EditorInfo())
 
-        fun wrap(editorInfo: EditorInfo) = OmniEditorInfo(editorInfo)
+        fun wrap(editorInfo: EditorInfo) = FlorisEditorInfo(editorInfo)
     }
 }

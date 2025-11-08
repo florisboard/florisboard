@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.media.emoji
+package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.emoji2.text.DefaultEmojiCompatConfig
 import androidx.emoji2.text.EmojiCompat
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.omniboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
  * TODO: investigate if having two instances of EmojiCompat causes other logic issues or if there's a better way of
  *  achieving the same result than the current implementation does.
  */
-object OmniEmojiCompat {
+object FlorisEmojiCompat {
     private lateinit var instanceNoReplace: InstanceHandler
     private lateinit var instanceReplaceAll: InstanceHandler
 

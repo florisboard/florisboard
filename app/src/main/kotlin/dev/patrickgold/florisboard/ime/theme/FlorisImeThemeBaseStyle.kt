@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.theme
+package dev.patrickgold.florisboard.ime.theme
 
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -22,12 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.silo.omniboard.ime.input.InputShiftState
-import dev.silo.omniboard.ime.text.key.KeyCode
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.SnyggStylesheet
 
-val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
+val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     defines {
         "--primary" to rgbaColor(76, 175, 80)
         "--primary-variant" to rgbaColor(56, 142, 60)
@@ -47,12 +47,12 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         "--shape-variant" to roundedCornerShape(12.dp)
     }
 
-    OmniImeUi.Window.elementName {
+    FlorisImeUi.Window.elementName {
         background = `var`("--background")
         foreground = `var`("--on-background")
     }
 
-    OmniImeUi.Key.elementName {
+    FlorisImeUi.Key.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(22.sp)
@@ -60,47 +60,47 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         shape = `var`("--shape")
         textMaxLines = textMaxLines(1)
     }
-    OmniImeUi.Key.elementName(selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.Key.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface-variant")
         foreground = `var`("--on-surface")
     }
-    OmniImeUi.Key.elementName(OmniImeUi.Attr.Code to listOf(KeyCode.ENTER)) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER)) {
         background = `var`("--primary")
         foreground = `var`("--on-surface")
     }
-    OmniImeUi.Key.elementName(OmniImeUi.Attr.Code to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
         background = `var`("--primary-variant")
         foreground = `var`("--on-surface")
     }
-    OmniImeUi.Key.elementName(OmniImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(12.sp)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.Key.elementName(OmniImeUi.Attr.Code to listOf(
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
         KeyCode.VIEW_CHARACTERS,
         KeyCode.VIEW_SYMBOLS,
         KeyCode.VIEW_SYMBOLS2,
     )) {
         fontSize = fontSize(18.sp)
     }
-    OmniImeUi.Key.elementName(OmniImeUi.Attr.Code to listOf(
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
         KeyCode.VIEW_NUMERIC,
         KeyCode.VIEW_NUMERIC_ADVANCED,
     )) {
         fontSize = fontSize(12.sp)
     }
-    OmniImeUi.Key.elementName(OmniImeUi.Attr.Code to listOf(KeyCode.VIEW_NUMERIC_ADVANCED)) {
+    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.VIEW_NUMERIC_ADVANCED)) {
         textMaxLines = textMaxLines(2)
     }
-    OmniImeUi.Key.elementName(
-        OmniImeUi.Attr.Code to listOf(KeyCode.SHIFT),
-        OmniImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.toString()),
+    FlorisImeUi.Key.elementName(
+        FlorisImeUi.Attr.Code to listOf(KeyCode.SHIFT),
+        FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.toString()),
     ) {
         foreground = rgbaColor(255, 152, 0)
     }
-    OmniImeUi.KeyHint.elementName {
+    FlorisImeUi.KeyHint.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("--on-surface-variant")
         fontFamily = genericFontFamily(FontFamily.Monospace)
@@ -108,57 +108,57 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         padding = padding(0.dp, 1.dp, 1.dp, 0.dp)
         textMaxLines = textMaxLines(1)
     }
-    OmniImeUi.KeyPopupBox.elementName {
+    FlorisImeUi.KeyPopupBox.elementName {
         background = rgbaColor(117, 117, 117)
         foreground = `var`("--on-surface")
         fontSize = fontSize(22.sp)
         shape = `var`("--shape")
         shadowElevation = size(2.dp)
     }
-    OmniImeUi.KeyPopupElement.elementName(selector = SnyggSelector.FOCUS) {
+    FlorisImeUi.KeyPopupElement.elementName(selector = SnyggSelector.FOCUS) {
         background = rgbaColor(189, 189, 189)
         shape = `var`("--shape")
     }
-    OmniImeUi.KeyPopupExtendedIndicator.elementName {
+    FlorisImeUi.KeyPopupExtendedIndicator.elementName {
         fontSize = fontSize(16.sp)
     }
 
-    OmniImeUi.Smartbar.elementName {
+    FlorisImeUi.Smartbar.elementName {
         fontSize = fontSize(18.sp)
     }
-    OmniImeUi.SmartbarSharedActionsToggle.elementName {
+    FlorisImeUi.SmartbarSharedActionsToggle.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         margin = padding(6.dp)
         shape = circleShape()
         shadowElevation = size(2.dp)
     }
-    OmniImeUi.SmartbarExtendedActionsToggle.elementName {
+    FlorisImeUi.SmartbarExtendedActionsToggle.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(144, 144, 144)
         margin = padding(6.dp)
         shape = circleShape()
     }
-    OmniImeUi.SmartbarActionKey.elementName {
+    FlorisImeUi.SmartbarActionKey.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
         shape = `var`("--shape")
     }
-    OmniImeUi.SmartbarActionKey.elementName(selector = SnyggSelector.DISABLED) {
+    FlorisImeUi.SmartbarActionKey.elementName(selector = SnyggSelector.DISABLED) {
         foreground = `var`("--on-background-disabled")
     }
 
-    OmniImeUi.SmartbarActionsOverflow.elementName {
+    FlorisImeUi.SmartbarActionsOverflow.elementName {
         margin = padding(4.dp)
     }
-    OmniImeUi.SmartbarActionsOverflowCustomizeButton.elementName {
+    FlorisImeUi.SmartbarActionsOverflowCustomizeButton.elementName {
         background = `var`("--primary")
         foreground = `var`("--on-primary")
         fontSize = fontSize(14.sp)
         margin = padding(0.dp, 8.dp, 0.dp, 0.dp)
         shape = roundedCornerShape(24.dp)
     }
-    OmniImeUi.SmartbarActionTile.elementName {
+    FlorisImeUi.SmartbarActionTile.elementName {
         background = `var`("--background-variant")
         foreground = `var`("--on-background")
         fontSize = fontSize(14.sp)
@@ -169,31 +169,31 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(2)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SmartbarActionTile.elementName(selector = SnyggSelector.DISABLED) {
+    FlorisImeUi.SmartbarActionTile.elementName(selector = SnyggSelector.DISABLED) {
         foreground = `var`("--on-background-disabled")
     }
-    OmniImeUi.SmartbarActionTileIcon.elementName {
+    FlorisImeUi.SmartbarActionTileIcon.elementName {
         fontSize = fontSize(24.sp)
         margin = padding(0.dp, 0.dp, 0.dp, 8.dp)
     }
 
-    OmniImeUi.SmartbarActionsEditor.elementName {
+    FlorisImeUi.SmartbarActionsEditor.elementName {
         background = `var`("--background")
         foreground = `var`("--on-background")
         shape = roundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp)
     }
-    OmniImeUi.SmartbarActionsEditorHeader.elementName {
+    FlorisImeUi.SmartbarActionsEditorHeader.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(16.sp)
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SmartbarActionsEditorHeaderButton.elementName {
+    FlorisImeUi.SmartbarActionsEditorHeaderButton.elementName {
         margin = padding(4.dp)
         shape = circleShape()
     }
-    OmniImeUi.SmartbarActionsEditorSubheader.elementName {
+    FlorisImeUi.SmartbarActionsEditorSubheader.elementName {
         foreground = `var`("--secondary")
         fontSize = fontSize(16.sp)
         fontWeight = fontWeight(FontWeight.Bold)
@@ -201,24 +201,24 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SmartbarActionsEditorTileGrid.elementName {
+    FlorisImeUi.SmartbarActionsEditorTileGrid.elementName {
         margin = padding(4.dp, 0.dp)
     }
-    OmniImeUi.SmartbarActionsEditorTile.elementName {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName {
         margin = padding(4.dp)
         padding = padding(8.dp)
         textAlign = textAlign(TextAlign.Center)
         textMaxLines = textMaxLines(2)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SmartbarActionsEditorTile.elementName(OmniImeUi.Attr.Code to listOf(KeyCode.NOOP)) {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.NOOP)) {
         foreground = `var`("--on-background-disabled")
     }
-    OmniImeUi.SmartbarActionsEditorTile.elementName(OmniImeUi.Attr.Code to listOf(KeyCode.DRAG_MARKER)) {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.DRAG_MARKER)) {
         foreground = rgbaColor(255, 0, 0)
     }
 
-    OmniImeUi.SmartbarCandidateWord.elementName {
+    FlorisImeUi.SmartbarCandidateWord.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("--on-background")
         fontSize = fontSize(14.sp)
@@ -228,15 +228,15 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SmartbarCandidateWord.elementName(selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.SmartbarCandidateWord.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }
-    OmniImeUi.SmartbarCandidateWordSecondaryText.elementName {
+    FlorisImeUi.SmartbarCandidateWordSecondaryText.elementName {
         fontSize = fontSize(8.sp)
         margin = padding(0.dp, 2.dp, 0.dp, 0.dp)
     }
-    OmniImeUi.SmartbarCandidateClip.elementName {
+    FlorisImeUi.SmartbarCandidateClip.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = rgbaColor(220, 220, 220)
         fontSize = fontSize(14.sp)
@@ -246,29 +246,29 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SmartbarCandidateClip.elementName(selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.SmartbarCandidateClip.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }
-    OmniImeUi.SmartbarCandidateClipIcon.elementName {
+    FlorisImeUi.SmartbarCandidateClipIcon.elementName {
         margin = padding(0.dp, 0.dp, 4.dp, 0.dp)
     }
-    OmniImeUi.SmartbarCandidateSpacer.elementName {
+    FlorisImeUi.SmartbarCandidateSpacer.elementName {
         foreground = rgbaColor(255, 255, 255, 0.25f)
     }
 
-    OmniImeUi.ClipboardHeader.elementName {
+    FlorisImeUi.ClipboardHeader.elementName {
         foreground = `var`("--on-background")
         fontSize = fontSize(16.sp)
     }
-    OmniImeUi.ClipboardSubheader.elementName {
+    FlorisImeUi.ClipboardSubheader.elementName {
         fontSize = fontSize(14.sp)
         margin = padding(6.dp)
     }
-    OmniImeUi.ClipboardContent.elementName {
+    FlorisImeUi.ClipboardContent.elementName {
         padding = padding(10.dp)
     }
-    OmniImeUi.ClipboardItem.elementName {
+    FlorisImeUi.ClipboardItem.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(14.sp)
@@ -279,7 +279,7 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(10)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.ClipboardItemPopup.elementName {
+    FlorisImeUi.ClipboardItemPopup.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(14.sp)
@@ -288,61 +288,61 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         shape = `var`("--shape-variant")
         shadowElevation = size(2.dp)
     }
-    OmniImeUi.ClipboardItemActions.elementName {
+    FlorisImeUi.ClipboardItemActions.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         margin = padding(4.dp)
         shape = `var`("--shape-variant")
         shadowElevation = size(2.dp)
     }
-    OmniImeUi.ClipboardItemAction.elementName {
+    FlorisImeUi.ClipboardItemAction.elementName {
         fontSize = fontSize(16.sp)
         padding = padding(12.dp)
     }
-    OmniImeUi.ClipboardItemActionText.elementName {
+    FlorisImeUi.ClipboardItemActionText.elementName {
         margin = padding(8.dp, 0.dp, 0.dp, 0.dp)
     }
-    OmniImeUi.ClipboardHistoryDisabledButton.elementName {
+    FlorisImeUi.ClipboardHistoryDisabledButton.elementName {
         background = `var`("--primary")
         foreground = `var`("--on-primary")
         shape = roundedCornerShape(24.dp)
     }
 
-    OmniImeUi.MediaEmojiKey.elementName {
+    FlorisImeUi.MediaEmojiKey.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("--on-background")
         fontSize = fontSize(22.sp)
         shape = `var`("--shape")
     }
-    OmniImeUi.MediaEmojiKey.elementName(selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.MediaEmojiKey.elementName(selector = SnyggSelector.PRESSED) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }
 
-    OmniImeUi.GlideTrail.elementName {
+    FlorisImeUi.GlideTrail.elementName {
         foreground = `var`("--primary")
     }
 
-    OmniImeUi.InlineAutofillChip.elementName {
+    FlorisImeUi.InlineAutofillChip.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
     }
 
-    OmniImeUi.IncognitoModeIndicator.elementName {
+    FlorisImeUi.IncognitoModeIndicator.elementName {
         foreground = rgbaColor(255, 255, 255, 0.067f)
     }
 
-    OmniImeUi.OneHandedPanel.elementName {
+    FlorisImeUi.OneHandedPanel.elementName {
         background = rgbaColor(27, 94, 32)
         foreground = rgbaColor(238, 238, 238)
     }
 
-    OmniImeUi.SubtypePanel.elementName {
+    FlorisImeUi.SubtypePanel.elementName {
         background = `var`("--background")
         foreground = `var`("--on-background")
         shape = roundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp)
     }
-    OmniImeUi.SubtypePanelHeader.elementName {
+    FlorisImeUi.SubtypePanelHeader.elementName {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(18.sp)
@@ -351,15 +351,15 @@ val OmniImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    OmniImeUi.SubtypePanelListItem.elementName {
+    FlorisImeUi.SubtypePanelListItem.elementName {
         fontSize = fontSize(16.sp)
         padding = padding(16.dp)
     }
-    OmniImeUi.SubtypePanelListItemIconLeading.elementName {
+    FlorisImeUi.SubtypePanelListItemIconLeading.elementName {
         fontSize = fontSize(24.sp)
         padding = padding(0.dp, 0.dp, 16.dp, 0.dp)
     }
-    OmniImeUi.SubtypePanelListItemText.elementName {
+    FlorisImeUi.SubtypePanelListItemText.elementName {
         textMaxLines = textMaxLines(1)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }

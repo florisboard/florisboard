@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings
+package dev.patrickgold.florisboard.app.settings
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -34,19 +34,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.Routes
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.util.InputMethodUtils
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.datastore.ui.Preference
-import org.omniboard.lib.compose.OmniErrorCard
-import org.omniboard.lib.compose.OmniWarningCard
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import org.florisboard.lib.compose.FlorisErrorCard
+import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.stringRes
 
 @Composable
-fun HomeScreen() = OmniScreen {
+fun HomeScreen() = FlorisScreen {
     title = stringRes(R.string.settings__home__title)
     navigationIconVisible = false
     previewFieldVisible = true
@@ -57,17 +57,17 @@ fun HomeScreen() = OmniScreen {
     content {
         val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
 
-        val isOmniBoardEnabled by InputMethodUtils.observeIsOmniboardEnabled(foregroundOnly = true)
-        val isOmniBoardSelected by InputMethodUtils.observeIsOmniboardSelected(foregroundOnly = true)
-        if (!isOmniBoardEnabled) {
-            OmniErrorCard(
+        val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
+        val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+        if (!isFlorisBoardEnabled) {
+            FlorisErrorCard(
                 modifier = Modifier.padding(8.dp),
                 showIcon = false,
                 text = stringRes(R.string.settings__home__ime_not_enabled),
                 onClick = { InputMethodUtils.showImeEnablerActivity(context) },
             )
-        } else if (!isOmniBoardSelected) {
-            OmniWarningCard(
+        } else if (!isFlorisBoardSelected) {
+            FlorisWarningCard(
                 modifier = Modifier.padding(8.dp),
                 showIcon = false,
                 text = stringRes(R.string.settings__home__ime_not_selected),

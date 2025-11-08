@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">إيقاف مؤقت</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">انتظر</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">أيقونة ثلاث نقاط. إذا كانت ظاهرة ، تشير إلى أنه يمكن استخدام المزيد من الأحرف إذا تم الضغط عليها لفترة أطول.</string>
@@ -110,8 +110,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">الإفتراضي</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">الإعداد الافتراضي</string>
     <string name="settings__home__title" comment="Title of the Home screen">مرحبا بكم في {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">لم يتم تمكين OmniBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">لم يتم تعيين OmniBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">لم يتم تمكين FlorisBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم تعيين FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">اللغات و التخطيطات</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">عرض أسم اللغة المفعلة</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">أنواع الإدخال الفرعية</string>
@@ -155,7 +155,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق نهاري</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">نسق ليلي</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">أدارة السمات المثبتة</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">أصول تطبيق OmniBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">أصول تطبيق FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">الذاكرة الداخلية</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">مزود خارجي</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">اختيار النمط الصباحي</string>
@@ -180,7 +180,7 @@
     <string name="settings__theme_editor__code_recording_help_text">للعثور على رمز المفتاح ، استخدم الزر بجانب حقل إدخال الرمز. بمجرد تنشيطه ، سيتم تسجيل الضغط على المفتاح التالي وسيقوم بإدخال الرمز في حقل الإدخال.</string>
     <string name="settings__theme_editor__code_recording_started">بدأ تسجيل رمز المفتاح</string>
     <string name="settings__theme_editor__code_recording_stopped">توقف تسجيل رمز المفتاح</string>
-    <string name="settings__theme_editor__code_recording_requires_default_ime_omni">يجب أن يكون {app_name} هو لوحة المفاتيح الافتراضية لتسجيل رمز المفتاح</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">يجب أن يكون {app_name} هو لوحة المفاتيح الافتراضية لتسجيل رمز المفتاح</string>
     <string name="settings__theme_editor__code_recording_placeholder">جارٍ التسجيل…</string>
     <string name="settings__theme_editor__add_property">إضافة خاصية</string>
     <string name="settings__theme_editor__edit_property">تحرير خاصية</string>
@@ -360,9 +360,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس مستخدم النظام</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">تفعيل القاموس الداخلي للمستخدم</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في القاموس الداخلي للمستخدم</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">إدارة قاموس الداخلي للمستخدم</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس المستخدم الداخلي</string>
-    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">القاموس الداخلي للمستخدم</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">إدارة قاموس الداخلي للمستخدم</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس المستخدم الداخلي</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">القاموس الداخلي للمستخدم</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">قاموس مستخدم النظام</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">ملف القاموس هذا لا يحتوي على اي كلمات.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">التكرار: {freq}</string>
@@ -421,7 +421,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">تراخيص البرامج مفتوحة المصدر</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سياسة الخصوصية</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
@@ -454,7 +454,7 @@
     <string name="setup__select_ime__switch_keyboard_btn">تبديل لوحة المفاتيح</string>
     <string name="setup__grant_notification_permission__title">السماح بإخطارات تقرير الأعطال</string>
     <string name="setup__grant_notification_permission__description">اعتبارًا من نظام التشغيل Android 13+، يجب أن تطلب التطبيقات الإذن بذلك
-         إرسال الإخطارات. في Omniboard، يُستخدم هذا فقط لفتح شاشة تقرير الأعطال في حالة حدوث عطل.
+         إرسال الإخطارات. في Florisboard، يُستخدم هذا فقط لفتح شاشة تقرير الأعطال في حالة حدوث عطل.
          يمكن تغيير هذا الإذن في أي وقت في إعدادات النظام.    </string>
     <string name="setup__grant_notification_permission__btn">منح الإذن</string>
     <string name="setup__finish_up__title">تم انهاء الاعداد</string>
@@ -494,18 +494,18 @@
     <string name="backup_and_restore__restore__success">تمت استعادة البيانات بنجاح!</string>
     <string name="backup_and_restore__restore__failure">فشل في استرداد البيانات: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في OmniBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن OmniBoard تعطل بسبب خطأ غير متوقع.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">إذا كنت ترغب في الإبلاغ عن هذا الخطأ ، فتحقق أولاً من أداة تعقب المشكلات على GitHub إذا لم يتم الإبلاغ عن العطل بالفعل. \n إذا لم يتم الإبلاغ عن هذا الخطأ ، فقم بنسخ سجل التعطل الذي تم إنشاؤه وافتح مشكلة جديدة. استخدم القالب واملأ الوصف وخطوات إعادة إنتاج ولصق سجل العطل الذي تم إنشاؤه في النهاية. هذا يساعد\"%s\" في جعل OmniBoard أفضل وأكثر استقرارًا للجميع. شكرا لك!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">إذا كنت ترغب في الإبلاغ عن هذا الخطأ ، فتحقق أولاً من أداة تعقب المشكلات على GitHub إذا لم يتم الإبلاغ عن العطل بالفعل. \n إذا لم يتم الإبلاغ عن هذا الخطأ ، فقم بنسخ سجل التعطل الذي تم إنشاؤه وافتح مشكلة جديدة. استخدم القالب واملأ الوصف وخطوات إعادة إنتاج ولصق سجل العطل الذي تم إنشاؤه في النهاية. هذا يساعد\"%s\" في جعل FlorisBoard أفضل وأكثر استقرارًا للجميع. شكرا لك!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">نسخ الى حافظة النظام</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">تم النسخ الى حافظة النظام</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">لا يمكن النسخ إلى حافظة النظام: لم يتم العثور على جلسة مدير الحافظة</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">إغلاق</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">تقارير حول خطأ في OmniBoard</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">توقف OmniBoard عن العمل…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">تقارير حول خطأ في FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">توقف FlorisBoard عن العمل…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">انقر لعرض تفاصيل الخطأ</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن OmniBoard يوقف عن العمل بشكل متكرر…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن FlorisBoard يوقف عن العمل بشكل متكرر…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">تم العودة إلى لوحة المفاتيح السابقة لإيقاف التعطل المتكرر الغير منتهي. انقر لعرض تفاصيل الخطأ</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">الحافظة</string>
@@ -635,7 +635,7 @@
     <string name="ext__export__failure">فشل في تصدير ألإضافة: {error_message}</string>
     <string name="ext__import__success">تمّ استيراد الاضافة بنجاح!</string>
     <string name="ext__import__failure">فشل في استيراد الاضافة: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">إستيراد الملحقات</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">إستيراد الملحقات</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">استيراد ملحقات لوحة المفاتيح</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">استيراد ملحقات الثيم</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">استيراد حزم اللغة</string>
@@ -675,7 +675,7 @@
     <string name="ext__addon_management_box__managing_placeholder">إدارة {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">يمكن التعامل مع جميع المهام المتعلقة باستيراد الملحقات وتصديرها وإنشائها وتخصيصها وإزالتها بواسطة مدير الإضافات المركزي.</string>
     <string name="ext__addon_management_box__go_to_page">انتقل إلى {ext_home_title}</string>
-    <string name="ext__home__info">يمكنك تنزيل الإضافات وتثبيتها من متجر إضافات OmniBoard أو استيراد أي مِلَفّ ملحق قمت بتنزيله من الإنترنت.</string>
+    <string name="ext__home__info">يمكنك تنزيل الإضافات وتثبيتها من متجر إضافات FlorisBoard أو استيراد أي مِلَفّ ملحق قمت بتنزيله من الإنترنت.</string>
     <string name="ext__home__visit_store">زيارة متجر الإضافات</string>
     <string name="ext__home__manage_extensions">إدارة الإضافات المثبتة</string>
     <string name="ext__list__view_details">عرض التفاصيل</string>

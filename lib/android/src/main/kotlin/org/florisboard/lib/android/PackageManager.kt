@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.android
+package org.florisboard.lib.android
 
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 
-private const val SETTINGS_ACTIVITY_NAME = "dev.silo.omniboard.SettingsLauncherAlias"
+private const val SETTINGS_ACTIVITY_NAME = "dev.patrickgold.florisboard.SettingsLauncherAlias"
 
 fun Context.hideAppIcon() {
     val pkg: PackageManager = this.packageManager

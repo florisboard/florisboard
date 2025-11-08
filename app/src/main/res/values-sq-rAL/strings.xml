@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">TastieraOmni</string>
+    <string name="app_name">TastieraFloris</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Ndalo</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Prit</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikonë me tre pika. Nëse është e dukshme, do të thotë që më shumë shkronja mund te përdoren nëse shtypen më gjatë.</string>

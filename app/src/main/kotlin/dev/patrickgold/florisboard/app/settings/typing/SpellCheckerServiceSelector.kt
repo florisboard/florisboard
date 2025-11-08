@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.typing
+package dev.patrickgold.florisboard.app.settings.typing
 
 import android.content.ComponentName
 import android.content.Intent
@@ -33,18 +33,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.lib.util.launchActivity
-import org.omniboard.lib.android.AndroidSettings
-import org.omniboard.lib.compose.OmniCanvasIcon
-import org.omniboard.lib.compose.OmniErrorCard
-import org.omniboard.lib.compose.OmniSimpleCard
-import org.omniboard.lib.compose.OmniWarningCard
-import org.omniboard.lib.compose.observeAsState
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.lib.util.launchActivity
+import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.compose.FlorisCanvasIcon
+import org.florisboard.lib.compose.FlorisErrorCard
+import org.florisboard.lib.compose.FlorisSimpleCard
+import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.observeAsState
+import org.florisboard.lib.compose.stringRes
 
 @Composable
-fun SpellCheckerServiceSelector(omniSpellCheckerEnabled: MutableState<Boolean>) {
+fun SpellCheckerServiceSelector(florisSpellCheckerEnabled: MutableState<Boolean>) {
     val context = LocalContext.current
 
     val systemSpellCheckerId by AndroidSettings.Secure.observeAsState(
@@ -70,14 +70,14 @@ fun SpellCheckerServiceSelector(omniSpellCheckerEnabled: MutableState<Boolean>) 
             it.component = componentToLaunch
         }
     }
-    omniSpellCheckerEnabled.value =
+    florisSpellCheckerEnabled.value =
         systemSpellCheckerEnabled == "1" &&
         systemSpellCheckerPkgName == context.packageName
 
     Column(modifier = Modifier.padding(horizontal = 8.dp)) {
         if (systemSpellCheckerEnabled == "1") {
             if (systemSpellCheckerId == null) {
-                OmniWarningCard(
+                FlorisWarningCard(
                     text = stringRes(R.string.pref__spelling__active_spellchecker__summary_none),
                     onClick = openSystemSpellCheckerSettings,
                 )
@@ -92,10 +92,10 @@ fun SpellCheckerServiceSelector(omniSpellCheckerEnabled: MutableState<Boolean>) 
                 } catch (e: Exception) {
                     spellCheckerIcon = null
                 }
-                OmniSimpleCard(
+                FlorisSimpleCard(
                     icon = {
                         if (spellCheckerIcon != null) {
-                            OmniCanvasIcon(
+                            FlorisCanvasIcon(
                                 modifier = Modifier
                                     .padding(end = 8.dp)
                                     .requiredSize(32.dp),
@@ -118,7 +118,7 @@ fun SpellCheckerServiceSelector(omniSpellCheckerEnabled: MutableState<Boolean>) 
                 )
             }
         } else {
-            OmniErrorCard(
+            FlorisErrorCard(
                 text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
                 onClick = openSystemSpellCheckerSettings,
             )

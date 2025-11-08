@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,70 +14,70 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app
+package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import dev.silo.omniboard.app.settings.theme.ColorPreferenceSerializer
-import dev.silo.omniboard.app.settings.theme.DisplayKbdAfterDialogs
-import dev.silo.omniboard.app.settings.theme.SnyggLevel
-import dev.silo.omniboard.app.setup.NotificationPermissionState
-import dev.silo.omniboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
-import dev.silo.omniboard.ime.clipboard.ClipboardSyncBehavior
-import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.input.CapitalizationBehavior
-import dev.silo.omniboard.ime.input.HapticVibrationMode
-import dev.silo.omniboard.ime.input.InputFeedbackActivationMode
-import dev.silo.omniboard.ime.keyboard.IncognitoMode
-import dev.silo.omniboard.ime.keyboard.SpaceBarMode
-import dev.silo.omniboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.silo.omniboard.ime.media.emoji.EmojiHairStyle
-import dev.silo.omniboard.ime.media.emoji.EmojiHistory
-import dev.silo.omniboard.ime.media.emoji.EmojiSkinTone
-import dev.silo.omniboard.ime.media.emoji.EmojiSuggestionType
-import dev.silo.omniboard.ime.nlp.SpellingLanguageMode
-import dev.silo.omniboard.ime.onehanded.OneHandedMode
-import dev.silo.omniboard.ime.smartbar.CandidatesDisplayMode
-import dev.silo.omniboard.ime.smartbar.ExtendedActionsPlacement
-import dev.silo.omniboard.ime.smartbar.IncognitoDisplayMode
-import dev.silo.omniboard.ime.smartbar.SmartbarLayout
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickAction
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionArrangement
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionJsonConfig
-import dev.silo.omniboard.ime.text.gestures.SwipeAction
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.key.KeyHintConfiguration
-import dev.silo.omniboard.ime.text.key.KeyHintMode
-import dev.silo.omniboard.ime.text.key.UtilityKeyAction
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.theme.ThemeMode
-import dev.silo.omniboard.ime.theme.extCoreTheme
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.observeAsTransformingState
-import dev.silo.omniboard.lib.util.VersionName
-import dev.silo.jetpref.datastore.annotations.Preferences
-import dev.silo.jetpref.datastore.jetprefDataStoreOf
-import dev.silo.jetpref.datastore.model.LocalTime
-import dev.silo.jetpref.datastore.model.PreferenceData
-import dev.silo.jetpref.datastore.model.PreferenceMigrationEntry
-import dev.silo.jetpref.datastore.model.PreferenceModel
-import dev.silo.jetpref.datastore.model.PreferenceType
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.material.ui.ColorRepresentation
+import dev.patrickgold.florisboard.app.settings.theme.ColorPreferenceSerializer
+import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
+import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
+import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickAction
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
+import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.extCoreTheme
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.observeAsTransformingState
+import dev.patrickgold.florisboard.lib.util.VersionName
+import dev.patrickgold.jetpref.datastore.annotations.Preferences
+import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
+import dev.patrickgold.jetpref.datastore.model.LocalTime
+import dev.patrickgold.jetpref.datastore.model.PreferenceData
+import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
+import dev.patrickgold.jetpref.datastore.model.PreferenceModel
+import dev.patrickgold.jetpref.datastore.model.PreferenceType
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import kotlinx.serialization.json.Json
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.android.isOrientationPortrait
-import org.omniboard.lib.color.DEFAULT_GREEN
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.color.DEFAULT_GREEN
 
-val OmniPreferenceStore = jetprefDataStoreOf(OmniPreferenceModel::class)
+val FlorisPreferenceStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
 @Preferences
-abstract class OmniPreferenceModel : PreferenceModel() {
+abstract class FlorisPreferenceModel : PreferenceModel() {
     companion object {
-        const val NAME = "omniboard-app-prefs"
+        const val NAME = "florisboard-app-prefs"
     }
 
     val clipboard = Clipboard()
@@ -86,8 +86,8 @@ abstract class OmniPreferenceModel : PreferenceModel() {
             key = "clipboard__use_internal_clipboard",
             default = false,
         )
-        val syncToOmni = enum(
-            key = "clipboard__sync_to_omni",
+        val syncToFloris = enum(
+            key = "clipboard__sync_to_floris",
             default = ClipboardSyncBehavior.ALL_EVENTS,
         )
         val syncToSystem = enum(
@@ -219,8 +219,8 @@ abstract class OmniPreferenceModel : PreferenceModel() {
             key = "suggestion__enable_system_user_dictionary",
             default = true,
         )
-        val enableOmniUserDictionary = boolean(
-            key = "suggestion__enable_omni_user_dictionary",
+        val enableFlorisUserDictionary = boolean(
+            key = "suggestion__enable_floris_user_dictionary",
             default = true,
         )
     }
@@ -758,12 +758,12 @@ abstract class OmniPreferenceModel : PreferenceModel() {
         )
         val dayThemeId = custom(
             key = "theme__day_theme_id",
-            default = extCoreTheme("omni_day"),
+            default = extCoreTheme("floris_day"),
             serializer = ExtensionComponentName.Serializer,
         )
         val nightThemeId = custom(
             key = "theme__night_theme_id",
-            default = extCoreTheme("omni_night"),
+            default = extCoreTheme("floris_night"),
             serializer = ExtensionComponentName.Serializer,
         )
         val accentColor = custom(
@@ -804,7 +804,7 @@ abstract class OmniPreferenceModel : PreferenceModel() {
             "media__emoji_recently_used" -> {
                 val emojiValues = entry.rawValue.split(";")
                 val recent = emojiValues.map {
-                    dev.silo.omniboard.ime.media.emoji.Emoji(it, "", emptyList())
+                    dev.patrickgold.florisboard.ime.media.emoji.Emoji(it, "", emptyList())
                 }
                 val data = EmojiHistory(emptyList(), recent)
                 entry.transform(key = "emoji__history_data", rawValue = Json.encodeToString(data))
@@ -894,7 +894,7 @@ abstract class OmniPreferenceModel : PreferenceModel() {
 
             // Migrate clipboard history pref names
             // Keep migration rules until: 0.7 dev cycle
-            "clipboard__sync_to_omni", "clipboard__sync_to_system" -> {
+            "clipboard__sync_to_floris", "clipboard__sync_to_system" -> {
                 entry.transform(
                     type = PreferenceType.string(),
                     rawValue = when (entry.rawValue) {

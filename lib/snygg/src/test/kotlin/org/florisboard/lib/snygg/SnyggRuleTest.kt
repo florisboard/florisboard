@@ -1,4 +1,4 @@
-package org.omniboard.lib.snygg
+package org.florisboard.lib.snygg
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.assertAll

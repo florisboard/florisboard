@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.clipboard
+package dev.patrickgold.florisboard.app.settings.clipboard
 
 import androidx.compose.runtime.Composable
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.enumDisplayEntriesOf
-import dev.silo.omniboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
-import dev.silo.omniboard.ime.clipboard.ClipboardSyncBehavior
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.jetpref.datastore.ui.DialogSliderPreference
-import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.silo.jetpref.datastore.ui.ListPreference
-import dev.silo.jetpref.datastore.ui.PreferenceGroup
-import dev.silo.jetpref.datastore.ui.SwitchPreference
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.compose.pluralsRes
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.pluralsRes
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun ClipboardScreen() = OmniScreen {
+fun ClipboardScreen() = FlorisScreen {
     title = stringRes(R.string.settings__clipboard__title)
     previewFieldVisible = true
 
@@ -44,7 +44,7 @@ fun ClipboardScreen() = OmniScreen {
             summary = stringRes(R.string.pref__clipboard__use_internal_clipboard__summary),
         )
         ListPreference(
-            prefs.clipboard.syncToOmni,
+            prefs.clipboard.syncToFloris,
             title = stringRes(R.string.pref__clipboard__sync_from_system_clipboard__label),
             entries = enumDisplayEntriesOf(ClipboardSyncBehavior::class),
             enabledIf = { prefs.clipboard.useInternalClipboard isEqualTo true },

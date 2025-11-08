@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.text.gestures
+package dev.patrickgold.florisboard.ime.text.gestures
 
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 
 /**
  * Inherit this to be able to handle gesture typing. Takes in raw pointer data, and

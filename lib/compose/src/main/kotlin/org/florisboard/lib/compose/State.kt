@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.compose
+package org.florisboard.lib.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -25,8 +25,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import org.omniboard.lib.android.AndroidSettingsHelper
-import org.omniboard.lib.android.SystemSettingsObserver
+import org.florisboard.lib.android.AndroidSettingsHelper
+import org.florisboard.lib.android.SystemSettingsObserver
 
 @Composable
 fun AndroidSettingsHelper.observeAsState(

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.media
+package dev.patrickgold.florisboard.ime.media
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -47,19 +47,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
-import dev.silo.omniboard.ime.input.InputEventDispatcher
-import dev.silo.omniboard.ime.input.LocalInputFeedbackController
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.ime.keyboard.KeyData
-import dev.silo.omniboard.ime.media.emoji.EmojiData
-import dev.silo.omniboard.ime.media.emoji.EmojiPaletteView
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggColumn
-import org.omniboard.lib.snygg.ui.SnyggRow
+import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiData
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiPaletteView
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggRow
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
@@ -76,23 +76,23 @@ fun MediaInputLayout(
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         SnyggColumn(
-            elementName = OmniImeUi.Media.elementName,
+            elementName = FlorisImeUi.Media.elementName,
             modifier = modifier
                 .fillMaxWidth()
-                .height(OmniImeSizing.imeUiHeight()),
+                .height(FlorisImeSizing.imeUiHeight()),
         ) {
             EmojiPaletteView(
                 modifier = Modifier.weight(1f),
                 fullEmojiMappings = emojiLayoutDataMap,
             )
             SnyggRow(
-                elementName = OmniImeUi.MediaBottomRow.elementName,
+                elementName = FlorisImeUi.MediaBottomRow.elementName,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(OmniImeSizing.keyboardRowBaseHeight * 0.8f),
+                    .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
             ) {
                 KeyboardLikeButton(
-                    elementName = OmniImeUi.MediaBottomRowButton.elementName,
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
                     inputEventDispatcher = keyboardManager.inputEventDispatcher,
                     keyData = TextKeyData.IME_UI_MODE_TEXT,
                     modifier = Modifier.fillMaxHeight(),
@@ -104,7 +104,7 @@ fun MediaInputLayout(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 KeyboardLikeButton(
-                    elementName = OmniImeUi.MediaBottomRowButton.elementName,
+                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
                     inputEventDispatcher = keyboardManager.inputEventDispatcher,
                     keyData = TextKeyData.DELETE,
                     modifier = Modifier.fillMaxHeight(),
@@ -121,7 +121,7 @@ internal fun KeyboardLikeButton(
     modifier: Modifier = Modifier,
     inputEventDispatcher: InputEventDispatcher,
     keyData: KeyData,
-    elementName: String = OmniImeUi.MediaEmojiKey.elementName,
+    elementName: String = FlorisImeUi.MediaEmojiKey.elementName,
     content: @Composable () -> Unit,
 ) {
     val inputFeedbackController = LocalInputFeedbackController.current
@@ -135,7 +135,7 @@ internal fun KeyboardLikeButton(
 
     SnyggBox(
         elementName = elementName,
-        attributes = mapOf(OmniImeUi.Attr.Code to keyData.code),
+        attributes = mapOf(FlorisImeUi.Attr.Code to keyData.code),
         selector = selector,
         clickAndSemanticsModifier = modifier
             .indication(interactionSource, ripple())

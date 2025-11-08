@@ -1,23 +1,23 @@
 {
   "$": "ime.extension.languagepack",
   "meta": {
-    "id": "org.omniboard.languagepack",
+    "id": "org.florisboard.languagepack",
     "version": "0.0.0",
     "title": "Default language pack",
     "description": "Default language pack which are always available.",
-    "maintainers": [ "silo <patrick@silo.dev>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
     "license": "apache-2.0"
   },
   "items": [
     {
       "id": "de_DE_neobone",
       "label": "Deutsch (Deutschland) [NEOBONE] / German (Germany) [NEOBONE]",
-      "authors": [ "silo" ]
+      "authors": [ "patrickgold" ]
     },
     {
       "id": "ja_JP_jis",
       "label": "日本語 (日本) [JIS] / Japanese (Japan) [JIS]",
-      "authors": [ "silo" ]
+      "authors": [ "patrickgold" ]
     }
   ]
 }

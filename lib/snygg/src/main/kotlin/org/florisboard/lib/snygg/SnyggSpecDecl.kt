@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.snygg
+package org.florisboard.lib.snygg
 
-import org.omniboard.lib.snygg.value.SnyggValueEncoder
+import org.florisboard.lib.snygg.value.SnyggValueEncoder
 
 enum class InheritBehavior {
     IMPLICITLY_OR_EXPLICITLY,

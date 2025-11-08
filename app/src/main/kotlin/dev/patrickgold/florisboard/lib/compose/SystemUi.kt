@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.compose
+package dev.patrickgold.florisboard.lib.compose
 
 import android.app.Activity
 import android.content.Context
@@ -26,14 +26,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsControllerCompat
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.snygg.ui.rememberSnyggThemeQuery
-import org.omniboard.lib.snygg.ui.uriOrNull
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.florisboard.lib.snygg.ui.uriOrNull
 
 @Composable
 fun SystemUiIme() {
-    val backgroundQuery = rememberSnyggThemeQuery(OmniImeUi.Window.elementName)
+    val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
 

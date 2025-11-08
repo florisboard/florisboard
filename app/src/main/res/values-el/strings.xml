@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Παύση</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Αναμονή</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Εικονίδιο με τρεις τελείες. Εάν εμφανιστεί, υποδεικνύει πως περισσότερα γράμματα μπορούν να χρησιμοποιηθούν εάν πατηθεί παρατεταμένα.</string>
@@ -33,8 +33,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Προεπιλογή</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Προεπιλογή συστήματος</string>
     <string name="settings__home__title" comment="Title of the Home screen">Καλώς ήλθατε στο {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">Το OmniBoard δεν είναι ενεργοποιημένο στο σύστημα και συνεπώς δε θα είναι διαθέσιμο ως μέθοδος εισαγωγής στον επιλογέα εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">Το OmniBoard δεν έχει επιλεχθεί ως η προεπιλεγμένη μέθοδος εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Το FlorisBoard δεν είναι ενεργοποιημένο στο σύστημα και συνεπώς δε θα είναι διαθέσιμο ως μέθοδος εισαγωγής στον επιλογέα εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Το FlorisBoard δεν έχει επιλεχθεί ως η προεπιλεγμένη μέθοδος εισαγωγής. Πατήστε εδώ για να επιλύσετε αυτό το πρόβλημα.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Γλώσσες &amp; Διατάξεις</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Υποτύποι</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Προσθήκη υποτύπου</string>
@@ -72,7 +72,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Θέμα ημέρας</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Θέμα νύχτας</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Διαχείριση εγκατεστημένων θεμάτων</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Πηγές της Εφαρμογής OmniBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Πηγές της Εφαρμογής FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Εσωτερικός αποθηκευτικός χώρος</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Εξωτερικός Προμηθευτής</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Επιλογή θέματος μέρας</string>
@@ -155,9 +155,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Προσθήκη, προβολή, και αφαίρεση εισαγωγών για το λεξικό χρήστη στο σύστημα</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ενεργοποίηση εσωτερικού λεξικού χρήστη</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Προτάσεις λέξεων αποθηκευμένων στο εσωτερικό λεξικό χρήστη</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">Διαχείριση εσωτερικού λεξικού χρήστη</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">Προσθήκη, προβολή, και αφαίρεση εισαγωγών για το εσωτερικό λεξικό χρήστη</string>
-    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">Εσωτερικό Λεξικό Χρήστη</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Διαχείριση εσωτερικού λεξικού χρήστη</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Προσθήκη, προβολή, και αφαίρεση εισαγωγών για το εσωτερικό λεξικό χρήστη</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Εσωτερικό Λεξικό Χρήστη</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Λεξικό Χρήστη στο Σύστημα</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Για όλες τις γλώσσες</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Άνοιγμα περιβάλλοντος διαχειριστή συστήματος</string>
@@ -192,7 +192,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Όριο απόστασης σάρωσης</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Σχετικά με</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Εικονίδιο εφαρμογής του OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Εικονίδιο εφαρμογής του FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Άδειες λογισμικού ανοικτού κώδικα</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Πολιτική απορρήτου</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Πηγαίος κώδικας</string>
@@ -207,7 +207,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Πολιτική απορρήτου</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Η πολιτική απορρήτου αυτού του πρότζεκτ</string>
     <string name="about__project_license__title" comment="Preference title">Άδεια πρότζεκτ</string>
-    <string name="about__project_license__summary" comment="Preference summary">Το OmniBoard είναι αδειοδοτημένο υπό την άδεια {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">Το FlorisBoard είναι αδειοδοτημένο υπό την άδεια {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Σφάλμα: Αποτυχία φόρτωσης κειμένου άδειας.\n-&gt; Λόγος: {error_message}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Άδειες χρήσης τρίτων</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Άδειες χρήσης βιβλιοθηκών τρίτων που έχουν συμπεριληφθεί σε αυτήν την εφαρμογή</string>
@@ -233,18 +233,18 @@
     <string name="backup_and_restore__restore__success">Επιτυχής επαναφορά δεδομένων!</string>
     <string name="backup_and_restore__restore__failure">Αποτυχία επαναφοράς δεδομένων: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος OmniBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, αλλά το OmniBoard έχει τερματιστεί απροσδόκητα εξαιτίας ενός απρόσμενου σφάλματος.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Εάν επιθυμείτε να αναφέρετε αυτό το σφάλμα, πρώτα ελέγξτε αν το πρόβλημά σας δεν έχει ακόμα αναφερθεί στην παρακολούθηση προβλημάτων στο GitHub.\nΕάν δεν έχει αναφερθεί, αντιγράψτε την καταγραφή του απροσδόκητου τερματισμού που έχει προκύψει και ανοίξτε ένα νέο θέμα. Χρησιμοποιήστε το πρότυπο \"%s\" και συμπληρώστε την περιγραφή, τα βήματα για αναπαραγωγή, και αντιγράψτε την καταγραφή του τερματισμού στο τέλος. Αυτό βοηθάει να γίνει το OmniBoard καλύτερο και πιο σταθερό για όλους. Ευχαριστώ!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, αλλά το FlorisBoard έχει τερματιστεί απροσδόκητα εξαιτίας ενός απρόσμενου σφάλματος.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Εάν επιθυμείτε να αναφέρετε αυτό το σφάλμα, πρώτα ελέγξτε αν το πρόβλημά σας δεν έχει ακόμα αναφερθεί στην παρακολούθηση προβλημάτων στο GitHub.\nΕάν δεν έχει αναφερθεί, αντιγράψτε την καταγραφή του απροσδόκητου τερματισμού που έχει προκύψει και ανοίξτε ένα νέο θέμα. Χρησιμοποιήστε το πρότυπο \"%s\" και συμπληρώστε την περιγραφή, τα βήματα για αναπαραγωγή, και αντιγράψτε την καταγραφή του τερματισμού στο τέλος. Αυτό βοηθάει να γίνει το FlorisBoard καλύτερο και πιο σταθερό για όλους. Ευχαριστώ!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Αντιγραφή στο πρόχειρο συστήματος</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Αντιγράφηκε στο πρόχειρο συστήματος</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Αδυναμία αντιγραφής στο πρόχειρο συστήματος: Η πραγμάτωση διαχειριστή προχείρου δε βρέθηκε</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Άνοιγμα παρακολούθησης θεμάτων (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Κλείσιμο</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Αναφορές σφάλματος OmniBoard</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Το OmniBoard έχει σταματήσει να λειτουργεί…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Αναφορές σφάλματος FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Το FlorisBoard έχει σταματήσει να λειτουργεί…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Πατήστε για προβολή λεπτομερειών σφάλματος</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Φαίνεται πως το OmniBoard σταματά να λειτουργεί επανειλημμένα…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Φαίνεται πως το FlorisBoard σταματά να λειτουργεί επανειλημμένα…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Χρήση εναλλακτικά του προηγούμενου πληκτρολογίου για να σταματήσει ο αδιάκοπος κύκλος απροσδόκητων τερματισμών. Πατήστε για να δείτε λεπτομέρειες του σφάλματος</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Πρόχειρο</string>
@@ -272,9 +272,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Χρήση εσωτερικού προχείρου</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Συγχρονισμός από συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου ενημερώνουν και το πρόχειρο Omni</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου ενημερώνουν και το πρόχειρο Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Συγχρονισμός στο συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Omni, ενημερώνουν και το συστημικό πρόχειρο</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
     <string name="pref__clipboard__group_clipboard_history__label">Ιστορικό προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση των στοιχείων του προχείρου για γρήγορη πρόσβαση</string>
@@ -320,7 +320,7 @@
     <string name="ext__export__failure">Αποτυχία εξαγωγής επέκτασης: {error_message}</string>
     <string name="ext__import__success">Επιτυχής εισαγωγή επέκτασης!</string>
     <string name="ext__import__failure">Αποτυχία εισαγωγής επέκτασης: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Εισαγωγή επέκτασης</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Εισαγωγή επέκτασης</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Εισαγωγή επέκτασης πληκτρολογίου</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Εισαγωγή επέκτασης θέματος</string>
     <string name="ext__import__file_skip" comment="Label when a file cannot be imported in the current context. The actual reason string is in a separate text view below this string.">Το αρχείο δεν μπορεί να εισαχθεί. Αιτία:</string>

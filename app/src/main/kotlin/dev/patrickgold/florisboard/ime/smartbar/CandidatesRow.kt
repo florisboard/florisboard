@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The OmniBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.smartbar
+package dev.patrickgold.florisboard.ime.smartbar
 
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -39,29 +39,29 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.nlp.ClipboardSuggestionCandidate
-import dev.silo.omniboard.ime.nlp.SuggestionCandidate
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.nlpManager
-import dev.silo.omniboard.subtypeManager
-import dev.silo.jetpref.datastore.model.observeAsState
-import org.omniboard.lib.compose.conditional
-import org.omniboard.lib.compose.omniHorizontalScroll
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggColumn
-import org.omniboard.lib.snygg.ui.SnyggIcon
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.SnyggSpacer
-import org.omniboard.lib.snygg.ui.SnyggText
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.nlpManager
+import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.compose.conditional
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggSpacer
+import org.florisboard.lib.snygg.ui.SnyggText
 
 val CandidatesRowScrollbarHeight = 2.dp
 
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
@@ -71,11 +71,11 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
 
     SnyggRow(
-        elementName = OmniImeUi.SmartbarCandidatesRow.elementName,
+        elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
         modifier = modifier
             .fillMaxSize()
             .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
-                omniHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
+                florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
             },
         horizontalArrangement = if (candidates.size > 1) {
             Arrangement.Start
@@ -105,7 +105,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
             for ((n, candidate) in list.withIndex()) {
                 if (n > 0) {
                     SnyggSpacer(
-                        elementName = OmniImeUi.SmartbarCandidateSpacer.elementName,
+                        elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
                         modifier = Modifier
                             .width(1.dp)
                             .fillMaxHeight(0.6f)
@@ -148,9 +148,9 @@ private fun CandidateItem(
     var isPressed by remember { mutableStateOf(false) }
 
     val elementName = if (candidate is ClipboardSuggestionCandidate) {
-        OmniImeUi.SmartbarCandidateClip
+        FlorisImeUi.SmartbarCandidateClip
     } else {
-        OmniImeUi.SmartbarCandidateWord
+        FlorisImeUi.SmartbarCandidateWord
     }.elementName
     val attributes = mapOf("auto-commit" to if (candidate.isEligibleForAutoCommit) 1 else 0)
     val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE

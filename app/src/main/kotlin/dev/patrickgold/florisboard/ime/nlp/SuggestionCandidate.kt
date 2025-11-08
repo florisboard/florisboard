@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.nlp
+package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
@@ -25,10 +25,10 @@ import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
-import dev.silo.omniboard.ime.clipboard.provider.ItemType
-import dev.silo.omniboard.ime.media.emoji.Emoji
-import dev.silo.omniboard.lib.util.NetworkUtils
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.ime.media.emoji.Emoji
+import dev.patrickgold.florisboard.lib.util.NetworkUtils
 
 /**
  * Interface for a candidate item, which is returned by a suggestion provider and used by the UI logic to render

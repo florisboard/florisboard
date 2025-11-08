@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app
+package dev.patrickgold.florisboard.app
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
@@ -36,46 +36,46 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
-import dev.silo.omniboard.app.devtools.AndroidLocalesScreen
-import dev.silo.omniboard.app.devtools.AndroidSettingsScreen
-import dev.silo.omniboard.app.devtools.DevtoolsScreen
-import dev.silo.omniboard.app.devtools.ExportDebugLogScreen
-import dev.silo.omniboard.app.ext.CheckUpdatesScreen
-import dev.silo.omniboard.app.ext.ExtensionEditScreen
-import dev.silo.omniboard.app.ext.ExtensionExportScreen
-import dev.silo.omniboard.app.ext.ExtensionHomeScreen
-import dev.silo.omniboard.app.ext.ExtensionImportScreen
-import dev.silo.omniboard.app.ext.ExtensionImportScreenType
-import dev.silo.omniboard.app.ext.ExtensionListScreen
-import dev.silo.omniboard.app.ext.ExtensionListScreenType
-import dev.silo.omniboard.app.ext.ExtensionViewScreen
-import dev.silo.omniboard.app.settings.HomeScreen
-import dev.silo.omniboard.app.settings.about.AboutScreen
-import dev.silo.omniboard.app.settings.about.ProjectLicenseScreen
-import dev.silo.omniboard.app.settings.about.ThirdPartyLicensesScreen
-import dev.silo.omniboard.app.settings.advanced.BackupScreen
-import dev.silo.omniboard.app.settings.advanced.OtherScreen
-import dev.silo.omniboard.app.settings.advanced.PhysicalKeyboardScreen
-import dev.silo.omniboard.app.settings.advanced.RestoreScreen
-import dev.silo.omniboard.app.settings.clipboard.ClipboardScreen
-import dev.silo.omniboard.app.settings.dictionary.DictionaryScreen
-import dev.silo.omniboard.app.settings.dictionary.UserDictionaryScreen
-import dev.silo.omniboard.app.settings.dictionary.UserDictionaryType
-import dev.silo.omniboard.app.settings.gestures.GesturesScreen
-import dev.silo.omniboard.app.settings.keyboard.InputFeedbackScreen
-import dev.silo.omniboard.app.settings.keyboard.KeyboardScreen
-import dev.silo.omniboard.app.settings.localization.LanguagePackManagerScreen
-import dev.silo.omniboard.app.settings.localization.LanguagePackManagerScreenAction
-import dev.silo.omniboard.app.settings.localization.LocalizationScreen
-import dev.silo.omniboard.app.settings.localization.SelectLocaleScreen
-import dev.silo.omniboard.app.settings.localization.SubtypeEditorScreen
-import dev.silo.omniboard.app.settings.media.MediaScreen
-import dev.silo.omniboard.app.settings.smartbar.SmartbarScreen
-import dev.silo.omniboard.app.settings.theme.ThemeManagerScreen
-import dev.silo.omniboard.app.settings.theme.ThemeManagerScreenAction
-import dev.silo.omniboard.app.settings.theme.ThemeScreen
-import dev.silo.omniboard.app.settings.typing.TypingScreen
-import dev.silo.omniboard.app.setup.SetupScreen
+import dev.patrickgold.florisboard.app.devtools.AndroidLocalesScreen
+import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
+import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
+import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
+import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
+import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
+import dev.patrickgold.florisboard.app.settings.HomeScreen
+import dev.patrickgold.florisboard.app.settings.about.AboutScreen
+import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
+import dev.patrickgold.florisboard.app.settings.about.ThirdPartyLicensesScreen
+import dev.patrickgold.florisboard.app.settings.advanced.BackupScreen
+import dev.patrickgold.florisboard.app.settings.advanced.OtherScreen
+import dev.patrickgold.florisboard.app.settings.advanced.PhysicalKeyboardScreen
+import dev.patrickgold.florisboard.app.settings.advanced.RestoreScreen
+import dev.patrickgold.florisboard.app.settings.clipboard.ClipboardScreen
+import dev.patrickgold.florisboard.app.settings.dictionary.DictionaryScreen
+import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryScreen
+import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
+import dev.patrickgold.florisboard.app.settings.gestures.GesturesScreen
+import dev.patrickgold.florisboard.app.settings.keyboard.InputFeedbackScreen
+import dev.patrickgold.florisboard.app.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreen
+import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreenAction
+import dev.patrickgold.florisboard.app.settings.localization.LocalizationScreen
+import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
+import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
+import dev.patrickgold.florisboard.app.settings.media.MediaScreen
+import dev.patrickgold.florisboard.app.settings.smartbar.SmartbarScreen
+import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreen
+import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
+import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
+import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
+import dev.patrickgold.florisboard.app.setup.SetupScreen
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
@@ -92,7 +92,7 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithDeepLink(
         "faulty class: $kClass with annotations ${kClass.annotations}"
     }
     composable<T>(
-        deepLinks = listOf(navDeepLink<T>(basePath = "ui://omniboard/${deeplink.path}")),
+        deepLinks = listOf(navDeepLink<T>(basePath = "ui://florisboard/${deeplink.path}")),
         content = content,
     )
 }

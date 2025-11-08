@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.omniboard.lib.compose.OmniChip
+import org.florisboard.lib.compose.FlorisChip
 
 @Composable
 fun ExtensionKeywordChip(
     keyword: String,
     modifier: Modifier = Modifier,
 ) {
-    OmniChip(
+    FlorisChip(
         modifier = modifier,
         text = keyword,
         enabled = false,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import dev.silo.omniboard.R
-import dev.silo.omniboard.extensionManager
-import dev.silo.omniboard.lib.compose.OmniScreen
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import org.florisboard.lib.compose.stringRes
 
 @Composable
-fun CheckUpdatesScreen() = OmniScreen {
+fun CheckUpdatesScreen() = FlorisScreen {
     title = stringRes(R.string.ext__check_updates__title)
 
     val context = LocalContext.current

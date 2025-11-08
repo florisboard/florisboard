@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.keyboard
+package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.appContext
-import dev.silo.omniboard.extensionManager
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.popup.PopupMapping
-import dev.silo.omniboard.ime.popup.PopupMappingComponent
-import dev.silo.omniboard.ime.text.key.KeyType
-import dev.silo.omniboard.ime.text.keyboard.TextKey
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.text.keyboard.TextKeyboard
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogDebug
-import dev.silo.omniboard.lib.devtools.flogWarning
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.io.ZipUtils
-import dev.silo.omniboard.lib.io.loadJsonAsset
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.popup.PopupMapping
+import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.io.loadJsonAsset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +43,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.omniboard.lib.kotlin.DeferredResult
-import org.omniboard.lib.kotlin.runCatchingAsync
+import org.florisboard.lib.kotlin.DeferredResult
+import org.florisboard.lib.kotlin.runCatchingAsync
 
 private data class LTN(
     val type: LayoutType,
@@ -78,7 +78,7 @@ data class DebugLayoutComputationResult(
  * Class which manages layout loading and caching.
  */
 class LayoutManager(context: Context) {
-    private val prefs by OmniPreferenceStore
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The OmniBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.nlp
+package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
 import android.os.Build
@@ -24,9 +24,9 @@ import android.view.inputmethod.InlineSuggestion
 import android.view.inputmethod.InlineSuggestionInfo
 import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.lib.devtools.flogInfo
-import dev.silo.omniboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -61,7 +61,7 @@ object NlpInlineAutofill {
         }
 
         scope.launch {
-            val size = Size(ViewGroup.LayoutParams.WRAP_CONTENT, OmniImeSizing.Static.smartbarHeightPx)
+            val size = Size(ViewGroup.LayoutParams.WRAP_CONTENT, FlorisImeSizing.Static.smartbarHeightPx)
             val latch = CountDownLatch(rawSuggestions.size)
             val suggestionsArray = Array<NlpInlineAutofillSuggestion?>(rawSuggestions.size) { null }
 

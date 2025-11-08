@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib
+package dev.patrickgold.florisboard.lib
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.kotlin.CurlyArg
-import org.omniboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.curlyFormat
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.nlp
+package dev.patrickgold.florisboard.ime.nlp
 
 import android.icu.text.BreakIterator
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.editor.EditorContent
-import dev.silo.omniboard.ime.editor.EditorRange
-import dev.silo.omniboard.ime.media.emoji.EmojiSuggestionType
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.editor.EditorRange
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -239,7 +239,7 @@ interface SuggestionProvider : NlpProvider {
  * Fallback NLP provider which implements all provider variants. Is used in case no other providers can be found.
  */
 object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
-    override val providerId = "org.omniboard.nlp.providers.fallback"
+    override val providerId = "org.florisboard.nlp.providers.fallback"
 
     override suspend fun create() {
         // Do nothing

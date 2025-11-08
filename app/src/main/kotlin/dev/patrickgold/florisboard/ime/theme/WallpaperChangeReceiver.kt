@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.theme
+package dev.patrickgold.florisboard.ime.theme
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import dev.silo.omniboard.lib.devtools.flogDebug
-import dev.silo.omniboard.themeManager
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.themeManager
 import kotlinx.coroutines.flow.update
 
 class WallpaperChangeReceiver : BroadcastReceiver() {

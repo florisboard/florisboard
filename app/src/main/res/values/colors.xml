@@ -22,5 +22,5 @@
     <color name="toolbarForegroundColor">#000000</color><!-- Black -->
     <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
 
-    <color name="omniApp_windowBackground">#FFFFFFFF</color>
+    <color name="florisApp_windowBackground">#FFFFFFFF</color>
 </resources>

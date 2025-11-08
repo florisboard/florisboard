@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Tauko</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Odota</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Kolmen pisteen kuvake. Se tarkoittaa, että lisää kirjaimia on saatavilla pitkällä painalluksella.</string>
@@ -34,8 +34,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Oletus</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Järjestelmän oletus</string>
     <string name="settings__home__title" comment="Title of the Home screen">Tervetuloa {app_name}iin</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoardia ei ole otettu järjestelmäasetuksissa käyttöön eikä sen vuoksi ole valittavissa syöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardia ei ole otettu järjestelmäasetuksissa käyttöön eikä sen vuoksi ole valittavissa syöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Kielet &amp; ulkoasut</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Kieli, jolla kielten nimet näytetään</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Alityypit</string>
@@ -72,7 +72,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Päiväteema</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Yöteema</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Hallitse asennettuja teemoja</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">OmniBoard-sovellus</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard-sovellus</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Sisäinen tallennustila</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ulkoinen lähde</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Valitse päiväteema</string>
@@ -203,9 +203,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Lisää, näytä ja poista kohteita järjestelmän käyttäjän sanakirjasta</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ota käyttöön sisäinen käyttäjän sanakirja</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Ehdota sanoja, jotka ovat sisäisestä käyttäjän sanakirjassa</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">Hallinnoi sisäistä käyttäjän sanakirjaa</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">Lisää, näytä ja poista kohteita sisäisestä käyttäjän sanakirjasta</string>
-    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">Sisäinen käyttäjän sanakirja</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Hallinnoi sisäistä käyttäjän sanakirjaa</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Lisää, näytä ja poista kohteita sisäisestä käyttäjän sanakirjasta</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Sisäinen käyttäjän sanakirja</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Järjestelmän käyttäjän sanakirja</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Tämä käyttäjän sanakirja ei sisällä kohteita.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Esiintymistiheys: {freq}</string>
@@ -252,7 +252,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Pyyhkäisyn pituuden kynnys</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Tietoa</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">OmniBoardin kuvake</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoardin kuvake</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Avoimen lähdekoodin lisenssit</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Tietosuojakäytäntö</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Lähdekoodi</string>
@@ -267,7 +267,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Tietosuojakäytäntö</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Projektin tietosuojakäytäntö</string>
     <string name="about__project_license__title" comment="Preference title">Projektin lisenssi</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoardin on lisensoitu lisenssillä {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoardin on lisensoitu lisenssillä {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Virhe: Lisenssitekstin lataus epäonnistui.\n-&gt; Syy: {error_message}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Kolmannen osapuolen lisenssit</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Sovelluksen käyttämien kolmannen osapuolen kirjastojen lisenssit</string>
@@ -284,16 +284,16 @@
     <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">OmniBoardin virheraportti</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Pahoittelut, OmniBoard kaatui odottamattoman virheen vuoksi.</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Pahoittelut, FlorisBoard kaatui odottamattoman virheen vuoksi.</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopioi järjestelmän leikepöydälle</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Kopioitu järjestelmän leikepöydälle</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Avaa ongelmien seuranta (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Sulje</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">OmniBoard-virheraportit</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard on lopettanut toimintansa…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard-virheraportit</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard on lopettanut toimintansa…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Napauta nähdäksesi virheen tiedot</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">OmniBoard vaikuttaa lopettavan toimintansa toistuvasti…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard vaikuttaa lopettavan toimintansa toistuvasti…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vaihdetaan edelliseen näppäimistöön, jotta kaatumiskierre loppuu. Napauta nähdäksesi virheen tiedot</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Leikepöytä</string>

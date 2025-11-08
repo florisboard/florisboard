@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The OmniBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.media.emoji
+package dev.patrickgold.florisboard.ime.media.emoji
 
-import dev.silo.omniboard.app.OmniPreferenceModel
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
@@ -75,7 +75,7 @@ data class EmojiHistory(
 object EmojiHistoryHelper {
     private var emojiGuard = Mutex(locked = false)
 
-    suspend fun markEmojiUsed(prefs: OmniPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
+    suspend fun markEmojiUsed(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -120,7 +120,7 @@ object EmojiHistoryHelper {
         )
     }
 
-    suspend fun pinEmoji(prefs: OmniPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
+    suspend fun pinEmoji(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -137,7 +137,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun unpinEmoji(prefs: OmniPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
+    suspend fun unpinEmoji(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -154,7 +154,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun moveEmoji(prefs: OmniPreferenceModel, emoji: Emoji, offset: Int): Unit = emojiGuard.withLock {
+    suspend fun moveEmoji(prefs: FlorisPreferenceModel, emoji: Emoji, offset: Int): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get() || offset == 0) {
             return
         }
@@ -174,7 +174,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun removeEmoji(prefs: OmniPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
+    suspend fun removeEmoji(prefs: FlorisPreferenceModel, emoji: Emoji): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -194,7 +194,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(dataMut.build())
     }
 
-    suspend fun deleteHistory(prefs: OmniPreferenceModel): Unit = emojiGuard.withLock {
+    suspend fun deleteHistory(prefs: FlorisPreferenceModel): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }
@@ -202,7 +202,7 @@ object EmojiHistoryHelper {
         prefs.emoji.historyData.set(EmojiHistory(pinned = dataMut.pinned, listOf()))
     }
 
-    suspend fun deletePinned(prefs: OmniPreferenceModel): Unit = emojiGuard.withLock {
+    suspend fun deletePinned(prefs: FlorisPreferenceModel): Unit = emojiGuard.withLock {
         if (!prefs.emoji.historyEnabled.get()) {
             return
         }

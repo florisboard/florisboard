@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.nlp
+package dev.patrickgold.florisboard.ime.nlp
 
-import dev.silo.omniboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import kotlinx.serialization.Serializable
 
 /**

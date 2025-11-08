@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.smartbar
+package dev.patrickgold.florisboard.ime.smartbar
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
@@ -53,27 +53,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.ime.nlp.NlpInlineAutofill
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionButton
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionsRow
-import dev.silo.omniboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.nlpManager
-import dev.silo.jetpref.datastore.model.observeAsState
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.nlpManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.launch
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.compose.horizontalTween
-import org.omniboard.lib.compose.verticalTween
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggColumn
-import org.omniboard.lib.snygg.ui.SnyggIcon
-import org.omniboard.lib.snygg.ui.SnyggIconButton
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.horizontalTween
+import org.florisboard.lib.compose.verticalTween
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 const val AnimationDuration = 200
 
@@ -91,7 +91,7 @@ private val NoAnimationTween = tween<Float>(0)
 
 @Composable
 fun Smartbar() {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
 
@@ -102,31 +102,31 @@ fun Smartbar() {
     ) {
         when (extendedActionsPlacement) {
             ExtendedActionsPlacement.ABOVE_CANDIDATES -> {
-                SnyggColumn(OmniImeUi.Smartbar.elementName) {
+                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
                     SmartbarSecondaryRow()
                     SmartbarMainRow()
                 }
             }
 
             ExtendedActionsPlacement.BELOW_CANDIDATES -> {
-                SnyggColumn(OmniImeUi.Smartbar.elementName) {
+                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
                     SmartbarMainRow()
                     SmartbarSecondaryRow()
                 }
             }
 
             ExtendedActionsPlacement.OVERLAY_APP_UI -> {
-                SnyggBox(OmniImeUi.Smartbar.elementName,
+                SnyggBox(FlorisImeUi.Smartbar.elementName,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(OmniImeSizing.smartbarHeight),
+                        .height(FlorisImeSizing.smartbarHeight),
                     allowClip = false,
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(OmniImeSizing.smartbarHeight * 2)
-                            .absoluteOffset(y = -OmniImeSizing.smartbarHeight),
+                            .height(FlorisImeSizing.smartbarHeight * 2)
+                            .absoluteOffset(y = -FlorisImeSizing.smartbarHeight),
                         contentAlignment = Alignment.BottomStart,
                     ) {
                         SmartbarSecondaryRow()
@@ -140,7 +140,7 @@ fun Smartbar() {
 
 @Composable
 private fun SmartbarMainRow(modifier: Modifier = Modifier) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
@@ -162,7 +162,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun SharedActionsToggle() {
         SnyggIconButton(
-            elementName = OmniImeUi.SmartbarSharedActionsToggle.elementName,
+            elementName = FlorisImeUi.SmartbarSharedActionsToggle.elementName,
             onClick = {
                 if (/* was */ sharedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
@@ -171,7 +171,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
                 }
             },
-            modifier = Modifier.sizeIn(maxHeight = OmniImeSizing.smartbarHeight).aspectRatio(1f)
+            modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
         ) {
             val transition = updateTransition(sharedActionsExpanded, label = "sharedActionsExpandedToggleBtn")
             val rotation by transition.animateFloat(
@@ -211,7 +211,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(OmniImeSizing.smartbarHeight),
+                .height(FlorisImeSizing.smartbarHeight),
         ) {
             val enterTransition = if (shouldAnimate) HorizontalEnterTransition else NoEnterTransition
             val exitTransition = if (shouldAnimate) HorizontalExitTransition else NoExitTransition
@@ -232,10 +232,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 exit = exitTransition,
             ) {
                 QuickActionsRow(
-                    OmniImeUi.SmartbarSharedActionsRow.elementName,
+                    FlorisImeUi.SmartbarSharedActionsRow.elementName,
                     modifier = modifier
                         .fillMaxWidth()
-                        .height(OmniImeSizing.smartbarHeight),
+                        .height(FlorisImeSizing.smartbarHeight),
                 )
             }
         }
@@ -244,7 +244,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun ExtendedActionsToggle() {
         SnyggIconButton(
-            OmniImeUi.SmartbarExtendedActionsToggle.elementName,
+            FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
             onClick = {
                 if (/* was */ extendedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
@@ -253,14 +253,14 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
                 }
             },
-            modifier = Modifier.sizeIn(maxHeight = OmniImeSizing.smartbarHeight).aspectRatio(1f)
+            modifier = Modifier.sizeIn(maxHeight = FlorisImeSizing.smartbarHeight).aspectRatio(1f)
         ) {
             val transition = updateTransition(extendedActionsExpanded, label = "smartbarSecondaryRowToggleBtn")
             val alpha by transition.animateFloat(label = "alpha") { if (it) 1f else 0f }
             val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
             // Expanded icon
             SnyggIcon(
-                OmniImeUi.SmartbarExtendedActionsToggle.elementName,
+                FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
                 modifier = Modifier
                     .alpha(alpha)
                     .rotate(rotation),
@@ -268,7 +268,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             )
             // Not expanded icon
             SnyggIcon(
-                OmniImeUi.SmartbarExtendedActionsToggle.elementName,
+                FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
                 modifier = Modifier
                     .alpha(1f - alpha)
                     .rotate(rotation - 180f),
@@ -320,7 +320,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     SnyggRow(
         modifier = modifier
             .fillMaxWidth()
-            .height(OmniImeSizing.smartbarHeight),
+            .height(FlorisImeSizing.smartbarHeight),
     ) {
         when (smartbarLayout) {
             SmartbarLayout.SUGGESTIONS_ONLY -> {
@@ -335,7 +335,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 if (shouldShowInlineSuggestionsUi) {
                     InlineSuggestionsUi(inlineSuggestions)
                 } else {
-                    QuickActionsRow(OmniImeUi.SmartbarSharedActionsRow.elementName)
+                    QuickActionsRow(FlorisImeUi.SmartbarSharedActionsRow.elementName)
                 }
             }
 
@@ -368,10 +368,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val smartbarLayout by prefs.smartbar.layout.observeAsState()
-    val secondaryRowStyle = rememberSnyggThemeQuery(OmniImeUi.SmartbarExtendedActionsRow.elementName)
-    val windowStyle = rememberSnyggThemeQuery(OmniImeUi.Window.elementName)
+    val secondaryRowStyle = rememberSnyggThemeQuery(FlorisImeUi.SmartbarExtendedActionsRow.elementName)
+    val windowStyle = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
     val background = secondaryRowStyle.background().let { color ->
@@ -392,10 +392,10 @@ private fun SmartbarSecondaryRow(modifier: Modifier = Modifier) {
         exit = VerticalExitTransition,
     ) {
         QuickActionsRow(
-            OmniImeUi.SmartbarExtendedActionsRow.elementName,
+            FlorisImeUi.SmartbarExtendedActionsRow.elementName,
             modifier = modifier
                 .fillMaxWidth()
-                .height(OmniImeSizing.smartbarHeight)
+                .height(FlorisImeSizing.smartbarHeight)
                 .background(background),
         )
     }

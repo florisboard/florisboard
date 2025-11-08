@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.popup
+package dev.patrickgold.florisboard.ime.popup
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -31,26 +31,26 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
-import dev.silo.omniboard.ime.keyboard.DefaultComputingEvaluator
-import dev.silo.omniboard.ime.keyboard.Key
-import dev.silo.omniboard.ime.keyboard.KeyData
-import dev.silo.omniboard.ime.keyboard.computeImageVector
-import dev.silo.omniboard.ime.keyboard.computeLabel
-import dev.silo.omniboard.ime.media.emoji.EmojiSet
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.key.KeyHintConfiguration
-import dev.silo.omniboard.ime.text.keyboard.TextKey
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.lib.OmniRect
-import dev.silo.omniboard.lib.toIntOffset
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
+import dev.patrickgold.florisboard.ime.keyboard.computeLabel
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.lib.FlorisRect
+import dev.patrickgold.florisboard.lib.toIntOffset
 
 @Composable
 fun rememberPopupUiController(
     key1: Any?,
     key2: Any?,
-    boundsProvider: (key: Key) -> OmniRect,
+    boundsProvider: (key: Key) -> FlorisRect,
     isSuitableForBasicPopup: (key: Key) -> Boolean,
     isSuitableForExtendedPopup: (key: Key) -> Boolean,
 ): PopupUiController {
@@ -73,7 +73,7 @@ val ExceptionsForKeyCodes = listOf(
 @Suppress("unused")
 class PopupUiController(
     val context: Context,
-    val boundsProvider: (key: Key) -> OmniRect,
+    val boundsProvider: (key: Key) -> FlorisRect,
     val isSuitableForBasicPopup: (key: Key) -> Boolean,
     val isSuitableForExtendedPopup: (key: Key) -> Boolean,
 ) {
@@ -289,7 +289,7 @@ class PopupUiController(
             row1count > 0 -> (baseBounds.height * 0.4f).toInt()
             else -> 0
         } + key.visibleBounds.bottom
-        val extBounds = OmniRect.new(
+        val extBounds = FlorisRect.new(
             left = x, top = y, right = x + extWidth, bottom = y + extHeight,
         )
 
@@ -449,8 +449,8 @@ class PopupUiController(
     @Composable
     fun RenderPopups(): Unit = with(LocalDensity.current) {
         val attributes = mapOf(
-            OmniImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
-            OmniImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
+            FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
+            FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
         )
         baseRenderInfo?.let { renderInfo ->
             PopupBaseBox(
@@ -486,14 +486,14 @@ class PopupUiController(
 
     data class BaseRenderInfo(
         val key: Key,
-        val bounds: OmniRect,
+        val bounds: FlorisRect,
         val shouldIndicateExtendedPopups: Boolean,
     )
 
     data class ExtRenderInfo(
         val elements: List<List<Element>>,
-        val baseBounds: OmniRect,
-        val bounds: OmniRect,
+        val baseBounds: FlorisRect,
+        val bounds: FlorisRect,
         val anchorLeft: Boolean,
         val anchorRight: Boolean,
         val anchorOffset: Int,

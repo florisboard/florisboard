@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.compose
+package org.florisboard.lib.compose
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -38,7 +38,7 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
-fun OmniButton(
+fun FlorisButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
@@ -70,7 +70,7 @@ fun OmniButton(
 }
 
 @Composable
-fun OmniOutlinedButton(
+fun FlorisOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
@@ -102,7 +102,7 @@ fun OmniOutlinedButton(
 }
 
 @Composable
-fun OmniTextButton(
+fun FlorisTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
@@ -134,7 +134,7 @@ fun OmniTextButton(
 }
 
 @Composable
-fun OmniIconButton(
+fun FlorisIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: ImageVector,

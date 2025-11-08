@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.popup
+package dev.patrickgold.florisboard.ime.popup
 
-import dev.silo.omniboard.ime.keyboard.AbstractKeyData
-import dev.silo.omniboard.ime.text.key.KeyVariation
-import dev.silo.omniboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import kotlinx.serialization.Serializable
 
 /**

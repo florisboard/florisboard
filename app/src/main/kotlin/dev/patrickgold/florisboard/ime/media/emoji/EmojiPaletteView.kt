@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.media.emoji
+package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -83,28 +83,28 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Popup
 import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.widget.EmojiTextView
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.editorInstance
-import dev.silo.omniboard.ime.input.LocalInputFeedbackController
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import dev.silo.jetpref.datastore.model.observeAsState
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.launch
-import org.omniboard.lib.android.AndroidKeyguardManager
-import org.omniboard.lib.android.showShortToast
-import org.omniboard.lib.android.systemService
-import org.omniboard.lib.compose.omniScrollbar
-import org.omniboard.lib.compose.header
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggIcon
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.SnyggText
-import org.omniboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.florisboard.lib.android.AndroidKeyguardManager
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.header
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -134,7 +134,7 @@ fun EmojiPaletteView(
     fullEmojiMappings: EmojiData,
     modifier: Modifier = Modifier,
 ) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val editorInstance by context.editorInstance()
     val keyboardManager by context.keyboardManager()
@@ -147,7 +147,7 @@ fun EmojiPaletteView(
     }
     val metadataVersion = activeEditorInfo.emojiCompatMetadataVersion
     val replaceAll = activeEditorInfo.emojiCompatReplaceAll
-    val emojiCompatInstance by OmniEmojiCompat.getAsFlow(replaceAll).collectAsState()
+    val emojiCompatInstance by FlorisEmojiCompat.getAsFlow(replaceAll).collectAsState()
     val emojiMappings = remember(emojiCompatInstance, fullEmojiMappings, metadataVersion, systemFontPaint) {
         fullEmojiMappings.byCategory.mapValues { (_, emojiSetList) ->
             emojiSetList.mapNotNull { emojiSet ->
@@ -178,7 +178,7 @@ fun EmojiPaletteView(
     @Composable
     fun GridHeader(text: String) {
         SnyggText(
-            elementName = OmniImeUi.MediaEmojiSubheader.elementName,
+            elementName = FlorisImeUi.MediaEmojiSubheader.elementName,
             text = text,
         )
     }
@@ -237,17 +237,17 @@ fun EmojiPaletteView(
     ) {
         val inputFeedbackController = LocalInputFeedbackController.current
         val selectedTabIndex = categoryToPageNumber(activeCategory)
-        val style = rememberSnyggThemeQuery(OmniImeUi.MediaEmojiTab.elementName)
+        val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiTab.elementName)
         TabRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(OmniImeSizing.smartbarHeight),
+                .height(FlorisImeSizing.smartbarHeight),
             selectedTabIndex = selectedTabIndex,
             containerColor = Color.Transparent,
             contentColor = style.foreground(),
             indicator = { tabPositions ->
                 val style = rememberSnyggThemeQuery(
-                    elementName = OmniImeUi.MediaEmojiTab.elementName,
+                    elementName = FlorisImeUi.MediaEmojiTab.elementName,
                     selector = SnyggSelector.FOCUS,
                 )
                 TabRowDefaults.PrimaryIndicator(
@@ -268,7 +268,7 @@ fun EmojiPaletteView(
                     },
                     selected = activeCategory == category,
                     icon = { SnyggIcon(
-                        elementName = OmniImeUi.MediaEmojiTab.elementName,
+                        elementName = FlorisImeUi.MediaEmojiTab.elementName,
                         selector = if (activeCategory == category) SnyggSelector.FOCUS else SnyggSelector.NONE,
                         modifier = Modifier.size(ButtonDefaults.IconSize),
                         imageVector = category.icon(),
@@ -364,7 +364,7 @@ fun EmojiPaletteView(
                         LazyVerticalGrid(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .omniScrollbar(lazyGridState),
+                                .florisScrollbar(lazyGridState),
                             columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
                             state = lazyGridState,
                         ) {
@@ -412,7 +412,7 @@ private fun EmojiKey(
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
-    SnyggBox(OmniImeUi.MediaEmojiKey.elementName,
+    SnyggBox(FlorisImeUi.MediaEmojiKey.elementName,
         modifier = Modifier
             .aspectRatio(1f)
             .pointerInput(Unit) {
@@ -438,7 +438,7 @@ private fun EmojiKey(
             emojiCompatInstance = emojiCompatInstance,
         )
         if (variations.isNotEmpty() || isPinned || isRecent) {
-            val style = rememberSnyggThemeQuery(OmniImeUi.MediaEmojiKeyPopupExtendedIndicator.elementName)
+            val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiKeyPopupExtendedIndicator.elementName)
             val shape = when (LocalLayoutDirection.current) {
                 LayoutDirection.Ltr -> VariantsTriangleShapeLtr
                 LayoutDirection.Rtl -> VariantsTriangleShapeRtl
@@ -491,7 +491,7 @@ private fun EmojiVariationsPopup(
     onEmojiTap: (Emoji) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val emojiKeyHeight = OmniImeSizing.smartbarHeight
+    val emojiKeyHeight = FlorisImeSizing.smartbarHeight
 
     if (visible) {
         Popup(
@@ -503,13 +503,13 @@ private fun EmojiVariationsPopup(
             onDismissRequest = onDismiss,
         ) {
             SnyggRow(
-                elementName = OmniImeUi.MediaEmojiKeyPopupBox.elementName,
+                elementName = FlorisImeUi.MediaEmojiKeyPopupBox.elementName,
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6),
             ) {
                 for (emoji in variations) {
                     SnyggBox(
-                        elementName = OmniImeUi.MediaEmojiKeyPopupElement.elementName,
+                        elementName = FlorisImeUi.MediaEmojiKeyPopupElement.elementName,
                         modifier = Modifier
                             .pointerInput(Unit) {
                                 detectTapGestures { onEmojiTap(emoji) }
@@ -538,9 +538,9 @@ private fun EmojiHistoryPopup(
     onHistoryAction: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
-    val emojiKeyHeight = OmniImeSizing.smartbarHeight
+    val emojiKeyHeight = FlorisImeSizing.smartbarHeight
     val context = LocalContext.current
     val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.observeAsState()
     val recentUS by prefs.emoji.historyRecentUpdateStrategy.observeAsState()
@@ -550,7 +550,7 @@ private fun EmojiHistoryPopup(
     @Composable
     fun Action(icon: ImageVector, action: suspend () -> Unit) {
         SnyggBox(
-            elementName = OmniImeUi.MediaEmojiKeyPopupElement.elementName,
+            elementName = FlorisImeUi.MediaEmojiKeyPopupElement.elementName,
             modifier = Modifier
                 .pointerInput(Unit) {
                     detectTapGestures {
@@ -581,7 +581,7 @@ private fun EmojiHistoryPopup(
             onDismissRequest = onDismiss,
         ) {
             SnyggRow(
-                elementName = OmniImeUi.MediaEmojiKeyPopupBox.elementName,
+                elementName = FlorisImeUi.MediaEmojiKeyPopupBox.elementName,
                 modifier = Modifier
                     .widthIn(max = EmojiBaseWidth * 6),
             ) {

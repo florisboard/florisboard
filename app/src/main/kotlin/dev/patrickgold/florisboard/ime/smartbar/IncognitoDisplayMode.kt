@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.smartbar
+package dev.patrickgold.florisboard.ime.smartbar
 
 enum class IncognitoDisplayMode {
     REPLACE_SHARED_ACTIONS_TOGGLE,

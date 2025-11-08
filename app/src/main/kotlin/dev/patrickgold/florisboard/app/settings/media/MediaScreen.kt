@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The OmniBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.media
+package dev.patrickgold.florisboard.app.settings.media
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EmojiSymbols
@@ -26,33 +26,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.enumDisplayEntriesOf
-import dev.silo.omniboard.ime.media.emoji.EmojiHistory
-import dev.silo.omniboard.ime.media.emoji.EmojiHistoryHelper
-import dev.silo.omniboard.ime.media.emoji.EmojiSkinTone
-import dev.silo.omniboard.ime.media.emoji.EmojiSuggestionType
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.jetpref.datastore.ui.DialogSliderPreference
-import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.silo.jetpref.datastore.ui.ListPreference
-import dev.silo.jetpref.datastore.ui.Preference
-import dev.silo.jetpref.datastore.ui.PreferenceGroup
-import dev.silo.jetpref.datastore.ui.SwitchPreference
-import dev.silo.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistoryHelper
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
-import org.omniboard.lib.compose.pluralsRes
-import org.omniboard.lib.compose.stringRes
+import org.florisboard.lib.compose.pluralsRes
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun MediaScreen() = OmniScreen {
+fun MediaScreen() = FlorisScreen {
     title = stringRes(R.string.settings__media__title)
     previewFieldVisible = true
     iconSpaceReserved = true
 
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
 
     var shouldDelete by remember { mutableStateOf<ShouldDelete?>(null) }
     val scope = rememberCoroutineScope()

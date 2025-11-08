@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The OmniBoard Contributors
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.crashutility
+package dev.patrickgold.florisboard.lib.crashutility
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -29,17 +29,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Process
 import android.util.Log
-import dev.silo.omniboard.BuildConfig
-import dev.silo.omniboard.OmniImeService
-import dev.silo.omniboard.R
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.omniboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.FlorisImeService
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import java.lang.ref.WeakReference
-import org.omniboard.lib.kotlin.io.FsDir
-import org.omniboard.lib.kotlin.io.FsFile
-import org.omniboard.lib.kotlin.io.subDir
-import org.omniboard.lib.kotlin.io.subFile
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import kotlin.system.exitProcess
 
 /**
@@ -393,7 +393,7 @@ abstract class CrashUtility private constructor() {
                 setLastCrashTimestamp(application, timestamp)
                 if (timestamp - lastTimestamp < 5000) {
                     pushCrashMultipleNotification(application)
-                    OmniImeService.switchToPrevInputMethod() || OmniImeService.switchToNextInputMethod()
+                    FlorisImeService.switchToPrevInputMethod() || FlorisImeService.switchToNextInputMethod()
                 } else {
                     pushCrashOnceNotification(application)
                 }

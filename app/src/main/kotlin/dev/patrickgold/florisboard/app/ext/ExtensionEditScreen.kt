@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -46,55 +46,55 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.settings.advanced.RadioListItem
-import dev.silo.omniboard.app.settings.theme.DialogProperty
-import dev.silo.omniboard.app.settings.theme.PrettyPrintConfig
-import dev.silo.omniboard.app.settings.theme.ThemeEditorScreen
-import dev.silo.omniboard.cacheManager
-import dev.silo.omniboard.extensionManager
-import dev.silo.omniboard.ime.keyboard.KeyboardExtension
-import dev.silo.omniboard.ime.theme.ThemeExtension
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponent
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponentEditor
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponentImpl
-import dev.silo.omniboard.ime.theme.ThemeExtensionEditor
-import dev.silo.omniboard.lib.ValidationResult
-import dev.silo.omniboard.lib.cache.CacheManager
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.compose.OmniUnsavedChangesDialog
-import dev.silo.omniboard.lib.compose.Validation
-import dev.silo.omniboard.lib.ext.Extension
-import dev.silo.omniboard.lib.ext.ExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.ext.ExtensionDefaults
-import dev.silo.omniboard.lib.ext.ExtensionEditor
-import dev.silo.omniboard.lib.ext.ExtensionJsonConfig
-import dev.silo.omniboard.lib.ext.ExtensionMaintainer
-import dev.silo.omniboard.lib.ext.ExtensionManager
-import dev.silo.omniboard.lib.ext.ExtensionMeta
-import dev.silo.omniboard.lib.ext.ExtensionValidation
-import dev.silo.omniboard.lib.ext.validate
-import dev.silo.omniboard.lib.io.OmniRef
-import dev.silo.omniboard.lib.io.ZipUtils
-import dev.silo.omniboard.lib.rememberValidationResult
-import dev.silo.omniboard.themeManager
-import dev.silo.jetpref.datastore.ui.Preference
-import dev.silo.jetpref.material.ui.JetPrefAlertDialog
-import dev.silo.jetpref.material.ui.JetPrefTextField
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.settings.advanced.RadioListItem
+import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
+import dev.patrickgold.florisboard.app.settings.theme.PrettyPrintConfig
+import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
+import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
+import dev.patrickgold.florisboard.lib.ValidationResult
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
+import dev.patrickgold.florisboard.lib.compose.Validation
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
+import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
+import dev.patrickgold.florisboard.lib.ext.ExtensionJsonConfig
+import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.lib.ext.ExtensionManager
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
+import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
+import dev.patrickgold.florisboard.lib.ext.validate
+import dev.patrickgold.florisboard.lib.io.FlorisRef
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.rememberValidationResult
+import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import java.util.*
-import org.omniboard.lib.compose.OmniButtonBar
-import org.omniboard.lib.compose.OmniIconButton
-import org.omniboard.lib.compose.OmniInfoCard
-import org.omniboard.lib.compose.OmniOutlinedBox
-import org.omniboard.lib.compose.defaultOmniOutlinedBox
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.android.showLongToastSync
-import org.omniboard.lib.kotlin.io.deleteContentsRecursively
-import org.omniboard.lib.kotlin.io.subDir
-import org.omniboard.lib.kotlin.io.subFile
-import org.omniboard.lib.kotlin.io.writeJson
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisInfoCard
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
+import org.florisboard.lib.kotlin.io.writeJson
 import kotlin.reflect.KClass
 
 private val TextFieldVerticalPadding = 8.dp
@@ -226,7 +226,7 @@ private fun ExtensionEditScreenSheetSwitcher(
 private fun EditScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
     isCreateExt: Boolean,
-) = OmniScreen {
+) = FlorisScreen {
     title = stringRes(if (isCreateExt) {
         when (workspace.ext) {
             is KeyboardExtension -> R.string.ext__editor__title_create_keyboard
@@ -244,7 +244,7 @@ private fun EditScreen(
     val context = LocalContext.current
     val navController = LocalNavController.current
 
-    val extEditor = workspace.editor ?: return@OmniScreen
+    val extEditor = workspace.editor ?: return@FlorisScreen
     var showUnsavedChangesDialog by remember { mutableStateOf(false) }
     var showInvalidMetadataDialog by remember { mutableStateOf(false) }
 
@@ -305,7 +305,7 @@ private fun EditScreen(
         val flexArchiveFile = workspace.dir.subFile(flexArchiveName)
         ZipUtils.zip(workspace.saverDir, flexArchiveFile)
         val sourceRef = if (isCreateExt) {
-            OmniRef.internal(ExtensionManager.IME_THEME_PATH).subRef(flexArchiveName)
+            FlorisRef.internal(ExtensionManager.IME_THEME_PATH).subRef(flexArchiveName)
         } else {
             workspace.ext!!.sourceRef!!
         }
@@ -315,14 +315,14 @@ private fun EditScreen(
     }
 
     navigationIcon {
-        OmniIconButton(
+        FlorisIconButton(
             onClick = { handleBackPress() },
             icon = Icons.AutoMirrored.Filled.ArrowBack,
         )
     }
 
     bottomBar {
-        OmniButtonBar {
+        FlorisButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
                 handleBackPress()
@@ -338,8 +338,8 @@ private fun EditScreen(
             handleBackPress()
         }
 
-        OmniOutlinedBox(
-            modifier = Modifier.defaultOmniOutlinedBox(),
+        FlorisOutlinedBox(
+            modifier = Modifier.defaultFlorisOutlinedBox(),
         ) {
             Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageMetaData },
@@ -368,7 +368,7 @@ private fun EditScreen(
                     },
                 ) { component ->
                     ExtensionComponentView(
-                        modifier = Modifier.defaultOmniOutlinedBox(),
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
                         meta = extEditor.meta,
                         component = component,
                         onDeleteBtnClick = { workspace.update { extEditor.themes.remove(component) } },
@@ -382,7 +382,7 @@ private fun EditScreen(
         }
 
         if (showUnsavedChangesDialog) {
-            OmniUnsavedChangesDialog(
+            FlorisUnsavedChangesDialog(
                 onSave = {
                     handleSave()
                 },
@@ -418,10 +418,10 @@ private fun EditScreen(
 private fun ManageMetaDataScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
     isCreateExt: Boolean,
-) = OmniScreen {
+) = FlorisScreen {
     title = stringRes(R.string.ext__editor__metadata__title)
 
-    val meta = workspace.editor?.meta ?: return@OmniScreen
+    val meta = workspace.editor?.meta ?: return@FlorisScreen
     var showValidationErrors by rememberSaveable { mutableStateOf(false) }
 
     var id by rememberSaveable { mutableStateOf(meta.id) }
@@ -471,14 +471,14 @@ private fun ManageMetaDataScreen(
     }
 
     navigationIcon {
-        OmniIconButton(
+        FlorisIconButton(
             onClick = { handleBackPress() },
             icon = Icons.Default.Close,
         )
     }
 
     bottomBar {
-        OmniButtonBar {
+        FlorisButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
                 handleBackPress()
@@ -563,17 +563,17 @@ private fun ManageMetaDataScreen(
 }
 
 @Composable
-private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = OmniScreen {
+private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
     title = stringRes(R.string.ext__editor__dependencies__title)
 
-    val dependencyList = workspace.editor?.dependencies ?: return@OmniScreen
+    val dependencyList = workspace.editor?.dependencies ?: return@FlorisScreen
 
     fun handleBackPress() {
         workspace.currentAction = null
     }
 
     navigationIcon {
-        OmniIconButton(
+        FlorisIconButton(
             onClick = { handleBackPress() },
             icon = Icons.Default.Close,
         )
@@ -584,7 +584,7 @@ private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<
             handleBackPress()
         }
 
-        OmniInfoCard(
+        FlorisInfoCard(
             modifier = Modifier.padding(all = 8.dp),
             text = """
                 Dependencies are currently not implemented, but are already somewhat
@@ -610,7 +610,7 @@ private enum class CreateFrom {
 private fun <T : ExtensionComponent> CreateComponentScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
     type: KClass<T>,
-) = OmniScreen {
+) = FlorisScreen {
     title = stringRes(when (type) {
         ThemeExtensionComponent::class -> R.string.ext__editor__create_component__title_theme
         else -> R.string.ext__editor__create_component__title
@@ -739,14 +739,14 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
     }
 
     navigationIcon {
-        OmniIconButton(
+        FlorisIconButton(
             onClick = { handleBackPress() },
             icon = Icons.Default.Close,
         )
     }
 
     bottomBar {
-        OmniButtonBar {
+        FlorisButtonBar {
             ButtonBarSpacer()
             ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
                 handleBackPress()
@@ -765,8 +765,8 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
             handleBackPress()
         }
 
-        OmniOutlinedBox(
-            modifier = Modifier.defaultOmniOutlinedBox(),
+        FlorisOutlinedBox(
+            modifier = Modifier.defaultFlorisOutlinedBox(),
         ) {
             RadioListItem(
                 onClick = { createFrom = CreateFrom.EXISTING },
@@ -781,8 +781,8 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
         }
 
         if (createFrom == CreateFrom.EXISTING) {
-            OmniOutlinedBox(
-                modifier = Modifier.defaultOmniOutlinedBox(),
+            FlorisOutlinedBox(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
             ) {
                 for ((componentName, component) in components) {
                     RadioListItem(
@@ -794,8 +794,8 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 }
             }
         } else if (createFrom == CreateFrom.EMPTY) {
-            OmniInfoCard(
-                modifier = Modifier.defaultOmniOutlinedBox(),
+            FlorisInfoCard(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
                 text = stringRes(R.string.ext__editor__create_component__from_empty_warning),
             )
             DialogProperty(

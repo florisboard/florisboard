@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,12 +22,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.lib.compose.OmniScreen
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import org.florisboard.lib.compose.stringRes
 
 @Composable
-internal fun ExtensionNotFoundScreen(id: String) = OmniScreen {
+internal fun ExtensionNotFoundScreen(id: String) = FlorisScreen {
     title = stringRes(R.string.ext__error__not_found_title)
 
     content {

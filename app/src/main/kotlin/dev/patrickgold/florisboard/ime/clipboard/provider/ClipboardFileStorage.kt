@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.clipboard.provider
+package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.Context
 import android.net.Uri
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogDebug
-import org.omniboard.lib.android.readToFile
-import org.omniboard.lib.kotlin.io.FsFile
-import org.omniboard.lib.kotlin.io.subFile
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.subFile
 
 /**
  * Backend helper object which is used by [ClipboardMediaProvider] to serve content.

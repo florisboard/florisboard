@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.theme
+package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.ui.graphics.Color
-import dev.silo.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 
 object ColorPreferenceSerializer : PreferenceSerializer<Color> {
     @OptIn(ExperimentalStdlibApi::class)

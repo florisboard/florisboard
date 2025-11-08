@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.ext
+package dev.patrickgold.florisboard.lib.ext
 
 import android.content.Context
 import android.net.Uri
 import android.os.FileObserver
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
-import dev.silo.omniboard.appContext
-import dev.silo.omniboard.ime.keyboard.KeyboardExtension
-import dev.silo.omniboard.ime.nlp.LanguagePackExtension
-import dev.silo.omniboard.ime.text.composing.Appender
-import dev.silo.omniboard.ime.text.composing.Composer
-import dev.silo.omniboard.ime.text.composing.HangulUnicode
-import dev.silo.omniboard.ime.text.composing.KanaUnicode
-import dev.silo.omniboard.ime.text.composing.WithRules
-import dev.silo.omniboard.ime.theme.ThemeExtension
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogDebug
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.omniboard.lib.io.OmniRef
-import dev.silo.omniboard.lib.io.ZipUtils
-import dev.silo.omniboard.lib.io.delete
-import dev.silo.omniboard.lib.io.listDirs
-import dev.silo.omniboard.lib.io.listFiles
-import dev.silo.omniboard.lib.io.loadJsonAsset
-import dev.silo.omniboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
+import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
+import dev.patrickgold.florisboard.ime.text.composing.KanaUnicode
+import dev.patrickgold.florisboard.ime.text.composing.WithRules
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.io.FlorisRef
+import dev.patrickgold.florisboard.lib.io.ZipUtils
+import dev.patrickgold.florisboard.lib.io.delete
+import dev.patrickgold.florisboard.lib.io.listDirs
+import dev.patrickgold.florisboard.lib.io.listFiles
+import dev.patrickgold.florisboard.lib.io.loadJsonAsset
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,10 +50,10 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import org.omniboard.lib.android.FileObserver
-import org.omniboard.lib.kotlin.io.FsFile
-import org.omniboard.lib.kotlin.io.writeJson
-import org.omniboard.lib.kotlin.throwOnFailure
+import org.florisboard.lib.android.FileObserver
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.writeJson
+import org.florisboard.lib.kotlin.throwOnFailure
 
 @OptIn(ExperimentalSerializationApi::class)
 val ExtensionJsonConfig = Json {
@@ -117,7 +117,7 @@ class ExtensionManager(context: Context) {
             is LanguagePackExtension -> IME_LANGUAGEPACK_PATH
             else -> error("Unknown extension type")
         }
-        ext.sourceRef = OmniRef.internal(relGroupPath).subRef(extFileName)
+        ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
         FsFile(workingDir, ExtensionDefaults.MANIFEST_FILE_NAME).writeJson(ext, ExtensionJsonConfig)
         writeExtension(ext).throwOnFailure()
         ext.unload(appContext)
@@ -159,8 +159,8 @@ class ExtensionManager(context: Context) {
         modulePath: String,
     ) : LiveData<List<T>>() {
 
-        private val assetsModuleRef = OmniRef.assets(modulePath)
-        private val internalModuleRef = OmniRef.internal(modulePath)
+        private val assetsModuleRef = FlorisRef.assets(modulePath)
+        private val internalModuleRef = FlorisRef.internal(modulePath)
         var internalModuleDir = internalModuleRef.absoluteFile(appContext)
 
         private var staticExtensions = listOf<T>()

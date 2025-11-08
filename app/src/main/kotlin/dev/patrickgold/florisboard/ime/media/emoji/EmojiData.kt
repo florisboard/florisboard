@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The OmniBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.media.emoji
+package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.content.Context
-import dev.silo.omniboard.lib.OmniLocale
-import org.omniboard.lib.android.bufferedReader
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import org.florisboard.lib.android.bufferedReader
 import io.github.reactivecircus.cache4k.Cache
 import java.util.*
 
@@ -61,7 +61,7 @@ data class EmojiData(
             }
         }
 
-        suspend fun get(context: Context, locale: OmniLocale): EmojiData {
+        suspend fun get(context: Context, locale: FlorisLocale): EmojiData {
             val path = resolveEmojiAssetPath(context, locale) ?: return empty()
             return get(context, path)
         }
@@ -153,7 +153,7 @@ data class EmojiData(
          *
          * @return The path to the emoji asset file, or the root path ("ime/media/emoji/root.txt") if no match is found.
          */
-        private fun resolveEmojiAssetPath(context: Context, locale: OmniLocale): String? {
+        private fun resolveEmojiAssetPath(context: Context, locale: FlorisLocale): String? {
             val emojiAssets = context.assets.list("ime/media/emoji/")!!.toList()
             val makePath = { file: String -> "ime/media/emoji/$file" }
             val language = locale.language.lowercase()

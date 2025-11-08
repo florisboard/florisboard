@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.devtools
+package dev.patrickgold.florisboard.lib.devtools
 
 import android.content.Context
 import android.util.Log
-import dev.silo.omniboard.appContext
-import dev.silo.omniboard.lib.devtools.Flog.OUTPUT_CONSOLE
-import dev.silo.omniboard.lib.devtools.Flog.createTag
-import dev.silo.omniboard.lib.devtools.Flog.getStacktraceElement
-import dev.silo.omniboard.lib.devtools.Flog.log
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.lib.devtools.Flog.OUTPUT_CONSOLE
+import dev.patrickgold.florisboard.lib.devtools.Flog.createTag
+import dev.patrickgold.florisboard.lib.devtools.Flog.getStacktraceElement
+import dev.patrickgold.florisboard.lib.devtools.Flog.log
 import java.lang.ref.WeakReference
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -164,7 +164,7 @@ private infix fun UInt.isSet(flag: UInt): Boolean {
 }
 
 /**
- * Main helper object for OmniBoard logging (=Flog). Manages the enabled
+ * Main helper object for FlorisBoard logging (=Flog). Manages the enabled
  * state and the active topics. Provides relevant helper functions for the
  * flog methods to properly work.
  *

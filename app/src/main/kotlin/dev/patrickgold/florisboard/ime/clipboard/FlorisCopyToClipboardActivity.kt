@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.clipboard
+package dev.patrickgold.florisboard.ime.clipboard
 
 import android.content.ClipData
 import android.content.Intent
@@ -46,19 +46,19 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.apptheme.OmniAppTheme
-import dev.silo.jetpref.datastore.model.observeAsState
-import org.omniboard.lib.android.AndroidClipboardManager
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.android.stringRes
-import org.omniboard.lib.android.systemService
-import org.omniboard.lib.compose.ProvideLocalizedResources
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.kotlin.mimeTypeFilterOf
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.AndroidClipboardManager
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.stringRes
+import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.mimeTypeFilterOf
 
-class OmniCopyToClipboardActivity : ComponentActivity() {
+class FlorisCopyToClipboardActivity : ComponentActivity() {
     private var error: CopyToClipboardError? = null
     private var bitmap: Bitmap? = null
     private val clipboardManager by lazy { systemService(AndroidClipboardManager::class) }
@@ -135,14 +135,14 @@ class OmniCopyToClipboardActivity : ComponentActivity() {
 
     @Composable
     private fun Content() {
-        val prefs by OmniPreferenceStore
+        val prefs by FlorisPreferenceStore
         ProvideLocalizedResources(
             resourcesContext = this,
             appName = R.string.app_name,
             forceLayoutDirection = LayoutDirection.Ltr,
         ) {
             val theme by prefs.other.settingsTheme.observeAsState()
-            OmniAppTheme(theme) {
+            FlorisAppTheme(theme) {
                 BottomSheet {
                     Row {
                         Text(

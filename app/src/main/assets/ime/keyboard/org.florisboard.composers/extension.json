@@ -1,11 +1,11 @@
 {
   "$": "ime.extension.keyboard",
   "meta": {
-    "id": "org.omniboard.composers",
+    "id": "org.florisboard.composers",
     "version": "0.1.1",
     "title": "Default composers",
     "description": "Default composers which are always available.",
-    "maintainers": [ "silo <patrick@silo.dev>", "thanhhocse96 <thanh.hoquang@pm.me>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "thanhhocse96 <thanh.hoquang@pm.me>" ],
     "license": "apache-2.0"
   },
   "composers": [

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.compose
+package dev.patrickgold.florisboard.lib.compose
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
@@ -53,12 +53,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.lib.util.InputMethodUtils
-import org.omniboard.lib.android.showShortToastSync
-import org.omniboard.lib.android.showShortToast
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.compose.verticalTween
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
+import org.florisboard.lib.android.showShortToastSync
+import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.verticalTween
 
 private const val AnimationDuration = 200
 

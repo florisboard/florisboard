@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.io
+package dev.patrickgold.florisboard.lib.io
 
-import dev.silo.omniboard.lib.cache.CacheManager
-import org.omniboard.lib.kotlin.io.FsFile
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import org.florisboard.lib.kotlin.io.FsFile
 
 object FileRegistry {
     val BackupArchive = Entry(
@@ -32,7 +32,7 @@ object FileRegistry {
     val FlexExtension = Entry(
         type = Type.BINARY,
         fileExt = "flex",
-        mediaType = "application/vnd.omniboard.extension+zip",
+        mediaType = "application/vnd.florisboard.extension+zip",
         alternativeMediaTypes = listOf(
             "application/zip",
             "application/octet-stream",

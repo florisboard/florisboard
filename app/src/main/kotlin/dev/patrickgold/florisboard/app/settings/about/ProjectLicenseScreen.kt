@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.about
+package dev.patrickgold.florisboard.app.settings.about
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -27,16 +27,16 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.io.OmniRef
-import dev.silo.omniboard.lib.io.loadTextAsset
-import org.omniboard.lib.compose.omniHorizontalScroll
-import org.omniboard.lib.compose.omniVerticalScroll
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.io.FlorisRef
+import dev.patrickgold.florisboard.lib.io.loadTextAsset
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.stringRes
 
 @Composable
-fun ProjectLicenseScreen() = OmniScreen {
+fun ProjectLicenseScreen() = FlorisScreen {
     title = stringRes(R.string.about__project_license__title)
     scrollable = false
 
@@ -50,10 +50,10 @@ fun ProjectLicenseScreen() = OmniScreen {
             SelectionContainer(
                 modifier = Modifier
                     .fillMaxSize()
-                    .omniVerticalScroll()
-                    .omniHorizontalScroll(),
+                    .florisVerticalScroll()
+                    .florisHorizontalScroll(),
             ) {
-                val licenseText = OmniRef.assets("license/project_license.txt").loadTextAsset(
+                val licenseText = FlorisRef.assets("license/project_license.txt").loadTextAsset(
                     context
                 ).getOrElse {
                     stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))

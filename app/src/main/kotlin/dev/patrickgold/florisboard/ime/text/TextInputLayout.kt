@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.text
+package dev.patrickgold.florisboard.ime.text
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,17 +30,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.LayoutDirection
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.smartbar.IncognitoDisplayMode
-import dev.silo.omniboard.ime.smartbar.InlineSuggestionsStyleCache
-import dev.silo.omniboard.ime.smartbar.Smartbar
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionsOverflowPanel
-import dev.silo.omniboard.ime.text.keyboard.TextKeyboardLayout
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import dev.silo.jetpref.datastore.model.observeAsState
-import org.omniboard.lib.snygg.ui.SnyggIcon
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsStyleCache
+import dev.patrickgold.florisboard.ime.smartbar.Smartbar
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflowPanel
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.ui.SnyggIcon
 
 @Composable
 fun TextInputLayout(
@@ -49,7 +49,7 @@ fun TextInputLayout(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
 
     val state by keyboardManager.activeState.collectAsState()
     val evaluator by keyboardManager.activeEvaluator.collectAsState()
@@ -72,7 +72,7 @@ fun TextInputLayout(
                         incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
                     if (showIncognitoIcon) {
                         SnyggIcon(
-                            OmniImeUi.IncognitoModeIndicator.elementName,
+                            FlorisImeUi.IncognitoModeIndicator.elementName,
                             modifier = Modifier
                                 .matchParentSize()
                                 .align(Alignment.Center),

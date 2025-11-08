@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.text.gestures
+package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import androidx.collection.LruCache
 import androidx.collection.SparseArrayCompat
 import androidx.collection.set
-import dev.silo.omniboard.ime.core.Subtype
-import dev.silo.omniboard.ime.keyboard.KeyData
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.keyboard.TextKey
-import dev.silo.omniboard.nlpManager
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.nlpManager
 import java.text.Normalizer
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap

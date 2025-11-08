@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard
+package dev.patrickgold.florisboard
 
 import android.app.Application
 import android.content.BroadcastReceiver
@@ -25,41 +25,41 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.util.Log
 import androidx.core.os.UserManagerCompat
-import dev.silo.omniboard.app.OmniPreferenceModel
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.clipboard.ClipboardManager
-import dev.silo.omniboard.ime.core.SubtypeManager
-import dev.silo.omniboard.ime.dictionary.DictionaryManager
-import dev.silo.omniboard.ime.editor.EditorInstance
-import dev.silo.omniboard.ime.keyboard.KeyboardManager
-import dev.silo.omniboard.ime.media.emoji.OmniEmojiCompat
-import dev.silo.omniboard.ime.nlp.NlpManager
-import dev.silo.omniboard.ime.text.gestures.GlideTypingManager
-import dev.silo.omniboard.ime.theme.ThemeManager
-import dev.silo.omniboard.lib.cache.CacheManager
-import dev.silo.omniboard.lib.crashutility.CrashUtility
-import dev.silo.omniboard.lib.devtools.Flog
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.omniboard.lib.ext.ExtensionManager
-import dev.silo.jetpref.datastore.runtime.initAndroid
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
+import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.editor.EditorInstance
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
+import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
+import dev.patrickgold.florisboard.ime.nlp.NlpManager
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.lib.cache.CacheManager
+import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
+import dev.patrickgold.florisboard.lib.devtools.Flog
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.ext.ExtensionManager
+import dev.patrickgold.jetpref.datastore.runtime.initAndroid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.omniboard.lib.kotlin.io.deleteContentsRecursively
-import org.omniboard.lib.kotlin.tryOrNull
-import org.omniboard.libnative.dummyAdd
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.tryOrNull
+import org.florisboard.libnative.dummyAdd
 import java.lang.ref.WeakReference
 
 /**
- * Global weak reference for the [OmniApplication] class. This is needed as in certain scenarios an application
+ * Global weak reference for the [FlorisApplication] class. This is needed as in certain scenarios an application
  * reference is needed, but the Android framework hasn't finished setting up
  */
-private var OmniApplicationReference = WeakReference<OmniApplication?>(null)
+private var FlorisApplicationReference = WeakReference<FlorisApplication?>(null)
 
 @Suppress("unused")
-class OmniApplication : Application() {
+class FlorisApplication : Application() {
     companion object {
         init {
             try {
@@ -85,7 +85,7 @@ class OmniApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        OmniApplicationReference = WeakReference(this)
+        FlorisApplicationReference = WeakReference(this)
         try {
             Flog.install(
                 context = this,
@@ -95,7 +95,7 @@ class OmniApplication : Application() {
                 flogOutputs = Flog.OUTPUT_CONSOLE,
             )
             CrashUtility.install(this)
-            OmniEmojiCompat.init(this)
+            FlorisEmojiCompat.init(this)
             flogError { "dummy result: ${dummyAdd(3,4)}" }
 
             if (!UserManagerCompat.isUserUnlocked(this)) {
@@ -115,9 +115,9 @@ class OmniApplication : Application() {
     fun init() {
         cacheDir?.deleteContentsRecursively()
         scope.launch {
-            val result = OmniPreferenceStore.initAndroid(
-                context = this@OmniApplication,
-                datastoreName = OmniPreferenceModel.NAME,
+            val result = FlorisPreferenceStore.initAndroid(
+                context = this@FlorisApplication,
+                datastoreName = FlorisPreferenceModel.NAME,
             )
             Log.i("PREFS", result.toString())
             preferenceStoreLoaded.value = true
@@ -142,33 +142,33 @@ class OmniApplication : Application() {
     }
 }
 
-private tailrec fun Context.omniApplication(): OmniApplication {
+private tailrec fun Context.florisApplication(): FlorisApplication {
     return when (this) {
-        is OmniApplication -> this
+        is FlorisApplication -> this
         is ContextWrapper -> when {
-            this.baseContext != null -> this.baseContext.omniApplication()
-            else -> OmniApplicationReference.get()!!
+            this.baseContext != null -> this.baseContext.florisApplication()
+            else -> FlorisApplicationReference.get()!!
         }
-        else -> tryOrNull { this.applicationContext as OmniApplication } ?: OmniApplicationReference.get()!!
+        else -> tryOrNull { this.applicationContext as FlorisApplication } ?: FlorisApplicationReference.get()!!
     }
 }
 
-fun Context.appContext() = lazyOf(this.omniApplication())
+fun Context.appContext() = lazyOf(this.florisApplication())
 
-fun Context.cacheManager() = this.omniApplication().cacheManager
+fun Context.cacheManager() = this.florisApplication().cacheManager
 
-fun Context.clipboardManager() = this.omniApplication().clipboardManager
+fun Context.clipboardManager() = this.florisApplication().clipboardManager
 
-fun Context.editorInstance() = this.omniApplication().editorInstance
+fun Context.editorInstance() = this.florisApplication().editorInstance
 
-fun Context.extensionManager() = this.omniApplication().extensionManager
+fun Context.extensionManager() = this.florisApplication().extensionManager
 
-fun Context.glideTypingManager() = this.omniApplication().glideTypingManager
+fun Context.glideTypingManager() = this.florisApplication().glideTypingManager
 
-fun Context.keyboardManager() = this.omniApplication().keyboardManager
+fun Context.keyboardManager() = this.florisApplication().keyboardManager
 
-fun Context.nlpManager() = this.omniApplication().nlpManager
+fun Context.nlpManager() = this.florisApplication().nlpManager
 
-fun Context.subtypeManager() = this.omniApplication().subtypeManager
+fun Context.subtypeManager() = this.florisApplication().subtypeManager
 
-fun Context.themeManager() = this.omniApplication().themeManager
+fun Context.themeManager() = this.florisApplication().themeManager

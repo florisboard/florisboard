@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.dictionary
+package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
 import androidx.room.Room
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.nlp.SuggestionCandidate
-import dev.silo.omniboard.ime.nlp.WordSuggestionCandidate
-import dev.silo.omniboard.lib.OmniLocale
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.lib.FlorisLocale
 import java.lang.ref.WeakReference
 
 /**
@@ -29,9 +29,9 @@ import java.lang.ref.WeakReference
  */
 class DictionaryManager private constructor(context: Context) {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext ?: context)
-    private val prefs by OmniPreferenceStore
+    private val prefs by FlorisPreferenceStore
 
-    private var omniUserDictionaryDatabase: OmniUserDictionaryDatabase? = null
+    private var florisUserDictionaryDatabase: FlorisUserDictionaryDatabase? = null
     private var systemUserDictionaryDatabase: SystemUserDictionaryDatabase? = null
 
     companion object {
@@ -55,20 +55,20 @@ class DictionaryManager private constructor(context: Context) {
         }
     }
 
-    fun queryUserDictionary(word: String, locale: OmniLocale): List<SuggestionCandidate> {
-        val omniDao = omniUserDictionaryDao()
+    fun queryUserDictionary(word: String, locale: FlorisLocale): List<SuggestionCandidate> {
+        val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()
-        if (omniDao == null && systemDao == null) {
+        if (florisDao == null && systemDao == null) {
             return emptyList()
         }
         return buildList {
-            if (prefs.dictionary.enableOmniUserDictionary.get()) {
-                omniDao?.query(word, locale)?.let {
+            if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+                florisDao?.query(word, locale)?.let {
                     for (entry in it) {
                         add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
                     }
                 }
-                omniDao?.queryShortcut(word, locale)?.let {
+                florisDao?.queryShortcut(word, locale)?.let {
                     for (entry in it) {
                         add(WordSuggestionCandidate(entry.word, confidence = entry.freq / 255.0))
                     }
@@ -90,16 +90,16 @@ class DictionaryManager private constructor(context: Context) {
 
     }
 
-    fun spell(word: String, locale: OmniLocale): Boolean {
-        val omniDao = omniUserDictionaryDao()
+    fun spell(word: String, locale: FlorisLocale): Boolean {
+        val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()
-        if (omniDao == null && systemDao == null) {
+        if (florisDao == null && systemDao == null) {
             return false
         }
         var ret = false
-        if (prefs.dictionary.enableOmniUserDictionary.get()) {
-            ret = ret || omniDao?.queryExactFuzzyLocale(word, locale)?.isNotEmpty() ?: false
-            ret = ret || omniDao?.queryShortcut(word, locale)?.isNotEmpty() ?: false
+        if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+            ret = ret || florisDao?.queryExactFuzzyLocale(word, locale)?.isNotEmpty() ?: false
+            ret = ret || florisDao?.queryShortcut(word, locale)?.isNotEmpty() ?: false
         }
         if (prefs.dictionary.enableSystemUserDictionary.get()) {
             ret = ret || systemDao?.queryExactFuzzyLocale(word, locale)?.isNotEmpty() ?: false
@@ -109,18 +109,18 @@ class DictionaryManager private constructor(context: Context) {
     }
 
     @Synchronized
-    fun omniUserDictionaryDao(): UserDictionaryDao? {
-        return if (prefs.dictionary.enableOmniUserDictionary.get()) {
-            omniUserDictionaryDatabase?.userDictionaryDao()
+    fun florisUserDictionaryDao(): UserDictionaryDao? {
+        return if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+            florisUserDictionaryDatabase?.userDictionaryDao()
         } else {
             null
         }
     }
 
     @Synchronized
-    fun omniUserDictionaryDatabase(): OmniUserDictionaryDatabase? {
-        return if (prefs.dictionary.enableOmniUserDictionary.get()) {
-            omniUserDictionaryDatabase
+    fun florisUserDictionaryDatabase(): FlorisUserDictionaryDatabase? {
+        return if (prefs.dictionary.enableFlorisUserDictionary.get()) {
+            florisUserDictionaryDatabase
         } else {
             null
         }
@@ -148,11 +148,11 @@ class DictionaryManager private constructor(context: Context) {
     fun loadUserDictionariesIfNecessary() {
         val context = applicationContext.get() ?: return
 
-        if (omniUserDictionaryDatabase == null && prefs.dictionary.enableOmniUserDictionary.get()) {
-            omniUserDictionaryDatabase = Room.databaseBuilder(
+        if (florisUserDictionaryDatabase == null && prefs.dictionary.enableFlorisUserDictionary.get()) {
+            florisUserDictionaryDatabase = Room.databaseBuilder(
                 context,
-                OmniUserDictionaryDatabase::class.java,
-                OmniUserDictionaryDatabase.DB_FILE_NAME
+                FlorisUserDictionaryDatabase::class.java,
+                FlorisUserDictionaryDatabase.DB_FILE_NAME
             ).allowMainThreadQueries().build()
         }
         if (systemUserDictionaryDatabase == null && prefs.dictionary.enableSystemUserDictionary.get()) {
@@ -162,9 +162,9 @@ class DictionaryManager private constructor(context: Context) {
 
     @Synchronized
     fun unloadUserDictionariesIfNecessary() {
-        if (omniUserDictionaryDatabase != null) {
-            omniUserDictionaryDatabase?.close()
-            omniUserDictionaryDatabase = null
+        if (florisUserDictionaryDatabase != null) {
+            florisUserDictionaryDatabase?.close()
+            florisUserDictionaryDatabase = null
         }
         if (systemUserDictionaryDatabase != null) {
             systemUserDictionaryDatabase = null

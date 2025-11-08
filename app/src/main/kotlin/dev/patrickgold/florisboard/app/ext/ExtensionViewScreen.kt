@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -44,24 +44,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.Routes
-import dev.silo.omniboard.extensionManager
-import dev.silo.omniboard.ime.nlp.LanguagePackExtension
-import dev.silo.omniboard.ime.theme.ThemeExtension
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponentImpl
-import dev.silo.omniboard.lib.compose.OmniConfirmDeleteDialog
-import dev.silo.omniboard.lib.compose.OmniHyperlinkText
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.ext.Extension
-import dev.silo.omniboard.lib.ext.ExtensionMaintainer
-import dev.silo.omniboard.lib.ext.ExtensionMeta
-import dev.silo.omniboard.lib.io.OmniRef
-import org.omniboard.lib.android.showLongToastSync
-import org.omniboard.lib.compose.OmniOutlinedButton
-import org.omniboard.lib.compose.defaultOmniOutlinedBox
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
+import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
+import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
+import dev.patrickgold.florisboard.lib.io.FlorisRef
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.FlorisOutlinedButton
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ExtensionViewScreen(id: String) {
@@ -77,7 +77,7 @@ fun ExtensionViewScreen(id: String) {
 }
 
 @Composable
-private fun ViewScreen(ext: Extension) = OmniScreen {
+private fun ViewScreen(ext: Extension) = FlorisScreen {
     title = ext.meta.title
 
     val navController = LocalNavController.current
@@ -121,16 +121,16 @@ private fun ViewScreen(ext: Extension) = OmniScreen {
             }
             if (!ext.meta.homepage.isNullOrBlank()) {
                 ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__homepage)) {
-                    OmniHyperlinkText(
-                        text = OmniRef.fromUrl(ext.meta.homepage!!).authority,
+                    FlorisHyperlinkText(
+                        text = FlorisRef.fromUrl(ext.meta.homepage!!).authority,
                         url = ext.meta.homepage!!,
                     )
                 }
             }
             if (!ext.meta.issueTracker.isNullOrBlank()) {
                 ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__issue_tracker)) {
-                    OmniHyperlinkText(
-                        text = OmniRef.fromUrl(ext.meta.issueTracker!!).authority,
+                    FlorisHyperlinkText(
+                        text = FlorisRef.fromUrl(ext.meta.issueTracker!!).authority,
                         url = ext.meta.issueTracker!!,
                     )
                 }
@@ -142,7 +142,7 @@ private fun ViewScreen(ext: Extension) = OmniScreen {
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 if (extensionManager.canDelete(ext)) {
-                    OmniOutlinedButton(
+                    FlorisOutlinedButton(
                         onClick = {
                             extToDelete = ext
                         },
@@ -154,7 +154,7 @@ private fun ViewScreen(ext: Extension) = OmniScreen {
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                OmniOutlinedButton(
+                FlorisOutlinedButton(
                     onClick = {
                         navController.navigate(Routes.Ext.Export(ext.meta.id))
                     },
@@ -171,7 +171,7 @@ private fun ViewScreen(ext: Extension) = OmniScreen {
                     components = ext.themes,
                 ) { component ->
                     ExtensionComponentView(
-                        modifier = Modifier.defaultOmniOutlinedBox(),
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
                         meta = ext.meta,
                         component = component,
                     )
@@ -183,7 +183,7 @@ private fun ViewScreen(ext: Extension) = OmniScreen {
                     components = ext.items,
                 ) { component ->
                     ExtensionComponentView(
-                        modifier = Modifier.defaultOmniOutlinedBox(),
+                        modifier = Modifier.defaultFlorisOutlinedBox(),
                         meta = ext.meta,
                         component = component,
                     )
@@ -195,7 +195,7 @@ private fun ViewScreen(ext: Extension) = OmniScreen {
         }
 
         if (extToDelete != null) {
-            OmniConfirmDeleteDialog(
+            FlorisConfirmDeleteDialog(
                 onConfirm = {
                     runCatching {
                         extensionManager.delete(extToDelete!!)

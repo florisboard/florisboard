@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.keyboard
+package dev.patrickgold.florisboard.ime.keyboard
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.silo.omniboard.lib.OmniRect
+import dev.patrickgold.florisboard.lib.FlorisRect
 
 /**
  * Abstract class describing the smallest computed unit in a computed keyboard. Each key represents exactly one key
@@ -53,12 +53,12 @@ abstract class Key(open val data: AbstractKeyData) {
     /**
      * The touch bounds of this key. All bounds defined here are absolute coordinates within the parent keyboard.
      */
-    open val touchBounds: OmniRect = OmniRect.empty()
+    open val touchBounds: FlorisRect = FlorisRect.empty()
 
     /**
      * The visible bounds of this key. All bounds defined here are absolute coordinates within the parent keyboard.
      */
-    open val visibleBounds: OmniRect = OmniRect.empty()
+    open val visibleBounds: FlorisRect = FlorisRect.empty()
 
     /**
      * Specifies how much this key is willing to shrink if too many keys are in a keyboard row. A value of 0.0

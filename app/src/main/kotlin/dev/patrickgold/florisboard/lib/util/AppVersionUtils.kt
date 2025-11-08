@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The OmniBoard Contributors
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.util
+package dev.patrickgold.florisboard.lib.util
 
 import android.content.Context
-import dev.silo.omniboard.app.OmniPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 
 object AppVersionUtils {
     private fun getRawVersionName(context: Context): String {
@@ -28,7 +28,7 @@ object AppVersionUtils {
         }
     }
 
-    fun shouldShowChangelog(context: Context, prefs: OmniPreferenceModel): Boolean {
+    fun shouldShowChangelog(context: Context, prefs: FlorisPreferenceModel): Boolean {
         val installVersion =
             VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
         val lastChangelogVersion =
@@ -39,14 +39,14 @@ object AppVersionUtils {
         return lastChangelogVersion < currentVersion && installVersion != currentVersion
     }
 
-    suspend fun updateVersionOnInstallAndLastUse(context: Context, prefs: OmniPreferenceModel) {
+    suspend fun updateVersionOnInstallAndLastUse(context: Context, prefs: FlorisPreferenceModel) {
         if (prefs.internal.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
             prefs.internal.versionOnInstall.set(getRawVersionName(context))
         }
         prefs.internal.versionLastUse.set(getRawVersionName(context))
     }
 
-    suspend fun updateVersionLastChangelog(context: Context, prefs: OmniPreferenceModel) {
+    suspend fun updateVersionLastChangelog(context: Context, prefs: FlorisPreferenceModel) {
         prefs.internal.versionLastChangelog.set(getRawVersionName(context))
     }
 }

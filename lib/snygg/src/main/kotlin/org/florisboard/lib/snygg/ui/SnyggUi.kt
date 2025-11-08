@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.snygg.ui
+package org.florisboard.lib.snygg.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -46,23 +46,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
 import kotlinx.coroutines.runBlocking
-import org.omniboard.lib.color.ColorMappings
-import org.omniboard.lib.snygg.CompiledFontFamilyData
-import org.omniboard.lib.snygg.SnyggQueryAttributes
-import org.omniboard.lib.snygg.SnyggRule
-import org.omniboard.lib.snygg.SnyggSelector
-import org.omniboard.lib.snygg.SnyggSinglePropertySet
-import org.omniboard.lib.snygg.SnyggSinglePropertySetEditor
-import org.omniboard.lib.snygg.SnyggStylesheet
-import org.omniboard.lib.snygg.SnyggTheme
-import org.omniboard.lib.snygg.value.SnyggAssetResolver
-import org.omniboard.lib.snygg.value.SnyggDefaultAssetResolver
-import org.omniboard.lib.snygg.value.SnyggDpSizeValue
-import org.omniboard.lib.snygg.value.SnyggNoValue
-import org.omniboard.lib.snygg.value.SnyggPaddingValue
-import org.omniboard.lib.snygg.value.SnyggStaticColorValue
-import org.omniboard.lib.snygg.value.SnyggUriValue
-import org.omniboard.lib.snygg.value.SnyggValue
+import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.snygg.CompiledFontFamilyData
+import org.florisboard.lib.snygg.SnyggQueryAttributes
+import org.florisboard.lib.snygg.SnyggRule
+import org.florisboard.lib.snygg.SnyggSelector
+import org.florisboard.lib.snygg.SnyggSinglePropertySet
+import org.florisboard.lib.snygg.SnyggSinglePropertySetEditor
+import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.SnyggTheme
+import org.florisboard.lib.snygg.value.SnyggAssetResolver
+import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggNoValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.florisboard.lib.snygg.value.SnyggValue
 
 internal val LocalSnyggTheme: ProvidableCompositionLocal<SnyggTheme> =
     compositionLocalOf {
@@ -110,7 +110,7 @@ internal val LocalSnyggParentSelector: ProvidableCompositionLocal<SnyggSelector>
  * When the stylesheet changes the [SnyggTheme] is recompiled.
  *
  * @param stylesheet [SnyggStylesheet] the [SnyggTheme] is compiled from
- * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.omniboard.lib.snygg.value.SnyggUriValue]
+ * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.florisboard.lib.snygg.value.SnyggUriValue]
  *
  * @since 0.5.0-alpha01
  *
@@ -134,7 +134,7 @@ fun rememberSnyggTheme(
  * @param snyggTheme The [SnyggTheme] for the composable functions.
  * @param dynamicAccentColor The [Color] for the dynamic color schemes.
  * [Color.Unspecified] means default/material you color.
- * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.omniboard.lib.snygg.value.SnyggUriValue].
+ * @param assetResolver The [SnyggAssetResolver] used to resolve [an asset Uri][org.florisboard.lib.snygg.value.SnyggUriValue].
  *
  * @since 0.5.0-alpha01
  *

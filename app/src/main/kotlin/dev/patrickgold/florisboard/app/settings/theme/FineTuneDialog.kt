@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.theme
+package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.enumDisplayEntriesOf
-import dev.silo.jetpref.datastore.ui.ListPreference
-import dev.silo.jetpref.datastore.ui.PreferenceLayout
-import dev.silo.jetpref.material.ui.ColorRepresentation
-import dev.silo.jetpref.material.ui.JetPrefAlertDialog
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.stringRes
 
 private val FineTuneContentPadding = PaddingValues(horizontal = 8.dp)
 
@@ -37,7 +37,7 @@ fun FineTuneDialog(onDismiss: () -> Unit) {
         onDismiss = onDismiss,
         contentPadding = FineTuneContentPadding,
     ) {
-        PreferenceLayout(OmniPreferenceStore, iconSpaceReserved = false) {
+        PreferenceLayout(FlorisPreferenceStore, iconSpaceReserved = false) {
             ListPreference(
                 listPref = prefs.theme.editorLevel,
                 title = stringRes(R.string.settings__theme_editor__fine_tune__level),

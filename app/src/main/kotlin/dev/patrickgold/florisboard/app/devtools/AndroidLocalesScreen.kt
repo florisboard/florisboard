@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.devtools
+package dev.patrickgold.florisboard.app.devtools
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,19 +30,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
-import dev.silo.omniboard.R
-import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.jetpref.datastore.model.observeAsState
-import org.omniboard.lib.android.showLongToastSync
-import org.omniboard.lib.compose.OmniIconButton
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.kotlin.io.subDir
-import org.omniboard.lib.kotlin.io.subFile
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import java.util.Locale
 
 @Composable
-fun AndroidLocalesScreen() = OmniScreen {
+fun AndroidLocalesScreen() = FlorisScreen {
     title = stringRes(R.string.devtools__android_locales__title)
     scrollable = false
 
@@ -50,7 +50,7 @@ fun AndroidLocalesScreen() = OmniScreen {
     val availableLocales = remember { Locale.getAvailableLocales().sortedBy { it.toLanguageTag() } }
 
     actions {
-        OmniIconButton(
+        FlorisIconButton(
             onClick = {
                 try {
                     val devtoolsDir = context.noBackupFilesDir.subDir("devtools")

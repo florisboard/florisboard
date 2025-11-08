@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.typing
+package dev.patrickgold.florisboard.app.settings.typing
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -33,27 +33,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.LocalNavController
-import dev.silo.omniboard.app.Routes
-import dev.silo.omniboard.app.enumDisplayEntriesOf
-import dev.silo.omniboard.ime.keyboard.IncognitoMode
-import dev.silo.omniboard.ime.nlp.SpellingLanguageMode
-import dev.silo.omniboard.lib.compose.OmniHyperlinkText
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.silo.jetpref.datastore.ui.ListPreference
-import dev.silo.jetpref.datastore.ui.Preference
-import dev.silo.jetpref.datastore.ui.PreferenceGroup
-import dev.silo.jetpref.datastore.ui.SwitchPreference
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.compose.OmniErrorCard
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
+import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisErrorCard
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun TypingScreen() = OmniScreen {
+fun TypingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__typing__title)
     previewFieldVisible = true
 
@@ -61,7 +61,7 @@ fun TypingScreen() = OmniScreen {
 
     content {
         // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
-        OmniErrorCard(
+        FlorisErrorCard(
             modifier = Modifier.padding(8.dp),
             text = """
                 Suggestions (except system autofill) and spell checking are not available in this release. All
@@ -118,9 +118,9 @@ fun TypingScreen() = OmniScreen {
                                 thread. This helps a lot in improving this feature. Thanks!
                             """.trimIndent().replace('\n', ' '),
                         )
-                        OmniHyperlinkText(
+                        FlorisHyperlinkText(
                             text = "Feedback thread (GitHub)",
-                            url = "https://github.com/omniboard/omniboard/discussions/1935",
+                            url = "https://github.com/florisboard/florisboard/discussions/1935",
                         )
                     }
                 }
@@ -138,21 +138,21 @@ fun TypingScreen() = OmniScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__spelling__title)) {
-            val omniSpellCheckerEnabled = remember { mutableStateOf(false) }
-            SpellCheckerServiceSelector(omniSpellCheckerEnabled)
+            val florisSpellCheckerEnabled = remember { mutableStateOf(false) }
+            SpellCheckerServiceSelector(florisSpellCheckerEnabled)
             ListPreference(
                 prefs.spelling.languageMode,
                 icon = Icons.Default.Language,
                 title = stringRes(R.string.pref__spelling__language_mode__label),
                 entries = enumDisplayEntriesOf(SpellingLanguageMode::class),
-                enabledIf = { omniSpellCheckerEnabled.value },
+                enabledIf = { florisSpellCheckerEnabled.value },
             )
             SwitchPreference(
                 prefs.spelling.useContacts,
                 icon = Icons.Default.Contacts,
                 title = stringRes(R.string.pref__spelling__use_contacts__label),
                 summary = stringRes(R.string.pref__spelling__use_contacts__summary),
-                enabledIf = { omniSpellCheckerEnabled.value },
+                enabledIf = { florisSpellCheckerEnabled.value },
                 visibleIf = { false }, // For now
             )
             SwitchPreference(
@@ -160,7 +160,7 @@ fun TypingScreen() = OmniScreen {
                 icon = Icons.AutoMirrored.Filled.LibraryBooks,
                 title = stringRes(R.string.pref__spelling__use_udm_entries__label),
                 summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
-                enabledIf = { omniSpellCheckerEnabled.value },
+                enabledIf = { florisSpellCheckerEnabled.value },
                 visibleIf = { false }, // For now
             )
         }

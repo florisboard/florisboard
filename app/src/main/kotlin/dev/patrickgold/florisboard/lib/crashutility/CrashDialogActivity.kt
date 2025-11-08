@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The OmniBoard Contributors
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.crashutility
+package dev.patrickgold.florisboard.lib.crashutility
 
 import android.annotation.SuppressLint
 import android.content.ClipData
@@ -28,25 +28,25 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.ComponentActivity
-import dev.silo.omniboard.BuildConfig
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceModel
-import dev.silo.omniboard.app.OmniPreferenceStore
-import org.omniboard.lib.android.stringRes
-import dev.silo.omniboard.lib.devtools.Devtools
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import org.florisboard.lib.android.stringRes
+import dev.patrickgold.florisboard.lib.devtools.Devtools
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, OmniPreferenceModel?> {
+private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, FlorisPreferenceModel?> {
     val cachedPreferenceModel = try {
-        OmniPreferenceStore
+        FlorisPreferenceStore
     } catch (_: Throwable) {
         null
     }
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): OmniPreferenceModel? {
+    override fun getValue(thisRef: Any?, property: KProperty<*>): FlorisPreferenceModel? {
         return cachedPreferenceModel?.getValue(thisRef, property)
     }
 }
@@ -77,15 +77,15 @@ class CrashDialogActivity : ComponentActivity() {
             append(BuildConfig.VERSION_NAME)
             append("](")
             if (BuildConfig.DEBUG) {
-                append(stringRes(R.string.omniboard__commit_by_hash_url, "hash" to BuildConfig.BUILD_COMMIT_HASH))
+                append(stringRes(R.string.florisboard__commit_by_hash_url, "hash" to BuildConfig.BUILD_COMMIT_HASH))
             } else {
-                append(stringRes(R.string.omniboard__changelog_url, "version" to BuildConfig.VERSION_NAME))
+                append(stringRes(R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME))
             }
             append(")")
         }
         errorReport.apply {
             appendLine("#### Environment information")
-            appendLine("- OmniBoard $versionName (${BuildConfig.VERSION_CODE})")
+            appendLine("- FlorisBoard $versionName (${BuildConfig.VERSION_CODE})")
             appendLine("- Device: ${Devtools.getDeviceName()}")
             appendLine("- Android: ${Devtools.getAndroidVersion()}")
             appendLine()
@@ -127,7 +127,7 @@ class CrashDialogActivity : ComponentActivity() {
         openBugReportForm.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(resources.getString(R.string.omniboard__issue_tracker_url))
+                Uri.parse(resources.getString(R.string.florisboard__issue_tracker_url))
             )
             startActivity(browserIntent)
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.dictionary
+package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.ContentValues
 import android.content.Context
@@ -33,12 +33,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import dev.silo.omniboard.R
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.ValidationRule
-import org.omniboard.lib.android.readText
-import org.omniboard.lib.android.writeText
-import org.omniboard.lib.kotlin.tryOrNull
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.ValidationRule
+import org.florisboard.lib.android.readText
+import org.florisboard.lib.android.writeText
+import org.florisboard.lib.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 
 private const val WORDS_TABLE = "words"
@@ -92,31 +92,31 @@ interface UserDictionaryDao {
     fun query(word: String): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%' AND $LOCALE_MATCHES")
-    fun query(word: String, locale: OmniLocale?): List<UserDictionaryEntry>
+    fun query(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut")
     fun queryShortcut(shortcut: String): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut AND $LOCALE_MATCHES")
-    fun queryShortcut(shortcut: String, locale: OmniLocale?): List<UserDictionaryEntry>
+    fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query(SELECT_ALL_FROM_WORDS)
     fun queryAll(): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE (${UserDictionary.Words.LOCALE} = :locale AND :locale IS NOT NULL) OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL)")
-    fun queryAll(locale: OmniLocale?): List<UserDictionaryEntry>
+    fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word")
     fun queryExact(word: String): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND (${UserDictionary.Words.LOCALE} = :locale OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL))")
-    fun queryExact(word: String, locale: OmniLocale?): List<UserDictionaryEntry>
+    fun queryExact(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
-    fun queryExactFuzzyLocale(word: String, locale: OmniLocale?): List<UserDictionaryEntry>
+    fun queryExactFuzzyLocale(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("SELECT DISTINCT ${UserDictionary.Words.LOCALE} FROM $WORDS_TABLE")
-    fun queryLanguageList(): List<OmniLocale?>
+    fun queryLanguageList(): List<FlorisLocale?>
 
     @Insert
     fun insert(entry: UserDictionaryEntry)
@@ -173,7 +173,7 @@ interface UserDictionaryDatabase {
                     checkNotNull(word) { "Error at source line `$line`: Word cannot be empty or missing" }
                     checkNotNull(freq) { "Error at source line `$line`: Freq cannot be empty or missing" }
                     val alreadyExistingEntries = userDictionaryDao().queryExact(
-                        word, locale?.let { OmniLocale.fromTag(it) },
+                        word, locale?.let { FlorisLocale.fromTag(it) },
                     )
                     if (alreadyExistingEntries.isNotEmpty()) {
                         userDictionaryDao().update(UserDictionaryEntry(alreadyExistingEntries[0].id, word, freq, locale, shortcut))
@@ -219,10 +219,10 @@ interface UserDictionaryDatabase {
 }
 
 @Database(entities = [UserDictionaryEntry::class], version = 1)
-@TypeConverters(OmniUserDictionaryDatabase.Converters::class)
-abstract class OmniUserDictionaryDatabase : RoomDatabase(), UserDictionaryDatabase {
+@TypeConverters(FlorisUserDictionaryDatabase.Converters::class)
+abstract class FlorisUserDictionaryDatabase : RoomDatabase(), UserDictionaryDatabase {
     companion object {
-        const val DB_FILE_NAME = "omni_user_dictionary"
+        const val DB_FILE_NAME = "floris_user_dictionary"
     }
 
     abstract override fun userDictionaryDao(): UserDictionaryDao
@@ -233,7 +233,7 @@ abstract class OmniUserDictionaryDatabase : RoomDatabase(), UserDictionaryDataba
 
     class Converters {
         @TypeConverter
-        fun localeToString(locale: OmniLocale?): String? {
+        fun localeToString(locale: FlorisLocale?): String? {
             return when (locale) {
                 null -> null
                 else -> locale.localeTag()
@@ -241,10 +241,10 @@ abstract class OmniUserDictionaryDatabase : RoomDatabase(), UserDictionaryDataba
         }
 
         @TypeConverter
-        fun stringToLocale(string: String?): OmniLocale? {
+        fun stringToLocale(string: String?): FlorisLocale? {
             return when (string) {
                 null, "all", "null", "" -> null
-                else -> OmniLocale.fromTag(string)
+                else -> FlorisLocale.fromTag(string)
             }
         }
     }
@@ -262,7 +262,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun query(word: String, locale: OmniLocale?): List<UserDictionaryEntry> {
+        override fun query(word: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -286,7 +286,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun queryShortcut(shortcut: String, locale: OmniLocale?): List<UserDictionaryEntry> {
+        override fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.SHORTCUT} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -310,7 +310,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun queryAll(locale: OmniLocale?): List<UserDictionaryEntry> {
+        override fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.LOCALE} IS NULL",
@@ -334,7 +334,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun queryExact(word: String, locale: OmniLocale?): List<UserDictionaryEntry> {
+        override fun queryExact(word: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -350,7 +350,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             }
         }
 
-        override fun queryExactFuzzyLocale(word: String, locale: OmniLocale?): List<UserDictionaryEntry> {
+        override fun queryExactFuzzyLocale(word: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -366,7 +366,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             }
         }
 
-        override fun queryLanguageList(): List<OmniLocale?> {
+        override fun queryLanguageList(): List<FlorisLocale?> {
             val resolver = applicationContext.get()?.contentResolver ?: return listOf()
             val cursor = resolver.query(
                 UserDictionary.Words.CONTENT_URI,
@@ -379,13 +379,13 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 return listOf()
             }
             val localeIndex = cursor.getColumnIndex(UserDictionary.Words.LOCALE)
-            val retList = mutableSetOf<OmniLocale?>()
+            val retList = mutableSetOf<FlorisLocale?>()
             while (cursor.moveToNext()) {
                 val localeStr = cursor.getString(localeIndex)
                 if (localeStr == null) {
                     retList.add(null)
                 } else {
-                    retList.add(OmniLocale.fromTag(localeStr))
+                    retList.add(FlorisLocale.fromTag(localeStr))
                 }
             }
             cursor.close()
@@ -520,7 +520,7 @@ object UserDictionaryValidation {
             val str = input.trim()
             when {
                 input.isBlank() -> resultValid() // Is optional
-                tryOrNull { OmniLocale.fromTag(str) } == null -> resultInvalid(error = R.string.settings__udm__dialog__locale_error_invalid)
+                tryOrNull { FlorisLocale.fromTag(str) } == null -> resultInvalid(error = R.string.settings__udm__dialog__locale_error_invalid)
                 else -> resultValid()
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The OmniBoard Contributors
+ * Copyright (C) 2024-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.media.emoji
+package dev.patrickgold.florisboard.ime.media.emoji
 
-import dev.silo.omniboard.ime.keyboard.AbstractKeyData
-import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
-import dev.silo.omniboard.ime.keyboard.KeyData
-import dev.silo.omniboard.ime.popup.PopupSet
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.popup.PopupSet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.text.keyboard
+package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.icu.lang.UCharacter
-import dev.silo.omniboard.ime.keyboard.AbstractKeyData
-import dev.silo.omniboard.ime.keyboard.ComputingEvaluator
-import dev.silo.omniboard.ime.keyboard.KeyData
-import dev.silo.omniboard.ime.popup.PopupSet
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.key.KeyType
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.Unicode
-import dev.silo.omniboard.lib.lowercase
-import dev.silo.omniboard.lib.uppercase
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.popup.PopupSet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.Unicode
+import dev.patrickgold.florisboard.lib.lowercase
+import dev.patrickgold.florisboard.lib.uppercase
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -553,13 +553,13 @@ class AutoTextKeyData(
     }
 
     private inner class AutoLetterState {
-        private var locale: OmniLocale = OmniLocale.ROOT
+        private var locale: FlorisLocale = FlorisLocale.ROOT
         var lower: TextKeyData = TextKeyData.UNSPECIFIED
             private set
         var upper: TextKeyData = TextKeyData.UNSPECIFIED
             private set
 
-        fun recomputeIfNecessary(locale: OmniLocale) {
+        fun recomputeIfNecessary(locale: FlorisLocale) {
             if (this.locale == locale) return
             this.locale = locale
             lower = TextKeyData(

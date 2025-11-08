@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.clipboard
+package dev.patrickgold.florisboard.ime.clipboard
 
 enum class ClipboardSyncBehavior(val shouldSyncSet: Boolean, val shouldSyncClear: Boolean) {
     NO_EVENTS(shouldSyncSet = false, shouldSyncClear = false),

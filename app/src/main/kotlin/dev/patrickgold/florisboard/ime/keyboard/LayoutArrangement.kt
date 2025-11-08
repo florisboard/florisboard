@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.keyboard
+package dev.patrickgold.florisboard.ime.keyboard
 
-import dev.silo.omniboard.lib.ext.ExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import kotlinx.serialization.Serializable
 
 typealias LayoutArrangement = List<List<AbstractKeyData>>

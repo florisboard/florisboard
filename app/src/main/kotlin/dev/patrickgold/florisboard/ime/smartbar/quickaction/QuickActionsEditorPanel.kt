@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.smartbar.quickaction
+package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
@@ -50,22 +50,22 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.ime.text.key.KeyCode
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.lib.toIntOffset
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.toIntOffset
+import org.florisboard.lib.compose.stringRes
 import kotlinx.coroutines.runBlocking
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggColumn
-import org.omniboard.lib.snygg.ui.SnyggIcon
-import org.omniboard.lib.snygg.ui.SnyggIconButton
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
 
 private const val ItemNotFound = -1
 private val NoopAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.NOOP))
@@ -73,7 +73,7 @@ private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.
 
 @Composable
 fun QuickActionsEditorPanel() {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
@@ -243,16 +243,16 @@ fun QuickActionsEditorPanel() {
         }
     }
 
-    SnyggColumn(OmniImeUi.SmartbarActionsEditor.elementName, modifier = Modifier.safeDrawingPadding()) {
+    SnyggColumn(FlorisImeUi.SmartbarActionsEditor.elementName, modifier = Modifier.safeDrawingPadding()) {
         SnyggRow(
-            elementName = OmniImeUi.SmartbarActionsEditorHeader.elementName,
+            elementName = FlorisImeUi.SmartbarActionsEditorHeader.elementName,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             // Extra box wrapper is needed to enforce size constraint but still allow for Snygg margin to be used
             Box(modifier = Modifier.size(48.dp)) {
                 SnyggIconButton(
-                    elementName = OmniImeUi.SmartbarActionsEditorHeaderButton.elementName,
+                    elementName = FlorisImeUi.SmartbarActionsEditorHeaderButton.elementName,
                     modifier = Modifier.fillMaxHeight().aspectRatio(1f),
                     onClick = {
                         keyboardManager.activeState.isActionsEditorVisible = false
@@ -270,7 +270,7 @@ fun QuickActionsEditorPanel() {
             Spacer(Modifier.size(48.dp))
         }
 
-        SnyggBox(OmniImeUi.SmartbarActionsEditorTileGrid.elementName) {
+        SnyggBox(FlorisImeUi.SmartbarActionsEditorTileGrid.elementName) {
             LazyVerticalGrid(
                 modifier = Modifier
                     .pointerInput(Unit) {
@@ -281,7 +281,7 @@ fun QuickActionsEditorPanel() {
                             onDragCancel = { completeDragGestureAndCleanUp() },
                         )
                     },
-                columns = GridCells.Adaptive(OmniImeSizing.smartbarHeight * 1.8f),
+                columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight * 1.8f),
                 state = gridState,
             ) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -351,7 +351,7 @@ private fun Subheader(
     modifier: Modifier = Modifier,
 ) {
     SnyggText(
-        elementName = OmniImeUi.SmartbarActionsEditorSubheader.elementName,
+        elementName = FlorisImeUi.SmartbarActionsEditorSubheader.elementName,
         modifier = modifier.fillMaxWidth(),
         text = text,
     )

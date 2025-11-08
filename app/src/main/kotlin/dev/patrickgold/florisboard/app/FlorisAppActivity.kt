@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app
+package dev.patrickgold.florisboard.app
 
 import android.content.Context
 import android.content.Intent
@@ -42,26 +42,26 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.apptheme.OmniAppTheme
-import dev.silo.omniboard.app.ext.ExtensionImportScreenType
-import dev.silo.omniboard.app.setup.NotificationPermissionState
-import dev.silo.omniboard.appContext
-import dev.silo.omniboard.cacheManager
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.compose.LocalPreviewFieldController
-import dev.silo.omniboard.lib.compose.PreviewKeyboardField
-import dev.silo.omniboard.lib.compose.rememberPreviewFieldController
-import dev.silo.omniboard.lib.util.AppVersionUtils
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.android.hideAppIcon
-import org.omniboard.lib.android.showAppIcon
-import org.omniboard.lib.compose.ProvideLocalizedResources
-import org.omniboard.lib.compose.conditional
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.kotlin.collectIn
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
+import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
+import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
+import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
+import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
+import dev.patrickgold.florisboard.lib.util.AppVersionUtils
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.hideAppIcon
+import org.florisboard.lib.android.showAppIcon
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.compose.conditional
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.collectIn
 import java.util.concurrent.atomic.AtomicBoolean
 
 enum class AppTheme(val id: String) {
@@ -76,8 +76,8 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
     error("LocalNavController not initialized")
 }
 
-class OmniAppActivity : ComponentActivity() {
-    private val prefs by OmniPreferenceStore
+class FlorisAppActivity : ComponentActivity() {
+    private val prefs by FlorisPreferenceStore
     private val appContext by appContext()
     private val cacheManager by cacheManager()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
@@ -98,7 +98,7 @@ class OmniAppActivity : ComponentActivity() {
         }
         prefs.other.settingsLanguage.asFlow().collectIn(lifecycleScope) {
             val config = Configuration(resources.configuration)
-            val locale = if (it == "auto") OmniLocale.default() else OmniLocale.fromTag(it)
+            val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
             config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
@@ -125,7 +125,7 @@ class OmniAppActivity : ComponentActivity() {
                     resourcesContext,
                     appName = R.string.app_name,
                 ) {
-                    OmniAppTheme(theme = appTheme) {
+                    FlorisAppTheme(theme = appTheme) {
                         Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()
                         }

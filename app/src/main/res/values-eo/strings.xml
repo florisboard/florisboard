@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Paŭzigi</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Atendi</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Tripunkta piktogramo. Se videbla, indikas ke vi povas uzi pliajn literojn se vi longe premetas ĝin.</string>
@@ -110,8 +110,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Defaŭlta</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistema defaŭlta</string>
     <string name="settings__home__title" comment="Title of the Home screen">Bonvenon al {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard estas ne ebligita en la sistemo kaj sekve estos ne disponebla kiel enigmetodo en la elektilo. Klaku ĉi tie por solvi la problemon.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard ne estas elektita kiel la implicita enigmetodo. Klaku ĉi tie por solvi la problemon.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard estas ne ebligita en la sistemo kaj sekve estos ne disponebla kiel enigmetodo en la elektilo. Klaku ĉi tie por solvi la problemon.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard ne estas elektita kiel la implicita enigmetodo. Klaku ĉi tie por solvi la problemon.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingvoj &amp; Aranĝoj</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Montri lingvajn nomojn en</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Montri klavarajn etikedojn en la subspeca lingvo</string>
@@ -158,7 +158,7 @@
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Baza koloro (etosoj Material You)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Administri instalitajn etosojn</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Rimedoj apon OmniBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Rimedoj apon FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interna memoro</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ekstera provizanto</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Elekti tagan etoson</string>
@@ -301,9 +301,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Aldoni, vidi kaj forigi enigaĵojn el la sistema uzula vortaro</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ŝalti internan uzulan vortaron</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Sugesti vortojn konservitajn en la interna uzula vortaro</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__label" comment="Preference title">Mastrumi internan uzulan vortaron</string>
-    <string name="pref__dictionary__manage_omni_user_dictionary__summary" comment="Preference summary">Aldoni, vidi kaj forigi enigaĵojn el la interna uzula vortaro</string>
-    <string name="settings__udm__title_omni" comment="Title of the User Dictionary Manager activity for internal">Interna uzula vortaro</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Mastrumi internan uzulan vortaron</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Aldoni, vidi kaj forigi enigaĵojn el la interna uzula vortaro</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Interna uzula vortaro</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Sistema uzula vortaro</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">Tiu uzula vortaro enhavas neniun vorton.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Ofteco: {freq}</string>
@@ -360,7 +360,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Ĉiam ŝaltata en Android 10+ pro sistemaj restriktoj</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Pri</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Aplikaĵo bildeto de OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Aplikaĵo bildeto de FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Malfermitkodaj permesiloj</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privateca politiko</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Fontkodo</string>
@@ -419,15 +419,15 @@
     <string name="backup_and_restore__restore__success">Datumoj sukcese restaŭritaj!</string>
     <string name="backup_and_restore__restore__failure">Fiaskis restaŭri datumojn: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">Erarojn raporto de OmniBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Pardonu la ĝeno, OmniBoard kraŝis kaŭze de neatendita eraro.</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">Erarojn raporto de FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Pardonu la ĝeno, FlorisBoard kraŝis kaŭze de neatendita eraro.</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopii al sistema tondujo</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Kopiita al sistema tondujo</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Erarojn raportoj de OmniBoard</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard ĉesis funkcii…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Erarojn raportoj de FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard ĉesis funkcii…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tuŝu tie por vidi detalojn de la eraro</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">OmniBoard ŝajnas ĉesi funkcii ripete…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard ŝajnas ĉesi funkcii ripete…</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Tondujo</string>
     <string name="clipboard__disabled__title">Tonduja historio estas nun malŝaltita</string>
@@ -457,9 +457,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Uzi internan tondujon</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Uzi internan tondujon anstataŭ la sistema tondujo</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinkronigi el sistema tondujo</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sisteman tondujon ĝisdatigoj ankaŭ ĝisdatigos Omni tondujon</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sisteman tondujon ĝisdatigoj ankaŭ ĝisdatigos Floris tondujon</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronigi al sistema tondujo</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Omni tondujon ĝisdatigoj ankaŭ ĝisdatigos sisteman tondujon</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris tondujon ĝisdatigoj ankaŭ ĝisdatigos sisteman tondujon</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Tondujaj sugestoj</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Tondujan enhavon sugestoj</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sugesti antaŭe kopiitan tondujan enhavon</string>
@@ -532,7 +532,7 @@
     <string name="ext__export__failure">Fiaskis eksporti etendaĵon: {error_message}</string>
     <string name="ext__import__success">Sukcesa etendaĵon enportado!</string>
     <string name="ext__import__failure">Fiaskis enporti etendaĵon: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Importi etendaĵon</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Importi etendaĵon</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Importi klavaran etendaĵon</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Importi etosan etendaĵon</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importi lingvajn pakajn etendaĵojn</string>
@@ -567,7 +567,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Administri la {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Ĉiuj taskoj rilataj al importado, eksportado, kreado, personecigo, kaj forigo etendaĵojn povas esti mastrumata per la centralizita etendaĵa mastrumilo.</string>
     <string name="ext__addon_management_box__go_to_page">Iri al {ext_home_title}</string>
-    <string name="ext__home__info">Vi povas elŝuti kaj instali etendaĵojn el la OmniBoard Aldonaĵejo aŭ enporti iun ajn etendaĵan dosieron ke vi elŝutis el la interreto.</string>
+    <string name="ext__home__info">Vi povas elŝuti kaj instali etendaĵojn el la FlorisBoard Aldonaĵejo aŭ enporti iun ajn etendaĵan dosieron ke vi elŝutis el la interreto.</string>
     <string name="ext__home__visit_store">Viziti Aldonaĵejon</string>
     <string name="ext__home__manage_extensions">Administri instalitajn etendaĵojn</string>
     <string name="ext__list__view_details">Vidi detalojn</string>

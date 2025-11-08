@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.ext
+package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,16 +37,16 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.ime.nlp.LanguagePackComponent
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.ext.ExtensionMeta
-import org.omniboard.lib.compose.OmniIconButton
-import org.omniboard.lib.compose.OmniOutlinedBox
-import org.omniboard.lib.compose.OmniTextButton
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.FlorisTextButton
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ExtensionComponentNoneFoundView() {
@@ -66,7 +66,7 @@ fun ExtensionComponentView(
     onEditBtnClick: (() -> Unit)? = null,
 ) {
     val componentName = remember(meta.id, component.id) { ExtensionComponentName(meta.id, component.id).toString() }
-    OmniOutlinedBox(
+    FlorisOutlinedBox(
         modifier = modifier,
         title = component.label,
         subtitle = componentName,
@@ -121,7 +121,7 @@ fun ExtensionComponentView(
                     .padding(horizontal = 6.dp),
             ) {
                 if (onDeleteBtnClick != null) {
-                    OmniTextButton(
+                    FlorisTextButton(
                         onClick = onDeleteBtnClick,
                         icon = Icons.Default.Delete,
                         text = stringRes(R.string.action__delete),
@@ -132,7 +132,7 @@ fun ExtensionComponentView(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 if (onEditBtnClick != null) {
-                    OmniTextButton(
+                    FlorisTextButton(
                         onClick = onEditBtnClick,
                         icon = Icons.Default.Edit,
                         text = stringRes(R.string.action__edit),
@@ -162,7 +162,7 @@ fun <T : ExtensionComponent> ExtensionComponentListView(
             ) },
             trailingContent = if (onCreateBtnClick != null) {
                 @Composable {
-                    OmniIconButton(
+                    FlorisIconButton(
                         onClick = onCreateBtnClick,
                         icon = Icons.Default.Add,
                         iconColor = MaterialTheme.colorScheme.secondary,

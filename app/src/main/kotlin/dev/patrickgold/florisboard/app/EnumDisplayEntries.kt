@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,40 +14,40 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app
+package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.settings.theme.DisplayKbdAfterDialogs
-import dev.silo.omniboard.app.settings.theme.SnyggLevel
-import dev.silo.omniboard.ime.clipboard.ClipboardSyncBehavior
-import dev.silo.omniboard.ime.core.DisplayLanguageNamesIn
-import dev.silo.omniboard.ime.input.CapitalizationBehavior
-import dev.silo.omniboard.ime.input.HapticVibrationMode
-import dev.silo.omniboard.ime.input.InputFeedbackActivationMode
-import dev.silo.omniboard.ime.input.InputShiftState
-import dev.silo.omniboard.ime.keyboard.IncognitoMode
-import dev.silo.omniboard.ime.keyboard.KeyboardMode
-import dev.silo.omniboard.ime.keyboard.SpaceBarMode
-import dev.silo.omniboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.silo.omniboard.ime.media.emoji.EmojiHistory
-import dev.silo.omniboard.ime.media.emoji.EmojiSkinTone
-import dev.silo.omniboard.ime.media.emoji.EmojiSuggestionType
-import dev.silo.omniboard.ime.nlp.SpellingLanguageMode
-import dev.silo.omniboard.ime.onehanded.OneHandedMode
-import dev.silo.omniboard.ime.smartbar.CandidatesDisplayMode
-import dev.silo.omniboard.ime.smartbar.ExtendedActionsPlacement
-import dev.silo.omniboard.ime.smartbar.IncognitoDisplayMode
-import dev.silo.omniboard.ime.smartbar.SmartbarLayout
-import dev.silo.omniboard.ime.text.gestures.SwipeAction
-import dev.silo.omniboard.ime.text.key.KeyHintMode
-import dev.silo.omniboard.ime.text.key.UtilityKeyAction
-import dev.silo.omniboard.ime.theme.ThemeMode
-import dev.silo.jetpref.datastore.ui.ListPreferenceEntry
-import dev.silo.jetpref.datastore.ui.listPrefEntries
-import dev.silo.jetpref.material.ui.ColorRepresentation
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.kotlin.curlyFormat
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
+import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
+import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
+import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.curlyFormat
 import kotlin.reflect.KClass
 
 private const val DEFAULT = ""

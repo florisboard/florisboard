@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.keyboard
+package dev.patrickgold.florisboard.ime.keyboard
 
-import dev.silo.omniboard.ime.core.SubtypePreset
-import dev.silo.omniboard.ime.nlp.PunctuationRule
-import dev.silo.omniboard.ime.popup.PopupMappingComponent
-import dev.silo.omniboard.ime.text.composing.Composer
-import dev.silo.omniboard.lib.ext.Extension
-import dev.silo.omniboard.lib.ext.ExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.ext.ExtensionEditor
-import dev.silo.omniboard.lib.ext.ExtensionMeta
+import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
+import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -59,7 +59,7 @@ data class KeyboardExtension(
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCoreComposer(id: String): ExtensionComponentName {
     return ExtensionComponentName(
-        extensionId = "org.omniboard.composers",
+        extensionId = "org.florisboard.composers",
         componentId = id,
     )
 }
@@ -67,7 +67,7 @@ inline fun extCoreComposer(id: String): ExtensionComponentName {
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCoreCurrencySet(id: String): ExtensionComponentName {
     return ExtensionComponentName(
-        extensionId = "org.omniboard.currencysets",
+        extensionId = "org.florisboard.currencysets",
         componentId = id,
     )
 }
@@ -75,7 +75,7 @@ inline fun extCoreCurrencySet(id: String): ExtensionComponentName {
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCoreLayout(id: String): ExtensionComponentName {
     return ExtensionComponentName(
-        extensionId = "org.omniboard.layouts",
+        extensionId = "org.florisboard.layouts",
         componentId = id,
     )
 }
@@ -83,7 +83,7 @@ inline fun extCoreLayout(id: String): ExtensionComponentName {
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCorePunctuationRule(id: String): ExtensionComponentName {
     return ExtensionComponentName(
-        extensionId = "org.omniboard.localization",
+        extensionId = "org.florisboard.localization",
         componentId = id,
     )
 }
@@ -91,7 +91,7 @@ inline fun extCorePunctuationRule(id: String): ExtensionComponentName {
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCorePopupMapping(id: String): ExtensionComponentName {
     return ExtensionComponentName(
-        extensionId = "org.omniboard.localization",
+        extensionId = "org.florisboard.localization",
         componentId = id,
     )
 }

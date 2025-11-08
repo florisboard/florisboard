@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.theme
+package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -32,20 +32,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.extensionManager
-import dev.silo.omniboard.ime.theme.ThemeExtensionComponent
-import dev.silo.omniboard.lib.compose.OmniScreen
-import dev.silo.omniboard.lib.ext.ExtensionComponentName
-import dev.silo.omniboard.lib.observeAsNonNullState
-import dev.silo.omniboard.themeManager
-import dev.silo.jetpref.datastore.model.observeAsState
-import dev.silo.jetpref.material.ui.JetPrefListItem
-import org.omniboard.lib.compose.OmniOutlinedBox
-import org.omniboard.lib.compose.defaultOmniOutlinedBox
-import org.omniboard.lib.compose.rippleClickable
-import org.omniboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import kotlinx.coroutines.launch
 
 enum class ThemeManagerScreenAction(val id: String) {
@@ -54,7 +54,7 @@ enum class ThemeManagerScreenAction(val id: String) {
 }
 
 @Composable
-fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = OmniScreen {
+fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     title = stringRes(when (action) {
         ThemeManagerScreenAction.SELECT_DAY -> R.string.settings__theme_manager__title_day
         ThemeManagerScreenAction.SELECT_NIGHT -> R.string.settings__theme_manager__title_night
@@ -62,7 +62,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = OmniScreen {
     })
     previewFieldVisible = true
 
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
     val themeManager by context.themeManager()
@@ -107,8 +107,8 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = OmniScreen {
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         for ((extensionId, configs) in extGroupedThemes) key(extensionId) {
             val ext = extensionManager.getExtensionById(extensionId)!!
-            OmniOutlinedBox(
-                modifier = Modifier.defaultOmniOutlinedBox(),
+            FlorisOutlinedBox(
+                modifier = Modifier.defaultFlorisOutlinedBox(),
                 title = ext.meta.title,
                 subtitle = extensionId,
             ) {

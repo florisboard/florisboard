@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.clipboard
+package dev.patrickgold.florisboard.ime.clipboard
 
 import android.content.ContentUris
 import android.graphics.BitmapFactory
@@ -88,46 +88,46 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.R
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.clipboardManager
-import dev.silo.omniboard.ime.ImeUiMode
-import dev.silo.omniboard.ime.clipboard.provider.ClipboardFileStorage
-import dev.silo.omniboard.ime.clipboard.provider.ClipboardItem
-import dev.silo.omniboard.ime.clipboard.provider.ItemType
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.ime.media.KeyboardLikeButton
-import dev.silo.omniboard.ime.smartbar.AnimationDuration
-import dev.silo.omniboard.ime.smartbar.VerticalEnterTransition
-import dev.silo.omniboard.ime.smartbar.VerticalExitTransition
-import dev.silo.omniboard.ime.text.keyboard.TextKeyData
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.lib.observeAsTransformingState
-import dev.silo.omniboard.lib.util.NetworkUtils
-import dev.silo.jetpref.datastore.model.observeAsState
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.media.KeyboardLikeButton
+import dev.patrickgold.florisboard.ime.smartbar.AnimationDuration
+import dev.patrickgold.florisboard.ime.smartbar.VerticalEnterTransition
+import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.observeAsTransformingState
+import dev.patrickgold.florisboard.lib.util.NetworkUtils
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.time.Instant
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.omniboard.lib.android.AndroidKeyguardManager
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.android.showShortToastSync
-import org.omniboard.lib.android.systemService
-import org.omniboard.lib.compose.LocalLocalizedDateTimeFormatter
-import org.omniboard.lib.compose.autoMirrorForRtl
-import org.omniboard.lib.compose.omniHorizontalScroll
-import org.omniboard.lib.compose.omniVerticalScroll
-import org.omniboard.lib.compose.rippleClickable
-import org.omniboard.lib.compose.stringRes
-import org.omniboard.lib.snygg.SnyggQueryAttributes
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggButton
-import org.omniboard.lib.snygg.ui.SnyggChip
-import org.omniboard.lib.snygg.ui.SnyggColumn
-import org.omniboard.lib.snygg.ui.SnyggIcon
-import org.omniboard.lib.snygg.ui.SnyggIconButton
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.android.AndroidKeyguardManager
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.showShortToastSync
+import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
+import org.florisboard.lib.compose.autoMirrorForRtl
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.snygg.SnyggQueryAttributes
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggChip
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -138,7 +138,7 @@ const val CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO: Int = 0
 fun ClipboardInputLayout(
     modifier: Modifier = Modifier,
 ) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
@@ -181,17 +181,17 @@ fun ClipboardInputLayout(
 
     @Composable
     fun HeaderRow() {
-        SnyggRow(OmniImeUi.ClipboardHeader.elementName,
+        SnyggRow(FlorisImeUi.ClipboardHeader.elementName,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(OmniImeSizing.smartbarHeight),
+                .height(FlorisImeSizing.smartbarHeight),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             val sizeModifier = Modifier
-                .sizeIn(maxHeight = OmniImeSizing.smartbarHeight)
+                .sizeIn(maxHeight = FlorisImeSizing.smartbarHeight)
                 .aspectRatio(1f)
             SnyggIconButton(
-                elementName = OmniImeUi.ClipboardHeaderButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT },
                 modifier = sizeModifier,
             ) {
@@ -200,12 +200,12 @@ fun ClipboardInputLayout(
                 )
             }
             SnyggText(
-                elementName = OmniImeUi.ClipboardHeaderText.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderText.elementName,
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.clipboard__header_title),
             )
             SnyggIconButton(
-                elementName = OmniImeUi.ClipboardHeaderButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { scope.launch { prefs.clipboard.historyEnabled.set(!historyEnabled) } },
                 modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
@@ -219,7 +219,7 @@ fun ClipboardInputLayout(
                 )
             }
             SnyggIconButton(
-                elementName = OmniImeUi.ClipboardHeaderButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { showClearAllHistory = true },
                 modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && historyEnabled && filteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
@@ -229,7 +229,7 @@ fun ClipboardInputLayout(
                 )
             }
             SnyggIconButton(
-                elementName = OmniImeUi.ClipboardHeaderButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { isFilterRowShown = !isFilterRowShown },
                 modifier = sizeModifier,
                 enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
@@ -246,7 +246,7 @@ fun ClipboardInputLayout(
                 modifier = sizeModifier,
                 inputEventDispatcher = keyboardManager.inputEventDispatcher,
                 keyData = TextKeyData.DELETE,
-                elementName = OmniImeUi.ClipboardHeaderButton.elementName,
+                elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
             ) {
                 SnyggIcon(imageVector = Icons.AutoMirrored.Outlined.Backspace)
             }
@@ -349,14 +349,14 @@ fun ClipboardInputLayout(
                 val text = item.stringRepresentation()
                 Column {
                     ClipTextItemDescription(
-                        elementName = OmniImeUi.ClipboardItemDescription.elementName,
+                        elementName = FlorisImeUi.ClipboardItemDescription.elementName,
                         attributes = attributes,
                         text = text,
                     )
                     SnyggText(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .run { if (contentScrollInsteadOfClip) this.omniVerticalScroll() else this },
+                            .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this },
                         text = item.displayText(),
                     )
                 }
@@ -366,7 +366,7 @@ fun ClipboardInputLayout(
 
     @Composable
     fun HistoryMainView() {
-        SnyggBox(OmniImeUi.ClipboardContent.elementName,
+        SnyggBox(FlorisImeUi.ClipboardContent.elementName,
             modifier = Modifier.fillMaxSize(),
         ) {
             val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
@@ -390,7 +390,7 @@ fun ClipboardInputLayout(
                     }
                     items(items) { item ->
                         ClipItemView(
-                            elementName = OmniImeUi.ClipboardItem.elementName,
+                            elementName = FlorisImeUi.ClipboardItem.elementName,
                             item = item,
                             contentScrollInsteadOfClip = false,
                         )
@@ -409,9 +409,9 @@ fun ClipboardInputLayout(
                     exit = VerticalExitTransition,
                 ) {
                     SnyggRow(
-                        elementName = OmniImeUi.ClipboardFilterRow.elementName,
+                        elementName = FlorisImeUi.ClipboardFilterRow.elementName,
                         modifier = Modifier.fillMaxWidth(),
-                        clickAndSemanticsModifier = Modifier.omniHorizontalScroll(),
+                        clickAndSemanticsModifier = Modifier.florisHorizontalScroll(),
                     ) {
                         @Composable
                         fun FilterChip(
@@ -427,7 +427,7 @@ fun ClipboardInputLayout(
                                 )
                             }
                             SnyggChip(
-                                elementName = OmniImeUi.ClipboardFilterChip.elementName,
+                                elementName = FlorisImeUi.ClipboardFilterChip.elementName,
                                 attributes = attributes,
                                 onClick = {
                                     if (!activeFilterTypes.add(itemType)) {
@@ -456,7 +456,7 @@ fun ClipboardInputLayout(
                         )
                     }
                 }
-                SnyggBox(OmniImeUi.ClipboardGrid.elementName,
+                SnyggBox(FlorisImeUi.ClipboardGrid.elementName,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
@@ -497,14 +497,14 @@ fun ClipboardInputLayout(
                 ) {
                     SnyggColumn(modifier = Modifier.weight(0.5f)) {
                         ClipItemView(
-                            elementName = OmniImeUi.ClipboardItemPopup.elementName,
+                            elementName = FlorisImeUi.ClipboardItemPopup.elementName,
                             modifier = Modifier
                                 .widthIn(max = ItemWidth)
                                 .weight(1f, fill = false),
                             item = popupItem!!,
                             contentScrollInsteadOfClip = true,
                         )
-                        SnyggBox(OmniImeUi.ClipboardItemTimestamp.elementName) {
+                        SnyggBox(FlorisImeUi.ClipboardItemTimestamp.elementName) {
                             val formatter = LocalLocalizedDateTimeFormatter.current
                             SnyggText(
                                 modifier = Modifier.fillMaxWidth(),
@@ -513,7 +513,7 @@ fun ClipboardInputLayout(
                         }
                     }
                     SnyggColumn(modifier = Modifier.weight(0.5f)) {
-                        SnyggColumn(OmniImeUi.ClipboardItemActions.elementName) {
+                        SnyggColumn(FlorisImeUi.ClipboardItemActions.elementName) {
                             PopupAction(
                                 icon = Icons.Outlined.PushPin,
                                 text = stringRes(if (popupItem!!.isPinned) {
@@ -559,7 +559,7 @@ fun ClipboardInputLayout(
                     horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     SnyggColumn(
-                        elementName = OmniImeUi.ClipboardClearAllDialog.elementName,
+                        elementName = FlorisImeUi.ClipboardClearAllDialog.elementName,
                         modifier = Modifier
                             .width(DialogWidth)
                             .pointerInput(Unit) {
@@ -567,7 +567,7 @@ fun ClipboardInputLayout(
                             },
                     ) {
                         SnyggText(
-                            elementName = OmniImeUi.ClipboardClearAllDialogMessage.elementName,
+                            elementName = FlorisImeUi.ClipboardClearAllDialogMessage.elementName,
                             text = stringRes(
                                 if (isFilterRowShown) {
                                     R.string.clipboard__confirm_clear_filtered_history__message
@@ -576,10 +576,10 @@ fun ClipboardInputLayout(
                                 }
                             ),
                         )
-                        SnyggRow(OmniImeUi.ClipboardClearAllDialogButtons.elementName) {
+                        SnyggRow(FlorisImeUi.ClipboardClearAllDialogButtons.elementName) {
                             Spacer(modifier = Modifier.weight(1f))
                             SnyggButton(
-                                elementName = OmniImeUi.ClipboardClearAllDialogButton.elementName,
+                                elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
                                 attributes = mapOf("action" to "no"),
                                 onClick = {
                                     showClearAllHistory = false
@@ -590,7 +590,7 @@ fun ClipboardInputLayout(
                                 )
                             }
                             SnyggButton(
-                                elementName = OmniImeUi.ClipboardClearAllDialogButton.elementName,
+                                elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
                                 attributes = mapOf("action" to "yes"),
                                 onClick = {
                                     clipboardManager.clearExactHistory(filteredHistory.unpinned)
@@ -611,7 +611,7 @@ fun ClipboardInputLayout(
 
     @Composable
     fun HistoryEmptyView() {
-        SnyggColumn(OmniImeUi.ClipboardContent.elementName,
+        SnyggColumn(FlorisImeUi.ClipboardContent.elementName,
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -626,19 +626,19 @@ fun ClipboardInputLayout(
 
     @Composable
     fun HistoryDisabledView() {
-        SnyggColumn(OmniImeUi.ClipboardContent.elementName,
+        SnyggColumn(FlorisImeUi.ClipboardContent.elementName,
             modifier = Modifier.fillMaxSize(),
         ) {
             SnyggText(
-                elementName = OmniImeUi.ClipboardHistoryDisabledTitle.elementName,
+                elementName = FlorisImeUi.ClipboardHistoryDisabledTitle.elementName,
                 modifier = Modifier.padding(bottom = 8.dp),
                 text = stringRes(R.string.clipboard__disabled__title),
             )
             SnyggText(
-                elementName = OmniImeUi.ClipboardHistoryDisabledMessage.elementName,
+                elementName = FlorisImeUi.ClipboardHistoryDisabledMessage.elementName,
                 text = stringRes(R.string.clipboard__disabled__message),
             )
-            SnyggButton(OmniImeUi.ClipboardHistoryDisabledButton.elementName,
+            SnyggButton(FlorisImeUi.ClipboardHistoryDisabledButton.elementName,
                 onClick = { scope.launch { prefs.clipboard.historyEnabled.set(true) } },
                 modifier = Modifier.align(Alignment.End),
             ) {
@@ -651,16 +651,16 @@ fun ClipboardInputLayout(
 
     @Composable
     fun HistoryLockedView() {
-        SnyggColumn(OmniImeUi.ClipboardContent.elementName,
+        SnyggColumn(FlorisImeUi.ClipboardContent.elementName,
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             SnyggText(
-                elementName = OmniImeUi.ClipboardHistoryLockedTitle.elementName,
+                elementName = FlorisImeUi.ClipboardHistoryLockedTitle.elementName,
                 text = stringRes(R.string.clipboard__locked__title),
             )
             SnyggText(
-                elementName = OmniImeUi.ClipboardHistoryLockedMessage.elementName,
+                elementName = FlorisImeUi.ClipboardHistoryLockedMessage.elementName,
                 text = stringRes(R.string.clipboard__locked__message),
             )
         }
@@ -669,7 +669,7 @@ fun ClipboardInputLayout(
     SnyggColumn(
         modifier = modifier
             .fillMaxWidth()
-            .height(OmniImeSizing.imeUiHeight()),
+            .height(FlorisImeSizing.imeUiHeight()),
     ) {
         HeaderRow()
         if (deviceLocked) {
@@ -693,7 +693,7 @@ private fun ClipCategoryTitle(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    SnyggText(OmniImeUi.ClipboardSubheader.elementName,
+    SnyggText(FlorisImeUi.ClipboardSubheader.elementName,
         modifier = modifier.fillMaxWidth(),
         text = text.uppercase(),
     )
@@ -751,14 +751,14 @@ private fun PopupAction(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    SnyggRow(OmniImeUi.ClipboardItemAction.elementName,
+    SnyggRow(FlorisImeUi.ClipboardItemAction.elementName,
         modifier = modifier.rippleClickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SnyggIcon(OmniImeUi.ClipboardItemActionIcon.elementName,
+        SnyggIcon(FlorisImeUi.ClipboardItemActionIcon.elementName,
             imageVector = icon,
         )
-        SnyggText(OmniImeUi.ClipboardItemActionText.elementName,
+        SnyggText(FlorisImeUi.ClipboardItemActionText.elementName,
             modifier = Modifier.weight(1f),
             text = text,
         )

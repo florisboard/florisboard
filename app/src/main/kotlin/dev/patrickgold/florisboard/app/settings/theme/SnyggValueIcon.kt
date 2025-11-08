@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The OmniBoard Contributors
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.settings.theme
+package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -56,33 +56,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.jetpref.datastore.model.observeAsState
-import org.omniboard.lib.snygg.value.SnyggCutCornerDpShapeValue
-import org.omniboard.lib.snygg.value.SnyggDefinedVarValue
-import org.omniboard.lib.snygg.value.SnyggDpSizeValue
-import org.omniboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.omniboard.lib.snygg.value.SnyggShapeValue
-import org.omniboard.lib.snygg.value.SnyggStaticColorValue
-import org.omniboard.lib.snygg.value.SnyggSpSizeValue
-import org.omniboard.lib.snygg.value.SnyggValue
-import dev.silo.jetpref.material.ui.checkeredBackground
-import org.omniboard.lib.color.ColorMappings
-import org.omniboard.lib.color.getColor
-import org.omniboard.lib.snygg.value.SnyggContentScaleValue
-import org.omniboard.lib.snygg.value.SnyggCustomFontFamilyValue
-import org.omniboard.lib.snygg.value.SnyggDynamicDarkColorValue
-import org.omniboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.omniboard.lib.snygg.value.SnyggFontStyleValue
-import org.omniboard.lib.snygg.value.SnyggFontWeightValue
-import org.omniboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.omniboard.lib.snygg.value.SnyggNoValue
-import org.omniboard.lib.snygg.value.SnyggPaddingValue
-import org.omniboard.lib.snygg.value.SnyggTextAlignValue
-import org.omniboard.lib.snygg.value.SnyggTextDecorationLineValue
-import org.omniboard.lib.snygg.value.SnyggTextOverflowValue
-import org.omniboard.lib.snygg.value.SnyggUriValue
-import org.omniboard.lib.snygg.value.SnyggYesValue
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggShapeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggValue
+import dev.patrickgold.jetpref.material.ui.checkeredBackground
+import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.color.getColor
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
+import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
+import org.florisboard.lib.snygg.value.SnyggFontStyleValue
+import org.florisboard.lib.snygg.value.SnyggFontWeightValue
+import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggNoValue
+import org.florisboard.lib.snygg.value.SnyggPaddingValue
+import org.florisboard.lib.snygg.value.SnyggTextAlignValue
+import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
+import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
+import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.florisboard.lib.snygg.value.SnyggYesValue
 
 object SnyggValueIcon {
     interface Spec {
@@ -120,7 +120,7 @@ internal fun SnyggValueIcon(
     modifier: Modifier = Modifier,
     spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
 ) {
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val accentColor by prefs.theme.accentColor.observeAsState()
 

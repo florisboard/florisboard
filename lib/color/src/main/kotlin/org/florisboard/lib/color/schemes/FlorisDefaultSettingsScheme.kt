@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.color.schemes
+package org.florisboard.lib.color.schemes
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -94,7 +94,7 @@ private val surfaceContainerHighestDark = Color(0xFF30362E)
 
 val amoledDark = Color(0xFF000000)
 
-val omniDefaultSettingsLightScheme = lightColorScheme(
+val florisDefaultSettingsLightScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
     primaryContainer = primaryContainerLight,
@@ -132,7 +132,7 @@ val omniDefaultSettingsLightScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestLight,
 )
 
-val omniDefaultSettingsDarkScheme = darkColorScheme(
+val florisDefaultSettingsDarkScheme = darkColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
     primaryContainer = primaryContainerDark,

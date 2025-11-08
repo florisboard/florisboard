@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The OmniBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.ime.nlp
+package dev.patrickgold.florisboard.ime.nlp
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.omniboard.lib.ext.Extension
-import dev.silo.omniboard.lib.ext.ExtensionComponent
-import dev.silo.omniboard.lib.ext.ExtensionEditor
-import dev.silo.omniboard.lib.ext.ExtensionMeta
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.ext.Extension
+import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
+import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
+import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import org.omniboard.lib.kotlin.io.FsDir
-import org.omniboard.lib.kotlin.io.subFile
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.subFile
 
 @Serializable
 class LanguagePackComponent(
     override val id: String,
     override val label: String,
     override val authors: List<String>,
-    val locale: OmniLocale = OmniLocale.fromTag(id),
+    val locale: FlorisLocale = FlorisLocale.fromTag(id),
     val hanShapeBasedKeyCode: String = "abcdefghijklmnopqrstuvwxyz",
 ) : ExtensionComponent {
     @Transient var parent: LanguagePackExtension? = null

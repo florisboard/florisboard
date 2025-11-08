@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.io
+package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
-import dev.silo.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -32,8 +32,8 @@ import kotlin.contracts.contract
 
 /**
  * A universal resource reference, capable to point to destinations within
- * OmniBoard's app user interface screens, APK assets, cache and internal
- * storage, external resources provided to OmniBoard via content URIs, as
+ * FlorisBoard's app user interface screens, APK assets, cache and internal
+ * storage, external resources provided to FlorisBoard via content URIs, as
  * well as hyperlinks.
  *
  * [android.net.Uri] is used as the underlying implementation for storing the
@@ -45,12 +45,12 @@ import kotlin.contracts.contract
  * @property uri The underlying URI, which can be used for external references
  *  to pass along to the system.
  */
-@Serializable(with = OmniRef.Serializer::class)
+@Serializable(with = FlorisRef.Serializer::class)
 @JvmInline
-value class OmniRef private constructor(val uri: Uri) {
+value class FlorisRef private constructor(val uri: Uri) {
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        internal const val SCHEME_FLORIS = "omniboard"
+        internal const val SCHEME_FLORIS = "florisboard"
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_APP_UI = "app-ui"
@@ -69,7 +69,7 @@ value class OmniRef private constructor(val uri: Uri) {
         private const val URL_MAILTO_PREFIX = "mailto:"
 
         /**
-         * Constructs a new [OmniRef] pointing to a UI screen within the app
+         * Constructs a new [FlorisRef] pointing to a UI screen within the app
          * user interface.
          *
          * @param path The relative path of the UI screen this ref should point
@@ -81,12 +81,12 @@ value class OmniRef private constructor(val uri: Uri) {
             scheme(SCHEME_FLORIS)
             authority(AUTHORITY_APP_UI)
             encodedPath(path)
-            OmniRef(build())
+            FlorisRef(build())
         }
 
         /**
-         * Constructs a new [OmniRef] pointing to a resource within the
-         * OmniBoard APK assets.
+         * Constructs a new [FlorisRef] pointing to a resource within the
+         * FlorisBoard APK assets.
          *
          * @param path The relative path from the APK assets root the resource
          *  is located.
@@ -97,12 +97,12 @@ value class OmniRef private constructor(val uri: Uri) {
             scheme(SCHEME_FLORIS)
             authority(AUTHORITY_ASSETS)
             encodedPath(path)
-            OmniRef(build())
+            FlorisRef(build())
         }
 
         /**
-         * Constructs a new [OmniRef] pointing to a resource within the
-         * cache storage of OmniBoard.
+         * Constructs a new [FlorisRef] pointing to a resource within the
+         * cache storage of FlorisBoard.
          *
          * @param path The relative path from the cache root directory.
          *
@@ -112,12 +112,12 @@ value class OmniRef private constructor(val uri: Uri) {
             scheme(SCHEME_FLORIS)
             authority(AUTHORITY_CACHE)
             encodedPath(path)
-            OmniRef(build())
+            FlorisRef(build())
         }
 
         /**
-         * Constructs a new [OmniRef] pointing to a resource within the
-         * internal storage of OmniBoard.
+         * Constructs a new [FlorisRef] pointing to a resource within the
+         * internal storage of FlorisBoard.
          *
          * @param path The relative path from the internal storage root directory.
          *
@@ -127,33 +127,33 @@ value class OmniRef private constructor(val uri: Uri) {
             scheme(SCHEME_FLORIS)
             authority(AUTHORITY_INTERNAL)
             encodedPath(path)
-            OmniRef(build())
+            FlorisRef(build())
         }
 
         /**
          * Constructs a new reference from given [uri], this can point to any
-         * destination, regardless of within OmniBoard or not.
+         * destination, regardless of within FlorisBoard or not.
          *
          * @param uri The destination, denoted by a system URI format.
          *
          * @return The newly constructed reference.
          */
-        fun from(uri: Uri) = OmniRef(uri)
+        fun from(uri: Uri) = FlorisRef(uri)
 
         /**
          * Constructs a new reference from given [str], this can point to any
-         * destination, regardless of within OmniBoard or not.
+         * destination, regardless of within FlorisBoard or not.
          *
          * @param str An RFC 2396-compliant, encoded URI string.
          *
          * @return The newly constructed reference.
          */
-        fun from(str: String): OmniRef {
+        fun from(str: String): FlorisRef {
             // First two entries only kept due to backwards-compatibility reasons.
             return when {
                 str.startsWith("assets:") -> assets(str.substring(7))
                 str.startsWith("internal:") -> internal(str.substring(9))
-                else -> OmniRef(Uri.parse(str))
+                else -> FlorisRef(Uri.parse(str))
             }
         }
 
@@ -164,8 +164,8 @@ value class OmniRef private constructor(val uri: Uri) {
          *
          * @return The newly constructed reference.
          */
-        fun fromUrl(url: String): OmniRef {
-            return OmniRef(when {
+        fun fromUrl(url: String): FlorisRef {
+            return FlorisRef(when {
                 url.startsWith(URL_HTTP_PREFIX) ||
                     url.startsWith(URL_HTTPS_PREFIX) ||
                     url.startsWith(URL_MAILTO_PREFIX) -> Uri.parse(url)
@@ -175,7 +175,7 @@ value class OmniRef private constructor(val uri: Uri) {
 
         /**
          * Constructs a new reference from given [scheme] and [path], this can
-         * point to any destination, regardless of within OmniBoard or not.
+         * point to any destination, regardless of within FlorisBoard or not.
          *
          * @param scheme The scheme of this reference.
          * @param path The relative path of this reference.
@@ -185,7 +185,7 @@ value class OmniRef private constructor(val uri: Uri) {
         fun from(scheme: String, path: String) = Uri.Builder().run {
             scheme(scheme)
             encodedPath(path)
-            OmniRef(build())
+            FlorisRef(build())
         }
     }
 
@@ -197,21 +197,21 @@ value class OmniRef private constructor(val uri: Uri) {
         get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_APP_UI
 
     /**
-     * True if the scheme and authority indicates a reference to a OmniBoard APK asset
+     * True if the scheme and authority indicates a reference to a FlorisBoard APK asset
      * resource, false otherwise.
      */
     val isAssets: Boolean
         get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_ASSETS
 
     /**
-     * True if the scheme indicates a reference to a OmniBoard cache
+     * True if the scheme indicates a reference to a FlorisBoard cache
      * resource, false otherwise.
      */
     val isCache: Boolean
         get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_CACHE
 
     /**
-     * True if the scheme indicates a reference to a OmniBoard internal
+     * True if the scheme indicates a reference to a FlorisBoard internal
      * storage resource, false otherwise.
      */
     val isInternal: Boolean
@@ -246,13 +246,13 @@ value class OmniRef private constructor(val uri: Uri) {
         get() = (uri.path ?: "").removePrefix("/")
 
     /**
-     * Returns if this URI contains data for all valid parts of a OmniRef.
+     * Returns if this URI contains data for all valid parts of a FlorisRef.
      */
     val isValid: Boolean
         get() = scheme.isNotBlank() && authority.isNotBlank()
 
     /**
-     * Returns if this URI contains data for all valid parts of a OmniRef.
+     * Returns if this URI contains data for all valid parts of a FlorisRef.
      */
     val isInvalid: Boolean
         get() = !isValid
@@ -302,23 +302,23 @@ value class OmniRef private constructor(val uri: Uri) {
      * Allows this URI to be used depending on where this reference points to.
      * It is guaranteed that one of the four lambda parameters is executed.
      *
-     * @param assets The lambda to run when the reference points to the OmniBoard
+     * @param assets The lambda to run when the reference points to the FlorisBoard
      *  screen UI resources. Defaults to do nothing.
-     * @param assets The lambda to run when the reference points to the OmniBoard
+     * @param assets The lambda to run when the reference points to the FlorisBoard
      *  APK assets. Defaults to do nothing.
-     * @param cache The lambda to run when the reference points to the OmniBoard
+     * @param cache The lambda to run when the reference points to the FlorisBoard
      *  cache resources. Defaults to do nothing.
-     * @param internal The lambda to run when the reference points to the OmniBoard
+     * @param internal The lambda to run when the reference points to the FlorisBoard
      *  internal storage. Defaults to do nothing.
      * @param external The lambda to run when the reference points to an external
      * resource. Defaults to do nothing.
      */
     fun whenSchemeIs(
-        appUi: (ref: OmniRef) -> Unit = { /* Do nothing */ },
-        assets: (ref: OmniRef) -> Unit = { /* Do nothing */ },
-        cache: (ref: OmniRef) -> Unit = { /* Do nothing */ },
-        internal: (ref: OmniRef) -> Unit = { /* Do nothing */ },
-        external: (ref: OmniRef) -> Unit = { /* Do nothing */ }
+        appUi: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
+        assets: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
+        cache: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
+        internal: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
+        external: (ref: FlorisRef) -> Unit = { /* Do nothing */ }
     ) {
         contract {
             callsInPlace(appUi, InvocationKind.AT_MOST_ONCE)
@@ -343,22 +343,22 @@ value class OmniRef private constructor(val uri: Uri) {
         return uri.toString()
     }
 
-    object Serializer : PreferenceSerializer<OmniRef>, KSerializer<OmniRef> {
-        override val descriptor = PrimitiveSerialDescriptor("OmniRef", PrimitiveKind.STRING)
+    object Serializer : PreferenceSerializer<FlorisRef>, KSerializer<FlorisRef> {
+        override val descriptor = PrimitiveSerialDescriptor("FlorisRef", PrimitiveKind.STRING)
 
-        override fun serialize(value: OmniRef): String {
+        override fun serialize(value: FlorisRef): String {
             return value.toString()
         }
 
-        override fun serialize(encoder: Encoder, value: OmniRef) {
+        override fun serialize(encoder: Encoder, value: FlorisRef) {
             encoder.encodeString(value.toString())
         }
 
-        override fun deserialize(value: String): OmniRef {
+        override fun deserialize(value: String): FlorisRef {
             return from(value)
         }
 
-        override fun deserialize(decoder: Decoder): OmniRef {
+        override fun deserialize(decoder: Decoder): FlorisRef {
             return from(decoder.decodeString())
         }
     }

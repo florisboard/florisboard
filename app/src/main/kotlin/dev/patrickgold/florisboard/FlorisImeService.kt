@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard
+package dev.patrickgold.florisboard
 
 import android.content.Context
 import android.content.Intent
@@ -74,95 +74,95 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import dev.silo.omniboard.app.OmniAppActivity
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.app.devtools.DevtoolsOverlay
-import dev.silo.omniboard.ime.ImeUiMode
-import dev.silo.omniboard.ime.clipboard.ClipboardInputLayout
-import dev.silo.omniboard.ime.core.SelectSubtypePanel
-import dev.silo.omniboard.ime.core.isSubtypeSelectionShowing
-import dev.silo.omniboard.ime.editor.EditorRange
-import dev.silo.omniboard.ime.editor.OmniEditorInfo
-import dev.silo.omniboard.ime.input.InputFeedbackController
-import dev.silo.omniboard.ime.input.LocalInputFeedbackController
-import dev.silo.omniboard.ime.keyboard.OmniImeSizing
-import dev.silo.omniboard.ime.keyboard.ProvideKeyboardRowBaseHeight
-import dev.silo.omniboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.silo.omniboard.ime.lifecycle.LifecycleInputMethodService
-import dev.silo.omniboard.ime.media.MediaInputLayout
-import dev.silo.omniboard.ime.nlp.NlpInlineAutofill
-import dev.silo.omniboard.ime.onehanded.OneHandedMode
-import dev.silo.omniboard.ime.onehanded.OneHandedPanel
-import dev.silo.omniboard.ime.sheet.BottomSheetHostUi
-import dev.silo.omniboard.ime.sheet.isBottomSheetShowing
-import dev.silo.omniboard.ime.smartbar.ExtendedActionsPlacement
-import dev.silo.omniboard.ime.smartbar.SmartbarLayout
-import dev.silo.omniboard.ime.smartbar.quickaction.QuickActionsEditorPanel
-import dev.silo.omniboard.ime.text.TextInputLayout
-import dev.silo.omniboard.ime.theme.OmniImeTheme
-import dev.silo.omniboard.ime.theme.OmniImeUi
-import dev.silo.omniboard.ime.theme.WallpaperChangeReceiver
-import dev.silo.omniboard.lib.compose.SystemUiIme
-import dev.silo.omniboard.lib.devtools.LogTopic
-import dev.silo.omniboard.lib.devtools.flogError
-import dev.silo.omniboard.lib.devtools.flogInfo
-import dev.silo.omniboard.lib.devtools.flogWarning
-import dev.silo.omniboard.lib.observeAsTransformingState
-import dev.silo.omniboard.lib.util.ViewUtils
-import dev.silo.omniboard.lib.util.debugSummarize
-import dev.silo.omniboard.lib.util.launchActivity
-import dev.silo.jetpref.datastore.model.observeAsState
+import dev.patrickgold.florisboard.app.FlorisAppActivity
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
+import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
+import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
+import dev.patrickgold.florisboard.ime.core.isSubtypeSelectionShowing
+import dev.patrickgold.florisboard.ime.editor.EditorRange
+import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
+import dev.patrickgold.florisboard.ime.input.InputFeedbackController
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
+import dev.patrickgold.florisboard.ime.media.MediaInputLayout
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
+import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
+import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
+import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
+import dev.patrickgold.florisboard.ime.text.TextInputLayout
+import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
+import dev.patrickgold.florisboard.lib.compose.SystemUiIme
+import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogInfo
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.lib.observeAsTransformingState
+import dev.patrickgold.florisboard.lib.util.ViewUtils
+import dev.patrickgold.florisboard.lib.util.debugSummarize
+import dev.patrickgold.florisboard.lib.util.launchActivity
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.update
-import org.omniboard.lib.android.AndroidInternalR
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.android.isOrientationLandscape
-import org.omniboard.lib.android.isOrientationPortrait
-import org.omniboard.lib.android.showShortToastSync
-import org.omniboard.lib.android.systemServiceOrNull
-import org.omniboard.lib.compose.ProvideLocalizedResources
-import org.omniboard.lib.kotlin.collectIn
-import org.omniboard.lib.snygg.ui.SnyggBox
-import org.omniboard.lib.snygg.ui.SnyggButton
-import org.omniboard.lib.snygg.ui.SnyggRow
-import org.omniboard.lib.snygg.ui.SnyggSurfaceView
-import org.omniboard.lib.snygg.ui.SnyggText
-import org.omniboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.florisboard.lib.android.AndroidInternalR
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.isOrientationLandscape
+import org.florisboard.lib.android.isOrientationPortrait
+import org.florisboard.lib.android.showShortToastSync
+import org.florisboard.lib.android.systemServiceOrNull
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.kotlin.collectIn
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggSurfaceView
+import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 
 /**
- * Global weak reference for the [OmniImeService] class. This is needed as certain actions (request hide, switch to
+ * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
  * another input method, getting the editor instance / input connection, etc.) can only be performed by an IME
  * service class and no context-bound managers. This reference is exclusively used by the companion helper methods
- * of [OmniImeService], which provide a safe and memory-leak-free way of performing certain actions on the Omni
+ * of [FlorisImeService], which provide a safe and memory-leak-free way of performing certain actions on the Floris
  * input method service instance.
  */
-private var OmniImeServiceReference = WeakReference<OmniImeService?>(null)
+private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
 
 /**
  * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
  */
-class OmniImeService : LifecycleInputMethodService() {
+class FlorisImeService : LifecycleInputMethodService() {
     companion object {
         private val InlineSuggestionUiSmallestSize = Size(0, 0)
         private val InlineSuggestionUiBiggestSize = Size(Int.MAX_VALUE, Int.MAX_VALUE)
 
         fun currentInputConnection(): InputConnection? {
-            return OmniImeServiceReference.get()?.currentInputConnection
+            return FlorisImeServiceReference.get()?.currentInputConnection
         }
 
         fun inputFeedbackController(): InputFeedbackController? {
-            return OmniImeServiceReference.get()?.inputFeedbackController
+            return FlorisImeServiceReference.get()?.inputFeedbackController
         }
 
         /**
-         * Hides the IME and launches [OmniAppActivity].
+         * Hides the IME and launches [FlorisAppActivity].
          */
         fun launchSettings() {
-            val ims = OmniImeServiceReference.get() ?: return
+            val ims = FlorisImeServiceReference.get() ?: return
             ims.requestHideSelf(0)
-            ims.launchActivity(OmniAppActivity::class) {
+            ims.launchActivity(FlorisAppActivity::class) {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                     Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -170,7 +170,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
 
         fun showUi() {
-            val ims = OmniImeServiceReference.get() ?: return
+            val ims = FlorisImeServiceReference.get() ?: return
             if (AndroidVersion.ATLEAST_API28_P) {
                 ims.requestShowSelf(0)
             } else {
@@ -181,7 +181,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
 
         fun hideUi() {
-            val ims = OmniImeServiceReference.get() ?: return
+            val ims = FlorisImeServiceReference.get() ?: return
             if (AndroidVersion.ATLEAST_API28_P) {
                 ims.requestHideSelf(0)
             } else {
@@ -189,11 +189,11 @@ class OmniImeService : LifecycleInputMethodService() {
                 ims.systemServiceOrNull(InputMethodManager::class)
                     ?.hideSoftInputFromInputMethod(ims.currentInputBinding.connectionToken, 0)
             }
-            OmniImeServiceReference.get()?.requestHideSelf(0)
+            FlorisImeServiceReference.get()?.requestHideSelf(0)
         }
 
         fun switchToPrevInputMethod(): Boolean {
-            val ims = OmniImeServiceReference.get() ?: return false
+            val ims = FlorisImeServiceReference.get() ?: return false
             val imm = ims.systemServiceOrNull(InputMethodManager::class)
             try {
                 if (AndroidVersion.ATLEAST_API28_P) {
@@ -212,7 +212,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
 
         fun switchToNextInputMethod(): Boolean {
-            val ims = OmniImeServiceReference.get() ?: return false
+            val ims = FlorisImeServiceReference.get() ?: return false
             val imm = ims.systemServiceOrNull(InputMethodManager::class)
             try {
                 if (AndroidVersion.ATLEAST_API28_P) {
@@ -231,7 +231,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
 
         fun switchToVoiceInputMethod(): Boolean {
-            val ims = OmniImeServiceReference.get() ?: return false
+            val ims = FlorisImeServiceReference.get() ?: return false
             val imm = ims.systemServiceOrNull(InputMethodManager::class) ?: return false
             val list: List<InputMethodInfo> = imm.enabledInputMethodList
             for (el in list) {
@@ -254,7 +254,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
     }
 
-    private val prefs by OmniPreferenceStore
+    private val prefs by FlorisPreferenceStore
     private val editorInstance by editorInstance()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
@@ -273,12 +273,12 @@ class OmniImeService : LifecycleInputMethodService() {
     private val wallpaperChangeReceiver = WallpaperChangeReceiver()
 
     init {
-        setTheme(R.style.OmniImeTheme)
+        setTheme(R.style.FlorisImeTheme)
     }
 
     override fun onCreate() {
         super.onCreate()
-        OmniImeServiceReference = WeakReference(this)
+        FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
@@ -304,7 +304,7 @@ class OmniImeService : LifecycleInputMethodService() {
     override fun onCreateInputView(): View {
         super.installViewTreeOwners()
         // Instantiate and install bottom sheet host UI view
-        val bottomSheetView = OmniBottomSheetHostUiView()
+        val bottomSheetView = FlorisBottomSheetHostUiView()
         window.window!!.findViewById<ViewGroup>(android.R.id.content).addView(bottomSheetView)
         // Instantiate and return input view
         val composeView = ComposeInputView()
@@ -343,7 +343,7 @@ class OmniImeService : LifecycleInputMethodService() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(wallpaperChangeReceiver)
-        OmniImeServiceReference = WeakReference(null)
+        FlorisImeServiceReference = WeakReference(null)
         inputWindowView = null
     }
 
@@ -351,7 +351,7 @@ class OmniImeService : LifecycleInputMethodService() {
         flogInfo { "restarting=$restarting info=${info?.debugSummarize()}" }
         super.onStartInput(info, restarting)
         if (info == null) return
-        val editorInfo = OmniEditorInfo.wrap(info)
+        val editorInfo = FlorisEditorInfo.wrap(info)
         editorInstance.handleStartInput(editorInfo)
     }
 
@@ -359,7 +359,7 @@ class OmniImeService : LifecycleInputMethodService() {
         flogInfo { "restarting=$restarting info=${info?.debugSummarize()}" }
         super.onStartInputView(info, restarting)
         if (info == null) return
-        val editorInfo = OmniEditorInfo.wrap(info)
+        val editorInfo = FlorisEditorInfo.wrap(info)
         activeState.batchEdit {
             if (activeState.imeUiMode != ImeUiMode.CLIPBOARD || prefs.clipboard.historyHideOnNextTextField.get()) {
                 activeState.imeUiMode = ImeUiMode.TEXT
@@ -457,7 +457,7 @@ class OmniImeService : LifecycleInputMethodService() {
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
-            editorInstance.handleStartInputView(OmniEditorInfo.wrap(info), isRestart = true)
+            editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info), isRestart = true)
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(info)
@@ -536,7 +536,7 @@ class OmniImeService : LifecycleInputMethodService() {
         val top = if (keyboardManager.activeState.isBottomSheetShowing() || keyboardManager.activeState.isSubtypeSelectionShowing()) {
             0
         } else {
-            visibleTopY - if (needAdditionalOverlay) OmniImeSizing.Static.smartbarHeightPx else 0
+            visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
         }
         val right = inputViewSize.width
         val bottom = inputWindowView.height
@@ -588,7 +588,7 @@ class OmniImeService : LifecycleInputMethodService() {
         ) {
             ProvideKeyboardRowBaseHeight {
                 CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
-                    OmniImeTheme {
+                    FlorisImeTheme {
                         // Do not apply system bar padding here yet, we want to draw it ourselves
                         Column(modifier = Modifier.fillMaxWidth()) {
                             if (!(isFullscreenUiMode && isExtractUiShown)) {
@@ -612,8 +612,8 @@ class OmniImeService : LifecycleInputMethodService() {
     private fun ImeUi() {
         val state by keyboardManager.activeState.collectAsState()
         val attributes = mapOf(
-            OmniImeUi.Attr.Mode to state.keyboardMode.toString(),
-            OmniImeUi.Attr.ShiftState to state.inputShiftState.toString(),
+            FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
+            FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
         )
         val layoutDirection = LocalLayoutDirection.current
         LaunchedEffect(layoutDirection) {
@@ -621,7 +621,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SnyggBox(
-                elementName = OmniImeUi.Window.elementName,
+                elementName = FlorisImeUi.Window.elementName,
                 attributes = attributes,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -638,7 +638,7 @@ class OmniImeService : LifecycleInputMethodService() {
                 // in the SurfaceView for Android >=11, and in the Compose View Tree for Android <=10.
                 if (AndroidVersion.ATLEAST_API30_R) {
                     SnyggSurfaceView(
-                        elementName = OmniImeUi.Window.elementName,
+                        elementName = FlorisImeUi.Window.elementName,
                         attributes = attributes,
                         modifier = Modifier.matchParentSize(),
                     )
@@ -723,7 +723,7 @@ class OmniImeService : LifecycleInputMethodService() {
         }
     }
 
-    private inner class OmniBottomSheetHostUiView : AbstractComposeView(this) {
+    private inner class FlorisBottomSheetHostUiView : AbstractComposeView(this) {
         init {
             isHapticFeedbackEnabled = true
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
@@ -740,7 +740,7 @@ class OmniImeService : LifecycleInputMethodService() {
                 appName = R.string.app_name,
                 forceLayoutDirection = LayoutDirection.Ltr,
             ) {
-                OmniImeTheme {
+                FlorisImeTheme {
                     BottomSheetHostUi(
                         isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
                         onHide = {
@@ -796,20 +796,20 @@ class OmniImeService : LifecycleInputMethodService() {
                 appName = R.string.app_name,
                 forceLayoutDirection = LayoutDirection.Ltr,
             ) {
-                OmniImeTheme {
+                FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    SnyggBox(OmniImeUi.ExtractedLandscapeInputLayout.elementName) {
+                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
                         SnyggRow(
                             modifier = Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             SnyggBox(
-                                elementName = OmniImeUi.ExtractedLandscapeInputLayout.elementName,
+                                elementName = FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .weight(1f),
                             ) {
-                                val fieldStyle = rememberSnyggThemeQuery(OmniImeUi.ExtractedLandscapeInputField.elementName)
+                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField.elementName)
                                 val foreground = fieldStyle.foreground()
                                 AndroidView(
                                     factory = { extractEditText },
@@ -827,7 +827,7 @@ class OmniImeService : LifecycleInputMethodService() {
                                 )
                             }
                             SnyggButton(
-                                OmniImeUi.ExtractedLandscapeInputAction.elementName,
+                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
                                 onClick = {
                                     if (activeEditorInfo.extractedActionId != 0) {
                                         currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)

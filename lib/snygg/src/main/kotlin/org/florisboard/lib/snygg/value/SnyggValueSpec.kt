@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.snygg.value
+package org.florisboard.lib.snygg.value
 
 import androidx.annotation.CallSuper
-import org.omniboard.lib.kotlin.curlyFormat
+import org.florisboard.lib.kotlin.curlyFormat
 
 private val AngledGroupNameRegex = """<[a-zA-Z0-9]+>""".toRegex()
 private val WhitespaceRegex = """\s*""".toRegex()

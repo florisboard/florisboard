@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.app.devtools
+package dev.patrickgold.florisboard.app.devtools
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -39,32 +39,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.silo.omniboard.app.OmniPreferenceStore
-import dev.silo.omniboard.appContext
-import dev.silo.omniboard.clipboardManager
-import dev.silo.omniboard.editorInstance
-import dev.silo.omniboard.ime.keyboard.CachedLayout
-import dev.silo.omniboard.ime.keyboard.DebugLayoutComputationResult
-import dev.silo.omniboard.ime.nlp.NlpInlineAutofill
-import dev.silo.omniboard.ime.theme.ThemeManager
-import dev.silo.omniboard.keyboardManager
-import dev.silo.omniboard.lib.OmniLocale
-import dev.silo.omniboard.lib.observeAsNonNullState
-import dev.silo.omniboard.nlpManager
-import dev.silo.omniboard.themeManager
-import dev.silo.jetpref.datastore.model.observeAsState
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
+import dev.patrickgold.florisboard.ime.keyboard.DebugLayoutComputationResult
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.observeAsNonNullState
+import dev.patrickgold.florisboard.nlpManager
+import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import java.text.SimpleDateFormat
 import java.util.*
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.snygg.SnyggMissingSchemaException
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.SnyggMissingSchemaException
 
 private val CardBackground = Color.Black.copy(0.6f)
-private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", OmniLocale.default().base)
+private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
 
 @Composable
 fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val prefs by OmniPreferenceStore
+    val prefs by FlorisPreferenceStore
     val appContext by context.appContext()
     val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
@@ -258,7 +258,7 @@ private fun DevtoolsStylesheetFailedToLoadOverlay(loadFailure: ThemeManager.Load
             DevtoolsSubGroup(title = "Explanation") {
                 DevtoolsText(
                     text = """
-                    It appears you’re trying to load a theme designed for OmniBoard v0.4 (Snygg v1), which isn’t compatible with the latest release using Snygg v2.
+                    It appears you’re trying to load a theme designed for FlorisBoard v0.4 (Snygg v1), which isn’t compatible with the latest release using Snygg v2.
 
                     If you are the theme author, please update your theme to support Snygg v2.
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.io
+package dev.patrickgold.florisboard.lib.io
 
 import android.content.Context
 import android.net.Uri
-import org.omniboard.lib.android.copyRecursively
-import org.omniboard.lib.android.write
-import org.omniboard.lib.kotlin.io.FsDir
-import org.omniboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.android.copyRecursively
+import org.florisboard.lib.android.write
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
 object ZipUtils {
-    fun readFileFromArchive(context: Context, zipRef: OmniRef, relPath: String) = runCatching<String> {
+    fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String) = runCatching<String> {
         when {
             zipRef.isAssets -> {
                 zipRef.subRef(relPath).loadTextAsset(context).getOrThrow()
@@ -48,10 +48,10 @@ object ZipUtils {
         }
     }
 
-    fun zip(context: Context, srcRef: OmniRef, dstRef: OmniRef) =
+    fun zip(context: Context, srcRef: FlorisRef, dstRef: FlorisRef) =
         zip(context, FsDir(srcRef.absolutePath(context)), dstRef)
 
-    fun zip(context: Context, srcDir: FsDir, dstRef: OmniRef) = runCatching {
+    fun zip(context: Context, srcDir: FsDir, dstRef: FlorisRef) = runCatching {
         check(srcDir.exists() && srcDir.isDirectory) { "Cannot zip standalone file." }
         when {
             dstRef.isCache || dstRef.isInternal -> {
@@ -104,10 +104,10 @@ object ZipUtils {
         }
     }
 
-    fun unzip(context: Context, srcRef: OmniRef, dstRef: OmniRef) =
+    fun unzip(context: Context, srcRef: FlorisRef, dstRef: FlorisRef) =
         unzip(context, srcRef, FsDir(dstRef.absolutePath(context)))
 
-    fun unzip(context: Context, srcRef: OmniRef, dstDir: FsFile) = runCatching {
+    fun unzip(context: Context, srcRef: FlorisRef, dstDir: FsFile) = runCatching {
         check(dstDir.exists() && dstDir.isDirectory) { "Cannot unzip into file." }
         dstDir.mkdirs()
         when {

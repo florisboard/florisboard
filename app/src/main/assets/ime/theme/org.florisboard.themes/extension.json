@@ -1,47 +1,47 @@
 {
   "$": "ime.extension.theme",
   "meta": {
-    "id": "org.omniboard.themes",
+    "id": "org.florisboard.themes",
     "version": "0.2.0",
-    "title": "OmniBoard default themes",
+    "title": "FlorisBoard default themes",
     "description": "Default themes (both day and night) for the keyboard UI",
-    "maintainers": [ "silo <patrick@silo.dev>", "lm41 <lm41@lm41.xyz>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "lm41 <lm41@lm41.xyz>" ],
     "license": "apache-2.0"
   },
   "themes": [
     {
-      "id": "omni_day",
-      "label": "Omni Day",
-      "authors": [ "silo" ],
+      "id": "floris_day",
+      "label": "Floris Day",
+      "authors": [ "patrickgold" ],
       "isNight": false
     },
     {
-      "id": "omni_day_borderless",
-      "label": "Omni Day (Borderless)",
-      "authors": [ "silo" ],
+      "id": "floris_day_borderless",
+      "label": "Floris Day (Borderless)",
+      "authors": [ "patrickgold" ],
       "isNight": false
     },
     {
-      "id": "omni_night",
-      "label": "Omni Night",
-      "authors": [ "silo" ],
+      "id": "floris_night",
+      "label": "Floris Night",
+      "authors": [ "patrickgold" ],
       "isNight": true
     },
     {
-      "id": "omni_night_borderless",
-      "label": "Omni Night (Borderless)",
-      "authors": [ "silo" ],
+      "id": "floris_night_borderless",
+      "label": "Floris Night (Borderless)",
+      "authors": [ "patrickgold" ],
       "isNight": true
     },
     {
-      "id": "omni_pure_night",
-      "label": "Omni Pure Night",
+      "id": "floris_pure_night",
+      "label": "Floris Pure Night",
       "authors": [ "serebit" ],
       "isNight": true
     },
     {
-      "id": "omni_pure_night_borderless",
-      "label": "Omni Pure Night (Borderless)",
+      "id": "floris_pure_night_borderless",
+      "label": "Floris Pure Night (Borderless)",
       "authors": [ "serebit" ],
       "isNight": true
     }

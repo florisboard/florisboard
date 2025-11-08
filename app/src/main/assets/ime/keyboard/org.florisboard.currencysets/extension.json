@@ -1,11 +1,11 @@
 {
   "$": "ime.extension.keyboard",
   "meta": {
-    "id": "org.omniboard.currencysets",
+    "id": "org.florisboard.currencysets",
     "version": "0.1.0",
     "title": "Default currency sets",
     "description": "Default currency sets which are always available.",
-    "maintainers": [ "silo <patrick@silo.dev>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
     "license": "apache-2.0"
   },
   "currencySets": [

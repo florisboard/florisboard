@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.omniboard.lib.android
+package org.florisboard.lib.android
 
 import android.content.Context
 import android.widget.Toast
@@ -22,7 +22,7 @@ import androidx.annotation.StringRes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.omniboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.CurlyArg
 
 /**
  * Shows a short toast with specified text.

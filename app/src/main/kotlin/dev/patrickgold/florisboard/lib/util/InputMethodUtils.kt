@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The OmniBoard Contributors
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.silo.omniboard.lib.util
+package dev.patrickgold.florisboard.lib.util
 
 import android.content.ComponentName
 import android.content.Context
@@ -28,20 +28,20 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import dev.silo.omniboard.BuildConfig
-import dev.silo.omniboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.delay
-import org.omniboard.lib.android.AndroidSettings
-import org.omniboard.lib.android.AndroidVersion
-import org.omniboard.lib.android.systemServiceOrNull
-import org.omniboard.lib.compose.observeAsState
+import org.florisboard.lib.android.AndroidSettings
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.systemServiceOrNull
+import org.florisboard.lib.compose.observeAsState
 
 private const val DELIMITER = ':'
-private const val IME_SERVICE_CLASS_NAME = "dev.silo.omniboard.OmniImeService"
+private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisImeService"
 private const val TIMED_QUERY_DELAY = 500L
 
 object InputMethodUtils {
-    fun isOmniboardEnabled(context: Context): Boolean {
+    fun isFlorisboardEnabled(context: Context): Boolean {
         return if (AndroidVersion.ATLEAST_API34_U) {
             context.systemServiceOrNull(InputMethodManager::class)
                 ?.enabledInputMethodList
@@ -50,11 +50,11 @@ object InputMethodUtils {
             val enabledImeList = AndroidSettings.Secure.getString(
                 context, Settings.Secure.ENABLED_INPUT_METHODS
             )
-            enabledImeList != null && parseIsOmniboardEnabled(context, enabledImeList)
+            enabledImeList != null && parseIsFlorisboardEnabled(context, enabledImeList)
         }
     }
 
-    fun isOmniboardSelected(context: Context): Boolean {
+    fun isFlorisboardSelected(context: Context): Boolean {
         return if (AndroidVersion.ATLEAST_API34_U) {
             context.systemServiceOrNull(InputMethodManager::class)
                 ?.currentInputMethodInfo
@@ -63,50 +63,50 @@ object InputMethodUtils {
             val selectedIme = AndroidSettings.Secure.getString(
                 context, Settings.Secure.DEFAULT_INPUT_METHOD
             )
-            selectedIme != null && parseIsOmniboardSelected(context, selectedIme)
+            selectedIme != null && parseIsFlorisboardSelected(context, selectedIme)
         }
     }
 
     @Composable
-    fun observeIsOmniboardEnabled(
+    fun observeIsFlorisboardEnabled(
         context: Context = LocalContext.current.applicationContext,
         foregroundOnly: Boolean = false,
     ): State<Boolean> {
         return if (AndroidVersion.ATLEAST_API34_U) {
-            timedObserveIsOmniBoardEnabled()
+            timedObserveIsFlorisBoardEnabled()
         } else {
             AndroidSettings.Secure.observeAsState(
                 key = Settings.Secure.ENABLED_INPUT_METHODS,
                 foregroundOnly = foregroundOnly,
-                transform = { parseIsOmniboardEnabled(context, it.toString()) },
+                transform = { parseIsFlorisboardEnabled(context, it.toString()) },
             )
         }
     }
 
     @Composable
-    fun observeIsOmniboardSelected(
+    fun observeIsFlorisboardSelected(
         context: Context = LocalContext.current.applicationContext,
         foregroundOnly: Boolean = false,
     ): State<Boolean> {
         return if (AndroidVersion.ATLEAST_API34_U) {
-            timedObserveIsOmniBoardSelected()
+            timedObserveIsFlorisBoardSelected()
         } else {
             AndroidSettings.Secure.observeAsState(
                 key = Settings.Secure.DEFAULT_INPUT_METHOD,
                 foregroundOnly = foregroundOnly,
-                transform = { parseIsOmniboardSelected(context, it.toString()) },
+                transform = { parseIsFlorisboardSelected(context, it.toString()) },
             )
         }
     }
 
-    fun parseIsOmniboardEnabled(context: Context, activeImeIds: String): Boolean {
+    fun parseIsFlorisboardEnabled(context: Context, activeImeIds: String): Boolean {
         flogDebug { activeImeIds }
         return activeImeIds.split(DELIMITER).map { componentStr ->
             ComponentName.unflattenFromString(componentStr)
         }.any { it?.packageName == context.packageName && it?.className == IME_SERVICE_CLASS_NAME }
     }
 
-    fun parseIsOmniboardSelected(context: Context, selectedImeId: String): Boolean {
+    fun parseIsFlorisboardSelected(context: Context, selectedImeId: String): Boolean {
         flogDebug { selectedImeId }
         val component = ComponentName.unflattenFromString(selectedImeId)
         return component?.packageName == context.packageName && component?.className == IME_SERVICE_CLASS_NAME
@@ -131,12 +131,12 @@ object InputMethodUtils {
 
     @RequiresApi(api = 34)
     @Composable
-    private fun timedObserveIsOmniBoardEnabled(): State<Boolean> {
+    private fun timedObserveIsFlorisBoardEnabled(): State<Boolean> {
         val state = remember { mutableStateOf(false) }
         val context = LocalContext.current
         LaunchedEffect(Unit) {
             while (true) {
-                state.value = isOmniboardEnabled(context)
+                state.value = isFlorisboardEnabled(context)
                 delay(TIMED_QUERY_DELAY)
             }
         }
@@ -145,12 +145,12 @@ object InputMethodUtils {
 
     @RequiresApi(api = 34)
     @Composable
-    private fun timedObserveIsOmniBoardSelected(): State<Boolean> {
+    private fun timedObserveIsFlorisBoardSelected(): State<Boolean> {
         val state = remember { mutableStateOf(false) }
         val context = LocalContext.current
         LaunchedEffect(Unit) {
             while (true) {
-                state.value = isOmniboardSelected(context)
+                state.value = isFlorisboardSelected(context)
                 delay(TIMED_QUERY_DELAY)
             }
         }
