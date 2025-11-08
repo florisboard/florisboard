@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Apturēt</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Uzgaidīt</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Trīspunkte. Ja redzama, norāda, ka vairāk rakstzīmju var tikt izmantotas, ja nospiež ilgāk.</string>
@@ -107,8 +107,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Noklusējums</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistēmas noklusējums</string>
     <string name="settings__home__title" comment="Title of the Home screen">Laipni lūgts {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard nav iespējots sistēmas iestatījumos, tādēļ tā nebūs pieejama kā ievades avots atlasītājā. Klikšķināt šeit, lai atrisinātu to.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard nav atlasīts kā noklusējuma ievades veids. Klikšķināt šeit, lai to novērstu.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nav iespējots sistēmas iestatījumos, tādēļ tā nebūs pieejama kā ievades avots atlasītājā. Klikšķināt šeit, lai atrisinātu to.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nav atlasīts kā noklusējuma ievades veids. Klikšķināt šeit, lai to novērstu.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Valodas un izkārtojumi</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Attēlot valodu nosaukumu</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Attēlot tastatūras iezīmes apakšveida valodā</string>
@@ -155,7 +155,7 @@
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Uzsvara krāsa (Material You izskati)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Pārvaldīt uzstādītos izskatus</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">OmniBoard lietotnes līdzekļi</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Ārējs avots</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Atlasīt dienas izskatu</string>
@@ -485,7 +485,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">OmniBoard lietotnes ikona</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Atvērtā pirmavota licences</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privātuma nosacījumi</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Avota kods</string>
@@ -500,7 +500,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Privātuma nosacījumi</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Šī projekta privātuma nosacījumi</string>
     <string name="about__project_license__title" comment="Preference title">Projekta licence</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoard ir licencēts ar {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard ir licencēts ar {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Kļūda: neizdevās ielādēt licences saturu.\n-&gt; Iemesls: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Līdzekļu pārvaldītāja atsauce ir null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Trešo pušu licences</string>
@@ -518,7 +518,7 @@
     <string name="setup__select_ime__switch_keyboard_btn">Pārslēgt tastatūru</string>
     <string name="setup__grant_notification_permission__title">Atļaut avārijas atskaišu paziņojumus</string>
     <string name="setup__grant_notification_permission__description">Sākot ar Android 13, lietotnēm ir jāprasa atļauja, lai
-        nosūtītu paziņojumus. OmniBoard tā tiek izmantota tikai, lai atvērtu avārijas ziņojuma ekrānu avārijas gadījumā.
+        nosūtītu paziņojumus. Florisboard tā tiek izmantota tikai, lai atvērtu avārijas ziņojuma ekrānu avārijas gadījumā.
         Šo atļauju sistēmas iestatījumos var mainīt jebkurā laikā.
     </string>
     <string name="setup__grant_notification_permission__btn">Piešķirt atļauju</string>
@@ -565,18 +565,18 @@
     <string name="backup_and_restore__restore__success">Dati veiksmīgi atjaunoti.</string>
     <string name="backup_and_restore__restore__failure">Neizdevās atjaunot datus: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">OmniBoard kļūdu ziņojums</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorsBoard avarēja neparedzētas kļūdas dēļ.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Ja ir vēlme ziņot par šo kļūdu, vispirms jāpārliecinās, vai GitHub pieteikumu ceļrādī par šādu avāriju jau ir ziņots.\nJa nē, starpliktuvē jāievieto izveidotais avārijas žurnāls un jāatver jauns pieteikums. Jāizmanto \"%s\" veidne un jānorāda apraksts, darbības atkārtošanai un beigās jāielīmē avārijas žurnāls. Tas palīdz padarīt OmniBoard labāku un noturīgāku ikvienam. Paldies!</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Ja ir vēlme ziņot par šo kļūdu, vispirms jāpārliecinās, vai GitHub pieteikumu ceļrādī par šādu avāriju jau ir ziņots.\nJa nē, starpliktuvē jāievieto izveidotais avārijas žurnāls un jāatver jauns pieteikums. Jāizmanto \"%s\" veidne un jānorāda apraksts, darbības atkārtošanai un beigās jāielīmē avārijas žurnāls. Tas palīdz padarīt FlorisBoard labāku un noturīgāku ikvienam. Paldies!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ievietot sistēmas starpliktuvē</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Ievietots sistēmas starpliktuvē</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nav iespējams ievietot sistēmas starpliktuvē: nav atrasts starpliktuves pārvaldnieks</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Atvērt pieteikumu ceļrādi (GitHub.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Aizvērt</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">OmniBoard kļūdu ziņojumi</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard pārstāja darboties…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard kļūdu ziņojumi</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard pārstāja darboties…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Pieskarties, lai apskatītu kļudu izklāstu</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Izskatās, ka OmniBoard atkārtoti pārstāj darboties…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Izskatās, ka FlorisBoard atkārtoti pārstāj darboties…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Starpliktuve</string>
@@ -609,9 +609,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinhronizēt no sistēmas starpliktuves</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī OmniBoard starpliktuvi</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">OmniBoard starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Starpliktuves ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
@@ -714,7 +714,7 @@
     <string name="ext__export__failure">Neizdevās izdot paplašinājumu: {error_message}</string>
     <string name="ext__import__success">Paplašinājums veiksmīgi ievietots.</string>
     <string name="ext__import__failure">Neizdevās ievietot paplašinājumu: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Iekļaut paplašinājumu</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Iekļaut paplašinājumu</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Ievietot tastatūras paplašinājumu</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Ievietot izskata paplašinājumu</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Ievietot valodu paplašinājumu</string>
@@ -754,7 +754,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Pārvalda {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Visi uzdevumi, kas saistīti ar paplašinājumu ievietošanu, izgūšanu, izveidošanu, pielāgošanu un noņemšanu, ir paveicami centralizētajā papildinājumu pārvaldniekā.</string>
     <string name="ext__addon_management_box__go_to_page">Doties uz {ext_home_title}</string>
-    <string name="ext__home__info">Paplašinājumus var lejupielādēt un uzstādīt no OmniBoard papildinājumu glabātavas vai ievietot jebkuru paplašinājuma datni, kas ir lejupielādēta internetā.</string>
+    <string name="ext__home__info">Paplašinājumus var lejupielādēt un uzstādīt no FlorisBoard papildinājumu glabātavas vai ievietot jebkuru paplašinājuma datni, kas ir lejupielādēta internetā.</string>
     <string name="ext__home__visit_store">Apmeklēt papildinājumu glabātavu</string>
     <string name="ext__home__manage_extensions">Pārvaldīt uzstādītos paplašinājumus</string>
     <string name="ext__list__view_details">Skatīt izvērsumu</string>

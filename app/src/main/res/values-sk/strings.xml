@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počkajte</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona s tromi bodkami. Ak je viditeľná, znamená, že po dlhšom stlačení je možné použiť viac písmen.</string>
@@ -96,8 +96,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Predvolené</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Podľa systému</string>
     <string name="settings__home__title" comment="Title of the Home screen">Víta ťa {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">Klávesnica OmniBoard nie je v systéme povolená, a preto sa pri výbere vstupu nebude dať nastaviť ako metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">Klávesnica OmniBoard nie je nastavená ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Klávesnica FlorisBoard nie je v systéme povolená, a preto sa pri výbere vstupu nebude dať nastaviť ako metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Klávesnica FlorisBoard nie je nastavená ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešiš.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Jazyky a rozloženia</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Zdroj zobrazovania názvov jazykov</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Podtypy</string>
@@ -137,7 +137,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denný motív</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočný motív</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Spravovať nainštalované motívy</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Zdroje aplikácie OmniBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Zdroje aplikácie FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Interné úložisko</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Externý poskytovateľ</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Vybrať denný motív</string>
@@ -251,7 +251,7 @@
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Potiahnutie vpravo</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikácii</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikácie OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikácie FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open-source licencie</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Zásady ochrany osobných údajov</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
@@ -266,7 +266,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Zásady ochrany osobných údajov</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Zásady ochrany osobných údajov v rámci tohto projektu</string>
     <string name="about__project_license__title" comment="Preference title">Licencia projektu</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoard má udelenú licenciu {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard má udelenú licenciu {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Chyba: Nepodarilo sa načítať text licencie.\n-&gt; Dôvod: {error_message}.</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Licencie tretích strán</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licencie knižníc tretích strán, ktoré sú zahrnuté v tejto aplikácii</string>
@@ -312,7 +312,7 @@
     <string name="backup_and_restore__restore__failure">Dáta sa nepodarilo obnoviť: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavrieť</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Aplikácia OmniBoard prestala pracovať…</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Aplikácia FlorisBoard prestala pracovať…</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Schránka</string>
     <string name="clipboard__disabled__title">História schránky je momentálne zakázaná</string>

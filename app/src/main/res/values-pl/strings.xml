@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Czekaj</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona trzech kropek. Jeśli jest widoczna, to oznacza, że po dłuższym naciśnięciu można użyć więcej liter.</string>
@@ -111,8 +111,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Domyślne</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Domyślne systemowe</string>
     <string name="settings__home__title" comment="Title of the Home screen">Witaj w {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard nie jest włączony w systemie i dlatego nie będzie dostępny jako metoda wprowadzania danych w oknie wyboru. Kliknij tutaj, aby rozwiązać ten problem.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie jest włączony w systemie i dlatego nie będzie dostępny jako metoda wprowadzania danych w oknie wyboru. Kliknij tutaj, aby rozwiązać ten problem.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Język i układ</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Wyświetla nazwy języków w</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Wyświetlaj etykiety klawiatury w języku podtypu</string>
@@ -159,7 +159,7 @@
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Kolor akcentujący (motywy Material you)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Zarządzaj zainstalowanymi motywami</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Wbudowane w aplikację OmniBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Wbudowane w aplikację FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Pamięć wewnętrzna</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Zewnętrzny dostawca</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Wybierz motyw dzienny</string>
@@ -521,7 +521,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Zawsze włączone na Androidzie 10+ ze względu na ograniczenia systemu</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informacje o oprogramowaniu</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikacji OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikacji FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Licencje Open Source</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Polityka prywatności</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kod źródłowy</string>
@@ -536,7 +536,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Polityka prywatności</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Polityka prywatności tego projektu</string>
     <string name="about__project_license__title" comment="Preference title">Licencja Projektu</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoard używa licencji {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard używa licencji {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Błąd: Nie udało się załadować tekstu licencji.\n-&gt; Powód: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Referencja do managera zasobów to null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Licencje stron trzecich</string>
@@ -554,7 +554,7 @@
     <string name="setup__select_ime__switch_keyboard_btn">Przełącz Klawiaturę</string>
     <string name="setup__grant_notification_permission__title">Zezwolenie na powiadomienia dotyczące raportów o awariach</string>
     <string name="setup__grant_notification_permission__description">Od Androida 13+ aplikacje muszą prosić o pozwolenie na
-        wysyłanie powiadomień. We OmniBoard jest to używane tylko do otwierania ekranu raportu o awarii, w przypadku awarii.
+        wysyłanie powiadomień. We Florisboard jest to używane tylko do otwierania ekranu raportu o awarii, w przypadku awarii.
         Zezwolenie to można zmienić w dowolnym momencie w ustawieniach systemu.
     </string>
     <string name="setup__grant_notification_permission__btn">Przyznaj uprawnienie</string>
@@ -602,17 +602,17 @@
     <string name="backup_and_restore__restore__failure">Nie udało się przywrócić danych: {error_message}</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Pobierz raport o błędach</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Przepraszamy za niedogodności, ale OmniBoard uległ awarii z powodu nieoczekiwanego błędu.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Jeśli chcesz zgłosić ten błąd, najpierw sprawdź system do śledzenia zgłoszeń na GitHub, czy Twoja awaria nie została już zgłoszona.\nJeśli nie, skopiuj wygenerowany dziennik awarii i otwórz nowy \"issue\". Użyj szablonu „%s” i wypełnij opis, kroki do odtworzenia, a na końcu wklej wygenerowany dziennik awarii. Pomaga to uczynić OmniBoard lepszym i bardziej stabilnym dla wszystkich. Dziękuję Ci!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Przepraszamy za niedogodności, ale FlorisBoard uległ awarii z powodu nieoczekiwanego błędu.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Jeśli chcesz zgłosić ten błąd, najpierw sprawdź system do śledzenia zgłoszeń na GitHub, czy Twoja awaria nie została już zgłoszona.\nJeśli nie, skopiuj wygenerowany dziennik awarii i otwórz nowy \"issue\". Użyj szablonu „%s” i wypełnij opis, kroki do odtworzenia, a na końcu wklej wygenerowany dziennik awarii. Pomaga to uczynić FlorisBoard lepszym i bardziej stabilnym dla wszystkich. Dziękuję Ci!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Skopiuj do schowka systemowego</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Skopiowano do schowka systemowego</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nie można skopiować do schowka systemowego: Nie znaleziono instancji menedżera schowka</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Otwórz system do śledzenia zgłoszeń (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zamknij</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raporty o błędach OmniBoard</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard przestał działać…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raporty o błędach FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard przestał działać…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Kliknij, by zobaczyć szczegóły</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">OmniBoard wydaje się wielokrotnie przerywać pracę…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard wydaje się wielokrotnie przerywać pracę…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Powracanie do poprzedniej klawiatury w celu zatrzymania nieskończonej pętli awarii. Stuknij, aby wyświetlić szczegóły błędu</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Schowek</string>
@@ -645,9 +645,9 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchronizuj ze schowkiem systemowym</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Zmiana w schowku systemowym również zmienia schowek OmniBoard</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Zmiana w schowku systemowym również zmienia schowek Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizuj do schowka systemowego</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Zmiana w schowku OmniBoard również zmienia schowek systemowy</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Zmiana w schowku Floris również zmienia schowek systemowy</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugestie schowka</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zasugeruj poprzednio skopiowaną zawartość schowka</string>
@@ -750,7 +750,7 @@
     <string name="ext__export__failure">Eksportowanie rozszerzenia nie powiodło się: {error_message}</string>
     <string name="ext__import__success">Pomyślnie zaimportowano rozszerzenie!</string>
     <string name="ext__import__failure">Importowanie rozszerzenia nie powiodło się: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Import rozszerzenia</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Import rozszerzenia</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Import rozszerzenie klawiatury</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Import rozszerzenia motywu</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Importuj rozszerzenie pakietu językowego</string>
@@ -790,7 +790,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Zarządzanie {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Wszystkie zadania związane z importowaniem, eksportowaniem, tworzeniem, dostosowywaniem i usuwaniem rozszerzeń mogą być obsługiwane za pośrednictwem scentralizowanego menedżera dodatków.</string>
     <string name="ext__addon_management_box__go_to_page">Przejdź do {ext_home_title}</string>
-    <string name="ext__home__info">Możesz pobrać i zainstalować rozszerzenia ze sklepu dodatków OmniBoard lub zaimportować dowolny plik rozszerzenia pobrany z Internetu.</string>
+    <string name="ext__home__info">Możesz pobrać i zainstalować rozszerzenia ze sklepu dodatków FlorisBoard lub zaimportować dowolny plik rozszerzenia pobrany z Internetu.</string>
     <string name="ext__home__visit_store">Odwiedź sklep z dodatkami</string>
     <string name="ext__home__manage_extensions">Zarządzaj zainstalowanymi rozszerzeniami</string>
     <string name="ext__list__view_details">Pokaż szczegóły</string>

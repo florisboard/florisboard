@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Изчакване</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Икона с многоточие. Ако е видима, означава, че при задържане могат да бъдат използвани повече букви.</string>
@@ -111,8 +111,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По подразбиране</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">По подразбиране от системата</string>
     <string name="settings__home__title" comment="Title of the Home screen">Добре дошли във {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">Клавиатурата OmniBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">Клавиатурата OmniBoard не е избрана като подразбиран метод за въвеждане. Докоснете, за да направите промяната.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Клавиатурата FlorisBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като подразбиран метод за въвеждане. Докоснете, за да направите промяната.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Езици и подредби</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Изписване на езиците на</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Етикети на клавиатурата на езика на подредбата</string>
@@ -158,7 +158,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нощна тема</string>
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">Допълнителен цвят (за теми на Material You)</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Управление на теми</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи на OmniBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи на FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Вътрешно хранилище</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Външен доставчик</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Избор на дневна тема</string>
@@ -519,7 +519,7 @@
     <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Лицензи с отворен код</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика за поверителност</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Изходен код</string>
@@ -534,7 +534,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Политика за личните данни</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Политиката за личните данни на проекта</string>
     <string name="about__project_license__title" comment="Preference title">Лиценз на проекта</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoard е лицензиран под {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard е лицензиран под {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Грешка при зареждане на текста на лиценза.\n-&gt; Причина: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Референцията към обекта за управление на активи е празна</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Лицензи на трети страни</string>
@@ -551,7 +551,7 @@
     <string name="setup__select_ime__description">Клавиатурата на {app_name} вече е включена от системата. За да я използвате активно, превключете на {app_name}, като я изберете в диалоговия прозорец с методи за въвеждане!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Смяна на клавиатура</string>
     <string name="setup__grant_notification_permission__title">Разрешаване на известия при срив</string>
-    <string name="setup__grant_notification_permission__description">От Андроид 13 нататък, приложенията трябва да поискат разрешение да изпращат известия. Във OmniBoard те се използват само за отваряне на екран в случай на срив.
+    <string name="setup__grant_notification_permission__description">От Андроид 13 нататък, приложенията трябва да поискат разрешение да изпращат известия. Във Florisboard те се използват само за отваряне на екран в случай на срив.
 Можете да промените разрешението по всяко време в системните настройки.</string>
     <string name="setup__grant_notification_permission__btn">Даване на разрешение</string>
     <string name="setup__finish_up__title">Завършване</string>
@@ -597,18 +597,18 @@
     <string name="backup_and_restore__restore__success">Данните са възстановени успешно!</string>
     <string name="backup_and_restore__restore__failure">Грешка при възстановяване на данни: {error_message}</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на OmniBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Извинявайте за неудобството, но поради непредвидена грешка OmniBoard се срина.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">При желание от ваша страна да съобщите за възникналата грешка първо проверете системата за дефекти в GitHub дали подобна вече не е докладвана.\nАко не е, копирайте генерирания журнал на грешката и направете нов долкад за нея, използвайки шаблона \"%s\". Попълнете описанието, стъпките за възпроизвеждане и накрая поставете копирания журнал.\nПо този начин помагате да направим приложението OmniBoard по-стабилно за всички. Благодарим ви!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Извинявайте за неудобството, но поради непредвидена грешка FlorisBoard се срина.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">При желание от ваша страна да съобщите за възникналата грешка първо проверете системата за дефекти в GitHub дали подобна вече не е докладвана.\nАко не е, копирайте генерирания журнал на грешката и направете нов долкад за нея, използвайки шаблона \"%s\". Попълнете описанието, стъпките за възпроизвеждане и накрая поставете копирания журнал.\nПо този начин помагате да направим приложението FlorisBoard по-стабилно за всички. Благодарим ви!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копиране в системната междинна памет</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Копирано в системната междинна памет</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Грешка при копиране в системната междинна памет</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Система за дефекти (github)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Затваряне</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Доклади за грешки на OmniBoard</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">OmniBoard спря да работи…</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Доклади за грешки на FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard спря да работи…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Докоснете, за да видите подробности за грешката</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">OmniBoard изглежда спира да работи многократно…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard изглежда спира да работи многократно…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Връщане към предишна клавиатура, за да се спре безкрайния цикъл от сривове. Докоснете, за да видите подробности за грешката</string>
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Междинна памет</string>
@@ -746,7 +746,7 @@
     <string name="ext__export__failure">Грешка при изнасяне на разширение: {error_message}</string>
     <string name="ext__import__success">Темата е внесена успешно!</string>
     <string name="ext__import__failure">Грешка при внасяне на разширение: {error_message}</string>
-    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported OmniBoard extension">Внасяне на добавка</string>
+    <string name="ext__import__ext_any" comment="Title of Importer screen for import of any supported FlorisBoard extension">Внасяне на добавка</string>
     <string name="ext__import__ext_keyboard" comment="Title of Importer screen for keyboard extension import">Внасяне на добавка с клавиатура</string>
     <string name="ext__import__ext_theme" comment="Title of Importer screen for theme extension import">Внасяне на добавка с тема</string>
     <string name="ext__import__ext_languagepack" comment="Title of Importer screen for language pack extension import">Внасяне на разширение-езиков пакет</string>
@@ -786,7 +786,7 @@
     <string name="ext__addon_management_box__managing_placeholder">Управление на {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">Всички дейности, свързани с внасяне, изнасяне, създаване, промяна и премахване на разширения могат да бъдат извършване през Управление на разширения.</string>
     <string name="ext__addon_management_box__go_to_page">Към {ext_home_title}</string>
-    <string name="ext__home__info">Можете да изтегляте и инсталирате разширения от магазина за добавки на OmniBoard или да внесете файл на разширение, който сте изтеглили от интернет.</string>
+    <string name="ext__home__info">Можете да изтегляте и инсталирате разширения от магазина за добавки на FlorisBoard или да внесете файл на разширение, който сте изтеглили от интернет.</string>
     <string name="ext__home__visit_store">Магазин за добавки</string>
     <string name="ext__home__manage_extensions">Управление на инсталирани разширения</string>
     <string name="ext__list__view_details">Подробности</string>

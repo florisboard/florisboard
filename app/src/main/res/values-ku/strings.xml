@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">OmniBoard</string>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Rawestandin</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Li bendê bimîne</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Îkona sê-dot. Eger xuya be, nîşan dide ku eger zêdetir pêl bê kirin, zêdetir tîp dikarin bên bikaranîn.</string>
@@ -34,8 +34,8 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Rawêj</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Jixwebera Sîstemê</string>
     <string name="settings__home__title" comment="Title of the Home screen">Bi xêr hatî {app_name}</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when OmniBoard is not enabled in the system">OmniBoard di pergalê de ne çalak e û ji ber vê yekê dê wekî rêbazek têketê di hilbijarka têketê de tune be. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when OmniBoard is not selected as the default keyboard">OmniBoard wekî metoda têketê ya pêşdarazî nayê hilbijartin. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard di pergalê de ne çalak e û ji ber vê yekê dê wekî rêbazek têketê di hilbijarka têketê de tune be. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard wekî metoda têketê ya pêşdarazî nayê hilbijartin. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Ziman û Rêzkirin</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Navên zimanan di nav de nîşan bidin</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Bintîp</string>
@@ -74,7 +74,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Rûkara Rojê</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Rûkara şevê</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Rûkarên sazkirî bi rê ve bibe</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">OmniBoard Hebûnên Sepan</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard Hebûnên Sepan</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Depoya Navxweyî</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Pêşkêşkerê Derve</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Rûkarê ronahiyê hilbijêre</string>
@@ -204,7 +204,7 @@
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Derbenda mesafeyê şemitîn</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya OmniBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Lîsansên çavkaniya vekirî</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Polîtîkaya nepenîtiyê</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Koda çavkanî</string>
@@ -219,7 +219,7 @@
     <string name="about__privacy_policy__title" comment="Preference title">Polîtîqa Taybetîyê</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">Polîtîkaya nepenîtiyê ya ji bo vê projeyê</string>
     <string name="about__project_license__title" comment="Preference title">Lîsansa projeyê</string>
-    <string name="about__project_license__summary" comment="Preference summary">OmniBoard di binê lîsansê de ye {license_name}</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard di binê lîsansê de ye {license_name}</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Lîsansên partiya sêyem</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Lîsansên pirtûkxaneyên sêyemîn ên di vê sepanê de cih digirin</string>
     <!-- Setup UI strings -->
@@ -251,11 +251,11 @@
     <string name="backup_and_restore__restore__title">Daneyan vegerîne</string>
     <string name="backup_and_restore__restore__mode">Moda restorebike</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya OmniBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Ji ber nelirêtîyê xemgîn im, lê OmniBoard ji ber xeletîyeka nelibendê têk çû.</string>
-    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Heke hûn bixwazin vê çewtiyê ragihînin, pêşî li ser GitHubê temaşekerê pirsgirêkê kontrol bikin heke qezaya we jixwe nehatibe ragihandin. nIf ew nehatibe ragihandin, qeyda têkçûnê ya hilberandî kopî bikin û pirsgirêkeke nû vekin. Şablona \"%s\" bi kar bîne û danasînê, gavên ji nû ve hilberînê dagire û di dawîyê da rojnivîska têkçûnê ya çêkirî pê ve bike. Ev, dibe alîkar ku OmniBoard ji bo her kesî baştir û aramtir bibe. Sax bî!</string>
+    <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Ji ber nelirêtîyê xemgîn im, lê FlorisBoard ji ber xeletîyeka nelibendê têk çû.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Heke hûn bixwazin vê çewtiyê ragihînin, pêşî li ser GitHubê temaşekerê pirsgirêkê kontrol bikin heke qezaya we jixwe nehatibe ragihandin. nIf ew nehatibe ragihandin, qeyda têkçûnê ya hilberandî kopî bikin û pirsgirêkeke nû vekin. Şablona \"%s\" bi kar bîne û danasînê, gavên ji nû ve hilberînê dagire û di dawîyê da rojnivîska têkçûnê ya çêkirî pê ve bike. Ev, dibe alîkar ku FlorisBoard ji bo her kesî baştir û aramtir bibe. Sax bî!</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raportên xeletiya OmniBoard</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raportên xeletiya FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorîsBoardê dest ji kar berda…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Ji bo dîtina hûrguliyên çewtiyê destlêdan bike</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Xuya ye FlorîsBoard bi berdewamî dest ji kar berde…</string>
