@@ -1,0 +1,72 @@
+{
+  "id": "lcars_hacker_en_us",
+  "label": "LCARS Hacker EN-US",
+  "units": 12,
+  "rows": [
+    {
+      "id": "row_letters_top",
+      "units": 12,
+      "keys": [
+        { "label": "Q", "code": "q", "units": 1, "style": "default", "spacer": false },
+        { "label": "W", "code": "w", "units": 1, "style": "default", "spacer": false },
+        { "label": "E", "code": "e", "units": 1, "style": "default", "spacer": false },
+        { "label": "R", "code": "r", "units": 1, "style": "default", "spacer": false },
+        { "label": "T", "code": "t", "units": 1, "style": "default", "spacer": false },
+        { "label": "Y", "code": "y", "units": 1, "style": "default", "spacer": false },
+        { "label": "U", "code": "u", "units": 1, "style": "default", "spacer": false },
+        { "label": "I", "code": "i", "units": 1, "style": "default", "spacer": false },
+        { "label": "O", "code": "o", "units": 1, "style": "default", "spacer": false },
+        { "label": "P", "code": "p", "units": 1, "style": "default", "spacer": false },
+        { "label": "[", "code": "[", "units": 1, "style": "default", "spacer": false },
+        { "label": "]", "code": "]", "units": 1, "style": "default", "spacer": false }
+      ]
+    },
+    {
+      "id": "row_letters_home",
+      "units": 12,
+      "keys": [
+        { "label": "A", "code": "a", "units": 1, "style": "default", "spacer": false },
+        { "label": "S", "code": "s", "units": 1, "style": "default", "spacer": false },
+        { "label": "D", "code": "d", "units": 1, "style": "default", "spacer": false },
+        { "label": "F", "code": "f", "units": 1, "style": "default", "spacer": false },
+        { "label": "G", "code": "g", "units": 1, "style": "default", "spacer": false },
+        { "label": "H", "code": "h", "units": 1, "style": "default", "spacer": false },
+        { "label": "J", "code": "j", "units": 1, "style": "default", "spacer": false },
+        { "label": "K", "code": "k", "units": 1, "style": "default", "spacer": false },
+        { "label": "L", "code": "l", "units": 1, "style": "default", "spacer": false },
+        { "label": ";", "code": ";", "units": 1, "style": "default", "spacer": false },
+        { "label": "'", "code": "'", "units": 1, "style": "default", "spacer": false },
+        { "label": "\\", "code": "\\", "units": 1, "style": "default", "spacer": false }
+      ]
+    },
+    {
+      "id": "row_letters_bottom",
+      "units": 12,
+      "keys": [
+        { "label": "Shift", "code": "KEYCODE_SHIFT", "units": 2, "style": "special_left", "spacer": false },
+        { "label": "Z", "code": "z", "units": 1, "style": "default", "spacer": false },
+        { "label": "X", "code": "x", "units": 1, "style": "default", "spacer": false },
+        { "label": "C", "code": "c", "units": 1, "style": "default", "spacer": false },
+        { "label": "V", "code": "v", "units": 1, "style": "default", "spacer": false },
+        { "label": "B", "code": "b", "units": 1, "style": "default", "spacer": false },
+        { "label": "N", "code": "n", "units": 1, "style": "default", "spacer": false },
+        { "label": "M", "code": "m", "units": 1, "style": "default", "spacer": false },
+        { "label": ",", "code": ",", "units": 1, "style": "default", "spacer": false },
+        { "label": ".", "code": ".", "units": 1, "style": "default", "spacer": false },
+        { "label": "/", "code": "/", "units": 1, "style": "default", "spacer": false },
+        { "label": "Delete", "code": "KEYCODE_DELETE", "units": 1, "style": "special_right", "spacer": false }
+      ]
+    },
+    {
+      "id": "row_space",
+      "units": 12,
+      "keys": [
+        { "label": "123", "code": "MODE_SYMBOLS", "units": 2, "style": "aux", "spacer": false },
+        { "label": "Ctrl", "code": "CTRL_MOD", "units": 2, "style": "aux", "spacer": false },
+        { "label": "Space", "code": "KEYCODE_SPACE", "units": 6, "style": "space", "spacer": false },
+        { "label": "Menu", "code": "MENU_TOGGLE", "units": 1, "style": "aux", "spacer": false },
+        { "label": "Enter", "code": "KEYCODE_ENTER", "units": 1, "style": "special_right", "spacer": false }
+      ]
+    }
+  ]
+}

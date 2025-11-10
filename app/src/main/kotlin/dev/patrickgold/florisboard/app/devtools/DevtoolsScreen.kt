@@ -138,6 +138,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 onClick = { navController.navigate(Routes.Devtools.ExportDebugLog) },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            Preference(
+                title = stringRes(R.string.devtools__layout_builder__label),
+                summary = stringRes(R.string.devtools__layout_builder__summary),
+                onClick = { navController.navigate(Routes.Devtools.LayoutBuilder) },
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
             SwitchPreference(
                 prefs.glide.enabled,
                 title = "prefs.glide.enabled (debug)",

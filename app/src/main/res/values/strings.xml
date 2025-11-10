@@ -761,6 +761,8 @@
     <string name="devtools__debuglog__copy_log">Copy log</string>
     <string name="devtools__debuglog__copy_for_github">Copy log (GitHub formatting)</string>
     <string name="devtools__debuglog__loading">Loading…</string>
+    <string name="devtools__layout_builder__label">Layout builder</string>
+    <string name="devtools__layout_builder__summary">Edit the LCARS Hacker layout pack with live preview</string>
 
 
     <!-- Extension strings -->
@@ -1135,5 +1137,30 @@
         <item quantity="one">{v} candidate</item>
         <item quantity="other">{v} candidates</item>
     </plurals>
+
+    <!-- Layout builder -->
+    <string name="layout_builder__title">Layout builder</string>
+    <string name="layout_builder__action_import">Import</string>
+    <string name="layout_builder__action_export">Export</string>
+    <string name="layout_builder__action_undo">Undo</string>
+    <string name="layout_builder__action_redo">Redo</string>
+    <string name="layout_builder__action_apply">Apply to IME</string>
+    <string name="layout_builder__validation_failed_title">Resolve validation issues before applying</string>
+    <string name="layout_builder__validation_sum_units">Σu %1$d/%2$d</string>
+    <string name="layout_builder__row_condition">Visible if setting "%1$s" is enabled</string>
+    <string name="layout_builder__add_key">Add key</string>
+    <string name="layout_builder__untitled_key">Untitled key</string>
+    <string name="layout_builder__delete_key">Delete key</string>
+    <string name="layout_builder__field_label">Label</string>
+    <string name="layout_builder__field_code">Code</string>
+    <string name="layout_builder__field_units">Units</string>
+    <string name="layout_builder__field_spacer">Spacer</string>
+    <string name="layout_builder__field_style">Style: %1$s</string>
+    <string name="layout_builder__toast_import_success">Imported layout pack</string>
+    <string name="layout_builder__toast_import_failed">Could not import the selected file</string>
+    <string name="layout_builder__toast_export_success">Exported layout pack</string>
+    <string name="layout_builder__toast_export_failed">Could not export the layout pack</string>
+    <string name="layout_builder__toast_apply_success">Applied layout pack to the IME</string>
+    <string name="layout_builder__toast_apply_failed">Validation failed. Layout not applied.</string>
 
 </resources>
