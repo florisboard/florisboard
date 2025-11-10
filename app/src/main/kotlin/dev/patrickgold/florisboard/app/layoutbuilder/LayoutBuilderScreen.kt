@@ -74,7 +74,6 @@ fun LayoutBuilderScreen() = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val currentPack by keyboardManager.layoutFlow.collectAsState()
     var state by remember(currentPack) { mutableStateOf(LayoutBuilderUiState(currentPack)) }
-    var statusMessage by remember { mutableStateOf<StatusMessage?>(null) }
 
     val validationErrors = remember(state.workingPack) {
         LayoutValidation.validatePack(state.workingPack)
@@ -98,9 +97,9 @@ fun LayoutBuilderScreen() = FlorisScreen {
                 }
             }.onSuccess { pack ->
                 state = LayoutBuilderUiState(pack)
-                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_import_success), false)
+                // TODO: Provide user-visible feedback for successful imports.
             }.onFailure {
-                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_import_failed), true)
+                // TODO: Provide user-visible feedback for failed imports.
             }
         }
     }
@@ -116,9 +115,9 @@ fun LayoutBuilderScreen() = FlorisScreen {
                     }
                 }
             }.onSuccess {
-                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_export_success), false)
+                // TODO: Provide user-visible feedback for successful exports.
             }.onFailure {
-                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_export_failed), true)
+                // TODO: Provide user-visible feedback for failed exports.
             }
         }
     }
@@ -126,7 +125,6 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun mutatePack(block: (LayoutPack) -> LayoutPack) {
         val next = block(state.workingPack)
         if (next != state.workingPack) {
-            statusMessage = null
             state = state.copy(
                 workingPack = next,
                 undoStack = state.undoStack + state.workingPack,
@@ -138,7 +136,6 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun undo() {
         if (state.undoStack.isNotEmpty()) {
             val previous = state.undoStack.last()
-            statusMessage = null
             state = state.copy(
                 workingPack = previous,
                 undoStack = state.undoStack.dropLast(1),
@@ -150,7 +147,6 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun redo() {
         if (state.redoStack.isNotEmpty()) {
             val next = state.redoStack.last()
-            statusMessage = null
             state = state.copy(
                 workingPack = next,
                 redoStack = state.redoStack.dropLast(1),
@@ -160,11 +156,8 @@ fun LayoutBuilderScreen() = FlorisScreen {
     }
 
     fun applyToIme() {
-        val result = keyboardManager.setLayout(state.workingPack)
-        result.onSuccess {
-            statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_apply_success), false)
-        }.onFailure {
-            statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_apply_failed), true)
+        keyboardManager.setLayout(state.workingPack).onFailure {
+            // TODO: Provide user-visible feedback for apply failures.
         }
     }
 
@@ -272,19 +265,9 @@ fun LayoutBuilderScreen() = FlorisScreen {
                     KeyboardPreview(pack = state.workingPack)
                 }
             }
-            statusMessage?.let { message ->
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = message.text,
-                    color = if (message.isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
         }
     }
 }
-
-private data class StatusMessage(val text: String, val isError: Boolean)
 
 @Composable
 private fun LayoutRowEditor(
