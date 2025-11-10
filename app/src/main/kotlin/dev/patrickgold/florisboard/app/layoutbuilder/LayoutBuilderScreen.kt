@@ -38,12 +38,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,9 +56,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.stringRes
 
 private data class LayoutBuilderUiState(
@@ -78,15 +74,11 @@ fun LayoutBuilderScreen() = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val currentPack by keyboardManager.layoutFlow.collectAsState()
     var state by remember(currentPack) { mutableStateOf(LayoutBuilderUiState(currentPack)) }
-
-    LaunchedEffect(currentPack) {
-        state = LayoutBuilderUiState(currentPack)
-    }
+    var statusMessage by remember { mutableStateOf<StatusMessage?>(null) }
 
     val validationErrors = remember(state.workingPack) {
         LayoutValidation.validatePack(state.workingPack)
     }
-    val scope = rememberCoroutineScope()
     val json = remember {
         Json {
             ignoreUnknownKeys = true
@@ -96,41 +88,37 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
-            scope.launch {
-                runCatching {
-                    context.contentResolver.openInputStream(uri).use { stream ->
-                        requireNotNull(stream) { "No input stream" }
-                        BufferedReader(InputStreamReader(stream, StandardCharsets.UTF_8)).use { reader ->
-                            val text = reader.readText()
-                            json.decodeFromString(LayoutPack.serializer(), text)
-                        }
+            runCatching {
+                context.contentResolver.openInputStream(uri).use { stream ->
+                    requireNotNull(stream) { "No input stream" }
+                    BufferedReader(InputStreamReader(stream, StandardCharsets.UTF_8)).use { reader ->
+                        val text = reader.readText()
+                        json.decodeFromString(LayoutPack.serializer(), text)
                     }
-                }.onSuccess { pack ->
-                    state = LayoutBuilderUiState(pack)
-                    context.showLongToast(R.string.layout_builder__toast_import_success)
-                }.onFailure {
-                    context.showLongToast(R.string.layout_builder__toast_import_failed)
                 }
+            }.onSuccess { pack ->
+                state = LayoutBuilderUiState(pack)
+                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_import_success), false)
+            }.onFailure {
+                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_import_failed), true)
             }
         }
     }
 
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri: Uri? ->
         if (uri != null) {
-            scope.launch {
-                runCatching {
-                    context.contentResolver.openOutputStream(uri).use { stream ->
-                        requireNotNull(stream) { "No output stream" }
-                        val text = json.encodeToString(LayoutPack.serializer(), state.workingPack)
-                        stream.writer(StandardCharsets.UTF_8).use { writer ->
-                            writer.write(text)
-                        }
+            runCatching {
+                context.contentResolver.openOutputStream(uri).use { stream ->
+                    requireNotNull(stream) { "No output stream" }
+                    val text = json.encodeToString(LayoutPack.serializer(), state.workingPack)
+                    stream.writer(StandardCharsets.UTF_8).use { writer ->
+                        writer.write(text)
                     }
-                }.onSuccess {
-                    context.showLongToast(R.string.layout_builder__toast_export_success)
-                }.onFailure {
-                    context.showLongToast(R.string.layout_builder__toast_export_failed)
                 }
+            }.onSuccess {
+                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_export_success), false)
+            }.onFailure {
+                statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_export_failed), true)
             }
         }
     }
@@ -138,6 +126,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun mutatePack(block: (LayoutPack) -> LayoutPack) {
         val next = block(state.workingPack)
         if (next != state.workingPack) {
+            statusMessage = null
             state = state.copy(
                 workingPack = next,
                 undoStack = state.undoStack + state.workingPack,
@@ -149,6 +138,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun undo() {
         if (state.undoStack.isNotEmpty()) {
             val previous = state.undoStack.last()
+            statusMessage = null
             state = state.copy(
                 workingPack = previous,
                 undoStack = state.undoStack.dropLast(1),
@@ -160,6 +150,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun redo() {
         if (state.redoStack.isNotEmpty()) {
             val next = state.redoStack.last()
+            statusMessage = null
             state = state.copy(
                 workingPack = next,
                 redoStack = state.redoStack.dropLast(1),
@@ -171,9 +162,9 @@ fun LayoutBuilderScreen() = FlorisScreen {
     fun applyToIme() {
         val result = keyboardManager.setLayout(state.workingPack)
         result.onSuccess {
-            context.showLongToast(R.string.layout_builder__toast_apply_success)
+            statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_apply_success), false)
         }.onFailure {
-            context.showLongToast(R.string.layout_builder__toast_apply_failed)
+            statusMessage = StatusMessage(context.getString(R.string.layout_builder__toast_apply_failed), true)
         }
     }
 
@@ -281,9 +272,19 @@ fun LayoutBuilderScreen() = FlorisScreen {
                     KeyboardPreview(pack = state.workingPack)
                 }
             }
+            statusMessage?.let { message ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = message.text,
+                    color = if (message.isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }
+
+private data class StatusMessage(val text: String, val isError: Boolean)
 
 @Composable
 private fun LayoutRowEditor(
