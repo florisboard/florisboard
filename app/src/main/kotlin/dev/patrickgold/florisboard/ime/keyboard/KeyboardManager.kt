@@ -19,9 +19,11 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutPack
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutPackRepository
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutValidation
 import dev.patrickgold.florisboard.audio.Recorder
 import dev.patrickgold.florisboard.net.WhisperClient
-import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showLongToast
 
@@ -104,6 +106,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val layoutRepository = LayoutPackRepository(context)
+    val layoutFlow = MutableStateFlow(loadInitialLayout())
     val layoutManager = LayoutManager(context)
     private val keyboardCache = TextKeyboardCache()
 
@@ -118,6 +122,32 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     private var isRecording = false
     private var recorder: Recorder? = null
+
+    private fun loadInitialLayout(): LayoutPack {
+        return runCatching {
+            val pack = layoutRepository.loadUserOrDefault()
+            if (LayoutValidation.validatePack(pack).isEmpty()) {
+                pack
+            } else {
+                layoutRepository.loadDefault()
+            }
+        }.getOrElse {
+            layoutRepository.loadDefault()
+        }
+    }
+
+    fun setLayout(newPack: LayoutPack): Result<Unit> {
+        val errors = LayoutValidation.validatePack(newPack)
+        if (errors.isNotEmpty()) {
+            val message = errors.joinToString(separator = "\n")
+            return Result.failure(IllegalArgumentException(message))
+        }
+        return runCatching {
+            layoutRepository.save(newPack)
+            layoutFlow.value = newPack
+            keyboardCache.clear()
+        }
+    }
 
     private fun requestAudioPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -49,6 +49,7 @@ import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionListScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutBuilderScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
@@ -217,6 +218,10 @@ object Routes {
         @Serializable
         @Deeplink("export-debug-log")
         object ExportDebugLog
+
+        @Serializable
+        @Deeplink("devtools/layout-builder")
+        object LayoutBuilder
     }
 
     object Ext {
@@ -330,6 +335,7 @@ object Routes {
                 AndroidSettingsScreen(payload.name)
             }
             composableWithDeepLink(Devtools.ExportDebugLog::class) { ExportDebugLogScreen() }
+            composableWithDeepLink(Devtools.LayoutBuilder::class) { LayoutBuilderScreen() }
 
             composableWithDeepLink(Ext.Home::class) { ExtensionHomeScreen() }
             composableWithDeepLink(Ext.List::class) { navBackStack ->
