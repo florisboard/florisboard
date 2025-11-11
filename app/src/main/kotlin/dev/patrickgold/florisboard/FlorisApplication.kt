@@ -27,6 +27,7 @@ import android.util.Log
 import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutPackRepository
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -43,6 +44,7 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.jetpref.datastore.runtime.initAndroid
+import java.lang.ref.WeakReference
 import kotlin.Lazy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,8 +53,6 @@ import kotlinx.coroutines.launch
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.tryOrNull
 import org.florisboard.libnative.dummyAdd
-import java.lang.ref.WeakReference
-import dev.patrickgold.florisboard.app.layoutbuilder.LayoutPackRepository
 
 /**
  * Global weak reference for the [FlorisApplication] class. This is needed as in certain scenarios an application
@@ -80,15 +80,17 @@ class FlorisApplication : Application() {
     val editorInstance = lazy { EditorInstance(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
-    val keyboardManager: Lazy<KeyboardManager> = lazy { KeyboardManager(this, layoutPackRepository.value) }
+    val keyboardManager: Lazy<KeyboardManager> = lazy { KeyboardManager(this, layoutPackRepository) }
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
     val themeManager = lazy { ThemeManager(this) }
-    val layoutPackRepository = lazy { LayoutPackRepository(this) }
+    lateinit var layoutPackRepository: LayoutPackRepository
+        private set
 
     override fun onCreate() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
+        layoutPackRepository = LayoutPackRepository(this)
         try {
             Flog.install(
                 context = this,
@@ -175,5 +177,3 @@ fun Context.nlpManager() = this.florisApplication().nlpManager
 fun Context.subtypeManager() = this.florisApplication().subtypeManager
 
 fun Context.themeManager() = this.florisApplication().themeManager
-
-fun Context.layoutPackRepository() = this.florisApplication().layoutPackRepository
