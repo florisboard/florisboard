@@ -182,20 +182,15 @@ fun LayoutBuilderScreen() = FlorisScreen {
     content {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             if (validationErrors.isNotEmpty()) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringRes(R.string.layout_builder__validation_failed_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        for (error in validationErrors) {
-                            Text(text = error, color = MaterialTheme.colorScheme.error)
-                        }
-                    }
+                Text(
+                    text = stringRes(R.string.layout_builder__validation_failed_title),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                for (error in validationErrors) {
+                    Text(text = error, color = MaterialTheme.colorScheme.error)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
