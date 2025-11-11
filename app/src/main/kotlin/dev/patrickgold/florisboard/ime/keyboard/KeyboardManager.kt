@@ -127,14 +127,14 @@ class KeyboardManager(
 
     private fun loadInitialLayout(): LayoutPack {
         return runCatching {
-            val pack = layoutRepository.loadUserOrDefault()
+            val pack = layoutPackRepository.loadUserOrDefault()
             if (LayoutValidation.validatePack(pack).isEmpty()) {
                 pack
             } else {
-                layoutRepository.loadDefault()
+                layoutPackRepository.loadDefault()
             }
         }.getOrElse {
-            layoutRepository.loadDefault()
+            layoutPackRepository.loadDefault()
         }
     }
 
@@ -145,7 +145,7 @@ class KeyboardManager(
             return Result.failure(IllegalArgumentException(message))
         }
         return runCatching {
-            layoutRepository.save(newPack)
+            layoutPackRepository.save(newPack)
             layoutFlow.value = newPack
             keyboardCache.clear()
         }

@@ -43,6 +43,7 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.jetpref.datastore.runtime.initAndroid
+import kotlin.Lazy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,6 +52,7 @@ import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.tryOrNull
 import org.florisboard.libnative.dummyAdd
 import java.lang.ref.WeakReference
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutPackRepository
 
 /**
  * Global weak reference for the [FlorisApplication] class. This is needed as in certain scenarios an application
@@ -78,7 +80,7 @@ class FlorisApplication : Application() {
     val editorInstance = lazy { EditorInstance(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
-    val keyboardManager = lazy { KeyboardManager(this, layoutPackRepository.value) }
+    val keyboardManager: Lazy<KeyboardManager> = lazy { KeyboardManager(this, layoutPackRepository.value) }
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
     val themeManager = lazy { ThemeManager(this) }

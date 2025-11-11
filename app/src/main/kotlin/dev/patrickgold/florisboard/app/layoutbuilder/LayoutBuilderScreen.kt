@@ -84,10 +84,10 @@ fun LayoutBuilderScreen() = FlorisScreen {
         if (uri != null) {
             runCatching {
                 layoutPackRepository.load(uri)
-            }.onSuccess { pack ->
+            }.onSuccess { pack: LayoutPack ->
                 state = LayoutBuilderUiState(pack)
                 // TODO: Provide user-visible feedback for successful imports.
-            }.onFailure {
+            }.onFailure { e: Throwable ->
                 // TODO: Provide user-visible feedback for failed imports.
             }
         }
@@ -97,9 +97,9 @@ fun LayoutBuilderScreen() = FlorisScreen {
         if (uri != null) {
             runCatching {
                 layoutPackRepository.save(state.workingPack, uri)
-            }.onSuccess {
+            }.onSuccess { _: Unit ->
                 // TODO: Provide user-visible feedback for successful exports.
-            }.onFailure {
+            }.onFailure { e: Throwable ->
                 // TODO: Provide user-visible feedback for failed exports.
             }
         }
@@ -287,7 +287,8 @@ private fun LayoutRowEditor(
                                 ),
                                 color = if (rowValidation.any { it.startsWith("Σu") }) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontWeight = FontWeight.SemiBold,
-                            )            if (!row.showIfSetting.isNullOrBlank()) {
+                            )
+                            if (!row.showIfSetting.isNullOrBlank()) {
                             Text(
                                 text = stringRes(
                                     R.string.layout_builder__row_condition,
@@ -295,7 +296,8 @@ private fun LayoutRowEditor(
                                 ),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )            }
+                            )
+                            }
             Spacer(modifier = Modifier.height(12.dp))
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.keys.forEachIndexed { keyIndex, key ->
