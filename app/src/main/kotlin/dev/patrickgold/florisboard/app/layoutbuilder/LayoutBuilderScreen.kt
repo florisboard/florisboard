@@ -82,12 +82,11 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
-            runCatching {
-                layoutPackRepository.load(uri)
-            }.onSuccess { pack: LayoutPack ->
+            try {
+                val pack = layoutPackRepository.load(uri)
                 state = LayoutBuilderUiState(pack)
                 // TODO: Provide user-visible feedback for successful imports.
-            }.onFailure { e: Throwable ->
+            } catch (e: Exception) {
                 // TODO: Provide user-visible feedback for failed imports.
             }
         }
@@ -95,11 +94,10 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri: Uri? ->
         if (uri != null) {
-            runCatching {
+            try {
                 layoutPackRepository.save(state.workingPack, uri)
-            }.onSuccess { _: Unit ->
                 // TODO: Provide user-visible feedback for successful exports.
-            }.onFailure { e: Throwable ->
+            } catch (e: Exception) {
                 // TODO: Provide user-visible feedback for failed exports.
             }
         }

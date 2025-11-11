@@ -89,7 +89,7 @@ data class TextKeyData(
         }
 
         // TODO: find better solution than to hand define array of below keys...
-        private val InternalKeys by lazy {
+        internal val InternalKeys by lazy {
             listOf(
                 UNSPECIFIED,
                 SPACE,
