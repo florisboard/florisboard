@@ -49,20 +49,22 @@ class LayoutPackRepository(
     }
 
     fun load(uri: Uri): LayoutPack {
-        context.contentResolver.openInputStream(uri).use { stream ->
-            requireNotNull(stream) { "No input stream" }
-            return stream.bufferedReader(Charsets.UTF_8).use { reader ->
-                json.decodeFromString(LayoutPack.serializer(), reader.readText())
-            }
+        val inputStream = requireNotNull(context.contentResolver.openInputStream(uri)) {
+            "No input stream"
+        }
+        inputStream.use { stream ->
+            val raw = stream.bufferedReader(Charsets.UTF_8).use { reader -> reader.readText() }
+            return json.decodeFromString(LayoutPack.serializer(), raw)
         }
     }
 
     fun save(pack: LayoutPack, uri: Uri) {
-        context.contentResolver.openOutputStream(uri).use { stream ->
-            requireNotNull(stream) { "No output stream" }
-            stream.bufferedWriter(Charsets.UTF_8).use { writer ->
-                json.encodeToString(LayoutPack.serializer(), pack).let { writer.write(it) }
-            }
+        val outputStream = requireNotNull(context.contentResolver.openOutputStream(uri)) {
+            "No output stream"
+        }
+        outputStream.bufferedWriter(Charsets.UTF_8).use { writer ->
+            val serialized = json.encodeToString(LayoutPack.serializer(), pack)
+            writer.write(serialized)
         }
     }
 

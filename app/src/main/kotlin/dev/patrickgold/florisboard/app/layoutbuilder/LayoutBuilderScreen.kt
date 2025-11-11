@@ -52,11 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.layoutPackRepository
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.nio.charset.StandardCharsets
-import kotlinx.serialization.json.Json
 import org.florisboard.lib.compose.stringRes
 
 private data class LayoutBuilderUiState(
@@ -72,7 +69,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
-    val layoutPackRepository by context.layoutPackRepository()
+    val repo = context.layoutPackRepository
     val currentPack by keyboardManager.layoutFlow.collectAsState()
     var state by remember(currentPack) { mutableStateOf(LayoutBuilderUiState(currentPack)) }
 
@@ -83,7 +80,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
             try {
-                val pack = layoutPackRepository.load(uri)
+                val pack = repo.load(uri)
                 state = LayoutBuilderUiState(pack)
                 // TODO: Provide user-visible feedback for successful imports.
             } catch (e: Exception) {
@@ -95,7 +92,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri: Uri? ->
         if (uri != null) {
             try {
-                layoutPackRepository.save(state.workingPack, uri)
+                repo.save(state.workingPack, uri)
                 // TODO: Provide user-visible feedback for successful exports.
             } catch (e: Exception) {
                 // TODO: Provide user-visible feedback for failed exports.
