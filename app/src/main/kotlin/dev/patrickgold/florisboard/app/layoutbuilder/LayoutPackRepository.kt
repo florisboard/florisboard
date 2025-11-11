@@ -47,6 +47,24 @@ class LayoutPackRepository(
         writeBackup(serialized)
     }
 
+    fun load(uri: Uri): LayoutPack {
+        context.contentResolver.openInputStream(uri).use { stream ->
+            requireNotNull(stream) { "No input stream" }
+            return stream.bufferedReader(Charsets.UTF_8).use { reader ->
+                json.decodeFromString(LayoutPack.serializer(), reader.readText())
+            }
+        }
+    }
+
+    fun save(pack: LayoutPack, uri: Uri) {
+        context.contentResolver.openOutputStream(uri).use { stream ->
+            requireNotNull(stream) { "No output stream" }
+            stream.bufferedWriter(Charsets.UTF_8).use { writer ->
+                json.encodeToString(LayoutPack.serializer(), pack).let { writer.write(it) }
+            }
+        }
+    }
+
     private fun writeBackup(serialized: String) {
         val formatter = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US)
         val timestamp = formatter.format(Date())

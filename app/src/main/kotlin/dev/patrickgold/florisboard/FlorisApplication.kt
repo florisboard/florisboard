@@ -78,10 +78,11 @@ class FlorisApplication : Application() {
     val editorInstance = lazy { EditorInstance(this) }
     val extensionManager = lazy { ExtensionManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
-    val keyboardManager = lazy { KeyboardManager(this) }
+    val keyboardManager = lazy { KeyboardManager(this, layoutPackRepository.value) }
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
     val themeManager = lazy { ThemeManager(this) }
+    val layoutPackRepository = lazy { LayoutPackRepository(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -172,3 +173,5 @@ fun Context.nlpManager() = this.florisApplication().nlpManager
 fun Context.subtypeManager() = this.florisApplication().subtypeManager
 
 fun Context.themeManager() = this.florisApplication().themeManager
+
+fun Context.layoutPackRepository() = this.florisApplication().layoutPackRepository

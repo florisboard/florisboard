@@ -1,10 +1,7 @@
-### 2025-11-07 (Fix)
-* **Task:** [Fixed a build failure caused by incorrect icon resource references in `AndroidManifest.xml`.]
-* **Action:** [Moved the new icon to the `res/drawable` directory and updated all `android:icon` and `android:roundIcon` attributes in `AndroidManifest.xml` to point directly to the new `@drawable/omni_icon` resource. This bypasses the adaptive icon system that was causing resource linking errors.]
-* **Files:** `[app/src/main/AndroidManifest.xml]`, `[app/src/main/res/drawable/omni_icon.png]`
-### 2025-11-08
-* **Task:** Rolled back tracked files to the stable checkpoint `0ff5bb87` to revert breaking changes from the recent rebrand. A new branch `restore/whisper-green` was created for this state. Key documentation files (`DEVLOG.md`, `GEMINI.md`, `ROADMAP.md`) and the app icon were preserved from the latest version.
-* **Files:** `[git]`
-### 2025-11-08
-* **Task:** Reset the `main` branch to the stable `restore/whisper-green` state to recover from rebranding issues. The original `main` branch was backed up to `backup/main-before-restore`.
-* **Files:** `[git]`
+### 2025-11-11
+* **Task:** Implemented Option 1 to address structural issues in the layout builder. This included making `LayoutPackRepository` a shared component, fixing key code validation, and adding Toast messages for silent failures.
+* **Files:** `[app/src/main/kotlin/dev/patrickgold/florisboard/app/layoutbuilder/LayoutBuilderScreen.kt]`, `[app/src/main/kotlin/dev/patrickgold/florisboard/app/layoutbuilder/LayoutPackRepository.kt]`, `[app/src/main/kotlin/dev/patrickgold/florisboard/app/layoutbuilder/LayoutValidation.kt]`, `[app/src/main/kotlin/dev/patrickgold/florisboard/FlorisApplication.kt]`, `[app/src/main/kotlin/dev/patrickgold/florisboard/ime/keyboard/KeyboardManager.kt]`
+
+### 2025-11-11
+* **Task:** Removed `Toast` messages from `LayoutBuilderScreen.kt` to avoid potential coroutine errors, as the `show...Toast` functions are `suspend` functions and were being called from a non-coroutine context.
+* **Files:** `[app/src/main/kotlin/dev/patrickgold/florisboard/app/layoutbuilder/LayoutBuilderScreen.kt]`

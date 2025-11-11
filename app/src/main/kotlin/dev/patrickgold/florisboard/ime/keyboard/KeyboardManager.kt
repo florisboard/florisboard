@@ -96,7 +96,10 @@ import java.util.concurrent.atomic.AtomicInteger
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
-class KeyboardManager(context: Context) : InputKeyEventReceiver {
+class KeyboardManager(
+    context: Context,
+    private val layoutPackRepository: LayoutPackRepository,
+) : InputKeyEventReceiver {
     private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
@@ -106,7 +109,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val layoutRepository = LayoutPackRepository(context)
     val layoutFlow = MutableStateFlow(loadInitialLayout())
     val layoutManager = LayoutManager(context)
     private val keyboardCache = TextKeyboardCache()

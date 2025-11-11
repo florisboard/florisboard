@@ -72,29 +72,18 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
+    val layoutPackRepository by context.layoutPackRepository()
     val currentPack by keyboardManager.layoutFlow.collectAsState()
     var state by remember(currentPack) { mutableStateOf(LayoutBuilderUiState(currentPack)) }
 
     val validationErrors = remember(state.workingPack) {
         LayoutValidation.validatePack(state.workingPack)
     }
-    val json = remember {
-        Json {
-            ignoreUnknownKeys = true
-            prettyPrint = true
-        }
-    }
 
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
             runCatching {
-                context.contentResolver.openInputStream(uri).use { stream ->
-                    requireNotNull(stream) { "No input stream" }
-                    BufferedReader(InputStreamReader(stream, StandardCharsets.UTF_8)).use { reader ->
-                        val text = reader.readText()
-                        json.decodeFromString(LayoutPack.serializer(), text)
-                    }
-                }
+                layoutPackRepository.load(uri)
             }.onSuccess { pack ->
                 state = LayoutBuilderUiState(pack)
                 // TODO: Provide user-visible feedback for successful imports.
@@ -107,13 +96,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri: Uri? ->
         if (uri != null) {
             runCatching {
-                context.contentResolver.openOutputStream(uri).use { stream ->
-                    requireNotNull(stream) { "No output stream" }
-                    val text = json.encodeToString(LayoutPack.serializer(), state.workingPack)
-                    stream.writer(StandardCharsets.UTF_8).use { writer ->
-                        writer.write(text)
-                    }
-                }
+                layoutPackRepository.save(state.workingPack, uri)
             }.onSuccess {
                 // TODO: Provide user-visible feedback for successful exports.
             }.onFailure {
@@ -296,18 +279,23 @@ private fun LayoutRowEditor(
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringRes(R.string.layout_builder__validation_sum_units, row.keys.sumOf { it.units }, pack.units),
-                color = if (rowValidation.any { it.startsWith("Σu") }) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = FontWeight.SemiBold,
-            )
-            if (!row.showIfSetting.isNullOrBlank()) {
-                Text(
-                    text = stringRes(R.string.layout_builder__row_condition, row.showIfSetting!!),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+                            Text(
+                                text = stringRes(
+                                    R.string.layout_builder__validation_sum_units,
+                                    "arg0" to row.keys.sumOf { it.units },
+                                    "arg1" to pack.units
+                                ),
+                                color = if (rowValidation.any { it.startsWith("Σu") }) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                                fontWeight = FontWeight.SemiBold,
+                            )            if (!row.showIfSetting.isNullOrBlank()) {
+                            Text(
+                                text = stringRes(
+                                    R.string.layout_builder__row_condition,
+                                    "arg0" to row.showIfSetting!!
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )            }
             Spacer(modifier = Modifier.height(12.dp))
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.keys.forEachIndexed { keyIndex, key ->
@@ -399,7 +387,12 @@ private fun KeyStyleDropdown(
     var expanded by remember { mutableStateOf(false) }
     Column {
         TextButton(onClick = { expanded = true }) {
-            Text(text = stringRes(R.string.layout_builder__field_style, selected.name.lowercase()))
+            Text(
+                text = stringRes(
+                    R.string.layout_builder__field_style,
+                    "arg0" to selected.name.lowercase()
+                )
+            )
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             LayoutKeyStyle.entries.forEach { style ->

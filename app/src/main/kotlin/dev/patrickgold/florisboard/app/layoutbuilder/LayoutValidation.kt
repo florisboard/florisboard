@@ -1,12 +1,9 @@
 package dev.patrickgold.florisboard.app.layoutbuilder
 
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+
 object LayoutValidation {
-    private val allowedSpecialCodes = setOf(
-        "SHIFT_TOGGLE",
-        "MODE_SYMBOLS",
-        "CTRL_MOD",
-        "MENU_TOGGLE",
-    )
+    private val validTextKeyDataLabels = TextKeyData.InternalKeys.map { it.label }.toSet()
 
     fun validatePack(pack: LayoutPack): List<String> {
         val errors = mutableListOf<String>()
@@ -37,15 +34,25 @@ object LayoutValidation {
         if (code.isBlank()) return false
         val trimmed = code.trim()
         val codePointCount = trimmed.codePointCount(0, trimmed.length)
-        if (codePointCount == 1 && !trimmed.startsWith("KEYCODE_")) {
+
+        // 1. Check if it's a single character
+        if (codePointCount == 1) {
             return true
         }
-        if (trimmed.startsWith("KEYCODE_")) {
-            return trimmed.length > "KEYCODE_".length
-        }
-        if (allowedSpecialCodes.contains(trimmed)) {
+
+        // 2. Check if it's a predefined TextKeyData label
+        if (validTextKeyDataLabels.contains(trimmed)) {
             return true
         }
+
+        // 3. Check if it's a raw KeyCode integer
+        val intCode = trimmed.toIntOrNull()
+        if (intCode != null) {
+            // For simplicity, we'll allow any integer for now.
+            // A more robust check would involve a map of KeyCode integer values.
+            return true
+        }
+
         return false
     }
 }
