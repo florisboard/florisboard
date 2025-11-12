@@ -121,6 +121,12 @@ fun HomeScreen() = FlorisScreen {
             onClick = { navController.navigate(Routes.Settings.Keyboard) },
         )
         Preference(
+            icon = Icons.Outlined.Build,
+            title = stringRes(R.string.devtools__layout_builder__label),
+            summary = stringRes(R.string.devtools__layout_builder__summary),
+            onClick = { navController.navigate(Routes.Settings.LayoutBuilder) },
+        )
+        Preference(
             icon = Icons.Default.SmartButton,
             title = stringRes(R.string.settings__smartbar__title),
             onClick = { navController.navigate(Routes.Settings.Smartbar) },
