@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -174,7 +172,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
             }
 
             Row(modifier = Modifier.fillMaxSize()) {
-                val editorModifier = Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState())
+                val editorModifier = Modifier.weight(1f).fillMaxHeight()
                 Column(modifier = editorModifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     state.workingPack.rows.forEachIndexed { index, row ->
                         LayoutRowEditor(
