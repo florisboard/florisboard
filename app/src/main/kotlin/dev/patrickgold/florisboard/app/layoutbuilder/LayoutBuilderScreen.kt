@@ -63,7 +63,7 @@ private data class LayoutBuilderUiState(
 )
 
 @Composable
-fun LayoutBuilderScreen() = FlorisScreen(scrollable = false) {
+fun LayoutBuilderScreen() = FlorisScreen {
     title = stringRes(R.string.layout_builder__title)
     previewFieldVisible = false
 
