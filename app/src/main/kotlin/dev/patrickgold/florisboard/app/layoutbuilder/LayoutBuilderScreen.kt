@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -171,9 +173,22 @@ fun LayoutBuilderScreen() = FlorisScreen {
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            Row(modifier = Modifier.fillMaxSize()) {
-                val editorModifier = Modifier.weight(1f).fillMaxHeight()
-                Column(modifier = editorModifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(240.dp),
+                ) {
+                    KeyboardPreview(pack = state.workingPack)
+                }
+                Divider(modifier = Modifier.fillMaxWidth())
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
                     state.workingPack.rows.forEachIndexed { index, row ->
                         LayoutRowEditor(
                             index = index,
@@ -230,10 +245,6 @@ fun LayoutBuilderScreen() = FlorisScreen {
                             },
                         )
                     }
-                }
-                Divider(modifier = Modifier.padding(horizontal = 16.dp).fillMaxHeight().width(1.dp))
-                Box(modifier = Modifier.weight(1f).fillMaxHeight()) {
-                    KeyboardPreview(pack = state.workingPack)
                 }
             }
         }
