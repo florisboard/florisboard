@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -63,7 +63,7 @@ private data class LayoutBuilderUiState(
 )
 
 @Composable
-fun LayoutBuilderScreen() = FlorisScreen {
+fun LayoutBuilderScreen() = FlorisScreen(scrollable = false) {
     title = stringRes(R.string.layout_builder__title)
     previewFieldVisible = false
 
@@ -158,37 +158,42 @@ fun LayoutBuilderScreen() = FlorisScreen {
     }
 
     content {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             if (validationErrors.isNotEmpty()) {
-                Text(
-                    text = stringRes(R.string.layout_builder__validation_failed_title),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                for (error in validationErrors) {
-                    Text(text = error, color = MaterialTheme.colorScheme.error)
+                item {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(
+                            text = stringRes(R.string.layout_builder__validation_failed_title),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.error,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                        validationErrors.forEach { error ->
+                            Text(text = error, color = MaterialTheme.colorScheme.error)
+                        }
+                    }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
             }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(260.dp),
-            ) {
-                KeyboardPreview(pack = state.workingPack)
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(260.dp),
+                    ) {
+                        KeyboardPreview(pack = state.workingPack)
+                    }
+                    Divider(modifier = Modifier.fillMaxWidth())
+                }
             }
-            Divider(modifier = Modifier.fillMaxWidth())
-            Spacer(modifier = Modifier.height(12.dp))
 
-            state.workingPack.rows.forEachIndexed { index, row ->
+            itemsIndexed(state.workingPack.rows) { index, row ->
                 LayoutRowEditor(
                     index = index,
                     pack = state.workingPack,
