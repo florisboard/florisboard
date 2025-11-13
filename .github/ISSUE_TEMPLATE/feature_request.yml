@@ -29,5 +29,7 @@ body:
           required: true
         - label: "I have read and understood the [contribution guidelines](https://github.com/florisboard/florisboard/blob/main/CONTRIBUTING.md)."
           required: true
+        - label: "I have read and understood the [AI policy](https://github.com/florisboard/florisboard/blob/main/AI_POLICY.md)."
+          required: true
         - label: "I have taken the time to fill in all the required details. I understand that the feature request will be dismissed otherwise."
           required: true

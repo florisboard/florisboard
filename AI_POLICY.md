@@ -11,9 +11,9 @@ Derived from: https://codeberg.org/forgejo/governance/src/commit/ff60d7ed4b0f3d4
 
 Software and services that heavily rely on large language model technology (LLMs) to generate their outcomes are referred to as Artificial Intelligence (AI). Examples of products that fit this definition are: GitHub Copilot, ChatGPT, Claude Sonnet, DeepSeek, Llama, Mistral and Gemini.
 
-There's a distinction between general and narrow AI, all of the previous examples fall under general AI as they were not trained to execute a specific well-defined task. Narrow AI is trained to be used for specific well-defined tasks with a problem space that is known in advance.
+There's a distinction between general and narrow AI, all the previous examples fall under general AI as they were not trained to execute a specific well-defined task. Narrow AI is trained to be used for specific well-defined tasks with a problem space that is known in advance.
 
-The use of AI agents ("vibe coding") involves an AI generating code changes, such as new features, bug fixes, tests, or refactors, based on a human's description of what needs to be implemented with litte to no human supervision.
+The use of AI agents ("vibe coding") involves an AI generating code changes, such as new features, bug fixes, tests, or refactors, based on a human's description of what needs to be implemented with little to no human supervision.
 
 ## Agreement
 
