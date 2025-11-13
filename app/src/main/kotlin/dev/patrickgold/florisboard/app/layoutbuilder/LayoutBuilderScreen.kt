@@ -158,7 +158,12 @@ fun LayoutBuilderScreen() = FlorisScreen {
     }
 
     content {
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+        ) {
             if (validationErrors.isNotEmpty()) {
                 Text(
                     text = stringRes(R.string.layout_builder__validation_failed_title),
@@ -181,69 +186,63 @@ fun LayoutBuilderScreen() = FlorisScreen {
                 KeyboardPreview(pack = state.workingPack)
             }
             Divider(modifier = Modifier.fillMaxWidth())
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                state.workingPack.rows.forEachIndexed { index, row ->
-                    LayoutRowEditor(
-                        index = index,
-                        pack = state.workingPack,
-                        row = row,
-                        onUpdate = { updatedRow ->
-                            mutatePack { pack ->
-                                val rows = pack.rows.toMutableList()
-                                rows[index] = updatedRow
-                                pack.copy(rows = rows)
-                            }
-                        },
-                        onDeleteKey = { keyIndex ->
-                            mutatePack { pack ->
-                                val rows = pack.rows.toMutableList()
-                                val keys = rows[index].keys.toMutableList()
-                                if (keyIndex in keys.indices) {
-                                    keys.removeAt(keyIndex)
-                                    rows[index] = rows[index].copy(keys = keys)
-                                }
-                                pack.copy(rows = rows)
-                            }
-                        },
-                        onAddKey = {
-                            mutatePack { pack ->
-                                val rows = pack.rows.toMutableList()
-                                val keys = rows[index].keys.toMutableList()
-                                keys.add(LayoutKey(label = "", code = "", units = 1))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            state.workingPack.rows.forEachIndexed { index, row ->
+                LayoutRowEditor(
+                    index = index,
+                    pack = state.workingPack,
+                    row = row,
+                    onUpdate = { updatedRow ->
+                        mutatePack { pack ->
+                            val rows = pack.rows.toMutableList()
+                            rows[index] = updatedRow
+                            pack.copy(rows = rows)
+                        }
+                    },
+                    onDeleteKey = { keyIndex ->
+                        mutatePack { pack ->
+                            val rows = pack.rows.toMutableList()
+                            val keys = rows[index].keys.toMutableList()
+                            if (keyIndex in keys.indices) {
+                                keys.removeAt(keyIndex)
                                 rows[index] = rows[index].copy(keys = keys)
+                            }
+                            pack.copy(rows = rows)
+                        }
+                    },
+                    onAddKey = {
+                        mutatePack { pack ->
+                            val rows = pack.rows.toMutableList()
+                            val keys = rows[index].keys.toMutableList()
+                            keys.add(LayoutKey(label = "", code = "", units = 1))
+                            rows[index] = rows[index].copy(keys = keys)
+                            pack.copy(rows = rows)
+                        }
+                    },
+                    onMoveUp = {
+                        if (index > 0) {
+                            mutatePack { pack ->
+                                val rows = pack.rows.toMutableList()
+                                rows.removeAt(index).also { moved ->
+                                    rows.add(index - 1, moved)
+                                }
                                 pack.copy(rows = rows)
                             }
-                        },
-                        onMoveUp = {
-                            if (index > 0) {
-                                mutatePack { pack ->
-                                    val rows = pack.rows.toMutableList()
-                                    rows.removeAt(index).also { moved ->
-                                        rows.add(index - 1, moved)
-                                    }
-                                    pack.copy(rows = rows)
+                        }
+                    },
+                    onMoveDown = {
+                        if (index < state.workingPack.rows.lastIndex) {
+                            mutatePack { pack ->
+                                val rows = pack.rows.toMutableList()
+                                rows.removeAt(index).also { moved ->
+                                    rows.add(index + 1, moved)
                                 }
+                                pack.copy(rows = rows)
                             }
-                        },
-                        onMoveDown = {
-                            if (index < state.workingPack.rows.lastIndex) {
-                                mutatePack { pack ->
-                                    val rows = pack.rows.toMutableList()
-                                    rows.removeAt(index).also { moved ->
-                                        rows.add(index + 1, moved)
-                                    }
-                                    pack.copy(rows = rows)
-                                }
-                            }
-                        },
-                    )
-                }
+                        }
+                    },
+                )
             }
         }
     }
