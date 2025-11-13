@@ -195,7 +195,9 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
             itemsIndexed(
                 items = state.workingPack.rows,
-                key = { _, row -> row.id },
+                key = { index, row ->
+                    row.id.takeIf { it.isNotBlank() }?.let { "$it#$index" } ?: index
+                },
             ) { index, row ->
                 LayoutRowEditor(
                     index = index,
