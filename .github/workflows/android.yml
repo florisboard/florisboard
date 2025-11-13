@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
       - ".github/FUNDING.yml"
       - ".editorconfig"
       - "fastlane/**"
