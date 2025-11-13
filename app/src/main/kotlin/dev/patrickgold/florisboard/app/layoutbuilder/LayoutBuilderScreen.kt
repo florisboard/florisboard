@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -159,13 +160,12 @@ fun LayoutBuilderScreen() = FlorisScreen {
 
     content {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             if (validationErrors.isNotEmpty()) {
-                item {
+                item("validation_errors") {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
                             text = stringRes(R.string.layout_builder__validation_failed_title),
@@ -180,7 +180,7 @@ fun LayoutBuilderScreen() = FlorisScreen {
                 }
             }
 
-            item {
+            item("keyboard_preview") {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Box(
                         modifier = Modifier
@@ -193,7 +193,12 @@ fun LayoutBuilderScreen() = FlorisScreen {
                 }
             }
 
-            itemsIndexed(state.workingPack.rows) { index, row ->
+            itemsIndexed(
+                items = state.workingPack.rows,
+                key = { index, row ->
+                    row.id.takeIf { it.isNotBlank() }?.let { "$it#$index" } ?: index
+                },
+            ) { index, row ->
                 LayoutRowEditor(
                     index = index,
                     pack = state.workingPack,
@@ -265,6 +270,8 @@ private fun LayoutRowEditor(
     onMoveDown: () -> Unit,
 ) {
     val rowValidation = remember(row, pack.units) { LayoutValidation.validateRow(row, pack.units) }
+    val sumUnitsError = rowValidation.any { it.startsWith("Σu") }
+    val additionalRowErrors = rowValidation.filterNot { it.startsWith("Σu") }
     Card {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -285,25 +292,40 @@ private fun LayoutRowEditor(
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = stringRes(
-                                    R.string.layout_builder__validation_sum_units,
-                                    "arg0" to row.keys.sumOf { it.units },
-                                    "arg1" to pack.units
-                                ),
-                                color = if (rowValidation.any { it.startsWith("Σu") }) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-                                fontWeight = FontWeight.SemiBold,
-                            )
-                            if (!row.showIfSetting.isNullOrBlank()) {
-                            Text(
-                                text = stringRes(
-                                    R.string.layout_builder__row_condition,
-                                    "arg0" to row.showIfSetting!!
-                                ),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            }
+            Text(
+                text = stringRes(
+                    R.string.layout_builder__validation_sum_units,
+                    "arg0" to row.keys.sumOf { it.units },
+                    "arg1" to pack.units
+                ),
+                color = if (sumUnitsError) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+                fontWeight = FontWeight.SemiBold,
+            )
+            if (!row.showIfSetting.isNullOrBlank()) {
+                Text(
+                    text = stringRes(
+                        R.string.layout_builder__row_condition,
+                        "arg0" to row.showIfSetting!!
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            if (additionalRowErrors.isNotEmpty()) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    additionalRowErrors.forEach { error ->
+                        Text(
+                            text = error,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+            }
             Spacer(modifier = Modifier.height(12.dp))
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.keys.forEachIndexed { keyIndex, key ->
