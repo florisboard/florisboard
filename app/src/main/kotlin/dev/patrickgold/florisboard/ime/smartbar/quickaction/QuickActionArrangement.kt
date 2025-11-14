@@ -87,6 +87,7 @@ data class QuickActionArrangement(
                 QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT_ALL),
                 QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH),
                 QuickAction.InsertKey(TextKeyData.FORWARD_DELETE),
+                QuickAction.InsertKey(TextKeyData.IME_HIDE_UI),
             ),
             hiddenActions = listOf(
             ),

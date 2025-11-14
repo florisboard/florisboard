@@ -98,6 +98,7 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode
             KeyCode.TOGGLE_AUTOCORRECT -> R.string.quick_action__toggle_autocorrect
             KeyCode.VOICE_INPUT -> R.string.quick_action__voice_input
+            KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
             KeyCode.TOGGLE_COMPACT_LAYOUT -> R.string.quick_action__one_handed_mode
             KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
@@ -135,6 +136,7 @@ fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
             KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode__tooltip
             KeyCode.TOGGLE_AUTOCORRECT -> R.string.quick_action__toggle_autocorrect__tooltip
             KeyCode.VOICE_INPUT -> R.string.quick_action__voice_input__tooltip
+            KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui__tooltip
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
             KeyCode.TOGGLE_COMPACT_LAYOUT -> R.string.quick_action__one_handed_mode__tooltip
             KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
