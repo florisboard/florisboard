@@ -294,8 +294,8 @@ class KeyboardManager(
                         pack = pack,
                         keyboardMode = mode,
                         subtype = subtype,
-                        _editorInfo = editorInfo,
-                        _state = state,
+                        editorInfo = editorInfo,
+                        state = state,
                     )
                 }
                 val layoutPackKeyboard = layoutPackResult.getOrNull()
