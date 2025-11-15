@@ -69,6 +69,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.uppercase
@@ -283,11 +284,45 @@ class KeyboardManager(
             if (mode != KeyboardMode.CHARACTERS) {
                 state.inputShiftState = InputShiftState.UNSHIFTED
             }
-            val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
-                layoutManager.computeKeyboardAsync(
-                    keyboardMode = mode,
-                    subtype = subtype,
-                ).await()
+            val (computedKeyboard, usesLayoutPack) = if (mode == KeyboardMode.CHARACTERS) {
+                val pack = layoutFlow.value
+                val layoutPackResult = runCatching {
+                    layoutManager.computeKeyboardFromLayoutPack(
+                        pack = pack,
+                        keyboardMode = mode,
+                        subtype = subtype,
+                        editorInfo = editorInfo,
+                        state = state,
+                    )
+                }
+                val layoutPackKeyboard = layoutPackResult.getOrNull()
+                if (layoutPackKeyboard != null && layoutPackKeyboard.arrangement.isNotEmpty()) {
+                    layoutPackKeyboard to true
+                } else {
+                    val error = layoutPackResult.exceptionOrNull()
+                    if (error != null) {
+                        flogWarning(LogTopic.LAYOUT_MANAGER) {
+                            "Falling back to extension layout for characters: ${error.message}"
+                        }
+                    } else {
+                        flogWarning(LogTopic.LAYOUT_MANAGER) {
+                            "Layout pack produced an empty arrangement, falling back to extension layout"
+                        }
+                    }
+                    keyboardCache.getOrElseAsync(mode, subtype) {
+                        layoutManager.computeKeyboardAsync(
+                            keyboardMode = mode,
+                            subtype = subtype,
+                        ).await()
+                    } to false
+                }
+            } else {
+                keyboardCache.getOrElseAsync(mode, subtype) {
+                    layoutManager.computeKeyboardAsync(
+                        keyboardMode = mode,
+                        subtype = subtype,
+                    ).await()
+                } to false
             }
             val computingEvaluator = ComputingEvaluatorImpl(
                 version = activeEvaluatorVersion.getAndAdd(1),
@@ -298,6 +333,19 @@ class KeyboardManager(
             )
             for (key in computedKeyboard.keys()) {
                 key.compute(computingEvaluator)
+                if (usesLayoutPack) {
+                    val layoutPackData = key.data as? LayoutPackKeyData
+                    if (layoutPackData != null) {
+                        val width = layoutPackData.widthUnits.coerceAtLeast(0f)
+                        key.flayWidthFactor = width
+                        key.flayGrow = width
+                        key.flayShrink = width
+                        if (layoutPackData.isSpacer) {
+                            key.isEnabled = false
+                            key.isVisible = false
+                        }
+                    }
+                }
                 key.computeLabelsAndDrawables(computingEvaluator)
             }
             _activeEvaluator.value = computingEvaluator
