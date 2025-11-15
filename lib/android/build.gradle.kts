@@ -69,7 +69,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.kotlin)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.serialization.json)
 }
