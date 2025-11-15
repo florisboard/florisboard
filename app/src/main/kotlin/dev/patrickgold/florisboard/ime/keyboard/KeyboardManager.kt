@@ -291,11 +291,11 @@ class KeyboardManager(
                 val pack = layoutFlow.value
                 val layoutPackResult = runCatching {
                     layoutManager.computeKeyboardFromLayoutPack(
-                        pack,
-                        mode,
-                        subtype,
-                        editorInfo,
-                        state,
+                        pack = pack,
+                        keyboardMode = mode,
+                        subtype = subtype,
+                        editorInfo = editorInfo,
+                        state = state,
                     )
                 }
                 val layoutPackKeyboard = layoutPackResult.getOrNull()
