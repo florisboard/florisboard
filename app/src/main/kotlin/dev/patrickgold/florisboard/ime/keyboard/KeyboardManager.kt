@@ -148,7 +148,10 @@ class KeyboardManager(
         return runCatching {
             layoutPackRepository.save(newPack)
             layoutFlow.value = newPack
-            keyboardCache.clear()
+            updateActiveEvaluators {
+                keyboardCache.clear()
+            }
+            Unit
         }
     }
 
