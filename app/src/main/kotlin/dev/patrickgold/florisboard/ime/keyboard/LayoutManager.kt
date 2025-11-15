@@ -17,12 +17,18 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.view.inputmethod.EditorInfo
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutKey
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutKeyStyle
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutPack
+import dev.patrickgold.florisboard.app.layoutbuilder.LayoutRow
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -34,6 +40,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.io.loadJsonAsset
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -63,6 +70,24 @@ private data class CachedPopupMapping(
     val meta: PopupMappingComponent,
     val mapping: PopupMapping,
 )
+
+internal data class LayoutPackKeyData(
+    val delegate: TextKeyData,
+    val widthUnits: Float,
+    val isSpacer: Boolean,
+) : AbstractKeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData? {
+        return if (isSpacer) {
+            null
+        } else {
+            delegate.compute(evaluator)
+        }
+    }
+
+    override fun asString(isForDisplay: Boolean): String {
+        return delegate.asString(isForDisplay)
+    }
+}
 
 data class DebugLayoutComputationResult(
     val main: Result<CachedLayout?>,
@@ -153,6 +178,119 @@ class LayoutManager(context: Context) {
                 return@withLock popupMapping
             }
         }.await().getOrThrow()
+    }
+
+    private fun resolveInternalKeyByLabel(label: String): TextKeyData? {
+        return TextKeyData.InternalKeys.firstOrNull { it.label.equals(label, ignoreCase = true) }
+    }
+
+    private fun resolveLayoutPackTextKeyData(
+        rawCode: String,
+        rawLabel: String,
+        style: LayoutKeyStyle,
+    ): TextKeyData? {
+        if (rawCode.isBlank()) {
+            return null
+        }
+        val trimmedCode = rawCode.trim()
+        val preferredLabel = rawLabel.ifEmpty { trimmedCode }
+        val groupId = when (style) {
+            LayoutKeyStyle.SPECIAL_LEFT -> KeyData.GROUP_LEFT
+            LayoutKeyStyle.SPECIAL_RIGHT -> KeyData.GROUP_RIGHT
+            else -> KeyData.GROUP_DEFAULT
+        }
+        val codePointCount = trimmedCode.codePointCount(0, trimmedCode.length)
+        if (codePointCount == 1) {
+            val codePoint = trimmedCode.codePointAt(0)
+            return TextKeyData(
+                type = KeyType.CHARACTER,
+                code = codePoint,
+                label = preferredLabel,
+                groupId = groupId,
+            )
+        }
+        resolveInternalKeyByLabel(trimmedCode)?.let { base ->
+            return base.copy(label = preferredLabel, groupId = groupId)
+        }
+        val normalized = trimmedCode.uppercase()
+        if (normalized.startsWith("KEYCODE_")) {
+            val suffix = normalized.removePrefix("KEYCODE_").lowercase()
+            resolveInternalKeyByLabel(suffix)?.let { base ->
+                return base.copy(label = preferredLabel, groupId = groupId)
+            }
+            when (suffix) {
+                "space" -> {
+                    return TextKeyData.SPACE.copy(label = preferredLabel, groupId = groupId)
+                }
+                "enter" -> {
+                    return TextKeyData(
+                        type = KeyType.ENTER_EDITING,
+                        code = KeyCode.ENTER,
+                        label = preferredLabel,
+                        groupId = KeyData.GROUP_ENTER,
+                    )
+                }
+                "delete" -> {
+                    return TextKeyData.DELETE.copy(label = preferredLabel, groupId = groupId)
+                }
+                "shift" -> {
+                    return TextKeyData.SHIFT.copy(label = preferredLabel, groupId = groupId)
+                }
+            }
+        }
+        when (normalized) {
+            "MODE_SYMBOLS" -> {
+                return TextKeyData.VIEW_SYMBOLS.copy(label = preferredLabel, groupId = groupId)
+            }
+            "MODE_SYMBOLS2" -> {
+                return TextKeyData.VIEW_SYMBOLS2.copy(label = preferredLabel, groupId = groupId)
+            }
+            "MODE_CHARACTERS" -> {
+                return TextKeyData.VIEW_CHARACTERS.copy(label = preferredLabel, groupId = groupId)
+            }
+            "MODE_NUMERIC_ADVANCED" -> {
+                return TextKeyData.VIEW_NUMERIC_ADVANCED.copy(label = preferredLabel, groupId = groupId)
+            }
+            "MODE_NUMERIC" -> {
+                return TextKeyData(
+                    type = KeyType.SYSTEM_GUI,
+                    code = KeyCode.VIEW_NUMERIC,
+                    label = preferredLabel,
+                    groupId = groupId,
+                )
+            }
+            "CTRL_MOD", "CTRL" -> {
+                return TextKeyData.CTRL.copy(label = preferredLabel, groupId = groupId)
+            }
+            "MENU_TOGGLE" -> {
+                return TextKeyData.TOGGLE_ACTIONS_OVERFLOW.copy(label = preferredLabel, groupId = groupId)
+            }
+        }
+        trimmedCode.toIntOrNull()?.let { numericCode ->
+            TextKeyData.getCodeInfoAsTextKeyData(numericCode)?.let { base ->
+                return base.copy(label = preferredLabel, groupId = groupId)
+            }
+        }
+        return null
+    }
+
+    private fun LayoutKey.toLayoutPackKeyData(pack: LayoutPack, row: LayoutRow): LayoutPackKeyData {
+        val keyData = resolveLayoutPackTextKeyData(code, label, style)
+        if (keyData == null && !spacer) {
+            flogWarning(LogTopic.LAYOUT_MANAGER) {
+                "Unable to resolve layout pack key '${code}' in row '${row.id}' of pack '${pack.id}'"
+            }
+        }
+        val resolvedData = keyData ?: TextKeyData.UNSPECIFIED.copy(label = label)
+        val widthUnits = when {
+            units > 0 -> units.toFloat()
+            else -> 1f
+        }
+        return LayoutPackKeyData(
+            delegate = resolvedData,
+            widthUnits = widthUnits,
+            isSpacer = spacer || keyData == null,
+        )
     }
 
     /**
@@ -317,6 +455,66 @@ class LayoutManager(context: Context) {
                 }
             }
         }
+    }
+
+    suspend fun computeKeyboardFromLayoutPack(
+        pack: LayoutPack,
+        keyboardMode: KeyboardMode,
+        subtype: Subtype,
+        _editorInfo: EditorInfo,
+        _state: KeyboardState,
+    ): TextKeyboard {
+        require(keyboardMode == KeyboardMode.CHARACTERS) {
+            "Layout packs are currently supported only for CHARACTER mode"
+        }
+        val extendedPopupsDefault = loadPopupMappingAsync()
+        val extendedPopups = loadPopupMappingAsync(subtype)
+
+        val computedArrangement: ArrayList<Array<TextKey>> = arrayListOf()
+        for (row in pack.rows) {
+            if (!row.enabled) {
+                continue
+            }
+            val rowKeys = Array(row.keys.size) { index ->
+                val keySpec = row.keys[index]
+                val keyData = keySpec.toLayoutPackKeyData(pack, row)
+                TextKey(keyData)
+            }
+            if (rowKeys.isNotEmpty()) {
+                computedArrangement.add(rowKeys)
+            }
+        }
+
+        if (computedArrangement.isNotEmpty()) {
+            val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
+            if (prefs.keyboard.hintedNumberRowEnabled.get() && symbolsComputedArrangement.isNotEmpty()) {
+                val row = computedArrangement[0]
+                val symbolRow = symbolsComputedArrangement[0]
+                addRowHints(row, symbolRow, KeyType.NUMERIC)
+            }
+            val rOffset = computedArrangement.size - symbolsComputedArrangement.size
+            for ((r, row) in computedArrangement.withIndex()) {
+                if (r < rOffset) {
+                    continue
+                }
+                val symbolRow = symbolsComputedArrangement.getOrNull(r - rOffset)
+                if (symbolRow != null) {
+                    addRowHints(row, symbolRow, KeyType.CHARACTER)
+                }
+            }
+        }
+
+        val arrangement = Array(computedArrangement.size) { computedArrangement[it] }
+        return TextKeyboard(
+            arrangement = arrangement,
+            mode = keyboardMode,
+            extendedPopupMapping = extendedPopups.await().onFailure {
+                flogWarning(LogTopic.LAYOUT_MANAGER) { it.toString() }
+            }.getOrNull()?.mapping,
+            extendedPopupMappingDefault = extendedPopupsDefault.await().onFailure {
+                flogWarning(LogTopic.LAYOUT_MANAGER) { it.toString() }
+            }.getOrNull()?.mapping,
+        )
     }
 
     /**
