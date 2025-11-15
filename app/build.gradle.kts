@@ -108,7 +108,7 @@ android {
     buildTypes {
         named("debug") {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug+${getGitCommitHash(short = true)}"
+            versionNameSuffix = "-debug+${getGitCommitHash(short = true).get()}"
 
             isDebuggable = true
             isJniDebuggable = false

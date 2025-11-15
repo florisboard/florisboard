@@ -1,19 +1,19 @@
 [versions]
 # Main
 android-gradle-plugin = "8.12.0"
-androidx-activity = "1.10.1"
-androidx-autofill = "1.1.0"
+androidx-activity = "1.11.0"
+androidx-autofill = "1.3.0"
 androidx-collection = "1.5.0"
-androidx-compose-bom = "2025.05.01"
-androidx-core = "1.16.0"
-androidx-core-splashscreen = "1.0.1"
-androidx-emoji2 = "1.5.0"
+androidx-compose-bom = "2025.11.00"
+androidx-core = "1.17.0"
+androidx-core-splashscreen = "1.2.0"
+androidx-emoji2 = "1.6.0"
 androidx-exifinterface = "1.4.1"
-androidx-navigation = "2.9.0"
+androidx-navigation = "2.9.6"
 androidx-profileinstaller = "1.4.1"
 androidx-room = "2.7.2"
 cache4k = "0.7.0"
-coil = "3.2.0"
+coil = "3.3.0"
 kotlin = "2.2.20"
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.9.0"
@@ -88,7 +88,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-mikepenz-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "mikepenz-aboutlibraries" }
+mikepenz-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "mikepenz-aboutlibraries" }
 
 # Testing
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlinx-kover" }
