@@ -61,7 +61,7 @@ dependencies {
 
     implementation(libs.androidx.compose.material3)
 
-    implementation(project(":lib:android"))
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.kotlin)
 }
 

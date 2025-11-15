@@ -70,9 +70,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":lib:android"))
-    implementation(project(":lib:color"))
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.color)
+    implementation(projects.lib.kotlin)
 
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)

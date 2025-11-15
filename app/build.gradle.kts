@@ -213,12 +213,12 @@ dependencies {
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
 
-    implementation(project(":lib:android"))
-    implementation(project(":lib:color"))
-    implementation(project(":lib:compose"))
-    implementation(project(":lib:kotlin"))
-    implementation(project(":lib:native"))
-    implementation(project(":lib:snygg"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.color)
+    implementation(projects.lib.compose)
+    implementation(projects.lib.kotlin)
+    implementation(projects.lib.native)
+    implementation(projects.lib.snygg)
 
     testImplementation(libs.kotlin.test.junit5)
     androidTestImplementation(libs.androidx.test.ext)
