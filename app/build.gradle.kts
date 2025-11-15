@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import java.io.ByteArrayOutputStream
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -38,6 +38,17 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.set(listOf(
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xjvm-default=all-compatibility",
+            "-Xwhen-guards",
+        ))
+    }
+}
+
 android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = projectCompileSdk.toInt()
@@ -49,13 +60,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
-            "-Xwhen-guards",
-        )
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
+        arg("room.expandProjection", "true")
     }
 
     defaultConfig {
@@ -67,15 +75,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
+        buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash().get()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
-
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
 
         sourceSets {
             maybeCreate("main").apply {
@@ -223,19 +225,17 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
 
-fun getGitCommitHash(short: Boolean = false): String {
+fun getGitCommitHash(short: Boolean = false): Provider<String> {
     if (!File(".git").exists()) {
-        return "null"
+        return providers.provider { "null" }
     }
 
-    val stdout = ByteArrayOutputStream()
-    exec {
+    val execProvider = providers.exec {
         if (short) {
             commandLine("git", "rev-parse", "--short", "HEAD")
         } else {
             commandLine("git", "rev-parse", "HEAD")
         }
-        standardOutput = stdout
     }
-    return stdout.toString().trim()
+    return execProvider.standardOutput.asText.map { it.trim() }
 }
