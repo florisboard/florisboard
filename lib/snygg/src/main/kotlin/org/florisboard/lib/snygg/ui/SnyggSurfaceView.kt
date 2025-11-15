@@ -123,42 +123,40 @@ fun SnyggSurfaceView(
             }
         }
 
+        val surfaceView = remember {
+            Log.d("SnyggSurfaceView", "creating new instance")
+            SurfaceView(context).apply {
+                if (AndroidVersion.ATLEAST_API34_U) {
+                    setSurfaceLifecycle(SurfaceView.SURFACE_LIFECYCLE_FOLLOWS_ATTACHMENT)
+                }
+                setZOrderOnTop(false)
+                holder.setFormat(PixelFormat.TRANSPARENT)
+            }
+        }
+
         if (showSurfaceView) {
-            var surfaceView by remember { mutableStateOf<SurfaceView?>(null) }
             AndroidView(
                 modifier = modifier,
-                factory = { context ->
-                    Log.d("SnyggSurfaceView", "creating new instance")
-                    SurfaceView(context).apply {
-                        if (AndroidVersion.ATLEAST_API34_U) {
-                            setSurfaceLifecycle(SurfaceView.SURFACE_LIFECYCLE_FOLLOWS_ATTACHMENT)
-                        }
-                        setZOrderOnTop(false)
-                        holder.setFormat(PixelFormat.TRANSPARENT)
-                    }
-                },
-                update = { surfaceView = it },
+                factory = { surfaceView },
             )
-            surfaceView?.let { surfaceView ->
-                LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale) {
-                    val image = loadedImage
-                    if (image is DrawableImage && image.drawable is Animatable) {
-                        // Slow path, need animation
-                        val fps = 30L // TODO: read frame delays from drawable
-                        val animatedDrawable = image.drawable as Animatable
-                        try {
-                            animatedDrawable.start()
-                            while (isActive) {
-                                surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
-                                delay(1000L / fps)
-                            }
-                        } finally {
-                            animatedDrawable.stop()
+            LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale) {
+                val image = loadedImage
+                if (image is DrawableImage && image.drawable is Animatable) {
+                    // Slow path, need animation
+                    val fps = 30L // TODO: read frame delays from drawable
+                    val animatedDrawable = image.drawable as Animatable
+                    try {
+                        animatedDrawable.start()
+                        while (isActive) {
+                            surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                            delay(1000L / fps)
                         }
-                    } else {
-                        // Fast path, render once and be done with it
-                        surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                    } finally {
+                        animatedDrawable.stop()
                     }
+                } else {
+                    // Fast path, render once and be done with it
+                    surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
                 }
             }
         }
@@ -193,8 +191,10 @@ private fun Bitmap.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
     val srcSize = Size(bitmap.width.toFloat(), bitmap.height.toFloat())
     val canvasSize = Size(canvas.width.toFloat(), canvas.height.toFloat())
     val scaleFactor = contentScale.computeScaleFactor(srcSize, canvasSize)
-    Log.d("SnyggSurfaceView",
-        "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor")
+    Log.d(
+        "SnyggSurfaceView",
+        "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor"
+    )
     val dstSize = srcSize.times(scaleFactor)
     val srcRect = srcSize.toRect().toAndroidRectF().toRect()
     val dstRect = dstSize.toRect().let {
