@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.agp.library)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,15 @@ plugins {
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.set(listOf(
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+        ))
+    }
+}
 
 android {
     namespace = "org.florisboard.lib.color"
@@ -34,12 +45,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-opt-in=kotlin.contracts.ExperimentalContracts",
-        )
-    }
 
     sourceSets {
         maybeCreate("main").apply {
@@ -56,7 +61,7 @@ dependencies {
 
     implementation(libs.androidx.compose.material3)
 
-    implementation(project(":lib:android"))
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.kotlin)
 }
 

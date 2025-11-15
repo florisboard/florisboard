@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright (C) 2025 The FlorisBoard Contributors
  *
@@ -21,6 +23,12 @@ plugins {
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
 
 android {
     namespace = "org.florisboard.libnative"
@@ -61,9 +69,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
 
     sourceSets {

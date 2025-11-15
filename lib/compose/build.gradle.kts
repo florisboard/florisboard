@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright (C) 2025 The FlorisBoard Contributors
  *
@@ -22,6 +24,15 @@ plugins {
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.set(listOf(
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+        ))
+    }
+}
 
 android {
     namespace = "org.florisboard.lib.compose"
@@ -56,19 +67,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-Xconsistent-data-class-copy-visibility",
-            "-Xwhen-guards",
-        )
-    }
 }
 
 dependencies {
-    implementation(project(":lib:android"))
-    implementation(project(":lib:color"))
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.color)
+    implementation(projects.lib.kotlin)
 
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
