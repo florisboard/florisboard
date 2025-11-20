@@ -1,0 +1,49 @@
+{
+  "$": "ime.extension.theme",
+  "meta": {
+    "id": "org.florisboard.themes.my",
+    "version": "0.2.0",
+    "title": "FlorisBoard default themes (Material You)",
+    "description": "Default Material You themes (both day and night) for the keyboard UI",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "lm41 <lm41@lm41.xyz>" ],
+    "license": "apache-2.0"
+  },
+  "themes": [
+    {
+      "id": "floris_day_my",
+      "label": "Floris Day (Material You)",
+      "authors": [ "lm41" ],
+      "isNight": false
+    },
+    {
+      "id": "floris_day_my_borderless",
+      "label": "Floris Day Borderless (Material You)",
+      "authors": [ "lm41" ],
+      "isNight": false
+    },
+    {
+      "id": "floris_night_my",
+      "label": "Floris Night (Material You)",
+      "authors": [ "lm41" ],
+      "isNight": true
+    },
+    {
+      "id": "floris_night_my_borderless",
+      "label": "Floris Night Borderless (Material You)",
+      "authors": [ "lm41" ],
+      "isNight": true
+    },
+    {
+      "id": "floris_pure_night_my",
+      "label": "Floris Pure Night (Material You)",
+      "authors": [ "lm41" ],
+      "isNight": true
+    },
+    {
+      "id": "floris_pure_night_my_borderless",
+      "label": "Floris Pure Night Borderless (Material You)",
+      "authors": [ "lm41" ],
+      "isNight": true
+    }
+  ]
+}

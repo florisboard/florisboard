@@ -5,7 +5,7 @@
     "--primary-variant": "dynamic-dark-color(primary)",
     "--secondary": "dynamic-dark-color(secondaryContainer)",
     "--secondary-variant": "dynamic-dark-color(secondary)",
-    "--background": "#000000",
+    "--background": "dynamic-dark-color(background)",
     "--background-variant": "dynamic-dark-color(background)",
     "--surface": "dynamic-dark-color(surfaceDim)",
     "--surface-variant": "dynamic-dark-color(surfaceVariant)",
@@ -17,7 +17,7 @@
     "--spacer-color": "dynamic-dark-color(scrim)",
 
     "--one-hand-background": "dynamic-dark-color(inversePrimary)",
-    "--one-hand-foreground": "#424242",
+    "--one-hand-foreground": "dynamic-dark-color(scrim)",
 
     "--incognito-icon-color": "#00000011",
 
