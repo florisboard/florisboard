@@ -1,0 +1,41 @@
+[
+  [
+    { "$": "auto_text_key", "code":  4326 , "label": "ღ" },
+    { "$": "auto_text_key", "code":  4335 , "label": "ჯ" },
+    { "$": "auto_text_key", "code":  4323 , "label": "უ" },
+    { "$": "auto_text_key", "code":  4313 , "label": "კ" },
+    { "$": "auto_text_key", "code":  4308 , "label": "ე" },
+    { "$": "auto_text_key", "code":  4316 , "label": "ნ" },
+    { "$": "auto_text_key", "code":  4306 , "label": "გ" },
+    { "$": "auto_text_key", "code":  4328 , "label": "შ" },
+    { "$": "auto_text_key", "code":  4332 , "label": "წ" },
+    { "$": "auto_text_key", "code":  4310 , "label": "ზ" },
+    { "$": "auto_text_key", "code":  4334 , "label": "ხ" },
+    { "$": "auto_text_key", "code": 4330 , "label": "ც" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 4324 , "label": "ფ" },
+    { "$": "auto_text_key", "code": 4331 , "label": ძ" },
+    { "$": "auto_text_key", "code": 4309 , "label": "ვ" },
+    { "$": "auto_text_key", "code": 4311 , "label": "თ" },
+    { "$": "auto_text_key", "code": 4304 , "label": "ა" },
+    { "$": "auto_text_key", "code": 4318 , "label": "პ" },
+    { "$": "auto_text_key", "code": 4320 , "label": "რ" },
+    { "$": "auto_text_key", "code": 4317 , "label": "ო" },
+    { "$": "auto_text_key", "code": 4314 , "label": "ლ" },
+    { "$": "auto_text_key", "code": 4307 , "label": "დ" },
+    { "$": "auto_text_key", "code": 4319 , "label": "ჟ" }
+  ],
+  [
+    { "$": "auto_text_key", "code": 4333 , "label": "ჭ" },
+    { "$": "auto_text_key", "code": 4329 , "label": "ჩ" },
+    { "$": "auto_text_key", "code": 4327 , "label": "ყ" },
+    { "$": "auto_text_key", "code": 4321 , "label": "ს" },
+    { "$": "auto_text_key", "code": 4315 , "label": "მ" },
+    { "$": "auto_text_key", "code": 4312 , "label": "ი" },
+    { "$": "auto_text_key", "code": 4322 , "label": "ტ" },
+    { "$": "auto_text_key", "code": 4325 , "label": "ქ" },
+    { "$": "auto_text_key", "code": 4305 , "label": "ბ" },
+    { "$": "auto_text_key", "code": 4336 , "label": "ჰ" }
+  ]
+]
