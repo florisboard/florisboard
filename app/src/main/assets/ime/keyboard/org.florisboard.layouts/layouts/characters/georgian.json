@@ -15,7 +15,7 @@
   ],
   [
     { "$": "auto_text_key", "code": 4324 , "label": "ფ" },
-    { "$": "auto_text_key", "code": 4331 , "label": ძ" },
+    { "$": "auto_text_key", "code": 4331 , "label": "ძ" },
     { "$": "auto_text_key", "code": 4309 , "label": "ვ" },
     { "$": "auto_text_key", "code": 4311 , "label": "თ" },
     { "$": "auto_text_key", "code": 4304 , "label": "ა" },
