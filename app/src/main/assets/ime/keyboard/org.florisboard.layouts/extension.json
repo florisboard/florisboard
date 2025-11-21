@@ -192,8 +192,7 @@
         "id": "georgian_standard",
         "label": "Georgian Standard Keyboard",
         "authors": [ "nE" ],
-        "direction": "ltr",
-        "modifier": "org.florisboard.layouts:georgian"
+        "direction": "ltr"
       },
       {
         "id": "german",
