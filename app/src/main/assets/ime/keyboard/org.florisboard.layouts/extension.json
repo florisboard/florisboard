@@ -189,6 +189,13 @@
         "direction": "ltr"
       },
       {
+        "id": "georgian_standard",
+        "label": "Georgian Standard Keyboard",
+        "authors": [ "nE" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:georgian"
+      },
+      {
         "id": "german",
         "label": "German (QWERTZ)",
         "authors": [ "mahmoudk1000" ],
