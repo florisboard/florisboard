@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.agp.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 val projectMinSdk: String by project
@@ -25,6 +26,9 @@ android {
         minSdk = projectMinSdk.toInt()
     }
 
+    buildFeatures {
+        compose = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -58,7 +62,7 @@ dependencies {
     implementation(composeBom)
     // testImplementation(composeBom)
     // androidTestImplementation(composeBom)
-
+    api(libs.material.kolor)
     implementation(libs.androidx.compose.material3)
 
     implementation(projects.lib.android)

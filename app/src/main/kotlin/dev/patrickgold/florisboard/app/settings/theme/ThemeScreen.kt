@@ -111,7 +111,7 @@ fun ThemeScreen() = FlorisScreen {
             icon = Icons.Default.ColorLens,
             defaultColors = ColorMappings.colors,
             showAlphaSlider = false,
-            enableAdvancedLayout = false,
+            enableAdvancedLayout = true,
             colorOverride = {
                 if (it.isMaterialYou(context)) {
                     Color.Unspecified
