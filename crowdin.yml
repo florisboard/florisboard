@@ -10,6 +10,7 @@ files:
     translate_attributes: 0
     languages_mapping:
       android_code:
+        # Existing languages (maintained)
         ar: "ar"
         ast: "ast-rES"
         bg: "bg"
@@ -45,3 +46,123 @@ files:
         tr: "tr"
         uk: "uk"
         zgh: "zgh"
+        # Additional languages for expanded ~120 language support
+        af: "af"                    # Afrikaans
+        sq: "sq"                    # Albanian
+        am: "am"                    # Amharic
+        ar-SA: "ar-rSA"            # Arabic (Saudi Arabia)
+        ar-EG: "ar-rEG"            # Arabic (Egypt)
+        hy-AM: "hy-rAM"            # Armenian
+        az: "az"                    # Azerbaijani
+        eu: "eu"                    # Basque
+        be: "be"                    # Belarusian
+        bn: "bn"                    # Bengali
+        bn-IN: "bn-rIN"            # Bengali (India)
+        my: "my"                    # Burmese
+        km: "km"                    # Khmer (Cambodian)
+        zh-CN: "zh-rCN"            # Chinese Simplified
+        zh-TW: "zh-rTW"            # Chinese Traditional
+        zh-HK: "zh-rHK"            # Chinese (Hong Kong)
+        co: "co"                    # Corsican
+        nl-BE: "nl-rBE"            # Dutch (Belgium)
+        en: "en"                    # English (default)
+        en-AU: "en-rAU"            # English (Australia)
+        en-CA: "en-rCA"            # English (Canada)
+        en-GB: "en-rGB"            # English (UK)
+        en-IN: "en-rIN"            # English (India)
+        en-NZ: "en-rNZ"            # English (New Zealand)
+        en-US: "en-rUS"            # English (US)
+        en-ZA: "en-rZA"            # English (South Africa)
+        et: "et"                    # Estonian
+        tl: "tl"                    # Filipino (Tagalog)
+        fil: "fil"                  # Filipino
+        fr-CA: "fr-rCA"            # French (Canada)
+        fr-CH: "fr-rCH"            # French (Switzerland)
+        gl: "gl"                    # Galician
+        ka: "ka"                    # Georgian
+        de-AT: "de-rAT"            # German (Austria)
+        de-CH: "de-rCH"            # German (Switzerland)
+        gu: "gu"                    # Gujarati
+        ht: "ht"                    # Haitian Creole
+        ha: "ha"                    # Hausa
+        haw: "haw"                  # Hawaiian
+        hi: "hi"                    # Hindi
+        hmn: "hmn"                  # Hmong
+        is: "is"                    # Icelandic
+        ig: "ig"                    # Igbo
+        ga: "ga"                    # Irish
+        it-CH: "it-rCH"            # Italian (Switzerland)
+        jv: "jv"                    # Javanese
+        kn: "kn"                    # Kannada
+        kk: "kk"                    # Kazakh
+        ko: "ko"                    # Korean
+        ko-KR: "ko-rKR"            # Korean (Korea)
+        ku: "ku"                    # Kurdish
+        ky: "ky"                    # Kyrgyz
+        lo: "lo"                    # Lao
+        la: "la"                    # Latin
+        lv: "lv"                    # Latvian
+        lt: "lt"                    # Lithuanian
+        lb: "lb"                    # Luxembourgish
+        ms: "ms"                    # Malay
+        ms-MY: "ms-rMY"            # Malay (Malaysia)
+        ml: "ml"                    # Malayalam
+        mt: "mt"                    # Maltese
+        mi: "mi"                    # Maori
+        mr: "mr"                    # Marathi
+        mn: "mn"                    # Mongolian
+        ne: "ne"                    # Nepali
+        nb: "nb"                    # Norwegian Bokmal
+        nn: "nn"                    # Norwegian Nynorsk
+        or: "or"                    # Odia (Oriya)
+        ps: "ps"                    # Pashto
+        pt-BR: "pt-rBR"            # Portuguese (Brazil)
+        pa: "pa"                    # Punjabi
+        ro: "ro"                    # Romanian
+        ru-UA: "ru-rUA"            # Russian (Ukraine)
+        sm: "sm"                    # Samoan
+        gd: "gd"                    # Scottish Gaelic
+        sr-Latn: "b+sr+Latn"       # Serbian (Latin) - Using BCP-47 format for Android 7.0+ script support
+        st: "st"                    # Sesotho
+        sn: "sn"                    # Shona
+        sd: "sd"                    # Sindhi
+        si: "si"                    # Sinhala
+        so: "so"                    # Somali
+        es-AR: "es-rAR"            # Spanish (Argentina)
+        es-MX: "es-rMX"            # Spanish (Mexico)
+        es-US: "es-rUS"            # Spanish (United States)
+        es-419: "es-r419"          # Spanish (Latin America)
+        su: "su"                    # Sundanese
+        sw: "sw"                    # Swahili
+        ta: "ta"                    # Tamil
+        ta-IN: "ta-rIN"            # Tamil (India)
+        te: "te"                    # Telugu
+        th: "th"                    # Thai
+        ti: "ti"                    # Tigrinya
+        to: "to"                    # Tongan
+        ts: "ts"                    # Tsonga
+        tn: "tn"                    # Tswana
+        tk: "tk"                    # Turkmen
+        ug: "ug"                    # Uyghur
+        ur: "ur"                    # Urdu
+        ur-PK: "ur-rPK"            # Urdu (Pakistan)
+        uz: "uz"                    # Uzbek
+        vi: "vi"                    # Vietnamese
+        cy: "cy"                    # Welsh
+        fy: "fy"                    # Western Frisian
+        xh: "xh"                    # Xhosa
+        yi: "yi"                    # Yiddish
+        yo: "yo"                    # Yoruba
+        zu: "zu"                    # Zulu
+        ceb: "ceb"                  # Cebuano
+        ny: "ny"                    # Chichewa
+        luo: "luo"                  # Luo
+        mg: "mg"                    # Malagasy
+        qu: "qu"                    # Quechua
+        rw: "rw"                    # Kinyarwanda
+        gn: "gn"                    # Guarani
+        tt: "tt"                    # Tatar
+        dv: "dv"                    # Dhivehi
+        ks: "ks"                    # Kashmiri
+        kri: "kri"                  # Krio
+        ay: "ay"                    # Aymara
