@@ -37,6 +37,7 @@ import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardCapslock
+import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.KeyboardVoice
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreHoriz
@@ -213,6 +214,9 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice
+        }
+        KeyCode.IME_HIDE_UI -> {
+            Icons.Default.KeyboardHide
         }
         KeyCode.DELETE -> {
             Icons.AutoMirrored.Outlined.Backspace

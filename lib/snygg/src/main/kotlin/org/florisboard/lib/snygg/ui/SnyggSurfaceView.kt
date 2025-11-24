@@ -21,6 +21,7 @@ import android.graphics.PixelFormat
 import android.graphics.drawable.Animatable
 import android.util.Log
 import android.view.SurfaceView
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,8 +37,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toAndroidRectF
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.times
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toRect
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -123,42 +126,51 @@ fun SnyggSurfaceView(
             }
         }
 
+        val surfaceView = remember {
+            Log.d("SnyggSurfaceView", "creating new instance")
+            SurfaceView(context).apply {
+                if (AndroidVersion.ATLEAST_API34_U) {
+                    setSurfaceLifecycle(SurfaceView.SURFACE_LIFECYCLE_FOLLOWS_ATTACHMENT)
+                }
+                setZOrderOnTop(false)
+                holder.setFormat(PixelFormat.TRANSPARENT)
+            }
+        }
+
         if (showSurfaceView) {
-            var surfaceView by remember { mutableStateOf<SurfaceView?>(null) }
-            AndroidView(
-                modifier = modifier,
-                factory = { context ->
-                    Log.d("SnyggSurfaceView", "creating new instance")
-                    SurfaceView(context).apply {
-                        if (AndroidVersion.ATLEAST_API34_U) {
-                            setSurfaceLifecycle(SurfaceView.SURFACE_LIFECYCLE_FOLLOWS_ATTACHMENT)
+            var parentSize by remember { mutableStateOf(IntSize.Zero) }
+            Box(modifier.onSizeChanged { parentSize = it }) {
+                AndroidView(
+                    modifier = Modifier.matchParentSize(),
+                    factory = { surfaceView },
+                    update = { view ->
+                        val lp = view.layoutParams
+                        if (lp == null || lp.width != parentSize.width || lp.height != parentSize.height) {
+                            view.layoutParams = ViewGroup.LayoutParams(parentSize.width, parentSize.height)
+                            view.requestLayout()
                         }
-                        setZOrderOnTop(false)
-                        holder.setFormat(PixelFormat.TRANSPARENT)
+                        Log.d("SnyggSurfaceView", "updateSize(height=${view.height},width=${view.width})")
                     }
-                },
-                update = { surfaceView = it },
-            )
-            surfaceView?.let { surfaceView ->
-                LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale) {
-                    val image = loadedImage
-                    if (image is DrawableImage && image.drawable is Animatable) {
-                        // Slow path, need animation
-                        val fps = 30L // TODO: read frame delays from drawable
-                        val animatedDrawable = image.drawable as Animatable
-                        try {
-                            animatedDrawable.start()
-                            while (isActive) {
-                                surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
-                                delay(1000L / fps)
-                            }
-                        } finally {
-                            animatedDrawable.stop()
+                )
+            }
+            LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale, parentSize) {
+                val image = loadedImage
+                if (image is DrawableImage && image.drawable is Animatable) {
+                    // Slow path, need animation
+                    val fps = 30L // TODO: read frame delays from drawable
+                    val animatedDrawable = image.drawable as Animatable
+                    try {
+                        animatedDrawable.start()
+                        while (isActive) {
+                            surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                            delay(1000L / fps)
                         }
-                    } else {
-                        // Fast path, render once and be done with it
-                        surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                    } finally {
+                        animatedDrawable.stop()
                     }
+                } else {
+                    // Fast path, render once and be done with it
+                    surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
                 }
             }
         }
@@ -193,8 +205,10 @@ private fun Bitmap.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
     val srcSize = Size(bitmap.width.toFloat(), bitmap.height.toFloat())
     val canvasSize = Size(canvas.width.toFloat(), canvas.height.toFloat())
     val scaleFactor = contentScale.computeScaleFactor(srcSize, canvasSize)
-    Log.d("SnyggSurfaceView",
-        "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor")
+    Log.d(
+        "SnyggSurfaceView",
+        "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor"
+    )
     val dstSize = srcSize.times(scaleFactor)
     val srcRect = srcSize.toRect().toAndroidRectF().toRect()
     val dstRect = dstSize.toRect().let {
