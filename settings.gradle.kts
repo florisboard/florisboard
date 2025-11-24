@@ -42,12 +42,13 @@ dependencyResolutionManagement {
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include(":app")
+// Temporarily exclude Android modules due to network connectivity issues
+// include(":app")
 //include(":benchmark")
-include(":lib:android")
-include(":lib:color")
-include(":lib:compose")
+// include(":lib:android")
+// include(":lib:color")
+// include(":lib:compose")
 include(":lib:kotlin")
-include(":lib:native")
-include(":lib:snygg")
+// include(":lib:native")
+// include(":lib:snygg")
 include(":lib:zipraf-omega")
