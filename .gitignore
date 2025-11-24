@@ -61,3 +61,8 @@ debug/
 target/
 **/*.rs.bk
 *.pdb
+
+# ZIPRAF_OMEGA generated reports (temporary)
+lib/zipraf-omega/*_report.txt
+lib/zipraf-omega/zipraf_omega_activation_report.txt
+lib/zipraf-omega/desk_test_report.txt
