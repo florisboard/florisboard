@@ -18,9 +18,9 @@ rootProject.name = "FlorisBoard"
 
 pluginManagement {
     repositories {
+        mavenCentral()
         gradlePluginPortal()
         google()
-        mavenCentral()
     }
 }
 
@@ -42,13 +42,12 @@ dependencyResolutionManagement {
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-// Temporarily exclude Android modules due to network connectivity issues
-// include(":app")
-//include(":benchmark")
-// include(":lib:android")
-// include(":lib:color")
-// include(":lib:compose")
+include(":app")
+include(":benchmark")
+include(":lib:android")
+include(":lib:color")
+include(":lib:compose")
 include(":lib:kotlin")
-// include(":lib:native")
-// include(":lib:snygg")
+include(":lib:native")
+include(":lib:snygg")
 include(":lib:zipraf-omega")

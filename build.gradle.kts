@@ -15,16 +15,14 @@
  */
 
 plugins {
-    // Temporarily commented out Android plugins due to network connectivity issues
-    // These are not needed for testing the zipraf-omega JVM module
-    // alias(libs.plugins.agp.application) apply false
-    // alias(libs.plugins.agp.library) apply false
-    // alias(libs.plugins.agp.test) apply false
-    // alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.agp.application) apply false
+    alias(libs.plugins.agp.library) apply false
+    alias(libs.plugins.agp.test) apply false
+    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.jvm) apply false
-    // alias(libs.plugins.kotlin.plugin.compose) apply false
+    alias(libs.plugins.kotlin.plugin.compose) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    // alias(libs.plugins.kotlinx.kover) apply false
-    // alias(libs.plugins.ksp) apply false
-    // alias(libs.plugins.mikepenz.aboutlibraries) apply false
+    alias(libs.plugins.kotlinx.kover) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.mikepenz.aboutlibraries) apply false
 }
