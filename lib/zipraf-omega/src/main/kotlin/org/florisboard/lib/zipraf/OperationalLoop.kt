@@ -65,11 +65,13 @@ class OperationalLoop {
      * @param scope Coroutine scope for loop execution
      * @param cycleDelayMs Delay between cycles in milliseconds
      * @param onCycle Callback invoked on each complete cycle
+     * @param onError Optional callback invoked when an error occurs
      */
     fun start(
         scope: CoroutineScope,
         cycleDelayMs: Long = 100,
-        onCycle: (LoopCycleResult) -> Unit = {}
+        onCycle: (LoopCycleResult) -> Unit = {},
+        onError: (Exception) -> Unit = {}
     ) {
         if (loopJob?.isActive == true) {
             return // Already running
@@ -84,6 +86,8 @@ class OperationalLoop {
                 } catch (e: Exception) {
                     // Error handling with graceful degradation
                     _state.value = LoopState.ERROR
+                    // Notify caller of error
+                    onError(e)
                     // Log error (in production, use proper logging framework)
                     break
                 }

@@ -133,6 +133,26 @@ data class LicensingModule(
     }
     
     /**
+     * Compares two hash strings in constant time to prevent timing attacks
+     * 
+     * @param hash1 First hash
+     * @param hash2 Second hash
+     * @return true if hashes match
+     */
+    private fun constantTimeHashEquals(hash1: String, hash2: String): Boolean {
+        if (hash1.length != hash2.length) {
+            return false
+        }
+        
+        var result = 0
+        for (i in hash1.indices) {
+            result = result or (hash1[i].code xor hash2[i].code)
+        }
+        
+        return result == 0
+    }
+    
+    /**
      * ZIPRAF_Ω_FUNCTION: Main licensing validation function
      * 
      * Formula: Licenciar = Validar(ΣΩΔΦBITRAF × RAFCODE-Φ × bitraf64 × Ethica[8])
@@ -142,7 +162,7 @@ data class LicensingModule(
      */
     fun ziprafOmegaFunction(context: ExecutionContext): ValidationResult {
         val integrityCheck = context.dataHash?.let { hash ->
-            computeHash(context.data.toByteArray()) == hash
+            constantTimeHashEquals(computeHash(context.data.toByteArray()), hash)
         } ?: true
         
         val authorshipCheck = validateAuthorship(context.authorId)

@@ -48,7 +48,20 @@ class PerformanceOptimizer {
     private val cacheMisses = AtomicLong(0)
     
     // Cache with automatic eviction (weak references)
+    // Note: Using ConcurrentHashMap which doesn't guarantee insertion order
+    // This provides approximate LRU behavior through periodic cleanup
     private val cache = ConcurrentHashMap<String, WeakReference<Any>>()
+    
+    // Maximum cache entries before cleanup (prevents unbounded growth)
+    private val maxCacheSize = 1000
+    
+    // Cache cleanup configuration
+    private val cacheOverflowThreshold = 1.2 // Trigger cleanup when 20% over limit
+    private val cleanupBatchSizeFraction = 4 // Remove up to 1/4 of max size in stale entries
+    
+    // Track when last cleanup occurred to avoid excessive cleanup operations
+    private val lastCleanupTime = AtomicLong(System.currentTimeMillis())
+    private val cleanupIntervalMs = 10000L // Cleanup at most every 10 seconds
     
     // Matrix pool for reuse (reduces allocations)
     private val matrixPool = MatrixPool()
@@ -56,6 +69,9 @@ class PerformanceOptimizer {
     /**
      * Gets cached value or computes if not present
      * Uses weak references to allow GC when memory is needed
+     * 
+     * Note: Cache eviction uses approximate LRU (due to ConcurrentHashMap's
+     * unordered iteration). For true LRU, consider LinkedHashMap with synchronization.
      * 
      * @param key Cache key
      * @param compute Function to compute value if not cached
@@ -74,8 +90,58 @@ class PerformanceOptimizer {
         // Cache miss - compute and store
         cacheMisses.incrementAndGet()
         val value = compute()
+        
+        // Check cache size and cleanup if needed
+        // Use time-based throttling to avoid expensive cleanup on every insertion
+        if (cache.size >= maxCacheSize) {
+            val now = System.currentTimeMillis()
+            val lastCleanup = lastCleanupTime.get()
+            
+            // Only cleanup if enough time has passed or cache is significantly over limit
+            if (now - lastCleanup > cleanupIntervalMs || cache.size > maxCacheSize * cacheOverflowThreshold) {
+                if (lastCleanupTime.compareAndSet(lastCleanup, now)) {
+                    performCacheCleanup()
+                }
+            }
+        }
+        
         cache[key] = WeakReference(value)
         return value
+    }
+    
+    /**
+     * Performs cache cleanup by removing stale entries and excess entries
+     * This is a separate method to allow throttling of expensive cleanup operations
+     */
+    private fun performCacheCleanup() {
+        // Collect stale keys first to avoid issues with concurrent modification
+        val staleKeys = mutableListOf<String>()
+        for (entry in cache.entries) {
+            if (entry.value.get() == null) {
+                staleKeys.add(entry.key)
+                if (staleKeys.size >= maxCacheSize / cleanupBatchSizeFraction) {
+                    break // Limit batch size for performance
+                }
+            }
+        }
+        
+        // Remove collected stale entries
+        staleKeys.forEach { cache.remove(it) }
+        
+        // If still over limit, remove excess entries
+        // Note: This is approximate LRU since ConcurrentHashMap doesn't maintain order
+        // For production use with strict LRU requirements, consider LinkedHashMap with locks
+        // or a dedicated LRU cache implementation
+        if (cache.size > maxCacheSize) {
+            val toRemove = cache.size - maxCacheSize
+            var count = 0
+            val keysIterator = cache.keys.iterator()
+            while (keysIterator.hasNext() && count < toRemove) {
+                keysIterator.next()
+                keysIterator.remove()
+                count++
+            }
+        }
     }
     
     /**
@@ -286,10 +352,13 @@ class MatrixPool {
         
         synchronized(pool) {
             // Only keep up to maxPoolSize matrices
-            if (counter.get() < maxPoolSize) {
+            // Check actual pool size to avoid race conditions
+            val currentSize = pool.size
+            if (currentSize < maxPoolSize) {
                 matrix.reset()
                 pool.addLast(matrix)
-                counter.incrementAndGet()
+                // Update counter atomically after successful addition
+                counter.set(currentSize + 1)
             }
         }
     }
@@ -359,6 +428,12 @@ class QueueOptimizer<T> {
     
     /**
      * Gets queue size (approximate for concurrent access)
+     * 
+     * Note: Due to the lock-free nature of ConcurrentLinkedQueue,
+     * the size returned is an approximation and may not reflect
+     * concurrent modifications happening at the same time.
+     * For precise size tracking in low-concurrency scenarios,
+     * consider using synchronized collections instead.
      * 
      * @return Current size (may be approximate due to concurrent modifications)
      */
