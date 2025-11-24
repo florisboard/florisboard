@@ -100,7 +100,8 @@ class StandardsChecker:
             with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
                 return standard in content
-        except:
+        except (FileNotFoundError, IOError, OSError, UnicodeDecodeError) as e:
+            # File read error - skip this file
             return False
     
     def check_standard_category(self, standards: Dict[str, str], 

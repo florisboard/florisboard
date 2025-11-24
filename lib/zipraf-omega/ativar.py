@@ -109,8 +109,11 @@ class ZIPRAFActivator:
         try:
             return hashlib.sha3_512(data).hexdigest()
         except AttributeError:
-            # Fallback to SHA-256 if SHA3 not available
-            print("⚠️  WARNING: SHA3-512 not available, using SHA-256 fallback")
+            # SHA3-512 not available - this is a security downgrade
+            print("⚠️  CRITICAL WARNING: SHA3-512 not available!")
+            print("   Using SHA-256 fallback (reduced security: 256-bit vs 512-bit)")
+            print("   For production use, install Python with SHA3 support")
+            print("   Consider using BLAKE3 as alternative (pip install blake3)")
             return hashlib.sha256(data).hexdigest()
     
     def compute_hash_blake3(self, data: bytes) -> Optional[str]:

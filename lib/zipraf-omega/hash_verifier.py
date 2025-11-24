@@ -52,8 +52,10 @@ class HashVerifier:
         try:
             return hashlib.sha3_512(data).hexdigest()
         except AttributeError:
-            # Fallback to SHA-256
-            print("⚠️  WARNING: SHA3-512 not available, using SHA-256", file=sys.stderr)
+            # SHA3-512 not available - security downgrade
+            print("⚠️  CRITICAL: SHA3-512 not available!", file=sys.stderr)
+            print("   Using SHA-256 (reduced security: 256-bit vs 512-bit)", file=sys.stderr)
+            print("   Install Python with SHA3 support or use BLAKE3", file=sys.stderr)
             return hashlib.sha256(data).hexdigest()
     
     def compute_blake3(self, data: bytes) -> Optional[str]:
@@ -105,15 +107,21 @@ class HashVerifier:
             raise FileNotFoundError(f"File not found: {filepath}")
         
         # Read file in chunks for memory efficiency
-        sha3_hasher = hashlib.sha3_512() if hasattr(hashlib, 'sha3_512') else hashlib.sha256()
+        if hasattr(hashlib, 'sha3_512'):
+            sha3_hasher = hashlib.sha3_512()
+        else:
+            print("⚠️  CRITICAL: SHA3-512 not available for file hashing!", file=sys.stderr)
+            print("   Using SHA-256 (reduced security)", file=sys.stderr)
+            sha3_hasher = hashlib.sha256()
+        
         blake3_hasher = None
         
         if self.blake3_available:
             try:
                 import blake3
                 blake3_hasher = blake3.blake3()
-            except:
-                pass
+            except (ImportError, AttributeError) as e:
+                print(f"⚠️  BLAKE3 initialization failed: {e}", file=sys.stderr)
         
         with open(filepath, 'rb') as f:
             while chunk := f.read(8192):
