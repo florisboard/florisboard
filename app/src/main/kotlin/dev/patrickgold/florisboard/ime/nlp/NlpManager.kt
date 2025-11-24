@@ -140,15 +140,24 @@ class NlpManager(context: Context) {
 
     fun preload(subtype: Subtype) {
         scope.launch {
-            emojiSuggestionProvider.preload(subtype)
-            providers.withLock { providers ->
-                subtype.nlpProviders.forEach { _, providerId ->
+            // Preload emoji provider concurrently with NLP providers
+            val emojiJob = launch { emojiSuggestionProvider.preload(subtype) }
+            
+            // Batch process NLP providers concurrently for better performance
+            val providerJobs = providers.withLock { providers ->
+                subtype.nlpProviders.mapNotNull { (_, providerId) ->
                     providers[providerId]?.let { provider ->
-                        provider.createIfNecessary()
-                        provider.preload(subtype)
+                        launch {
+                            provider.createIfNecessary()
+                            provider.preload(subtype)
+                        }
                     }
                 }
             }
+            
+            // Wait for all preload operations to complete
+            emojiJob.join()
+            providerJobs.forEach { it.join() }
         }
     }
 

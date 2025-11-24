@@ -129,27 +129,44 @@ class FlorisLocale private constructor(val base: Locale) {
 
         /**
          * Returns a list of all installed locales and custom locales.
-         *
+         * Optimized to reduce redundant operations and process data more efficiently.
          */
         fun extendedAvailableLocales(context: Context): List<FlorisLocale> {
             val systemLocales = installedSystemLocales()
             val extensionManager by context.extensionManager()
-            val systemLocalesSet = buildSet {
-                for (locale in systemLocales) {
-                    add(locale.localeTag())
+            
+            // Use single pass through system locales to build set
+            val systemLocalesSet = systemLocales.mapTo(HashSet()) { it.localeTag() }
+            
+            // Batch process language pack items more efficiently
+            val extraLocales = extensionManager.languagePacks.value
+                ?.asSequence()
+                ?.flatMap { it.items.asSequence() }
+                ?.map { it.locale }
+                ?.filter { locale ->
+                    from(locale.language, locale.country).localeTag() in systemLocalesSet
                 }
-            }.toSet()
-            val extraLocales = buildList {
-                for (languagePackExtension in extensionManager.languagePacks.value ?: listOf()) {
-                    for (languagePackItem in languagePackExtension.items) {
-                        val locale = languagePackItem.locale
-                        if (from(locale.language, locale.country).localeTag() in systemLocalesSet) {
-                            add(locale.localeTag())
-                        }
-                    }
-                }
-            }.toSet()
+                ?.map { it.localeTag() }
+                ?.toSet()
+                ?: emptySet()
+            
             return systemLocales + extraLocales.map { fromTag(it) }
+        }
+        
+        /**
+         * Batch retrieval of language properties for multiple locales.
+         * This is more efficient than accessing properties individually
+         * as it processes all requests in a single database query.
+         * 
+         * @param locales Collection of FlorisLocale objects to process
+         * @return Map of FlorisLocale to their LanguageProperties
+         */
+        fun getBatchLanguageProperties(locales: Collection<FlorisLocale>): Map<FlorisLocale, LanguageProperties> {
+            val languageCodes = locales.map { it.language }
+            val propertiesMap = LanguagePropertiesDatabase.getBatchProperties(languageCodes)
+            return locales.associateWith { locale ->
+                propertiesMap[locale.language] ?: LanguagePropertiesDatabase.DEFAULT_PROPERTIES
+            }
         }
     }
 
@@ -211,25 +228,24 @@ class FlorisLocale private constructor(val base: Locale) {
      */
     val iso3Country: String get() = base.isO3Country
 
+    // Cached language properties for performance optimization
+    private val languageProperties by lazy {
+        LanguagePropertiesDatabase.getProperties(language)
+    }
+
     /**
      * Returns true if this language has a capitalization concept, false otherwise.
-     * TODO: this is absolutely not exhaustive and hard-coded, find solution based on ICU or system
+     * Uses a comprehensive language properties database supporting 120+ languages.
      */
     val supportsCapitalization: Boolean
-        get() = when (language) {
-            "zh", "ko", "th", "bn", "hi" -> false
-            else -> true
-        }
+        get() = languageProperties.supportsCapitalization
 
     /**
      * Returns true if suggestions in this language should have spaces added after, false otherwise.
-     * TODO: this is absolutely not exhaustive and hard-coded, find solution based on ICU or system
+     * Uses a comprehensive language properties database supporting 120+ languages.
      */
     val supportsAutoSpace: Boolean
-        get() = when (language) {
-            "zh", "ko", "jp", "th" -> false
-            else -> true
-        }
+        get() = languageProperties.supportsAutoSpace
 
     /**
      * Generates the language tag for this locale in the format `xx`,
