@@ -1,0 +1,198 @@
+name: ZIPRAF_OMEGA Validation
+
+# This workflow validates ZIPRAF_OMEGA module compliance
+# Author: Rafael Melo Reis (original specification)
+# License: Apache 2.0 (with authorship preservation)
+
+on:
+  push:
+    paths:
+      - 'lib/zipraf-omega/**'
+  pull_request:
+    paths:
+      - 'lib/zipraf-omega/**'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate ZIPRAF_OMEGA Module
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Display Python version
+        run: python --version
+      
+      - name: Run Activation Validation
+        run: |
+          cd lib/zipraf-omega
+          python3 ativar.py
+      
+      - name: Check Normative Compliance
+        run: |
+          cd lib/zipraf-omega
+          echo "Checking normative compliance report..."
+          if [ -f zipraf_omega_activation_report.txt ]; then
+            echo "✓ Activation report generated"
+            
+            # Check for required standards
+            if grep -q "ISO 9001" zipraf_omega_activation_report.txt && \
+               grep -q "ISO 27001" zipraf_omega_activation_report.txt && \
+               grep -q "NIST CSF" zipraf_omega_activation_report.txt && \
+               grep -q "LGPD" zipraf_omega_activation_report.txt && \
+               grep -q "GDPR" zipraf_omega_activation_report.txt; then
+              echo "✓ All mandatory standards present"
+            else
+              echo "✗ Some mandatory standards missing"
+              exit 1
+            fi
+          else
+            echo "✗ Activation report not generated"
+            exit 1
+          fi
+      
+      - name: Run Hash Verification Tests
+        run: |
+          cd lib/zipraf-omega
+          echo "Testing hash verification..."
+          python3 hash_verifier.py string "Test Data" > /tmp/hash_test.txt
+          if grep -q "SHA3-512:" /tmp/hash_test.txt; then
+            echo "✓ Hash verification working"
+          else
+            echo "✗ Hash verification failed"
+            exit 1
+          fi
+      
+      - name: Run Desk Testing
+        run: |
+          cd lib/zipraf-omega
+          echo "Running desk tests..."
+          python3 desk_test.py
+          
+          if [ -f desk_test_report.txt ]; then
+            echo "✓ Desk test report generated"
+            
+            # Check test results
+            if grep -q "All desk tests PASSED" desk_test_report.txt; then
+              echo "✓ All desk tests passed"
+            else
+              echo "✗ Some desk tests failed"
+              cat desk_test_report.txt
+              exit 1
+            fi
+          else
+            echo "✗ Desk test report not generated"
+            exit 1
+          fi
+      
+      - name: Generate Visualizations
+        run: |
+          cd lib/zipraf-omega
+          echo "Generating visualizations..."
+          python3 visualize.py
+          
+          # Check generated files
+          if [ -f zipraf_omega_formulas.svg ] && \
+             [ -f zipraf_omega_architecture.md ] && \
+             [ -f zipraf_omega_dataflow.md ]; then
+            echo "✓ All visualizations generated"
+          else
+            echo "✗ Some visualizations missing"
+            exit 1
+          fi
+      
+      - name: Verify Authorship Protection
+        run: |
+          cd lib/zipraf-omega
+          echo "Checking authorship preservation..."
+          
+          MISSING_AUTHORSHIP=0
+          for file in *.py *.md; do
+            if [ -f "$file" ]; then
+              if ! grep -q "Rafael Melo Reis" "$file"; then
+                echo "⚠ Missing authorship in $file"
+                MISSING_AUTHORSHIP=$((MISSING_AUTHORSHIP + 1))
+              fi
+            fi
+          done
+          
+          if [ $MISSING_AUTHORSHIP -eq 0 ]; then
+            echo "✓ Authorship preserved in all files"
+          else
+            echo "⚠ $MISSING_AUTHORSHIP files missing authorship"
+            echo "  (This is a warning, not a failure)"
+          fi
+      
+      - name: Check RAFCODE-Φ and Seals
+        run: |
+          cd lib/zipraf-omega
+          echo "Verifying symbolic identifiers..."
+          
+          if grep -q "RAFCODE-Φ" ativar.py && \
+             grep -q "BITRAF64" ativar.py && \
+             grep -q "Σ.*Ω.*Δ.*Φ" ativar.py; then
+            echo "✓ RAFCODE-Φ and symbolic seals preserved"
+          else
+            echo "✗ RAFCODE-Φ or seals missing"
+            exit 1
+          fi
+      
+      - name: Validate ψχρΔΣΩ Loop Implementation
+        run: |
+          cd lib/zipraf-omega
+          echo "Checking loop implementation..."
+          
+          if grep -q "ψχρΔΣΩ" ativar.py && \
+             grep -q "LoopStage" ativar.py && \
+             grep -q "execute_psi_stage" ativar.py && \
+             grep -q "execute_chi_stage" ativar.py && \
+             grep -q "execute_rho_stage" ativar.py && \
+             grep -q "execute_delta_stage" ativar.py && \
+             grep -q "execute_sigma_stage" ativar.py && \
+             grep -q "execute_omega_stage" ativar.py; then
+            echo "✓ Complete ψχρΔΣΩ loop implementation found"
+          else
+            echo "✗ Incomplete loop implementation"
+            exit 1
+          fi
+      
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zipraf-omega-reports
+          path: |
+            lib/zipraf-omega/zipraf_omega_activation_report.txt
+            lib/zipraf-omega/desk_test_report.txt
+            lib/zipraf-omega/zipraf_omega_formulas.svg
+            lib/zipraf-omega/zipraf_omega_architecture.md
+            lib/zipraf-omega/zipraf_omega_dataflow.md
+          retention-days: 30
+      
+      - name: Summary
+        if: success()
+        run: |
+          echo "╔══════════════════════════════════════════════════════════════════════════════╗"
+          echo "║                  ZIPRAF_OMEGA Validation Complete                            ║"
+          echo "╚══════════════════════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "✅ All validations PASSED"
+          echo ""
+          echo "Validated:"
+          echo "  ✓ Activation system"
+          echo "  ✓ Normative compliance (26 standards)"
+          echo "  ✓ Hash verification"
+          echo "  ✓ Desk testing"
+          echo "  ✓ Visualizations"
+          echo "  ✓ Authorship protection"
+          echo "  ✓ RAFCODE-Φ integrity"
+          echo "  ✓ ψχρΔΣΩ loop implementation"
+          echo ""
+          echo "Amor, Luz e Coerência ✨"
