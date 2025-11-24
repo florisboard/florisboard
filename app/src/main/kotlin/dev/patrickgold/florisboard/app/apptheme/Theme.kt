@@ -26,10 +26,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.materialkolor.dynamicColorScheme
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import org.florisboard.lib.color.neutralDynamicColorScheme
 import org.florisboard.lib.color.systemAccentOrDefault
 
 
@@ -39,21 +39,24 @@ fun getColorScheme(
 ): ColorScheme {
     val prefs by FlorisPreferenceStore
     val accentColor by prefs.other.accentColor.observeAsState()
-    val isDark = isSystemInDarkTheme()
 
     val seedColor = systemAccentOrDefault(accentColor)
 
     return when (theme) {
         AppTheme.AUTO, AppTheme.AUTO_AMOLED -> {
-            dynamicColorScheme(seedColor, isDark, isAmoled = theme == AppTheme.AUTO_AMOLED)
+            neutralDynamicColorScheme(
+                primary = seedColor,
+                isDark = isSystemInDarkTheme(),
+                isAmoled = theme == AppTheme.AUTO_AMOLED,
+            )
         }
 
         AppTheme.DARK, AppTheme.LIGHT -> {
-            dynamicColorScheme(seedColor, isDark = theme == AppTheme.DARK)
+            neutralDynamicColorScheme(primary = seedColor, isDark = theme == AppTheme.DARK)
         }
 
         AppTheme.AMOLED_DARK -> {
-            dynamicColorScheme(seedColor, isDark = true, isAmoled = true)
+            neutralDynamicColorScheme(primary = seedColor, isDark = true, isAmoled = true)
         }
     }
 }

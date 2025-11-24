@@ -18,11 +18,17 @@ package org.florisboard.lib.color
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
+import com.materialkolor.Contrast
+import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamicColorScheme
+import com.materialkolor.dynamiccolor.ColorSpec
+import com.materialkolor.scheme.DynamicScheme
 import org.florisboard.lib.android.AndroidVersion
 
 val DEFAULT_GREEN = Color(0xFF4CAF50)
@@ -70,3 +76,38 @@ fun systemAccentOrDefault(default: Color): Color {
     }
 }
 
+
+/**
+ * This is a helper method that uses [com.materialkolor.PaletteStyle.Neutral] as a default PalleteStyle.
+ */
+fun neutralDynamicColorScheme(
+    primary: Color,
+    isDark: Boolean,
+    isAmoled: Boolean = false,
+    secondary: Color? = null,
+    tertiary: Color? = null,
+    neutral: Color? = null,
+    neutralVariant: Color? = null,
+    error: Color? = null,
+    style: PaletteStyle = PaletteStyle.Neutral,
+    contrastLevel: Double = Contrast.Default.value,
+    specVersion: ColorSpec.SpecVersion = ColorSpec.SpecVersion.Default,
+    platform: DynamicScheme.Platform = DynamicScheme.Platform.Default,
+    modifyColorScheme: ((ColorScheme) -> ColorScheme)? = null,
+): ColorScheme =
+    dynamicColorScheme(
+        seedColor = primary,
+        isDark = isDark,
+        isAmoled = isAmoled,
+        primary = primary,
+        secondary = secondary,
+        tertiary = tertiary,
+        neutral = neutral,
+        neutralVariant = neutralVariant,
+        error = error,
+        style = style,
+        contrastLevel = contrastLevel,
+        specVersion = specVersion,
+        platform = platform,
+        modifyColorScheme = modifyColorScheme,
+    )
