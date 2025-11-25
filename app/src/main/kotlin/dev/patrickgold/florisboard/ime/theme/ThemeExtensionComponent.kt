@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.color.MaterialYouFlags
@@ -52,6 +54,7 @@ interface ThemeExtensionComponent : ExtensionComponent {
     fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ThemeExtensionComponentImpl(
     override val id: String,
@@ -59,6 +62,7 @@ data class ThemeExtensionComponentImpl(
     override val authors: List<String>,
     @SerialName("isNight")
     override val isNightTheme: Boolean = true,
+    @EncodeDefault
     override val materialYouFlags: MaterialYouFlags = MaterialYouFlags(),
     @SerialName("stylesheet")
     override val stylesheetPath: String? = null,

@@ -58,7 +58,7 @@ import org.florisboard.lib.kotlin.throwOnFailure
 @OptIn(ExperimentalSerializationApi::class)
 val ExtensionJsonConfig = Json {
     classDiscriminator = "$"
-    encodeDefaults = true
+    encodeDefaults = false
     ignoreUnknownKeys = true
     isLenient = true
     prettyPrint = true
