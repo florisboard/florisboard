@@ -25,6 +25,7 @@ import android.hardware.display.VirtualDisplay
 import android.media.ImageReader
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -53,12 +54,14 @@ class AiScreenshotActivity : Activity() {
         mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         
         // Request permission for screen capture
+        @Suppress("DEPRECATION")
         startActivityForResult(
             mediaProjectionManager?.createScreenCaptureIntent(),
             REQUEST_MEDIA_PROJECTION
         )
     }
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         
@@ -79,13 +82,7 @@ class AiScreenshotActivity : Activity() {
 
     private fun captureScreen(resultCode: Int, data: Intent) {
         try {
-            val metrics = DisplayMetrics()
-            @Suppress("DEPRECATION")
-            windowManager.defaultDisplay.getMetrics(metrics)
-            
-            val width = metrics.widthPixels
-            val height = metrics.heightPixels
-            val density = metrics.densityDpi
+            val (width, height, density) = getScreenMetrics()
 
             imageReader = ImageReader.newInstance(width, height, android.graphics.PixelFormat.RGBA_8888, 2)
             
@@ -142,6 +139,19 @@ class AiScreenshotActivity : Activity() {
             Toast.makeText(this, R.string.gpt__screenshot_failed, Toast.LENGTH_SHORT).show()
             cleanup()
             finish()
+        }
+    }
+
+    private fun getScreenMetrics(): Triple<Int, Int, Int> {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            val bounds = windowMetrics.bounds
+            Triple(bounds.width(), bounds.height(), resources.displayMetrics.densityDpi)
+        } else {
+            val metrics = DisplayMetrics()
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getMetrics(metrics)
+            Triple(metrics.widthPixels, metrics.heightPixels, metrics.densityDpi)
         }
     }
 

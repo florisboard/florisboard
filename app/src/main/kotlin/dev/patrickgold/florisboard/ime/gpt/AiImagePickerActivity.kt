@@ -42,12 +42,14 @@ class AiImagePickerActivity : Activity() {
             addCategory(Intent.CATEGORY_OPENABLE)
         }
         
+        @Suppress("DEPRECATION")
         startActivityForResult(
-            Intent.createChooser(intent, "Select Image for AI"),
+            Intent.createChooser(intent, getString(R.string.gpt__select_image_for_ai)),
             REQUEST_IMAGE_PICK
         )
     }
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         
@@ -59,7 +61,7 @@ class AiImagePickerActivity : Activity() {
                     if (success) {
                         Toast.makeText(this, R.string.gpt__image_selected, Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.gpt__image_load_failed, Toast.LENGTH_SHORT).show()
                     }
                 }
                 finish()

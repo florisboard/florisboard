@@ -581,8 +581,10 @@
     <string name="quick_action__ai_screenshot__tooltip" comment="Quick action tooltip">Capture screenshot for AI analysis</string>
     <string name="gpt__image_selected" comment="Toast message">Image selected for AI</string>
     <string name="gpt__image_cleared" comment="Toast message">Image cleared</string>
+    <string name="gpt__image_load_failed" comment="Toast message">Failed to load image</string>
     <string name="gpt__screenshot_captured" comment="Toast message">Screenshot captured for AI</string>
     <string name="gpt__screenshot_failed" comment="Toast message">Failed to capture screenshot</string>
+    <string name="gpt__select_image_for_ai" comment="Image picker chooser title">Select Image for AI</string>
 
     <string name="settings__other__title" comment="Title of Other settings">Other</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
