@@ -551,6 +551,41 @@
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
+    <string name="settings__gpt__title" comment="Title of GPT settings screen">AI Text Generation</string>
+    <string name="pref__gpt__general_title" comment="Preference group title">General</string>
+    <string name="pref__gpt__enabled__label" comment="Preference title">Enable AI text generation</string>
+    <string name="pref__gpt__enabled__summary" comment="Preference summary">Generate AI responses by typing a prompt followed by the trigger pattern</string>
+    <string name="pref__gpt__trigger_title" comment="Preference group title">Trigger</string>
+    <string name="pref__gpt__trigger_pattern__label" comment="Preference title">Trigger pattern</string>
+    <string name="pref__gpt__trigger_pattern__summary" comment="Preference summary">Type this pattern after your prompt to trigger AI generation (e.g. "What is AI!!" with trigger "!!")</string>
+    <string name="pref__gpt__model_title" comment="Preference group title">AI Model Configuration</string>
+    <string name="pref__gpt__model__label" comment="Preference title">AI Provider</string>
+    <string name="pref__gpt__api_key__label" comment="Preference title">API Key</string>
+    <string name="pref__gpt__sub_model__label" comment="Preference title">Model Name</string>
+    <string name="pref__gpt__sub_model__summary" comment="Preference summary">The specific model to use (leave empty for default)</string>
+    <string name="pref__gpt__base_url__label" comment="Preference title">Custom Base URL</string>
+    <string name="pref__gpt__base_url__summary" comment="Preference summary">API endpoint URL for OpenAI-compatible providers (e.g. Grok). Leave empty for default provider endpoints</string>
+    <string name="pref__gpt__system_prompt_title" comment="Preference group title">System Prompt</string>
+    <string name="pref__gpt__system_prompt__label" comment="Preference title">AI System Prompt</string>
+    <string name="pref__gpt__system_prompt__summary" comment="Preference summary">Instructions that define how the AI should behave and respond</string>
+    <string name="pref__gpt__context_title" comment="Preference group title">Context Settings</string>
+    <string name="pref__gpt__include_clipboard__label" comment="Preference title">Include clipboard history</string>
+    <string name="pref__gpt__include_clipboard__summary" comment="Preference summary">Send recent clipboard items as context with your prompts</string>
+    <string name="pref__gpt__include_conversation__label" comment="Preference title">Include conversation history</string>
+    <string name="pref__gpt__include_conversation__summary" comment="Preference summary">Remember previous AI interactions for better context</string>
+    <string name="quick_action__ai_settings" comment="Quick action name">AI Settings</string>
+    <string name="quick_action__ai_settings__tooltip" comment="Quick action tooltip">Open AI text generation settings</string>
+    <string name="quick_action__ai_image_picker" comment="Quick action name">AI Image</string>
+    <string name="quick_action__ai_image_picker__tooltip" comment="Quick action tooltip">Select image from gallery for AI analysis</string>
+    <string name="quick_action__ai_screenshot" comment="Quick action name">AI Screenshot</string>
+    <string name="quick_action__ai_screenshot__tooltip" comment="Quick action tooltip">Capture screenshot for AI analysis</string>
+    <string name="gpt__image_selected" comment="Toast message">Image selected for AI</string>
+    <string name="gpt__image_cleared" comment="Toast message">Image cleared</string>
+    <string name="gpt__image_load_failed" comment="Toast message">Failed to load image</string>
+    <string name="gpt__screenshot_captured" comment="Toast message">Screenshot captured for AI</string>
+    <string name="gpt__screenshot_failed" comment="Toast message">Failed to capture screenshot</string>
+    <string name="gpt__select_image_for_ai" comment="Image picker chooser title">Select Image for AI</string>
+
     <string name="settings__other__title" comment="Title of Other settings">Other</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>

@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
+import dev.patrickgold.florisboard.gptManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
@@ -53,6 +54,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
+    private val gptManager by context.gptManager()
     private val keyboardManager by context.keyboardManager()
     private val subtypeManager by context.subtypeManager()
     private val nlpManager by context.nlpManager()
@@ -207,12 +209,87 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
         val isPhantomSpaceActive = phantomSpace.determine(char)
         phantomSpace.setInactive()
-        return super.commitChar(
+        val result = super.commitChar(
             char = char,
             deletePreviousSpace = isDeletePreviousSpace,
             insertSpaceBeforeChar = isInsertAutoSpaceBeforeChar || isPhantomSpaceActive,
             insertSpaceAfterChar = isInsertAutoSpaceAfterChar,
         )
+
+        // Check for GPT trigger after committing the character
+        if (result) {
+            checkGptTrigger()
+        }
+
+        return result
+    }
+
+    /**
+     * Checks if the current text matches a GPT trigger pattern and initiates AI generation.
+     */
+    private fun checkGptTrigger() {
+        if (!gptManager.isEnabled) return
+
+        val triggerPattern = gptManager.triggerPattern
+        if (triggerPattern.isEmpty()) return
+
+        // Get text before cursor to check for trigger
+        val textBefore = activeContent.getTextBeforeCursor(256)
+        if (textBefore.isEmpty() || !textBefore.endsWith(triggerPattern)) return
+
+        // Extract the prompt (text before trigger pattern)
+        val promptEnd = textBefore.length - triggerPattern.length
+        if (promptEnd <= 0) return
+
+        // Find the start of the prompt (last newline or start of text)
+        var promptStart = textBefore.lastIndexOf('\n', promptEnd - 1) + 1
+        if (promptStart < 0) promptStart = 0
+
+        val prompt = textBefore.substring(promptStart, promptEnd).trim()
+        if (prompt.isEmpty()) return
+
+        // Calculate how many characters to delete (prompt + trigger)
+        val deleteCount = textBefore.length - promptStart
+
+        // Delete the prompt and trigger pattern using selection
+        val content = activeContent
+        val selection = content.selection
+        if (selection.isNotValid) return
+
+        val newStart = selection.start - deleteCount
+        if (newStart < 0) return
+
+        // Select the text to delete
+        setSelection(newStart, selection.start)
+        // Delete the selected text
+        commitText("")
+
+        // Show generating indicator
+        val indicatorText = "<Generating...>"
+        commitText(indicatorText)
+
+        // Generate AI response (callback is already on Main dispatcher)
+        gptManager.generateResponse(prompt) { response ->
+            // Get current content and find the indicator
+            val currentContent = activeContent
+            val currentTextBefore = currentContent.getTextBeforeCursor(64)
+
+            if (currentTextBefore.endsWith(indicatorText)) {
+                // Delete the indicator
+                val currentSelection = currentContent.selection
+                if (currentSelection.isValid) {
+                    setSelection(currentSelection.start - indicatorText.length, currentSelection.start)
+                    commitText("")
+                }
+            }
+
+            // Insert the AI response or show error
+            if (response != null) {
+                commitText(response)
+            } else {
+                appContext.showShortToastSync("AI generation failed")
+            }
+        }
     }
 
     /**

@@ -143,6 +143,9 @@ data class TextKeyData(
                 IME_SHOW_UI,
                 IME_HIDE_UI,
                 SETTINGS,
+                AI_SETTINGS,
+                AI_IMAGE_PICKER,
+                AI_SCREENSHOT,
                 VOICE_INPUT,
                 TOGGLE_SMARTBAR_VISIBILITY,
                 TOGGLE_ACTIONS_OVERFLOW,
@@ -480,6 +483,27 @@ data class TextKeyData(
             type = KeyType.CHARACTER,
             code = KeyCode.SETTINGS,
             label = "settings",
+        )
+
+        /** Predefined key data for [KeyCode.AI_SETTINGS] */
+        val AI_SETTINGS = TextKeyData(
+            type = KeyType.CHARACTER,
+            code = KeyCode.AI_SETTINGS,
+            label = "ai_settings",
+        )
+
+        /** Predefined key data for [KeyCode.AI_IMAGE_PICKER] */
+        val AI_IMAGE_PICKER = TextKeyData(
+            type = KeyType.CHARACTER,
+            code = KeyCode.AI_IMAGE_PICKER,
+            label = "ai_image_picker",
+        )
+
+        /** Predefined key data for [KeyCode.AI_SCREENSHOT] */
+        val AI_SCREENSHOT = TextKeyData(
+            type = KeyType.CHARACTER,
+            code = KeyCode.AI_SCREENSHOT,
+            label = "ai_screenshot",
         )
 
         /** Predefined key data for [KeyCode.VOICE_INPUT] */

@@ -62,6 +62,7 @@ import dev.patrickgold.florisboard.app.settings.dictionary.DictionaryScreen
 import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryScreen
 import dev.patrickgold.florisboard.app.settings.dictionary.UserDictionaryType
 import dev.patrickgold.florisboard.app.settings.gestures.GesturesScreen
+import dev.patrickgold.florisboard.app.settings.gpt.GptScreen
 import dev.patrickgold.florisboard.app.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.settings.localization.LanguagePackManagerScreen
@@ -163,6 +164,10 @@ object Routes {
         @Serializable
         @Deeplink("settings/gestures")
         object Gestures
+
+        @Serializable
+        @Deeplink("settings/gpt")
+        object Gpt
 
         @Serializable
         @Deeplink("settings/clipboard")
@@ -309,6 +314,8 @@ object Routes {
             }
 
             composableWithDeepLink(Settings.Gestures::class) { GesturesScreen() }
+
+            composableWithDeepLink(Settings.Gpt::class) { GptScreen() }
 
             composableWithDeepLink(Settings.Clipboard::class) { ClipboardScreen() }
 

@@ -102,6 +102,8 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
+import dev.patrickgold.florisboard.ime.gpt.AiImagePickerActivity
+import dev.patrickgold.florisboard.ime.gpt.AiScreenshotActivity
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -164,6 +166,46 @@ class FlorisImeService : LifecycleInputMethodService() {
             ims.launchActivity(FlorisAppActivity::class) {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+        }
+
+        /**
+         * Hides the IME and launches [FlorisAppActivity] with AI settings screen.
+         */
+        fun launchAiSettings() {
+            val ims = FlorisImeServiceReference.get() ?: return
+            ims.requestHideSelf(0)
+            ims.launchActivity(FlorisAppActivity::class) {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+                it.action = Intent.ACTION_VIEW
+                it.addCategory(Intent.CATEGORY_BROWSABLE)
+                it.data = android.net.Uri.parse("ui://florisboard/settings/gpt")
+            }
+        }
+
+        /**
+         * Launches an image picker for AI vision features.
+         */
+        fun launchImagePicker() {
+            val ims = FlorisImeServiceReference.get() ?: return
+            ims.requestHideSelf(0)
+            ims.launchActivity(AiImagePickerActivity::class) {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+        }
+
+        /**
+         * Captures a screenshot for AI vision features.
+         */
+        fun captureScreenshot() {
+            val ims = FlorisImeServiceReference.get() ?: return
+            ims.requestHideSelf(0)
+            ims.launchActivity(AiScreenshotActivity::class) {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
         }

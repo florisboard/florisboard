@@ -71,6 +71,9 @@ import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.color.DEFAULT_GREEN
+import org.florisboard.lib.gpt.LanguageModel
+import org.florisboard.lib.gpt.LanguageModelConfig
+import org.florisboard.lib.gpt.LanguageModelConfigSerializer
 
 val FlorisPreferenceStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
@@ -363,6 +366,23 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val immediateBackspaceDeletesWord = boolean(
             key = "glide__immediate_backspace_deletes_word",
             default = true,
+        )
+    }
+
+    val gpt = Gpt()
+    inner class Gpt {
+        val enabled = boolean(
+            key = "gpt__enabled",
+            default = false,
+        )
+        val triggerPattern = string(
+            key = "gpt__trigger_pattern",
+            default = "!!",
+        )
+        val config = custom(
+            key = "gpt__config",
+            default = LanguageModelConfig(),
+            serializer = LanguageModelConfigSerializer,
         )
     }
 

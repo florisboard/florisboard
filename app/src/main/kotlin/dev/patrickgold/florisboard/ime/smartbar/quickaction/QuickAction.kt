@@ -92,6 +92,9 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media
             KeyCode.LANGUAGE_SWITCH -> R.string.quick_action__language_switch
             KeyCode.SETTINGS -> R.string.quick_action__settings
+            KeyCode.AI_SETTINGS -> R.string.quick_action__ai_settings
+            KeyCode.AI_IMAGE_PICKER -> R.string.quick_action__ai_image_picker
+            KeyCode.AI_SCREENSHOT -> R.string.quick_action__ai_screenshot
             KeyCode.UNDO -> R.string.quick_action__undo
             KeyCode.REDO -> R.string.quick_action__redo
             KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow
@@ -130,6 +133,9 @@ fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
             KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media__tooltip
             KeyCode.LANGUAGE_SWITCH -> R.string.quick_action__language_switch__tooltip
             KeyCode.SETTINGS -> R.string.quick_action__settings__tooltip
+            KeyCode.AI_SETTINGS -> R.string.quick_action__ai_settings__tooltip
+            KeyCode.AI_IMAGE_PICKER -> R.string.quick_action__ai_image_picker__tooltip
+            KeyCode.AI_SCREENSHOT -> R.string.quick_action__ai_screenshot__tooltip
             KeyCode.UNDO -> R.string.quick_action__undo__tooltip
             KeyCode.REDO -> R.string.quick_action__redo__tooltip
             KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow__tooltip
