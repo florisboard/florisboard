@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.agp.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val projectMinSdk: String by project
@@ -64,6 +65,7 @@ dependencies {
     // androidTestImplementation(composeBom)
     api(libs.material.kolor)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(projects.lib.android)
     implementation(projects.lib.kotlin)

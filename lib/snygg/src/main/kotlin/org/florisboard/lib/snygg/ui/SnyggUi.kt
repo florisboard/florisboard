@@ -44,8 +44,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
+import com.materialkolor.dynamicColorScheme
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.color.neutralDynamicColorScheme
+import org.florisboard.lib.color.MaterialYouFlags
 import org.florisboard.lib.color.systemAccentOrDefault
 import org.florisboard.lib.snygg.CompiledFontFamilyData
 import org.florisboard.lib.snygg.SnyggQueryAttributes
@@ -149,10 +150,24 @@ fun ProvideSnyggTheme(
     fontSizeMultiplier: Float = 1.0f,
     assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
     rootAttributes: SnyggQueryAttributes = emptyMap(),
+    materialYouFlags: MaterialYouFlags = MaterialYouFlags(),
     content: @Composable () -> Unit,
 ) {
-    val lightScheme = neutralDynamicColorScheme(systemAccentOrDefault(dynamicAccentColor), isDark = false)
-    val darkScheme = neutralDynamicColorScheme(systemAccentOrDefault(dynamicAccentColor), isDark = true)
+    val (colorPalette, contrastLevel, specVersion) = materialYouFlags
+    val lightScheme = dynamicColorScheme(
+        primary = systemAccentOrDefault(dynamicAccentColor),
+        isDark = false,
+        style = colorPalette,
+        contrastLevel = contrastLevel.value,
+        specVersion = specVersion
+    )
+    val darkScheme = dynamicColorScheme(
+        primary = systemAccentOrDefault(dynamicAccentColor),
+        isDark = true,
+        style = colorPalette,
+        contrastLevel = contrastLevel.value,
+        specVersion = specVersion
+    )
 
     val resolver = LocalFontFamilyResolver.current
     val customFontFamilies = remember(snyggTheme) {

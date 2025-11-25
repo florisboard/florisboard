@@ -80,6 +80,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
                 assetResolver = assetResolver,
                 rootAttributes = attributes,
                 content = content,
+                materialYouFlags = activeConfig.materialYouFlags
             )
         }
     }

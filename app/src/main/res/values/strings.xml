@@ -217,8 +217,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Stylesheet error</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} can try to leniently load the stylesheet and add missing schemas, rules, or remove invalid rules, properties, or values. Do you want {app_name} to apply these changes?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Palette style</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Color contrast</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Spec version</string>
 
     <string name="snygg__rule_annotation__defines">Variables</string>
     <string name="snygg__rule_annotation__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
