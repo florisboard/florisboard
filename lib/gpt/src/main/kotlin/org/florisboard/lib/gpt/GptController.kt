@@ -46,6 +46,14 @@ sealed class GptResult {
 }
 
 /**
+ * Represents an image attachment for vision AI.
+ */
+data class ImageAttachment(
+    val base64Data: String,
+    val mimeType: String = "image/jpeg"
+)
+
+/**
  * Controller for generating AI responses using various language models.
  */
 class GptController {
@@ -60,13 +68,15 @@ class GptController {
      * @param prompt The user's prompt
      * @param systemMessage Optional custom system message (overrides config.systemPrompt)
      * @param contextHistory Optional context history to include with the prompt
+     * @param imageAttachment Optional image for vision models
      * @return Flow emitting GptResult
      */
     fun generateResponse(
         config: LanguageModelConfig,
         prompt: String,
         systemMessage: String? = null,
-        contextHistory: String? = null
+        contextHistory: String? = null,
+        imageAttachment: ImageAttachment? = null
     ): Flow<GptResult> = flow {
         if (!config.hasValidApiKey()) {
             emit(GptResult.MissingApiKey)
@@ -84,12 +94,12 @@ class GptController {
             val effectiveSystemMessage = systemMessage ?: config.getEffectiveSystemPrompt()
             
             val result = when (config.model) {
-                LanguageModel.Gemini -> generateGeminiResponse(config, effectivePrompt, effectiveSystemMessage)
+                LanguageModel.Gemini -> generateGeminiResponse(config, effectivePrompt, effectiveSystemMessage, imageAttachment)
                 LanguageModel.ChatGPT,
                 LanguageModel.Groq,
                 LanguageModel.OpenRouter,
-                LanguageModel.Mistral -> generateOpenAICompatibleResponse(config, effectivePrompt, effectiveSystemMessage)
-                LanguageModel.Claude -> generateClaudeResponse(config, effectivePrompt, effectiveSystemMessage)
+                LanguageModel.Mistral -> generateOpenAICompatibleResponse(config, effectivePrompt, effectiveSystemMessage, imageAttachment)
+                LanguageModel.Claude -> generateClaudeResponse(config, effectivePrompt, effectiveSystemMessage, imageAttachment)
             }
             emit(result)
         } catch (e: Exception) {
@@ -100,7 +110,8 @@ class GptController {
     private fun generateGeminiResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String
+        systemMessage: String,
+        imageAttachment: ImageAttachment? = null
     ): GptResult {
         val url = "${config.getEffectiveBaseUrl()}/models/${config.getEffectiveSubModel()}:generateContent"
 
@@ -115,6 +126,15 @@ class GptController {
                 add(buildJsonObject {
                     put("role", "user")
                     put("parts", buildJsonArray {
+                        // Add image if provided
+                        if (imageAttachment != null) {
+                            add(buildJsonObject {
+                                put("inline_data", buildJsonObject {
+                                    put("mime_type", imageAttachment.mimeType)
+                                    put("data", imageAttachment.base64Data)
+                                })
+                            })
+                        }
                         add(buildJsonObject { put("text", prompt) })
                     })
                 })
@@ -182,7 +202,8 @@ class GptController {
     private fun generateOpenAICompatibleResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String
+        systemMessage: String,
+        imageAttachment: ImageAttachment? = null
     ): GptResult {
         val url = "${config.getEffectiveBaseUrl()}/chat/completions"
 
@@ -195,7 +216,23 @@ class GptController {
                 })
                 add(buildJsonObject {
                     put("role", "user")
-                    put("content", prompt)
+                    // For vision models, content is an array of objects
+                    if (imageAttachment != null) {
+                        put("content", buildJsonArray {
+                            add(buildJsonObject {
+                                put("type", "image_url")
+                                put("image_url", buildJsonObject {
+                                    put("url", "data:${imageAttachment.mimeType};base64,${imageAttachment.base64Data}")
+                                })
+                            })
+                            add(buildJsonObject {
+                                put("type", "text")
+                                put("text", prompt)
+                            })
+                        })
+                    } else {
+                        put("content", prompt)
+                    }
                 })
             })
             put("stream", false)
@@ -244,7 +281,8 @@ class GptController {
     private fun generateClaudeResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String
+        systemMessage: String,
+        imageAttachment: ImageAttachment? = null
     ): GptResult {
         val url = "${config.getEffectiveBaseUrl()}/messages"
 
@@ -255,7 +293,25 @@ class GptController {
             put("messages", buildJsonArray {
                 add(buildJsonObject {
                     put("role", "user")
-                    put("content", prompt)
+                    // For vision models, content is an array of objects
+                    if (imageAttachment != null) {
+                        put("content", buildJsonArray {
+                            add(buildJsonObject {
+                                put("type", "image")
+                                put("source", buildJsonObject {
+                                    put("type", "base64")
+                                    put("media_type", imageAttachment.mimeType)
+                                    put("data", imageAttachment.base64Data)
+                                })
+                            })
+                            add(buildJsonObject {
+                                put("type", "text")
+                                put("text", prompt)
+                            })
+                        })
+                    } else {
+                        put("content", prompt)
+                    }
                 })
             })
         }

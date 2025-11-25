@@ -132,6 +132,18 @@
             </intent-filter>
         </activity>
 
+        <!-- AI Image Picker Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.ime.gpt.AiImagePickerActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:exported="false"/>
+
+        <!-- AI Screenshot Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.ime.gpt.AiScreenshotActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:exported="false"/>
+
         <!-- Clipboard Media File Provider -->
         <provider
             android:name="dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardMediaProvider"

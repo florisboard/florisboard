@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.ime.gpt
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.util.Base64
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
@@ -28,7 +31,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.florisboard.lib.gpt.GptController
 import org.florisboard.lib.gpt.GptResult
+import org.florisboard.lib.gpt.ImageAttachment
 import org.florisboard.lib.gpt.LanguageModelConfig
+import java.io.ByteArrayOutputStream
 
 /**
  * State for GPT generation operations.
@@ -52,7 +57,7 @@ data class ConversationTurn(
 /**
  * Manager for GPT text generation functionality.
  */
-class GptManager(context: Context) {
+class GptManager(private val context: Context) {
     private val prefs by FlorisPreferenceStore
     private val editorInstance by context.editorInstance()
     private val clipboardManager by context.clipboardManager()
@@ -67,6 +72,10 @@ class GptManager(context: Context) {
     // Conversation history (last few turns)
     private val conversationHistory = mutableListOf<ConversationTurn>()
     private val maxHistorySize = 5
+
+    // Pending image for next AI request
+    private val _pendingImage = MutableStateFlow<ImageAttachment?>(null)
+    val pendingImage = _pendingImage.asStateFlow()
 
     val isEnabled: Boolean
         get() = prefs.gpt.enabled.get()
@@ -146,6 +155,56 @@ class GptManager(context: Context) {
     }
 
     /**
+     * Set a pending image from a URI.
+     */
+    fun setImageFromUri(uri: Uri): Boolean {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val bytes = inputStream?.readBytes()
+            inputStream?.close()
+            
+            if (bytes != null) {
+                val base64 = Base64.encodeToString(bytes, Base64.NO_WRAP)
+                val mimeType = context.contentResolver.getType(uri) ?: "image/jpeg"
+                _pendingImage.value = ImageAttachment(base64, mimeType)
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    /**
+     * Set a pending image from a Bitmap.
+     */
+    fun setImageFromBitmap(bitmap: Bitmap): Boolean {
+        return try {
+            val outputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outputStream)
+            val bytes = outputStream.toByteArray()
+            val base64 = Base64.encodeToString(bytes, Base64.NO_WRAP)
+            _pendingImage.value = ImageAttachment(base64, "image/jpeg")
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    /**
+     * Clear the pending image.
+     */
+    fun clearPendingImage() {
+        _pendingImage.value = null
+    }
+
+    /**
+     * Check if there is a pending image.
+     */
+    fun hasPendingImage(): Boolean = _pendingImage.value != null
+
+    /**
      * Generate a response using the configured AI model.
      *
      * @param prompt The prompt to send to the AI
@@ -160,14 +219,22 @@ class GptManager(context: Context) {
         _state.value = GptState.Generating
 
         val contextHistory = buildContextHistory()
+        val imageAttachment = _pendingImage.value
 
         scope.launch {
-            controller.generateResponse(config, prompt, contextHistory = contextHistory).collect { result ->
+            controller.generateResponse(
+                config = config, 
+                prompt = prompt, 
+                contextHistory = contextHistory,
+                imageAttachment = imageAttachment
+            ).collect { result ->
                 val response: String? = when (result) {
                     is GptResult.Success -> {
                         _state.value = GptState.Success(result.text)
                         // Add to conversation history
                         addToHistory(prompt, result.text)
+                        // Clear the pending image after successful use
+                        clearPendingImage()
                         result.text
                     }
                     is GptResult.Error -> {

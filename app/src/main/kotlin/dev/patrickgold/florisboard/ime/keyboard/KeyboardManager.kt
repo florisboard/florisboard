@@ -753,6 +753,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.REDO -> editorInstance.performRedo()
             KeyCode.SETTINGS -> FlorisImeService.launchSettings()
             KeyCode.AI_SETTINGS -> FlorisImeService.launchAiSettings()
+            KeyCode.AI_IMAGE_PICKER -> FlorisImeService.launchImagePicker()
+            KeyCode.AI_SCREENSHOT -> FlorisImeService.captureScreenshot()
             KeyCode.SHIFT -> handleShiftUp(data)
             KeyCode.SPACE -> handleSpace(data)
             KeyCode.SYSTEM_INPUT_METHOD_PICKER -> InputMethodUtils.showImePicker(appContext)

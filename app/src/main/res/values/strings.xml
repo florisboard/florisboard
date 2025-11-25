@@ -575,6 +575,14 @@
     <string name="pref__gpt__include_conversation__summary" comment="Preference summary">Remember previous AI interactions for better context</string>
     <string name="quick_action__ai_settings" comment="Quick action name">AI Settings</string>
     <string name="quick_action__ai_settings__tooltip" comment="Quick action tooltip">Open AI text generation settings</string>
+    <string name="quick_action__ai_image_picker" comment="Quick action name">AI Image</string>
+    <string name="quick_action__ai_image_picker__tooltip" comment="Quick action tooltip">Select image from gallery for AI analysis</string>
+    <string name="quick_action__ai_screenshot" comment="Quick action name">AI Screenshot</string>
+    <string name="quick_action__ai_screenshot__tooltip" comment="Quick action tooltip">Capture screenshot for AI analysis</string>
+    <string name="gpt__image_selected" comment="Toast message">Image selected for AI</string>
+    <string name="gpt__image_cleared" comment="Toast message">Image cleared</string>
+    <string name="gpt__screenshot_captured" comment="Toast message">Screenshot captured for AI</string>
+    <string name="gpt__screenshot_failed" comment="Toast message">Failed to capture screenshot</string>
 
     <string name="settings__other__title" comment="Title of Other settings">Other</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
