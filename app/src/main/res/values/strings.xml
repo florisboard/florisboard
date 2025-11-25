@@ -563,6 +563,8 @@
     <string name="pref__gpt__api_key__label" comment="Preference title">API Key</string>
     <string name="pref__gpt__sub_model__label" comment="Preference title">Model Name</string>
     <string name="pref__gpt__sub_model__summary" comment="Preference summary">The specific model to use (leave empty for default)</string>
+    <string name="pref__gpt__base_url__label" comment="Preference title">Custom Base URL</string>
+    <string name="pref__gpt__base_url__summary" comment="Preference summary">API endpoint URL for OpenAI-compatible providers (e.g. Grok). Leave empty for default provider endpoints</string>
 
     <string name="settings__other__title" comment="Title of Other settings">Other</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>

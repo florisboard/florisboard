@@ -27,11 +27,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
@@ -48,7 +51,11 @@ fun GptScreen() = FlorisScreen {
     title = stringRes(R.string.settings__gpt__title)
     previewFieldVisible = true
 
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
+
     content {
+        
         FlorisInfoCard(
             modifier = Modifier.padding(8.dp),
             text = """
@@ -76,7 +83,9 @@ fun GptScreen() = FlorisScreen {
                     value = editedPattern,
                     onValueChange = { newValue ->
                         editedPattern = newValue
-                        prefs.gpt.triggerPattern.set(newValue)
+                        scope.launch {
+                            prefs.gpt.triggerPattern.set(newValue)
+                        }
                     },
                     label = { Text(stringRes(R.string.pref__gpt__trigger_pattern__label)) },
                     modifier = Modifier.fillMaxWidth(),
@@ -98,6 +107,7 @@ fun GptScreen() = FlorisScreen {
             var selectedModel by remember(config.model) { mutableStateOf(config.model) }
             var apiKey by remember(config.apiKey) { mutableStateOf(config.apiKey) }
             var subModel by remember(config.subModel) { mutableStateOf(config.subModel) }
+            var baseUrl by remember(config.baseUrl) { mutableStateOf(config.baseUrl) }
             
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 // Model type dropdown
@@ -117,7 +127,9 @@ fun GptScreen() = FlorisScreen {
                             selected = selectedModel == model,
                             onClick = {
                                 selectedModel = model
-                                prefs.gpt.config.set(config.copy(model = model))
+                                scope.launch {
+                                    prefs.gpt.config.set(config.copy(model = model))
+                                }
                             },
                             label = { Text(model.label) }
                         )
@@ -131,7 +143,9 @@ fun GptScreen() = FlorisScreen {
                     value = apiKey,
                     onValueChange = { newValue ->
                         apiKey = newValue
-                        prefs.gpt.config.set(config.copy(apiKey = newValue))
+                        scope.launch {
+                            prefs.gpt.config.set(config.copy(apiKey = newValue))
+                        }
                     },
                     label = { Text(stringRes(R.string.pref__gpt__api_key__label)) },
                     modifier = Modifier.fillMaxWidth(),
@@ -146,7 +160,9 @@ fun GptScreen() = FlorisScreen {
                     value = subModel.ifEmpty { selectedModel.defaultSubModel },
                     onValueChange = { newValue ->
                         subModel = newValue
-                        prefs.gpt.config.set(config.copy(subModel = newValue))
+                        scope.launch {
+                            prefs.gpt.config.set(config.copy(subModel = newValue))
+                        }
                     },
                     label = { Text(stringRes(R.string.pref__gpt__sub_model__label)) },
                     modifier = Modifier.fillMaxWidth(),
@@ -156,6 +172,29 @@ fun GptScreen() = FlorisScreen {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = stringRes(R.string.pref__gpt__sub_model__summary),
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Custom Base URL input (for OpenAI-compatible APIs like Grok)
+                OutlinedTextField(
+                    value = baseUrl,
+                    onValueChange = { newValue ->
+                        baseUrl = newValue
+                        scope.launch {
+                            prefs.gpt.config.set(config.copy(baseUrl = newValue))
+                        }
+                    },
+                    label = { Text(stringRes(R.string.pref__gpt__base_url__label)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                )
+                
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringRes(R.string.pref__gpt__base_url__summary),
                     modifier = Modifier.padding(horizontal = 4.dp),
                     style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
                 )
