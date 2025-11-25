@@ -133,8 +133,9 @@ class GptManager(context: Context) {
      */
     private fun getRecentClipboardItems(): String {
         return try {
-            val history = clipboardManager.history.value
-            history.take(3)
+            val history = clipboardManager.currentHistory
+            history.all.take(3)
+                .filter { it.type == dev.patrickgold.florisboard.ime.clipboard.provider.ItemType.TEXT }
                 .mapNotNull { item -> 
                     item.text?.take(200) // Limit each item to 200 chars
                 }
