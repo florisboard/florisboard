@@ -23,6 +23,7 @@ import android.util.Base64
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -149,7 +150,7 @@ class GptManager(private val context: Context) {
         return try {
             val history = clipboardManager.currentHistory
             history.all.take(3)
-                .filter { it.type == dev.patrickgold.florisboard.ime.clipboard.provider.ItemType.TEXT }
+                .filter { it.type == ItemType.TEXT }
                 .mapNotNull { item -> 
                     item.text?.take(200) // Limit each item to 200 chars
                 }
@@ -166,7 +167,7 @@ class GptManager(private val context: Context) {
         try {
             val history = clipboardManager.currentHistory
             val imageItem = history.all.firstOrNull { 
-                it.type == dev.patrickgold.florisboard.ime.clipboard.provider.ItemType.IMAGE 
+                it.type == ItemType.IMAGE 
             }
             
             if (imageItem?.uri != null) {
