@@ -50,7 +50,6 @@ sealed class GptResult {
  */
 class GptController {
     companion object {
-        private const val DEFAULT_SYSTEM_MESSAGE = "You are a helpful assistant integrated inside a keyboard. Keep responses concise."
         private val json = Json { ignoreUnknownKeys = true }
     }
 
@@ -59,13 +58,15 @@ class GptController {
      *
      * @param config The language model configuration
      * @param prompt The user's prompt
-     * @param systemMessage Optional custom system message
+     * @param systemMessage Optional custom system message (overrides config.systemPrompt)
+     * @param contextHistory Optional context history to include with the prompt
      * @return Flow emitting GptResult
      */
     fun generateResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String? = null
+        systemMessage: String? = null,
+        contextHistory: String? = null
     ): Flow<GptResult> = flow {
         if (!config.hasValidApiKey()) {
             emit(GptResult.MissingApiKey)
@@ -73,13 +74,22 @@ class GptController {
         }
 
         try {
+            // Build the effective prompt with context if provided
+            val effectivePrompt = if (contextHistory.isNullOrBlank()) {
+                prompt
+            } else {
+                "Context:\n$contextHistory\n\nUser request:\n$prompt"
+            }
+            
+            val effectiveSystemMessage = systemMessage ?: config.getEffectiveSystemPrompt()
+            
             val result = when (config.model) {
-                LanguageModel.Gemini -> generateGeminiResponse(config, prompt, systemMessage)
+                LanguageModel.Gemini -> generateGeminiResponse(config, effectivePrompt, effectiveSystemMessage)
                 LanguageModel.ChatGPT,
                 LanguageModel.Groq,
                 LanguageModel.OpenRouter,
-                LanguageModel.Mistral -> generateOpenAICompatibleResponse(config, prompt, systemMessage)
-                LanguageModel.Claude -> generateClaudeResponse(config, prompt, systemMessage)
+                LanguageModel.Mistral -> generateOpenAICompatibleResponse(config, effectivePrompt, effectiveSystemMessage)
+                LanguageModel.Claude -> generateClaudeResponse(config, effectivePrompt, effectiveSystemMessage)
             }
             emit(result)
         } catch (e: Exception) {
@@ -90,9 +100,8 @@ class GptController {
     private fun generateGeminiResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String?
+        systemMessage: String
     ): GptResult {
-        val effectiveSystemMessage = systemMessage ?: DEFAULT_SYSTEM_MESSAGE
         val url = "${config.getEffectiveBaseUrl()}/models/${config.getEffectiveSubModel()}:generateContent"
 
         val requestBody = buildJsonObject {
@@ -100,7 +109,7 @@ class GptController {
                 add(buildJsonObject {
                     put("role", "user")
                     put("parts", buildJsonArray {
-                        add(buildJsonObject { put("text", "[$effectiveSystemMessage]") })
+                        add(buildJsonObject { put("text", "[$systemMessage]") })
                     })
                 })
                 add(buildJsonObject {
@@ -173,9 +182,8 @@ class GptController {
     private fun generateOpenAICompatibleResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String?
+        systemMessage: String
     ): GptResult {
-        val effectiveSystemMessage = systemMessage ?: DEFAULT_SYSTEM_MESSAGE
         val url = "${config.getEffectiveBaseUrl()}/chat/completions"
 
         val requestBody = buildJsonObject {
@@ -183,7 +191,7 @@ class GptController {
             put("messages", buildJsonArray {
                 add(buildJsonObject {
                     put("role", "system")
-                    put("content", effectiveSystemMessage)
+                    put("content", systemMessage)
                 })
                 add(buildJsonObject {
                     put("role", "user")
@@ -236,15 +244,14 @@ class GptController {
     private fun generateClaudeResponse(
         config: LanguageModelConfig,
         prompt: String,
-        systemMessage: String?
+        systemMessage: String
     ): GptResult {
-        val effectiveSystemMessage = systemMessage ?: DEFAULT_SYSTEM_MESSAGE
         val url = "${config.getEffectiveBaseUrl()}/messages"
 
         val requestBody = buildJsonObject {
             put("model", config.getEffectiveSubModel())
             put("max_tokens", config.maxTokens)
-            put("system", effectiveSystemMessage)
+            put("system", systemMessage)
             put("messages", buildJsonArray {
                 add(buildJsonObject {
                     put("role", "user")

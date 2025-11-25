@@ -168,6 +168,22 @@ class FlorisImeService : LifecycleInputMethodService() {
             }
         }
 
+        /**
+         * Hides the IME and launches [FlorisAppActivity] with AI settings screen.
+         */
+        fun launchAiSettings() {
+            val ims = FlorisImeServiceReference.get() ?: return
+            ims.requestHideSelf(0)
+            ims.launchActivity(FlorisAppActivity::class) {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+                it.action = Intent.ACTION_VIEW
+                it.addCategory(Intent.CATEGORY_BROWSABLE)
+                it.data = android.net.Uri.parse("ui://florisboard/settings/gpt")
+            }
+        }
+
         fun showUi() {
             val ims = FlorisImeServiceReference.get() ?: return
             if (AndroidVersion.ATLEAST_API28_P) {

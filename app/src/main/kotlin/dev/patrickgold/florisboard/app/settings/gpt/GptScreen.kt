@@ -200,5 +200,91 @@ fun GptScreen() = FlorisScreen {
                 )
             }
         }
+
+        PreferenceGroup(title = stringRes(R.string.pref__gpt__system_prompt_title)) {
+            val config by prefs.gpt.config.observeAsState()
+            var systemPrompt by remember(config.systemPrompt) { mutableStateOf(config.systemPrompt) }
+            
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                OutlinedTextField(
+                    value = systemPrompt,
+                    onValueChange = { newValue ->
+                        systemPrompt = newValue
+                        scope.launch {
+                            prefs.gpt.config.set(config.copy(systemPrompt = newValue))
+                        }
+                    },
+                    label = { Text(stringRes(R.string.pref__gpt__system_prompt__label)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3,
+                    maxLines = 5,
+                )
+                
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringRes(R.string.pref__gpt__system_prompt__summary),
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                )
+            }
+        }
+
+        PreferenceGroup(title = stringRes(R.string.pref__gpt__context_title)) {
+            val config by prefs.gpt.config.observeAsState()
+            
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                // Clipboard history toggle
+                androidx.compose.foundation.layout.Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringRes(R.string.pref__gpt__include_clipboard__label),
+                            style = androidx.compose.material3.MaterialTheme.typography.bodyLarge,
+                        )
+                        Text(
+                            text = stringRes(R.string.pref__gpt__include_clipboard__summary),
+                            style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                    androidx.compose.material3.Switch(
+                        checked = config.includeClipboardHistory,
+                        onCheckedChange = { checked ->
+                            scope.launch {
+                                prefs.gpt.config.set(config.copy(includeClipboardHistory = checked))
+                            }
+                        }
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Conversation history toggle
+                androidx.compose.foundation.layout.Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringRes(R.string.pref__gpt__include_conversation__label),
+                            style = androidx.compose.material3.MaterialTheme.typography.bodyLarge,
+                        )
+                        Text(
+                            text = stringRes(R.string.pref__gpt__include_conversation__summary),
+                            style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                    androidx.compose.material3.Switch(
+                        checked = config.includeConversationHistory,
+                        onCheckedChange = { checked ->
+                            scope.launch {
+                                prefs.gpt.config.set(config.copy(includeConversationHistory = checked))
+                            }
+                        }
+                    )
+                }
+            }
+        }
     }
 }

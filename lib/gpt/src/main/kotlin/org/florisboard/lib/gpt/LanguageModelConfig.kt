@@ -27,12 +27,20 @@ data class LanguageModelConfig(
     val apiKey: String = "",
     val subModel: String = "",
     val baseUrl: String = "",
+    val systemPrompt: String = DEFAULT_SYSTEM_PROMPT,
     val maxTokens: Int = LanguageModel.DEFAULT_MAX_TOKENS,
     val temperature: Double = LanguageModel.DEFAULT_TEMPERATURE,
     val topP: Double = LanguageModel.DEFAULT_TOP_P,
+    val includeClipboardHistory: Boolean = false,
+    val includeConversationHistory: Boolean = false,
 ) {
+    companion object {
+        const val DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant integrated into a keyboard. Keep responses concise and directly useful."
+    }
+
     fun getEffectiveSubModel(): String = subModel.ifEmpty { model.defaultSubModel }
     fun getEffectiveBaseUrl(): String = baseUrl.ifEmpty { model.defaultBaseUrl }
+    fun getEffectiveSystemPrompt(): String = systemPrompt.ifEmpty { DEFAULT_SYSTEM_PROMPT }
 
     fun hasValidApiKey(): Boolean = apiKey.isNotBlank()
 }

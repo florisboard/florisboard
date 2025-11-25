@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.gpt
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,11 +41,21 @@ sealed class GptState {
 }
 
 /**
+ * Represents a conversation turn for history.
+ */
+data class ConversationTurn(
+    val prompt: String,
+    val response: String,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+/**
  * Manager for GPT text generation functionality.
  */
 class GptManager(context: Context) {
     private val prefs by FlorisPreferenceStore
     private val editorInstance by context.editorInstance()
+    private val clipboardManager by context.clipboardManager()
 
     // Using Main dispatcher so callbacks are executed on the main thread
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
@@ -52,6 +63,10 @@ class GptManager(context: Context) {
 
     private val _state = MutableStateFlow<GptState>(GptState.Idle)
     val state = _state.asStateFlow()
+
+    // Conversation history (last few turns)
+    private val conversationHistory = mutableListOf<ConversationTurn>()
+    private val maxHistorySize = 5
 
     val isEnabled: Boolean
         get() = prefs.gpt.enabled.get()
@@ -88,6 +103,48 @@ class GptManager(context: Context) {
     }
 
     /**
+     * Build context history string based on configuration.
+     */
+    private fun buildContextHistory(): String? {
+        val cfg = config
+        val contextParts = mutableListOf<String>()
+
+        // Add clipboard history if enabled
+        if (cfg.includeClipboardHistory) {
+            val clipboardHistory = getRecentClipboardItems()
+            if (clipboardHistory.isNotBlank()) {
+                contextParts.add("Recent clipboard:\n$clipboardHistory")
+            }
+        }
+
+        // Add conversation history if enabled
+        if (cfg.includeConversationHistory && conversationHistory.isNotEmpty()) {
+            val historyText = conversationHistory.takeLast(3).joinToString("\n\n") { turn ->
+                "User: ${turn.prompt}\nAssistant: ${turn.response}"
+            }
+            contextParts.add("Previous conversation:\n$historyText")
+        }
+
+        return if (contextParts.isEmpty()) null else contextParts.joinToString("\n\n---\n\n")
+    }
+
+    /**
+     * Get recent clipboard items as text.
+     */
+    private fun getRecentClipboardItems(): String {
+        return try {
+            val history = clipboardManager.history.value
+            history.take(3)
+                .mapNotNull { item -> 
+                    item.text?.take(200) // Limit each item to 200 chars
+                }
+                .joinToString("\n- ", prefix = "- ")
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    /**
      * Generate a response using the configured AI model.
      *
      * @param prompt The prompt to send to the AI
@@ -101,11 +158,15 @@ class GptManager(context: Context) {
 
         _state.value = GptState.Generating
 
+        val contextHistory = buildContextHistory()
+
         scope.launch {
-            controller.generateResponse(config, prompt).collect { result ->
+            controller.generateResponse(config, prompt, contextHistory = contextHistory).collect { result ->
                 val response: String? = when (result) {
                     is GptResult.Success -> {
                         _state.value = GptState.Success(result.text)
+                        // Add to conversation history
+                        addToHistory(prompt, result.text)
                         result.text
                     }
                     is GptResult.Error -> {
@@ -121,6 +182,24 @@ class GptManager(context: Context) {
                 onComplete?.invoke(response)
             }
         }
+    }
+
+    /**
+     * Add a conversation turn to history.
+     */
+    private fun addToHistory(prompt: String, response: String) {
+        conversationHistory.add(ConversationTurn(prompt, response))
+        // Keep only last N items
+        while (conversationHistory.size > maxHistorySize) {
+            conversationHistory.removeAt(0)
+        }
+    }
+
+    /**
+     * Clear conversation history.
+     */
+    fun clearHistory() {
+        conversationHistory.clear()
     }
 
     /**
