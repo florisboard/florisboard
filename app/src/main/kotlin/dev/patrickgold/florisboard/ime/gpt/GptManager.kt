@@ -46,7 +46,8 @@ class GptManager(context: Context) {
     private val prefs by FlorisPreferenceStore
     private val editorInstance by context.editorInstance()
 
-    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    // Using Main dispatcher so callbacks are executed on the main thread
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val controller = GptController()
 
     private val _state = MutableStateFlow<GptState>(GptState.Idle)
@@ -90,7 +91,7 @@ class GptManager(context: Context) {
      * Generate a response using the configured AI model.
      *
      * @param prompt The prompt to send to the AI
-     * @param onComplete Callback when generation is complete
+     * @param onComplete Callback when generation is complete (called on Main dispatcher)
      */
     fun generateResponse(prompt: String, onComplete: ((String?) -> Unit)? = null) {
         if (!isEnabled || prompt.isBlank()) {
@@ -102,20 +103,22 @@ class GptManager(context: Context) {
 
         scope.launch {
             controller.generateResponse(config, prompt).collect { result ->
-                when (result) {
+                val response: String? = when (result) {
                     is GptResult.Success -> {
                         _state.value = GptState.Success(result.text)
-                        onComplete?.invoke(result.text)
+                        result.text
                     }
                     is GptResult.Error -> {
                         _state.value = GptState.Error(result.message)
-                        onComplete?.invoke(null)
+                        null
                     }
                     is GptResult.MissingApiKey -> {
                         _state.value = GptState.Error("API key not configured")
-                        onComplete?.invoke(null)
+                        null
                     }
                 }
+                // Callback is already on Main dispatcher since scope uses Dispatchers.Main
+                onComplete?.invoke(response)
             }
         }
     }

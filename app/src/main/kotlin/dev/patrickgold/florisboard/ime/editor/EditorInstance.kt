@@ -43,9 +43,6 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.util.concurrent.atomic.AtomicInteger
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.android.showShortToastSync
 
@@ -271,30 +268,26 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         val indicatorText = "<Generating...>"
         commitText(indicatorText)
 
-        // Generate AI response
+        // Generate AI response (callback is already on Main dispatcher)
         gptManager.generateResponse(prompt) { response ->
-            // We need to delete the indicator and insert the response
-            // This will be done asynchronously on the main thread
-            GlobalScope.launch(Dispatchers.Main) {
-                // Get current content and find the indicator
-                val currentContent = activeContent
-                val currentTextBefore = currentContent.getTextBeforeCursor(64)
+            // Get current content and find the indicator
+            val currentContent = activeContent
+            val currentTextBefore = currentContent.getTextBeforeCursor(64)
 
-                if (currentTextBefore.endsWith(indicatorText)) {
-                    // Delete the indicator
-                    val currentSelection = currentContent.selection
-                    if (currentSelection.isValid) {
-                        setSelection(currentSelection.start - indicatorText.length, currentSelection.start)
-                        commitText("")
-                    }
+            if (currentTextBefore.endsWith(indicatorText)) {
+                // Delete the indicator
+                val currentSelection = currentContent.selection
+                if (currentSelection.isValid) {
+                    setSelection(currentSelection.start - indicatorText.length, currentSelection.start)
+                    commitText("")
                 }
+            }
 
-                // Insert the AI response or show error
-                if (response != null) {
-                    commitText(response)
-                } else {
-                    appContext.showShortToastSync("AI generation failed")
-                }
+            // Insert the AI response or show error
+            if (response != null) {
+                commitText(response)
+            } else {
+                appContext.showShortToastSync("AI generation failed")
             }
         }
     }
