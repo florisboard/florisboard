@@ -124,6 +124,11 @@ class GptManager(private val context: Context) {
             if (clipboardHistory.isNotBlank()) {
                 contextParts.add("Recent clipboard:\n$clipboardHistory")
             }
+            
+            // Also check for clipboard images and set as pending image if not already set
+            if (_pendingImage.value == null) {
+                tryLoadClipboardImage()
+            }
         }
 
         // Add conversation history if enabled
@@ -151,6 +156,24 @@ class GptManager(private val context: Context) {
                 .joinToString("\n- ", prefix = "- ")
         } catch (e: Exception) {
             ""
+        }
+    }
+
+    /**
+     * Try to load an image from clipboard history.
+     */
+    private fun tryLoadClipboardImage() {
+        try {
+            val history = clipboardManager.currentHistory
+            val imageItem = history.all.firstOrNull { 
+                it.type == dev.patrickgold.florisboard.ime.clipboard.provider.ItemType.IMAGE 
+            }
+            
+            if (imageItem?.uri != null) {
+                setImageFromUri(imageItem.uri)
+            }
+        } catch (e: Exception) {
+            // Ignore errors when trying to load clipboard images
         }
     }
 
