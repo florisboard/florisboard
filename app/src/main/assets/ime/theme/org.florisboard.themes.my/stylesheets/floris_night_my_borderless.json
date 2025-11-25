@@ -7,7 +7,7 @@
     "--secondary-variant": "dynamic-dark-color(secondary)",
     "--background": "dynamic-dark-color(background)",
     "--background-variant": "dynamic-dark-color(background)",
-    "--surface": "dynamic-dark-color(surfaceDim)",
+    "--surface": "dynamic-dark-color(surfaceBright)",
     "--surface-variant": "dynamic-dark-color(surfaceVariant)",
 
     "--popup-surface": "dynamic-dark-color(surfaceContainerLow)",
