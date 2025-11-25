@@ -1,0 +1,3 @@
+[submodule "KeyboardGPT"]
+	path = KeyboardGPT
+	url = https://github.com/bilbilaki/KeyboardGPT.git
