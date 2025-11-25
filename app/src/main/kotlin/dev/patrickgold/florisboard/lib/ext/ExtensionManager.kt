@@ -63,7 +63,6 @@ val ExtensionJsonConfig = Json {
     isLenient = true
     prettyPrint = true
     prettyPrintIndent = "  "
-    encodeDefaults = false
     serializersModule = SerializersModule {
         polymorphic(Extension::class) {
             subclass(KeyboardExtension::class, KeyboardExtension.serializer())
