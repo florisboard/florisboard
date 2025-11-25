@@ -551,6 +551,19 @@
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
+    <string name="settings__gpt__title" comment="Title of GPT settings screen">AI Text Generation</string>
+    <string name="pref__gpt__general_title" comment="Preference group title">General</string>
+    <string name="pref__gpt__enabled__label" comment="Preference title">Enable AI text generation</string>
+    <string name="pref__gpt__enabled__summary" comment="Preference summary">Generate AI responses by typing a prompt followed by the trigger pattern</string>
+    <string name="pref__gpt__trigger_title" comment="Preference group title">Trigger</string>
+    <string name="pref__gpt__trigger_pattern__label" comment="Preference title">Trigger pattern</string>
+    <string name="pref__gpt__trigger_pattern__summary" comment="Preference summary">Type this pattern after your prompt to trigger AI generation (e.g. "What is AI!!" with trigger "!!")</string>
+    <string name="pref__gpt__model_title" comment="Preference group title">AI Model Configuration</string>
+    <string name="pref__gpt__model__label" comment="Preference title">AI Provider</string>
+    <string name="pref__gpt__api_key__label" comment="Preference title">API Key</string>
+    <string name="pref__gpt__sub_model__label" comment="Preference title">Model Name</string>
+    <string name="pref__gpt__sub_model__summary" comment="Preference summary">The specific model to use (leave empty for default)</string>
+
     <string name="settings__other__title" comment="Title of Other settings">Other</string>
     <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>
