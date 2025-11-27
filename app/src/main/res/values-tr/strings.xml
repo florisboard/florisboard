@@ -642,9 +642,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Dahili panoyu kullan</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Sistem panosu yerine dahili bir pano kullan</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sistem panosundan senkronize et</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistem panosu güncellemeleri Floris panosunu da günceller</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sistem panosuna senkronize et</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris panosu güncellemeleri sistem panosunu da günceller</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Pano önerileri</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Pano içeriği önerileri</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Daha önce kopyalanan pano içeriğini öner</string>
@@ -660,8 +658,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Hassas ögeleri şu süre sonunda otomatik temizle</string>
     <string name="pref__clipboard__limit_history_size__label">Geçmiş boyutunu sınırla</string>
     <string name="pref__clipboard__max_history_size__label">Maksimum geçmiş boyutu</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Birincil klibi temizlemek geçmişi etkiler</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Birincil klibi temizlemek, en son geçmiş girişini de siler</string>
     <string name="send_to_clipboard__unknown_error">Bilinmeyen bir hata oluştu. Lütfen tekrar deneyin!</string>
     <string name="send_to_clipboard__type_not_supported_error">Bu medya türü desteklenmiyor.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Aşağıdaki resim panoya kopyalandı.</string>

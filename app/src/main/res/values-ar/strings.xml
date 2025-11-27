@@ -536,9 +536,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">استخدم الحافظة الداخلية</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">استخدم الحافظة الداخلية بدلا من حافظة النظام</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">مزامنة حافظة النظام</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">عند مزامنة حافظة النظام يتم مزامنة حافظة لوحة المفاتيح تلقائيا</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">مزامنة الى حافظة النظام</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">تحديثات حافظة لوحة المفاتيح يقوم أيضًا بتحديث حافظة النظام</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">إقتراحات الحافظة</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">إقتراحات محتوى الحافظة</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">اقتراح المحتويات المنسوخة في سجل الحافظة</string>
@@ -553,8 +551,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">التنظيف التلقائي للأصناف الحساسة بعد</string>
     <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
     <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">مسح الحافظة الأساسية يؤثر على السجل</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">يؤدي مسح السجل الأساسي للحافظة أيضًا إلى حذف آخر إدخال للمحفوظات</string>
     <string name="send_to_clipboard__unknown_error">حدث خطأ غير معروف. حاول مرة اخرى!</string>
     <string name="send_to_clipboard__type_not_supported_error">هذا النوع من الوسائط غير مدعوم.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">نسخ الصورة أدناه إلى الحافظة.</string>

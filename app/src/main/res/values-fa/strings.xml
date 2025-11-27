@@ -275,9 +275,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">استفاده از کلیپ‌بورد داخلی</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">استفاده از کلیپ‌بورد داخل برنامه بجای کلیپ‌بورد سیستم</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">هماهنگ سازی از کلیپ‌بورد سیستم</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد سیستم، کلیپ‌بورد فلوریس کیبورد را نیز بروز می کند</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">هماهنگ سازی به کلیپ‌بورد سیستم</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد فلوریس کیبورد، کلیپ‌بورد سیستم را نیز بروز می کند</string>
     <string name="pref__clipboard__group_clipboard_history__label">تاریخچه کلیپ بورد</string>
     <string name="pref__clipboard__enable_clipboard_history__label">فعالسازی تاریخچه کلیپ‌بورد</string>
     <string name="pref__clipboard__clean_up_old__label">پاکسازی موارد قدیمی</string>

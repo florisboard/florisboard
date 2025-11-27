@@ -272,9 +272,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Χρήση εσωτερικού προχείρου</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Συγχρονισμός από συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου ενημερώνουν και το πρόχειρο Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Συγχρονισμός στο συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
     <string name="pref__clipboard__group_clipboard_history__label">Ιστορικό προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση των στοιχείων του προχείρου για γρήγορη πρόσβαση</string>
@@ -282,8 +280,6 @@
     <string name="pref__clipboard__clean_up_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
     <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
     <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Η διαγραφή του κυρίου αποκόμματος επηρεάζει το ιστορικό</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Διαγράφοντας το κύριο απόκομμα διαγράφεται επίσης η νεότερη καταχώριση στο ιστορικό</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Εργαλεία προγραμματιστή</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ενεργοποίηση εργαλείων προγραμματιστή</string>

@@ -286,7 +286,6 @@
     <string name="pref__clipboard__clean_up_old__label">Berhemên kevin paqij bikin</string>
     <string name="pref__clipboard__clean_up_after__label">Piştî kelûpelên kevin paqij bikin</string>
     <string name="pref__clipboard__max_history_size__label">Mezinahiya dîroka Maxê</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Dîroka efektên klîbê yên sereke paqij bike</string>
     <!-- Devtools strings -->
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">پیشاندانی لەبەرگیراوە بنەڕەتیەکان</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">پیشاندانی لەبەرگیراوەی بنەڕەتی سیستەم</string>

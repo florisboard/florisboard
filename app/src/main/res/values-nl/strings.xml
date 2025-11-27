@@ -555,9 +555,7 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="pref__clipboard__use_internal_clipboard__label">Gebruik intern klembord</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Gebruik een intern klembord in plaats van het systeemklembord</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchroniseer met systeemklembord</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Systeemklembord ververst ook het FlorisBoard-klembord</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniseer met systeemklembord</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris-klembord ververst ook het systeemklembord</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Suggesties voor de klembord</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Eerder gekopieerde klembordinhoud voorstellen</string>
@@ -572,8 +570,6 @@ Deze toestemming kan op elk moment worden gewijzigd in de systeeminstellingen.  
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Gevoelige items automatisch opschonen na</string>
     <string name="pref__clipboard__limit_history_size__label">Beperk geschiedenisgrootte</string>
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Primaire clip wissen beïnvloedt geschiedenis</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Als u de primaire clip wist, wordt ook het laatste geschiedenisitem verwijderd</string>
     <string name="send_to_clipboard__unknown_error">Een onbekende fout is opgetreden. Probeer het alstublieft opnieuw!</string>
     <string name="send_to_clipboard__type_not_supported_error">Dit mediatype wordt niet ondersteund.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Onderstaande afbeelding gekopieerd naar klembord.</string>

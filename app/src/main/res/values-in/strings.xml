@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Lakukan panah kiri</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Panah kanan</string>
     <string name="quick_action__arrow_right__tooltip">Lakukan panah kanan</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Sembunyikan papan ketik</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Sembunyikan papan ketik</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Hapus klip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Lakukan penghapusan klip utama pada papan klip</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Salin</string>
@@ -562,6 +564,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="setup__finish_up__description_p2">Jika Anda mengalami masalah, bug, crash, atau hanya ingin membuat saran, lihat repositori proyek di layar tentang!</string>
     <string name="setup__finish_up__finish_btn">Mulai Menyesuaikan</string>
     <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Keyboard fisik</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Hanya tersedia saat papan ketik terpasang</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Tampilkan papan ketik di layar</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Cadangkan &amp; Pulihkan</string>
     <string name="backup_and_restore__back_up__title">Cadangkan data</string>
@@ -636,9 +641,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Gunakan papan klip internal</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Gunakan papan klip internal daripada papan klip sistem</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinkronkan dari papan klip sistem</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Pembaruan papan klip sistem juga memperbarui papan klip Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronkan ke papan klip sistem</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Pembaruan papan klip Floris juga memperbarui papan klip sistem</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Saran papan klip</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Saran konten papan klip</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sarankan konten papan klip yang sebelumnya disalin</string>
@@ -654,8 +657,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Otomatis hapus item setelah</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
     <string name="pref__clipboard__max_history_size__label">Batas ukuran riwayat</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Membersihkan klip utama memengaruhi riwayat</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Membersihkan klip utama juga menghapus entri riwayat terkini</string>
     <string name="send_to_clipboard__unknown_error">Terjadi kesalahan yang tidak diketahui. Harap coba lagi!</string>
     <string name="send_to_clipboard__type_not_supported_error">Jenis media ini tidak didukung.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Salin gambar berikut ke papan klip.</string>

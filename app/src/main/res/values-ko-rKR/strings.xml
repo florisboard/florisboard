@@ -378,9 +378,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">앱 자체 클립보드 사용</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">시스템 클립보드 대신 앱 자체에서 제공하는 클립보드를 사용합니다.</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">시스템 클립보드와 동기화</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">시스템 클립보드의 항목이 업데이트되면 앱 자체 클립보드에도 적용합니다.</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">시스템 클립보드로 동기화</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">앱 자체 클립보드의 항목이 업데이트되면 시스템 클립보드에도 적용합니다.</string>
     <string name="pref__clipboard__group_clipboard_history__label">클립보드 기록</string>
     <string name="pref__clipboard__enable_clipboard_history__label">클립보드 기록 켜기</string>
     <string name="pref__clipboard__limit_history_size__label">기록 크기 제한</string>

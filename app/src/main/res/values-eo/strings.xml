@@ -457,9 +457,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Uzi internan tondujon</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Uzi internan tondujon anstataŭ la sistema tondujo</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinkronigi el sistema tondujo</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sisteman tondujon ĝisdatigoj ankaŭ ĝisdatigos Floris tondujon</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronigi al sistema tondujo</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris tondujon ĝisdatigoj ankaŭ ĝisdatigos sisteman tondujon</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Tondujaj sugestoj</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Tondujan enhavon sugestoj</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sugesti antaŭe kopiitan tondujan enhavon</string>
@@ -474,8 +472,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Aŭtomate elviŝi kaŝendaj eroj post</string>
     <string name="pref__clipboard__limit_history_size__label">Limigi la grandon de la historio</string>
     <string name="pref__clipboard__max_history_size__label">Maksimuma grando historion</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Viŝi lastan eron efikas sur historion</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Viŝi lastan tondujan eron ankaŭ forigas la lastan historian enigaĵon</string>
     <string name="send_to_clipboard__unknown_error">Nekonata eraro okazis. Bonvolu ree provi!</string>
     <string name="send_to_clipboard__type_not_supported_error">Tiu aŭdvidaĵon tipo estas ne subtenata.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Malsupra bildo kopiita al tondujo.</string>
