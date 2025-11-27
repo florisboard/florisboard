@@ -110,9 +110,10 @@ fun PopupExtBox(
                     } else {
                         null
                     }
+                    val localAttrs = attributes.plus(FlorisImeUi.Attr.Code to element.data.code)
                     SnyggBox(
                         elementName = FlorisImeUi.KeyPopupElement.elementName,
-                        attributes = attributes,
+                        attributes = localAttrs,
                         selector = selector,
                         modifier = Modifier.size(elemWidth, elemHeight),
                     ) {

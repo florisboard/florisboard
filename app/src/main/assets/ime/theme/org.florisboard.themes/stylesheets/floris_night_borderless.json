@@ -91,6 +91,10 @@
     "foreground": "var(--on-surface)",
     "shape": "var(--shape)"
   },
+  "key-popup-element[code=-255]": {
+    "font-size": "18sp",
+    "text-max-lines": "1"
+  },
   "key-popup-extended-indicator": {
     "font-size": "16sp"
   },
