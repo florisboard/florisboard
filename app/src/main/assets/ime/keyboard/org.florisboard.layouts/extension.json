@@ -189,6 +189,12 @@
         "direction": "ltr"
       },
       {
+        "id": "georgian_standard",
+        "label": "Georgian Standard Keyboard",
+        "authors": [ "nE" ],
+        "direction": "ltr"
+      },
+      {
         "id": "german",
         "label": "German (QWERTZ)",
         "authors": [ "mahmoudk1000" ],
