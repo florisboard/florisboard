@@ -903,9 +903,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 entry.transform(
                     type = PreferenceType.string(),
                     rawValue = when (entry.rawValue) {
-                        "true" -> ClipboardSyncBehavior.ALL_EVENTS
-                        else -> ClipboardSyncBehavior.NO_EVENTS
-                    }.name,
+                        "true" -> ClipboardSyncBehavior.ALL_EVENTS.name
+                        "false" -> ClipboardSyncBehavior.NO_EVENTS.name
+                        else -> entry.rawValue
+                    },
                 )
             }
             "clipboard__num_history_grid_columns_portrait" -> {
