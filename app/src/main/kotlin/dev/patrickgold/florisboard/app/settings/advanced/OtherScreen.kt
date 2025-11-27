@@ -73,7 +73,7 @@ fun OtherScreen() = FlorisScreen {
             icon = Icons.Default.FormatColorFill,
             defaultColors = ColorMappings.colors,
             showAlphaSlider = false,
-            enableAdvancedLayout = false,
+            enableAdvancedLayout = true,
             colorOverride = {
                 if (it.isMaterialYou(context)) {
                     Color.Unspecified
