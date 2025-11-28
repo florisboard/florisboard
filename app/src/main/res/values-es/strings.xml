@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Realizar flecha hacia la izquierda</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Derecha</string>
     <string name="quick_action__arrow_right__tooltip">Realizar flecha hacia la derecha</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Ten en cuenta el limitado espacio disponible para la tira de acción rápida</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Ejecutar ocultar el teclado</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Borrar clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Realizar limpiar portapapeles principal</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copiar</string>
@@ -68,6 +70,7 @@
     <string name="quick_action__clipboard_paste__tooltip">Pegar del portapapeles</string>
     <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Marcar todo</string>
     <string name="quick_action__clipboard_select_all__tooltip">Seleccionar todo en el portapapeles</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Suprimir</string>
     <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Portapapeles</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir historial del portapapeles</string>
     <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
@@ -220,8 +223,13 @@
     <string name="snygg__rule_element__clipboard_header_text">Texto de encabezado del portapapeles</string>
     <string name="snygg__rule_element__clipboard_subheader">Subencabezado del portapapeles</string>
     <string name="snygg__rule_element__clipboard_content">Contenido del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Fila del filtro del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Elemento de filtro de memoria intermedia</string>
+    <string name="snygg__rule_element__clipboard_grid">Rejilla de portapapeles</string>
     <string name="snygg__rule_element__clipboard_item">Ítem de portapapeles</string>
+    <string name="snygg__rule_element__clipboard_item_description">Descripción de objeto en el portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_popup">Ítem de portapapeles emergente</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Fecha y hora del objeto en el portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_actions">Acciones de elemento del portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_action">Acción de elemento del portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Icono de acción de elemento del portapapeles</string>
@@ -637,9 +645,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Usar portapapeles interno</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usar portapapeles interno en vez del portapapeles del sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar portapapeles del sistema</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Las actualizaciones en el portapapeles del sistema también actualizan el portapapeles de Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar al portapapeles del sistema</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Las actualizaciones del portapapeles de Floris también actualizan el portapapeles del sistema</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugerencias del portapapeles</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugerencias del contenido del portapapeles</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sugerir contenido del portapapeles copiado anteriormente</string>
@@ -655,8 +661,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Limpiar automáticamente elementos sensibles después de</string>
     <string name="pref__clipboard__limit_history_size__label">Limite de tamaño del historial</string>
     <string name="pref__clipboard__max_history_size__label">Tamaño máximo del historial</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Borrar el clip principal afecta al historial</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Al borrar el clip principal también se borra la última entrada del historial</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Ocultar el historial al pegar</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Ocultar historial en el siguiente campo de texto</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Eliminar el clip primario afecta al historial</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Eliminar el clip principal también lo quita del historial, si no está fijado</string>
     <string name="send_to_clipboard__unknown_error">Ha ocurrido un error desconocido. Por favor, vuelve a intentarlo.</string>
     <string name="send_to_clipboard__type_not_supported_error">Este tipo de medio no está soportado.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Imagen copiada en el portapapeles.</string>
@@ -851,6 +859,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Ancho dinámico &amp; desplazable</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Permitr Bloq May haciendo doble toque en mayúscula</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Cambiar modo de capitalización cada vez que se pulsa la tecla Mayús</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Sin eventos</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">No se sincronizan eventos en esta dirección. En este modo, la sincronización excluye el contenido del texto.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Limpiar solo los eventos</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Solo se sincronizan en esta dirección los datos del clip de borrado de eventos. En este modo, sync excluye el contenido de texto.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Fijar solo los eventos</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Solo los datos del clip de configuración de los eventos se sincronizan en esta dirección. En este modo, la sincronización incluye el contenido del texto.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Todos los eventos</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">Tanto la configuración de los eventos como el borrado de los datos del clip se sincronizan en esta dirección. En este modo, sync incluye el contenido del texto.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Rojo Verde Azul</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Tono Saturación Valor</string>
@@ -972,6 +988,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Mover cursor al inicio de la página</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Mover cursor al final de la página</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Abrir gestor/historial del portapapeles</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Abrir panel de emojis</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Mayúsculas</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Rehacer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Deshacer</string>

@@ -368,9 +368,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Bruk intern utklippstavle</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Bruk en intern utklippstavle i steden for systemutklippstavlen</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synkroniser fra systemutklippstavlen</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Systemutklippstavlen oppdaterer også Floris-utklippstavlen</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synkroniser til systemutklippstavlen</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris-utklippstavlen oppdaterer også systemutklippstavlen</string>
     <string name="pref__clipboard__group_clipboard_history__label">Utklippstavle-historie</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Skru på utklippstavle-historie</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Behold utklippstavleobjekter for rask tilgang</string>

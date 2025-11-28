@@ -544,9 +544,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use uma área de transferência interna em vez da área de transferência do sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar a partir da área de transferência do sistema</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Atualizações da área de transferência do sistema também atualizam a área de transferência do Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar com a área de transferência do sistema</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Atualizações da área de transferência do Floris também atualizam a área de transferência do sistema</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugestões da área de transf.</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugestões da área de transf.</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sugerir conteúdos da área de transferência</string>
@@ -561,8 +559,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Limpar a área de transferência após o uso automaticamente</string>
     <string name="pref__clipboard__limit_history_size__label">Limitar o tamanho do histórico</string>
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Limpar o clipe primário afeta o histórico</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Limpar o clipe primário também exclui a última entrada do histórico</string>
     <string name="send_to_clipboard__unknown_error">Ocorreu um erro desconhecido. Por favor, tente novamente!</string>
     <string name="send_to_clipboard__type_not_supported_error">Esse tipo de mídia não é suportado.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Imagem abaixo copiada para área de transferência.</string>

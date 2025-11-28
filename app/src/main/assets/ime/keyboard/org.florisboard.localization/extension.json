@@ -57,8 +57,10 @@
     { "id": "it", "authors": [ "patrickgold" ] },
     { "id": "iw", "authors": [ "Antony" ] },
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
+    { "id": "ka-std", "authors": [ "nE" ] },
     { "id": "kab", "authors": [ "yanis867" ] },
     { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
+    { "id": "ko-KR", "authors": [ "Shunnuo" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
     { "id": "lt", "authors": [ "patrickgold" ] },
     { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
@@ -432,6 +434,15 @@
       }
     },
     {
+      "languageTag": "ka-GE",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:georgian_lari",
+      "popupMapping": "org.florisboard.localization:ka-std",
+      "preferred": {
+        "characters": "org.florisboard.layouts:georgian_standard"
+      }
+    },
+    {
       "languageTag": "ru",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
@@ -604,6 +615,15 @@
       "popupMapping": "org.florisboard.localization:ko",
       "preferred": {
         "characters": "org.florisboard.layouts:korean"
+      }
+    },
+    {
+      "languageTag": "ko-KR",
+      "composer": "org.florisboard.composers:hangul-unicode",
+      "currencySet": "org.florisboard.currencysets:south_korean_won",
+      "popupMapping": "org.florisboard.localization:ko",
+      "preferred": {
+        "characters": "org.florisboard.layouts:korean_phonetic"
       }
     },
     {

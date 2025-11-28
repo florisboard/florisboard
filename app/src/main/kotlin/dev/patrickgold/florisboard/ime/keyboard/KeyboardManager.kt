@@ -65,6 +65,7 @@ import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import java.lang.ref.WeakReference
+import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -80,7 +81,6 @@ import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
-import java.util.concurrent.atomic.AtomicInteger
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
@@ -274,6 +274,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> TextKeyData.SYSTEM_INPUT_METHOD_PICKER
             SwipeAction.SHOW_SUBTYPE_PICKER -> TextKeyData.SHOW_SUBTYPE_PICKER
             SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> TextKeyData.IME_UI_MODE_CLIPBOARD
+            SwipeAction.SWITCH_TO_MEDIA_CONTEXT -> TextKeyData.IME_UI_MODE_MEDIA
             SwipeAction.SWITCH_TO_PREV_SUBTYPE -> TextKeyData.IME_PREV_SUBTYPE
             SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> TextKeyData.IME_NEXT_SUBTYPE
             SwipeAction.SWITCH_TO_PREV_KEYBOARD -> TextKeyData.SYSTEM_PREV_INPUT_METHOD
@@ -717,8 +718,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CLIPBOARD_CLEAR_HISTORY -> clipboardManager.clearHistory()
             KeyCode.CLIPBOARD_CLEAR_FULL_HISTORY -> clipboardManager.clearFullHistory()
             KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
-                if (prefs.clipboard.clearPrimaryClipDeletesLastItem.get()) {
-                    clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it) }
+                if (prefs.clipboard.clearPrimaryClipAffectsHistoryIfUnpinned.get()) {
+                    clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it, onlyIfUnpinned = true) }
                 }
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)

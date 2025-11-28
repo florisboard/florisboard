@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Izpildīt bultu pa kreisi</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Pa labi</string>
     <string name="quick_action__arrow_right__tooltip">Izpildīt bultu pa labi</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Paslēpt tastatūru</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Veikt tastatūras paslēpšanu</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Izpildīt galvenā starliktuves vienuma notīrīšanu</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopēt</string>
     <string name="quick_action__clipboard_copy__tooltip">Izpildīt starpliktuves kopēšanu</string>
@@ -609,9 +611,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinhronizēt no sistēmas starpliktuves</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Starpliktuves ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
@@ -627,8 +627,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Autmātiski notīrīt jutīgus vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Galvenā vienuma notīrīšana dzēš arī jaunāko vēstures ierakstu</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Paslēpt vēsturi pēc ielīmēšanas</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Paslēpt vēsturi pēc pāriešanas uz nākamo teksta lauku</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Galvenā vienuma notīrīšana noņem to arī no vēstures, ja tas nav piesprausts</string>
     <string name="send_to_clipboard__unknown_error">Radusies nezināma kļūda. Lūgums vēlāk mēģināt vēlreiz.</string>
     <string name="send_to_clipboard__type_not_supported_error">Šis informācijas nesēja veids netiek atbalstīts.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Zemāk esošais attēls ir ievietots starpliktuvē.</string>
@@ -823,6 +825,10 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Mainīgs platums un ritināms</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Iespējot burtslēgu ar divkāršu piesitienu pārslēgšanas taustiņam</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Pārslēgties uz nākamo lielā burta rakstīšānas soli katru reizi, kad tiek nospiests pārslēgšanas taustiņš</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Nav notikumu</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">Šajā virzienā netiek sinhronizēts neviens notikums. Šajā režīmā sinhronizēšana neiekļauj teksta saturu.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Tikai notīrīt notikumus</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Visi notikumi</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Sarkans Zaļš Zils</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Nokrāsas piesātinājuma vērtība</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Rādīt vienmēr</string>

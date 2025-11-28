@@ -19,10 +19,8 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
-import androidx.compose.material.icons.automirrored.filled.Backspace
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.automirrored.filled.KeyboardBackspace
 import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
 import androidx.compose.material.icons.automirrored.filled.Redo
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -32,13 +30,14 @@ import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
-import androidx.compose.material.icons.filled.ContentPaste
+import androidx.compose.material.icons.filled.ContentPasteGo
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardCapslock
+import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.KeyboardVoice
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreHoriz
@@ -200,7 +199,7 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             Icons.Default.ContentCut
         }
         KeyCode.CLIPBOARD_PASTE -> {
-            Icons.Default.ContentPaste
+            Icons.Default.ContentPasteGo
         }
         KeyCode.CLIPBOARD_SELECT_ALL -> {
             Icons.Default.SelectAll
@@ -215,6 +214,9 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice
+        }
+        KeyCode.IME_HIDE_UI -> {
+            Icons.Default.KeyboardHide
         }
         KeyCode.DELETE -> {
             Icons.AutoMirrored.Outlined.Backspace

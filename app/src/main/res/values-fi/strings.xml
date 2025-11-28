@@ -320,9 +320,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Käytä sisäistä leikepöytää</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Käytä järjestelmän leikepöydän sijasta sisäistä leikepöytää</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synkronoi järjestelmän leikepöydältä</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Järjestelmän leikepöytä päivittää myös Floriksen leikepöydän</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synkronoi järjestelmän leikepöydälle</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floriksen leikepöytä päivittää myös järjestelmän leikepöydän</string>
     <string name="pref__clipboard__group_clipboard_history__label">Leikepöydän historia</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ota leikepöydän historia käyttöön</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Säästä leikepöydän kohteita käyttääksesi niitä pikaisesti uudelleen</string>

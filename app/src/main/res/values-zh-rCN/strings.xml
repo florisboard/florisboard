@@ -536,9 +536,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">使用内部剪贴板</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">使用内部剪贴板，而不是系统剪贴板</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">从系统剪贴板同步</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">当安卓底层剪贴板系统更新时，同步更新到 Floris 的独立剪贴板系统中</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">同步到系统剪贴板</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">当 Floris 的独立剪贴板系统更新时，同步到安卓底层的剪贴板系统</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">根据剪切板内容给出的建议</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">剪贴板内容建议</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">建议之前复制的内容</string>
@@ -553,8 +551,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">在多久之后自动删除敏感项目</string>
     <string name="pref__clipboard__limit_history_size__label">限制最大历史条目数</string>
     <string name="pref__clipboard__max_history_size__label">限制最大历史条目数</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">清除主要剪贴板条目时影响历史</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">清除主要剪贴板条目时还会删除最新的历史记录条目</string>
     <string name="send_to_clipboard__unknown_error">发生未知错误。请重试！</string>
     <string name="send_to_clipboard__type_not_supported_error">不支持这一媒体类型。</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">已将以下图像复制到剪贴板。</string>

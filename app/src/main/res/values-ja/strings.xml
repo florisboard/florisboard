@@ -620,9 +620,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">内部クリップボードを使用</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">システムクリップボードの代わりに内部クリップボードを使用します</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">システムクリップボードから同期</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">システムクリップボードの更新はFlorisクリップボードも更新します</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">システムクリップボードへ同期</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Florisクリップボードの更新はシステムクリップボードも更新します</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">クリップボードの候補</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">クリップボードコンテンツ候補</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">以前にコピーしたクリップボードコンテンツを提案します</string>
@@ -637,8 +635,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">経過後に機密アイテムを自動クリーンアップ</string>
     <string name="pref__clipboard__limit_history_size__label">履歴サイズを制限</string>
     <string name="pref__clipboard__max_history_size__label">最大履歴サイズ</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">プライマリクリップのクリアは履歴に影響</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">プライマリクリップをクリアすると最新の履歴エントリも削除されます</string>
     <string name="send_to_clipboard__unknown_error">不明なエラーが発生しました。もう一度お試しください！</string>
     <string name="send_to_clipboard__type_not_supported_error">このメディアタイプはサポートされていません。</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">下の画像をクリップボードにコピーしました。</string>

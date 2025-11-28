@@ -35,6 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.florisboard.lib.kotlin.tryOrNull
+import androidx.core.net.toUri
 
 /**
  * Allows apps to access images and videos on the clipboard.
@@ -49,8 +50,8 @@ class ClipboardMediaProvider : ContentProvider() {
 
     companion object {
         const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.clipboard"
-        val IMAGE_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/images")
-        val VIDEO_CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips/videos")
+        val IMAGE_CLIPS_URI: Uri = "content://$AUTHORITY/clips/images".toUri()
+        val VIDEO_CLIPS_URI: Uri = "content://$AUTHORITY/clips/videos".toUri()
 
         private const val IMAGE_CLIP_ITEM = 0
         private const val IMAGE_CLIPS_TABLE = 1
@@ -118,7 +119,7 @@ class ClipboardMediaProvider : ContentProvider() {
     override fun getStreamTypes(uri: Uri, mimeTypeFilter: String): Array<String>? {
         return when (Matcher.match(uri)) {
             IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
-                cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes
+                cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.toTypedArray()
             }
             else -> null
         }
@@ -152,7 +153,7 @@ class ClipboardMediaProvider : ContentProvider() {
                     }
                     val id = ClipboardFileStorage.cloneUri(context!!, mediaUri)
                     val size = ClipboardFileStorage.getFileForId(context!!, id).length()
-                    val mimeTypes = values.getAsString(Columns.MimeTypes).split(",").toTypedArray()
+                    val mimeTypes = values.getAsString(Columns.MimeTypes).split(",")
                     val displayName = values.getAsString(OpenableColumns.DISPLAY_NAME)
                     val fileInfo = ClipboardFileInfo(id, displayName, size, rotation, mimeTypes)
                     cachedFileInfos[id] = fileInfo

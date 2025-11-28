@@ -637,9 +637,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Belső vágólap használata</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Belső vágólap használata a rendszer vágólapja helyett</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Szinkronizálás a rendszervágólapról</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">A rendszervágólap frissítései a Florisboard vágólapján is megjelennek</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Szinkronizálás a rendszervágólapra</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">A Florisboard vágólapjának frissítései a rendszervágólapon is megjelennek</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vágólapjavaslatok</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vágólaptartalom-javaslatok</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Javasolja a vágólap korábban másolt tartalmát</string>
@@ -655,8 +653,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Érzékeny elemek automatikus törlése ennyi idő után</string>
     <string name="pref__clipboard__limit_history_size__label">Előzmények méretének korlátozása</string>
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Az elsődleges vágólap ürítése befolyásolja az előzményeket</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Az elsődleges vágólap ürítése emellett törli az utolsó elemet</string>
     <string name="send_to_clipboard__unknown_error">Ismeretlen hiba történt. Kérjük próbálja újra!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ez a médiatípus nem támogatott.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Az alábbi kép a vágólapra lett másolva.</string>

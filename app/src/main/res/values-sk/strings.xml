@@ -325,8 +325,6 @@
     <string name="clipboard__cleared_primary_clip">Prvý výstrižok bol vymazaný</string>
     <string name="settings__clipboard__title">Schránka</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Povoliť históriu schránku</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Vymazanie prvého výstrižku ovplyvní históriu</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Pri vymazaní prvého výstrižku sa odstráni aj najnovší záznam v histórii</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Vývojárske nástroje</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Povoliť vývojárske nástroje</string>

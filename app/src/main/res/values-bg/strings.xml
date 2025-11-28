@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Извършва стрелка наляво</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Надясно</string>
     <string name="quick_action__arrow_right__tooltip">Извършва стрелка надясно</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Скриване на клавиатурата</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Извършва скриване на клавиатурата</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Изпр. буфера</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Изчиства последното копирано от междинната памет</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копиране</string>
@@ -641,9 +643,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Междинна памет на приложението</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Използва се междинната памет на приложението вместо системната</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Внасяне от системната междинна памет</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Промените в системната памет се отразяват в тази на приложението</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Изнасяне в системната междинна памет</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Промените в междинната памет на приложението се отразяват и в системната</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Предложения от междинната памет</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предложения от съдържанието на междинната памет</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
@@ -659,8 +659,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Почистване на чувствителни елементи след</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя елементи</string>
     <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Изчистване на текущата межд. памет влияе на историята</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Изчистване на текущото съдържание на междинната памет изчиства и последния елемент от историята</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Скриване при поставяне</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Скриване при смяна на полето</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Изчистването на първия елемент влияе на историята</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Изчистването на първия елемент го премахва от историята ако не е залачен</string>
     <string name="send_to_clipboard__unknown_error">Възникна неизвестна грешка. Опитайте отново!</string>
     <string name="send_to_clipboard__type_not_supported_error">Този вид медия не се поддържа.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Долното изображение е копирано в междинната памет.</string>
@@ -855,6 +857,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамична ширина с плъзгач</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Само главни букви при двойно докосване на клавиша Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Превключва способите за въвеждане на главни букви при всяко докосване на Shift</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Никакви събития</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">Никакви събития не се синхронизират в тази посока. Този режим не включва текстово съдържание.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Събития на изчистване</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Само събитията, изчистващи елементи от историята се синхронизират в тази посока. Този режим не включва текстово съдържание.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Събития на създаване</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Само събитията, добавящи елементи към историята се синхронизират в тази посока. Този режим включва текстово съдържание.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Всички събития</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">И двата вида събития, добавящи и изчистващи елементи от историята се синхронизират в тази посока. Този режим включва текстово съдържание.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Шестнадесетично</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Червено, зелено, синьо</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Нюанс, наситеност, стойност</string>
@@ -976,6 +986,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Курсорът се премества в началото на страницата</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Курсорът се премества в края на страницата</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Управление на междинната памет</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Отваря панела с емоции</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Възстановяване</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Отменяне</string>

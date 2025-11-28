@@ -559,9 +559,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Interne Zwischenablage nutzen</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Interne Zwischenablage anstatt der Systemzwischenablage verwenden</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Von Systemzwischenablage synchronisieren</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Änderungen in der Systemzwischenablage aktualisieren auch die interne Zwischenablage</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
@@ -576,8 +574,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Lösche Zwischenablageinhalte automatisch nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Das Löschen des aktiven Elements betrifft den Verlauf</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Durch das Löschen des aktiven Elements wird auch das neueste Verlaufselement entfernt</string>
     <string name="send_to_clipboard__unknown_error">Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut!</string>
     <string name="send_to_clipboard__type_not_supported_error">Dieser Media-Typ wird nicht unterstützt.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Nachfolgendes Bild wurde in die Zwischenablage kopiert.</string>

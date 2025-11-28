@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Vykonat šipku vlevo</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Šipka vpravo</string>
     <string name="quick_action__arrow_right__tooltip">Vykonat šipku vpravo</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Skrýt klávesnici</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Provést skrytí klávesnice</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vykonat vymazání primární položky schránky</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopírovat</string>
     <string name="quick_action__clipboard_copy__tooltip">Vykonat kopírování do schránky</string>
@@ -643,9 +645,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchronizovat ze systémovou schránkou</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Aktualizace systémové schránky také zahrnují schránku Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizovat do systémové schránky</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualizace schránky Floris také zahrnují systémovou schránku</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Návrhy schránky</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Obsah návrhu schránky</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Navrhnout obsah dříve zkopírovaný do schránky</string>
@@ -661,8 +661,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Automaticky mazat citlivé položky po uplynutí</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Vymazání primární položky ovlivní historii</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Vymazání primární položky také vymaže poslední zápis v historii</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Skrýt historii při vložení</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Skrýt historii u dalšího textového pole</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Vymazání primární položky ovlivní historii</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Vymazání primární položky ji také odstraní z historie, pokud není připnutá</string>
     <string name="send_to_clipboard__unknown_error">Došlo k neznámé chybě. Zkuste to prosím znovu!</string>
     <string name="send_to_clipboard__type_not_supported_error">Tento typ médií není podporován.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Obrázek níže zkopírován do schránky.</string>
@@ -857,6 +859,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamická šířka a skrolovatelné</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Zapnout Caps Lock při dvojitém klepnutí na Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Přepnout na další krok kapitalizace při každém stisknutí klávesy Shift</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Žádné události</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">V tomto směru nejsou synchronizovány žádné události. V tomto režimu synchronizace nezahrnuje textový obsah.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Pouze události vymazání</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">V tomto směru jsou synchronizovány pouze události vymazání dat položek. V tomto režimu synchronizace nezahrnuje textový obsah.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Pouze události nastavení</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">V tomto směru jsou synchronizovány pouze události nastavení dat položek. V tomto režimu synchronizace nezahrnuje textový obsah.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Všechny události</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">V tomto směru jsou synchronizovány události nastavení i vymazání dat položek. V tomto režimu synchronizace zahrnuje textový obsah.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimální</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Červená Zelená Modrá</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Odstín Sytost Hodnota</string>

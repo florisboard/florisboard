@@ -537,9 +537,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Використовувати внутрішній буфер обміну</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Використовувати внутрішній буфер обміну замість системного</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Синхронізувати з системного буферу обміну</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Оновлення системного буферу також оновить буфер обміну Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронізувати з системним буфером обміну</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обміну Floris також оновлює системний буфер обміну</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Пропозиції буфера обміну</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Пропозиції вмісту буфера обміну</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Пропонувати раніше скопійований вміст буфера обміну</string>
@@ -554,8 +552,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Автоматичне очищення чутливих елементів після</string>
     <string name="pref__clipboard__limit_history_size__label">Обмежити розмір історії</string>
     <string name="pref__clipboard__max_history_size__label">Максимальний розмір історії</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Очищення основного запису впливає на історію</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Очищення основного запису також видаляє останній запис історії</string>
     <string name="send_to_clipboard__unknown_error">Виникла невідома помилка. Спробуйте ще раз!</string>
     <string name="send_to_clipboard__type_not_supported_error">Цей тип медіа не підтримується.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Зображення нижче скопійовано в буфер обміну.</string>

@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Wykonaj strzałkę w lewo</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">W prawo</string>
     <string name="quick_action__arrow_right__tooltip">Wykonaj strzałkę w prawo</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Ukryj klawiaturę</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Ukrywa klawiaturę</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Czyść schow.</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Powoduję wyczyszczenie głównego schowka</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopiuj</string>
@@ -645,9 +647,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchronizuj ze schowkiem systemowym</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Zmiana w schowku systemowym również zmienia schowek Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizuj do schowka systemowego</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Zmiana w schowku Floris również zmienia schowek systemowy</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugestie schowka</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zasugeruj poprzednio skopiowaną zawartość schowka</string>
@@ -663,8 +663,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Automatyczne czyszczenie wrażliwych elementów po</string>
     <string name="pref__clipboard__limit_history_size__label">Ograniczenie rozmiaru historii</string>
     <string name="pref__clipboard__max_history_size__label">Maksymalny rozmiar historii</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Wyczyszczenie głównego schowka wpływa na historię</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Wyczyszczenie głównego schowka również usuwa najnowsze pozycje w historii</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Ukryj historię wklejania</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Ukryj historię w następnym polu tekstowym</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Czyszczenie głównego klipu wpływa na historię</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Usunięcie głównego klipu powoduje również usunięcie go z historii, jeśli nie został przypięty</string>
     <string name="send_to_clipboard__unknown_error">Wystąpił nieoczekiwany błąd. Proszę spróbować ponownie!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ten typ mediów nie jest wspierany.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Skopiowano poniższy obraz do schowka.</string>
@@ -859,6 +861,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Szerokość dynamiczna i przewijalna</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Włącz Capslock poprzez dwukrotne dotknięcie Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Zmieniaj na pisanie wielkimi literami po każdym dotknięciu klawisza Shift</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Brak wydarzeń</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">W tym kierunku nie są synchronizowane żadne zdarzenia. W tym trybie synchronizacja nie obejmuje treści tekstowych.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Tylko czyste wydarzenia</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">W tym kierunku synchronizowane są tylko zdarzenia czyszczące dane klipu. W tym trybie synchronizacja nie obejmuje treści tekstowych.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Tylko ustawione wydarzenia</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">W tym kierunku synchronizowane są tylko zdarzenia ustawiające dane klipu. W tym trybie synchronizacja obejmuje treść tekstową.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Wszystkie wydarzenia</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">W tym trybie synchronizowane są zarówno zdarzenia ustawiania, jak i kasowania danych klipów. W tym trybie synchronizacja obejmuje również treść tekstową.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Szesnastkowy</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Czerwony Zielony Niebieski</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Barwa Nasycenie</string>
@@ -980,6 +990,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Przesuń kursor na początek strony</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Przesuń kursor na koniec strony</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Otwórz menedżera/historię schowka</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Otwórz panel emotikonów</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Powtórz</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Cofnij</string>
