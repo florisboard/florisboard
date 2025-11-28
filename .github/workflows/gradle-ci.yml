@@ -1,0 +1,67 @@
+name: Gradle CI (matrix)
+
+on:
+  push:
+    branches:
+      - main
+      - 'upgrade/**'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      JAVA_HOME_ACTION: temurin
+    strategy:
+      matrix:
+        # JDK must match tools.versions.toml (jdk = 17)
+        java: [17]
+        # Platform matrix can be extended (windows, macos) if desired
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: gradle
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('gradle/libs.versions.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Validate versions files present
+        run: |
+          test -f gradle/libs.versions.toml
+          test -f gradle/tools.versions.toml
+
+      - name: Use Gradle Wrapper to build
+        run: ./gradlew --no-daemon clean build -x :app:connectedAndroidTest
+
+      - name: Run lint
+        run: ./gradlew :app:lint
+
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+
+      - name: Upload build scan / artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-log
+          path: build/reports || build/libs || app/build/outputs
