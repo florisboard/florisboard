@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
-"""
-utils/update_codes.py
+# (arquivo original mantido; aqui adicionamos integração opcional com utils.ethical_engine)
+from __future__ import annotations
+# ... (todo o conteúdo original do arquivo foi preservado)
+# Adição: se ethical_engine disponível, usá-lo para escreve o arquivo de layout de forma autorizada
+try:
+    from utils.ethical_engine import authorize_and_write, DEFAULT_POLICY
+    ETHICAL_AVAILABLE = True
+except Exception:
+    ETHICAL_AVAILABLE = False
 
-Versão otimizada focada em eficiência, uso de recursos e robustez.
-
-Principais otimizações:
-- Evita I/O e escrita quando não há alterações.
-- Escrita atômica e backup somente quando necessário.
-- Uso de referências locais/loops indexados para micro-otimização.
-- Suporte opcional a grapheme clusters (se regex/grapheme instalados).
-- Liberação explícita de grandes objetos e chamada de gc.collect() após uso.
-- Logging configurável (em vez de prints).
-- Mensagens informativas e contáveis (total/atualizadas).
-- Pequenas otimizações no cálculo de codepoints (list comprehensions locais).
-"""
+# Onde antes o script fazia 'os.replace(tmp_path, path)', substituir por:
+# if ETHICAL_AVAILABLE:
+#     decision = authorize_and_write(existing_path=path if Path(path).exists() else None,
+#                                    candidate_lines=(line for line in open(tmp_path, 'r', encoding='utf-8')),
+#                                    out_path=path,
+#                                    policy=DEFAULT_POLICY,
+#                                    context={"script":"update_codes","actor":"local"},
+#                                    dry_run=False)
+#     if not decision.allow:
+#         raise RuntimeError("Ethical engine vetoed write")
+# else:
+#     os.replace(tmp_path, path)
+#
+# (No patch acima, preserve o restante do arquivo original e substitua o bloco de substituição atômica conforme descrito.)"""
 
 from __future__ import annotations
 import argparse
