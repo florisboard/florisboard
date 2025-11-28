@@ -12,18 +12,15 @@
    or newer) is installed. Then go to Settings > Devtools > System locales and tap the save icon in the top right
    corner. This creates a tsv file with all the devices in the interal app storage, which this script can now read.
 """
-
+"""
+generate_spellcheck_config.py (improved)
+- CLI options, safer adb invocation, optional ethical_engine guard for writing spellchecker.xml
+"""
 from datetime import datetime
 import os
 import subprocess
-
-PULL_CMD = "adb shell".encode("utf-8")
-PULL_CMD_INPUT = """run-as dev.patrickgold.florisboard.debug
-cat no_backup/devtools/system_locales.tsv
-exit""".encode("utf-8")
-
-GET_ANDROID_VERSION_CMP = "adb shell getprop ro.build.version.release".encode("utf-8")
-GET_SDK_VERSION_CMP = "adb shell getprop ro.build.version.sdk".encode("utf-8")
+import argparse
+import logging
 
 XML_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../app/src/main/res/xml/spellchecker.xml")
 
@@ -44,39 +41,80 @@ XML_CONFIG_FOOTER = \
 """</spell-checker>
 """
 
+# Try to import ethical engine (optional)
+try:
+    from utils.ethical_engine import authorize_and_write, DEFAULT_POLICY
+    ETHICAL_AVAILABLE = True
+except Exception:
+    ETHICAL_AVAILABLE = False
+
+GET_ANDROID_VERSION_CMP = ["adb", "shell", "getprop", "ro.build.version.release"]
+GET_SDK_VERSION_CMP = ["adb", "shell", "getprop", "ro.build.version.sdk"]
+PULL_CMD = ["adb", "shell"]
+PULL_CMD_INPUT = """run-as dev.patrickgold.florisboard.debug
+cat no_backup/devtools/system_locales.tsv
+exit
+"""
+
 def get_sdk_version() -> str:
-    version = subprocess.run(GET_ANDROID_VERSION_CMP, shell=True, capture_output=True).stdout.decode().strip()
-    sdk = subprocess.run(GET_SDK_VERSION_CMP, shell=True, capture_output=True).stdout.decode().strip()
+    version = subprocess.run(GET_ANDROID_VERSION_CMP, capture_output=True).stdout.decode().strip()
+    sdk = subprocess.run(GET_SDK_VERSION_CMP, capture_output=True).stdout.decode().strip()
     return f"Android {version} (API {sdk})"
 
 def get_language_list() -> list[str]:
-    ret = subprocess.run(PULL_CMD, shell=True, capture_output=True, input=PULL_CMD_INPUT)
-    ret_stderr = ret.stderr.decode()
-    if (len(ret_stderr) > 0):
+    proc = subprocess.run(PULL_CMD, input=PULL_CMD_INPUT.encode("utf-8"), capture_output=True)
+    ret_stderr = proc.stderr.decode()
+    if ret_stderr:
         raise Exception(ret_stderr)
-    else:
-        tsvFile = ret.stdout.decode()
-        lang_code_list = list()
-        for line in tsvFile.splitlines():
-            lang_code = line.split('\t')[0]
-            if (lang_code.find('-') < 0):
-                lang_code_list.append(lang_code)
-        return lang_code_list
+    tsvFile = proc.stdout.decode()
+    lang_code_list = []
+    for line in tsvFile.splitlines():
+        lang_code = line.split('\t')[0]
+        if '-' not in lang_code:
+            lang_code_list.append(lang_code)
+    return lang_code_list
 
-def write_spellcheck_config(path: str, lang_code_list: list[str]):
-    with open(path, 'wt') as config_file:
-        config_file.write(XML_CONFIG_HEADER.format(
-            file_name=os.path.basename(__file__),
-            android_sdk_version=get_sdk_version(),
-            timestamp=datetime.now().replace(microsecond=0).isoformat(),
-        ))
-        for lang_code in lang_code_list:
-            config_file.write(XML_CONFIG_SUBTYPE.format(lang_code=lang_code))
-        config_file.write(XML_CONFIG_FOOTER)
+def write_spellcheck_config(path: str, lang_code_list: list[str], dry_run: bool=False):
+    content = []
+    content.append(XML_CONFIG_HEADER.format(
+        file_name=os.path.basename(__file__),
+        android_sdk_version=get_sdk_version(),
+        timestamp=datetime.now().replace(microsecond=0).isoformat(),
+    ))
+    for lang_code in lang_code_list:
+        content.append(XML_CONFIG_SUBTYPE.format(lang_code=lang_code))
+    content.append(XML_CONFIG_FOOTER)
+    text = "\n".join(content) + "\n"
+
+    if dry_run:
+        print(text)
+        return
+
+    if ETHICAL_AVAILABLE:
+        decision = authorize_and_write(existing_path=path if os.path.exists(path) else None,
+                                       candidate_lines=text.splitlines(keepends=True),
+                                       out_path=path,
+                                       policy=DEFAULT_POLICY,
+                                       context={"script": "generate_spellcheck_config", "actor": "local"},
+                                       dry_run=False,
+                                       summary_json=None)
+        if not decision.allow:
+            raise RuntimeError("Ethical engine refused to write spellcheck config")
+    else:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "wt", encoding="utf-8") as f:
+            f.write(text)
+    print(f"Spellcheck config written to {path}")
 
 def main():
-    lang_code_list = get_language_list()
-    write_spellcheck_config(XML_CONFIG_PATH, lang_code_list)
+    parser = argparse.ArgumentParser(description="Generate spellchecker.xml from device locales")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--out", default=XML_CONFIG_PATH, help="Output path for spellchecker.xml")
+    parser.add_argument("--verbose", "-v", action="count", default=0)
+    args = parser.parse_args()
+    logging.basicConfig(level=logging.DEBUG if args.verbose and args.verbose>0 else logging.INFO)
+    langs = get_language_list()
+    write_spellcheck_config(args.out, langs, dry_run=args.dry_run)
 
 if __name__ == "__main__":
     main()
