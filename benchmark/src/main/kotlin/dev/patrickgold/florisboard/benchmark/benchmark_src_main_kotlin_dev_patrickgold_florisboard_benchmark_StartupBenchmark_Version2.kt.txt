@@ -1,0 +1,162 @@
+/*
+ * Enhanced startup benchmark utilities:
+ * - improved logging and defensive checks across API levels
+ * - system property overrides for target package/service/iterations
+ * - retries and verification when enabling/setting IME (mitigation for transient failures)
+ * - graceful fallback when device doesn't support certain operations
+ */
+
+package dev.patrickgold.florisboard.benchmark
+
+import androidx.benchmark.macro.BaselineProfileMode
+import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.StartupMode
+import androidx.benchmark.macro.StartupTimingMetric
+import androidx.benchmark.macro.junit4.MacrobenchmarkRule
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import android.os.Build
+import java.lang.Exception
+import kotlin.math.max
+
+@RunWith(AndroidJUnit4ClassRunner::class)
+class ColdStartupBenchmark : AbstractStartupBenchmark(StartupMode.COLD)
+
+@RunWith(AndroidJUnit4ClassRunner::class)
+class WarmStartupBenchmark : AbstractStartupBenchmark(StartupMode.WARM)
+
+@RunWith(AndroidJUnit4ClassRunner::class)
+class HotStartupBenchmark : AbstractStartupBenchmark(StartupMode.HOT)
+
+abstract class AbstractStartupBenchmark(private val startupMode: StartupMode) {
+    @get:Rule
+    val benchmarkRule = MacrobenchmarkRule()
+
+    // Allow overriding target package and iterations via system properties for flexibility when testing
+    private val targetPackage: String
+        get() = System.getProperty("benchmark.targetPackage", "dev.patrickgold.florisboard")
+
+    private val imeServiceClass: String
+        get() = System.getProperty("benchmark.imeService", "$targetPackage/.FlorisImeService")
+
+    private val iterationsFromProp: Int
+        get() = try {
+            max(1, System.getProperty("benchmark.iterations")?.toInt() ?: 10)
+        } catch (e: Exception) {
+            10
+        }
+
+    @Test
+    fun startupNoCompilation() = startup(CompilationMode.None())
+
+    @Test
+    fun startupBaselineProfileDisabled() = startup(
+        CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Disable, warmupIterations = 1)
+    )
+
+    @Test
+    fun startupBaselineProfile() = startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
+
+    @Test
+    fun startupFullCompilation() = startup(CompilationMode.Full())
+
+    private fun startup(compilationMode: CompilationMode) = benchmarkRule.measureRepeated(
+        packageName = targetPackage,
+        metrics = listOf(StartupTimingMetric()),
+        compilationMode = compilationMode,
+        iterations = iterationsFromProp,
+        startupMode = startupMode,
+        setupBlock = {
+            pressHome()
+
+            try {
+                println("Macrobenchmark device API level: ${Build.VERSION.SDK_INT}")
+            } catch (_: Throwable) { /* ignore */ }
+
+            val pkg = targetPackage
+            val service = imeServiceClass
+
+            try {
+                if (!isPackageInstalled(pkg)) {
+                    println("Target package '$pkg' not installed on device. Skipping IME setup.")
+                } else {
+                    if (!isImeServiceDeclared(pkg, service)) {
+                        println("IME service '$service' not declared in package '$pkg'. Skipping IME setup.")
+                    } else {
+                        val maxRetries = 3
+                        var attempt = 0
+                        var enabled = false
+                        while (attempt < maxRetries && !enabled) {
+                            attempt++
+                            try {
+                                enableImeSafe(service)
+                                val imeList = device.executeShellCommand("ime list -a") ?: ""
+                                if (imeList.contains(service)) {
+                                    device.executeShellCommand("ime set $service")
+                                    val current = device.executeShellCommand("settings get secure default_input_method") ?: ""
+                                    if (current.contains(service)) {
+                                        enabled = true
+                                        println("IME '$service' enabled and set successfully on attempt $attempt")
+                                    } else {
+                                        println("IME '$service' set command executed but verification failed on attempt $attempt")
+                                    }
+                                } else {
+                                    println("IME '$service' not present in ime list after enable; attempt $attempt")
+                                }
+                            } catch (e: Exception) {
+                                println("Attempt $attempt to enable/set IME failed: ${e.message}")
+                            }
+                            if (!enabled) {
+                                Thread.sleep(500L * attempt)
+                            }
+                        }
+                        if (!enabled) {
+                            println("Final status: IME '$service' could not be enabled/selected. Continuing without changing IME.")
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                println("Unexpected error during setupBlock: ${e.message}")
+            }
+        }
+    ) {
+        try {
+            startActivityAndWait()
+            val waitMs = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) 7000L else 5000L
+            device.waitForIdle(waitMs)
+        } catch (e: Exception) {
+            println("Error during measured startup block: ${e.message}")
+            throw e
+        }
+    }
+
+    private fun isPackageInstalled(pkg: String): Boolean {
+        return try {
+            val out = device.executeShellCommand("pm list packages $pkg")
+            out?.contains(pkg) ?: false
+        } catch (e: Exception) {
+            println("isPackageInstalled: failed to query pm: ${e.message}")
+            false
+        }
+    }
+
+    private fun isImeServiceDeclared(pkg: String, service: String): Boolean {
+        return try {
+            val out = device.executeShellCommand("dumpsys package $pkg")
+            out != null && (out.contains(service) || out.contains(".FlorisImeService"))
+        } catch (e: Exception) {
+            println("isImeServiceDeclared: failed to dumpsys package: ${e.message}")
+            false
+        }
+    }
+
+    private fun enableImeSafe(service: String) {
+        try {
+            device.executeShellCommand("ime enable $service")
+        } catch (e: Exception) {
+            println("enableImeSafe: ime enable failed: ${e.message}")
+        }
+    }
+}
