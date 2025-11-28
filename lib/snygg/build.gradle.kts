@@ -107,16 +107,31 @@ dependencies {
     testImplementation(libs.kotlin.test.junit5)
 }
 
-tasks.register<JavaExec>("generateJsonSchema") {
+// RAFAELIA patch: make JSON schema generation optional and lazy, to avoid CI failures
+val generateJsonSchema by tasks.register<JavaExec>("generateJsonSchema") {
+    // Run only when explicitly requested:
+    //   ./gradlew :lib:snygg:generateJsonSchema -PwithJsonSchema
+    onlyIf { project.hasProperty("withJsonSchema") }
     dependsOn("build")
     mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
-    val debugVariant = android.libraryVariants.first { it.name == "debug" }
-    classpath = files(
-        debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },
-    )
+    // Use compiled classes + runtime classpath instead of forcing early variant resolution
+    doFirst {
+        // This is a conservative classpath; good enough for the generator and CI-safe
+        val runtimeCp = configurations.getByName("debugRuntimeClasspath")
+        classpath = files(
+            "$buildDir/tmp/kotlin-classes/debug",
+            "$buildDir/intermediates/javac/debug/classes",
+            runtimeCp
+        )
+    }
     args = listOf("schemas/stylesheet.schema.json")
     workingDir = projectDir
     standardOutput = System.out
 }
 
-tasks["build"].finalizedBy("generateJsonSchema")
+if (project.hasProperty("withJsonSchema")) {
+    tasks.named("build") {
+        finalizedBy(generateJsonSchema)
+    }
+}
+
