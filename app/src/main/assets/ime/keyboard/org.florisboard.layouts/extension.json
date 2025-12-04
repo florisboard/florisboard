@@ -50,11 +50,12 @@
         "authors": [ "patrickgold" ],
         "direction": "ltr"
       },
-	  {
-        "id": "bengali_bd",
-        "label": "বাংলা",
-        "authors": [ "iamrasel" ],
-        "direction": "ltr"
+	    {
+        "id": "bengali_unijoy",
+        "label": "Unijoy",
+        "authors": [ "RHJihan" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:bengali_unijoy"
       },
       {
         "id": "hindi_in",
@@ -510,6 +511,12 @@
         "label": "Arabic",
         "authors": [ "HeiWiper" ],
         "direction": "rtl"
+      },
+      {
+        "id": "bengali_unijoy",
+        "label": "Unijoy",
+        "authors": [ "RHJihan" ],
+        "direction": "ltr"
       },
       {
         "id": "diktor",
