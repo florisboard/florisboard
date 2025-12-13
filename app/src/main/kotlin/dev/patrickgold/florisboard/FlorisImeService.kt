@@ -626,9 +626,6 @@ class FlorisImeService : LifecycleInputMethodService() {
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .onGloballyPositioned { coords -> inputViewSize = coords.size },
-                clickAndSemanticsModifier = Modifier
-                    // Do not remove below line or touch input may get stuck
-                    .pointerInteropFilter { false },
                 supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
                 allowClip = false,
             ) {
