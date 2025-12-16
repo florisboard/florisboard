@@ -35,8 +35,7 @@
     },
     "o": {
       "relevant": [
-        { "$": "auto_text_key", "code":  243, "label": "ó" },
-        { "$": "auto_text_key", "code":  244, "label": "ô" }
+        { "$": "auto_text_key", "code":  243, "label": "ó" }
       ]
     },
     "a": {
