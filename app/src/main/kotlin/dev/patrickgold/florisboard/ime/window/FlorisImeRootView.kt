@@ -1,0 +1,64 @@
+/*
+ * Copyright (C) 2025 The FlorisBoard Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.patrickgold.florisboard.ime.window
+
+import android.annotation.SuppressLint
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.AbstractComposeView
+import dev.patrickgold.florisboard.FlorisImeService
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
+import org.florisboard.lib.compose.ProvideLocalizedResources
+
+val LocalFlorisImeService = staticCompositionLocalOf<FlorisImeService> {
+    error("This composition local provider is only available in an IME context")
+}
+
+@SuppressLint("ViewConstructor")
+class FlorisImeRootView(val ime: FlorisImeService) : AbstractComposeView(ime) {
+    init {
+        isHapticFeedbackEnabled = true
+        layoutParams = LayoutParams(
+            /* width = */ LayoutParams.MATCH_PARENT,
+            /* height = */ LayoutParams.MATCH_PARENT,
+        )
+    }
+
+    @Composable
+    override fun Content() {
+        CompositionLocalProvider(
+            LocalFlorisImeService provides ime,
+            LocalInputFeedbackController provides ime.inputFeedbackController,
+        ) {
+            ProvideLocalizedResources(
+                resourcesContext = ime.resourcesContext,
+                appName = R.string.app_name,
+            ) {
+                FlorisImeTheme {
+                    FlorisImeRootWindow()
+                }
+            }
+        }
+    }
+
+    override fun getAccessibilityClassName(): CharSequence? {
+        return this::class.simpleName
+    }
+}

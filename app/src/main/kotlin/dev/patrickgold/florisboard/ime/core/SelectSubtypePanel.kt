@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -94,8 +93,4 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-fun KeyboardState.isSubtypeSelectionShowing(): Boolean {
-    return isSubtypeSelectionVisible
 }

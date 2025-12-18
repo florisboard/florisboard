@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
@@ -83,7 +84,7 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
         LocalContentColor provides Color.White,
         LocalLayoutDirection provides LayoutDirection.Ltr,
     ) {
-        Column(modifier = modifier) {
+        Column(modifier = modifier.fillMaxSize()) {
             if (devtoolsEnabled && showPrimaryClip) {
                 DevtoolsClipboardOverlay()
             }

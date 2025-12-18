@@ -29,7 +29,6 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
@@ -41,11 +40,10 @@ import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -55,19 +53,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -76,43 +71,32 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
-import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
-import dev.patrickgold.florisboard.ime.core.isSubtypeSelectionShowing
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
-import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
-import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
-import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
-import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.lib.compose.SystemUiIme
+import dev.patrickgold.florisboard.ime.window.FlorisImeInsets
+import dev.patrickgold.florisboard.ime.window.FlorisImeRootView
+import dev.patrickgold.florisboard.ime.window.isFullscreenInputRequired
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
@@ -128,6 +112,7 @@ import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import java.lang.ref.WeakReference
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -261,13 +246,13 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val themeManager by themeManager()
 
     private val activeState get() = keyboardManager.activeState
-    private var inputWindowView by mutableStateOf<View?>(null)
-    private var inputViewSize by mutableStateOf(IntSize.Zero)
-    private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
+    var activeImeInsets by mutableStateOf<FlorisImeInsets?>(null)
+    val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private var isWindowShown: Boolean = false
     private var isFullscreenUiMode by mutableStateOf(false)
     private var isExtractUiShown by mutableStateOf(false)
-    private var resourcesContext by mutableStateOf(this as Context)
+    var resourcesContext by mutableStateOf(this as Context)
+        private set
 
     private val wallpaperChangeReceiver = WallpaperChangeReceiver()
 
@@ -300,15 +285,11 @@ class FlorisImeService : LifecycleInputMethodService() {
         registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
 
-    override fun onCreateInputView(): View {
+    override fun onCreateInputView(): View? {
         super.installViewTreeOwners()
-        // Instantiate and install bottom sheet host UI view
-        val bottomSheetView = FlorisBottomSheetHostUiView()
-        window.window!!.findViewById<ViewGroup>(android.R.id.content).addView(bottomSheetView)
-        // Instantiate and return input view
-        val composeView = ComposeInputView()
-        inputWindowView = composeView
-        return composeView
+        val content = window.window!!.findViewById<ViewGroup>(android.R.id.content)
+        content.addView(FlorisImeRootView(this))
+        return null // TODO: may require a shadow input view here
     }
 
     override fun onCreateCandidatesView(): View? {
@@ -343,7 +324,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onDestroy()
         unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
-        inputWindowView = null
     }
 
     override fun onStartInput(info: EditorInfo?, restarting: Boolean) {
@@ -451,7 +431,6 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun updateFullscreenMode() {
         super.updateFullscreenMode()
         isFullscreenUiMode = isFullscreenMode
-        updateSoftInputWindowLayoutParameters()
     }
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
@@ -509,57 +488,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
-        super.onComputeInsets(outInsets)
         if (outInsets == null) return
-
-        val inputWindowView = inputWindowView ?: return
-        // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
-        if (!isInputViewShown) {
-            outInsets.contentTopInsets = inputWindowView.height
-            outInsets.visibleTopInsets = inputWindowView.height
-            return
-        }
-
-        val visibleTopY = inputWindowView.height - inputViewSize.height
-        val needAdditionalOverlay =
-            prefs.smartbar.enabled.get() &&
-                prefs.smartbar.layout.get() == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED &&
-                prefs.smartbar.extendedActionsExpanded.get() &&
-                prefs.smartbar.extendedActionsPlacement.get() == ExtendedActionsPlacement.OVERLAY_APP_UI &&
-                keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
-
-        outInsets.contentTopInsets = visibleTopY
-        outInsets.visibleTopInsets = visibleTopY
-        outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
-        val left = 0
-        val top = if (keyboardManager.activeState.isBottomSheetShowing() || keyboardManager.activeState.isSubtypeSelectionShowing()) {
-            0
-        } else {
-            visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
-        }
-        val right = inputViewSize.width
-        val bottom = inputWindowView.height
-        outInsets.touchableRegion.set(left, top, right, bottom)
-    }
-
-    /**
-     * Updates the layout params of the window and compose input view.
-     */
-    private fun updateSoftInputWindowLayoutParameters() {
-        val w = window?.window ?: return
-        // TODO: Verify that this doesn't give us a padding problem
-        WindowCompat.setDecorFitsSystemWindows(w, false)
-        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val layoutHeight = if (isFullscreenUiMode) {
-            WindowManager.LayoutParams.WRAP_CONTENT
-        } else {
-            WindowManager.LayoutParams.MATCH_PARENT
-        }
-        val inputArea = w.findViewById<View>(android.R.id.inputArea) ?: return
-        ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
-        ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-        val inputWindowView = inputWindowView ?: return
-        ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
+        val imeInsets = activeImeInsets ?: return
+        val state = keyboardManager.activeState.snapshot()
+        imeInsets.applyTo(outInsets, state.isFullscreenInputRequired())
     }
 
     override fun getTextForImeAction(imeOptions: Int): String? {
@@ -579,36 +511,10 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    @Composable
-    private fun ImeUiWrapper() {
-        ProvideLocalizedResources(
-            resourcesContext,
-            appName = R.string.app_name,
-        ) {
-            ProvideKeyboardRowBaseHeight {
-                CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
-                    FlorisImeTheme {
-                        // Do not apply system bar padding here yet, we want to draw it ourselves
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            if (!(isFullscreenUiMode && isExtractUiShown)) {
-                                DevtoolsOverlay(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(1f),
-                                )
-                            }
-                            ImeUi()
-                            SystemUiIme()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+    // TODO: rework this
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
-    private fun ImeUi() {
+    fun ImeUi() {
         val state by keyboardManager.activeState.collectAsState()
         val attributes = mapOf(
             FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
@@ -624,8 +530,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                 attributes = attributes,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
-                    .onGloballyPositioned { coords -> inputViewSize = coords.size },
+                    .wrapContentHeight(),
                 supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
                 allowClip = false,
             ) {
@@ -698,72 +603,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
     }
 
-    private inner class ComposeInputView : AbstractComposeView(this) {
-        init {
-            isHapticFeedbackEnabled = true
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        }
-
-        @Composable
-        override fun Content() {
-            ImeUiWrapper()
-        }
-
-        override fun getAccessibilityClassName(): CharSequence {
-            return javaClass.name
-        }
-
-        override fun onAttachedToWindow() {
-            super.onAttachedToWindow()
-            updateSoftInputWindowLayoutParameters()
-        }
-    }
-
-    private inner class FlorisBottomSheetHostUiView : AbstractComposeView(this) {
-        init {
-            isHapticFeedbackEnabled = true
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        }
-
-        @Composable
-        override fun Content() {
-            val context = LocalContext.current
-            val keyboardManager by context.keyboardManager()
-            val state by keyboardManager.activeState.collectAsState()
-
-            ProvideLocalizedResources(
-                resourcesContext,
-                appName = R.string.app_name,
-                forceLayoutDirection = LayoutDirection.Ltr,
-            ) {
-                FlorisImeTheme {
-                    BottomSheetHostUi(
-                        isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
-                        onHide = {
-                            if (state.isBottomSheetShowing()) {
-                                keyboardManager.activeState.isActionsEditorVisible = false
-                            }
-                            if (state.isSubtypeSelectionShowing()) {
-                                keyboardManager.activeState.isSubtypeSelectionVisible = false
-                            }
-                        },
-                    ) {
-                        if (state.isBottomSheetShowing()) {
-                            QuickActionsEditorPanel()
-                        }
-                        if (state.isSubtypeSelectionShowing()) {
-                            SelectSubtypePanel()
-                        }
-                    }
-                }
-            }
-        }
-
-        override fun getAccessibilityClassName(): CharSequence {
-            return javaClass.name
-        }
-    }
-
     private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {
         val composeView: ComposeView
         val extractEditText: ExtractEditText
@@ -794,9 +633,17 @@ class FlorisImeService : LifecycleInputMethodService() {
             ) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
+                    val height = with(LocalDensity.current) {
+                        remember(activeImeInsets) {
+                            val heightPx = activeImeInsets?.windowBounds?.top ?: 0
+                            heightPx.toDp()
+                        }
+                    }
                     SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
                         SnyggRow(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(height),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             SnyggBox(
