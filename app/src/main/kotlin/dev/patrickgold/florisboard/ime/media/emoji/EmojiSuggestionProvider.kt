@@ -44,7 +44,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
     private val prefs by FlorisPreferenceStore
     private val lettersRegex = "^[A-Za-z]*$".toRegex()
 
-    private val cachedEmojiMappings = Cache.Builder().build<FlorisLocale, EmojiDataBySkinTone>()
+    private val cachedEmojiMappings = Cache.Builder<FlorisLocale, EmojiDataBySkinTone>().build()
 
     override suspend fun create() {
     }
