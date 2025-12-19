@@ -45,6 +45,7 @@ kotlin {
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-Xjvm-default=all-compatibility",
             "-Xwhen-guards",
+            "-Xexplicit-backing-fields",
         ))
     }
 }

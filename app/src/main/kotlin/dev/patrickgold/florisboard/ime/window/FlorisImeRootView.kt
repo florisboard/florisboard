@@ -32,7 +32,7 @@ val LocalFlorisImeService = staticCompositionLocalOf<FlorisImeService> {
 }
 
 @SuppressLint("ViewConstructor")
-class FlorisImeRootView(val ime: FlorisImeService) : AbstractComposeView(ime) {
+class FlorisImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
     init {
         isHapticFeedbackEnabled = true
         layoutParams = LayoutParams(
@@ -44,11 +44,11 @@ class FlorisImeRootView(val ime: FlorisImeService) : AbstractComposeView(ime) {
     @Composable
     override fun Content() {
         CompositionLocalProvider(
-            LocalFlorisImeService provides ime,
-            LocalInputFeedbackController provides ime.inputFeedbackController,
+            LocalFlorisImeService provides ims,
+            LocalInputFeedbackController provides ims.inputFeedbackController,
         ) {
             ProvideLocalizedResources(
-                resourcesContext = ime.resourcesContext,
+                resourcesContext = ims.resourcesContext,
                 appName = R.string.app_name,
             ) {
                 FlorisImeTheme {

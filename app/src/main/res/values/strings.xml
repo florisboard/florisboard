@@ -231,6 +231,7 @@
 
     <string name="snygg__rule_element__root">Root</string>
     <string name="snygg__rule_element__window">Window</string>
+    <string name="snygg__rule_element__window_inner">Window Inner</string>
 
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>

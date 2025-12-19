@@ -22,10 +22,10 @@ import androidx.compose.ui.unit.IntRect
 data class FlorisImeInsets(
     val rootBounds: IntRect,
     val windowBounds: IntRect,
-    val windowMode: FlorisImeWindowMode,
 ) {
     fun applyTo(
         outInsets: InputMethodService.Insets,
+        windowMode: FlorisImeWindowMode,
         isFullscreenInputRequired: Boolean,
     ) {
         when (windowMode.windowType) {
@@ -34,8 +34,8 @@ data class FlorisImeInsets(
                 outInsets.visibleTopInsets = windowBounds.top
             }
             FlorisImeWindowType.FLOATING -> {
-                outInsets.contentTopInsets = 0
-                outInsets.visibleTopInsets = 0
+                outInsets.contentTopInsets = rootBounds.bottom
+                outInsets.visibleTopInsets = rootBounds.bottom
             }
         }
         when {

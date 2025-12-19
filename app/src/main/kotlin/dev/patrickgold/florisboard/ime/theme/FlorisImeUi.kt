@@ -27,6 +27,10 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "window",
         resId = R.string.snygg__rule_element__window,
     ),
+    WindowInner(
+        elementName = "window-inner",
+        resId = R.string.snygg__rule_element__window_inner,
+    ),
 
     Key(
         elementName = "key",

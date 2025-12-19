@@ -39,30 +39,21 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,36 +63,28 @@ import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
-import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
-import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.ime.window.FlorisImeInsets
 import dev.patrickgold.florisboard.ime.window.FlorisImeRootView
+import dev.patrickgold.florisboard.ime.window.FlorisImeWindowController
+import dev.patrickgold.florisboard.ime.window.FlorisImeWindowMode
 import dev.patrickgold.florisboard.ime.window.isFullscreenInputRequired
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.isOrientationLandscape
-import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.compose.ProvideLocalizedResources
@@ -109,7 +92,6 @@ import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import java.lang.ref.WeakReference
@@ -245,10 +227,10 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
 
+    val windowController = FlorisImeWindowController(this)
+
     private val activeState get() = keyboardManager.activeState
-    var activeImeInsets by mutableStateOf<FlorisImeInsets?>(null)
     val inputFeedbackController by lazy { InputFeedbackController.new(this) }
-    private var isWindowShown: Boolean = false
     private var isFullscreenUiMode by mutableStateOf(false)
     private var isExtractUiShown by mutableStateOf(false)
     var resourcesContext by mutableStateOf(this as Context)
@@ -289,7 +271,8 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.installViewTreeOwners()
         val content = window.window!!.findViewById<ViewGroup>(android.R.id.content)
         content.addView(FlorisImeRootView(this))
-        return null // TODO: may require a shadow input view here
+        // Disable the default input view placement
+        return null
     }
 
     override fun onCreateCandidatesView(): View? {
@@ -390,29 +373,25 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onWindowShown() {
         super.onWindowShown()
-        if (isWindowShown) {
-            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
-            return
-        } else {
+        if (windowController.onWindowShown()) {
             flogInfo(LogTopic.IMS_EVENTS)
+            inputFeedbackController.updateSystemPrefsState()
+        } else {
+            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
         }
-        isWindowShown = true
-        inputFeedbackController.updateSystemPrefsState()
     }
 
     override fun onWindowHidden() {
         super.onWindowHidden()
-        if (!isWindowShown) {
-            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
-            return
-        } else {
+        if (windowController.onWindowHidden()) {
             flogInfo(LogTopic.IMS_EVENTS)
-        }
-        isWindowShown = false
-        activeState.batchEdit {
-            activeState.imeUiMode = ImeUiMode.TEXT
-            activeState.isActionsOverflowVisible = false
-            activeState.isActionsEditorVisible = false
+            activeState.batchEdit {
+                activeState.imeUiMode = ImeUiMode.TEXT
+                activeState.isActionsOverflowVisible = false
+                activeState.isActionsEditorVisible = false
+            }
+        } else {
+            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
         }
     }
 
@@ -489,9 +468,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onComputeInsets(outInsets: Insets?) {
         if (outInsets == null) return
-        val imeInsets = activeImeInsets ?: return
+        val imeInsets = windowController.activeImeInsets.value ?: return
         val state = keyboardManager.activeState.snapshot()
-        imeInsets.applyTo(outInsets, state.isFullscreenInputRequired())
+        val windowMode = FlorisImeWindowMode.FULL // TODO mode impl, for now always FULL
+        imeInsets.applyTo(outInsets, windowMode, state.isFullscreenInputRequired())
     }
 
     override fun getTextForImeAction(imeOptions: Int): String? {
@@ -508,90 +488,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             }
         } catch (_: Throwable) {
             super.getTextForImeAction(imeOptions)?.toString()
-        }
-    }
-
-    // TODO: rework this
-    @OptIn(ExperimentalComposeUiApi::class)
-    @Composable
-    fun ImeUi() {
-        val state by keyboardManager.activeState.collectAsState()
-        val attributes = mapOf(
-            FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
-            FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
-        )
-        val layoutDirection = LocalLayoutDirection.current
-        LaunchedEffect(layoutDirection) {
-            keyboardManager.activeState.layoutDirection = layoutDirection
-        }
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-            SnyggBox(
-                elementName = FlorisImeUi.Window.elementName,
-                attributes = attributes,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
-                allowClip = false,
-            ) {
-                // The SurfaceView is used to render the background image under inline-autofill chips. These are only
-                // available on Android >=11, and SurfaceView causes trouble on Android 8/9, thus we render the image
-                // in the SurfaceView for Android >=11, and in the Compose View Tree for Android <=10.
-                if (AndroidVersion.ATLEAST_API30_R) {
-                    SnyggSurfaceView(
-                        elementName = FlorisImeUi.Window.elementName,
-                        attributes = attributes,
-                        modifier = Modifier.matchParentSize(),
-                    )
-                }
-                val configuration = LocalConfiguration.current
-                val bottomOffset by if (configuration.isOrientationPortrait()) {
-                    prefs.keyboard.bottomOffsetPortrait
-                } else {
-                    prefs.keyboard.bottomOffsetLandscape
-                }.observeAsTransformingState { it.dp }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        // Apply system bars padding here (we already drew our keyboard background)
-                        .safeDrawingPadding()
-                        .padding(bottom = bottomOffset),
-                ) {
-                    val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                    val oneHandedModeEnabled by prefs.keyboard.oneHandedModeEnabled.observeAsState()
-                    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
-                    val keyboardWeight = when {
-                        !oneHandedModeEnabled || configuration.isOrientationLandscape() -> 1f
-                        else -> oneHandedModeScaleFactor / 100f
-                    }
-                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
-                        OneHandedPanel(
-                            panelSide = OneHandedMode.START,
-                            weight = 1f - keyboardWeight,
-                        )
-                    }
-                    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
-                        Box(
-                            modifier = Modifier
-                                .weight(keyboardWeight)
-                                .wrapContentHeight(),
-                        ) {
-                            when (state.imeUiMode) {
-                                ImeUiMode.TEXT -> TextInputLayout()
-                                ImeUiMode.MEDIA -> MediaInputLayout()
-                                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
-                            }
-                        }
-                    }
-                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
-                        OneHandedPanel(
-                            panelSide = OneHandedMode.END,
-                            weight = 1f - keyboardWeight,
-                        )
-                    }
-                }
-            }
         }
     }
 
@@ -633,9 +529,10 @@ class FlorisImeService : LifecycleInputMethodService() {
             ) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
+                    val imeInsets by windowController.activeImeInsets.collectAsState()
                     val height = with(LocalDensity.current) {
-                        remember(activeImeInsets) {
-                            val heightPx = activeImeInsets?.windowBounds?.top ?: 0
+                        remember(imeInsets) {
+                            val heightPx = imeInsets?.windowBounds?.top ?: 0
                             heightPx.toDp()
                         }
                     }
