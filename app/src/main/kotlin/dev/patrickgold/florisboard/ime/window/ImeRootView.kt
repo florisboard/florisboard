@@ -32,7 +32,7 @@ val LocalFlorisImeService = staticCompositionLocalOf<FlorisImeService> {
 }
 
 @SuppressLint("ViewConstructor")
-class FlorisImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
+class ImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
     init {
         isHapticFeedbackEnabled = true
         layoutParams = LayoutParams(

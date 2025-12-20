@@ -72,10 +72,9 @@ import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.ime.window.FlorisImeRootView
+import dev.patrickgold.florisboard.ime.window.ImeRootView
 import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
-import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.isFullscreenInputRequired
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -276,7 +275,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreateInputView(): View? {
         super.installViewTreeOwners()
         val content = window.window!!.findViewById<ViewGroup>(android.R.id.content)
-        content.addView(FlorisImeRootView(this))
+        content.addView(ImeRootView(this))
         // Disable the default input view placement
         return null
     }
