@@ -51,7 +51,16 @@ sealed interface ImeWindowSize {
         val width: Dp,
         val topLeftX: Dp,
         val topLeftY: Dp,
-    ) : ImeWindowSize
+    ) : ImeWindowSize {
+        companion object {
+            val DefaultFloating = Floating(
+                rowHeight = DefaultRowHeight * 0.8f,
+                width = 350.dp,
+                topLeftX = 15.dp,
+                topLeftY = 480.dp
+            )
+        }
+    }
 
     companion object {
         private val DefaultRowHeight = 55.dp

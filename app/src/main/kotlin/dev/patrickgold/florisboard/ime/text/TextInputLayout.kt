@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflow
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import org.florisboard.lib.snygg.ui.SnyggIcon
 
@@ -82,6 +83,8 @@ fun TextInputLayout(
                     TextKeyboardLayout(evaluator = evaluator)
                 }
             }
+            // TODO(Check if this is the right place)
+            FloatingSystemUiIme()
         }
     }
 }

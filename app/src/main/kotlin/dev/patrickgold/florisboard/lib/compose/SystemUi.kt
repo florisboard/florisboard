@@ -20,14 +20,51 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.inputmethodservice.InputMethodService
+import android.util.Log
 import android.view.Window
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.window.ImeWindowSize.Floating.Companion.DefaultFloating
+import dev.patrickgold.florisboard.ime.window.LocalFlorisImeService
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.uriOrNull
 
@@ -53,6 +90,80 @@ fun SystemUiIme() {
         if (AndroidVersion.ATLEAST_API29_Q) {
             window.isNavigationBarContrastEnforced = hasBackgroundImage
         }
+    }
+}
+
+
+@Composable
+fun FloatingSystemUiIme() {
+    val ims = LocalFlorisImeService.current
+
+    val activeConfig by ims.windowController.activeWindowConfig.collectAsState()
+    val floatingSize = activeConfig.floatingSizes[activeConfig.floatingMode] ?: DefaultFloating
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround,
+        modifier = Modifier.width(floatingSize.width),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        FlorisIconButton(
+            onClick = {
+                Log.e("FloatingSystemUiIme", "Close keyboard pressed")
+                ims.hideUiLocal()
+            }
+        ) {
+            Icon(Icons.Default.KeyboardArrowDown, "Close floating keyboard window")
+        }
+        NavigationPill()
+        FlorisIconButton(
+            onClick = {
+                Log.e("FloatingSystemUiIme", "Switch to next method")
+                ims.switchToNextInputMethodLocal()
+            },
+            onLongClick = {
+                Log.e("FloatingSystemUiIme", "Show ime Picker")
+                InputMethodUtils.showImePicker(ims)
+            }
+        ) {
+            Icon(Icons.Default.Language, "Click: switch to next input method; Longclick: Show ime picker")
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RowScope.NavigationPill() {
+    val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
+    val backgroundColor = backgroundQuery.background()
+    val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
+
+    val useDarkIcons = if (backgroundImage == null) {
+        backgroundColor.luminance() >= 0.5
+    } else {
+        false
+    }
+
+    //TODO: make snygg themeable?
+    val scrimColor = if (useDarkIcons) {
+        Color.Black
+    } else {
+        Color.White
+    }.copy(0.5f)
+
+    val size = DpSize(80.dp, 5.dp)
+
+    Box(
+        modifier = Modifier
+            .width(IntrinsicSize.Max)
+            .align(Alignment.CenterVertically)
+    ) {
+        Log.e("NavigationPill", "Scrimcolor: ${BottomSheetDefaults.ScrimColor}")
+        Box(
+            modifier = Modifier
+                .size(size)
+                .background(scrimColor, RoundedCornerShape(25.dp))
+                .align(Alignment.Center)
+        )
     }
 }
 
