@@ -18,9 +18,8 @@ package dev.patrickgold.florisboard.ime.window
 
 import android.content.res.Configuration
 import androidx.compose.ui.unit.IntRect
-import androidx.lifecycle.lifecycleScope
-import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -29,7 +28,7 @@ import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.kotlin.collectIn
 
-class ImeWindowController(val ims: FlorisImeService) {
+class ImeWindowController(val scope: CoroutineScope) {
     private val prefs by FlorisPreferenceStore
 
     val activeOrientation: StateFlow<ImeOrientation>
@@ -70,7 +69,7 @@ class ImeWindowController(val ims: FlorisImeService) {
             }
         }
 
-        windowConfigFlow.collectIn(ims.lifecycleScope) { windowConfig ->
+        windowConfigFlow.collectIn(scope) { windowConfig ->
             activeWindowConfig.value = windowConfig
         }
 
@@ -80,7 +79,7 @@ class ImeWindowController(val ims: FlorisImeService) {
         ) { multiplier, windowConfig ->
             // TODO: Scale the fontsize with the keyboard
             multiplier
-        }.collectIn(ims.lifecycleScope) { multiplier ->
+        }.collectIn(scope) { multiplier ->
             activeFontSizeMultiplier.value = multiplier
         }
     }

@@ -9,6 +9,7 @@ androidx-core = "1.17.0"
 androidx-core-splashscreen = "1.2.0"
 androidx-emoji2 = "1.6.0"
 androidx-exifinterface = "1.4.2"
+androidx-lifecycle = "2.10.0"
 androidx-navigation = "2.9.6"
 androidx-profileinstaller = "1.4.1"
 androidx-room = "2.8.4"
@@ -20,6 +21,7 @@ kotlinx-serialization-json = "1.9.0"
 ksp = "2.3.4"
 material-kolor = "4.0.5"
 mikepenz-aboutlibraries = "13.2.1"
+mockk = "1.14.7"
 patrickgold-compose-tooltip = "0.2.0-rc02"
 patrickgold-jetpref = "0.3.0-rc01"
 
@@ -76,6 +78,8 @@ androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core",
 androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx-test-uiautomator" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-jupiter-params" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 
 
