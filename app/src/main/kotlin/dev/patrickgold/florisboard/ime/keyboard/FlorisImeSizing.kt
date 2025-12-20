@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -112,29 +113,8 @@ object FlorisImeSizing {
 
 @Composable
 fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
-    val prefs by FlorisPreferenceStore
-    val resources = LocalContext.current.resources
-    val configuration = LocalConfiguration.current
-
-    val heightFactorPortrait by prefs.keyboard.heightFactorPortrait.observeAsTransformingState { it.toFloat() / 100f }
-    val heightFactorLandscape by prefs.keyboard.heightFactorLandscape.observeAsTransformingState { it.toFloat() / 100f }
-    val oneHandedMode by prefs.keyboard.oneHandedModeEnabled.observeAsState()
-    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsTransformingState { it.toFloat() / 100f }
-
-    // Only set systemBarHeights on api 35 or later because https://developer.android.com/about/versions/15/behavior-changes-15#stable-configuration
-    val systemBarHeights = if (AndroidVersion.ATLEAST_API35_V) {
-        systemBarHeights()
-    } else {
-        0
-    }
-    val baseRowHeight = remember(
-        configuration, resources, heightFactorPortrait, heightFactorLandscape,
-        oneHandedMode, oneHandedModeScaleFactor, systemBarHeights,
-    ) {
-        calcInputViewHeight(resources, systemBarHeights) * when {
-            configuration.isOrientationLandscape() -> heightFactorLandscape
-            else -> heightFactorPortrait * (if (oneHandedMode) oneHandedModeScaleFactor else 1f)
-        }
+    val baseRowHeight = with (LocalDensity.current) {
+        55.dp.toPx()
     }
     val smartbarHeight = baseRowHeight * 0.753f
 

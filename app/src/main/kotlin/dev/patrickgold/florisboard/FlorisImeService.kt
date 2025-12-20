@@ -73,8 +73,9 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.ime.window.FlorisImeRootView
-import dev.patrickgold.florisboard.ime.window.FlorisImeWindowController
-import dev.patrickgold.florisboard.ime.window.FlorisImeWindowMode
+import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
+import dev.patrickgold.florisboard.ime.window.ImeWindowController
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.isFullscreenInputRequired
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
@@ -218,6 +219,11 @@ class FlorisImeService : LifecycleInputMethodService() {
             ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
             return false
         }
+
+        fun windowControllerOrNull(): ImeWindowController? {
+            val ims = FlorisImeServiceReference.get() ?: return null
+            return ims.windowController
+        }
     }
 
     private val prefs by FlorisPreferenceStore
@@ -227,7 +233,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
 
-    val windowController = FlorisImeWindowController(this)
+    val windowController = ImeWindowController(this)
 
     private val activeState get() = keyboardManager.activeState
     val inputFeedbackController by lazy { InputFeedbackController.new(this) }
@@ -301,6 +307,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         themeManager.configurationChangeCounter.update { it + 1 }
+        windowController.onConfigurationChanged(newConfig)
     }
 
     override fun onDestroy() {
@@ -470,8 +477,8 @@ class FlorisImeService : LifecycleInputMethodService() {
         if (outInsets == null) return
         val imeInsets = windowController.activeImeInsets.value ?: return
         val state = keyboardManager.activeState.snapshot()
-        val windowMode = FlorisImeWindowMode.FULL // TODO mode impl, for now always FULL
-        imeInsets.applyTo(outInsets, windowMode, state.isFullscreenInputRequired())
+        val windowConfig = ImeWindowConfig.DefaultPortrait // TODO
+        imeInsets.applyTo(outInsets, windowConfig, state.isFullscreenInputRequired())
     }
 
     override fun getTextForImeAction(imeOptions: Int): String? {

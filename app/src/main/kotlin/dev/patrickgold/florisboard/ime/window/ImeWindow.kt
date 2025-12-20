@@ -52,17 +52,17 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 
 @Composable
-fun FlorisImeRootWindow() {
+fun ImeRootWindow() {
     Box(Modifier.fillMaxSize()) {
         DevtoolsOverlay()
-        FlorisImeWindow()
+        ImeWindow()
         BottomSheetWindow()
         SystemUiIme()
     }
 }
 
 @Composable
-fun BoxScope.FlorisImeWindow() {
+fun BoxScope.ImeWindow() {
     val ims = LocalFlorisImeService.current
     val keyboardManager by ims.keyboardManager()
     val state by keyboardManager.activeState.collectAsState()
@@ -79,7 +79,7 @@ fun BoxScope.FlorisImeWindow() {
         keyboardManager.activeState.layoutDirection = layoutDirection
     }
 
-    val windowMode = FlorisImeWindowMode.FULL // TODO mode impl, for now always FULL
+    val windowConfig = ImeWindowConfig.DefaultPortrait // TODO mode impl, for now always FULL
 
     SnyggBox(
         elementName = FlorisImeUi.Window.elementName,
@@ -110,19 +110,19 @@ fun BoxScope.FlorisImeWindow() {
             )
         }
         ProvideKeyboardRowBaseHeight {
-            FlorisImeInnerWindow(state, windowMode)
+            ImeInnerWindow(state, windowConfig)
         }
     }
 }
 
 @Composable
-fun FlorisImeInnerWindow(state: KeyboardState, windowMode: FlorisImeWindowMode) {
+private fun ImeInnerWindow(state: KeyboardState, windowConfig: ImeWindowConfig) {
     SnyggBox(
         elementName = FlorisImeUi.WindowInner.elementName,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .conditional(windowMode.windowType == FlorisImeWindowType.FIXED) {
+            .conditional(windowConfig.mode == ImeWindowMode.FIXED) {
                 safeDrawingPadding()
             },
         allowClip = false,

@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -456,18 +455,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = LandscapeInputUiMode.DYNAMICALLY_SHOW,
                 label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
-            )
-        }
-    },
-    OneHandedMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = OneHandedMode.START,
-                label = stringRes(R.string.enum__one_handed_mode__start),
-            )
-            entry(
-                key = OneHandedMode.END,
-                label = stringRes(R.string.enum__one_handed_mode__end),
             )
         }
     },

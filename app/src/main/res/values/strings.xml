@@ -441,12 +441,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">One-handed mode keyboard width</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Keyboard height</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Bottom offset</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
@@ -1037,9 +1033,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
-
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
 
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>

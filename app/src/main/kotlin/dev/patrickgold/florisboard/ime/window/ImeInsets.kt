@@ -19,21 +19,21 @@ package dev.patrickgold.florisboard.ime.window
 import android.inputmethodservice.InputMethodService
 import androidx.compose.ui.unit.IntRect
 
-data class FlorisImeInsets(
+data class ImeInsets(
     val rootBounds: IntRect,
     val windowBounds: IntRect,
 ) {
     fun applyTo(
         outInsets: InputMethodService.Insets,
-        windowMode: FlorisImeWindowMode,
+        windowConfig: ImeWindowConfig,
         isFullscreenInputRequired: Boolean,
     ) {
-        when (windowMode.windowType) {
-            FlorisImeWindowType.FIXED -> {
+        when (windowConfig.mode) {
+            ImeWindowMode.FIXED -> {
                 outInsets.contentTopInsets = windowBounds.top
                 outInsets.visibleTopInsets = windowBounds.top
             }
-            FlorisImeWindowType.FLOATING -> {
+            ImeWindowMode.FLOATING -> {
                 outInsets.contentTopInsets = rootBounds.bottom
                 outInsets.visibleTopInsets = rootBounds.bottom
             }

@@ -52,7 +52,7 @@ class FlorisImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
                 appName = R.string.app_name,
             ) {
                 FlorisImeTheme {
-                    FlorisImeRootWindow()
+                    ImeRootWindow()
                 }
             }
         }

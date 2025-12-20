@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.onehanded
-//
-///**
-// * Static object which contains all possible one-handed mode strings.
-// */
-//enum class OneHandedMode {
-//    START,
-//    END;
-//}
+package dev.patrickgold.florisboard.ime.window
+
+enum class ImeWindowMode {
+    FIXED,
+    FLOATING;
+
+    enum class Fixed {
+        NORMAL,
+        COMPACT,
+        THUMBS;
+    }
+
+    enum class Floating {
+        NORMAL;
+    }
+}

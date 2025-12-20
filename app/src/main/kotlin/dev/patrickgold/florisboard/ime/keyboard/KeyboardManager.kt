@@ -23,6 +23,8 @@ import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.min
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -47,7 +49,6 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -56,6 +57,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
+import dev.patrickgold.florisboard.ime.window.ImeWindowSize
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -237,10 +240,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes.size > 1
-    }
-
-    suspend fun toggleOneHandedMode() {
-        prefs.keyboard.oneHandedModeEnabled.set(!prefs.keyboard.oneHandedModeEnabled.get())
     }
 
     fun executeSwipeAction(swipeAction: SwipeAction) {
@@ -724,14 +723,47 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
             }
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> scope.launch { toggleOneHandedMode() }
+            KeyCode.TOGGLE_COMPACT_LAYOUT -> scope.launch {
+                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+                windowController.updateWindowConfig { config ->
+                    val newFixedMode = when (config.fixedMode) {
+                        ImeWindowMode.Fixed.NORMAL -> ImeWindowMode.Fixed.COMPACT
+                        else -> ImeWindowMode.Fixed.NORMAL
+                    }
+                    config.copy(fixedMode = newFixedMode)
+                }
+            }
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
-                prefs.keyboard.oneHandedMode.set(OneHandedMode.START)
-                toggleOneHandedMode()
+                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+                windowController.updateWindowConfig { config ->
+                    val size = config.fixedSizes[ImeWindowMode.Fixed.COMPACT]
+                        ?: ImeWindowSize.Fixed.DefaultCompact
+                    val newSize = size.copy(
+                        offsetLeft = min(size.offsetLeft, size.offsetRight),
+                        offsetRight = max(size.offsetLeft, size.offsetRight),
+                    )
+                    config.copy(
+                        fixedSizes = config.fixedSizes.plus(
+                            ImeWindowMode.Fixed.COMPACT to newSize,
+                        ),
+                    )
+                }
             }
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
-                prefs.keyboard.oneHandedMode.set(OneHandedMode.END)
-                toggleOneHandedMode()
+                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+                windowController.updateWindowConfig { config ->
+                    val size = config.fixedSizes[ImeWindowMode.Fixed.COMPACT]
+                        ?: ImeWindowSize.Fixed.DefaultCompact
+                    val newSize = size.copy(
+                        offsetLeft = max(size.offsetLeft, size.offsetRight),
+                        offsetRight = min(size.offsetLeft, size.offsetRight),
+                    )
+                    config.copy(
+                        fixedSizes = config.fixedSizes.plus(
+                            ImeWindowMode.Fixed.COMPACT to newSize,
+                        ),
+                    )
+                }
             }
             KeyCode.DELETE -> handleBackwardDelete(OperationUnit.CHARACTERS)
             KeyCode.DELETE_WORD -> handleBackwardDelete(OperationUnit.WORDS)
