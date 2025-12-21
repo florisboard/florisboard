@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.window
 
 import android.content.res.Configuration
-import androidx.compose.ui.unit.IntRect
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -84,8 +83,8 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
     }
 
-    fun updateImeInsets(rootBounds: IntRect, windowBounds: IntRect) {
-        activeImeInsets.value = ImeInsets(rootBounds, windowBounds)
+    fun updateImeInsets(imeInsets: ImeInsets) {
+        activeImeInsets.value = imeInsets
     }
 
     val tempUpdateGuard = Mutex() // TODO remove once JetPref is updated

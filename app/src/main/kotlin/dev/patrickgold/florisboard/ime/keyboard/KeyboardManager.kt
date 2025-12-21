@@ -58,7 +58,7 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
-import dev.patrickgold.florisboard.ime.window.ImeWindowSize
+import dev.patrickgold.florisboard.ime.window.ImeWindowSpec
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -723,6 +723,16 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
             }
+            KeyCode.TOGGLE_FLOATING_WINDOW -> scope.launch {
+                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+                windowController.updateWindowConfig { config ->
+                    val newMode = when (config.mode) {
+                        ImeWindowMode.FIXED -> ImeWindowMode.FLOATING
+                        ImeWindowMode.FLOATING -> ImeWindowMode.FIXED
+                    }
+                    config.copy(mode = newMode)
+                }
+            }
             KeyCode.TOGGLE_COMPACT_LAYOUT -> scope.launch {
                 val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
                 windowController.updateWindowConfig { config ->
@@ -736,14 +746,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
                 val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
                 windowController.updateWindowConfig { config ->
-                    val size = config.fixedSizes[ImeWindowMode.Fixed.COMPACT]
-                        ?: ImeWindowSize.Fixed.DefaultCompact
+                    val size = config.fixedSpecs[ImeWindowMode.Fixed.COMPACT]
+                        ?: ImeWindowSpec.Fixed.DefaultCompact
                     val newSize = size.copy(
-                        offsetLeft = min(size.offsetLeft, size.offsetRight),
-                        offsetRight = max(size.offsetLeft, size.offsetRight),
+                        paddingLeft = min(size.paddingLeft, size.paddingRight),
+                        paddingRight = max(size.paddingLeft, size.paddingRight),
                     )
                     config.copy(
-                        fixedSizes = config.fixedSizes.plus(
+                        fixedSpecs = config.fixedSpecs.plus(
                             ImeWindowMode.Fixed.COMPACT to newSize,
                         ),
                     )
@@ -752,14 +762,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
                 val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
                 windowController.updateWindowConfig { config ->
-                    val size = config.fixedSizes[ImeWindowMode.Fixed.COMPACT]
-                        ?: ImeWindowSize.Fixed.DefaultCompact
+                    val size = config.fixedSpecs[ImeWindowMode.Fixed.COMPACT]
+                        ?: ImeWindowSpec.Fixed.DefaultCompact
                     val newSize = size.copy(
-                        offsetLeft = max(size.offsetLeft, size.offsetRight),
-                        offsetRight = min(size.offsetLeft, size.offsetRight),
+                        paddingLeft = max(size.paddingLeft, size.paddingRight),
+                        paddingRight = min(size.paddingLeft, size.paddingRight),
                     )
                     config.copy(
-                        fixedSizes = config.fixedSizes.plus(
+                        fixedSpecs = config.fixedSpecs.plus(
                             ImeWindowMode.Fixed.COMPACT to newSize,
                         ),
                     )

@@ -17,7 +17,12 @@
 package org.florisboard.lib.compose
 
 import androidx.compose.runtime.saveable.Saver
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
@@ -44,6 +49,20 @@ val DpSizeSaver = Saver<Dp, Float>(
     save = { it.value },
     restore = { it.dp },
 )
+
+context(density: Density)
+fun IntRect.toDpRect(): DpRect {
+    return with(density) {
+        DpRect(left.toDp(), top.toDp(), right.toDp(), bottom.toDp())
+    }
+}
+
+context(density: Density)
+fun Offset.toDp(): DpOffset {
+    return with(density) {
+        DpOffset(x.toDp(), y.toDp())
+    }
+}
 
 object DpSizeSerializer : KSerializer<Dp> {
     override val descriptor = PrimitiveSerialDescriptor("DpSize", PrimitiveKind.FLOAT)

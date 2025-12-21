@@ -24,9 +24,9 @@ import kotlinx.serialization.json.Json
 data class ImeWindowConfig(
     val mode: ImeWindowMode,
     val fixedMode: ImeWindowMode.Fixed,
-    val fixedSizes: Map<ImeWindowMode.Fixed, ImeWindowSize.Fixed> = emptyMap(),
+    val fixedSpecs: Map<ImeWindowMode.Fixed, ImeWindowSpec.Fixed> = emptyMap(),
     val floatingMode: ImeWindowMode.Floating,
-    val floatingSizes: Map<ImeWindowMode.Floating, ImeWindowSize.Floating> = emptyMap(),
+    val floatingSpecs: Map<ImeWindowMode.Floating, ImeWindowSpec.Floating> = emptyMap(),
 ) {
     companion object {
         val DefaultPortrait = ImeWindowConfig(

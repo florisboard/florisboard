@@ -46,6 +46,7 @@ kotlin {
             "-Xjvm-default=all-compatibility",
             "-Xwhen-guards",
             "-Xexplicit-backing-fields",
+            "-XXLanguage:+ContextParameters",
         ))
     }
 }

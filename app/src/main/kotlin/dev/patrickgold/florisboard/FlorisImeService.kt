@@ -29,7 +29,6 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
@@ -60,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
+import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -67,6 +67,7 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.isFullscreenInputRequired
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
@@ -74,9 +75,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.ime.window.ImeRootView
-import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
-import dev.patrickgold.florisboard.ime.window.isFullscreenInputRequired
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
@@ -483,8 +482,8 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onComputeInsets(outInsets: Insets?) {
         if (outInsets == null) return
         val imeInsets = windowController.activeImeInsets.value ?: return
+        val windowConfig = windowController.activeWindowConfig.value
         val state = keyboardManager.activeState.snapshot()
-        val windowConfig = ImeWindowConfig.DefaultPortrait // TODO
         imeInsets.applyTo(outInsets, windowConfig, state.isFullscreenInputRequired())
     }
 
@@ -511,6 +510,16 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
+    }
+
+    fun findNavBarFrameOrNull(): View? {
+        val decorView = window?.window?.peekDecorView() ?: return null
+        if (decorView !is ViewGroup) {
+            return null
+        }
+        return decorView.children.firstOrNull { child ->
+            child is ViewGroup && child.findViewById<View>(android.R.id.content) == null
+        }
     }
 
     private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {
@@ -546,7 +555,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                     val imeInsets by windowController.activeImeInsets.collectAsState()
                     val height = with(LocalDensity.current) {
                         remember(imeInsets) {
-                            val heightPx = imeInsets?.windowBounds?.top ?: 0
+                            val heightPx = imeInsets?.windowBoundsPx?.top ?: 0
                             heightPx.toDp()
                         }
                     }

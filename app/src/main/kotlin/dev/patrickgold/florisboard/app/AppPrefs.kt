@@ -841,6 +841,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.IME_HIDE_UI))
                     )
                 }
+                if (QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW))
+                    )
+                }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
                 entry.transform(rawValue = json)
             }

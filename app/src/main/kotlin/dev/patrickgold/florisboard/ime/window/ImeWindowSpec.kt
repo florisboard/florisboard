@@ -25,22 +25,28 @@ import kotlinx.serialization.UseSerializers
 import org.florisboard.lib.compose.DpSizeSerializer
 
 @Serializable
-sealed interface ImeWindowSize {
+sealed interface ImeWindowSpec {
     val rowHeight: Dp
 
     @Serializable
     data class Fixed(
         override val rowHeight: Dp,
-        val offsetLeft: Dp,
-        val offsetRight: Dp,
-        val offsetBottom: Dp,
-    ) : ImeWindowSize {
+        val paddingLeft: Dp,
+        val paddingRight: Dp,
+        val paddingBottom: Dp,
+    ) : ImeWindowSpec {
         companion object {
+            val DefaultNormal = Fixed(
+                rowHeight = DefaultRowHeight,
+                paddingLeft = 0.dp,
+                paddingRight = 0.dp,
+                paddingBottom = 0.dp,
+            )
             val DefaultCompact = Fixed(
                 rowHeight = DefaultRowHeight * 0.8f,
-                offsetLeft = DefaultCompactOffset,
-                offsetRight = 0.dp,
-                offsetBottom = (DefaultRowHeight * 4.7f) * 0.2f,
+                paddingLeft = DefaultCompactOffset,
+                paddingRight = 0.dp,
+                paddingBottom = (DefaultRowHeight * 4.7f) * 0.2f,
             )
         }
     }
@@ -49,15 +55,15 @@ sealed interface ImeWindowSize {
     data class Floating(
         override val rowHeight: Dp,
         val width: Dp,
-        val topLeftX: Dp,
-        val topLeftY: Dp,
-    ) : ImeWindowSize {
+        val offsetLeft: Dp,
+        val offsetBottom: Dp,
+    ) : ImeWindowSpec {
         companion object {
             val DefaultFloating = Floating(
                 rowHeight = DefaultRowHeight * 0.8f,
                 width = 350.dp,
-                topLeftX = 15.dp,
-                topLeftY = 480.dp
+                offsetLeft = 30.dp,
+                offsetBottom = 30.dp
             )
         }
     }
@@ -65,5 +71,9 @@ sealed interface ImeWindowSize {
     companion object {
         private val DefaultRowHeight = 55.dp
         private val DefaultCompactOffset = 70.dp
+
+        const val KeyboardHeightFactor = 4.7f
+
+        val MinKeyboardWidth = 300.dp
     }
 }

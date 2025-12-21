@@ -17,11 +17,15 @@
 package dev.patrickgold.florisboard.ime.window
 
 import android.inputmethodservice.InputMethodService
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.IntRect
 
 data class ImeInsets(
-    val rootBounds: IntRect,
-    val windowBounds: IntRect,
+    val rootBoundsDp: DpRect,
+    val rootBoundsPx: IntRect,
+    val windowBoundsDp: DpRect,
+    val windowBoundsPx: IntRect,
 ) {
     fun applyTo(
         outInsets: InputMethodService.Insets,
@@ -30,32 +34,43 @@ data class ImeInsets(
     ) {
         when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
-                outInsets.contentTopInsets = windowBounds.top
-                outInsets.visibleTopInsets = windowBounds.top
+                outInsets.contentTopInsets = windowBoundsPx.top
+                outInsets.visibleTopInsets = windowBoundsPx.top
             }
             ImeWindowMode.FLOATING -> {
-                outInsets.contentTopInsets = rootBounds.bottom
-                outInsets.visibleTopInsets = rootBounds.bottom
+                outInsets.contentTopInsets = rootBoundsPx.bottom
+                outInsets.visibleTopInsets = rootBoundsPx.bottom
             }
         }
         when {
             isFullscreenInputRequired -> {
                 outInsets.touchableRegion.set(
-                    rootBounds.left,
-                    rootBounds.top,
-                    rootBounds.right,
-                    rootBounds.bottom,
+                    rootBoundsPx.left,
+                    rootBoundsPx.top,
+                    rootBoundsPx.right,
+                    rootBoundsPx.bottom,
                 )
             }
             else -> {
                 outInsets.touchableRegion.set(
-                    windowBounds.left,
-                    windowBounds.top,
-                    windowBounds.right,
-                    windowBounds.bottom,
+                    windowBoundsPx.left,
+                    windowBoundsPx.top,
+                    windowBoundsPx.right,
+                    windowBoundsPx.bottom,
                 )
             }
         }
         outInsets.touchableInsets = InputMethodService.Insets.TOUCHABLE_INSETS_REGION
+    }
+
+    companion object {
+        private val InfiniteDpRect = DpRect(-Dp.Infinity, -Dp.Infinity, Dp.Infinity, Dp.Infinity)
+
+        val Indeterminate = ImeInsets(
+            rootBoundsDp = InfiniteDpRect,
+            rootBoundsPx = IntRect.Zero,
+            windowBoundsDp = InfiniteDpRect,
+            windowBoundsPx = IntRect.Zero,
+        )
     }
 }

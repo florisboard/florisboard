@@ -23,15 +23,16 @@ import android.inputmethodservice.InputMethodService
 import android.util.Log
 import android.view.Window
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -39,28 +40,17 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.window.ImeWindowSize.Floating.Companion.DefaultFloating
 import dev.patrickgold.florisboard.ime.window.LocalFlorisImeService
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import org.florisboard.lib.android.AndroidVersion
@@ -95,15 +85,14 @@ fun SystemUiIme() {
 
 
 @Composable
-fun FloatingSystemUiIme() {
+fun FloatingSystemUiIme(moveModifier: Modifier) {
     val ims = LocalFlorisImeService.current
 
-    val activeConfig by ims.windowController.activeWindowConfig.collectAsState()
-    val floatingSize = activeConfig.floatingSizes[activeConfig.floatingMode] ?: DefaultFloating
-
     Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
         horizontalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier.width(floatingSize.width),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         FlorisIconButton(
@@ -114,7 +103,9 @@ fun FloatingSystemUiIme() {
         ) {
             Icon(Icons.Default.KeyboardArrowDown, "Close floating keyboard window")
         }
-        NavigationPill()
+
+        NavigationPill(moveModifier)
+
         FlorisIconButton(
             onClick = {
                 Log.e("FloatingSystemUiIme", "Switch to next method")
@@ -132,7 +123,7 @@ fun FloatingSystemUiIme() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RowScope.NavigationPill() {
+fun RowScope.NavigationPill(moveModifier: Modifier) {
     val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
@@ -155,6 +146,9 @@ fun RowScope.NavigationPill() {
     Box(
         modifier = Modifier
             .width(IntrinsicSize.Max)
+            .wrapContentHeight()
+            .then(moveModifier)
+            .padding(vertical = 20.dp)
             .align(Alignment.CenterVertically)
     ) {
         Log.e("NavigationPill", "Scrimcolor: ${BottomSheetDefaults.ScrimColor}")
