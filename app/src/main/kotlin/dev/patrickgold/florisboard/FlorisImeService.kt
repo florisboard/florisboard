@@ -81,6 +81,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
@@ -93,7 +94,6 @@ import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
-import java.lang.ref.WeakReference
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -136,65 +136,27 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         fun showUi() {
             val ims = FlorisImeServiceReference.get() ?: return
-            if (AndroidVersion.ATLEAST_API28_P) {
-                ims.requestShowSelf(0)
-            } else {
-                @Suppress("DEPRECATION")
-                ims.systemServiceOrNull(InputMethodManager::class)
-                    ?.showSoftInputFromInputMethod(ims.currentInputBinding.connectionToken, 0)
-            }
+            ims.showUi()
         }
 
         fun hideUi() {
             val ims = FlorisImeServiceReference.get() ?: return
-            ims.hideUiLocal()
+            ims.hideUi()
         }
 
         fun switchToPrevInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
-            val imm = ims.systemServiceOrNull(InputMethodManager::class)
-            try {
-                if (AndroidVersion.ATLEAST_API28_P) {
-                    return ims.switchToPreviousInputMethod()
-                } else {
-                    ims.window.window?.let { window ->
-                        @Suppress("DEPRECATION")
-                        return imm?.switchToLastInputMethod(window.attributes.token) == true
-                    }
-                }
-            } catch (e: Exception) {
-                flogError { "Unable to switch to the previous IME" }
-                imm?.showInputMethodPicker()
-            }
-            return false
+            return ims.switchToPrevInputMethod()
         }
 
         fun switchToNextInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
-            return ims.switchToNextInputMethodLocal()
+            return ims.switchToNextInputMethod()
         }
 
         fun switchToVoiceInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
-            val imm = ims.systemServiceOrNull(InputMethodManager::class) ?: return false
-            val list: List<InputMethodInfo> = imm.enabledInputMethodList
-            for (el in list) {
-                for (i in 0 until el.subtypeCount) {
-                    if (el.getSubtypeAt(i).mode != "voice") continue
-                    if (AndroidVersion.ATLEAST_API28_P) {
-                        ims.switchInputMethod(el.id, el.getSubtypeAt(i))
-                        return true
-                    } else {
-                        ims.window.window?.let { window ->
-                            @Suppress("DEPRECATION")
-                            imm.setInputMethod(window.attributes.token, el.id)
-                            return true
-                        }
-                    }
-                }
-            }
-            ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
-            return false
+            return ims.switchToVoiceInputMethod()
         }
 
         fun windowControllerOrNull(): ImeWindowController? {
@@ -203,7 +165,62 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    fun switchToNextInputMethodLocal(): Boolean {
+    fun hideUi() {
+        requestHideSelf(0)
+    }
+
+    /**
+     * Show the Ime UI
+     *
+     * Note: This function can be replaced with a `requestShowSelf(0)`
+     * call once we've set the minApiLevel to 28 (Android 9)
+     */
+    fun showUi() {
+        if (AndroidVersion.ATLEAST_API28_P) {
+            requestShowSelf(0)
+        } else {
+            @Suppress("DEPRECATION")
+            systemServiceOrNull(InputMethodManager::class)
+                ?.showSoftInputFromInputMethod(currentInputBinding.connectionToken, 0)
+        }
+    }
+
+
+    /**
+     * Switch to previous input method
+     *
+     * Note: This function can be replaced with a `switchToPreviousInputMethod()`
+     * call once we've set the minApiLevel to 28 (Android 9)
+     *
+     * @return true if the switch was successful
+     */
+    fun switchToPrevInputMethod(): Boolean {
+        val imm = systemServiceOrNull(InputMethodManager::class)
+        try {
+            if (AndroidVersion.ATLEAST_API28_P) {
+                return switchToPreviousInputMethod()
+            } else {
+                window.window?.let { window ->
+                    @Suppress("DEPRECATION")
+                    return imm?.switchToLastInputMethod(window.attributes.token) == true
+                }
+            }
+        } catch (e: Exception) {
+            flogError { "Unable to switch to the previous IME" }
+            imm?.showInputMethodPicker()
+        }
+        return false
+    }
+
+    /**
+     * Switch to next input method
+     *
+     * Note: This function can be replaced with a `switchToNextInputMethod(false)`
+     * call once we've set the minApiLevel to 28 (Android 9)
+     *
+     * @return true if the switch was successful
+     */
+    fun switchToNextInputMethod(): Boolean {
         val imm = systemServiceOrNull(InputMethodManager::class)
         try {
             if (AndroidVersion.ATLEAST_API28_P) {
@@ -221,14 +238,38 @@ class FlorisImeService : LifecycleInputMethodService() {
         return false
     }
 
-    fun hideUiLocal() {
-        if (AndroidVersion.ATLEAST_API28_P) {
-            requestHideSelf(0)
-        } else {
-            @Suppress("DEPRECATION")
-            systemServiceOrNull(InputMethodManager::class)
-                ?.hideSoftInputFromInputMethod(currentInputBinding.connectionToken, 0)
+    /**
+     * Switch to next input method
+     *
+     * Note: The inner part of this function can be replaced with a
+     *
+     * `switchInputMethod(el.id, el.getSubtypeAt(i))` call once we've set the minApiLevel to 28 (Android 9)
+     *
+     * @return true if the switch was successful
+     */
+    fun switchToVoiceInputMethod(): Boolean {
+        val imm = systemServiceOrNull(InputMethodManager::class) ?: return false
+        val list: List<InputMethodInfo> = imm.enabledInputMethodList
+        for (el in list) {
+            for (i in 0 until el.subtypeCount) {
+                // Check if the subtype is a voice input method.
+                // We need to hardcode 'voice' here because the SUBTYPE_MODE_VOICE constant is private.
+                // https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/base/core/java/android/view/inputmethod/InputMethodManager.java;drc=2b278ab3ac73bb5596327aac1298df85cd94e454;l=309
+                if (el.getSubtypeAt(i).mode != "voice") continue
+                if (AndroidVersion.ATLEAST_API28_P) {
+                    switchInputMethod(el.id, el.getSubtypeAt(i))
+                    return true
+                } else {
+                    window.window?.let { window ->
+                        @Suppress("DEPRECATION")
+                        imm.setInputMethod(window.attributes.token, el.id)
+                        return true
+                    }
+                }
+            }
         }
+        showShortToastSync("Failed to find voice IME, do you have one installed?")
+        return false
     }
 
     private val prefs by FlorisPreferenceStore
