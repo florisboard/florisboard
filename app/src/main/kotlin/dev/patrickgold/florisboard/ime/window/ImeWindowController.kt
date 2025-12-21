@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.window
 
 import android.content.res.Configuration
+import android.inputmethodservice.InputMethodService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,8 +34,11 @@ class ImeWindowController(val scope: CoroutineScope) {
     val activeOrientation: StateFlow<ImeOrientation>
         field = MutableStateFlow(ImeOrientation.PORTRAIT)
 
-    val activeImeInsets: StateFlow<ImeInsets?>
-        field = MutableStateFlow(null)
+    val activeRootInsets: StateFlow<ImeInsets>
+        field = MutableStateFlow(ImeInsets.Infinite)
+
+    val activeWindowInsets: StateFlow<ImeInsets>
+        field = MutableStateFlow(ImeInsets.Zero)
 
     val activeFontSizeMultiplier: StateFlow<Float>
         field = MutableStateFlow(1.0f)
@@ -83,8 +87,12 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
     }
 
-    fun updateImeInsets(imeInsets: ImeInsets) {
-        activeImeInsets.value = imeInsets
+    fun updateRootInsets(newInsets: ImeInsets) {
+        activeRootInsets.value = newInsets
+    }
+
+    fun updateWindowInsets(newInsets: ImeInsets) {
+        activeWindowInsets.value = newInsets
     }
 
     val tempUpdateGuard = Mutex() // TODO remove once JetPref is updated
@@ -96,6 +104,45 @@ class ImeWindowController(val scope: CoroutineScope) {
         tempUpdateGuard.withLock {
             pref.set(function(pref.get()))
         }
+    }
+
+    fun onComputeInsets(
+        outInsets: InputMethodService.Insets,
+        isFullscreenInputRequired: Boolean,
+    ) {
+        val rootBounds = activeRootInsets.value.boundsPx
+        val windowBounds = activeWindowInsets.value.boundsPx
+        val windowConfig = activeWindowConfig.value
+
+        when (windowConfig.mode) {
+            ImeWindowMode.FIXED -> {
+                outInsets.contentTopInsets = windowBounds.top
+                outInsets.visibleTopInsets = windowBounds.top
+            }
+            ImeWindowMode.FLOATING -> {
+                outInsets.contentTopInsets = rootBounds.bottom
+                outInsets.visibleTopInsets = rootBounds.bottom
+            }
+        }
+        when {
+            isFullscreenInputRequired -> {
+                outInsets.touchableRegion.set(
+                    rootBounds.left,
+                    rootBounds.top,
+                    rootBounds.right,
+                    rootBounds.bottom,
+                )
+            }
+            else -> {
+                outInsets.touchableRegion.set(
+                    windowBounds.left,
+                    windowBounds.top,
+                    windowBounds.right,
+                    windowBounds.bottom,
+                )
+            }
+        }
+        outInsets.touchableInsets = InputMethodService.Insets.TOUCHABLE_INSETS_REGION
     }
 
     fun onConfigurationChanged(newConfig: Configuration) {

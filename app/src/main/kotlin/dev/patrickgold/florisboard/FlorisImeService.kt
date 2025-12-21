@@ -47,15 +47,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
@@ -82,7 +81,6 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
@@ -95,6 +93,7 @@ import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import java.lang.ref.WeakReference
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -481,10 +480,8 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onComputeInsets(outInsets: Insets?) {
         if (outInsets == null) return
-        val imeInsets = windowController.activeImeInsets.value ?: return
-        val windowConfig = windowController.activeWindowConfig.value
         val state = keyboardManager.activeState.snapshot()
-        imeInsets.applyTo(outInsets, windowConfig, state.isFullscreenInputRequired())
+        windowController.onComputeInsets(outInsets, state.isFullscreenInputRequired())
     }
 
     override fun getTextForImeAction(imeOptions: Int): String? {
@@ -552,18 +549,12 @@ class FlorisImeService : LifecycleInputMethodService() {
             ) {
                 FlorisImeTheme {
                     val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    val imeInsets by windowController.activeImeInsets.collectAsState()
-                    val height = with(LocalDensity.current) {
-                        remember(imeInsets) {
-                            val heightPx = imeInsets?.windowBoundsPx?.top ?: 0
-                            heightPx.toDp()
-                        }
-                    }
+                    val windowInsets by windowController.activeWindowInsets.collectAsState()
                     SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
                         SnyggRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(height),
+                                .height(windowInsets.boundsDp.height),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             SnyggBox(
