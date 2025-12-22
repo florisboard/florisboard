@@ -19,6 +19,11 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.coerceAtMost
+import androidx.compose.ui.unit.coerceIn
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
+import androidx.compose.ui.unit.width
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import org.florisboard.lib.compose.DpSizeSerializer
@@ -26,13 +31,23 @@ import org.florisboard.lib.compose.DpSizeSerializer
 sealed interface ImeWindowProps {
     val rowHeight: Dp
 
+    fun constrained(rootInsets: ImeInsets?): ImeWindowProps
+
     @Serializable
     data class Fixed(
         override val rowHeight: Dp,
         val paddingLeft: Dp,
         val paddingRight: Dp,
         val paddingBottom: Dp,
-    ) : ImeWindowProps
+    ) : ImeWindowProps {
+        override fun constrained(
+            rootInsets: ImeInsets?,
+        ): Fixed {
+            val rootBounds = rootInsets?.boundsDp ?: return this
+            // TODO impl
+            return this
+        }
+    }
 
     @Serializable
     data class Floating(
@@ -40,5 +55,33 @@ sealed interface ImeWindowProps {
         val keyboardWidth: Dp,
         val offsetLeft: Dp,
         val offsetBottom: Dp,
-    ) : ImeWindowProps
+    ) : ImeWindowProps {
+        override fun constrained(
+            rootInsets: ImeInsets?,
+        ): Floating {
+            val rootBounds = rootInsets?.boundsDp ?: return this
+            val newRowHeight = rowHeight.coerceIn(
+                minimumValue = (rootBounds.height / (3f * ImeWindowDefaults.KeyboardHeightFactor)),
+                maximumValue = (rootBounds.height / (2f * ImeWindowDefaults.KeyboardHeightFactor)),
+            )
+            val newKeyboardWidth = keyboardWidth.coerceIn(
+                minimumValue = ImeWindowDefaults.MinKeyboardWidth.coerceAtMost(rootBounds.width),
+                maximumValue = rootBounds.width,
+            )
+            val newOffsetLeft = offsetLeft.coerceIn(
+                minimumValue = 0.dp,
+                maximumValue = rootBounds.width - newKeyboardWidth,
+            )
+            val newOffsetBottom = offsetBottom.coerceIn(
+                minimumValue = 0.dp,
+                maximumValue = rootBounds.height - (newRowHeight * ImeWindowDefaults.KeyboardHeightFactor),
+            )
+            return Floating(
+                rowHeight = newRowHeight,
+                keyboardWidth = newKeyboardWidth,
+                offsetLeft = newOffsetLeft,
+                offsetBottom = newOffsetBottom,
+            )
+        }
+    }
 }

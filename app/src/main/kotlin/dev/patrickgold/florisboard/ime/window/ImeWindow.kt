@@ -96,7 +96,9 @@ fun ImeRootWindow() {
 @Composable
 fun BoxScope.ImeWindow() {
     val ims = LocalFlorisImeService.current
+    val density = LocalDensity.current
     val keyboardManager by ims.keyboardManager()
+
     val state by keyboardManager.activeState.collectAsState()
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
     val navBarFrameView = remember { ims.findNavBarFrameOrNull() }
@@ -108,7 +110,6 @@ fun BoxScope.ImeWindow() {
         }
     }
 
-    val density = LocalDensity.current
     val layoutDirection = LocalLayoutDirection.current
     LaunchedEffect(layoutDirection) {
         keyboardManager.activeState.layoutDirection = layoutDirection

@@ -19,11 +19,6 @@ package dev.patrickgold.florisboard.ime.window
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.coerceAtMost
-import androidx.compose.ui.unit.coerceIn
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.height
-import androidx.compose.ui.unit.width
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -214,37 +209,6 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
     }
 
-    private fun ImeWindowProps.Fixed.constrained(
-        rootInsets: ImeInsets,
-    ): ImeWindowProps.Fixed = let { props ->
-        val rootBounds = rootInsets.boundsDp
-        // TODO
-        return props
-    }
-
-    private fun ImeWindowProps.Floating.constrained(
-        rootInsets: ImeInsets,
-    ): ImeWindowProps.Floating = let { props ->
-        val rootBounds = rootInsets.boundsDp
-        val rowHeight = props.rowHeight.coerceIn(
-            minimumValue = (rootBounds.height / (3f * ImeWindowDefaults.KeyboardHeightFactor)),
-            maximumValue = (rootBounds.height / (2f * ImeWindowDefaults.KeyboardHeightFactor)),
-        )
-        val keyboardWidth = props.keyboardWidth.coerceIn(
-            minimumValue = ImeWindowDefaults.MinKeyboardWidth.coerceAtMost(rootBounds.width),
-            maximumValue = rootBounds.width,
-        )
-        val offsetLeft = props.offsetLeft.coerceIn(
-            minimumValue = 0.dp,
-            maximumValue = rootBounds.width - keyboardWidth,
-        )
-        val offsetBottom = props.offsetBottom.coerceIn(
-            minimumValue = 0.dp,
-            maximumValue = rootBounds.height - (rowHeight * ImeWindowDefaults.KeyboardHeightFactor),
-        )
-        return ImeWindowProps.Floating(rowHeight, keyboardWidth, offsetLeft, offsetBottom)
-    }
-
     inner class Editor {
         val state: StateFlow<EditorState>
             field = MutableStateFlow(EditorState.INACTIVE)
@@ -280,21 +244,7 @@ class ImeWindowController(val scope: CoroutineScope) {
 
         fun moveBy(offset: DpOffset) {
             activeWindowSpec.update { spec ->
-                when (spec) {
-                    is ImeWindowSpec.Fixed -> {
-                        // TODO: moving in fixed means adjusting the paddings really
-                        spec
-                    }
-                    is ImeWindowSpec.Floating -> {
-                        val newProps = spec.props.copy(
-                            offsetLeft = spec.props.offsetLeft + offset.x,
-                            offsetBottom = spec.props.offsetBottom - offset.y,
-                        )
-                        spec.copy(
-                            props = if (spec.rootInsets != null) newProps.constrained(spec.rootInsets) else newProps,
-                        )
-                    }
-                }
+                spec.movedBy(offset)
             }
         }
 
@@ -322,18 +272,9 @@ class ImeWindowController(val scope: CoroutineScope) {
             syncFromPrefs()
         }
 
-        fun resizeBy() {
+        fun resizeTo(offset: DpOffset, handle: ImeWindowResizeHandle) {
             activeWindowSpec.update { spec ->
-                when (spec) {
-                    is ImeWindowSpec.Fixed -> {
-                        // TODO impl
-                        spec
-                    }
-                    is ImeWindowSpec.Floating -> {
-                        // TODO impl
-                        spec
-                    }
-                }
+                spec.resizedTo(offset, handle)
             }
         }
 

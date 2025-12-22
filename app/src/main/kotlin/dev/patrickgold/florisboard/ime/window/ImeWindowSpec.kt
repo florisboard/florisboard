@@ -17,29 +17,67 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpOffset
 
 sealed interface ImeWindowSpec {
     val props: ImeWindowProps
     val rootInsets: ImeInsets?
     val orientation: ImeOrientation
 
+    val floatingDockHeight: Dp
+        get() = when (orientation) {
+            ImeOrientation.PORTRAIT -> ImeWindowDefaults.FloatingDockHeightPortrait
+            ImeOrientation.LANDSCAPE -> ImeWindowDefaults.FloatingDockHeightLandscape
+        }
+
+    fun movedBy(offset: DpOffset): ImeWindowSpec
+
+    fun resizedTo(offset: DpOffset, handle: ImeWindowResizeHandle): ImeWindowSpec
+
     data class Fixed(
         val mode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
         override val rootInsets: ImeInsets?,
         override val orientation: ImeOrientation,
-    ) : ImeWindowSpec
+    ) : ImeWindowSpec {
+        override fun movedBy(
+            offset: DpOffset,
+        ): ImeWindowSpec {
+            // TODO impl
+            return this
+        }
+
+        override fun resizedTo(
+            offset: DpOffset,
+            handle: ImeWindowResizeHandle,
+        ): ImeWindowSpec {
+            // TODO impl
+            return this
+        }
+    }
 
     data class Floating(
         val mode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
         override val rootInsets: ImeInsets?,
         override val orientation: ImeOrientation,
-    ) : ImeWindowSpec
-
-    val floatingDockHeight: Dp
-        get() = when (orientation) {
-            ImeOrientation.PORTRAIT -> ImeWindowDefaults.FloatingDockHeightPortrait
-            ImeOrientation.LANDSCAPE -> ImeWindowDefaults.FloatingDockHeightLandscape
+    ) : ImeWindowSpec {
+        override fun movedBy(
+            offset: DpOffset,
+        ): ImeWindowSpec {
+            val newProps = props.copy(
+                offsetLeft = props.offsetLeft + offset.x,
+                offsetBottom = props.offsetBottom - offset.y,
+            )
+            return copy(props = newProps.constrained(rootInsets))
         }
+
+        override fun resizedTo(
+            offset: DpOffset,
+            handle: ImeWindowResizeHandle,
+        ): ImeWindowSpec {
+            // TODO impl
+            return this
+        }
+    }
 }
