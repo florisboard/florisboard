@@ -53,7 +53,6 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.compose.toDp
 import org.florisboard.lib.compose.toDpRect
@@ -138,11 +137,6 @@ fun BoxScope.ImeWindow() {
             .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) { props ->
                 Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = props.paddingLeft,
-                        end = props.paddingRight,
-                        bottom = props.paddingBottom,
-                    )
             }
             .ifIsInstance<ImeWindowProps.Floating>(windowSpec.props) { props ->
                 Modifier
@@ -171,7 +165,7 @@ fun BoxScope.ImeWindow() {
                 modifier = Modifier.matchParentSize(),
             )
         }
-        ProvideKeyboardRowBaseHeight {
+        ProvideKeyboardRowBaseHeight(windowSpec) {
             ImeInnerWindow(state, windowSpec, localMoveModifier)
         }
     }
@@ -184,8 +178,14 @@ private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, move
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .conditional(windowSpec is ImeWindowSpec.Fixed) {
-                safeDrawingPadding()
+            .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) { props ->
+                Modifier
+                    .safeDrawingPadding()
+                    .padding(
+                        start = props.paddingLeft,
+                        end = props.paddingRight,
+                        bottom = props.paddingBottom,
+                    )
             },
         allowClip = false,
     ) {

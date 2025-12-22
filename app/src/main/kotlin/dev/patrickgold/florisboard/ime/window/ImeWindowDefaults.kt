@@ -24,7 +24,8 @@ object ImeWindowDefaults {
     val CompactOffsetPortrait = 55.dp
     val CompactOffsetLandscape = 55.dp
 
-    const val KeyboardHeightFactor = 4.7f
+    const val SmartbarHeightFactor = 0.753f
+    const val KeyboardHeightFactor = SmartbarHeightFactor + 4f
 
     val MinKeyboardWidth = 300.dp
 

@@ -16,37 +16,25 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.content.Context
-import android.content.res.Resources
-import android.os.Build
-import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowInsetsCompat
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
+import dev.patrickgold.florisboard.ime.window.ImeWindowDefaults
+import dev.patrickgold.florisboard.ime.window.ImeWindowSpec
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.util.ViewUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.isOrientationLandscape
 
 private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
 private val LocalSmartbarHeight = staticCompositionLocalOf { 40.dp }
@@ -105,76 +93,26 @@ object FlorisImeSizing {
     }
 
     object Static {
-        var keyboardRowBaseHeightPx: Int = 0
-
         var smartbarHeightPx: Int = 0
     }
 }
 
+@Deprecated("TODO: move logic fully into ImeWindow impl")
 @Composable
-fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
-    val baseRowHeight = with (LocalDensity.current) {
-        55.dp.toPx()
-    }
-    val smartbarHeight = baseRowHeight * 0.753f
+fun ProvideKeyboardRowBaseHeight(windowSpec: ImeWindowSpec, content: @Composable () -> Unit) {
+    val density = LocalDensity.current
+
+    val rowHeight = windowSpec.props.rowHeight
+    val smartbarHeight = rowHeight * ImeWindowDefaults.SmartbarHeightFactor
 
     SideEffect {
-        FlorisImeSizing.Static.keyboardRowBaseHeightPx = baseRowHeight.toInt()
-        FlorisImeSizing.Static.smartbarHeightPx = smartbarHeight.toInt()
+        FlorisImeSizing.Static.smartbarHeightPx = with(density) { smartbarHeight.roundToPx() }
     }
 
     CompositionLocalProvider(
-        LocalKeyboardRowBaseHeight provides ViewUtils.px2dp(baseRowHeight).dp,
-        LocalSmartbarHeight provides ViewUtils.px2dp(smartbarHeight).dp,
+        LocalKeyboardRowBaseHeight provides rowHeight,
+        LocalSmartbarHeight provides smartbarHeight,
     ) {
         content()
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.R)
-@Composable
-fun systemBarHeights(): Int {
-    val view = LocalView.current
-    val context = LocalContext.current
-
-    // Get the navigationBarHeight
-    val insets = WindowInsetsCompat.toWindowInsetsCompat(view.rootWindowInsets)
-    val navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-
-    // Use windowManager because the IME ui does not have statusBars insets
-    val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    val metrics = windowManager.currentWindowMetrics
-    val statusBarHeight = metrics.windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-
-    return navigationBarHeight + statusBarHeight
-}
-
-/**
- * Calculates the input view height based on the current screen dimensions and the auto
- * selected dimension values.
- *
- * This method and the fraction values have been inspired by [OpenBoard](https://github.com/dslul/openboard)
- * but are not 1:1 the same. This implementation differs from the
- * [original](https://github.com/dslul/openboard/blob/90ae4c8aec034a8935e1fd02b441be25c7dba6ce/app/src/main/java/org/dslul/openboard/inputmethod/latin/utils/ResourceUtils.java)
- * by calculating the average of the min and max height values, then taking at least the input
- * view base height and return this resulting value.
- */
-private fun calcInputViewHeight(resources: Resources, systemBarHeights: Int): Float {
-    val dm = resources.displayMetrics
-    val height = dm.heightPixels - systemBarHeights
-    val width = dm.widthPixels
-    val minBaseSize = when {
-        resources.configuration.isOrientationLandscape() -> resources.getFraction(
-            R.fraction.inputView_minHeightFraction, height, height
-        )
-        else -> resources.getFraction(
-            R.fraction.inputView_minHeightFraction, width, width
-        )
-    }
-    val maxBaseSize = resources.getFraction(
-        R.fraction.inputView_maxHeightFraction, height, height
-    )
-    return ((minBaseSize + maxBaseSize) / 2.0f).coerceAtLeast(
-        resources.getDimension(R.dimen.inputView_baseHeight)
-    ) * 0.21f
 }
