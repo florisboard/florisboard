@@ -29,6 +29,9 @@ object ImeWindowDefaults {
 
     val MinKeyboardWidth = 300.dp
 
+    val FloatingDockHeightPortrait = 80.dp
+    val FloatingDockHeightLandscape = 50.dp
+
     val FallbackSpec = ImeWindowSpec.Fixed(
         mode = ImeWindowMode.Fixed.NORMAL,
         props = ImeWindowProps.Fixed(
@@ -37,7 +40,8 @@ object ImeWindowDefaults {
             paddingRight = 0.dp,
             paddingBottom = 0.dp,
         ),
-        rootInsets = ImeInsets.Infinite,
+        rootInsets = null,
+        orientation = ImeOrientation.PORTRAIT,
     )
 
     val PropsFixedPortrait = mapOf(

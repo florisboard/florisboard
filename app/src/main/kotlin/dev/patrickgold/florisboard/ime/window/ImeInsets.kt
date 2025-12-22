@@ -16,28 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.window
 
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.IntRect
-import androidx.compose.ui.unit.dp
 
 data class ImeInsets(
     val boundsDp: DpRect,
     val boundsPx: IntRect,
-) {
-    companion object {
-        private val InfiniteDpRect = DpRect(-Dp.Infinity, -Dp.Infinity, Dp.Infinity, Dp.Infinity)
-        private val InfiniteIntRect = IntRect(-Int.MAX_VALUE, -Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE)
-        private val ZeroDpRect = DpRect(0.dp, 0.dp, 0.dp, 0.dp)
-
-        val Infinite = ImeInsets(
-            boundsDp = InfiniteDpRect,
-            boundsPx = InfiniteIntRect,
-        )
-
-        val Zero = ImeInsets(
-            boundsDp = ZeroDpRect,
-            boundsPx = IntRect.Zero,
-        )
-    }
-}
+)

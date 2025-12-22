@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.window
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
@@ -29,9 +30,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.kotlin.collectIn
 
@@ -40,17 +40,20 @@ class ImeWindowController(val scope: CoroutineScope) {
 
     val resizeMode = ResizeMode()
 
-    val activeRootInsets: StateFlow<ImeInsets>
-        field = MutableStateFlow(ImeInsets.Infinite)
+    val activeRootInsets: StateFlow<ImeInsets?>
+        field = MutableStateFlow(null)
 
-    val activeWindowInsets: StateFlow<ImeInsets>
-        field = MutableStateFlow(ImeInsets.Zero)
+    val activeWindowInsets: StateFlow<ImeInsets?>
+        field = MutableStateFlow(null)
 
     val activeOrientation: StateFlow<ImeOrientation>
         field = MutableStateFlow(ImeOrientation.PORTRAIT)
 
     val activeFontSizeMultiplier: StateFlow<Float>
         field = MutableStateFlow(1.0f)
+
+    val activeWindowConfig: StateFlow<ImeWindowConfig>
+        field = MutableStateFlow(ImeWindowConfig.DefaultPortrait)
 
     val activeWindowSpec: StateFlow<ImeWindowSpec>
         field = MutableStateFlow<ImeWindowSpec>(ImeWindowDefaults.FallbackSpec)
@@ -59,7 +62,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         field = MutableStateFlow(false)
 
     init {
-        val prefsWindowConfig = combine(
+        combine(
             activeOrientation,
             prefs.keyboard.windowConfigPortrait.asFlow(),
             prefs.keyboard.windowConfigLandscape.asFlow(),
@@ -68,6 +71,8 @@ class ImeWindowController(val scope: CoroutineScope) {
                 ImeOrientation.PORTRAIT -> windowConfigP
                 ImeOrientation.LANDSCAPE -> windowConfigL
             }
+        }.collectIn(scope) { windowConfig ->
+            activeWindowConfig.value = windowConfig
         }
 
         val prefsFontSizeMultiplier = combine(
@@ -84,7 +89,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         combine(
             activeRootInsets,
             activeOrientation,
-            prefsWindowConfig,
+            activeWindowConfig,
             resizeMode.version,
         ) { rootInsets, orientation, windowConfig, _ ->
             doComputeWindowSpec(rootInsets, orientation, windowConfig)
@@ -93,7 +98,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
 
         combine(
-            prefsWindowConfig,
+            activeWindowConfig,
             prefsFontSizeMultiplier,
         ) { windowConfig, multiplier ->
             // TODO: Scale the fontsize with the keyboard
@@ -111,14 +116,11 @@ class ImeWindowController(val scope: CoroutineScope) {
         activeWindowInsets.value = newInsets
     }
 
-    val tempUpdateGuard = Mutex() // TODO remove once JetPref is updated
-    suspend fun updateWindowConfig(function: (ImeWindowConfig) -> ImeWindowConfig) {
+    fun updateWindowConfig(function: (ImeWindowConfig) -> ImeWindowConfig) {
         val pref = windowConfigPref(activeOrientation.value)
-        // this function is only thread safe assuming the pref is written
-        // exclusively by this function!
-        // TODO rework JetPref pref data impl to support a thread-safe compareAndSet function
-        tempUpdateGuard.withLock {
-            pref.set(function(pref.get()))
+        val newWindowConfig = activeWindowConfig.updateAndGet(function)
+        scope.launch {
+            pref.set(newWindowConfig)
         }
     }
 
@@ -126,8 +128,10 @@ class ImeWindowController(val scope: CoroutineScope) {
         outInsets: InputMethodService.Insets,
         isFullscreenInputRequired: Boolean,
     ) {
-        val rootBounds = activeRootInsets.value.boundsPx
-        val windowBounds = activeWindowInsets.value.boundsPx
+        val rootInsets = activeRootInsets.value ?: return
+        val windowInsets = activeWindowInsets.value ?: return
+        val rootBounds = rootInsets.boundsPx
+        val windowBounds = windowInsets.boundsPx
         val windowSpec = activeWindowSpec.value
 
         when (windowSpec) {
@@ -184,7 +188,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
 
     private fun doComputeWindowSpec(
-        rootInsets: ImeInsets,
+        rootInsets: ImeInsets?,
         orientation: ImeOrientation,
         windowConfig: ImeWindowConfig,
     ): ImeWindowSpec {
@@ -193,16 +197,18 @@ class ImeWindowController(val scope: CoroutineScope) {
                 val props = windowConfig.getFixedPropsOrDefault(orientation)
                 ImeWindowSpec.Fixed(
                     mode = windowConfig.fixedMode,
-                    props = props.constrained(rootInsets),
+                    props = if (rootInsets != null) props.constrained(rootInsets) else props,
                     rootInsets = rootInsets,
+                    orientation = orientation,
                 )
             }
             ImeWindowMode.FLOATING -> {
                 val props = windowConfig.getFloatingPropsOrDefault(orientation)
                 ImeWindowSpec.Floating(
                     mode = windowConfig.floatingMode,
-                    props = props.constrained(rootInsets),
+                    props = if (rootInsets != null) props.constrained(rootInsets) else props,
                     rootInsets = rootInsets,
+                    orientation = orientation,
                 )
             }
         }
@@ -225,7 +231,7 @@ class ImeWindowController(val scope: CoroutineScope) {
             maximumValue = (rootBounds.height / (2f * ImeWindowDefaults.KeyboardHeightFactor)),
         )
         val keyboardWidth = props.keyboardWidth.coerceIn(
-            minimumValue = ImeWindowDefaults.MinKeyboardWidth,
+            minimumValue = ImeWindowDefaults.MinKeyboardWidth.coerceAtMost(rootBounds.width),
             maximumValue = rootBounds.width,
         )
         val offsetLeft = props.offsetLeft.coerceIn(
@@ -240,14 +246,14 @@ class ImeWindowController(val scope: CoroutineScope) {
     }
 
     inner class ResizeMode {
-        val active: StateFlow<Boolean>
+        val isActive: StateFlow<Boolean>
             field = MutableStateFlow(false)
 
         val version: StateFlow<Int>
             field = MutableStateFlow(0)
 
         fun start() {
-            active.value = true
+            isActive.value = true
             version.update { it + 1 }
         }
 
@@ -263,7 +269,9 @@ class ImeWindowController(val scope: CoroutineScope) {
                             offsetLeft = spec.props.offsetLeft + offset.x,
                             offsetBottom = spec.props.offsetBottom - offset.y,
                         )
-                        spec.copy(props = newProps.constrained(spec.rootInsets))
+                        spec.copy(
+                            props = if (spec.rootInsets != null) newProps.constrained(spec.rootInsets) else newProps,
+                        )
                     }
                 }
             }
@@ -271,14 +279,16 @@ class ImeWindowController(val scope: CoroutineScope) {
 
         fun end() {
             val spec = activeWindowSpec.value
-            active.value = false
-            scope.launch { // TODO once updateWindowConfig is fixed no coroutine scope should be needed here
-                updateWindowConfig { config ->
-                    when (spec) {
-                         is ImeWindowSpec.Fixed -> {
-                             config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
-                         }
-                        is ImeWindowSpec.Floating -> {
+            isActive.value = false
+            updateWindowConfig { config ->
+                when (spec) {
+                     is ImeWindowSpec.Fixed -> {
+                         config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
+                     }
+                    is ImeWindowSpec.Floating -> {
+                        if (spec.props.offsetBottom <= spec.floatingDockHeight) {
+                            config.copy(mode = ImeWindowMode.FIXED)
+                        } else {
                             config.copy(floatingProps = config.floatingProps.plus(spec.mode to spec.props))
                         }
                     }
@@ -287,7 +297,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
 
         fun cancel() {
-            active.value = false
+            isActive.value = false
             version.update { it + 1 }
         }
     }

@@ -595,7 +595,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                         SnyggRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(windowInsets.boundsDp.height),
+                                .height(windowInsets?.boundsDp?.height ?: 0.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             SnyggBox(

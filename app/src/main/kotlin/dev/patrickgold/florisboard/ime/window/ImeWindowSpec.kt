@@ -16,19 +16,30 @@
 
 package dev.patrickgold.florisboard.ime.window
 
+import androidx.compose.ui.unit.Dp
+
 sealed interface ImeWindowSpec {
     val props: ImeWindowProps
-    val rootInsets: ImeInsets
+    val rootInsets: ImeInsets?
+    val orientation: ImeOrientation
 
     data class Fixed(
         val mode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
-        override val rootInsets: ImeInsets,
+        override val rootInsets: ImeInsets?,
+        override val orientation: ImeOrientation,
     ) : ImeWindowSpec
 
     data class Floating(
         val mode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
-        override val rootInsets: ImeInsets,
+        override val rootInsets: ImeInsets?,
+        override val orientation: ImeOrientation,
     ) : ImeWindowSpec
+
+    val floatingDockHeight: Dp
+        get() = when (orientation) {
+            ImeOrientation.PORTRAIT -> ImeWindowDefaults.FloatingDockHeightPortrait
+            ImeOrientation.LANDSCAPE -> ImeWindowDefaults.FloatingDockHeightLandscape
+        }
 }

@@ -16,12 +16,19 @@
 
 package dev.patrickgold.florisboard.ime.window
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -30,10 +37,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -111,7 +121,7 @@ fun BoxScope.ImeWindow() {
         )
     }
 
-    val localMoveModifier = Modifier.pointerInput(Unit) {
+    val modeModifier = Modifier.pointerInput(Unit) {
         detectDragGestures(
             onDragStart = {
                 ims.windowController.resizeMode.start()
@@ -129,12 +139,14 @@ fun BoxScope.ImeWindow() {
         )
     }
 
+    FloatingDockToFixedIndicator()
+
     SnyggBox(
         elementName = FlorisImeUi.Window.elementName,
         attributes = attributes,
         modifier = Modifier
             .align(Alignment.BottomStart)
-            .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) { props ->
+            .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) {
                 Modifier
                     .fillMaxWidth()
             }
@@ -166,7 +178,7 @@ fun BoxScope.ImeWindow() {
             )
         }
         ProvideKeyboardRowBaseHeight(windowSpec) {
-            ImeInnerWindow(state, windowSpec, localMoveModifier)
+            ImeInnerWindow(state, windowSpec, modeModifier)
         }
     }
 }
@@ -199,5 +211,43 @@ private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, move
                 FloatingSystemUiIme(moveModifier)
             }
         }
+    }
+}
+
+@Composable
+private fun BoxScope.FloatingDockToFixedIndicator() {
+    val ims = LocalFlorisImeService.current
+    val density = LocalDensity.current
+
+    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val isResizeModeActive by ims.windowController.resizeMode.isActive.collectAsState()
+
+    val visible by remember {
+        derivedStateOf {
+            val spec = windowSpec
+            isResizeModeActive && spec is ImeWindowSpec.Floating &&
+                spec.props.offsetBottom <= spec.floatingDockHeight
+        }
+    }
+
+    AnimatedVisibility(
+        visible = visible,
+        modifier = Modifier
+            .align(Alignment.BottomStart)
+            .fillMaxWidth()
+            .height(windowSpec.floatingDockHeight),
+        enter = fadeIn() + slideInVertically {
+            with(density) { windowSpec.floatingDockHeight.roundToPx() }
+        },
+        exit = fadeOut() + slideOutVertically {
+            with(density) { windowSpec.floatingDockHeight.roundToPx() }
+        },
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.5f)
+                .background(Color.Gray)
+        )
     }
 }
