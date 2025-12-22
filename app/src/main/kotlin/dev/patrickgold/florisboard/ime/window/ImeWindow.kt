@@ -124,17 +124,17 @@ fun BoxScope.ImeWindow() {
     val modeModifier = Modifier.pointerInput(Unit) {
         detectDragGestures(
             onDragStart = {
-                ims.windowController.resizeMode.start()
+                ims.windowController.editor.beginMoveGesture()
             },
             onDrag = { change, dragAmount ->
                 change.consume()
-                ims.windowController.resizeMode.moveBy(dragAmount.toDp())
+                ims.windowController.editor.moveBy(dragAmount.toDp())
             },
             onDragEnd = {
-                ims.windowController.resizeMode.end()
+                ims.windowController.editor.endMoveGesture()
             },
             onDragCancel = {
-                ims.windowController.resizeMode.cancel()
+                ims.windowController.editor.cancelGesture()
             },
         )
     }
@@ -220,12 +220,12 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
     val density = LocalDensity.current
 
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val isResizeModeActive by ims.windowController.resizeMode.isActive.collectAsState()
+    val editorState by ims.windowController.editor.state.collectAsState()
 
     val visible by remember {
         derivedStateOf {
             val spec = windowSpec
-            isResizeModeActive && spec is ImeWindowSpec.Floating &&
+            editorState.isMoveGesture && spec is ImeWindowSpec.Floating &&
                 spec.props.offsetBottom <= spec.floatingDockHeight
         }
     }

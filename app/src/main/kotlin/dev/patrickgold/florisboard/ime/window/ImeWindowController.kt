@@ -38,7 +38,7 @@ import org.florisboard.lib.kotlin.collectIn
 class ImeWindowController(val scope: CoroutineScope) {
     private val prefs by FlorisPreferenceStore
 
-    val resizeMode = ResizeMode()
+    val editor = Editor()
 
     val activeRootInsets: StateFlow<ImeInsets?>
         field = MutableStateFlow(null)
@@ -90,7 +90,7 @@ class ImeWindowController(val scope: CoroutineScope) {
             activeRootInsets,
             activeOrientation,
             activeWindowConfig,
-            resizeMode.version,
+            editor.version,
         ) { rootInsets, orientation, windowConfig, _ ->
             doComputeWindowSpec(rootInsets, orientation, windowConfig)
         }.collectIn(scope) { windowSpec ->
@@ -245,16 +245,37 @@ class ImeWindowController(val scope: CoroutineScope) {
         return ImeWindowProps.Floating(rowHeight, keyboardWidth, offsetLeft, offsetBottom)
     }
 
-    inner class ResizeMode {
-        val isActive: StateFlow<Boolean>
-            field = MutableStateFlow(false)
+    inner class Editor {
+        val state: StateFlow<EditorState>
+            field = MutableStateFlow(EditorState.INACTIVE)
 
         val version: StateFlow<Int>
             field = MutableStateFlow(0)
 
-        fun start() {
-            isActive.value = true
+        private fun syncFromPrefs() {
             version.update { it + 1 }
+        }
+
+        fun enable() {
+            state.value = EditorState.ACTIVE
+            syncFromPrefs()
+        }
+
+        fun disable() {
+            state.value = EditorState.INACTIVE
+            syncFromPrefs()
+        }
+
+        fun toggleEnabled() {
+            state.update { state ->
+                editorStateOf(!state.isEnabled)
+            }
+            syncFromPrefs()
+        }
+
+        fun beginMoveGesture() {
+            state.value = EditorState.ACTIVE_MOVE_GESTURE
+            syncFromPrefs()
         }
 
         fun moveBy(offset: DpOffset) {
@@ -277,9 +298,9 @@ class ImeWindowController(val scope: CoroutineScope) {
             }
         }
 
-        fun end() {
+        fun endMoveGesture(keepEnabled: Boolean = true) {
             val spec = activeWindowSpec.value
-            isActive.value = false
+            state.value = editorStateOf(keepEnabled)
             updateWindowConfig { config ->
                 when (spec) {
                      is ImeWindowSpec.Fixed -> {
@@ -296,9 +317,64 @@ class ImeWindowController(val scope: CoroutineScope) {
             }
         }
 
-        fun cancel() {
-            isActive.value = false
-            version.update { it + 1 }
+        fun beginResizeGesture() {
+            state.value = EditorState.ACTIVE_RESIZE_GESTURE
+            syncFromPrefs()
         }
+
+        fun resizeBy() {
+            activeWindowSpec.update { spec ->
+                when (spec) {
+                    is ImeWindowSpec.Fixed -> {
+                        // TODO impl
+                        spec
+                    }
+                    is ImeWindowSpec.Floating -> {
+                        // TODO impl
+                        spec
+                    }
+                }
+            }
+        }
+
+        fun endResizeGesture(keepEnabled: Boolean = true) {
+            val spec = activeWindowSpec.value
+            state.value = editorStateOf(keepEnabled)
+            updateWindowConfig { config ->
+                when (spec) {
+                    is ImeWindowSpec.Fixed -> {
+                        config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
+                    }
+                    is ImeWindowSpec.Floating -> {
+                        config.copy(floatingProps = config.floatingProps.plus(spec.mode to spec.props))
+                    }
+                }
+            }
+        }
+
+        fun cancelGesture(keepEnabled: Boolean = true) {
+            state.value = editorStateOf(keepEnabled)
+            syncFromPrefs()
+        }
+
+        @Suppress("NOTHING_TO_INLINE")
+        private inline fun editorStateOf(isEnabled: Boolean): EditorState {
+            return if (isEnabled) {
+                EditorState.ACTIVE
+            } else {
+                EditorState.INACTIVE
+            }
+        }
+    }
+
+    enum class EditorState(
+        val isEnabled: Boolean = false,
+        val isMoveGesture: Boolean = false,
+        val isResizeGesture: Boolean = false,
+    ) {
+        INACTIVE,
+        ACTIVE(isEnabled = true),
+        ACTIVE_MOVE_GESTURE(isEnabled = true, isMoveGesture = true),
+        ACTIVE_RESIZE_GESTURE(isEnabled = true, isResizeGesture = true),
     }
 }
