@@ -744,36 +744,38 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
             }
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.updateWindowConfig { config ->
-                    val size = config.fixedSpecs[ImeWindowMode.Fixed.COMPACT]
-                        ?: ImeWindowSpec.Fixed.DefaultCompact
-                    val newSize = size.copy(
-                        paddingLeft = min(size.paddingLeft, size.paddingRight),
-                        paddingRight = max(size.paddingLeft, size.paddingRight),
-                    )
-                    config.copy(
-                        fixedSpecs = config.fixedSpecs.plus(
-                            ImeWindowMode.Fixed.COMPACT to newSize,
-                        ),
-                    )
-                }
+                // TODO
+//                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+//                windowController.updateWindowConfig { config ->
+//                    val size = config.fixedSpecs[ImeWindowMode.Fixed.COMPACT]
+//                        ?: ImeWindowSpec.Fixed.DefaultCompact
+//                    val newSize = size.copy(
+//                        paddingLeft = min(size.paddingLeft, size.paddingRight),
+//                        paddingRight = max(size.paddingLeft, size.paddingRight),
+//                    )
+//                    config.copy(
+//                        fixedSpecs = config.fixedSpecs.plus(
+//                            ImeWindowMode.Fixed.COMPACT to newSize,
+//                        ),
+//                    )
+//                }
             }
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.updateWindowConfig { config ->
-                    val size = config.fixedSpecs[ImeWindowMode.Fixed.COMPACT]
-                        ?: ImeWindowSpec.Fixed.DefaultCompact
-                    val newSize = size.copy(
-                        paddingLeft = max(size.paddingLeft, size.paddingRight),
-                        paddingRight = min(size.paddingLeft, size.paddingRight),
-                    )
-                    config.copy(
-                        fixedSpecs = config.fixedSpecs.plus(
-                            ImeWindowMode.Fixed.COMPACT to newSize,
-                        ),
-                    )
-                }
+                // TODO
+//                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+//                windowController.updateWindowConfig { config ->
+//                    val size = config.fixedSpecs[ImeWindowMode.Fixed.COMPACT]
+//                        ?: ImeWindowSpec.Fixed.DefaultCompact
+//                    val newSize = size.copy(
+//                        paddingLeft = max(size.paddingLeft, size.paddingRight),
+//                        paddingRight = min(size.paddingLeft, size.paddingRight),
+//                    )
+//                    config.copy(
+//                        fixedSpecs = config.fixedSpecs.plus(
+//                            ImeWindowMode.Fixed.COMPACT to newSize,
+//                        ),
+//                    )
+//                }
             }
             KeyCode.DELETE -> handleBackwardDelete(OperationUnit.CHARACTERS)
             KeyCode.DELETE_WORD -> handleBackwardDelete(OperationUnit.WORDS)

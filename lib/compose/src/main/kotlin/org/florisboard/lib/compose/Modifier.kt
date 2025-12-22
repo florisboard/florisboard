@@ -25,3 +25,10 @@ fun Modifier.conditional(
     modifier: @Composable Modifier.() -> Modifier
 ): Modifier =
     if (condition) then(modifier(Modifier)) else this
+
+@Composable
+inline fun <reified T : Any> Modifier.ifIsInstance(
+    value: Any,
+    modifier: @Composable Modifier.(T) -> Modifier
+): Modifier =
+    if (value is T) then(modifier(Modifier, value)) else this

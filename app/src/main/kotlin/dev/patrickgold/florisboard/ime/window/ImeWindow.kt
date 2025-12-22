@@ -31,10 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -42,13 +39,7 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.coerceIn
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.roundToIntRect
-import androidx.compose.ui.unit.width
-import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
@@ -61,9 +52,9 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
-import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.conditional
+import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.compose.toDp
 import org.florisboard.lib.compose.toDpRect
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -98,14 +89,13 @@ fun BoxScope.ImeWindow() {
     val ims = LocalFlorisImeService.current
     val keyboardManager by ims.keyboardManager()
     val state by keyboardManager.activeState.collectAsState()
-    val rootInsets by ims.windowController.activeRootInsets.collectAsState()
-    val windowConfig by ims.windowController.activeWindowConfig.collectAsState()
+    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
     val navBarFrameView = remember { ims.findNavBarFrameOrNull() }
 
-    LaunchedEffect(navBarFrameView, windowConfig.mode) {
-        navBarFrameView?.scaleY = when (windowConfig.mode) {
-            ImeWindowMode.FIXED -> 1f
-            ImeWindowMode.FLOATING -> 0f
+    LaunchedEffect(navBarFrameView, windowSpec) {
+        navBarFrameView?.scaleY = when (windowSpec) {
+            is ImeWindowSpec.Fixed -> 1f
+            is ImeWindowSpec.Floating -> 0f
         }
     }
 
@@ -122,41 +112,20 @@ fun BoxScope.ImeWindow() {
         )
     }
 
-    var localMoveOffset by remember { mutableStateOf(DpOffset.Zero) }
-    val effectiveSpec = rememberEffectiveSpec(rootInsets, windowConfig, localMoveOffset)
-    val specForPersisting = rememberUpdatedState(effectiveSpec)
-
     val localMoveModifier = Modifier.pointerInput(Unit) {
         detectDragGestures(
             onDragStart = {
-                localMoveOffset = DpOffset.Zero
+                ims.windowController.resizeMode.start()
             },
             onDrag = { change, dragAmount ->
                 change.consume()
-                localMoveOffset += dragAmount.toDp()
+                ims.windowController.resizeMode.moveBy(dragAmount.toDp())
             },
             onDragEnd = {
-                val spec = specForPersisting.value
-                ims.lifecycleScope.launch {
-                    ims.windowController.updateWindowConfig { config ->
-                        when (spec) {
-                            is ImeWindowSpec.Fixed -> {
-                                config.copy(
-                                    fixedSpecs = config.fixedSpecs.plus(config.fixedMode to spec),
-                                )
-                            }
-                            is ImeWindowSpec.Floating -> {
-                                config.copy(
-                                    floatingSpecs = config.floatingSpecs.plus(config.floatingMode to spec),
-                                )
-                            }
-                        }
-                    }
-                }
-                localMoveOffset = DpOffset.Zero
+                ims.windowController.resizeMode.end()
             },
             onDragCancel = {
-                localMoveOffset = DpOffset.Zero
+                ims.windowController.resizeMode.cancel()
             },
         )
     }
@@ -166,24 +135,20 @@ fun BoxScope.ImeWindow() {
         attributes = attributes,
         modifier = Modifier
             .align(Alignment.BottomStart)
-            .then(
-                when (effectiveSpec) {
-                    is ImeWindowSpec.Fixed -> {
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = effectiveSpec.paddingLeft,
-                                end = effectiveSpec.paddingRight,
-                                bottom = effectiveSpec.paddingBottom,
-                            )
-                    }
-                    is ImeWindowSpec.Floating -> {
-                        Modifier
-                            .offset(x = effectiveSpec.offsetLeft, y = -effectiveSpec.offsetBottom)
-                            .width(effectiveSpec.width)
-                    }
-                }
-            )
+            .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) { props ->
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = props.paddingLeft,
+                        end = props.paddingRight,
+                        bottom = props.paddingBottom,
+                    )
+            }
+            .ifIsInstance<ImeWindowProps.Floating>(windowSpec.props) { props ->
+                Modifier
+                    .offset(props.offsetLeft, -props.offsetBottom)
+                    .width(props.keyboardWidth)
+            }
             .wrapContentHeight()
             .onGloballyPositioned { coords ->
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
@@ -207,19 +172,19 @@ fun BoxScope.ImeWindow() {
             )
         }
         ProvideKeyboardRowBaseHeight {
-            ImeInnerWindow(state, windowConfig, localMoveModifier)
+            ImeInnerWindow(state, windowSpec, localMoveModifier)
         }
     }
 }
 
 @Composable
-private fun ImeInnerWindow(state: KeyboardState, windowConfig: ImeWindowConfig, moveModifier: Modifier) {
+private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, moveModifier: Modifier) {
     SnyggBox(
         elementName = FlorisImeUi.WindowInner.elementName,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .conditional(windowConfig.mode == ImeWindowMode.FIXED) {
+            .conditional(windowSpec is ImeWindowSpec.Fixed) {
                 safeDrawingPadding()
             },
         allowClip = false,
@@ -230,48 +195,8 @@ private fun ImeInnerWindow(state: KeyboardState, windowConfig: ImeWindowConfig, 
                 ImeUiMode.MEDIA -> MediaInputLayout()
                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
             }
-            if (windowConfig.mode == ImeWindowMode.FLOATING) {
+            if (windowSpec is ImeWindowSpec.Floating) {
                 FloatingSystemUiIme(moveModifier)
-            }
-        }
-    }
-}
-
-@Composable
-private fun rememberEffectiveSpec(
-    rootInsets: ImeInsets,
-    windowConfig: ImeWindowConfig,
-    localMoveOffset: DpOffset = DpOffset.Zero,
-): ImeWindowSpec {
-    return remember(rootInsets, windowConfig, localMoveOffset) {
-        val rootBounds = rootInsets.boundsDp
-        when (windowConfig.mode) {
-            ImeWindowMode.FIXED -> {
-                val spec = windowConfig.fixedSpecs[windowConfig.fixedMode]
-                    ?: ImeWindowSpec.Fixed.DefaultNormal
-                // TODO
-                spec
-            }
-            ImeWindowMode.FLOATING -> {
-                val spec = windowConfig.floatingSpecs[windowConfig.floatingMode]
-                    ?: ImeWindowSpec.Floating.DefaultFloating
-                val rowHeight = spec.rowHeight.coerceIn(
-                    minimumValue = (rootBounds.height / (3f * ImeWindowSpec.KeyboardHeightFactor)),
-                    maximumValue = (rootBounds.height / (2f * ImeWindowSpec.KeyboardHeightFactor)),
-                )
-                val width = spec.width.coerceIn(
-                    minimumValue = ImeWindowSpec.MinKeyboardWidth,
-                    maximumValue = rootBounds.width,
-                )
-                val offsetLeft = (spec.offsetLeft + localMoveOffset.x).coerceIn(
-                    minimumValue = 0.dp,
-                    maximumValue = rootBounds.width - width,
-                )
-                val offsetBottom = (spec.offsetBottom - localMoveOffset.y).coerceIn(
-                    minimumValue = 0.dp,
-                    maximumValue = rootBounds.height - (rowHeight * ImeWindowSpec.KeyboardHeightFactor),
-                )
-                ImeWindowSpec.Floating(rowHeight, width, offsetLeft, offsetBottom)
             }
         }
     }

@@ -14,21 +14,31 @@
  * limitations under the License.
  */
 
+@file:UseSerializers(DpSizeSerializer::class)
+
 package dev.patrickgold.florisboard.ime.window
 
-sealed interface ImeWindowSpec {
-    val props: ImeWindowProps
-    val rootInsets: ImeInsets
+import androidx.compose.ui.unit.Dp
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
+import org.florisboard.lib.compose.DpSizeSerializer
 
+sealed interface ImeWindowProps {
+    val rowHeight: Dp
+
+    @Serializable
     data class Fixed(
-        val mode: ImeWindowMode.Fixed,
-        override val props: ImeWindowProps.Fixed,
-        override val rootInsets: ImeInsets,
-    ) : ImeWindowSpec
+        override val rowHeight: Dp,
+        val paddingLeft: Dp,
+        val paddingRight: Dp,
+        val paddingBottom: Dp,
+    ) : ImeWindowProps
 
+    @Serializable
     data class Floating(
-        val mode: ImeWindowMode.Floating,
-        override val props: ImeWindowProps.Floating,
-        override val rootInsets: ImeInsets,
-    ) : ImeWindowSpec
+        override val rowHeight: Dp,
+        val keyboardWidth: Dp,
+        val offsetLeft: Dp,
+        val offsetBottom: Dp,
+    ) : ImeWindowProps
 }

@@ -24,22 +24,26 @@ import kotlinx.serialization.json.Json
 data class ImeWindowConfig(
     val mode: ImeWindowMode,
     val fixedMode: ImeWindowMode.Fixed,
-    val fixedSpecs: Map<ImeWindowMode.Fixed, ImeWindowSpec.Fixed> = emptyMap(),
+    val fixedProps: Map<ImeWindowMode.Fixed, ImeWindowProps.Fixed> = emptyMap(),
     val floatingMode: ImeWindowMode.Floating,
-    val floatingSpecs: Map<ImeWindowMode.Floating, ImeWindowSpec.Floating> = emptyMap(),
+    val floatingProps: Map<ImeWindowMode.Floating, ImeWindowProps.Floating> = emptyMap(),
 ) {
-    companion object {
-        val DefaultPortrait = ImeWindowConfig(
-            mode = ImeWindowMode.FIXED,
-            fixedMode = ImeWindowMode.Fixed.NORMAL,
-            floatingMode = ImeWindowMode.Floating.NORMAL,
-        )
+    fun getFixedPropsOrDefault(orientation: ImeOrientation): ImeWindowProps.Fixed {
+        val props = fixedProps[fixedMode]
+        if (props != null) return props
+        return when (orientation) {
+            ImeOrientation.PORTRAIT -> ImeWindowDefaults.PropsFixedPortrait[fixedMode]!!
+            ImeOrientation.LANDSCAPE -> ImeWindowDefaults.PropsFixedLandscape[fixedMode]!!
+        }
+    }
 
-        val DefaultLandscape = ImeWindowConfig(
-            mode = ImeWindowMode.FIXED,
-            fixedMode = ImeWindowMode.Fixed.NORMAL,
-            floatingMode = ImeWindowMode.Floating.NORMAL,
-        )
+    fun getFloatingPropsOrDefault(orientation: ImeOrientation): ImeWindowProps.Floating {
+        val props = floatingProps[floatingMode]
+        if (props != null) return props
+        return when (orientation) {
+            ImeOrientation.PORTRAIT -> ImeWindowDefaults.PropsFloatingPortrait[floatingMode]!!
+            ImeOrientation.LANDSCAPE -> ImeWindowDefaults.PropsFloatingLandscape[floatingMode]!!
+        }
     }
 
     object Serializer : PreferenceSerializer<ImeWindowConfig> {
@@ -52,5 +56,19 @@ data class ImeWindowConfig(
         override fun deserialize(value: String): ImeWindowConfig {
             return coercingJson.decodeFromString(value)
         }
+    }
+
+    companion object {
+        val DefaultPortrait = ImeWindowConfig(
+            mode = ImeWindowMode.FIXED,
+            fixedMode = ImeWindowMode.Fixed.NORMAL,
+            floatingMode = ImeWindowMode.Floating.NORMAL,
+        )
+
+        val DefaultLandscape = ImeWindowConfig(
+            mode = ImeWindowMode.FIXED,
+            fixedMode = ImeWindowMode.Fixed.NORMAL,
+            floatingMode = ImeWindowMode.Floating.NORMAL,
+        )
     }
 }
