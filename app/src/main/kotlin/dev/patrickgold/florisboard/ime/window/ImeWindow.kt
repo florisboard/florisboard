@@ -17,11 +17,12 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -49,6 +51,7 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
@@ -218,7 +221,6 @@ private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, move
 @Composable
 private fun BoxScope.FloatingDockToFixedIndicator() {
     val ims = LocalFlorisImeService.current
-    val density = LocalDensity.current
 
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
     val editorState by ims.windowController.editor.state.collectAsState()
@@ -231,24 +233,36 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
         }
     }
 
+    val animatedHeight by animateDpAsState(
+        targetValue = if (visible) windowSpec.floatingDockHeight else 0.dp,
+        animationSpec = tween(durationMillis = 150),
+        finishedListener = { height ->
+            if (height == windowSpec.floatingDockHeight) {
+                ims.inputFeedbackController.keyPress()
+            }
+        },
+    )
+
+    //TODO: Make snygg themeable
+    val color = Color.Gray
+
+
     AnimatedVisibility(
         visible = visible,
         modifier = Modifier
-            .align(Alignment.BottomStart)
+            .align(Alignment.BottomCenter)
             .fillMaxWidth()
-            .height(windowSpec.floatingDockHeight),
-        enter = fadeIn() + slideInVertically {
-            with(density) { windowSpec.floatingDockHeight.roundToPx() }
-        },
-        exit = fadeOut() + slideOutVertically {
-            with(density) { windowSpec.floatingDockHeight.roundToPx() }
-        },
+            .wrapContentHeight(),
+        enter = fadeIn(),
+        exit = fadeOut(),
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .height(animatedHeight)
+                .navigationBarsPadding()
+                .border(2.dp, color)
                 .alpha(0.5f)
-                .background(Color.Gray)
+                .background(color),
         )
     }
 }
