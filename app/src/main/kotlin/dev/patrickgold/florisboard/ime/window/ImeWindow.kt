@@ -86,10 +86,10 @@ import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.fold
 import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.compose.toDp
 import org.florisboard.lib.compose.toDpRect
-import org.florisboard.lib.compose.toggeled
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 
@@ -213,13 +213,7 @@ fun BoxScope.ImeWindow() {
                 modifier = Modifier.matchParentSize(),
             )
         }
-        when (val spec = windowSpec) {
-            is ImeWindowSpec.Fixed if spec.mode == ImeWindowMode.Fixed.COMPACT -> {
-                OneHandPanel()
-            }
-
-            else -> {/*Do nothing*/}
-        }
+        OneHandedPanel()
         ProvideKeyboardRowBaseHeight(windowSpec) {
             ImeInnerWindow(state, windowSpec, modeModifier)
         }
@@ -426,52 +420,51 @@ private fun FloatingResizeHandle(
 }
 
 @Composable
-private fun BoxScope.OneHandPanel() {
+private fun BoxScope.OneHandedPanel() {
     val ims = LocalFlorisImeService.current
     val windowController = ims.windowController
     val windowSpec by windowController.activeWindowSpec.collectAsState()
+
+    when (val spec = windowSpec) {
+        is ImeWindowSpec.Fixed if spec.mode == ImeWindowMode.Fixed.COMPACT -> {
+            OneHandedPanel(spec)
+        }
+        else -> { }
+    }
+}
+
+@Composable
+private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
+    val ims = LocalFlorisImeService.current
+    val windowController = ims.windowController
     val activeOrientation by windowController.activeOrientation.collectAsState()
 
-    val showToLeftIcon by remember {
-        derivedStateOf {
-            val spec = windowSpec
-            spec is ImeWindowSpec.Fixed &&
-                spec.props.paddingLeft > spec.props.paddingRight
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .matchParentSize()
-    ) {
+    Box(Modifier.matchParentSize()) {
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) {
-                    Modifier
-                        .safeDrawingPadding()
-                        .padding(bottom = it.paddingBottom)
-                        .toggeled(
-                            condition = it.paddingLeft >= it.paddingRight,
-                            ifTrue = {
-                                Modifier
-                                    .width(it.paddingLeft)
-                                    .align(Alignment.CenterStart)
-                            },
-                            ifFalse = {
-                                Modifier
-                                    .width(it.paddingRight)
-                                    .align(Alignment.CenterEnd)
-                            }
-                        )
-                },
+                .safeDrawingPadding()
+                .padding(bottom = spec.props.paddingBottom)
+                .fold(
+                    condition = spec.props.paddingLeft >= spec.props.paddingRight,
+                    ifTrue = {
+                        Modifier
+                            .width(spec.props.paddingLeft)
+                            .align(Alignment.CenterStart)
+                    },
+                    ifFalse = {
+                        Modifier
+                            .width(spec.props.paddingRight)
+                            .align(Alignment.CenterEnd)
+                    }
+                ),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             FlorisIconButton(
                 onClick = {
-                    ims.windowController.updateWindowConfig { currentConfig ->
-                        currentConfig.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+                    ims.windowController.updateWindowConfig { config ->
+                        config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
                     }
                 },
                 size = DpSize(40.dp, 40.dp)
@@ -480,14 +473,14 @@ private fun BoxScope.OneHandPanel() {
             }
             FlorisIconButton(
                 onClick = {
-                    windowController.updateWindowConfig { currentConfig ->
-                        val fixedProps = currentConfig.getFixedPropsOrDefault(activeOrientation)
+                    windowController.updateWindowConfig { config ->
+                        val fixedProps = config.getFixedPropsOrDefault(activeOrientation)
                         val newProps = fixedProps.copy(
                             paddingLeft = fixedProps.paddingRight,
                             paddingRight = fixedProps.paddingLeft,
                         )
-                        currentConfig.copy(
-                            fixedProps = currentConfig.fixedProps.plus(
+                        config.copy(
+                            fixedProps = config.fixedProps.plus(
                                 ImeWindowMode.Fixed.COMPACT to newProps,
                             ),
                         )
@@ -495,7 +488,7 @@ private fun BoxScope.OneHandPanel() {
                 },
                 size = DpSize(40.dp, 40.dp)
             ) {
-                if (showToLeftIcon) {
+                if (spec.props.paddingLeft > spec.props.paddingRight) {
                     Icon(Icons.Default.ChevronLeft, null)
                 } else {
                     Icon(Icons.Default.ChevronRight, null)

@@ -747,6 +747,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
                 val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
                 windowController.updateWindowConfig { config ->
+                    if (config.fixedMode == ImeWindowMode.Fixed.COMPACT) {
+                        return@updateWindowConfig config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+                    }
                     val compactConfig = config.copy(fixedMode = ImeWindowMode.Fixed.COMPACT)
                     val size = compactConfig.getFixedPropsOrDefault(windowController.activeOrientation.value)
                     val newSize = size.copy(
@@ -763,6 +766,9 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
                 val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
                 windowController.updateWindowConfig { config ->
+                    if (config.fixedMode == ImeWindowMode.Fixed.COMPACT) {
+                        return@updateWindowConfig config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+                    }
                     val compactConfig = config.copy(fixedMode = ImeWindowMode.Fixed.COMPACT)
                     val size = compactConfig.getFixedPropsOrDefault(windowController.activeOrientation.value)
                     val newSize = size.copy(

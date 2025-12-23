@@ -22,12 +22,12 @@ import androidx.compose.ui.Modifier
 @Composable
 fun Modifier.conditional(
     condition: Boolean,
-    modifier: @Composable Modifier.() -> Modifier
+    modifier: @Composable Modifier.() -> Modifier,
 ): Modifier =
     if (condition) then(modifier(Modifier)) else this
 
 @Composable
-fun Modifier.toggeled(
+fun Modifier.fold(
     condition: Boolean,
     ifTrue: @Composable () -> Modifier,
     ifFalse: @Composable () -> Modifier,
@@ -37,6 +37,6 @@ fun Modifier.toggeled(
 @Composable
 inline fun <reified T : Any> Modifier.ifIsInstance(
     value: Any,
-    modifier: @Composable (T) -> Modifier
+    modifier: @Composable (T) -> Modifier,
 ): Modifier =
     if (value is T) then(modifier(value)) else this
