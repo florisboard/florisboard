@@ -67,6 +67,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
@@ -369,13 +370,16 @@ private fun FloatingResizeHandle(
         modifier = modifier
             .size(ImeWindowDefaults.ResizeHandleTouchSize)
             .pointerInput(Unit) {
+                var unconsumed = DpOffset.Zero
                 detectDragGestures(
                     onDragStart = {
                         ims.windowController.editor.beginResizeGesture()
                     },
                     onDrag = { change, dragAmount ->
                         change.consume()
-                        ims.windowController.editor.resizeBy(handle, dragAmount.toDp())
+                        unconsumed += dragAmount.toDp()
+                        val consumed = ims.windowController.editor.resizeBy(handle, unconsumed)
+                        unconsumed -= consumed
                     },
                     onDragEnd = {
                         ims.windowController.editor.endResizeGesture()

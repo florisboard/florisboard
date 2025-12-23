@@ -35,7 +35,7 @@ sealed interface ImeWindowSpec {
 
     fun movedBy(offset: DpOffset): ImeWindowSpec
 
-    fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset): ImeWindowSpec
+    fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
     data class Fixed(
         val mode: ImeWindowMode.Fixed,
@@ -53,9 +53,9 @@ sealed interface ImeWindowSpec {
         override fun resizedBy(
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
-        ): ImeWindowSpec {
+        ): Pair<ImeWindowSpec, DpOffset> {
             // TODO impl
-            return this
+            return this to offset
         }
     }
 
@@ -78,8 +78,8 @@ sealed interface ImeWindowSpec {
         override fun resizedBy(
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
-        ): ImeWindowSpec {
-            val rootBounds = rootInsets?.boundsDp ?: return this
+        ): Pair<ImeWindowSpec, DpOffset> {
+            val rootBounds = rootInsets?.boundsDp ?: return this to DpOffset.Zero
 
             var keyboardHeight = props.rowHeight * ImeWindowDefaults.KeyboardHeightFactor
             var keyboardWidth = props.keyboardWidth
@@ -114,7 +114,17 @@ sealed interface ImeWindowSpec {
                 offsetLeft = offsetLeft,
                 offsetBottom = offsetBottom,
             )
-            return copy(props = newProps)
+            val consumed = DpOffset(
+                x = when {
+                    handle.left -> -(newProps.keyboardWidth - props.keyboardWidth)
+                    else -> (newProps.keyboardWidth - props.keyboardWidth)
+                },
+                y = when {
+                    handle.top -> -(newProps.rowHeight - props.rowHeight)
+                    else -> (newProps.rowHeight - props.rowHeight)
+                } * ImeWindowDefaults.KeyboardHeightFactor,
+            )
+            return copy(props = newProps) to consumed
         }
     }
 }

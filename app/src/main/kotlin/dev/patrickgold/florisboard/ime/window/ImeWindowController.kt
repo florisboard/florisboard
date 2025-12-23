@@ -287,10 +287,14 @@ class ImeWindowController(val scope: CoroutineScope) {
             syncFromPrefs()
         }
 
-        fun resizeBy(handle: ImeWindowResizeHandle, offset: DpOffset) {
+        fun resizeBy(handle: ImeWindowResizeHandle, offset: DpOffset): DpOffset {
+            var consumed = DpOffset.Zero
             activeWindowSpec.update { spec ->
-                spec.resizedBy(handle, offset)
+                val (newSpec, newConsumed) = spec.resizedBy(handle, offset)
+                consumed = newConsumed
+                newSpec
             }
+            return consumed
         }
 
         fun endResizeGesture() {
