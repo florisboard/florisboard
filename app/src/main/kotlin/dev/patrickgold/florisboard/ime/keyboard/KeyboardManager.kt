@@ -58,6 +58,7 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
+import dev.patrickgold.florisboard.ime.window.ImeWindowProps
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -745,40 +746,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
             }
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.updateWindowConfig { config ->
-                    if (config.fixedMode == ImeWindowMode.Fixed.COMPACT) {
-                        return@updateWindowConfig config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
-                    }
-                    val compactConfig = config.copy(fixedMode = ImeWindowMode.Fixed.COMPACT)
-                    val size = compactConfig.getFixedPropsOrDefault(windowController.activeOrientation.value)
-                    val newSize = size.copy(
+                compactLayoutToSide { size ->
+                    size.copy(
                         paddingLeft = min(size.paddingLeft, size.paddingRight),
                         paddingRight = max(size.paddingLeft, size.paddingRight),
-                    )
-                    compactConfig.copy(
-                        fixedProps = compactConfig.fixedProps.plus(
-                            ImeWindowMode.Fixed.COMPACT to newSize,
-                        ),
                     )
                 }
             }
             KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.updateWindowConfig { config ->
-                    if (config.fixedMode == ImeWindowMode.Fixed.COMPACT) {
-                        return@updateWindowConfig config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
-                    }
-                    val compactConfig = config.copy(fixedMode = ImeWindowMode.Fixed.COMPACT)
-                    val size = compactConfig.getFixedPropsOrDefault(windowController.activeOrientation.value)
-                    val newSize = size.copy(
+                compactLayoutToSide { size ->
+                    size.copy(
                         paddingLeft = max(size.paddingLeft, size.paddingRight),
                         paddingRight = min(size.paddingLeft, size.paddingRight),
-                    )
-                    compactConfig.copy(
-                        fixedProps = compactConfig.fixedProps.plus(
-                            ImeWindowMode.Fixed.COMPACT to newSize,
-                        ),
                     )
                 }
             }
@@ -908,6 +887,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         val devtoolsEnabled = prefs.devtools.enabled.get()
         activeState.batchEdit {
             activeState.debugShowDragAndDropHelpers = devtoolsEnabled && prefs.devtools.showDragAndDropHelpers.get()
+        }
+    }
+
+    private inline fun compactLayoutToSide(crossinline calculateSide: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed) {
+        val windowController = FlorisImeService.windowControllerOrNull() ?: return
+        windowController.updateWindowConfig { config ->
+            if (config.fixedMode == ImeWindowMode.Fixed.COMPACT) {
+                return@updateWindowConfig config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+            }
+            val compactConfig = config.copy(fixedMode = ImeWindowMode.Fixed.COMPACT)
+            val size = compactConfig.getFixedPropsOrDefault(windowController.activeOrientation.value)
+            compactConfig.copy(
+                fixedProps = compactConfig.fixedProps.plus(
+                    ImeWindowMode.Fixed.COMPACT to calculateSide(size),
+                ),
+            )
         }
     }
 
