@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.coerceAtLeast
+import androidx.compose.ui.unit.coerceAtMost
+import androidx.compose.ui.unit.width
 
 sealed interface ImeWindowSpec {
     val props: ImeWindowProps
@@ -32,7 +35,7 @@ sealed interface ImeWindowSpec {
 
     fun movedBy(offset: DpOffset): ImeWindowSpec
 
-    fun resizedTo(positionInRoot: DpOffset, handle: ImeWindowResizeHandle): ImeWindowSpec
+    fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset): ImeWindowSpec
 
     data class Fixed(
         val mode: ImeWindowMode.Fixed,
@@ -47,9 +50,9 @@ sealed interface ImeWindowSpec {
             return this
         }
 
-        override fun resizedTo(
-            positionInRoot: DpOffset,
+        override fun resizedBy(
             handle: ImeWindowResizeHandle,
+            offset: DpOffset,
         ): ImeWindowSpec {
             // TODO impl
             return this
@@ -72,30 +75,46 @@ sealed interface ImeWindowSpec {
             return copy(props = newProps.constrained(rootInsets))
         }
 
-        override fun resizedTo(
-            positionInRoot: DpOffset,
+        override fun resizedBy(
             handle: ImeWindowResizeHandle,
+            offset: DpOffset,
         ): ImeWindowSpec {
-            // TODO calculate
-            val newProps = props.copy(
-                rowHeight = when {
-                    else -> props.rowHeight
-                },
-                keyboardWidth = when {
-                    else -> props.keyboardWidth
-                },
-                offsetLeft = when {
-                    else -> props.offsetLeft
-                },
-                offsetBottom = when {
-                    else -> props.offsetBottom
-                },
-            )
-            val newPropsConstrained = newProps.constrained(rootInsets)
-            return when {
-                newProps == newPropsConstrained -> copy(props = newProps)
-                else -> this
+            val rootBounds = rootInsets?.boundsDp ?: return this
+
+            var keyboardHeight = props.rowHeight * ImeWindowDefaults.KeyboardHeightFactor
+            var keyboardWidth = props.keyboardWidth
+            var offsetLeft = props.offsetLeft
+            var offsetBottom = props.offsetBottom
+
+            if (handle.top) {
+                keyboardHeight = (keyboardHeight - offset.y)
+                    .coerceIn(ImeWindowDefaults.MinKeyboardHeight..ImeWindowDefaults.MaxKeyboardHeight)
+            } else if (handle.bottom) {
+                val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtLeast(-offsetBottom))
+                    .coerceIn(ImeWindowDefaults.MinKeyboardHeight..ImeWindowDefaults.MaxKeyboardHeight)
+                offsetBottom -= (newKeyboardHeight - keyboardHeight)
+                keyboardHeight = newKeyboardHeight
             }
+
+            if (handle.left) {
+                val newKeyboardWidth = (keyboardWidth - offset.x.coerceAtLeast(-offsetLeft))
+                    .coerceIn(ImeWindowDefaults.MinKeyboardWidth..ImeWindowDefaults.MaxKeyboardWidth)
+                    .coerceAtMost(rootBounds.width - offsetLeft)
+                offsetLeft -= (newKeyboardWidth - keyboardWidth)
+                keyboardWidth = newKeyboardWidth
+            } else if (handle.right) {
+                keyboardWidth = (keyboardWidth + offset.x)
+                    .coerceIn(ImeWindowDefaults.MinKeyboardWidth..ImeWindowDefaults.MaxKeyboardWidth)
+                    .coerceAtMost(rootBounds.width - offsetLeft)
+            }
+
+            val newProps = ImeWindowProps.Floating(
+                rowHeight = keyboardHeight / ImeWindowDefaults.KeyboardHeightFactor,
+                keyboardWidth = keyboardWidth,
+                offsetLeft = offsetLeft,
+                offsetBottom = offsetBottom,
+            )
+            return copy(props = newProps)
         }
     }
 }

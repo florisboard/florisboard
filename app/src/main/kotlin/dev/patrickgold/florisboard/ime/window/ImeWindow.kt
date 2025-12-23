@@ -25,8 +25,8 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -68,7 +68,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import dev.patrickgold.florisboard.R
@@ -363,25 +362,20 @@ private fun FloatingResizeHandle(
     modifier: Modifier,
 ) {
     val ims = LocalFlorisImeService.current
-    val density = LocalDensity.current
 
-    var handlePositionInRoot = DpOffset.Zero // no state on purpose
     val handleColor = Color.Red
 
     Box(
         modifier = modifier
             .size(ImeWindowDefaults.ResizeHandleTouchSize)
             .pointerInput(Unit) {
-                var pointerPositionInRoot = DpOffset.Zero
                 detectDragGestures(
-                    onDragStart = { initialPosition ->
-                        pointerPositionInRoot = handlePositionInRoot + initialPosition.toDp()
+                    onDragStart = {
                         ims.windowController.editor.beginResizeGesture()
                     },
                     onDrag = { change, dragAmount ->
                         change.consume()
-                        pointerPositionInRoot += dragAmount.toDp()
-                        ims.windowController.editor.resizeTo(pointerPositionInRoot, handle)
+                        ims.windowController.editor.resizeBy(handle, dragAmount.toDp())
                     },
                     onDragEnd = {
                         ims.windowController.editor.endResizeGesture()
@@ -390,9 +384,6 @@ private fun FloatingResizeHandle(
                         ims.windowController.editor.cancelGesture()
                     },
                 )
-            }
-            .onGloballyPositioned { coords ->
-                handlePositionInRoot = with(density) { coords.boundsInRoot().topLeft.toDp() }
             }
             .drawWithContent {
                 drawContent()

@@ -19,10 +19,10 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.width
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
@@ -61,12 +61,12 @@ sealed interface ImeWindowProps {
         ): Floating {
             val rootBounds = rootInsets?.boundsDp ?: return this
             val newRowHeight = rowHeight.coerceIn(
-                minimumValue = (rootBounds.height / (3f * ImeWindowDefaults.KeyboardHeightFactor)),
-                maximumValue = (rootBounds.height / (2f * ImeWindowDefaults.KeyboardHeightFactor)),
+                minimumValue = min(ImeWindowDefaults.MinKeyboardHeight / ImeWindowDefaults.KeyboardHeightFactor, rootBounds.height),
+                maximumValue = min(ImeWindowDefaults.MaxKeyboardHeight / ImeWindowDefaults.KeyboardHeightFactor, rootBounds.height),
             )
             val newKeyboardWidth = keyboardWidth.coerceIn(
-                minimumValue = ImeWindowDefaults.MinKeyboardWidth.coerceAtMost(rootBounds.width),
-                maximumValue = rootBounds.width,
+                minimumValue = min(ImeWindowDefaults.MinKeyboardWidth, rootBounds.width),
+                maximumValue = min(ImeWindowDefaults.MaxKeyboardWidth, rootBounds.width),
             )
             val newOffsetLeft = offsetLeft.coerceIn(
                 minimumValue = 0.dp,

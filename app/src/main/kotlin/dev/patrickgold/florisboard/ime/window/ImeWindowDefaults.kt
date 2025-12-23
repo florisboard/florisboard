@@ -27,7 +27,11 @@ object ImeWindowDefaults {
     const val SmartbarHeightFactor = 0.753f
     const val KeyboardHeightFactor = SmartbarHeightFactor + 4f
 
-    val MinKeyboardWidth = 300.dp
+    val MinKeyboardWidth = 200.dp
+    val MaxKeyboardWidth = 500.dp
+
+    val MinKeyboardHeight = 175.dp
+    val MaxKeyboardHeight = 375.dp
 
     val FloatingDockHeightPortrait = 80.dp
     val FloatingDockHeightLandscape = 50.dp

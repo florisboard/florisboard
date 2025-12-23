@@ -174,6 +174,7 @@ class ImeWindowController(val scope: CoroutineScope) {
     }
 
     fun onWindowHidden(): Boolean {
+        editor.disable()
         return isWindowShown.compareAndSet(expect = true, update = false)
     }
 
@@ -286,9 +287,9 @@ class ImeWindowController(val scope: CoroutineScope) {
             syncFromPrefs()
         }
 
-        fun resizeTo(positionInRoot: DpOffset, handle: ImeWindowResizeHandle) {
+        fun resizeBy(handle: ImeWindowResizeHandle, offset: DpOffset) {
             activeWindowSpec.update { spec ->
-                spec.resizedTo(positionInRoot, handle)
+                spec.resizedBy(handle, offset)
             }
         }
 
