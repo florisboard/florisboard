@@ -128,6 +128,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         val rootBounds = rootInsets.boundsPx
         val windowBounds = windowInsets.boundsPx
         val windowSpec = activeWindowSpec.value
+        val editorState = editor.state.value
 
         when (windowSpec) {
             is ImeWindowSpec.Fixed -> {
@@ -140,7 +141,7 @@ class ImeWindowController(val scope: CoroutineScope) {
             }
         }
         when {
-            isFullscreenInputRequired -> {
+            isFullscreenInputRequired || editorState.isEnabled -> {
                 outInsets.touchableRegion.set(
                     rootBounds.left,
                     rootBounds.top,
@@ -230,6 +231,15 @@ class ImeWindowController(val scope: CoroutineScope) {
             syncFromPrefs()
         }
 
+        fun disableIfNoGestureInProgress() {
+            val newState = state.updateAndGet { state ->
+                if (state.isAnyGesture) state else EditorState.INACTIVE
+            }
+            if (!newState.isEnabled) {
+                syncFromPrefs()
+            }
+        }
+
         fun toggleEnabled() {
             state.update { state ->
                 editorStateOf(!state.isEnabled)
@@ -248,23 +258,27 @@ class ImeWindowController(val scope: CoroutineScope) {
             }
         }
 
-        fun endMoveGesture(keepEnabled: Boolean = true) {
+        fun endMoveGesture() {
             val spec = activeWindowSpec.value
-            state.value = editorStateOf(keepEnabled)
+            var keepEnabled = true
             updateWindowConfig { config ->
                 when (spec) {
                      is ImeWindowSpec.Fixed -> {
+                         keepEnabled = true
                          config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
                      }
                     is ImeWindowSpec.Floating -> {
                         if (spec.props.offsetBottom <= spec.floatingDockHeight) {
+                            keepEnabled = false
                             config.copy(mode = ImeWindowMode.FIXED)
                         } else {
+                            keepEnabled = true
                             config.copy(floatingProps = config.floatingProps.plus(spec.mode to spec.props))
                         }
                     }
                 }
             }
+            state.value = editorStateOf(keepEnabled)
         }
 
         fun beginResizeGesture() {
@@ -272,29 +286,32 @@ class ImeWindowController(val scope: CoroutineScope) {
             syncFromPrefs()
         }
 
-        fun resizeTo(offset: DpOffset, handle: ImeWindowResizeHandle) {
+        fun resizeTo(positionInRoot: DpOffset, handle: ImeWindowResizeHandle) {
             activeWindowSpec.update { spec ->
-                spec.resizedTo(offset, handle)
+                spec.resizedTo(positionInRoot, handle)
             }
         }
 
-        fun endResizeGesture(keepEnabled: Boolean = true) {
+        fun endResizeGesture() {
             val spec = activeWindowSpec.value
-            state.value = editorStateOf(keepEnabled)
+            var keepEnabled = true
             updateWindowConfig { config ->
                 when (spec) {
                     is ImeWindowSpec.Fixed -> {
+                        keepEnabled = true
                         config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
                     }
                     is ImeWindowSpec.Floating -> {
+                        keepEnabled = true
                         config.copy(floatingProps = config.floatingProps.plus(spec.mode to spec.props))
                     }
                 }
             }
+            state.value = editorStateOf(keepEnabled)
         }
 
-        fun cancelGesture(keepEnabled: Boolean = true) {
-            state.value = editorStateOf(keepEnabled)
+        fun cancelGesture() {
+            state.value = EditorState.INACTIVE
             syncFromPrefs()
         }
 
@@ -316,6 +333,9 @@ class ImeWindowController(val scope: CoroutineScope) {
         INACTIVE,
         ACTIVE(isEnabled = true),
         ACTIVE_MOVE_GESTURE(isEnabled = true, isMoveGesture = true),
-        ACTIVE_RESIZE_GESTURE(isEnabled = true, isResizeGesture = true),
+        ACTIVE_RESIZE_GESTURE(isEnabled = true, isResizeGesture = true);
+
+        val isAnyGesture: Boolean
+            get() = isMoveGesture || isResizeGesture
     }
 }

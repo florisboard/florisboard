@@ -32,6 +32,10 @@ object ImeWindowDefaults {
     val FloatingDockHeightPortrait = 80.dp
     val FloatingDockHeightLandscape = 50.dp
 
+    val ResizeHandleTouchSize = 32.dp
+    val ResizeHandleThickness = ResizeHandleTouchSize / 4
+    val ResizeHandleCornerRadius = ResizeHandleThickness / 2
+
     val FallbackSpec = ImeWindowSpec.Fixed(
         mode = ImeWindowMode.Fixed.NORMAL,
         props = ImeWindowProps.Fixed(

@@ -32,7 +32,7 @@ sealed interface ImeWindowSpec {
 
     fun movedBy(offset: DpOffset): ImeWindowSpec
 
-    fun resizedTo(offset: DpOffset, handle: ImeWindowResizeHandle): ImeWindowSpec
+    fun resizedTo(positionInRoot: DpOffset, handle: ImeWindowResizeHandle): ImeWindowSpec
 
     data class Fixed(
         val mode: ImeWindowMode.Fixed,
@@ -48,7 +48,7 @@ sealed interface ImeWindowSpec {
         }
 
         override fun resizedTo(
-            offset: DpOffset,
+            positionInRoot: DpOffset,
             handle: ImeWindowResizeHandle,
         ): ImeWindowSpec {
             // TODO impl
@@ -73,11 +73,29 @@ sealed interface ImeWindowSpec {
         }
 
         override fun resizedTo(
-            offset: DpOffset,
+            positionInRoot: DpOffset,
             handle: ImeWindowResizeHandle,
         ): ImeWindowSpec {
-            // TODO impl
-            return this
+            // TODO calculate
+            val newProps = props.copy(
+                rowHeight = when {
+                    else -> props.rowHeight
+                },
+                keyboardWidth = when {
+                    else -> props.keyboardWidth
+                },
+                offsetLeft = when {
+                    else -> props.offsetLeft
+                },
+                offsetBottom = when {
+                    else -> props.offsetBottom
+                },
+            )
+            val newPropsConstrained = newProps.constrained(rootInsets)
+            return when {
+                newProps == newPropsConstrained -> copy(props = newProps)
+                else -> this
+            }
         }
     }
 }
