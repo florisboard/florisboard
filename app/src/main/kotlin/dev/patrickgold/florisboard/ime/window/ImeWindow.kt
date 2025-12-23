@@ -17,8 +17,6 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -34,7 +32,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
@@ -50,10 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
@@ -64,7 +58,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.coerceAtLeast
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
@@ -77,8 +72,6 @@ import dev.patrickgold.florisboard.ime.sheet.BottomSheetWindow
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
-import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.drawBorder
@@ -116,7 +109,7 @@ fun ImeRootWindow() {
         DevtoolsOverlay()
         ImeWindow()
         BottomSheetWindow()
-        SystemUiIme()
+        ImeSystemUi()
     }
 }
 
@@ -128,14 +121,6 @@ fun BoxScope.ImeWindow() {
 
     val state by keyboardManager.activeState.collectAsState()
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val navBarFrameView = remember { ims.findNavBarFrameOrNull() }
-
-    LaunchedEffect(windowSpec) {
-        navBarFrameView?.scaleY = when (windowSpec) {
-            is ImeWindowSpec.Fixed -> 1f
-            is ImeWindowSpec.Floating -> 0f
-        }
-    }
 
     val layoutDirection = LocalLayoutDirection.current
     LaunchedEffect(layoutDirection) {
@@ -215,7 +200,7 @@ fun BoxScope.ImeWindow() {
         ProvideKeyboardRowBaseHeight(windowSpec) {
             ImeInnerWindow(state, windowSpec, modeModifier)
         }
-        FloatingResizeHandles()
+        ImeWindowResizeHandlesFloating()
     }
 }
 
@@ -230,9 +215,9 @@ private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, move
                 Modifier
                     .safeDrawingPadding()
                     .padding(
-                        start = props.paddingLeft,
-                        end = props.paddingRight,
-                        bottom = props.paddingBottom,
+                        start = props.paddingLeft.coerceAtLeast(0.dp),
+                        end = props.paddingRight.coerceAtLeast(0.dp),
+                        bottom = props.paddingBottom.coerceAtLeast(0.dp),
                     )
             },
         allowClip = false,
@@ -244,9 +229,10 @@ private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, move
                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
             }
             if (windowSpec is ImeWindowSpec.Floating) {
-                FloatingSystemUiIme(moveModifier)
+                ImeSystemUiFloating(moveModifier)
             }
         }
+        ImeWindowResizeHandlesFixed(moveModifier)
     }
 }
 
@@ -309,125 +295,6 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
                     topLeft = animatedTopLeft,
                     stroke = Stroke(windowSpec.floatingDockToFixedBorder.toPx()),
                 )
-            },
-    )
-}
-
-@Composable
-private fun BoxScope.FloatingResizeHandles() {
-    val ims = LocalFlorisImeService.current
-
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val editorState by ims.windowController.editor.state.collectAsState()
-
-    val visible by remember {
-        derivedStateOf {
-            editorState.isEnabled && !editorState.isMoveGesture && windowSpec is ImeWindowSpec.Floating
-        }
-    }
-    val animatedAlpha by animateFloatAsState(
-        targetValue = if (visible) 1f else 0f,
-        animationSpec = tween(350),
-    )
-    val alphaModifier = Modifier.graphicsLayer { alpha = animatedAlpha }
-
-    val offset = ImeWindowDefaults.ResizeHandleTouchOffset
-    if (visible) {
-        FloatingResizeHandle(
-            handle = ImeWindowResizeHandle.TOP_LEFT,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(-offset, -offset)
-                .then(alphaModifier),
-        )
-        FloatingResizeHandle(
-            handle = ImeWindowResizeHandle.TOP_RIGHT,
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .offset(offset, -offset)
-                .then(alphaModifier),
-        )
-        FloatingResizeHandle(
-            handle = ImeWindowResizeHandle.BOTTOM_RIGHT,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .offset(offset, offset)
-                .then(alphaModifier),
-        )
-        FloatingResizeHandle(
-            handle = ImeWindowResizeHandle.BOTTOM_LEFT,
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .offset(-offset, offset)
-                .then(alphaModifier),
-        )
-    }
-}
-
-@Composable
-private fun FloatingResizeHandle(
-    handle: ImeWindowResizeHandle,
-    modifier: Modifier,
-) {
-    val ims = LocalFlorisImeService.current
-
-    val handleColor = Color.Red
-
-    Box(
-        modifier = modifier
-            .size(ImeWindowDefaults.ResizeHandleTouchSize)
-            .pointerInput(Unit) {
-                var unconsumed = DpOffset.Zero
-                detectDragGestures(
-                    onDragStart = {
-                        ims.windowController.editor.beginResizeGesture()
-                    },
-                    onDrag = { change, dragAmount ->
-                        change.consume()
-                        unconsumed += dragAmount.toDp()
-                        val consumed = ims.windowController.editor.resizeBy(handle, unconsumed)
-                        unconsumed -= consumed
-                    },
-                    onDragEnd = {
-                        ims.windowController.editor.endResizeGesture()
-                    },
-                    onDragCancel = {
-                        ims.windowController.editor.cancelGesture()
-                    },
-                )
-            }
-            .drawWithContent {
-                drawContent()
-                val thickness = ImeWindowDefaults.ResizeHandleThickness.toPx()
-                val cornerRadius = ImeWindowDefaults.ResizeHandleCornerRadius.toPx().let { CornerRadius(it, it) }
-                if (handle.top || handle.bottom) {
-                    val handleSize = Size(
-                        width = size.width,
-                        height = thickness,
-                    )
-                    val topLeft = when {
-                        handle.bottom -> Offset(
-                            x = 0f,
-                            y = size.height - handleSize.height,
-                        )
-                        else -> Offset.Zero
-                    }
-                    drawRoundRect(handleColor, topLeft, handleSize, cornerRadius)
-                }
-                if (handle.left || handle.right) {
-                    val handleSize = Size(
-                        width = thickness,
-                        height = size.height,
-                    )
-                    val topLeft = when {
-                        handle.right -> Offset(
-                            x = size.width - handleSize.width,
-                            y = 0f,
-                        )
-                        else -> Offset.Zero
-                    }
-                    drawRoundRect(handleColor, topLeft, handleSize, cornerRadius)
-                }
             },
     )
 }
@@ -510,7 +377,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             SnyggIconButton(
                 elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
-                    // TODO: Implement resize
+                    ims.windowController.editor.toggleEnabled()
                 },
             ) {
                 SnyggIcon(imageVector = ImageVector.vectorResource(R.drawable.ic_resize))

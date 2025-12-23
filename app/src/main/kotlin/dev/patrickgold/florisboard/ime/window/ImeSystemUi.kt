@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.compose
+package dev.patrickgold.florisboard.ime.window
 
 import android.app.Activity
 import android.content.Context
@@ -40,6 +40,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,17 +51,25 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.window.LocalFlorisImeService
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.uriOrNull
 
 @Composable
-fun SystemUiIme() {
+fun ImeSystemUi() {
+    val ims = LocalFlorisImeService.current
+
+    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val isSystemNavbarVisible by remember {
+        derivedStateOf { windowSpec is ImeWindowSpec.Fixed }
+    }
+
     val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
@@ -73,6 +85,14 @@ fun SystemUiIme() {
     val window = view.context.findWindow()!!
     val windowInsetsController = WindowInsetsControllerCompat(window, view)
 
+    LaunchedEffect(isSystemNavbarVisible) {
+        if (isSystemNavbarVisible) {
+            windowInsetsController.show(WindowInsetsCompat.Type.captionBar())
+        } else {
+            windowInsetsController.hide(WindowInsetsCompat.Type.captionBar())
+        }
+    }
+
     LaunchedEffect(useDarkIcons, hasBackgroundImage) {
         windowInsetsController.isAppearanceLightNavigationBars = useDarkIcons
         if (AndroidVersion.ATLEAST_API29_Q) {
@@ -81,9 +101,8 @@ fun SystemUiIme() {
     }
 }
 
-
 @Composable
-fun FloatingSystemUiIme(moveModifier: Modifier) {
+fun ImeSystemUiFloating(moveModifier: Modifier) {
     val ims = LocalFlorisImeService.current
 
     Row(
@@ -118,7 +137,7 @@ fun FloatingSystemUiIme(moveModifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RowScope.NavigationPill(moveModifier: Modifier) {
+private fun RowScope.NavigationPill(moveModifier: Modifier) {
     val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
@@ -155,7 +174,7 @@ fun RowScope.NavigationPill(moveModifier: Modifier) {
     }
 }
 
-tailrec fun Context.findWindow(): Window? {
+private tailrec fun Context.findWindow(): Window? {
     val context = this
     if (context is Activity) return context.window
     if (context is InputMethodService) return context.window?.window

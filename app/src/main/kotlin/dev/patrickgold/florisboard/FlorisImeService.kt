@@ -58,7 +58,6 @@ import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
-import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -81,7 +80,6 @@ import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
@@ -94,6 +92,7 @@ import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import java.lang.ref.WeakReference
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -298,6 +297,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
+        windowController.onConfigurationChanged(resources.configuration)
         subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
@@ -548,16 +548,6 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
-    }
-
-    fun findNavBarFrameOrNull(): View? {
-        val decorView = window?.window?.peekDecorView() ?: return null
-        if (decorView !is ViewGroup) {
-            return null
-        }
-        return decorView.children.firstOrNull { child ->
-            child is ViewGroup && child.findViewById<View>(android.R.id.content) == null
-        }
     }
 
     private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {

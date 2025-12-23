@@ -19,32 +19,32 @@ package dev.patrickgold.florisboard.ime.window
 import androidx.compose.ui.unit.dp
 
 object ImeWindowDefaults {
-    val RowHeightPortrait = 55.dp
-    val RowHeightLandscape = 45.dp
-    val CompactOffsetPortrait = 55.dp
-    val CompactOffsetLandscape = 55.dp
+    val RowHeight = ByOrientation(portrait = 55.dp, landscape = 45.dp)
+    val CompactOffset = ByOrientation(portrait = 55.dp, landscape = 55.dp)
 
     const val SmartbarHeightFactor = 0.753f
     const val KeyboardHeightFactor = SmartbarHeightFactor + 4f
 
-    val MinKeyboardWidth = 200.dp
+    val MinKeyboardWidth = 250.dp
     val MaxKeyboardWidth = 500.dp
 
     val MinKeyboardHeight = 175.dp
     val MaxKeyboardHeight = 375.dp
 
-    val FloatingDockToFixedHeight = PerOrientation(portrait = 80.dp, landscape = 50.dp)
-    val FloatingDockToFixedBorder = PerOrientation(portrait = 2.dp, landscape = 2.dp)
+    val FloatingDockToFixedHeight = ByOrientation(portrait = 80.dp, landscape = 50.dp)
+    val FloatingDockToFixedBorder = ByOrientation(portrait = 2.dp, landscape = 2.dp)
 
-    val ResizeHandleTouchSize = 32.dp
-    val ResizeHandleTouchOffset = 32.dp / 2
-    val ResizeHandleThickness = ResizeHandleTouchSize / 4
-    val ResizeHandleCornerRadius = ResizeHandleThickness / 2
+    val ResizeHandleTouchSize = 64.dp
+    val ResizeHandleTouchOffsetFloating = ResizeHandleTouchSize / 2
+    val ResizeHandleDrawSize = 32.dp
+    val ResizeHandleDrawPadding = (ResizeHandleTouchSize - ResizeHandleDrawSize) / 2
+    val ResizeHandleDrawThickness = ResizeHandleDrawSize / 4
+    val ResizeHandleDrawCornerRadius = ResizeHandleDrawSize / 2
 
     val FallbackSpec = ImeWindowSpec.Fixed(
         mode = ImeWindowMode.Fixed.NORMAL,
         props = ImeWindowProps.Fixed(
-            rowHeight = RowHeightPortrait,
+            rowHeight = RowHeight.portrait,
             paddingLeft = 0.dp,
             paddingRight = 0.dp,
             paddingBottom = 0.dp,
@@ -55,19 +55,19 @@ object ImeWindowDefaults {
 
     val PropsFixedPortrait = mapOf(
         ImeWindowMode.Fixed.NORMAL to ImeWindowProps.Fixed(
-            rowHeight = RowHeightPortrait,
+            rowHeight = RowHeight.portrait,
             paddingLeft = 0.dp,
             paddingRight = 0.dp,
             paddingBottom = 0.dp,
         ),
         ImeWindowMode.Fixed.COMPACT to ImeWindowProps.Fixed(
-            rowHeight = RowHeightPortrait * 0.8f,
-            paddingLeft = CompactOffsetPortrait,
+            rowHeight = RowHeight.portrait * 0.8f,
+            paddingLeft = CompactOffset.portrait,
             paddingRight = 0.dp,
-            paddingBottom = (RowHeightPortrait * KeyboardHeightFactor) * 0.2f,
+            paddingBottom = (RowHeight.portrait * KeyboardHeightFactor) * 0.2f,
         ),
         ImeWindowMode.Fixed.THUMBS to ImeWindowProps.Fixed(
-            rowHeight = RowHeightPortrait,
+            rowHeight = RowHeight.portrait,
             paddingLeft = 0.dp,
             paddingRight = 0.dp,
             paddingBottom = 0.dp,
@@ -76,7 +76,7 @@ object ImeWindowDefaults {
 
     val PropsFloatingPortrait = mapOf(
         ImeWindowMode.Floating.NORMAL to ImeWindowProps.Floating(
-            rowHeight = RowHeightPortrait,
+            rowHeight = RowHeight.portrait,
             keyboardWidth = 350.dp,
             offsetLeft = 30.dp,
             offsetBottom = 30.dp,
@@ -87,7 +87,7 @@ object ImeWindowDefaults {
 
     val PropsFloatingLandscape = PropsFloatingPortrait // TODO
 
-    data class PerOrientation<T>(
+    data class ByOrientation<T>(
         val portrait: T,
         val landscape: T,
     ) {
