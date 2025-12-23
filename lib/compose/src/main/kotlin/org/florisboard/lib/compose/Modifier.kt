@@ -27,8 +27,16 @@ fun Modifier.conditional(
     if (condition) then(modifier(Modifier)) else this
 
 @Composable
+fun Modifier.toggeled(
+    condition: Boolean,
+    ifTrue: @Composable () -> Modifier,
+    ifFalse: @Composable () -> Modifier,
+): Modifier =
+    if (condition) then(ifTrue()) else then(ifFalse())
+
+@Composable
 inline fun <reified T : Any> Modifier.ifIsInstance(
     value: Any,
-    modifier: @Composable Modifier.(T) -> Modifier
+    modifier: @Composable (T) -> Modifier
 ): Modifier =
-    if (value is T) then(modifier(Modifier, value)) else this
+    if (value is T) then(modifier(value)) else this

@@ -209,11 +209,11 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
         KeyCode.COMPACT_LAYOUT_TO_RIGHT,
-        KeyCode.TOGGLE_FLOATING_WINDOW -> {
-            context()?.vectorResource(id = R.drawable.ic_app_icon_debug_foreground) // TODO proper icon
-        }
         KeyCode.TOGGLE_COMPACT_LAYOUT -> {
             context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
+        }
+        KeyCode.TOGGLE_FLOATING_WINDOW -> {
+            context()?.vectorResource(id = R.drawable.ic_app_icon_debug_foreground) // TODO proper icon
         }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice
