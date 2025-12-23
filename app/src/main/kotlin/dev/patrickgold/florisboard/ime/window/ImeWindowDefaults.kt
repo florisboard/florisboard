@@ -33,10 +33,11 @@ object ImeWindowDefaults {
     val MinKeyboardHeight = 175.dp
     val MaxKeyboardHeight = 375.dp
 
-    val FloatingDockHeightPortrait = 80.dp
-    val FloatingDockHeightLandscape = 50.dp
+    val FloatingDockToFixedHeight = PerOrientation(portrait = 80.dp, landscape = 50.dp)
+    val FloatingDockToFixedBorder = PerOrientation(portrait = 2.dp, landscape = 2.dp)
 
     val ResizeHandleTouchSize = 32.dp
+    val ResizeHandleTouchOffset = 32.dp / 2
     val ResizeHandleThickness = ResizeHandleTouchSize / 4
     val ResizeHandleCornerRadius = ResizeHandleThickness / 2
 
@@ -85,4 +86,14 @@ object ImeWindowDefaults {
     val PropsFixedLandscape = PropsFixedPortrait // TODO
 
     val PropsFloatingLandscape = PropsFloatingPortrait // TODO
+
+    data class PerOrientation<T>(
+        val portrait: T,
+        val landscape: T,
+    ) {
+        fun select(orientation: ImeOrientation): T = when (orientation) {
+            ImeOrientation.PORTRAIT -> portrait
+            ImeOrientation.LANDSCAPE -> landscape
+        }
+    }
 }

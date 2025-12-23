@@ -269,7 +269,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                          config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
                      }
                     is ImeWindowSpec.Floating -> {
-                        if (spec.props.offsetBottom <= spec.floatingDockHeight) {
+                        if (spec.props.offsetBottom <= spec.floatingDockToFixedHeight) {
                             keepEnabled = false
                             config.copy(mode = ImeWindowMode.FIXED)
                         } else {

@@ -27,11 +27,10 @@ sealed interface ImeWindowSpec {
     val rootInsets: ImeInsets?
     val orientation: ImeOrientation
 
-    val floatingDockHeight: Dp
-        get() = when (orientation) {
-            ImeOrientation.PORTRAIT -> ImeWindowDefaults.FloatingDockHeightPortrait
-            ImeOrientation.LANDSCAPE -> ImeWindowDefaults.FloatingDockHeightLandscape
-        }
+    val floatingDockToFixedHeight: Dp
+        get() = ImeWindowDefaults.FloatingDockToFixedHeight.select(orientation)
+    val floatingDockToFixedBorder: Dp
+        get() = ImeWindowDefaults.FloatingDockToFixedBorder.select(orientation)
 
     fun movedBy(offset: DpOffset): ImeWindowSpec
 

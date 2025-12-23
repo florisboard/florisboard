@@ -21,8 +21,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -36,8 +36,8 @@ import dev.patrickgold.florisboard.ime.window.ImeWindowSpec
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
-private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
-private val LocalSmartbarHeight = staticCompositionLocalOf { 40.dp }
+private val LocalKeyboardRowBaseHeight = compositionLocalOf { 65.dp }
+private val LocalSmartbarHeight = compositionLocalOf { 40.dp }
 
 object FlorisImeSizing {
     val keyboardRowBaseHeight: Dp

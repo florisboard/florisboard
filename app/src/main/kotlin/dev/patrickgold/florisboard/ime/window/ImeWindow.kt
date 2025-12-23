@@ -16,14 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.window
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -54,12 +50,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInRoot
@@ -84,8 +82,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
+import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.drawBorder
 import org.florisboard.lib.compose.fold
 import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.compose.toDp
@@ -132,7 +132,7 @@ fun BoxScope.ImeWindow() {
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
     val navBarFrameView = remember { ims.findNavBarFrameOrNull() }
 
-    LaunchedEffect(navBarFrameView, windowSpec) {
+    LaunchedEffect(windowSpec) {
         navBarFrameView?.scaleY = when (windowSpec) {
             is ImeWindowSpec.Fixed -> 1f
             is ImeWindowSpec.Floating -> 0f
@@ -261,44 +261,58 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
 
     val visible by remember {
         derivedStateOf {
-            val spec = windowSpec
-            editorState.isMoveGesture && spec is ImeWindowSpec.Floating &&
-                spec.props.offsetBottom <= spec.floatingDockHeight
+            windowSpec.let { spec ->
+                editorState.isMoveGesture && spec is ImeWindowSpec.Floating &&
+                    spec.props.offsetBottom <= spec.floatingDockToFixedHeight
+            }
         }
     }
 
-    val animatedHeight by animateDpAsState(
-        targetValue = if (visible) windowSpec.floatingDockHeight else 0.dp,
-        animationSpec = tween(durationMillis = 150),
-        finishedListener = { height ->
-            if (height == windowSpec.floatingDockHeight) {
-                ims.inputFeedbackController.keyPress()
-            }
-        },
+    val transition = updateTransition(
+        targetState = visible,
+        label = "FloatingDockToFixedIndicator_visibility",
     )
+    val animatedAlpha by transition.animateFloat(label = "alpha") { visible ->
+        if (visible) 1f else 0f
+    }
+    val animatedHeightRatio by transition.animateFloat(label = "height") { visible ->
+        if (visible) 1f else 0f
+    }
 
     //TODO: Make snygg themeable
     val color = Color.Gray
 
+    LaunchedEffect(visible) {
+        if (visible) {
+            delay(150)
+            ims.inputFeedbackController.keyPress()
+        }
+    }
 
-    AnimatedVisibility(
-        visible = visible,
+    Box(
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .fillMaxWidth()
-            .wrapContentHeight(),
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
-        Box(
-            modifier = Modifier
-                .height(animatedHeight)
-                .navigationBarsPadding()
-                .border(2.dp, color)
-                .alpha(0.5f)
-                .background(color),
-        )
-    }
+            .height(windowSpec.floatingDockToFixedHeight)
+            .navigationBarsPadding()
+            .graphicsLayer { alpha = animatedAlpha }
+            .drawBehind {
+                val animatedTopLeft = Offset(
+                    x = 0f,
+                    y = size.height * (1f - animatedHeightRatio),
+                )
+                drawRect(
+                    color = color,
+                    topLeft = animatedTopLeft,
+                    alpha = 0.5f,
+                )
+                drawBorder(
+                    color = color,
+                    topLeft = animatedTopLeft,
+                    stroke = Stroke(windowSpec.floatingDockToFixedBorder.toPx()),
+                )
+            },
+    )
 }
 
 @Composable
@@ -313,40 +327,41 @@ private fun BoxScope.FloatingResizeHandles() {
             editorState.isEnabled && !editorState.isMoveGesture && windowSpec is ImeWindowSpec.Floating
         }
     }
-    val alpha by animateFloatAsState(
+    val animatedAlpha by animateFloatAsState(
         targetValue = if (visible) 1f else 0f,
         animationSpec = tween(350),
     )
+    val alphaModifier = Modifier.graphicsLayer { alpha = animatedAlpha }
 
-    val offset = ImeWindowDefaults.ResizeHandleTouchSize / 2
+    val offset = ImeWindowDefaults.ResizeHandleTouchOffset
     if (visible) {
         FloatingResizeHandle(
             handle = ImeWindowResizeHandle.TOP_LEFT,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .offset(-offset, -offset)
-                .alpha(alpha),
+                .then(alphaModifier),
         )
         FloatingResizeHandle(
             handle = ImeWindowResizeHandle.TOP_RIGHT,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .offset(offset, -offset)
-                .alpha(alpha),
+                .then(alphaModifier),
         )
         FloatingResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM_RIGHT,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .offset(offset, offset)
-                .alpha(alpha),
+                .then(alphaModifier),
         )
         FloatingResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM_LEFT,
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .offset(-offset, offset)
-                .alpha(alpha),
+                .then(alphaModifier),
         )
     }
 }
