@@ -437,6 +437,11 @@
     "background": "var(--one-hand-background)",
     "foreground": "var(--one-hand-foreground)"
   },
+  "one-handed-panel-button": {
+    "padding": "8dp",
+    "font-size": "24sp",
+    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
+  },
 
   "subtype-panel": {
     "background": "var(--background)",

@@ -41,7 +41,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ZoomOutMap
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -66,8 +65,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
@@ -84,13 +81,14 @@ import dev.patrickgold.florisboard.lib.compose.FloatingSystemUiIme
 import dev.patrickgold.florisboard.lib.compose.SystemUiIme
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.drawBorder
 import org.florisboard.lib.compose.fold
 import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.compose.toDp
 import org.florisboard.lib.compose.toDpRect
 import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 
 @Composable
@@ -476,17 +474,18 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            FlorisIconButton(
+            SnyggIconButton(
+                elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
                     ims.windowController.updateWindowConfig { config ->
                         config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
                     }
                 },
-                size = DpSize(40.dp, 40.dp)
             ) {
-                Icon(Icons.Default.ZoomOutMap, null)
+                SnyggIcon(imageVector = Icons.Default.ZoomOutMap)
             }
-            FlorisIconButton(
+            SnyggIconButton(
+                elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
                     windowController.updateWindowConfig { config ->
                         val fixedProps = config.getFixedPropsOrDefault(activeOrientation)
@@ -501,21 +500,20 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                         )
                     }
                 },
-                size = DpSize(40.dp, 40.dp)
             ) {
                 if (spec.props.paddingLeft > spec.props.paddingRight) {
-                    Icon(Icons.Default.ChevronLeft, null)
+                    SnyggIcon(imageVector = Icons.Default.ChevronLeft)
                 } else {
-                    Icon(Icons.Default.ChevronRight, null)
+                    SnyggIcon(imageVector = Icons.Default.ChevronRight)
                 }
             }
-            FlorisIconButton(
+            SnyggIconButton(
+                elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
                     // TODO: Implement resize
                 },
-                size = DpSize(40.dp, 40.dp)
             ) {
-                Icon(ImageVector.vectorResource(R.drawable.ic_resize), null)
+                SnyggIcon(imageVector = ImageVector.vectorResource(R.drawable.ic_resize))
             }
         }
     }
