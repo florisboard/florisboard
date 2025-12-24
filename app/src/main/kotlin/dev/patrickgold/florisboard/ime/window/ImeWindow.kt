@@ -192,15 +192,21 @@ fun BoxScope.ImeWindow() {
             )
         }
         OneHandedPanel()
-        ProvideKeyboardRowBaseHeight(windowSpec) {
-            ImeInnerWindow(state, windowSpec, modeModifier)
+        ProvideKeyboardRowBaseHeight {
+            ImeInnerWindow(modeModifier)
         }
         ImeWindowResizeHandlesFloating()
     }
 }
 
 @Composable
-private fun ImeInnerWindow(state: KeyboardState, windowSpec: ImeWindowSpec, moveModifier: Modifier) {
+private fun ImeInnerWindow(moveModifier: Modifier) {
+    val ims = LocalFlorisImeService.current
+    val keyboardManager by ims.keyboardManager()
+
+    val state by keyboardManager.activeState.collectAsState()
+    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+
     SnyggBox(
         elementName = FlorisImeUi.WindowInner.elementName,
         modifier = Modifier
@@ -237,12 +243,13 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
 
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
     val editorState by ims.windowController.editor.state.collectAsState()
+    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
 
     val visible by remember {
         derivedStateOf {
             windowSpec.let { spec ->
                 editorState.isMoveGesture && spec is ImeWindowSpec.Floating &&
-                    spec.props.offsetBottom <= spec.floatingDockToFixedHeight
+                    spec.props.offsetBottom <= windowDefaults.floatingDockToFixedHeight
             }
         }
     }
@@ -272,7 +279,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .fillMaxWidth()
-            .height(windowSpec.floatingDockToFixedHeight)
+            .height(windowDefaults.floatingDockToFixedHeight)
             .navigationBarsPadding()
             .graphicsLayer { alpha = animatedAlpha }
             .drawBehind {
@@ -288,7 +295,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
                 drawBorder(
                     color = color,
                     topLeft = animatedTopLeft,
-                    stroke = Stroke(windowSpec.floatingDockToFixedBorder.toPx()),
+                    stroke = Stroke(windowDefaults.floatingDockToFixedBorder.toPx()),
                 )
             },
     )

@@ -16,35 +16,112 @@
 
 package dev.patrickgold.florisboard.ime.window
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 object ImeWindowDefaults {
-    val RowHeight = ByOrientation(portrait = 55.dp, landscape = 45.dp)
-    val CompactOffset = ByOrientation(portrait = 55.dp, landscape = 55.dp)
+    abstract class OrientationIndependent {
+        val smartbarHeightFactor = 0.753f
+        val keyboardHeightFactor = smartbarHeightFactor + 4f
 
-    const val SmartbarHeightFactor = 0.753f
-    const val KeyboardHeightFactor = SmartbarHeightFactor + 4f
+        val resizeHandleTouchSize = 48.dp
+        val resizeHandleTouchOffsetFloating = resizeHandleTouchSize / 2
+        val resizeHandleDrawSize = 32.dp
+        val resizeHandleDrawPadding = (resizeHandleTouchSize - resizeHandleDrawSize) / 2
+        val resizeHandleDrawThickness = resizeHandleDrawSize / 4
+        val resizeHandleDrawCornerRadius = resizeHandleDrawSize / 2
+    }
 
-    val MinKeyboardWidth = 250.dp
-    val MaxKeyboardWidth = 500.dp
+    abstract class OrientationDependent : OrientationIndependent() {
+        abstract val rowHeight: Dp
 
-    val MinKeyboardHeight = 175.dp
-    val MaxKeyboardHeight = 375.dp
+        abstract val keyboardWidthMin: Dp
+        abstract val keyboardWidthMax: Dp
 
-    val FloatingDockToFixedHeight = ByOrientation(portrait = 80.dp, landscape = 50.dp)
-    val FloatingDockToFixedBorder = ByOrientation(portrait = 2.dp, landscape = 2.dp)
+        abstract val keyboardHeightMin: Dp
+        abstract val keyboardHeightMax: Dp
 
-    val ResizeHandleTouchSize = 64.dp
-    val ResizeHandleTouchOffsetFloating = ResizeHandleTouchSize / 2
-    val ResizeHandleDrawSize = 32.dp
-    val ResizeHandleDrawPadding = (ResizeHandleTouchSize - ResizeHandleDrawSize) / 2
-    val ResizeHandleDrawThickness = ResizeHandleDrawSize / 4
-    val ResizeHandleDrawCornerRadius = ResizeHandleDrawSize / 2
+        abstract val oneHandedPadding: Dp
+        abstract val oneHandedPaddingMin: Dp
+
+        abstract val floatingDockToFixedHeight: Dp
+        abstract val floatingDockToFixedBorder: Dp
+
+        val propsFixed by lazy {
+            mapOf(
+                ImeWindowMode.Fixed.NORMAL to ImeWindowProps.Fixed(
+                    rowHeight = rowHeight,
+                    paddingLeft = 0.dp,
+                    paddingRight = 0.dp,
+                    paddingBottom = 0.dp,
+                ),
+                ImeWindowMode.Fixed.COMPACT to ImeWindowProps.Fixed(
+                    rowHeight = rowHeight * 0.8f,
+                    paddingLeft = oneHandedPadding,
+                    paddingRight = 0.dp,
+                    paddingBottom = (rowHeight * keyboardHeightFactor) * 0.2f,
+                ),
+                ImeWindowMode.Fixed.THUMBS to ImeWindowProps.Fixed(
+                    rowHeight = rowHeight,
+                    paddingLeft = 0.dp,
+                    paddingRight = 0.dp,
+                    paddingBottom = 0.dp,
+                ),
+            )
+        }
+
+        val propsFloating by lazy {
+            mapOf(
+                ImeWindowMode.Floating.NORMAL to ImeWindowProps.Floating(
+                    rowHeight = rowHeight,
+                    keyboardWidth = 350.dp,
+                    offsetLeft = 30.dp,
+                    offsetBottom = 30.dp,
+                ),
+            )
+        }
+    }
+
+    object Portrait : OrientationDependent() {
+        override val rowHeight = 55.dp
+
+        override val keyboardWidthMin = 250.dp
+        override val keyboardWidthMax = 500.dp
+
+        override val keyboardHeightMin = 200.dp
+        override val keyboardHeightMax = 375.dp
+
+        override val oneHandedPadding = 55.dp
+        override val oneHandedPaddingMin = 40.dp
+
+        override val floatingDockToFixedHeight = 80.dp
+        override val floatingDockToFixedBorder = 2.dp
+    }
+
+    object Landscape : OrientationDependent() {
+        override val rowHeight = 45.dp
+
+        override val keyboardWidthMin = 250.dp
+        override val keyboardWidthMax = 500.dp
+
+        override val keyboardHeightMin = 200.dp
+        override val keyboardHeightMax = 375.dp
+
+        override val oneHandedPadding = 55.dp
+        override val oneHandedPaddingMin = 40.dp
+
+        override val floatingDockToFixedHeight = 50.dp
+        override val floatingDockToFixedBorder = 2.dp
+    }
 
     val FallbackSpec = ImeWindowSpec.Fixed(
         mode = ImeWindowMode.Fixed.NORMAL,
         props = ImeWindowProps.Fixed(
-            rowHeight = RowHeight.portrait,
+            rowHeight = Portrait.rowHeight,
             paddingLeft = 0.dp,
             paddingRight = 0.dp,
             paddingBottom = 0.dp,
@@ -53,47 +130,17 @@ object ImeWindowDefaults {
         orientation = ImeOrientation.PORTRAIT,
     )
 
-    val PropsFixedPortrait = mapOf(
-        ImeWindowMode.Fixed.NORMAL to ImeWindowProps.Fixed(
-            rowHeight = RowHeight.portrait,
-            paddingLeft = 0.dp,
-            paddingRight = 0.dp,
-            paddingBottom = 0.dp,
-        ),
-        ImeWindowMode.Fixed.COMPACT to ImeWindowProps.Fixed(
-            rowHeight = RowHeight.portrait * 0.8f,
-            paddingLeft = CompactOffset.portrait,
-            paddingRight = 0.dp,
-            paddingBottom = (RowHeight.portrait * KeyboardHeightFactor) * 0.2f,
-        ),
-        ImeWindowMode.Fixed.THUMBS to ImeWindowProps.Fixed(
-            rowHeight = RowHeight.portrait,
-            paddingLeft = 0.dp,
-            paddingRight = 0.dp,
-            paddingBottom = 0.dp,
-        ),
-    )
+    fun of(orientation: ImeOrientation): OrientationDependent = when (orientation) {
+        ImeOrientation.PORTRAIT -> Portrait
+        ImeOrientation.LANDSCAPE -> Landscape
+    }
 
-    val PropsFloatingPortrait = mapOf(
-        ImeWindowMode.Floating.NORMAL to ImeWindowProps.Floating(
-            rowHeight = RowHeight.portrait,
-            keyboardWidth = 350.dp,
-            offsetLeft = 30.dp,
-            offsetBottom = 30.dp,
-        ),
-    )
-
-    val PropsFixedLandscape = PropsFixedPortrait // TODO
-
-    val PropsFloatingLandscape = PropsFloatingPortrait // TODO
-
-    data class ByOrientation<T>(
-        val portrait: T,
-        val landscape: T,
-    ) {
-        fun select(orientation: ImeOrientation): T = when (orientation) {
-            ImeOrientation.PORTRAIT -> portrait
-            ImeOrientation.LANDSCAPE -> landscape
+    @Composable
+    fun rememberDerivedStateOf(orientationEvaluator: () -> ImeOrientation): State<OrientationDependent> {
+        return remember {
+            derivedStateOf {
+                of(orientationEvaluator())
+            }
         }
     }
 }

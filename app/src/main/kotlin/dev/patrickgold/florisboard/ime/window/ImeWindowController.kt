@@ -167,6 +167,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         } else {
             ImeOrientation.LANDSCAPE
         }
+        editor.disable()
     }
 
     fun onWindowShown(): Boolean {
@@ -194,7 +195,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                 val props = windowConfig.getFixedPropsOrDefault(orientation)
                 ImeWindowSpec.Fixed(
                     mode = windowConfig.fixedMode,
-                    props = if (rootInsets != null) props.constrained(rootInsets) else props,
+                    props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
                     rootInsets = rootInsets,
                     orientation = orientation,
                 )
@@ -203,7 +204,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                 val props = windowConfig.getFloatingPropsOrDefault(orientation)
                 ImeWindowSpec.Floating(
                     mode = windowConfig.floatingMode,
-                    props = if (rootInsets != null) props.constrained(rootInsets) else props,
+                    props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
                     rootInsets = rootInsets,
                     orientation = orientation,
                 )
@@ -263,13 +264,14 @@ class ImeWindowController(val scope: CoroutineScope) {
             val spec = activeWindowSpec.value
             var keepEnabled = true
             updateWindowConfig { config ->
+                val windowDefaults = ImeWindowDefaults.of(spec.orientation)
                 when (spec) {
                      is ImeWindowSpec.Fixed -> {
                          keepEnabled = true
                          config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
                      }
                     is ImeWindowSpec.Floating -> {
-                        if (spec.props.offsetBottom <= spec.floatingDockToFixedHeight) {
+                        if (spec.props.offsetBottom <= windowDefaults.floatingDockToFixedHeight) {
                             keepEnabled = false
                             config.copy(mode = ImeWindowMode.FIXED)
                         } else {

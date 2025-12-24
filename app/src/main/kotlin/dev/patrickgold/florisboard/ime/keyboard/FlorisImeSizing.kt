@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.window.ImeWindowDefaults
 import dev.patrickgold.florisboard.ime.window.ImeWindowSpec
+import dev.patrickgold.florisboard.ime.window.LocalFlorisImeService
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -99,11 +100,15 @@ object FlorisImeSizing {
 
 @Deprecated("TODO: move logic fully into ImeWindow impl")
 @Composable
-fun ProvideKeyboardRowBaseHeight(windowSpec: ImeWindowSpec, content: @Composable () -> Unit) {
+fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
+    val ims = LocalFlorisImeService.current
     val density = LocalDensity.current
 
+    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
+
     val rowHeight = windowSpec.props.rowHeight
-    val smartbarHeight = rowHeight * ImeWindowDefaults.SmartbarHeightFactor
+    val smartbarHeight = rowHeight * windowDefaults.smartbarHeightFactor
 
     SideEffect {
         FlorisImeSizing.Static.smartbarHeightPx = with(density) { smartbarHeight.roundToPx() }
