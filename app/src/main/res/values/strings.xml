@@ -754,6 +754,12 @@
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Debug action to re-show the setup screen</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test crash report screen</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug action to purposely produce a crash</string>
+    <string name="devtools__group_ime_window_tools__title" comment="Title of IME window tools group in Devtools">IME window tools</string>
+    <string name="devtools__reset_window_config_portrait__label">Reset window config for portrait</string>
+    <string name="devtools__reset_window_config_landscape__label">Reset window config for landscape</string>
+    <string name="devtools__reset_window_config__summary">Resets the window config (fixed/floating mode, paddings, offsets) to default</string>
+    <string name="devtools__reset_window_config__toast_success">Successfully reset window config to default</string>
+    <string name="devtools__reset_window_config__toast_failure">Failed to reset window config to default: {message}</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android system tools</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Global Android settings</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Secure Android settings</string>

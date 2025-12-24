@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,8 +30,10 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
+import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -40,7 +43,6 @@ import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.android.showLongToastSync
 
 class DebugOnPurposeCrashException : Exception(
     "Success! The app crashed purposely to display this beautiful screen we all love :)"
@@ -115,8 +117,8 @@ fun DevtoolsScreen() = FlorisScreen {
                 onClick = {
                     scope.launch {
                         prefs.smartbar.actionArrangement.set(QuickActionArrangement.Default)
+                        context.showLongToast(R.string.devtools__reset_quick_actions_to_default__toast_success)
                     }
-                    context.showLongToastSync(R.string.devtools__reset_quick_actions_to_default__toast_success)
                 },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
@@ -143,6 +145,25 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = "prefs.glide.enabled (debug)",
                 summaryOn = "This impacts your performance and may trigger the all keys invisible bug!",
                 summaryOff = "Recommended to keep this off!",
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.devtools__group_ime_window_tools__title)) {
+            Preference(
+                title = stringRes(R.string.devtools__reset_window_config_portrait__label),
+                summary = stringRes(R.string.devtools__reset_window_config__summary),
+                onClick = {
+                    scope.launch { prefs.keyboard.windowConfigPortrait.resetWithToast(context) }
+                },
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
+            Preference(
+                title = stringRes(R.string.devtools__reset_window_config_landscape__label),
+                summary = stringRes(R.string.devtools__reset_window_config__summary),
+                onClick = {
+                    scope.launch { prefs.keyboard.windowConfigLandscape.resetWithToast(context) }
+                },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
         }
@@ -205,14 +226,18 @@ fun DevtoolsScreen() = FlorisScreen {
                 title = "keyboardExtensions",
                 summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
                 onClick = {
-                    context.showLongToastSync(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
+                    scope.launch {
+                        context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
+                    }
                 },
             )
             Preference(
                 title = "themes",
                 summary = extensionManager.themes.internalModuleDir.absolutePath,
                 onClick = {
-                    context.showLongToastSync(extensionManager.themes.internalModuleDir.absolutePath)
+                    scope.launch {
+                        context.showLongToast(extensionManager.themes.internalModuleDir.absolutePath)
+                    }
                 },
             )
         }
@@ -231,4 +256,18 @@ fun DevtoolsScreen() = FlorisScreen {
             )
         }
     }
+}
+
+private suspend fun PreferenceData<ImeWindowConfig>.resetWithToast(context: Context) {
+    reset().fold(
+        onSuccess = {
+            context.showLongToast(R.string.devtools__reset_window_config__toast_success)
+        },
+        onFailure = { error ->
+            context.showLongToast(
+                R.string.devtools__reset_window_config__toast_failure,
+                "message" to "${error.localizedMessage}",
+            )
+        }
+    )
 }
