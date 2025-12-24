@@ -31,6 +31,28 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "window-inner",
         resId = R.string.snygg__rule_element__window_inner,
     ),
+    WindowMoveHandleFixed(
+        elementName = "window-move-handle-fixed",
+        resId = R.string.snygg__rule_element__window_move_handle_fixed,
+    ),
+    WindowMoveHandleFloating(
+        elementName = "window-move-handle-floating",
+        resId = R.string.snygg__rule_element__window_move_handle_floating,
+    ),
+    WindowResizeHandleFixed(
+        elementName = "window-resize-handle-fixed",
+        resId = R.string.snygg__rule_element__window_resize_handle_fixed,
+    ),
+    WindowResizeHandleFloating(
+        elementName = "window-resize-handle-floating",
+        resId = R.string.snygg__rule_element__window_resize_handle_floating,
+    ),
+    WindowResizeActionFixed(
+        elementName = "window-resize-action-fixed",
+        resId = R.string.snygg__rule_element__window_resize_action_fixed,
+    ),
+
+
 
     Key(
         elementName = "key",

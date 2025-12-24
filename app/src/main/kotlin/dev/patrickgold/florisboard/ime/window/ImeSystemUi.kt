@@ -57,7 +57,6 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.uriOrNull
 
@@ -148,12 +147,14 @@ private fun RowScope.NavigationPill(moveModifier: Modifier) {
         false
     }
 
-    //TODO: make snygg themeable?
-    val scrimColor = if (useDarkIcons) {
+    val defaultScrimColor = if (useDarkIcons) {
         Color.Black
     } else {
         Color.White
     }.copy(0.5f)
+
+    val style = rememberSnyggThemeQuery(FlorisImeUi.WindowMoveHandleFloating.elementName)
+    val scrimColor = style.background(defaultScrimColor)
 
     val size = DpSize(80.dp, 5.dp)
 

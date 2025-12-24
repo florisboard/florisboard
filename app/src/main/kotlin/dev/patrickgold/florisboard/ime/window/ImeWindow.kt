@@ -34,10 +34,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.ZoomOutMap
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -51,13 +47,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
@@ -75,6 +69,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.drawBorder
+import org.florisboard.lib.compose.drawableRes
 import org.florisboard.lib.compose.fold
 import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.compose.toDp
@@ -324,7 +319,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             modifier = Modifier
                 .fillMaxHeight()
                 .safeDrawingPadding()
-                .padding(bottom = spec.props.paddingBottom)
+                .padding(bottom = spec.props.paddingBottom.coerceAtLeast(0.dp))
                 .fold(
                     condition = spec.props.paddingLeft >= spec.props.paddingRight,
                     ifTrue = {
@@ -349,7 +344,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                     }
                 },
             ) {
-                SnyggIcon(imageVector = Icons.Default.ZoomOutMap)
+                SnyggIcon(imageVector = drawableRes(R.drawable.ic_zoom_out_map))
             }
             SnyggIconButton(
                 elementName = FlorisImeUi.OneHandedPanelButton.elementName,
@@ -369,9 +364,9 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                 },
             ) {
                 if (spec.props.paddingLeft > spec.props.paddingRight) {
-                    SnyggIcon(imageVector = Icons.Default.ChevronLeft)
+                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_left))
                 } else {
-                    SnyggIcon(imageVector = Icons.Default.ChevronRight)
+                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_right))
                 }
             }
             SnyggIconButton(
@@ -380,7 +375,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                     ims.windowController.editor.toggleEnabled()
                 },
             ) {
-                SnyggIcon(imageVector = ImageVector.vectorResource(R.drawable.ic_resize))
+                SnyggIcon(imageVector = drawableRes(R.drawable.ic_resize))
             }
         }
     }

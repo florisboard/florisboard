@@ -233,6 +233,12 @@
     <string name="snygg__rule_element__window">Window</string>
     <string name="snygg__rule_element__window_inner">Window Inner</string>
 
+    <string name="snygg__rule_element__window_move_handle_fixed">Window move handle fixed</string>
+    <string name="snygg__rule_element__window_move_handle_floating">Window move handle floating</string>
+    <string name="snygg__rule_element__window_resize_handle_fixed">Window resize handle fixed</string>
+    <string name="snygg__rule_element__window_resize_handle_floating">Window resize handle floating</string>
+    <string name="snygg__rule_element__window_resize_action_fixed">Window resize action fixed</string>
+
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>
     <string name="snygg__rule_element__key_popup_box">Key popup box</string>
@@ -875,6 +881,7 @@
     <string name="action__delete">Delete</string>
     <string name="action__delete_confirm_title">Confirm delete</string>
     <string name="action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
+    <string name="action__reset">Reset</string>
     <string name="action__reset_confirm_title">Confirm reset</string>
     <string name="action__reset_confirm_message">Are you sure you want to reset \"{name}\"? This action can not be undone once executed.</string>
     <string name="action__discard">Discard</string>
@@ -889,6 +896,7 @@
     <string name="action__import_files">Import files</string>
     <string name="action__no">No</string>
     <string name="action__ok">OK</string>
+    <string name="action__done">Done</string>
     <string name="action__restore">Restore</string>
     <string name="action__save">Save</string>
     <string name="action__select">Select</string>

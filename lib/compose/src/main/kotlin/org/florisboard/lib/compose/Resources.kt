@@ -18,14 +18,17 @@ package org.florisboard.lib.compose
 
 import android.content.Context
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -108,4 +111,9 @@ private fun formatString(
         "app_name" to LocalAppNameString.current,
         *args
     )
+}
+
+@Composable
+fun drawableRes(@DrawableRes resId: Int): ImageVector {
+    return ImageVector.vectorResource(resId)
 }

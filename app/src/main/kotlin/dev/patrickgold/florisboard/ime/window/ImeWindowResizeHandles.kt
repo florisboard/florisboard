@@ -20,12 +20,15 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -43,10 +46,18 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.coroutines.launch
+import org.florisboard.lib.compose.drawableRes
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.compose.toDp
 import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggText
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 enum class ImeWindowResizeHandle(
     val left: Boolean = false,
@@ -71,7 +82,19 @@ private fun ImeWindowResizeHandle(
 ) {
     val ims = LocalFlorisImeService.current
 
-    val handleColor = Color.Red
+    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+
+    val elementName by remember {
+        derivedStateOf {
+            when (windowSpec) {
+                is ImeWindowSpec.Fixed -> FlorisImeUi.WindowResizeHandleFixed.elementName
+                is ImeWindowSpec.Floating -> FlorisImeUi.WindowResizeHandleFloating.elementName
+            }
+        }
+    }
+
+    val style = rememberSnyggThemeQuery(elementName)
+    val handleColor = style.background()
 
     Box(
         modifier = modifier
@@ -161,10 +184,15 @@ fun BoxScope.ImeWindowResizeHandlesFixed(moveModifier: Modifier) {
                 .background(Color.Gray.copy(alpha = 0.5f))
         )
 
-        Column(Modifier.align(Alignment.Center)) {
-            // TODO proper UI
+        Column(
+            modifier = Modifier
+                .matchParentSize()
+                .padding(vertical = ImeWindowDefaults.ResizeHandleTouchSize),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             SnyggButton(
-                elementName = "TODO",
+                elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
                 onClick = {
                     ims.windowController.scope.launch {
                         ims.windowController.updateWindowConfig { config ->
@@ -174,21 +202,29 @@ fun BoxScope.ImeWindowResizeHandlesFixed(moveModifier: Modifier) {
                         }
                     }
                 },
+                contentPadding = PaddingValues(all = 4.dp)
             ) {
-                Text("RESET")
+                Icon(drawableRes(R.drawable.ic_restart_alt), null)
+                SnyggText(text = stringRes(R.string.action__reset))
             }
-            SnyggText(
-                elementName = "TODO",
-                text = "MOVEBY",
-                modifier = moveModifier,
-            )
+
+            SnyggIconButton(FlorisImeUi.WindowMoveHandleFixed.elementName, onClick = {}) {
+                SnyggIcon(
+                    elementName = FlorisImeUi.WindowMoveHandleFixed.elementName,
+                    imageVector = drawableRes(R.drawable.ic_drag_pan),
+                    modifier = moveModifier,
+                )
+            }
+
             SnyggButton(
-                elementName = "TODO",
+                elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
                 onClick = {
                     ims.windowController.editor.disable()
                 },
+                contentPadding = PaddingValues(all = 4.dp)
             ) {
-                Text("DONE")
+                Icon(drawableRes(R.drawable.ic_check), null)
+                Text(stringRes(R.string.action__done))
             }
         }
 

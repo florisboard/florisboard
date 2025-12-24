@@ -36,6 +36,16 @@
     "background": "var(--background)",
     "foreground": "var(--on-background)"
   },
+  "window-resize-handle-fixed": {
+    "background": "var(--primary)"
+  },
+  "window-resize-handle-floating": {
+    "background": "var(--primary)"
+  },
+  "window-move-handle-fixed": {
+    "background": "var(--surface)",
+    "foreground": "var(--on-surface)"
+  },
 
   "key": {
     "background": "var(--surface)",
@@ -440,6 +450,7 @@
   "one-handed-panel-button": {
     "padding": "8dp",
     "font-size": "24sp",
+    "background": "rgb(128,128,128)",
     "shape": "rounded-corner(20%, 20%, 20%, 20%)"
   },
 
