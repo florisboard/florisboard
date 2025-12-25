@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -59,7 +58,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.sheet.BottomSheetWindow
@@ -72,7 +70,6 @@ import org.florisboard.lib.compose.drawBorder
 import org.florisboard.lib.compose.drawableRes
 import org.florisboard.lib.compose.fold
 import org.florisboard.lib.compose.ifIsInstance
-import org.florisboard.lib.compose.toDp
 import org.florisboard.lib.compose.toDpRect
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
@@ -129,30 +126,6 @@ fun BoxScope.ImeWindow() {
         )
     }
 
-    val modeModifier = Modifier
-        .pointerInput(Unit) {
-            detectTapGestures {
-                ims.windowController.editor.toggleEnabled()
-            }
-        }
-        .pointerInput(Unit) {
-            detectDragGestures(
-                onDragStart = {
-                    ims.windowController.editor.beginMoveGesture()
-                },
-                onDrag = { change, dragAmount ->
-                    change.consume()
-                    ims.windowController.editor.moveBy(dragAmount.toDp())
-                },
-                onDragEnd = {
-                    ims.windowController.editor.endMoveGesture()
-                },
-                onDragCancel = {
-                    ims.windowController.editor.cancelGesture()
-                },
-            )
-        }
-
     FloatingDockToFixedIndicator()
 
     SnyggBox(
@@ -193,14 +166,14 @@ fun BoxScope.ImeWindow() {
         }
         OneHandedPanel()
         ProvideKeyboardRowBaseHeight {
-            ImeInnerWindow(modeModifier)
+            ImeInnerWindow()
         }
         ImeWindowResizeHandlesFloating()
     }
 }
 
 @Composable
-private fun ImeInnerWindow(moveModifier: Modifier) {
+private fun ImeInnerWindow() {
     val ims = LocalFlorisImeService.current
     val keyboardManager by ims.keyboardManager()
 
@@ -230,10 +203,10 @@ private fun ImeInnerWindow(moveModifier: Modifier) {
                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
             }
             if (windowSpec is ImeWindowSpec.Floating) {
-                ImeSystemUiFloating(moveModifier)
+                ImeSystemUiFloating()
             }
         }
-        ImeWindowResizeHandlesFixed(moveModifier)
+        ImeWindowResizeHandlesFixed()
     }
 }
 

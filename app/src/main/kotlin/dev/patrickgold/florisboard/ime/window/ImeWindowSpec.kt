@@ -22,13 +22,14 @@ import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.width
+import kotlin.math.abs
 
 sealed interface ImeWindowSpec {
     val props: ImeWindowProps
     val rootInsets: ImeInsets?
     val orientation: ImeOrientation
 
-    fun movedBy(offset: DpOffset): ImeWindowSpec
+    fun movedBy(offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
     fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
@@ -40,7 +41,7 @@ sealed interface ImeWindowSpec {
     ) : ImeWindowSpec {
         override fun movedBy(
             offset: DpOffset,
-        ): ImeWindowSpec {
+        ): Pair<ImeWindowSpec, DpOffset> {
             val windowDefaults = ImeWindowDefaults.of(orientation)
 
             var paddingLeft = props.paddingLeft
@@ -61,6 +62,15 @@ sealed interface ImeWindowSpec {
                 paddingRight = newPaddingRight
             }
 
+            if (mode == ImeWindowMode.Fixed.NORMAL && paddingLeft != 0.dp && paddingRight != 0.dp) {
+                // maybe snap to center
+                if (abs((paddingLeft - paddingRight).value).dp <= windowDefaults.fixedSnapToCenterWidth) {
+                    val avgPadding = (paddingLeft + paddingRight) / 2
+                    paddingLeft = avgPadding
+                    paddingRight = avgPadding
+                }
+            }
+
             paddingBottom = (paddingBottom - offset.y)
                 .coerceAtLeast(0.dp)
                 .coerceAtMost(max(windowDefaults.keyboardHeightMax - props.rowHeight * windowDefaults.keyboardHeightFactor, 0.dp))
@@ -70,7 +80,11 @@ sealed interface ImeWindowSpec {
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
             )
-            return copy(props = newProps.constrained(rootInsets, orientation))
+            val consumed = DpOffset(
+                x = newProps.paddingLeft - props.paddingLeft,
+                y = -(newProps.paddingBottom - props.paddingBottom),
+            )
+            return copy(props = newProps.constrained(rootInsets, orientation)) to consumed
         }
 
         override fun resizedBy(
@@ -136,12 +150,16 @@ sealed interface ImeWindowSpec {
     ) : ImeWindowSpec {
         override fun movedBy(
             offset: DpOffset,
-        ): ImeWindowSpec {
+        ): Pair<ImeWindowSpec, DpOffset> {
             val newProps = props.copy(
                 offsetLeft = props.offsetLeft + offset.x,
                 offsetBottom = props.offsetBottom - offset.y,
+            ).constrained(rootInsets, orientation)
+            val consumed = DpOffset(
+                x = newProps.offsetLeft - props.offsetLeft,
+                y = -(newProps.offsetBottom - props.offsetBottom),
             )
-            return copy(props = newProps.constrained(rootInsets, orientation))
+            return copy(props = newProps) to consumed
         }
 
         override fun resizedBy(

@@ -254,10 +254,14 @@ class ImeWindowController(val scope: CoroutineScope) {
             syncFromPrefs()
         }
 
-        fun moveBy(offset: DpOffset) {
+        fun moveBy(offset: DpOffset): DpOffset {
+            var consumed = DpOffset.Zero
             activeWindowSpec.update { spec ->
-                spec.movedBy(offset)
+                val (newSpec, newConsumed) = spec.movedBy(offset)
+                consumed = newConsumed
+                newSpec
             }
+            return consumed
         }
 
         fun endMoveGesture() {

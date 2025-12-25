@@ -160,7 +160,7 @@ private fun ImeWindowResizeHandle(
 }
 
 @Composable
-fun BoxScope.ImeWindowResizeHandlesFixed(moveModifier: Modifier) {
+fun BoxScope.ImeWindowResizeHandlesFixed() {
     val ims = LocalFlorisImeService.current
 
     val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
@@ -214,7 +214,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed(moveModifier: Modifier) {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowMoveHandleFixed.elementName,
                     imageVector = drawableRes(R.drawable.ic_drag_pan),
-                    modifier = moveModifier,
+                    modifier = Modifier.imeWindowMoveHandle(ims.windowController),
                 )
             }
 

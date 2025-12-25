@@ -101,7 +101,7 @@ fun ImeSystemUi() {
 }
 
 @Composable
-fun ImeSystemUiFloating(moveModifier: Modifier) {
+fun ImeSystemUiFloating() {
     val ims = LocalFlorisImeService.current
 
     Row(
@@ -119,7 +119,7 @@ fun ImeSystemUiFloating(moveModifier: Modifier) {
             Icon(Icons.Default.KeyboardArrowDown, "Close floating keyboard window")
         }
 
-        NavigationPill(moveModifier)
+        NavigationPill()
 
         FlorisIconButton(
             onClick = {
@@ -136,7 +136,9 @@ fun ImeSystemUiFloating(moveModifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun RowScope.NavigationPill(moveModifier: Modifier) {
+private fun RowScope.NavigationPill() {
+    val ims = LocalFlorisImeService.current
+
     val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
@@ -162,7 +164,7 @@ private fun RowScope.NavigationPill(moveModifier: Modifier) {
         modifier = Modifier
             .width(IntrinsicSize.Max)
             .wrapContentHeight()
-            .then(moveModifier)
+            .imeWindowMoveHandle(ims.windowController)
             .padding(vertical = 20.dp)
             .align(Alignment.CenterVertically)
     ) {

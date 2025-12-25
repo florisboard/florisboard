@@ -48,6 +48,8 @@ object ImeWindowDefaults {
         abstract val oneHandedPadding: Dp
         abstract val oneHandedPaddingMin: Dp
 
+        abstract val fixedSnapToCenterWidth: Dp
+
         abstract val floatingDockToFixedHeight: Dp
         abstract val floatingDockToFixedBorder: Dp
 
@@ -98,6 +100,8 @@ object ImeWindowDefaults {
         override val oneHandedPadding = 55.dp
         override val oneHandedPaddingMin = 40.dp
 
+        override val fixedSnapToCenterWidth = 32.dp
+
         override val floatingDockToFixedHeight = 80.dp
         override val floatingDockToFixedBorder = 2.dp
     }
@@ -113,6 +117,8 @@ object ImeWindowDefaults {
 
         override val oneHandedPadding = 55.dp
         override val oneHandedPaddingMin = 40.dp
+
+        override val fixedSnapToCenterWidth = 32.dp
 
         override val floatingDockToFixedHeight = 50.dp
         override val floatingDockToFixedBorder = 2.dp
