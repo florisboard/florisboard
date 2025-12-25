@@ -27,8 +27,8 @@ import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import org.florisboard.lib.compose.ProvideLocalizedResources
 
-val LocalFlorisImeService = staticCompositionLocalOf<FlorisImeService> {
-    error("This composition local provider is only available in an IME context")
+val LocalWindowController = staticCompositionLocalOf<ImeWindowController> {
+    error("This composition local provider is only available within an IME view")
 }
 
 @SuppressLint("ViewConstructor")
@@ -44,8 +44,8 @@ class ImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
     @Composable
     override fun Content() {
         CompositionLocalProvider(
-            LocalFlorisImeService provides ims,
             LocalInputFeedbackController provides ims.inputFeedbackController,
+            LocalWindowController provides ims.windowController,
         ) {
             ProvideLocalizedResources(
                 resourcesContext = ims.resourcesContext,

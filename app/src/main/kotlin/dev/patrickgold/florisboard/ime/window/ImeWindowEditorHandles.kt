@@ -80,9 +80,9 @@ private fun ImeWindowResizeHandle(
     handle: ImeWindowResizeHandle,
     modifier: Modifier,
 ) {
-    val ims = LocalFlorisImeService.current
+    val windowController = LocalWindowController.current
 
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
     val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
 
     val elementName by remember {
@@ -100,7 +100,7 @@ private fun ImeWindowResizeHandle(
     Box(
         modifier = modifier
             .size(windowDefaults.resizeHandleTouchSize)
-            .imeWindowResizeHandle(ims.windowController, handle)
+            .imeWindowResizeHandle(windowController, handle)
             .background(Color.Yellow)
             .padding(windowDefaults.resizeHandleDrawPadding)
             .drawBehind {
@@ -140,10 +140,10 @@ private fun ImeWindowResizeHandle(
 
 @Composable
 fun BoxScope.ImeWindowResizeHandlesFixed() {
-    val ims = LocalFlorisImeService.current
+    val windowController = LocalWindowController.current
 
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val editorState by ims.windowController.editor.state.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val editorState by windowController.editor.state.collectAsState()
     val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
 
     val visible by remember {
@@ -182,8 +182,8 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             SnyggButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
                 onClick = {
-                    ims.windowController.scope.launch {
-                        ims.windowController.updateWindowConfig { config ->
+                    windowController.scope.launch {
+                        windowController.updateWindowConfig { config ->
                             config.copy(
                                 fixedProps = config.fixedProps.filterNot { it.key == config.fixedMode },
                             )
@@ -200,14 +200,14 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowMoveHandleFixed.elementName,
                     imageVector = drawableRes(R.drawable.ic_drag_pan),
-                    modifier = Modifier.imeWindowMoveHandle(ims.windowController),
+                    modifier = Modifier.imeWindowMoveHandle(windowController),
                 )
             }
 
             SnyggButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
                 onClick = {
-                    ims.windowController.editor.disable()
+                    windowController.editor.disable()
                 },
                 contentPadding = PaddingValues(all = 4.dp)
             ) {
@@ -270,10 +270,10 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
 
 @Composable
 fun BoxScope.ImeWindowResizeHandlesFloating() {
-    val ims = LocalFlorisImeService.current
+    val windowController = LocalWindowController.current
 
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val editorState by ims.windowController.editor.state.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val editorState by windowController.editor.state.collectAsState()
     val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
 
     val visible by remember {

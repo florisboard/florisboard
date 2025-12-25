@@ -78,6 +78,7 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import kotlinx.coroutines.flow.update
@@ -156,6 +157,11 @@ class FlorisImeService : LifecycleInputMethodService() {
         fun switchToVoiceInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
             return ims.switchToVoiceInputMethod()
+        }
+
+        fun showImePicker(): Boolean {
+            val ims = FlorisImeServiceReference.get() ?: return false
+            return InputMethodUtils.showImePicker(ims)
         }
 
         fun windowControllerOrNull(): ImeWindowController? {

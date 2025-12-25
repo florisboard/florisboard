@@ -23,9 +23,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.window.LocalFlorisImeService
+import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -34,9 +35,11 @@ import org.florisboard.lib.snygg.ui.rememberSnyggTheme
 
 @Composable
 fun FlorisImeTheme(content: @Composable () -> Unit) {
-    val ims = LocalFlorisImeService.current
-    val keyboardManager by ims.keyboardManager()
-    val themeManager by ims.themeManager()
+    val context = LocalContext.current
+    val windowController = LocalWindowController.current
+
+    val keyboardManager by context.keyboardManager()
+    val themeManager by context.themeManager()
 
     val prefs by FlorisPreferenceStore
     val accentColor by prefs.theme.accentColor.observeAsState()
@@ -44,10 +47,10 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val activeThemeInfo by themeManager.activeThemeInfo.collectAsState()
 
     val assetResolver = remember(activeThemeInfo) {
-        FlorisAssetResolver(ims, activeThemeInfo)
+        FlorisAssetResolver(context, activeThemeInfo)
     }
     val snyggTheme = rememberSnyggTheme(activeThemeInfo.stylesheet, assetResolver)
-    val fontSizeMultiplier by ims.windowController.activeFontSizeMultiplier.collectAsState()
+    val fontSizeMultiplier by windowController.activeFontSizeMultiplier.collectAsState()
 
     val state by keyboardManager.activeState.collectAsState()
     val attributes = mapOf(

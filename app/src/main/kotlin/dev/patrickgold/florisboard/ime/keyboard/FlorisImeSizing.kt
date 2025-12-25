@@ -22,7 +22,9 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -32,8 +34,7 @@ import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.window.ImeWindowDefaults
-import dev.patrickgold.florisboard.ime.window.ImeWindowSpec
-import dev.patrickgold.florisboard.ime.window.LocalFlorisImeService
+import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
@@ -101,14 +102,20 @@ object FlorisImeSizing {
 @Deprecated("TODO: move logic fully into ImeWindow impl")
 @Composable
 fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
-    val ims = LocalFlorisImeService.current
+    val windowController = LocalWindowController.current
     val density = LocalDensity.current
 
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
 
-    val rowHeight = windowSpec.props.rowHeight
-    val smartbarHeight = rowHeight * windowDefaults.smartbarHeightFactor
+    val heights by remember {
+        derivedStateOf {
+            val windowDefaults = ImeWindowDefaults.of(windowSpec.orientation)
+            val rowHeight = windowSpec.props.rowHeight
+            val smartbarHeight = rowHeight * windowDefaults.smartbarHeightFactor
+            rowHeight to smartbarHeight
+        }
+    }
+    val (rowHeight, smartbarHeight) = heights
 
     SideEffect {
         FlorisImeSizing.Static.smartbarHeightPx = with(density) { smartbarHeight.roundToPx() }

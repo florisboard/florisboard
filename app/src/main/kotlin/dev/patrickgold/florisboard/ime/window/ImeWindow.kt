@@ -35,6 +35,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -49,6 +50,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.coerceAtLeast
@@ -58,11 +60,13 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.sheet.BottomSheetWindow
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.window.ImeWindowDefaults.OrientationDependent
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
@@ -78,15 +82,15 @@ import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 
 @Composable
 fun ImeRootWindow() {
-    val ims = LocalFlorisImeService.current
     val density = LocalDensity.current
+    val windowController = LocalWindowController.current
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTapGestures {
-                    ims.windowController.editor.disableIfNoGestureInProgress()
+                    windowController.editor.disableIfNoGestureInProgress()
                 }
             }
             .onGloballyPositioned { coords ->
@@ -95,7 +99,7 @@ fun ImeRootWindow() {
                     boundsDp = with(density) { boundsPx.toDpRect() },
                     boundsPx = boundsPx,
                 )
-                ims.windowController.updateRootInsets(newInsets)
+                windowController.updateRootInsets(newInsets)
             },
     ) {
         DevtoolsOverlay()
@@ -107,12 +111,14 @@ fun ImeRootWindow() {
 
 @Composable
 fun BoxScope.ImeWindow() {
-    val ims = LocalFlorisImeService.current
+    val context = LocalContext.current
     val density = LocalDensity.current
-    val keyboardManager by ims.keyboardManager()
+    val windowController = LocalWindowController.current
+
+    val keyboardManager by context.keyboardManager()
 
     val state by keyboardManager.activeState.collectAsState()
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
 
     val layoutDirection = LocalLayoutDirection.current
     LaunchedEffect(layoutDirection) {
@@ -149,7 +155,7 @@ fun BoxScope.ImeWindow() {
                     boundsDp = with(density) { boundsPx.toDpRect() },
                     boundsPx = boundsPx,
                 )
-                ims.windowController.updateWindowInsets(newInsets)
+                windowController.updateWindowInsets(newInsets)
             },
         supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
         allowClip = false,
@@ -174,11 +180,13 @@ fun BoxScope.ImeWindow() {
 
 @Composable
 private fun ImeInnerWindow() {
-    val ims = LocalFlorisImeService.current
-    val keyboardManager by ims.keyboardManager()
+    val context = LocalContext.current
+    val windowController = LocalWindowController.current
+
+    val keyboardManager by context.keyboardManager()
 
     val state by keyboardManager.activeState.collectAsState()
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
 
     SnyggBox(
         elementName = FlorisImeUi.WindowInner.elementName,
@@ -212,10 +220,11 @@ private fun ImeInnerWindow() {
 
 @Composable
 private fun BoxScope.FloatingDockToFixedIndicator() {
-    val ims = LocalFlorisImeService.current
+    val inputFeedbackController = LocalInputFeedbackController.current
+    val windowController = LocalWindowController.current
 
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
-    val editorState by ims.windowController.editor.state.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val editorState by windowController.editor.state.collectAsState()
     val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
 
     val visible by remember {
@@ -244,7 +253,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
     LaunchedEffect(visible) {
         if (visible) {
             delay(150)
-            ims.inputFeedbackController.keyPress()
+            inputFeedbackController.keyPress()
         }
     }
 
@@ -276,8 +285,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
 
 @Composable
 private fun BoxScope.OneHandedPanel() {
-    val ims = LocalFlorisImeService.current
-    val windowController = ims.windowController
+    val windowController = LocalWindowController.current
     val windowSpec by windowController.activeWindowSpec.collectAsState()
 
     when (val spec = windowSpec) {
@@ -290,8 +298,7 @@ private fun BoxScope.OneHandedPanel() {
 
 @Composable
 private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
-    val ims = LocalFlorisImeService.current
-    val windowController = ims.windowController
+    val windowController = LocalWindowController.current
     val activeOrientation by windowController.activeOrientation.collectAsState()
 
     Box(Modifier.matchParentSize()) {
@@ -319,7 +326,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             SnyggIconButton(
                 elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
-                    ims.windowController.updateWindowConfig { config ->
+                    windowController.updateWindowConfig { config ->
                         config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
                     }
                 },
@@ -352,11 +359,20 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             SnyggIconButton(
                 elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
-                    ims.windowController.editor.toggleEnabled()
+                    windowController.editor.toggleEnabled()
                 },
             ) {
                 SnyggIcon(imageVector = drawableRes(R.drawable.ic_resize))
             }
+        }
+    }
+}
+
+@Composable
+fun ImeWindowDefaults.rememberDerivedStateOf(orientationEvaluator: () -> ImeOrientation): State<OrientationDependent> {
+    return remember {
+        derivedStateOf {
+            of(orientationEvaluator())
         }
     }
 }

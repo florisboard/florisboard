@@ -16,10 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.window
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -139,14 +135,5 @@ object ImeWindowDefaults {
     fun of(orientation: ImeOrientation): OrientationDependent = when (orientation) {
         ImeOrientation.PORTRAIT -> Portrait
         ImeOrientation.LANDSCAPE -> Landscape
-    }
-
-    @Composable
-    fun rememberDerivedStateOf(orientationEvaluator: () -> ImeOrientation): State<OrientationDependent> {
-        return remember {
-            derivedStateOf {
-                of(orientationEvaluator())
-            }
-        }
     }
 }

@@ -53,8 +53,8 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
@@ -62,9 +62,9 @@ import org.florisboard.lib.snygg.ui.uriOrNull
 
 @Composable
 fun ImeSystemUi() {
-    val ims = LocalFlorisImeService.current
+    val windowController = LocalWindowController.current
 
-    val windowSpec by ims.windowController.activeWindowSpec.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
     val isSystemNavbarVisible by remember {
         derivedStateOf { windowSpec is ImeWindowSpec.Fixed }
     }
@@ -102,8 +102,6 @@ fun ImeSystemUi() {
 
 @Composable
 fun ImeSystemUiFloating() {
-    val ims = LocalFlorisImeService.current
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -113,7 +111,7 @@ fun ImeSystemUiFloating() {
     ) {
         FlorisIconButton(
             onClick = {
-                ims.hideUi()
+                FlorisImeService.hideUi()
             }
         ) {
             Icon(Icons.Default.KeyboardArrowDown, "Close floating keyboard window")
@@ -123,10 +121,10 @@ fun ImeSystemUiFloating() {
 
         FlorisIconButton(
             onClick = {
-                ims.switchToNextInputMethod()
+                FlorisImeService.switchToNextInputMethod()
             },
             onLongClick = {
-                InputMethodUtils.showImePicker(ims)
+                FlorisImeService.showImePicker()
             }
         ) {
             Icon(Icons.Default.Language, "Click: switch to next input method; Longclick: Show ime picker")
@@ -137,7 +135,7 @@ fun ImeSystemUiFloating() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowScope.NavigationPill() {
-    val ims = LocalFlorisImeService.current
+    val windowController = LocalWindowController.current
 
     val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
@@ -164,8 +162,8 @@ private fun RowScope.NavigationPill() {
         modifier = Modifier
             .width(IntrinsicSize.Max)
             .wrapContentHeight()
-            .imeWindowMoveHandle(ims.windowController, onTap = {
-                ims.windowController.editor.toggleEnabled()
+            .imeWindowMoveHandle(windowController, onTap = {
+                windowController.editor.toggleEnabled()
             })
             .padding(vertical = 20.dp)
             .align(Alignment.CenterVertically)
