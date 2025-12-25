@@ -164,7 +164,9 @@ private fun RowScope.NavigationPill() {
         modifier = Modifier
             .width(IntrinsicSize.Max)
             .wrapContentHeight()
-            .imeWindowMoveHandle(ims.windowController)
+            .imeWindowMoveHandle(ims.windowController, onTap = {
+                ims.windowController.editor.toggleEnabled()
+            })
             .padding(vertical = 20.dp)
             .align(Alignment.CenterVertically)
     ) {

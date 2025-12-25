@@ -678,7 +678,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     override fun onInputKeyDown(data: KeyData) {
         val windowController = FlorisImeService.windowControllerOrNull()
-        windowController?.editor?.disable()
+        windowController?.editor?.disableIfNoGestureInProgress()
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,

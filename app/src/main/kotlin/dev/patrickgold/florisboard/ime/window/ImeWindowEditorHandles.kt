@@ -20,6 +20,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -44,7 +45,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -100,28 +100,7 @@ private fun ImeWindowResizeHandle(
     Box(
         modifier = modifier
             .size(windowDefaults.resizeHandleTouchSize)
-            .pointerInput(Unit) {
-                var unconsumed = DpOffset.Zero
-                detectDragGestures(
-                    onDragStart = {
-                        ims.windowController.editor.beginResizeGesture()
-                    },
-                    onDrag = { change, dragAmount ->
-                        change.consume()
-                        unconsumed += dragAmount.toDp()
-                        val consumed = ims.windowController.editor.resizeBy(handle, unconsumed)
-                        unconsumed -= consumed
-                    },
-                    onDragEnd = {
-                        ims.windowController.editor.endResizeGesture()
-                        unconsumed = DpOffset.Zero
-                    },
-                    onDragCancel = {
-                        ims.windowController.editor.cancelGesture()
-                        unconsumed = DpOffset.Zero
-                    },
-                )
-            }
+            .imeWindowResizeHandle(ims.windowController, handle)
             .background(Color.Yellow)
             .padding(windowDefaults.resizeHandleDrawPadding)
             .drawBehind {
@@ -182,7 +161,14 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .pointerInteropFilter { true }
+                .pointerInput(Unit) {
+                    while (true) {
+                        awaitPointerEventScope {
+                            val event = awaitPointerEvent()
+                            event.changes.forEach { it.consume() }
+                        }
+                    }
+                }
                 .background(Color.Gray.copy(alpha = 0.5f))
         )
 
@@ -333,3 +319,74 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
         )
     }
 }
+
+fun Modifier.imeWindowMoveHandle(
+    windowController: ImeWindowController,
+    onTap: () -> Unit = {},
+): Modifier = this.then(
+    Modifier
+        .pointerInput(Unit) {
+            detectTapGestures {
+                onTap()
+            }
+        }
+        .pointerInput(Unit) {
+            var unconsumed = DpOffset.Zero
+            detectDragGestures(
+                onDragStart = {
+                    windowController.editor.beginMoveGesture()
+                    unconsumed = DpOffset.Zero
+                },
+                onDrag = { change, dragAmount ->
+                    change.consume()
+                    unconsumed += dragAmount.toDp()
+                    val consumed = windowController.editor.moveBy(unconsumed)
+                    unconsumed -= consumed
+                },
+                onDragEnd = {
+                    windowController.editor.endMoveGesture()
+                    unconsumed = DpOffset.Zero
+                },
+                onDragCancel = {
+                    windowController.editor.cancelGesture()
+                    unconsumed = DpOffset.Zero
+                },
+            )
+        }
+)
+
+fun Modifier.imeWindowResizeHandle(
+    windowController: ImeWindowController,
+    handle: ImeWindowResizeHandle,
+    onTap: () -> Unit = {},
+): Modifier = this.then(
+    Modifier
+        .pointerInput(Unit) {
+            detectTapGestures {
+                onTap()
+            }
+        }
+        .pointerInput(Unit) {
+            var unconsumed = DpOffset.Zero
+            detectDragGestures(
+                onDragStart = {
+                    windowController.editor.beginResizeGesture()
+                    unconsumed = DpOffset.Zero
+                },
+                onDrag = { change, dragAmount ->
+                    change.consume()
+                    unconsumed += dragAmount.toDp()
+                    val consumed = windowController.editor.resizeBy(handle, unconsumed)
+                    unconsumed -= consumed
+                },
+                onDragEnd = {
+                    windowController.editor.endResizeGesture()
+                    unconsumed = DpOffset.Zero
+                },
+                onDragCancel = {
+                    windowController.editor.cancelGesture()
+                    unconsumed = DpOffset.Zero
+                },
+            )
+        }
+)
