@@ -208,6 +208,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "devtools__show_drag_and_drop_helpers",
             default = false,
         )
+        val showWindowResizeHandleBoundaries = boolean(
+            key = "devtools__show_window_resize_handle_bounderies",
+            default = false
+        )
     }
 
     val dictionary = Dictionary()

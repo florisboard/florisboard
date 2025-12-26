@@ -38,8 +38,8 @@ import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import org.florisboard.lib.android.AndroidSettings
 import kotlinx.coroutines.launch
+import org.florisboard.lib.android.AndroidSettings
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.stringRes
@@ -150,6 +150,11 @@ fun DevtoolsScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.devtools__group_ime_window_tools__title)) {
+            SwitchPreference(
+                prefs.devtools.showWindowResizeHandleBoundaries,
+                title = stringRes(R.string.devtools__show_window_resize_handle_boundaries__label),
+                summary = stringRes(R.string.devtools__show_window_resize_handle_boundaries__summary),
+            )
             Preference(
                 title = stringRes(R.string.devtools__reset_window_config_portrait__label),
                 summary = stringRes(R.string.devtools__reset_window_config__summary),

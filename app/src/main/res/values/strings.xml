@@ -761,6 +761,8 @@
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test crash report screen</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug action to purposely produce a crash</string>
     <string name="devtools__group_ime_window_tools__title" comment="Title of IME window tools group in Devtools">IME window tools</string>
+    <string name="devtools__show_window_resize_handle_boundaries__label">Show window resize handle boundaries</string>
+    <string name="devtools__show_window_resize_handle_boundaries__summary">Show window resize handle boundaries for debugging</string>
     <string name="devtools__reset_window_config_portrait__label">Reset window config for portrait</string>
     <string name="devtools__reset_window_config_landscape__label">Reset window config for landscape</string>
     <string name="devtools__reset_window_config__summary">Resets the window config (fixed/floating mode, paddings, offsets) to default</string>

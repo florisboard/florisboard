@@ -48,8 +48,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.launch
+import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawableRes
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.compose.toDp
@@ -81,6 +84,7 @@ private fun ImeWindowResizeHandle(
     modifier: Modifier,
 ) {
     val windowController = LocalWindowController.current
+    val prefs by FlorisPreferenceStore
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val windowDefaults by remember {
@@ -88,6 +92,8 @@ private fun ImeWindowResizeHandle(
             ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
         }
     }
+
+    val showWindowResizeHandleBoundaries by prefs.devtools.showWindowResizeHandleBoundaries.observeAsState()
 
     val elementName by remember {
         derivedStateOf {
@@ -105,7 +111,10 @@ private fun ImeWindowResizeHandle(
         modifier = modifier
             .size(windowDefaults.resizeHandleTouchSize)
             .imeWindowResizeHandle(windowController, handle)
-            .background(Color.Yellow)
+            .conditional(showWindowResizeHandleBoundaries) {
+                Modifier
+                    .background(Color.Yellow)
+            }
             .padding(windowDefaults.resizeHandleDrawPadding)
             .drawBehind {
                 val thickness = windowDefaults.resizeHandleDrawThickness.toPx()
