@@ -26,6 +26,7 @@ import kotlin.math.abs
 
 sealed interface ImeWindowSpec {
     val props: ImeWindowProps
+    val fontScale: Float
     val rootInsets: ImeInsets?
     val orientation: ImeOrientation
 
@@ -36,6 +37,7 @@ sealed interface ImeWindowSpec {
     data class Fixed(
         val mode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
+        override val fontScale: Float,
         override val rootInsets: ImeInsets?,
         override val orientation: ImeOrientation,
     ) : ImeWindowSpec {
@@ -79,12 +81,13 @@ sealed interface ImeWindowSpec {
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
-            )
+            ).constrained(rootInsets, orientation)
+            val newSpec = copy(props = newProps)
             val consumed = DpOffset(
                 x = newProps.paddingLeft - props.paddingLeft,
                 y = -(newProps.paddingBottom - props.paddingBottom),
             )
-            return copy(props = newProps.constrained(rootInsets, orientation)) to consumed
+            return newSpec to consumed
         }
 
         override fun resizedBy(
@@ -127,6 +130,10 @@ sealed interface ImeWindowSpec {
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
+            ).constrained(rootInsets, orientation)
+            val newSpec = copy(
+                props = newProps,
+                //fontScale = newProps.calcFontScale(rootInsets, orientation),
             )
             val consumed = DpOffset(
                 x = when {
@@ -138,13 +145,14 @@ sealed interface ImeWindowSpec {
                     else -> (newProps.rowHeight - props.rowHeight)
                 } * windowDefaults.keyboardHeightFactor,
             )
-            return copy(props = newProps.constrained(rootInsets, orientation)) to consumed
+            return newSpec to consumed
         }
     }
 
     data class Floating(
         val mode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
+        override val fontScale: Float,
         override val rootInsets: ImeInsets?,
         override val orientation: ImeOrientation,
     ) : ImeWindowSpec {
@@ -155,11 +163,12 @@ sealed interface ImeWindowSpec {
                 offsetLeft = props.offsetLeft + offset.x,
                 offsetBottom = props.offsetBottom - offset.y,
             ).constrained(rootInsets, orientation)
+            val newSpec = copy(props = newProps)
             val consumed = DpOffset(
                 x = newProps.offsetLeft - props.offsetLeft,
                 y = -(newProps.offsetBottom - props.offsetBottom),
             )
-            return copy(props = newProps) to consumed
+            return newSpec to consumed
         }
 
         override fun resizedBy(
@@ -201,6 +210,10 @@ sealed interface ImeWindowSpec {
                 keyboardWidth = keyboardWidth,
                 offsetLeft = offsetLeft,
                 offsetBottom = offsetBottom,
+            ).constrained(rootInsets, orientation)
+            val newSpec = copy(
+                props = newProps,
+                //fontScale = newProps.calcFontScale(rootInsets, orientation),
             )
             val consumed = DpOffset(
                 x = when {
@@ -212,7 +225,7 @@ sealed interface ImeWindowSpec {
                     else -> (newProps.rowHeight - props.rowHeight)
                 } * windowDefaults.keyboardHeightFactor,
             )
-            return copy(props = newProps.constrained(rootInsets, orientation)) to consumed
+            return newSpec to consumed
         }
     }
 }

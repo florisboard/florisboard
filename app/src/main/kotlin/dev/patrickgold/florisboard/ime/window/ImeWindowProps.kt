@@ -33,6 +33,15 @@ sealed interface ImeWindowProps {
 
     fun constrained(rootInsets: ImeInsets?, orientation: ImeOrientation): ImeWindowProps
 
+    fun calcFontScale(
+        rootInsets: ImeInsets?,
+        orientation: ImeOrientation,
+    ): Float {
+        val windowDefaults = ImeWindowDefaults.of(orientation)
+        val fontScale = rowHeight / windowDefaults.rowHeight
+        return fontScale.coerceAtMost(1f)
+    }
+
     @Serializable
     data class Fixed(
         override val rowHeight: Dp,

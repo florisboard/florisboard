@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +51,8 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
         FlorisAssetResolver(context, activeThemeInfo)
     }
     val snyggTheme = rememberSnyggTheme(activeThemeInfo.stylesheet, assetResolver)
-    val fontSizeMultiplier by windowController.activeFontSizeMultiplier.collectAsState()
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val fontScale by remember { derivedStateOf { windowSpec.fontScale } }
 
     val state by keyboardManager.activeState.collectAsState()
     val attributes = mapOf(
@@ -65,7 +67,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
             ProvideSnyggTheme(
                 snyggTheme = snyggTheme,
                 dynamicAccentColor = accentColor,
-                fontSizeMultiplier = fontSizeMultiplier,
+                fontSizeMultiplier = fontScale,
                 assetResolver = assetResolver,
                 rootAttributes = attributes,
                 content = content,

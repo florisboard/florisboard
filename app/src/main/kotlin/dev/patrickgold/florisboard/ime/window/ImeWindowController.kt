@@ -44,9 +44,6 @@ class ImeWindowController(val scope: CoroutineScope) {
     val activeOrientation: StateFlow<ImeOrientation>
         field = MutableStateFlow(ImeOrientation.PORTRAIT)
 
-    val activeFontSizeMultiplier: StateFlow<Float>
-        field = MutableStateFlow(1.0f)
-
     val activeWindowConfig: StateFlow<ImeWindowConfig>
         field = MutableStateFlow(ImeWindowConfig.DefaultPortrait)
 
@@ -70,7 +67,7 @@ class ImeWindowController(val scope: CoroutineScope) {
             activeWindowConfig.value = windowConfig
         }
 
-        val prefsFontSizeMultiplier = combine(
+        val userFontScale = combine(
             activeOrientation,
             prefs.keyboard.fontSizeMultiplierPortrait.asFlow(),
             prefs.keyboard.fontSizeMultiplierLandscape.asFlow(),
@@ -85,21 +82,12 @@ class ImeWindowController(val scope: CoroutineScope) {
             activeRootInsets,
             activeOrientation,
             activeWindowConfig,
+            userFontScale,
             editor.version,
-        ) { rootInsets, orientation, windowConfig, _ ->
-            doComputeWindowSpec(rootInsets, orientation, windowConfig)
+        ) { rootInsets, orientation, windowConfig, userFontScale, _ ->
+            doComputeWindowSpec(rootInsets, orientation, windowConfig, userFontScale)
         }.collectIn(scope) { windowSpec ->
             activeWindowSpec.value = windowSpec
-        }
-
-        combine(
-            activeWindowConfig,
-            prefsFontSizeMultiplier,
-        ) { windowConfig, multiplier ->
-            // TODO: Scale the fontsize with the keyboard
-            multiplier
-        }.collectIn(scope) { multiplier ->
-            activeFontSizeMultiplier.value = multiplier
         }
     }
 
@@ -189,22 +177,27 @@ class ImeWindowController(val scope: CoroutineScope) {
         rootInsets: ImeInsets?,
         orientation: ImeOrientation,
         windowConfig: ImeWindowConfig,
+        userFontScale: Float,
     ): ImeWindowSpec {
         return when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
                 val props = windowConfig.getFixedPropsOrDefault(orientation)
+                val fontScale = props.calcFontScale(rootInsets, orientation) * userFontScale
                 ImeWindowSpec.Fixed(
                     mode = windowConfig.fixedMode,
                     props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
+                    fontScale = fontScale,
                     rootInsets = rootInsets,
                     orientation = orientation,
                 )
             }
             ImeWindowMode.FLOATING -> {
                 val props = windowConfig.getFloatingPropsOrDefault(orientation)
+                val fontScale = props.calcFontScale(rootInsets, orientation) * userFontScale
                 ImeWindowSpec.Floating(
                     mode = windowConfig.floatingMode,
                     props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
+                    fontScale = fontScale,
                     rootInsets = rootInsets,
                     orientation = orientation,
                 )

@@ -128,6 +128,7 @@ object ImeWindowDefaults {
             paddingRight = 0.dp,
             paddingBottom = 0.dp,
         ),
+        fontScale = 1f,
         rootInsets = null,
         orientation = ImeOrientation.PORTRAIT,
     )
