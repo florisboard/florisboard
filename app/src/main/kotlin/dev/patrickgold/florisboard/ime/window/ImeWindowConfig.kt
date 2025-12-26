@@ -31,15 +31,15 @@ data class ImeWindowConfig(
     fun getFixedPropsOrDefault(orientation: ImeOrientation): ImeWindowProps.Fixed {
         val props = fixedProps[fixedMode]
         if (props != null) return props
-        val windowDefaults = ImeWindowDefaults.of(orientation)
-        return windowDefaults.propsFixed[fixedMode]!!
+        val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
+        return windowDefaults.props[fixedMode]!!
     }
 
     fun getFloatingPropsOrDefault(orientation: ImeOrientation): ImeWindowProps.Floating {
         val props = floatingProps[floatingMode]
         if (props != null) return props
-        val windowDefaults = ImeWindowDefaults.of(orientation)
-        return windowDefaults.propsFloating[floatingMode]!!
+        val windowDefaults = ImeWindowDefaults.Floating.of(orientation)
+        return windowDefaults.props[floatingMode]!!
     }
 
     object Serializer : PreferenceSerializer<ImeWindowConfig> {

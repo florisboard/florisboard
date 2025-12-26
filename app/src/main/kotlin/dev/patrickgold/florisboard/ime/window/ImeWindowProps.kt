@@ -31,16 +31,15 @@ import org.florisboard.lib.compose.DpSizeSerializer
 sealed interface ImeWindowProps {
     val rowHeight: Dp
 
-    fun constrained(rootInsets: ImeInsets?, orientation: ImeOrientation): ImeWindowProps
+    fun constrained(
+        rootInsets: ImeInsets?,
+        orientation: ImeOrientation,
+    ): ImeWindowProps
 
     fun calcFontScale(
         rootInsets: ImeInsets?,
         orientation: ImeOrientation,
-    ): Float {
-        val windowDefaults = ImeWindowDefaults.of(orientation)
-        val fontScale = rowHeight / windowDefaults.rowHeight
-        return fontScale.coerceAtMost(1f)
-    }
+    ): Float
 
     @Serializable
     data class Fixed(
@@ -54,9 +53,18 @@ sealed interface ImeWindowProps {
             orientation: ImeOrientation,
         ): Fixed {
             val rootBounds = rootInsets?.boundsDp ?: return this
-            val windowDefaults = ImeWindowDefaults.of(orientation)
+            val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
             // TODO impl
             return this
+        }
+
+        override fun calcFontScale(
+            rootInsets: ImeInsets?,
+            orientation: ImeOrientation,
+        ): Float {
+            val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
+            val fontScale = rowHeight / windowDefaults.rowHeight
+            return fontScale.coerceAtMost(1f)
         }
     }
 
@@ -72,7 +80,7 @@ sealed interface ImeWindowProps {
             orientation: ImeOrientation,
         ): Floating {
             val rootBounds = rootInsets?.boundsDp ?: return this
-            val windowDefaults = ImeWindowDefaults.of(orientation)
+            val windowDefaults = ImeWindowDefaults.Floating.of(orientation)
 
             val newRowHeight = rowHeight.coerceIn(
                 minimumValue = min(windowDefaults.keyboardHeightMin / windowDefaults.keyboardHeightFactor, rootBounds.height),
@@ -96,6 +104,15 @@ sealed interface ImeWindowProps {
                 offsetLeft = newOffsetLeft,
                 offsetBottom = newOffsetBottom,
             )
+        }
+
+        override fun calcFontScale(
+            rootInsets: ImeInsets?,
+            orientation: ImeOrientation,
+        ): Float {
+            val windowDefaults = ImeWindowDefaults.Floating.of(orientation)
+            val fontScale = rowHeight / windowDefaults.rowHeight
+            return fontScale.coerceAtMost(1f)
         }
     }
 }

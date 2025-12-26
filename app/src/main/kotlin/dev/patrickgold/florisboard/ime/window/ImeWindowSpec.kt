@@ -30,21 +30,26 @@ sealed interface ImeWindowSpec {
     val rootInsets: ImeInsets?
     val orientation: ImeOrientation
 
+    val mode: ImeWindowMode
+
     fun movedBy(offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
     fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
     data class Fixed(
-        val mode: ImeWindowMode.Fixed,
+        val fixedMode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
         override val fontScale: Float,
         override val rootInsets: ImeInsets?,
         override val orientation: ImeOrientation,
     ) : ImeWindowSpec {
+        override val mode: ImeWindowMode
+            get() = ImeWindowMode.FIXED
+
         override fun movedBy(
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
-            val windowDefaults = ImeWindowDefaults.of(orientation)
+            val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
 
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
@@ -64,9 +69,9 @@ sealed interface ImeWindowSpec {
                 paddingRight = newPaddingRight
             }
 
-            if (mode == ImeWindowMode.Fixed.NORMAL && paddingLeft != 0.dp && paddingRight != 0.dp) {
+            if (fixedMode == ImeWindowMode.Fixed.NORMAL && paddingLeft != 0.dp && paddingRight != 0.dp) {
                 // maybe snap to center
-                if (abs((paddingLeft - paddingRight).value).dp <= windowDefaults.fixedSnapToCenterWidth) {
+                if (abs((paddingLeft - paddingRight).value).dp <= windowDefaults.snapToCenterWidth) {
                     val avgPadding = (paddingLeft + paddingRight) / 2
                     paddingLeft = avgPadding
                     paddingRight = avgPadding
@@ -95,7 +100,7 @@ sealed interface ImeWindowSpec {
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
             val rootBounds = rootInsets?.boundsDp ?: return this to DpOffset.Zero
-            val windowDefaults = ImeWindowDefaults.of(orientation)
+            val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
 
             var keyboardHeight = props.rowHeight * windowDefaults.keyboardHeightFactor
             var paddingLeft = props.paddingLeft
@@ -150,12 +155,15 @@ sealed interface ImeWindowSpec {
     }
 
     data class Floating(
-        val mode: ImeWindowMode.Floating,
+        val floatingMode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
         override val fontScale: Float,
         override val rootInsets: ImeInsets?,
         override val orientation: ImeOrientation,
     ) : ImeWindowSpec {
+        override val mode: ImeWindowMode
+            get() = ImeWindowMode.FLOATING
+
         override fun movedBy(
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
@@ -176,7 +184,7 @@ sealed interface ImeWindowSpec {
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
             val rootBounds = rootInsets?.boundsDp ?: return this to DpOffset.Zero
-            val windowDefaults = ImeWindowDefaults.of(orientation)
+            val windowDefaults = ImeWindowDefaults.Floating.of(orientation)
 
             var keyboardHeight = props.rowHeight * windowDefaults.keyboardHeightFactor
             var keyboardWidth = props.keyboardWidth

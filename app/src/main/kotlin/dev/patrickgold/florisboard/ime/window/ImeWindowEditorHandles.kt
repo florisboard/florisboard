@@ -83,7 +83,11 @@ private fun ImeWindowResizeHandle(
     val windowController = LocalWindowController.current
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
-    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
+    val windowDefaults by remember {
+        derivedStateOf {
+            ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
+        }
+    }
 
     val elementName by remember {
         derivedStateOf {
@@ -144,7 +148,11 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
-    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
+    val windowDefaults by remember {
+        derivedStateOf {
+            ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
+        }
+    }
 
     val visible by remember {
         derivedStateOf {
@@ -274,7 +282,11 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
-    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
+    val windowDefaults by remember {
+        derivedStateOf {
+            ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
+        }
+    }
 
     val visible by remember {
         derivedStateOf {

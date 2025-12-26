@@ -35,7 +35,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -66,7 +65,6 @@ import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.sheet.BottomSheetWindow
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.window.ImeWindowDefaults.OrientationDependent
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
@@ -225,13 +223,17 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
-    val windowDefaults by ImeWindowDefaults.rememberDerivedStateOf { windowSpec.orientation }
+    val windowDefaults by remember {
+        derivedStateOf {
+            ImeWindowDefaults.Floating.of(windowSpec.orientation)
+        }
+    }
 
     val visible by remember {
         derivedStateOf {
             windowSpec.let { spec ->
                 editorState.isMoveGesture && spec is ImeWindowSpec.Floating &&
-                    spec.props.offsetBottom <= windowDefaults.floatingDockToFixedHeight
+                    spec.props.offsetBottom <= windowDefaults.dockToFixedHeight
             }
         }
     }
@@ -261,7 +263,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .fillMaxWidth()
-            .height(windowDefaults.floatingDockToFixedHeight)
+            .height(windowDefaults.dockToFixedHeight)
             .navigationBarsPadding()
             .graphicsLayer { alpha = animatedAlpha }
             .drawBehind {
@@ -277,7 +279,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
                 drawBorder(
                     color = color,
                     topLeft = animatedTopLeft,
-                    stroke = Stroke(windowDefaults.floatingDockToFixedBorder.toPx()),
+                    stroke = Stroke(windowDefaults.dockToFixedBorder.toPx()),
                 )
             },
     )
@@ -289,7 +291,7 @@ private fun BoxScope.OneHandedPanel() {
     val windowSpec by windowController.activeWindowSpec.collectAsState()
 
     when (val spec = windowSpec) {
-        is ImeWindowSpec.Fixed if spec.mode == ImeWindowMode.Fixed.COMPACT -> {
+        is ImeWindowSpec.Fixed if spec.fixedMode == ImeWindowMode.Fixed.COMPACT -> {
             OneHandedPanel(spec)
         }
         else -> { }
@@ -364,15 +366,6 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             ) {
                 SnyggIcon(imageVector = drawableRes(R.drawable.ic_resize))
             }
-        }
-    }
-}
-
-@Composable
-fun ImeWindowDefaults.rememberDerivedStateOf(orientationEvaluator: () -> ImeOrientation): State<OrientationDependent> {
-    return remember {
-        derivedStateOf {
-            of(orientationEvaluator())
         }
     }
 }

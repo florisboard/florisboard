@@ -184,7 +184,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                 val props = windowConfig.getFixedPropsOrDefault(orientation)
                 val fontScale = props.calcFontScale(rootInsets, orientation) * userFontScale
                 ImeWindowSpec.Fixed(
-                    mode = windowConfig.fixedMode,
+                    fixedMode = windowConfig.fixedMode,
                     props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
                     fontScale = fontScale,
                     rootInsets = rootInsets,
@@ -195,7 +195,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                 val props = windowConfig.getFloatingPropsOrDefault(orientation)
                 val fontScale = props.calcFontScale(rootInsets, orientation) * userFontScale
                 ImeWindowSpec.Floating(
-                    mode = windowConfig.floatingMode,
+                    floatingMode = windowConfig.floatingMode,
                     props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
                     fontScale = fontScale,
                     rootInsets = rootInsets,
@@ -261,19 +261,19 @@ class ImeWindowController(val scope: CoroutineScope) {
             val spec = activeWindowSpec.value
             var keepEnabled = true
             updateWindowConfig { config ->
-                val windowDefaults = ImeWindowDefaults.of(spec.orientation)
                 when (spec) {
                      is ImeWindowSpec.Fixed -> {
                          keepEnabled = true
-                         config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
+                         config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
                      }
                     is ImeWindowSpec.Floating -> {
-                        if (spec.props.offsetBottom <= windowDefaults.floatingDockToFixedHeight) {
+                        val windowDefaults = ImeWindowDefaults.Floating.of(spec.orientation)
+                        if (spec.props.offsetBottom <= windowDefaults.dockToFixedHeight) {
                             keepEnabled = false
                             config.copy(mode = ImeWindowMode.FIXED)
                         } else {
                             keepEnabled = true
-                            config.copy(floatingProps = config.floatingProps.plus(spec.mode to spec.props))
+                            config.copy(floatingProps = config.floatingProps.plus(spec.floatingMode to spec.props))
                         }
                     }
                 }
@@ -303,11 +303,11 @@ class ImeWindowController(val scope: CoroutineScope) {
                 when (spec) {
                     is ImeWindowSpec.Fixed -> {
                         keepEnabled = true
-                        config.copy(fixedProps = config.fixedProps.plus(spec.mode to spec.props))
+                        config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
                     }
                     is ImeWindowSpec.Floating -> {
                         keepEnabled = true
-                        config.copy(floatingProps = config.floatingProps.plus(spec.mode to spec.props))
+                        config.copy(floatingProps = config.floatingProps.plus(spec.floatingMode to spec.props))
                     }
                 }
             }

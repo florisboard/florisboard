@@ -109,7 +109,7 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
 
     val heights by remember {
         derivedStateOf {
-            val windowDefaults = ImeWindowDefaults.of(windowSpec.orientation)
+            val windowDefaults = ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
             val rowHeight = windowSpec.props.rowHeight
             val smartbarHeight = rowHeight * windowDefaults.smartbarHeightFactor
             rowHeight to smartbarHeight
