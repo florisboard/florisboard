@@ -818,7 +818,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             "smartbar__action_arrangement" -> {
                 fun migrateAction(action: QuickAction): QuickAction {
                     return if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
-                        action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                        action.copy(data = TextKeyData.TOGGLE_COMPACT_LAYOUT)
                     } else {
                         action
                     }
@@ -848,6 +848,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 if (QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW) !in newArrangement) {
                     newArrangement = newArrangement.copy(
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW))
+                    )
+                }
+                if (QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE))
                     )
                 }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())

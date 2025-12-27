@@ -361,6 +361,12 @@ data class TextKeyData(
             code = KeyCode.COMPACT_LAYOUT_TO_RIGHT,
             label = "compact_layout_to_right",
         )
+        /** Predefined key data for [KeyCode.TOGGLE_RESIZE_MODE] */
+        val TOGGLE_RESIZE_MODE = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_RESIZE_MODE,
+            label = "toggle_resize_mode",
+        )
 
         /** Predefined key data for [KeyCode.UNDO] */
         val UNDO = TextKeyData(

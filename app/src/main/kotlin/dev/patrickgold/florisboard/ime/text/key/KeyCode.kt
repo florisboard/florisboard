@@ -74,6 +74,7 @@ object KeyCode {
     const val COMPACT_LAYOUT_TO_RIGHT =     -112
     const val SPLIT_LAYOUT =                -113
     const val MERGE_LAYOUT =                -114
+    const val TOGGLE_RESIZE_MODE =          -115
 
     const val UNDO =                        -131
     const val REDO =                        -132

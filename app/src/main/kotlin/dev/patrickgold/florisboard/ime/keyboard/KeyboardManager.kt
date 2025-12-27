@@ -762,6 +762,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     )
                 }
             }
+            KeyCode.TOGGLE_RESIZE_MODE -> scope.launch {
+                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
+                windowController.editor.toggleEnabled()
+            }
             KeyCode.DELETE -> handleBackwardDelete(OperationUnit.CHARACTERS)
             KeyCode.DELETE_WORD -> handleBackwardDelete(OperationUnit.WORDS)
             KeyCode.ENTER -> handleEnter()
