@@ -57,6 +57,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.ime.window.ImeWindowConstraints
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.ImeWindowProps
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -893,16 +894,22 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private inline fun compactLayoutToSide(crossinline calculateSide: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed) {
         val windowController = FlorisImeService.windowControllerOrNull() ?: return
         windowController.updateWindowConfig { config ->
-            if (config.fixedMode == ImeWindowMode.Fixed.COMPACT) {
-                return@updateWindowConfig config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+            when (config.fixedMode) {
+                ImeWindowMode.Fixed.COMPACT -> {
+                    config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+                }
+                else -> {
+                    val rootInsets = windowController.activeRootInsets.value ?: return@updateWindowConfig config
+                    val constraints = ImeWindowConstraints.of(ImeWindowMode.Fixed.COMPACT, rootInsets)
+                    val size = config.fixedProps[config.fixedMode] ?: constraints.defaultProps()
+                    config.copy(
+                        fixedMode = ImeWindowMode.Fixed.COMPACT,
+                        fixedProps = config.fixedProps.plus(
+                            ImeWindowMode.Fixed.COMPACT to calculateSide(size),
+                        ),
+                    )
+                }
             }
-            val compactConfig = config.copy(fixedMode = ImeWindowMode.Fixed.COMPACT)
-            val size = compactConfig.getFixedPropsOrDefault(windowController.activeOrientation.value)
-            compactConfig.copy(
-                fixedProps = compactConfig.fixedProps.plus(
-                    ImeWindowMode.Fixed.COMPACT to calculateSide(size),
-                ),
-            )
         }
     }
 

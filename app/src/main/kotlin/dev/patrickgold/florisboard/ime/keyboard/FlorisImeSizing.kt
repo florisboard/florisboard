@@ -33,7 +33,6 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
-import dev.patrickgold.florisboard.ime.window.ImeWindowDefaults
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -109,9 +108,8 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
 
     val heights by remember {
         derivedStateOf {
-            val windowDefaults = ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
             val rowHeight = windowSpec.props.rowHeight
-            val smartbarHeight = rowHeight * windowDefaults.smartbarHeightFactor
+            val smartbarHeight = rowHeight * windowSpec.constraints.smartbarHeightFactor
             rowHeight to smartbarHeight
         }
     }

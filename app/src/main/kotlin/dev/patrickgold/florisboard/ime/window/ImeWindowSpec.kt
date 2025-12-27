@@ -27,10 +27,7 @@ import kotlin.math.abs
 sealed interface ImeWindowSpec {
     val props: ImeWindowProps
     val fontScale: Float
-    val rootInsets: ImeInsets?
-    val orientation: ImeOrientation
-
-    val mode: ImeWindowMode
+    val constraints: ImeWindowConstraints
 
     fun movedBy(offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
@@ -40,17 +37,11 @@ sealed interface ImeWindowSpec {
         val fixedMode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
         override val fontScale: Float,
-        override val rootInsets: ImeInsets?,
-        override val orientation: ImeOrientation,
+        override val constraints: ImeWindowConstraints.Fixed,
     ) : ImeWindowSpec {
-        override val mode: ImeWindowMode
-            get() = ImeWindowMode.FIXED
-
         override fun movedBy(
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
-            val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
-
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
             var paddingBottom = props.paddingBottom
@@ -71,7 +62,7 @@ sealed interface ImeWindowSpec {
 
             if (fixedMode == ImeWindowMode.Fixed.NORMAL && paddingLeft != 0.dp && paddingRight != 0.dp) {
                 // maybe snap to center
-                if (abs((paddingLeft - paddingRight).value).dp <= windowDefaults.snapToCenterWidth) {
+                if (abs((paddingLeft - paddingRight).value).dp <= constraints.snapToCenterWidth) {
                     val avgPadding = (paddingLeft + paddingRight) / 2
                     paddingLeft = avgPadding
                     paddingRight = avgPadding
@@ -80,13 +71,13 @@ sealed interface ImeWindowSpec {
 
             paddingBottom = (paddingBottom - offset.y)
                 .coerceAtLeast(0.dp)
-                .coerceAtMost(max(windowDefaults.keyboardHeightMax - props.rowHeight * windowDefaults.keyboardHeightFactor, 0.dp))
+                .coerceAtMost(max(constraints.maxKeyboardHeight - props.rowHeight * constraints.keyboardHeightFactor, 0.dp))
 
             val newProps = props.copy(
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
-            ).constrained(rootInsets, orientation)
+            ).constrained(constraints)
             val newSpec = copy(props = newProps)
             val consumed = DpOffset(
                 x = newProps.paddingLeft - props.paddingLeft,
@@ -99,21 +90,18 @@ sealed interface ImeWindowSpec {
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
-            val rootBounds = rootInsets?.boundsDp ?: return this to DpOffset.Zero
-            val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
-
-            var keyboardHeight = props.rowHeight * windowDefaults.keyboardHeightFactor
+            var keyboardHeight = props.rowHeight * constraints.keyboardHeightFactor
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
             var paddingBottom = props.paddingBottom
 
             if (handle.top) {
                 keyboardHeight = (keyboardHeight - offset.y)
-                    .coerceAtLeast(windowDefaults.keyboardHeightMin)
-                    .coerceAtMost(windowDefaults.keyboardHeightMax - paddingBottom)
+                    .coerceAtLeast(constraints.minKeyboardHeight)
+                    .coerceAtMost(constraints.maxKeyboardHeight - paddingBottom)
             } else if (handle.bottom) {
                 val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtMost(paddingBottom))
-                    .coerceIn(windowDefaults.keyboardHeightMin..windowDefaults.keyboardHeightMax)
+                    .coerceIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
                 paddingBottom -= (newKeyboardHeight - keyboardHeight)
                 keyboardHeight = newKeyboardHeight
             }
@@ -121,21 +109,21 @@ sealed interface ImeWindowSpec {
             if (handle.left) {
                 val newPaddingLeft = (paddingLeft + offset.x)
                     .coerceAtLeast(0.dp)
-                    .coerceAtMost(max(rootBounds.width - paddingRight - windowDefaults.keyboardWidthMin, 0.dp))
+                    .coerceAtMost(max(constraints.rootBounds.width - paddingRight - constraints.minKeyboardWidth, 0.dp))
                 paddingLeft = newPaddingLeft
             } else if (handle.right) {
                 val newPaddingRight = (paddingRight - offset.x)
                     .coerceAtLeast(0.dp)
-                    .coerceAtMost(max(rootBounds.width - paddingLeft - windowDefaults.keyboardWidthMin, 0.dp))
+                    .coerceAtMost(max(constraints.rootBounds.width - paddingLeft - constraints.minKeyboardWidth, 0.dp))
                 paddingRight = newPaddingRight
             }
 
             val newProps = ImeWindowProps.Fixed(
-                rowHeight = keyboardHeight / windowDefaults.keyboardHeightFactor,
+                rowHeight = keyboardHeight / constraints.keyboardHeightFactor,
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
-            ).constrained(rootInsets, orientation)
+            ).constrained(constraints)
             val newSpec = copy(
                 props = newProps,
                 //fontScale = newProps.calcFontScale(rootInsets, orientation),
@@ -148,7 +136,7 @@ sealed interface ImeWindowSpec {
                 y = when {
                     handle.top -> -(newProps.rowHeight - props.rowHeight)
                     else -> (newProps.rowHeight - props.rowHeight)
-                } * windowDefaults.keyboardHeightFactor,
+                } * constraints.keyboardHeightFactor,
             )
             return newSpec to consumed
         }
@@ -158,19 +146,15 @@ sealed interface ImeWindowSpec {
         val floatingMode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
         override val fontScale: Float,
-        override val rootInsets: ImeInsets?,
-        override val orientation: ImeOrientation,
+        override val constraints: ImeWindowConstraints.Floating,
     ) : ImeWindowSpec {
-        override val mode: ImeWindowMode
-            get() = ImeWindowMode.FLOATING
-
         override fun movedBy(
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
             val newProps = props.copy(
                 offsetLeft = props.offsetLeft + offset.x,
                 offsetBottom = props.offsetBottom - offset.y,
-            ).constrained(rootInsets, orientation)
+            ).constrained(constraints)
             val newSpec = copy(props = newProps)
             val consumed = DpOffset(
                 x = newProps.offsetLeft - props.offsetLeft,
@@ -183,42 +167,39 @@ sealed interface ImeWindowSpec {
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
-            val rootBounds = rootInsets?.boundsDp ?: return this to DpOffset.Zero
-            val windowDefaults = ImeWindowDefaults.Floating.of(orientation)
-
-            var keyboardHeight = props.rowHeight * windowDefaults.keyboardHeightFactor
+            var keyboardHeight = props.rowHeight * constraints.keyboardHeightFactor
             var keyboardWidth = props.keyboardWidth
             var offsetLeft = props.offsetLeft
             var offsetBottom = props.offsetBottom
 
             if (handle.top) {
                 keyboardHeight = (keyboardHeight - offset.y)
-                    .coerceIn(windowDefaults.keyboardHeightMin..windowDefaults.keyboardHeightMax)
+                    .coerceIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
             } else if (handle.bottom) {
                 val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtLeast(-offsetBottom))
-                    .coerceIn(windowDefaults.keyboardHeightMin..windowDefaults.keyboardHeightMax)
+                    .coerceIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
                 offsetBottom -= (newKeyboardHeight - keyboardHeight)
                 keyboardHeight = newKeyboardHeight
             }
 
             if (handle.left) {
                 val newKeyboardWidth = (keyboardWidth - offset.x.coerceAtLeast(-offsetLeft))
-                    .coerceIn(windowDefaults.keyboardWidthMin..windowDefaults.keyboardWidthMax)
-                    .coerceAtMost(rootBounds.width - offsetLeft)
+                    .coerceIn(constraints.minKeyboardWidth..constraints.maxKeyboardWidth)
+                    .coerceAtMost(constraints.rootBounds.width - offsetLeft)
                 offsetLeft -= (newKeyboardWidth - keyboardWidth)
                 keyboardWidth = newKeyboardWidth
             } else if (handle.right) {
                 keyboardWidth = (keyboardWidth + offset.x)
-                    .coerceIn(windowDefaults.keyboardWidthMin..windowDefaults.keyboardWidthMax)
-                    .coerceAtMost(rootBounds.width - offsetLeft)
+                    .coerceIn(constraints.minKeyboardWidth..constraints.maxKeyboardWidth)
+                    .coerceAtMost(constraints.rootBounds.width - offsetLeft)
             }
 
             val newProps = ImeWindowProps.Floating(
-                rowHeight = keyboardHeight / windowDefaults.keyboardHeightFactor,
+                rowHeight = keyboardHeight / constraints.keyboardHeightFactor,
                 keyboardWidth = keyboardWidth,
                 offsetLeft = offsetLeft,
                 offsetBottom = offsetBottom,
-            ).constrained(rootInsets, orientation)
+            ).constrained(constraints)
             val newSpec = copy(
                 props = newProps,
                 //fontScale = newProps.calcFontScale(rootInsets, orientation),
@@ -231,7 +212,7 @@ sealed interface ImeWindowSpec {
                 y = when {
                     handle.top -> -(newProps.rowHeight - props.rowHeight)
                     else -> (newProps.rowHeight - props.rowHeight)
-                } * windowDefaults.keyboardHeightFactor,
+                } * constraints.keyboardHeightFactor,
             )
             return newSpec to consumed
         }

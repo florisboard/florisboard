@@ -28,20 +28,6 @@ data class ImeWindowConfig(
     val floatingMode: ImeWindowMode.Floating,
     val floatingProps: Map<ImeWindowMode.Floating, ImeWindowProps.Floating> = emptyMap(),
 ) {
-    fun getFixedPropsOrDefault(orientation: ImeOrientation): ImeWindowProps.Fixed {
-        val props = fixedProps[fixedMode]
-        if (props != null) return props
-        val windowDefaults = ImeWindowDefaults.Fixed.of(orientation)
-        return windowDefaults.props[fixedMode]!!
-    }
-
-    fun getFloatingPropsOrDefault(orientation: ImeOrientation): ImeWindowProps.Floating {
-        val props = floatingProps[floatingMode]
-        if (props != null) return props
-        val windowDefaults = ImeWindowDefaults.Floating.of(orientation)
-        return windowDefaults.props[floatingMode]!!
-    }
-
     object Serializer : PreferenceSerializer<ImeWindowConfig> {
         private val coercingJson = Json { coerceInputValues = true }
 

@@ -48,7 +48,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         field = MutableStateFlow(ImeWindowConfig.DefaultPortrait)
 
     val activeWindowSpec: StateFlow<ImeWindowSpec>
-        field = MutableStateFlow<ImeWindowSpec>(ImeWindowDefaults.FallbackSpec)
+        field = MutableStateFlow<ImeWindowSpec>(ImeWindowConstraints.FallbackSpec)
 
     val isWindowShown: StateFlow<Boolean>
         field = MutableStateFlow(false)
@@ -80,14 +80,13 @@ class ImeWindowController(val scope: CoroutineScope) {
 
         combine(
             activeRootInsets,
-            activeOrientation,
             activeWindowConfig,
             userFontScale,
             editor.version,
-        ) { rootInsets, orientation, windowConfig, userFontScale, _ ->
-            doComputeWindowSpec(rootInsets, orientation, windowConfig, userFontScale)
+        ) { rootInsets, windowConfig, userFontScale, _ ->
+            rootInsets?.let { doComputeWindowSpec(rootInsets, windowConfig, userFontScale) }
         }.collectIn(scope) { windowSpec ->
-            activeWindowSpec.value = windowSpec
+            windowSpec?.let { activeWindowSpec.value = windowSpec }
         }
     }
 
@@ -174,32 +173,31 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
 
     private fun doComputeWindowSpec(
-        rootInsets: ImeInsets?,
-        orientation: ImeOrientation,
+        rootInsets: ImeInsets,
         windowConfig: ImeWindowConfig,
         userFontScale: Float,
     ): ImeWindowSpec {
         return when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
-                val props = windowConfig.getFixedPropsOrDefault(orientation)
-                val fontScale = props.calcFontScale(rootInsets, orientation) * userFontScale
+                val constraints = ImeWindowConstraints.of(windowConfig.fixedMode, rootInsets)
+                val props = windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps()
+                val fontScale = props.calcFontScale(constraints) * userFontScale
                 ImeWindowSpec.Fixed(
                     fixedMode = windowConfig.fixedMode,
-                    props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
+                    props = props.constrained(constraints),
                     fontScale = fontScale,
-                    rootInsets = rootInsets,
-                    orientation = orientation,
+                    constraints = constraints,
                 )
             }
             ImeWindowMode.FLOATING -> {
-                val props = windowConfig.getFloatingPropsOrDefault(orientation)
-                val fontScale = props.calcFontScale(rootInsets, orientation) * userFontScale
+                val constraints = ImeWindowConstraints.of(windowConfig.floatingMode, rootInsets)
+                val props = windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps()
+                val fontScale = props.calcFontScale(constraints) * userFontScale
                 ImeWindowSpec.Floating(
                     floatingMode = windowConfig.floatingMode,
-                    props = if (rootInsets != null) props.constrained(rootInsets, orientation) else props,
+                    props = props.constrained(constraints),
                     fontScale = fontScale,
-                    rootInsets = rootInsets,
-                    orientation = orientation,
+                    constraints = constraints,
                 )
             }
         }
@@ -267,8 +265,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                          config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
                      }
                     is ImeWindowSpec.Floating -> {
-                        val windowDefaults = ImeWindowDefaults.Floating.of(spec.orientation)
-                        if (spec.props.offsetBottom <= windowDefaults.dockToFixedHeight) {
+                        if (spec.props.offsetBottom <= spec.constraints.dockToFixedHeight) {
                             keepEnabled = false
                             config.copy(mode = ImeWindowMode.FIXED)
                         } else {

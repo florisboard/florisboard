@@ -223,17 +223,12 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
-    val windowDefaults by remember {
-        derivedStateOf {
-            ImeWindowDefaults.Floating.of(windowSpec.orientation)
-        }
-    }
 
     val visible by remember {
         derivedStateOf {
             windowSpec.let { spec ->
                 editorState.isMoveGesture && spec is ImeWindowSpec.Floating &&
-                    spec.props.offsetBottom <= windowDefaults.dockToFixedHeight
+                    spec.props.offsetBottom <= spec.constraints.dockToFixedHeight
             }
         }
     }
@@ -263,7 +258,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .fillMaxWidth()
-            .height(windowDefaults.dockToFixedHeight)
+            .height(windowSpec.constraints.dockToFixedHeight)
             .navigationBarsPadding()
             .graphicsLayer { alpha = animatedAlpha }
             .drawBehind {
@@ -279,7 +274,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
                 drawBorder(
                     color = color,
                     topLeft = animatedTopLeft,
-                    stroke = Stroke(windowDefaults.dockToFixedBorder.toPx()),
+                    stroke = Stroke(windowSpec.constraints.dockToFixedBorder.toPx()),
                 )
             },
     )
@@ -301,7 +296,6 @@ private fun BoxScope.OneHandedPanel() {
 @Composable
 private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
     val windowController = LocalWindowController.current
-    val activeOrientation by windowController.activeOrientation.collectAsState()
 
     Box(Modifier.matchParentSize()) {
         Column(
@@ -339,7 +333,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                 elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                 onClick = {
                     windowController.updateWindowConfig { config ->
-                        val fixedProps = config.getFixedPropsOrDefault(activeOrientation)
+                        val fixedProps = config.fixedProps[config.fixedMode] ?: return@updateWindowConfig config
                         val newProps = fixedProps.copy(
                             paddingLeft = fixedProps.paddingRight,
                             paddingRight = fixedProps.paddingLeft,

@@ -18,8 +18,24 @@ package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
+import androidx.compose.ui.unit.width
 
 data class ImeInsets(
     val boundsDp: DpRect,
     val boundsPx: IntRect,
-)
+) {
+    companion object {
+        val Zero = ImeInsets(
+            boundsDp = DpRect(0.dp, 0.dp, 0.dp, 0.dp),
+            boundsPx = IntRect.Zero,
+        )
+    }
+}
+
+val DpRect.inferredOrientation: ImeOrientation
+    get() = when {
+        width <= height -> ImeOrientation.PORTRAIT
+        else -> ImeOrientation.LANDSCAPE
+    }

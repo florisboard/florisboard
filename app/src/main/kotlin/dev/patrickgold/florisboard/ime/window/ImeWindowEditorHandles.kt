@@ -87,11 +87,6 @@ private fun ImeWindowResizeHandle(
     val prefs by FlorisPreferenceStore
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
-    val windowDefaults by remember {
-        derivedStateOf {
-            ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
-        }
-    }
 
     val showWindowResizeHandleBoundaries by prefs.devtools.showWindowResizeHandleBoundaries.observeAsState()
 
@@ -109,16 +104,16 @@ private fun ImeWindowResizeHandle(
 
     Box(
         modifier = modifier
-            .size(windowDefaults.resizeHandleTouchSize)
+            .size(windowSpec.constraints.resizeHandleTouchSize)
             .imeWindowResizeHandle(windowController, handle)
             .conditional(showWindowResizeHandleBoundaries) {
                 Modifier
                     .background(Color.Yellow)
             }
-            .padding(windowDefaults.resizeHandleDrawPadding)
+            .padding(windowSpec.constraints.resizeHandleDrawPadding)
             .drawBehind {
-                val thickness = windowDefaults.resizeHandleDrawThickness.toPx()
-                val cornerRadius = windowDefaults.resizeHandleDrawCornerRadius.toPx().let { CornerRadius(it, it) }
+                val thickness = windowSpec.constraints.resizeHandleDrawThickness.toPx()
+                val cornerRadius = windowSpec.constraints.resizeHandleDrawCornerRadius.toPx().let { CornerRadius(it, it) }
                 if (handle.top || handle.bottom) {
                     val handleSize = Size(
                         width = size.width,
@@ -157,11 +152,6 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
-    val windowDefaults by remember {
-        derivedStateOf {
-            ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
-        }
-    }
 
     val visible by remember {
         derivedStateOf {
@@ -192,7 +182,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
         Column(
             modifier = Modifier
                 .matchParentSize()
-                .padding(vertical = windowDefaults.resizeHandleTouchSize),
+                .padding(vertical = windowSpec.constraints.resizeHandleTouchSize),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -291,11 +281,6 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
-    val windowDefaults by remember {
-        derivedStateOf {
-            ImeWindowDefaults.of(windowSpec.mode, windowSpec.orientation)
-        }
-    }
 
     val visible by remember {
         derivedStateOf {
@@ -308,7 +293,7 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
     )
     val alphaModifier = Modifier.graphicsLayer { alpha = animatedAlpha }
 
-    val offset = windowDefaults.resizeHandleTouchOffsetFloating
+    val offset = windowSpec.constraints.resizeHandleTouchOffsetFloating
     if (visible) {
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.TOP_LEFT,
