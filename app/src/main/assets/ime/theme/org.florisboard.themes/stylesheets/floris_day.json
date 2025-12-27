@@ -36,15 +36,22 @@
     "background": "var(--background)",
     "foreground": "var(--on-background)"
   },
+  "window-move-handle-fixed": {
+    "background": "var(--surface)",
+    "foreground": "var(--primary)",
+    "font-size": "40sp",
+    "shape": "circle()"
+  },
   "window-resize-handle-fixed": {
     "background": "var(--primary)"
   },
   "window-resize-handle-floating": {
     "background": "var(--primary)"
   },
-  "window-move-handle-fixed": {
+  "window-resize-action-fixed": {
     "background": "var(--surface)",
-    "foreground": "var(--on-surface)"
+    "foreground": "var(--primary)",
+    "shape": "circle()"
   },
 
   "key": {
@@ -450,8 +457,8 @@
   "one-handed-panel-button": {
     "padding": "8dp",
     "font-size": "24sp",
-    "background": "rgb(128,128,128)",
-    "shape": "rounded-corner(20%, 20%, 20%, 20%)"
+    "background": "var(--surface)",
+    "shape": "circle()"
   },
 
   "subtype-panel": {

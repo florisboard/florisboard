@@ -31,6 +31,23 @@
     "background": "var(--background)",
     "foreground": "var(--on-background)"
   },
+  "window-move-handle-fixed": {
+    "background": "var(--surface)",
+    "foreground": "var(--primary)",
+    "font-size": "40sp",
+    "shape": "circle()"
+  },
+  "window-resize-handle-fixed": {
+    "background": "var(--primary)"
+  },
+  "window-resize-handle-floating": {
+    "background": "var(--primary)"
+  },
+  "window-resize-action-fixed": {
+    "background": "var(--surface)",
+    "foreground": "var(--primary)",
+    "shape": "circle()"
+  },
 
   "key": {
     "background": "transparent",
@@ -438,6 +455,12 @@
     "background": "var(--one-hand-background)",
     "foreground": "var(--one-hand-foreground)"
   },
+  "one-handed-panel-button": {
+    "padding": "8dp",
+    "font-size": "24sp",
+    "shape": "circle()"
+  },
+
   "subtype-panel": {
     "background": "var(--background)",
     "foreground": "var(--on-background)",
