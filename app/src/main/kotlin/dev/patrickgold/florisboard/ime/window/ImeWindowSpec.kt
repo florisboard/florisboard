@@ -108,11 +108,13 @@ sealed interface ImeWindowSpec {
 
             if (handle.left) {
                 val newPaddingLeft = (paddingLeft + offset.x)
+                    .coerceAtLeast(constraints.minPaddingHorizontal - paddingRight)
                     .coerceAtLeast(0.dp)
                     .coerceAtMost(max(constraints.rootBounds.width - paddingRight - constraints.minKeyboardWidth, 0.dp))
                 paddingLeft = newPaddingLeft
             } else if (handle.right) {
                 val newPaddingRight = (paddingRight - offset.x)
+                    .coerceAtLeast(constraints.minPaddingHorizontal - paddingLeft)
                     .coerceAtLeast(0.dp)
                     .coerceAtMost(max(constraints.rootBounds.width - paddingLeft - constraints.minKeyboardWidth, 0.dp))
                 paddingRight = newPaddingRight

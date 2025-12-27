@@ -56,11 +56,14 @@ abstract class ImeWindowConstraints(rootInsets: ImeInsets) {
     abstract fun defaultProps(): ImeWindowProps
 
     abstract class Fixed(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
-        override val defKeyboardWidth = rootBounds.width
-        override val minKeyboardWidth = min(rootBounds.width, 250.dp)
-        override val maxKeyboardWidth = rootBounds.width
+        open val defPaddingHorizontal = 0.dp
+        open val minPaddingHorizontal = 0.dp
 
-        override val defKeyboardHeight = min(rootBounds.height * 0.45f, 270.dp)
+        override val defKeyboardWidth by lazy { rootBounds.width - defPaddingHorizontal }
+        override val minKeyboardWidth = min(rootBounds.width - minPaddingHorizontal, 250.dp)
+        override val maxKeyboardWidth by lazy { rootBounds.width - minPaddingHorizontal }
+
+        override val defKeyboardHeight = min(rootBounds.height * 0.45f, 260.dp)
         override val minKeyboardHeight = max(rootBounds.height * 0.25f, 210.dp)
         override val maxKeyboardHeight = min(rootBounds.height * 0.50f, 400.dp)
 
@@ -80,10 +83,13 @@ abstract class ImeWindowConstraints(rootInsets: ImeInsets) {
         }
 
         class Compact(rootInsets: ImeInsets) : Fixed(rootInsets) {
+            override val defPaddingHorizontal = 70.dp
+            override val minPaddingHorizontal = 50.dp
+
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
                     rowHeight = defRowHeight * 0.8f,
-                    paddingLeft = 55.dp,
+                    paddingLeft = defPaddingHorizontal,
                     paddingRight = 0.dp,
                     paddingBottom = defRowHeight * 0.2f * keyboardHeightFactor,
                 )
