@@ -34,6 +34,9 @@ data class ImeInsets(
     }
 }
 
+val ImeInsets?.inferredOrientation: ImeOrientation
+    get() = this?.boundsDp?.inferredOrientation ?: ImeOrientation.PORTRAIT
+
 val DpRect.inferredOrientation: ImeOrientation
     get() = when {
         width <= height -> ImeOrientation.PORTRAIT

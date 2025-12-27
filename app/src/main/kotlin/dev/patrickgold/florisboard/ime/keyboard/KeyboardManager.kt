@@ -179,7 +179,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    private fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
+    fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
         activeEvaluatorGuard.withLock {
             action()
             val editorInfo = editorInstance.activeInfo

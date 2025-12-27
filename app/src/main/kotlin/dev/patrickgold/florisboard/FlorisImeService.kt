@@ -88,6 +88,7 @@ import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.kotlin.collectIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggRow
@@ -304,6 +305,9 @@ class FlorisImeService : LifecycleInputMethodService() {
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         windowController.onConfigurationChanged(resources.configuration)
+        windowController.activeWindowConfig.collectLatestIn(lifecycleScope) {
+            keyboardManager.updateActiveEvaluators() // TODO: wacky solution, but works for now
+        }
         subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {

@@ -17,35 +17,36 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.width
 
-abstract class ImeWindowConstraints(rootInsets: ImeInsets) {
+sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
     val rootBounds = rootInsets.boundsDp
 
-    abstract val defKeyboardWidth: Dp
     abstract val minKeyboardWidth: Dp
     abstract val maxKeyboardWidth: Dp
+    abstract val defKeyboardWidth: Dp
 
-    abstract val defKeyboardHeight: Dp
     abstract val minKeyboardHeight: Dp
     abstract val maxKeyboardHeight: Dp
+    abstract val defKeyboardHeight: Dp
 
     open val smartbarHeightFactor: Float = 0.753f
-    open val keyboardHeightFactor: Float by lazy { smartbarHeightFactor + 4f }
-    open val defRowHeight: Dp by lazy { defKeyboardHeight / keyboardHeightFactor }
+    open val keyboardHeightFactor: Float by calculation { smartbarHeightFactor + 4f }
+    open val defRowHeight: Dp by calculation { defKeyboardHeight / keyboardHeightFactor }
 
     open val resizeHandleTouchSize: Dp = 48.dp
-    open val resizeHandleTouchOffsetFloating: Dp by lazy { resizeHandleTouchSize / 2 }
+    open val resizeHandleTouchOffsetFloating: Dp by calculation { resizeHandleTouchSize / 2 }
     open val resizeHandleDrawSize: Dp = 32.dp
-    open val resizeHandleDrawPadding: Dp by lazy { (resizeHandleTouchSize - resizeHandleDrawSize) / 2 }
-    open val resizeHandleDrawThickness: Dp by lazy { resizeHandleDrawSize / 4 }
-    open val resizeHandleDrawCornerRadius: Dp by lazy { resizeHandleDrawSize / 2 }
+    open val resizeHandleDrawPadding: Dp by calculation { (resizeHandleTouchSize - resizeHandleDrawSize) / 2 }
+    open val resizeHandleDrawThickness: Dp by calculation { resizeHandleDrawSize / 4 }
+    open val resizeHandleDrawCornerRadius: Dp by calculation { resizeHandleDrawSize / 2 }
 
-    open val dockToFixedHeight: Dp by lazy {
+    open val dockToFixedHeight: Dp by calculation {
         when (rootBounds.inferredOrientation) {
             ImeOrientation.PORTRAIT -> 80.dp
             ImeOrientation.LANDSCAPE -> 50.dp
@@ -55,17 +56,19 @@ abstract class ImeWindowConstraints(rootInsets: ImeInsets) {
 
     abstract fun defaultProps(): ImeWindowProps
 
-    abstract class Fixed(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
-        open val defPaddingHorizontal = 0.dp
+    protected fun <T> calculation(initializer: () -> T) = lazy(LazyThreadSafetyMode.PUBLICATION, initializer)
+
+    sealed class Fixed(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
         open val minPaddingHorizontal = 0.dp
+        open val defPaddingHorizontal = 0.dp
 
-        override val defKeyboardWidth by lazy { rootBounds.width - defPaddingHorizontal }
-        override val minKeyboardWidth = min(rootBounds.width - minPaddingHorizontal, 250.dp)
-        override val maxKeyboardWidth by lazy { rootBounds.width - minPaddingHorizontal }
+        override val minKeyboardWidth by calculation { min(rootBounds.width - minPaddingHorizontal, 250.dp) }
+        override val maxKeyboardWidth by calculation { rootBounds.width - minPaddingHorizontal }
+        override val defKeyboardWidth by calculation { rootBounds.width - defPaddingHorizontal }
 
-        override val defKeyboardHeight = min(rootBounds.height * 0.45f, 260.dp)
-        override val minKeyboardHeight = max(rootBounds.height * 0.25f, 210.dp)
-        override val maxKeyboardHeight = min(rootBounds.height * 0.50f, 400.dp)
+        override val minKeyboardHeight by calculation { max(rootBounds.height * 0.25f, 210.dp) }
+        override val maxKeyboardHeight by calculation { min(rootBounds.height * 0.50f, 400.dp) }
+        override val defKeyboardHeight by calculation { min(rootBounds.height * 0.45f, 260.dp) }
 
         open val snapToCenterWidth: Dp = 32.dp
 
@@ -83,8 +86,8 @@ abstract class ImeWindowConstraints(rootInsets: ImeInsets) {
         }
 
         class Compact(rootInsets: ImeInsets) : Fixed(rootInsets) {
-            override val defPaddingHorizontal = 70.dp
             override val minPaddingHorizontal = 50.dp
+            override val defPaddingHorizontal = 70.dp
 
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
@@ -108,14 +111,14 @@ abstract class ImeWindowConstraints(rootInsets: ImeInsets) {
         }
     }
 
-    abstract class Floating(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
-        override val defKeyboardWidth = min(rootBounds.width * 0.8f, 300.dp)
-        override val minKeyboardWidth = max(rootBounds.width * 0.5f, 250.dp)
-        override val maxKeyboardWidth = min(rootBounds.width * 0.8f, 500.dp)
+    sealed class Floating(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
+        override val minKeyboardWidth by calculation { min(rootBounds.width, 250.dp) }
+        override val maxKeyboardWidth by calculation { min(rootBounds.width, 500.dp) }
+        override val defKeyboardWidth by calculation { min(rootBounds.width, 300.dp) }
 
-        override val defKeyboardHeight = min(rootBounds.height * 0.35f, 270.dp)
-        override val minKeyboardHeight = max(rootBounds.height * 0.25f, 210.dp)
-        override val maxKeyboardHeight = min(rootBounds.height * 0.40f, 360.dp)
+        override val minKeyboardHeight by calculation { (rootBounds.height * 0.25f).coerceAtLeast(150.dp) }
+        override val maxKeyboardHeight by calculation { (rootBounds.height * 0.40f).coerceAtLeast(minKeyboardHeight) }
+        override val defKeyboardHeight by calculation { (minKeyboardHeight + maxKeyboardHeight) / 2 }
 
         abstract override fun defaultProps(): ImeWindowProps.Floating
 

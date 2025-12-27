@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.kotlin.collectIn
 
 class ImeWindowController(val scope: CoroutineScope) {
@@ -41,9 +40,6 @@ class ImeWindowController(val scope: CoroutineScope) {
     val activeWindowInsets: StateFlow<ImeInsets?>
         field = MutableStateFlow(null)
 
-    val activeOrientation: StateFlow<ImeOrientation>
-        field = MutableStateFlow(ImeOrientation.PORTRAIT)
-
     val activeWindowConfig: StateFlow<ImeWindowConfig>
         field = MutableStateFlow(ImeWindowConfig.DefaultPortrait)
 
@@ -55,11 +51,11 @@ class ImeWindowController(val scope: CoroutineScope) {
 
     init {
         combine(
-            activeOrientation,
+            activeRootInsets,
             prefs.keyboard.windowConfigPortrait.asFlow(),
             prefs.keyboard.windowConfigLandscape.asFlow(),
-        ) { orientation, windowConfigP, windowConfigL ->
-            when (orientation) {
+        ) { rootInsets, windowConfigP, windowConfigL ->
+            when (rootInsets.inferredOrientation) {
                 ImeOrientation.PORTRAIT -> windowConfigP
                 ImeOrientation.LANDSCAPE -> windowConfigL
             }
@@ -68,11 +64,11 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
 
         val userFontScale = combine(
-            activeOrientation,
+            activeRootInsets,
             prefs.keyboard.fontSizeMultiplierPortrait.asFlow(),
             prefs.keyboard.fontSizeMultiplierLandscape.asFlow(),
-        ) { orientation, multiplierP, multiplierL ->
-            when (orientation) {
+        ) { rootInsets, multiplierP, multiplierL ->
+            when (rootInsets.inferredOrientation) {
                 ImeOrientation.PORTRAIT -> multiplierP / 100f
                 ImeOrientation.LANDSCAPE -> multiplierL / 100f
             }
@@ -99,7 +95,7 @@ class ImeWindowController(val scope: CoroutineScope) {
     }
 
     fun updateWindowConfig(function: (ImeWindowConfig) -> ImeWindowConfig) {
-        val pref = windowConfigPref(activeOrientation.value)
+        val pref = windowConfigPref(activeRootInsets.value.inferredOrientation)
         val newWindowConfig = activeWindowConfig.updateAndGet(function)
         scope.launch {
             pref.set(newWindowConfig)
@@ -149,11 +145,6 @@ class ImeWindowController(val scope: CoroutineScope) {
     }
 
     fun onConfigurationChanged(newConfig: Configuration) {
-        activeOrientation.value = if (newConfig.isOrientationPortrait()) {
-            ImeOrientation.PORTRAIT
-        } else {
-            ImeOrientation.LANDSCAPE
-        }
         editor.disable()
     }
 
