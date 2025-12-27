@@ -53,6 +53,9 @@
     "foreground": "var(--primary)",
     "shape": "circle()"
   },
+  "floating-dock-to-fixed-indicator": {
+    "background": "var(--primary)"
+  },
 
   "key": {
     "background": "transparent",

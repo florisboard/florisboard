@@ -242,6 +242,7 @@
     <string name="snygg__rule_element__window_resize_handle_fixed">Window resize handle fixed</string>
     <string name="snygg__rule_element__window_resize_handle_floating">Window resize handle floating</string>
     <string name="snygg__rule_element__window_resize_action_fixed">Window resize action fixed</string>
+    <string name="snygg__rule_element__floating_dock_to_fixed_indicator">Floating dock to fixed indicator</string>
 
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>

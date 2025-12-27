@@ -43,7 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -77,6 +76,7 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
+import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 @Composable
 fun ImeRootWindow() {
@@ -243,9 +243,8 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
     val animatedHeightRatio by transition.animateFloat(label = "height") { visible ->
         if (visible) 1f else 0f
     }
-
-    //TODO: Make snygg themeable
-    val color = Color.Gray
+    val indicatorTheme = rememberSnyggThemeQuery(FlorisImeUi.FloatingDockToFixedIndicator.elementName)
+    val color = indicatorTheme.background()
 
     LaunchedEffect(visible) {
         if (visible) {
@@ -296,69 +295,72 @@ private fun BoxScope.OneHandedPanel() {
 @Composable
 private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
     val windowController = LocalWindowController.current
+    val editorState by windowController.editor.state.collectAsState()
 
-    Box(Modifier.matchParentSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .safeDrawingPadding()
-                .padding(bottom = spec.props.paddingBottom.coerceAtLeast(0.dp))
-                .fold(
-                    condition = spec.props.paddingLeft >= spec.props.paddingRight,
-                    ifTrue = {
-                        Modifier
-                            .width(spec.props.paddingLeft)
-                            .align(Alignment.CenterStart)
+    if (!editorState.isEnabled) {
+        Box(Modifier.matchParentSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .safeDrawingPadding()
+                    .padding(bottom = spec.props.paddingBottom.coerceAtLeast(0.dp))
+                    .fold(
+                        condition = spec.props.paddingLeft >= spec.props.paddingRight,
+                        ifTrue = {
+                            Modifier
+                                .width(spec.props.paddingLeft)
+                                .align(Alignment.CenterStart)
+                        },
+                        ifFalse = {
+                            Modifier
+                                .width(spec.props.paddingRight)
+                                .align(Alignment.CenterEnd)
+                        }
+                    ),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.OneHandedPanelButton.elementName,
+                    onClick = {
+                        windowController.updateWindowConfig { config ->
+                            config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
+                        }
                     },
-                    ifFalse = {
-                        Modifier
-                            .width(spec.props.paddingRight)
-                            .align(Alignment.CenterEnd)
-                    }
-                ),
-            verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            SnyggIconButton(
-                elementName = FlorisImeUi.OneHandedPanelButton.elementName,
-                onClick = {
-                    windowController.updateWindowConfig { config ->
-                        config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
-                    }
-                },
-            ) {
-                SnyggIcon(imageVector = drawableRes(R.drawable.ic_zoom_out_map))
-            }
-            SnyggIconButton(
-                elementName = FlorisImeUi.OneHandedPanelButton.elementName,
-                onClick = {
-                    windowController.updateWindowConfig { config ->
-                        val fixedProps = config.fixedProps[config.fixedMode] ?: return@updateWindowConfig config
-                        val newProps = fixedProps.copy(
-                            paddingLeft = fixedProps.paddingRight,
-                            paddingRight = fixedProps.paddingLeft,
-                        )
-                        config.copy(
-                            fixedProps = config.fixedProps.plus(
-                                ImeWindowMode.Fixed.COMPACT to newProps,
-                            ),
-                        )
-                    }
-                },
-            ) {
-                if (spec.props.paddingLeft > spec.props.paddingRight) {
-                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_left))
-                } else {
-                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_right))
+                ) {
+                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_zoom_out_map))
                 }
-            }
-            SnyggIconButton(
-                elementName = FlorisImeUi.OneHandedPanelButton.elementName,
-                onClick = {
-                    windowController.editor.toggleEnabled()
-                },
-            ) {
-                SnyggIcon(imageVector = drawableRes(R.drawable.ic_resize))
+                SnyggIconButton(
+                    elementName = FlorisImeUi.OneHandedPanelButton.elementName,
+                    onClick = {
+                        windowController.updateWindowConfig { config ->
+                            val fixedProps = config.fixedProps[config.fixedMode] ?: return@updateWindowConfig config
+                            val newProps = fixedProps.copy(
+                                paddingLeft = fixedProps.paddingRight,
+                                paddingRight = fixedProps.paddingLeft,
+                            )
+                            config.copy(
+                                fixedProps = config.fixedProps.plus(
+                                    ImeWindowMode.Fixed.COMPACT to newProps,
+                                ),
+                            )
+                        }
+                    },
+                ) {
+                    if (spec.props.paddingLeft > spec.props.paddingRight) {
+                        SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_left))
+                    } else {
+                        SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_right))
+                    }
+                }
+                SnyggIconButton(
+                    elementName = FlorisImeUi.OneHandedPanelButton.elementName,
+                    onClick = {
+                        windowController.editor.toggleEnabled()
+                    },
+                ) {
+                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_resize))
+                }
             }
         }
     }

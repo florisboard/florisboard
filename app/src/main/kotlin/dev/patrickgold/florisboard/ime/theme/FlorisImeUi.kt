@@ -51,8 +51,10 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "window-resize-action-fixed",
         resId = R.string.snygg__rule_element__window_resize_action_fixed,
     ),
-
-
+    FloatingDockToFixedIndicator(
+        elementName = "floating-dock-to-fixed-indicator",
+        resId = null,
+    ),
 
     Key(
         elementName = "key",
