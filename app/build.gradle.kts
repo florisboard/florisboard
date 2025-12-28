@@ -47,6 +47,7 @@ kotlin {
             "-Xwhen-guards",
             "-Xexplicit-backing-fields",
             "-XXLanguage:+ContextParameters",
+            "-XXLanguage:+LocalTypeAliases",
         ))
     }
 }
@@ -203,6 +204,7 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)

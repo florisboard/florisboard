@@ -16,21 +16,35 @@
 
 package dev.patrickgold.florisboard.ime.window
 
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.width
+import org.florisboard.lib.compose.toDpRect
 
 data class ImeInsets(
     val boundsDp: DpRect,
     val boundsPx: IntRect,
+    val formFactor: ImeFormFactor,
 ) {
     companion object {
         val Zero = ImeInsets(
             boundsDp = DpRect(0.dp, 0.dp, 0.dp, 0.dp),
             boundsPx = IntRect.Zero,
+            formFactor = ImeFormFactor.Zero,
         )
+
+        context(density: Density)
+        fun of(boundsPx: IntRect): ImeInsets {
+            val boundsDp = boundsPx.toDpRect()
+            return ImeInsets(
+                boundsDp = boundsDp,
+                boundsPx = boundsPx,
+                formFactor = ImeFormFactor.of(boundsDp),
+            )
+        }
     }
 }
 

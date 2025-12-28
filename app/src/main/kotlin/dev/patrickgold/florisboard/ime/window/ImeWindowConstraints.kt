@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.width
 
 sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
     val rootBounds = rootInsets.boundsDp
+    val formFactor = rootInsets.formFactor
 
     abstract val minKeyboardWidth: Dp
     abstract val maxKeyboardWidth: Dp
@@ -62,15 +62,56 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
         open val minPaddingHorizontal = 0.dp
         open val defPaddingHorizontal = 0.dp
 
-        override val minKeyboardWidth by calculation { min(rootBounds.width - minPaddingHorizontal, 250.dp) }
-        override val maxKeyboardWidth by calculation { rootBounds.width - minPaddingHorizontal }
-        override val defKeyboardWidth by calculation { rootBounds.width - defPaddingHorizontal }
+        override val minKeyboardWidth by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.TABLET_PORTRAIT -> min(rootBounds.width - minPaddingHorizontal, 400.dp)
+                else -> min(rootBounds.width - minPaddingHorizontal, 250.dp)
+            }
+        }
+        override val maxKeyboardWidth by calculation {
+            (rootBounds.width - minPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
+        }
+        override val defKeyboardWidth by calculation {
+            (rootBounds.width - defPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
+        }
 
-        override val minKeyboardHeight by calculation { max(rootBounds.height * 0.25f, 210.dp) }
-        override val maxKeyboardHeight by calculation { min(rootBounds.height * 0.50f, 400.dp) }
-        override val defKeyboardHeight by calculation { min(rootBounds.height * 0.45f, 260.dp) }
+        override val minKeyboardHeight by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.32f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.20f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.42f).coerceAtLeast(150.dp)
+                else -> (rootBounds.height * 0.23f).coerceAtLeast(210.dp)
+            }
+        }
+        override val maxKeyboardHeight by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.70f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.38f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.66f).coerceAtLeast(minKeyboardHeight)
+                else -> (rootBounds.height * 0.46f).coerceAtLeast(minKeyboardHeight)
+            }
+        }
+        override val defKeyboardHeight by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.42f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.26f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.55f).coerceAtLeast(minKeyboardHeight)
+                else -> (rootBounds.height * 0.31f).coerceAtLeast(minKeyboardHeight)
+            }
+        }
 
-        open val snapToCenterWidth: Dp = 32.dp
+        open val snapToCenterWidth: Dp by lazy {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE,
+                ImeFormFactor.Type.TABLET_PORTRAIT -> 64.dp
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> 48.dp
+                else -> 32.dp
+            }
+        }
 
         abstract override fun defaultProps(): ImeWindowProps.Fixed
 

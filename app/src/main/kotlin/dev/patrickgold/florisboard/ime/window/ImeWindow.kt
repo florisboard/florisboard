@@ -71,7 +71,6 @@ import org.florisboard.lib.compose.drawBorder
 import org.florisboard.lib.compose.drawableRes
 import org.florisboard.lib.compose.fold
 import org.florisboard.lib.compose.ifIsInstance
-import org.florisboard.lib.compose.toDpRect
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
@@ -93,10 +92,7 @@ fun ImeRootWindow() {
             }
             .onGloballyPositioned { coords ->
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
-                val newInsets = ImeInsets(
-                    boundsDp = with(density) { boundsPx.toDpRect() },
-                    boundsPx = boundsPx,
-                )
+                val newInsets = with(density) { ImeInsets.of(boundsPx) }
                 windowController.updateRootInsets(newInsets)
             },
     ) {
@@ -149,10 +145,7 @@ fun BoxScope.ImeWindow() {
             .wrapContentHeight()
             .onGloballyPositioned { coords ->
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
-                val newInsets = ImeInsets(
-                    boundsDp = with(density) { boundsPx.toDpRect() },
-                    boundsPx = boundsPx,
-                )
+                val newInsets = with(density) { ImeInsets.of(boundsPx) }
                 windowController.updateWindowInsets(newInsets)
             },
         supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
