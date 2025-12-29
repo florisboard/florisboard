@@ -228,6 +228,25 @@ class ImeWindowController(val scope: CoroutineScope) {
             }
         }
 
+        fun resetFloatingSize() {
+            updateWindowConfig { config ->
+                when(config.mode) {
+                    ImeWindowMode.FLOATING -> {
+                        //TODO: Reset only the sizing and not the position
+                        editor.toggleEnabled()
+                        config.copy(
+                            floatingProps = config.floatingProps.filterNot {
+                                it.key == config.floatingMode
+                            }
+                        )
+                    }
+                    ImeWindowMode.FIXED -> {
+                        config
+                    }
+                }
+            }
+        }
+
         private inline fun doCompactLayout(
             crossinline updateProps: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed,
         ) {

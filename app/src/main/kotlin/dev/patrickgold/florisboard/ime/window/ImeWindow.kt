@@ -201,9 +201,7 @@ private fun ImeInnerWindow() {
                 ImeUiMode.MEDIA -> MediaInputLayout()
                 ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
             }
-            if (windowSpec is ImeWindowSpec.Floating) {
-                ImeSystemUiFloating()
-            }
+            ImeSystemUiFloating()
         }
         ImeWindowResizeHandlesFixed()
     }

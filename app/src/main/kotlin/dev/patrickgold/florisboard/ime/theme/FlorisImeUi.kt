@@ -56,6 +56,16 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         resId = null,
     ),
 
+    FloatingSystemUiIcon(
+        elementName = "floating-system-ui-icon",
+        resId = null
+    ),
+
+    FloatingSystemUiReset(
+        elementName = "floating-system-ui-reset",
+        resId = null
+    ),
+
     Key(
         elementName = "key",
         resId = R.string.snygg__rule_element__key,

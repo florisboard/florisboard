@@ -25,8 +25,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -36,8 +38,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -54,9 +56,14 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.FlorisImeService
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.drawableRes
+import org.florisboard.lib.snygg.ui.SnyggButton
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.uriOrNull
 
@@ -102,37 +109,93 @@ fun ImeSystemUi() {
 
 @Composable
 fun ImeSystemUiFloating() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        FlorisIconButton(
-            onClick = {
-                FlorisImeService.hideUi()
-            }
-        ) {
-            Icon(Icons.Default.KeyboardArrowDown, "Close floating keyboard window")
+    val windowController = LocalWindowController.current
+    val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val editor by windowController.editor.state.collectAsState()
+
+    val visible by remember {
+        derivedStateOf {
+            windowSpec is ImeWindowSpec.Floating
         }
+    }
+    val showReset by remember {
+        derivedStateOf {
+            editor.isEnabled
+        }
+    }
 
-        NavigationPill()
-
-        FlorisIconButton(
-            onClick = {
-                FlorisImeService.switchToNextInputMethod()
-            },
-            onLongClick = {
-                FlorisImeService.showImePicker()
-            }
+    if (visible) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(Icons.Default.Language, "Click: switch to next input method; Longclick: Show ime picker")
+            val weightModifier = Modifier.weight(1f)
+
+            if (!showReset) {
+                Box(
+                    modifier = weightModifier,
+                    contentAlignment = Alignment.Center,
+                ) {
+                    FlorisIconButton(
+                        onClick = {
+                            FlorisImeService.hideUi()
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.KeyboardArrowDown, null)
+                    }
+                }
+            } else {
+                Box(
+                    modifier = weightModifier,
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Spacer(modifier = Modifier.size(DpSize(52.dp, 30.dp)))
+                }
+            }
+
+            NavigationPill()
+
+            if (!showReset) {
+                Box(
+                    modifier = weightModifier,
+                    contentAlignment = Alignment.Center,
+                ) {
+                    FlorisIconButton(
+                        onClick = {
+                            FlorisImeService.switchToNextInputMethod()
+                        },
+                        onLongClick = {
+                            FlorisImeService.showImePicker()
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.Language, null)
+                    }
+                }
+            } else {
+                Box(
+                    modifier = weightModifier,
+                    contentAlignment = Alignment.Center,
+                ) {
+                    SnyggButton(
+                        elementName = FlorisImeUi.FloatingSystemUiReset.elementName,
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        modifier = Modifier.minimumInteractiveComponentSize(),
+                        onClick = {
+                            windowController.actions.resetFloatingSize()
+                        }
+                    ) {
+                        SnyggIcon(imageVector = drawableRes(R.drawable.ic_restart_alt))
+                        SnyggText(text = "Reset")
+                    }
+                }
+            }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowScope.NavigationPill() {
     val windowController = LocalWindowController.current

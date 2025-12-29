@@ -56,6 +56,12 @@
   "floating-dock-to-fixed-indicator": {
     "background": "var(--primary)"
   },
+  "floating-system-ui-reset": {
+    "background": "var(--surface)",
+    "foreground": "var(--primary)",
+    "shape": "circle()"
+  },
+
 
   "key": {
     "background": "var(--surface)",
