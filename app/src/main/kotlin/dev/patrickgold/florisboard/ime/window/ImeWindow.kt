@@ -92,7 +92,7 @@ fun ImeRootWindow() {
             }
             .onGloballyPositioned { coords ->
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
-                val newInsets = with(density) { ImeInsets.of(boundsPx) }
+                val newInsets = with(density) { ImeInsets.Root.of(boundsPx) }
                 windowController.updateRootInsets(newInsets)
             },
     ) {
@@ -145,7 +145,7 @@ fun BoxScope.ImeWindow() {
             .wrapContentHeight()
             .onGloballyPositioned { coords ->
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
-                val newInsets = with(density) { ImeInsets.of(boundsPx) }
+                val newInsets = with(density) { ImeInsets.Window.of(boundsPx) }
                 windowController.updateWindowInsets(newInsets)
             },
         supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,

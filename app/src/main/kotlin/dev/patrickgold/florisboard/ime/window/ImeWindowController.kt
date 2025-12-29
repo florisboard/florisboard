@@ -37,10 +37,10 @@ class ImeWindowController(val scope: CoroutineScope) {
     val actions = Actions()
     val editor = Editor()
 
-    val activeRootInsets: StateFlow<ImeInsets?>
+    val activeRootInsets: StateFlow<ImeInsets.Root?>
         field = MutableStateFlow(null)
 
-    val activeWindowInsets: StateFlow<ImeInsets?>
+    val activeWindowInsets: StateFlow<ImeInsets.Window?>
         field = MutableStateFlow(null)
 
     val activeWindowConfig: StateFlow<ImeWindowConfig>
@@ -89,11 +89,11 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
     }
 
-    fun updateRootInsets(newInsets: ImeInsets) {
+    fun updateRootInsets(newInsets: ImeInsets.Root) {
         activeRootInsets.value = newInsets
     }
 
-    fun updateWindowInsets(newInsets: ImeInsets) {
+    fun updateWindowInsets(newInsets: ImeInsets.Window) {
         activeWindowInsets.value = newInsets
     }
 
@@ -167,7 +167,7 @@ class ImeWindowController(val scope: CoroutineScope) {
         }
 
     private fun doComputeWindowSpec(
-        rootInsets: ImeInsets,
+        rootInsets: ImeInsets.Root,
         windowConfig: ImeWindowConfig,
         userFontScale: Float,
     ): ImeWindowSpec {

@@ -24,26 +24,47 @@ import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.width
 import org.florisboard.lib.compose.toDpRect
 
-data class ImeInsets(
-    val boundsDp: DpRect,
-    val boundsPx: IntRect,
-    val formFactor: ImeFormFactor,
-) {
-    companion object {
-        val Zero = ImeInsets(
-            boundsDp = DpRect(0.dp, 0.dp, 0.dp, 0.dp),
-            boundsPx = IntRect.Zero,
-            formFactor = ImeFormFactor.Zero,
-        )
+sealed interface ImeInsets {
+    val boundsDp: DpRect
+    val boundsPx: IntRect
 
-        context(density: Density)
-        fun of(boundsPx: IntRect): ImeInsets {
-            val boundsDp = boundsPx.toDpRect()
-            return ImeInsets(
-                boundsDp = boundsDp,
-                boundsPx = boundsPx,
-                formFactor = ImeFormFactor.of(boundsDp),
+    data class Root(
+        override val boundsDp: DpRect,
+        override val boundsPx: IntRect,
+        val formFactor: ImeFormFactor,
+    ) : ImeInsets {
+        companion object {
+            val Zero = Root(
+                boundsDp = DpRect(0.dp, 0.dp, 0.dp, 0.dp),
+                boundsPx = IntRect.Zero,
+                formFactor = ImeFormFactor.Zero,
             )
+
+            context(density: Density)
+            fun of(boundsPx: IntRect): Root {
+                val boundsDp = boundsPx.toDpRect()
+                return Root(
+                    boundsDp = boundsDp,
+                    boundsPx = boundsPx,
+                    formFactor = ImeFormFactor.of(boundsDp),
+                )
+            }
+        }
+    }
+
+    data class Window(
+        override val boundsDp: DpRect,
+        override val boundsPx: IntRect,
+    ) : ImeInsets {
+        companion object {
+            context(density: Density)
+            fun of(boundsPx: IntRect): Window {
+                val boundsDp = boundsPx.toDpRect()
+                return Window(
+                    boundsDp = boundsDp,
+                    boundsPx = boundsPx,
+                )
+            }
         }
     }
 }

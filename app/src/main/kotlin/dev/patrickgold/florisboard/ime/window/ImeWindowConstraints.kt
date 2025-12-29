@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.width
 
-sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
+sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
     val rootBounds = rootInsets.boundsDp
     val formFactor = rootInsets.formFactor
 
@@ -62,7 +62,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
 
     protected fun <T> calculation(initializer: () -> T) = lazy(LazyThreadSafetyMode.PUBLICATION, initializer)
 
-    sealed class Fixed(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
+    sealed class Fixed(rootInsets: ImeInsets.Root) : ImeWindowConstraints(rootInsets) {
         open val minPaddingHorizontal = 0.dp
         open val defPaddingHorizontal = 0.dp
 
@@ -123,7 +123,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
 
         abstract override fun defaultProps(): ImeWindowProps.Fixed
 
-        class Normal(rootInsets: ImeInsets) : Fixed(rootInsets) {
+        class Normal(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
                     rowHeight = defRowHeight,
@@ -134,7 +134,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
             }
         }
 
-        class Compact(rootInsets: ImeInsets) : Fixed(rootInsets) {
+        class Compact(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
             override val minPaddingHorizontal by calculation {
                 when (formFactor.typeGuess) {
                     ImeFormFactor.Type.DESKTOP,
@@ -166,7 +166,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
             }
         }
 
-        class Thumbs(rootInsets: ImeInsets) : Fixed(rootInsets) {
+        class Thumbs(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
                     rowHeight = defRowHeight,
@@ -178,7 +178,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
         }
     }
 
-    sealed class Floating(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
+    sealed class Floating(rootInsets: ImeInsets.Root) : ImeWindowConstraints(rootInsets) {
         override val minKeyboardWidth by calculation {
             when (formFactor.typeGuess) {
                 ImeFormFactor.Type.DESKTOP,
@@ -243,7 +243,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
 
         abstract override fun defaultProps(): ImeWindowProps.Floating
 
-        class Normal(rootInsets: ImeInsets) : Floating(rootInsets) {
+        class Normal(rootInsets: ImeInsets.Root) : Floating(rootInsets) {
             override fun defaultProps(): ImeWindowProps.Floating {
                 return ImeWindowProps.Floating(
                     rowHeight = defRowHeight,
@@ -265,10 +265,10 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
                 paddingBottom = 0.dp,
             ),
             fontScale = 1f,
-            constraints = Fixed.Normal(ImeInsets.Zero),
+            constraints = Fixed.Normal(ImeInsets.Root.Zero),
         )
 
-        fun of(fixedMode: ImeWindowMode.Fixed, rootInsets: ImeInsets): Fixed {
+        fun of(fixedMode: ImeWindowMode.Fixed, rootInsets: ImeInsets.Root): Fixed {
             return when (fixedMode) {
                 ImeWindowMode.Fixed.NORMAL -> Fixed.Normal(rootInsets)
                 ImeWindowMode.Fixed.COMPACT -> Fixed.Compact(rootInsets)
@@ -276,7 +276,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
             }
         }
 
-        fun of(floatingMode: ImeWindowMode.Floating, rootInsets: ImeInsets): Floating {
+        fun of(floatingMode: ImeWindowMode.Floating, rootInsets: ImeInsets.Root): Floating {
             return when (floatingMode) {
                 ImeWindowMode.Floating.NORMAL -> Floating.Normal(rootInsets)
             }
