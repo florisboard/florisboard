@@ -68,7 +68,6 @@ data class ImeFormFactor(
                 }
                 else -> Type.PHONE_LANDSCAPE
             }
-            android.util.Log.d("TYPEGUESS", "$boundsDp, $typeGuess")
             return ImeFormFactor(sizeClass, typeGuess)
         }
     }

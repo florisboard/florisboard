@@ -47,9 +47,13 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
     open val resizeHandleDrawCornerRadius: Dp by calculation { resizeHandleDrawSize / 2 }
 
     open val dockToFixedHeight: Dp by calculation {
-        when (rootBounds.inferredOrientation) {
-            ImeOrientation.PORTRAIT -> 80.dp
-            ImeOrientation.LANDSCAPE -> 50.dp
+        when (formFactor.typeGuess) {
+            ImeFormFactor.Type.DESKTOP,
+            ImeFormFactor.Type.LARGE_TABLET,
+            ImeFormFactor.Type.TABLET_LANDSCAPE,
+            ImeFormFactor.Type.TABLET_PORTRAIT -> 80.dp
+            ImeFormFactor.Type.PHONE_LANDSCAPE -> 50.dp
+            ImeFormFactor.Type.PHONE_PORTRAIT -> 80.dp
         }
     }
     open val dockToFixedBorder: Dp = 2.dp
@@ -77,39 +81,43 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
 
         override val minKeyboardHeight by calculation {
             when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.32f).coerceAtLeast(150.dp)
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.20f).coerceAtLeast(150.dp)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.42f).coerceAtLeast(150.dp)
-                else -> (rootBounds.height * 0.23f).coerceAtLeast(210.dp)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.23f).coerceAtLeast(210.dp)
             }
         }
         override val maxKeyboardHeight by calculation {
             when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.70f).coerceAtLeast(minKeyboardHeight)
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.38f).coerceAtLeast(minKeyboardHeight)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.66f).coerceAtLeast(minKeyboardHeight)
-                else -> (rootBounds.height * 0.46f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.46f).coerceAtLeast(minKeyboardHeight)
             }
         }
         override val defKeyboardHeight by calculation {
             when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.42f).coerceAtLeast(minKeyboardHeight)
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.26f).coerceAtLeast(minKeyboardHeight)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.55f).coerceAtLeast(minKeyboardHeight)
-                else -> (rootBounds.height * 0.31f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.31f).coerceAtLeast(minKeyboardHeight)
             }
         }
 
         open val snapToCenterWidth: Dp by lazy {
             when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP -> 80.dp
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE,
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 64.dp
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 48.dp
-                else -> 32.dp
+                ImeFormFactor.Type.PHONE_PORTRAIT -> 32.dp
             }
         }
 
@@ -127,8 +135,26 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
         }
 
         class Compact(rootInsets: ImeInsets) : Fixed(rootInsets) {
-            override val minPaddingHorizontal = 50.dp
-            override val defPaddingHorizontal = 70.dp
+            override val minPaddingHorizontal by calculation {
+                when (formFactor.typeGuess) {
+                    ImeFormFactor.Type.DESKTOP,
+                    ImeFormFactor.Type.LARGE_TABLET,
+                    ImeFormFactor.Type.TABLET_LANDSCAPE,
+                    ImeFormFactor.Type.TABLET_PORTRAIT,
+                    ImeFormFactor.Type.PHONE_LANDSCAPE,
+                    ImeFormFactor.Type.PHONE_PORTRAIT -> 50.dp
+                }
+            }
+            override val defPaddingHorizontal by calculation {
+                when (formFactor.typeGuess) {
+                    ImeFormFactor.Type.DESKTOP,
+                    ImeFormFactor.Type.LARGE_TABLET,
+                    ImeFormFactor.Type.TABLET_LANDSCAPE,
+                    ImeFormFactor.Type.TABLET_PORTRAIT,
+                    ImeFormFactor.Type.PHONE_LANDSCAPE,
+                    ImeFormFactor.Type.PHONE_PORTRAIT -> 70.dp
+                }
+            }
 
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
@@ -153,13 +179,67 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
     }
 
     sealed class Floating(rootInsets: ImeInsets) : ImeWindowConstraints(rootInsets) {
-        override val minKeyboardWidth by calculation { min(rootBounds.width, 250.dp) }
-        override val maxKeyboardWidth by calculation { min(rootBounds.width, 500.dp) }
-        override val defKeyboardWidth by calculation { min(rootBounds.width, 300.dp) }
+        override val minKeyboardWidth by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.width * 0.25f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.width * 0.40f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.width * 0.28f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> rootBounds.width.coerceAtMost(250.dp)
+            }
+        }
+        override val maxKeyboardWidth by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.width * 0.48f).coerceAtLeast(minKeyboardWidth)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.width * 0.70f).coerceAtLeast(minKeyboardWidth)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.width * 0.40f).coerceAtLeast(minKeyboardWidth)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> rootBounds.width.coerceAtMost(500.dp)
+            }
+        }
+        override val defKeyboardWidth by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.width * 0.30f).coerceAtLeast(minKeyboardWidth)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.width * 0.45f).coerceAtLeast(minKeyboardWidth)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.width * 0.28f).coerceAtLeast(minKeyboardWidth)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> rootBounds.width.coerceAtMost(300.dp)
+            }
+        }
 
-        override val minKeyboardHeight by calculation { (rootBounds.height * 0.25f).coerceAtLeast(150.dp) }
-        override val maxKeyboardHeight by calculation { (rootBounds.height * 0.40f).coerceAtLeast(minKeyboardHeight) }
-        override val defKeyboardHeight by calculation { (minKeyboardHeight + maxKeyboardHeight) / 2 }
+        override val minKeyboardHeight by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.30f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.18f).coerceAtLeast(150.dp)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.20f).coerceAtLeast(120.dp)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.20f).coerceAtLeast(150.dp)
+            }
+        }
+        override val maxKeyboardHeight by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.55f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.35f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.55f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.40f).coerceAtLeast(minKeyboardHeight)
+            }
+        }
+        override val defKeyboardHeight by calculation {
+            when (formFactor.typeGuess) {
+                ImeFormFactor.Type.DESKTOP,
+                ImeFormFactor.Type.LARGE_TABLET,
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.35f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.22f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.25f).coerceAtLeast(minKeyboardHeight)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.25f).coerceAtLeast(minKeyboardHeight)
+            }
+        }
 
         abstract override fun defaultProps(): ImeWindowProps.Floating
 
@@ -168,8 +248,8 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets) {
                 return ImeWindowProps.Floating(
                     rowHeight = defRowHeight,
                     keyboardWidth = defKeyboardWidth,
-                    offsetLeft = 30.dp,
-                    offsetBottom = 30.dp,
+                    offsetLeft = 60.dp,
+                    offsetBottom = 60.dp,
                 )
             }
         }
