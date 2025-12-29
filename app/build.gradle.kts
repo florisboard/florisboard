@@ -161,9 +161,6 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
 
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
             resValue("string", "floris_app_name", "FlorisBoard Bench")
         }
     }

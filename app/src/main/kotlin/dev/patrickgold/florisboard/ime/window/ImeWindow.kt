@@ -67,6 +67,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawBorder
 import org.florisboard.lib.compose.drawableRes
 import org.florisboard.lib.compose.fold
@@ -81,13 +82,22 @@ import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 fun ImeRootWindow() {
     val density = LocalDensity.current
     val windowController = LocalWindowController.current
+    val editorState by windowController.editor.state.collectAsState()
+    val isEditorEnabled by remember {
+        derivedStateOf {
+            editorState.isEnabled
+        }
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures {
-                    windowController.editor.disableIfNoGestureInProgress()
+            .conditional(isEditorEnabled) {
+                Modifier.pointerInput(isEditorEnabled) {
+                    detectTapGestures {
+                        android.util.Log.d("UPSIIII", "lol")
+                        windowController.editor.disableIfNoGestureInProgress()
+                    }
                 }
             }
             .onGloballyPositioned { coords ->

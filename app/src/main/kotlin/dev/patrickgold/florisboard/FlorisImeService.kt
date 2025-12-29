@@ -24,8 +24,6 @@ import android.inputmethodservice.ExtractEditText
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -35,28 +33,11 @@ import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.height
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
@@ -66,11 +47,10 @@ import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.isFullscreenInputRequired
+import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.ime.window.ImeRootView
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
@@ -86,14 +66,8 @@ import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggButton
-import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import java.lang.ref.WeakReference
 
 /**
@@ -279,7 +253,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     private val prefs by FlorisPreferenceStore
-    private val editorInstance by editorInstance()
+    val editorInstance by editorInstance()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
@@ -349,13 +323,13 @@ class FlorisImeService : LifecycleInputMethodService() {
         // is a known one to break AOSP standards...
         val defaultExtractView = super.onCreateExtractTextView()
         if (defaultExtractView == null || defaultExtractView !is ViewGroup) {
-            return ComposeExtractedLandscapeInputView(null)
+            return ExtractedInputRootView(this, null)
         }
         val extractEditText = defaultExtractView.findViewById<ExtractEditText>(android.R.id.inputExtractEditText)
         (extractEditText?.parent as? ViewGroup)?.removeView(extractEditText)
-        defaultExtractView.apply {
-            removeAllViews()
-            addView(ComposeExtractedLandscapeInputView(extractEditText))
+        defaultExtractView.let {
+            it.removeAllViews()
+            it.addView(ExtractedInputRootView(this, extractEditText))
         }
         return defaultExtractView
     }
@@ -558,110 +532,5 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
-    }
-
-    private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {
-        val composeView: ComposeView
-        val extractEditText: ExtractEditText
-
-        init {
-            isHapticFeedbackEnabled = true
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-
-            extractEditText = (eet ?: ExtractEditText(context)).also {
-                it.id = android.R.id.inputExtractEditText
-                it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-                it.background = null
-                it.gravity = Gravity.TOP
-                it.isVerticalScrollBarEnabled = true
-            }
-            addView(extractEditText)
-
-            composeView = ComposeView(context).also { it.setContent { Content() } }
-            addView(composeView)
-        }
-
-        @Composable
-        fun Content() {
-            ProvideLocalizedResources(
-                resourcesContext,
-                appName = R.string.app_name,
-                forceLayoutDirection = LayoutDirection.Ltr,
-            ) {
-                FlorisImeTheme {
-                    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    val windowInsets by windowController.activeWindowInsets.collectAsState()
-                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
-                        SnyggRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(windowInsets?.boundsDp?.height ?: 0.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            SnyggBox(
-                                elementName = FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
-                            ) {
-                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField.elementName)
-                                val foreground = fieldStyle.foreground()
-                                AndroidView(
-                                    factory = { extractEditText },
-                                    update = { view ->
-                                        view.background = null
-                                        view.backgroundTintList = null
-                                        view.foregroundTintList = null
-                                        view.setTextColor(foreground.toArgb())
-                                        view.setHintTextColor(foreground.copy(foreground.alpha * 0.6f).toArgb())
-                                        view.setTextSize(
-                                            TypedValue.COMPLEX_UNIT_SP,
-                                            fieldStyle.fontSize(default = 16.sp).value,
-                                        )
-                                    },
-                                )
-                            }
-                            SnyggButton(
-                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
-                                onClick = {
-                                    if (activeEditorInfo.extractedActionId != 0) {
-                                        currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
-                                    } else {
-                                        editorInstance.performEnterAction(activeEditorInfo.imeOptions.action)
-                                    }
-                                },
-                                modifier = Modifier.padding(horizontal = 8.dp),
-                            ) {
-                                SnyggText(
-                                    text = activeEditorInfo.extractedActionLabel
-                                        ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
-                                        ?: "ACTION",
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        override fun getAccessibilityClassName(): CharSequence {
-            return javaClass.name
-        }
-
-        override fun onAttachedToWindow() {
-            removeView(extractEditText)
-            super.onAttachedToWindow()
-            try {
-                (parent as LinearLayout).let { extractEditLayout ->
-                    extractEditLayout.layoutParams = LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                    ).also { it.setMargins(0, 0, 0, 0) }
-                    extractEditLayout.setPadding(0, 0, 0, 0)
-                }
-            } catch (e: Throwable) {
-                flogError { e.message.toString() }
-            }
-        }
     }
 }
