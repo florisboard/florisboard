@@ -48,7 +48,10 @@ kotlin {
             "-Xexplicit-backing-fields",
             "-XXLanguage:+ContextParameters",
             "-XXLanguage:+LocalTypeAliases",
+            "-Xnullability-annotations=@org.jspecify.annotations:strict", // jqwik
+            "-Xemit-jvm-type-annotations", // jqwik
         ))
+        javaParameters = true
     }
 }
 
@@ -233,9 +236,9 @@ dependencies {
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
 
+    testImplementation(libs.jqwik)
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

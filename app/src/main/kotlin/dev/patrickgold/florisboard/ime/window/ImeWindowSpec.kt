@@ -71,7 +71,7 @@ sealed interface ImeWindowSpec {
 
             paddingBottom = (paddingBottom - offset.y)
                 .coerceAtLeast(0.dp)
-                .coerceAtMost(max(constraints.maxKeyboardHeight - props.rowHeight * constraints.keyboardHeightFactor, 0.dp))
+                .coerceAtMost(max(constraints.maxKeyboardHeight - props.keyboardHeight, 0.dp))
 
             val newProps = props.copy(
                 paddingLeft = paddingLeft,
@@ -90,7 +90,7 @@ sealed interface ImeWindowSpec {
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
-            var keyboardHeight = props.rowHeight * constraints.keyboardHeightFactor
+            var keyboardHeight = props.keyboardHeight
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
             var paddingBottom = props.paddingBottom
@@ -121,7 +121,7 @@ sealed interface ImeWindowSpec {
             }
 
             val newProps = ImeWindowProps.Fixed(
-                rowHeight = keyboardHeight / constraints.keyboardHeightFactor,
+                keyboardHeight = keyboardHeight,
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
@@ -136,9 +136,9 @@ sealed interface ImeWindowSpec {
                     else -> -(newProps.paddingRight - props.paddingRight)
                 },
                 y = when {
-                    handle.top -> -(newProps.rowHeight - props.rowHeight)
-                    else -> (newProps.rowHeight - props.rowHeight)
-                } * constraints.keyboardHeightFactor,
+                    handle.top -> -(newProps.keyboardHeight - props.keyboardHeight)
+                    else -> (newProps.keyboardHeight - props.keyboardHeight)
+                },
             )
             return newSpec to consumed
         }
@@ -169,7 +169,7 @@ sealed interface ImeWindowSpec {
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
         ): Pair<ImeWindowSpec, DpOffset> {
-            var keyboardHeight = props.rowHeight * constraints.keyboardHeightFactor
+            var keyboardHeight = props.keyboardHeight
             var keyboardWidth = props.keyboardWidth
             var offsetLeft = props.offsetLeft
             var offsetBottom = props.offsetBottom
@@ -197,7 +197,7 @@ sealed interface ImeWindowSpec {
             }
 
             val newProps = ImeWindowProps.Floating(
-                rowHeight = keyboardHeight / constraints.keyboardHeightFactor,
+                keyboardHeight = keyboardHeight,
                 keyboardWidth = keyboardWidth,
                 offsetLeft = offsetLeft,
                 offsetBottom = offsetBottom,
@@ -212,9 +212,9 @@ sealed interface ImeWindowSpec {
                     else -> (newProps.keyboardWidth - props.keyboardWidth)
                 },
                 y = when {
-                    handle.top -> -(newProps.rowHeight - props.rowHeight)
-                    else -> (newProps.rowHeight - props.rowHeight)
-                } * constraints.keyboardHeightFactor,
+                    handle.top -> -(newProps.keyboardHeight - props.keyboardHeight)
+                    else -> (newProps.keyboardHeight - props.keyboardHeight)
+                },
             )
             return newSpec to consumed
         }

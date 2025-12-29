@@ -285,7 +285,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
 
-    val windowController = ImeWindowController(lifecycleScope)
+    val windowController = ImeWindowController(prefs, lifecycleScope)
 
     private val activeState get() = keyboardManager.activeState
     val inputFeedbackController by lazy { InputFeedbackController.new(this) }

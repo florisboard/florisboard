@@ -21,7 +21,7 @@ import android.inputmethodservice.InputMethodService
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,9 +31,10 @@ import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import org.florisboard.lib.kotlin.collectIn
 
-class ImeWindowController(val scope: CoroutineScope) {
-    private val prefs by FlorisPreferenceStore
-
+class ImeWindowController(
+    private val prefs: FlorisPreferenceModel,
+    val scope: CoroutineScope,
+) {
     val actions = Actions()
     val editor = Editor()
 
@@ -173,7 +174,7 @@ class ImeWindowController(val scope: CoroutineScope) {
     ): ImeWindowSpec {
         return when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
-                val constraints = ImeWindowConstraints.of(windowConfig.fixedMode, rootInsets)
+                val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.fixedMode)
                 val props = windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps()
                 val fontScale = props.calcFontScale(constraints) * userFontScale
                 ImeWindowSpec.Fixed(
@@ -184,7 +185,7 @@ class ImeWindowController(val scope: CoroutineScope) {
                 )
             }
             ImeWindowMode.FLOATING -> {
-                val constraints = ImeWindowConstraints.of(windowConfig.floatingMode, rootInsets)
+                val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.floatingMode)
                 val props = windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps()
                 val fontScale = props.calcFontScale(constraints) * userFontScale
                 ImeWindowSpec.Floating(
@@ -251,7 +252,7 @@ class ImeWindowController(val scope: CoroutineScope) {
             crossinline updateProps: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed,
         ) {
             val rootInsets = activeRootInsets.value ?: return
-            val constraints = ImeWindowConstraints.of(ImeWindowMode.Fixed.COMPACT, rootInsets)
+            val constraints = ImeWindowConstraints.of(rootInsets, ImeWindowMode.Fixed.COMPACT)
             updateWindowConfig { config ->
                 val props = config.fixedProps[ImeWindowMode.Fixed.COMPACT] ?: constraints.defaultProps()
                 val newProps = updateProps(props)

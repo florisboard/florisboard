@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtLeast
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.min
@@ -37,7 +38,6 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
 
     open val smartbarHeightFactor: Float = 0.753f
     open val keyboardHeightFactor: Float by calculation { smartbarHeightFactor + 4f }
-    open val defRowHeight: Dp by calculation { defKeyboardHeight / keyboardHeightFactor }
 
     open val resizeHandleTouchSize: Dp = 48.dp
     open val resizeHandleTouchOffsetFloating: Dp by calculation { resizeHandleTouchSize / 2 }
@@ -126,7 +126,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
         class Normal(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
-                    rowHeight = defRowHeight,
+                    keyboardHeight = defKeyboardHeight,
                     paddingLeft = 0.dp,
                     paddingRight = 0.dp,
                     paddingBottom = 0.dp,
@@ -158,10 +158,10 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
 
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
-                    rowHeight = defRowHeight * 0.8f,
+                    keyboardHeight = defKeyboardHeight * 0.8f,
                     paddingLeft = defPaddingHorizontal,
                     paddingRight = 0.dp,
-                    paddingBottom = defRowHeight * 0.2f * keyboardHeightFactor,
+                    paddingBottom = defKeyboardHeight * 0.2f,
                 )
             }
         }
@@ -169,7 +169,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
         class Thumbs(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
-                    rowHeight = defRowHeight,
+                    keyboardHeight = defKeyboardHeight,
                     paddingLeft = 0.dp,
                     paddingRight = 0.dp,
                     paddingBottom = 0.dp,
@@ -187,7 +187,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.width * 0.40f).coerceAtLeast(150.dp)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.width * 0.28f).coerceAtLeast(150.dp)
                 ImeFormFactor.Type.PHONE_PORTRAIT -> rootBounds.width.coerceAtMost(250.dp)
-            }
+            }.coerceAtMost(rootBounds.width)
         }
         override val maxKeyboardWidth by calculation {
             when (formFactor.typeGuess) {
@@ -218,7 +218,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.18f).coerceAtLeast(150.dp)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.20f).coerceAtLeast(120.dp)
                 ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.20f).coerceAtLeast(150.dp)
-            }
+            }.coerceAtMost(rootBounds.height)
         }
         override val maxKeyboardHeight by calculation {
             when (formFactor.typeGuess) {
@@ -246,10 +246,10 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
         class Normal(rootInsets: ImeInsets.Root) : Floating(rootInsets) {
             override fun defaultProps(): ImeWindowProps.Floating {
                 return ImeWindowProps.Floating(
-                    rowHeight = defRowHeight,
+                    keyboardHeight = defKeyboardHeight,
                     keyboardWidth = defKeyboardWidth,
-                    offsetLeft = 60.dp,
-                    offsetBottom = 60.dp,
+                    offsetLeft = 60.dp.coerceAtMost(rootBounds.width - defKeyboardWidth),
+                    offsetBottom = 60.dp.coerceAtMost(rootBounds.height - defKeyboardHeight),
                 )
             }
         }
@@ -259,7 +259,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
         val FallbackSpec = ImeWindowSpec.Fixed(
             fixedMode = ImeWindowMode.Fixed.NORMAL,
             props = ImeWindowProps.Fixed(
-                rowHeight = 50.dp,
+                keyboardHeight = 250.dp,
                 paddingLeft = 0.dp,
                 paddingRight = 0.dp,
                 paddingBottom = 0.dp,
@@ -268,7 +268,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             constraints = Fixed.Normal(ImeInsets.Root.Zero),
         )
 
-        fun of(fixedMode: ImeWindowMode.Fixed, rootInsets: ImeInsets.Root): Fixed {
+        fun of(rootInsets: ImeInsets.Root, fixedMode: ImeWindowMode.Fixed): Fixed {
             return when (fixedMode) {
                 ImeWindowMode.Fixed.NORMAL -> Fixed.Normal(rootInsets)
                 ImeWindowMode.Fixed.COMPACT -> Fixed.Compact(rootInsets)
@@ -276,7 +276,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             }
         }
 
-        fun of(floatingMode: ImeWindowMode.Floating, rootInsets: ImeInsets.Root): Floating {
+        fun of(rootInsets: ImeInsets.Root, floatingMode: ImeWindowMode.Floating): Floating {
             return when (floatingMode) {
                 ImeWindowMode.Floating.NORMAL -> Floating.Normal(rootInsets)
             }

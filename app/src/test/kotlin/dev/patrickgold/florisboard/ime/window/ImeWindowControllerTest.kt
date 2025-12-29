@@ -16,32 +16,23 @@
 
 package dev.patrickgold.florisboard.ime.window
 
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.jetpref.datastore.runtime.LoadStrategy
-import dev.patrickgold.jetpref.datastore.runtime.PersistStrategy
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Nested
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ImeWindowControllerTest {
-    @BeforeTest
-    fun initStore() = runTest {
-        FlorisPreferenceStore.init(
-            loadStrategy = LoadStrategy.Disabled,
-            persistStrategy = PersistStrategy.Disabled,
-        ).let { result ->
-            assertTrue(result.isSuccess, "DataStore initialization failed")
-        }
-    }
+    val dataStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
     @Nested
     inner class IsWindowShownState {
         @Test
         fun `simple onShown onHidden`() = runTest {
-            val windowController = ImeWindowController(backgroundScope)
+            val prefs by dataStore
+            val windowController = ImeWindowController(prefs, backgroundScope)
 
             assertFalse(windowController.isWindowShown.value)
             assertTrue { windowController.onWindowShown() }
@@ -52,7 +43,8 @@ class ImeWindowControllerTest {
 
         @Test
         fun `duplicate onWindowShown is detected`() = runTest {
-            val windowController = ImeWindowController(backgroundScope)
+            val prefs by dataStore
+            val windowController = ImeWindowController(prefs, backgroundScope)
 
             assertFalse(windowController.isWindowShown.value)
             assertTrue { windowController.onWindowShown() }
@@ -65,7 +57,8 @@ class ImeWindowControllerTest {
 
         @Test
         fun `duplicate onWindowHidden is detected`() = runTest {
-            val windowController = ImeWindowController(backgroundScope)
+            val prefs by dataStore
+            val windowController = ImeWindowController(prefs, backgroundScope)
 
             assertFalse(windowController.isWindowShown.value)
             assertTrue { windowController.onWindowShown() }

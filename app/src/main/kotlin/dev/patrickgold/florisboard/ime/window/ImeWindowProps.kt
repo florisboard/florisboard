@@ -28,7 +28,7 @@ import kotlinx.serialization.UseSerializers
 import org.florisboard.lib.compose.DpSizeSerializer
 
 sealed interface ImeWindowProps {
-    val rowHeight: Dp
+    val keyboardHeight: Dp
 
     fun constrained(constraints: ImeWindowConstraints): ImeWindowProps
 
@@ -36,7 +36,7 @@ sealed interface ImeWindowProps {
 
     @Serializable
     data class Fixed(
-        override val rowHeight: Dp,
+        override val keyboardHeight: Dp,
         val paddingLeft: Dp,
         val paddingRight: Dp,
         val paddingBottom: Dp,
@@ -47,22 +47,22 @@ sealed interface ImeWindowProps {
         }
 
         override fun calcFontScale(constraints: ImeWindowConstraints): Float {
-            val fontScale = rowHeight / constraints.defRowHeight
+            val fontScale = keyboardHeight / constraints.defKeyboardHeight
             return fontScale.coerceAtMost(1f)
         }
     }
 
     @Serializable
     data class Floating(
-        override val rowHeight: Dp,
+        override val keyboardHeight: Dp,
         val keyboardWidth: Dp,
         val offsetLeft: Dp,
         val offsetBottom: Dp,
     ) : ImeWindowProps {
         override fun constrained(constraints: ImeWindowConstraints): Floating {
-            val newRowHeight = rowHeight.coerceIn(
-                minimumValue = constraints.minKeyboardHeight / constraints.keyboardHeightFactor,
-                maximumValue = constraints.maxKeyboardHeight / constraints.keyboardHeightFactor,
+            val newKeyboardHeight = keyboardHeight.coerceIn(
+                minimumValue = constraints.minKeyboardHeight,
+                maximumValue = constraints.maxKeyboardHeight,
             )
             val newKeyboardWidth = keyboardWidth.coerceIn(
                 minimumValue = constraints.minKeyboardWidth,
@@ -74,10 +74,10 @@ sealed interface ImeWindowProps {
             )
             val newOffsetBottom = offsetBottom.coerceIn(
                 minimumValue = 0.dp,
-                maximumValue = constraints.rootBounds.height - (newRowHeight * constraints.keyboardHeightFactor),
+                maximumValue = constraints.rootBounds.height - newKeyboardHeight,
             )
             return Floating(
-                rowHeight = newRowHeight,
+                keyboardHeight = newKeyboardHeight,
                 keyboardWidth = newKeyboardWidth,
                 offsetLeft = newOffsetLeft,
                 offsetBottom = newOffsetBottom,
@@ -85,7 +85,7 @@ sealed interface ImeWindowProps {
         }
 
         override fun calcFontScale(constraints: ImeWindowConstraints): Float {
-            val fontScale = rowHeight / constraints.defRowHeight
+            val fontScale = keyboardHeight / constraints.defKeyboardHeight
             return fontScale.coerceAtMost(1f)
         }
     }
