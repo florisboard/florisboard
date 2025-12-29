@@ -316,9 +316,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                 SnyggIconButton(
                     elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                     onClick = {
-                        windowController.updateWindowConfig { config ->
-                            config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
-                        }
+                        windowController.actions.toggleCompactLayout()
                     },
                 ) {
                     SnyggIcon(imageVector = drawableRes(R.drawable.ic_zoom_out_map))
@@ -326,18 +324,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
                 SnyggIconButton(
                     elementName = FlorisImeUi.OneHandedPanelButton.elementName,
                     onClick = {
-                        windowController.updateWindowConfig { config ->
-                            val fixedProps = config.fixedProps[config.fixedMode] ?: return@updateWindowConfig config
-                            val newProps = fixedProps.copy(
-                                paddingLeft = fixedProps.paddingRight,
-                                paddingRight = fixedProps.paddingLeft,
-                            )
-                            config.copy(
-                                fixedProps = config.fixedProps.plus(
-                                    ImeWindowMode.Fixed.COMPACT to newProps,
-                                ),
-                            )
-                        }
+                        windowController.actions.compactLayoutFlipSide()
                     },
                 ) {
                     if (spec.props.paddingLeft > spec.props.paddingRight) {

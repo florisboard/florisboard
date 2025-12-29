@@ -23,8 +23,6 @@ import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.unit.max
-import androidx.compose.ui.unit.min
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
@@ -57,9 +55,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
-import dev.patrickgold.florisboard.ime.window.ImeWindowConstraints
-import dev.patrickgold.florisboard.ime.window.ImeWindowMode
-import dev.patrickgold.florisboard.ime.window.ImeWindowProps
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -696,6 +691,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyUp(data: KeyData) = activeState.batchEdit {
+        val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -726,46 +722,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
             }
-            KeyCode.TOGGLE_FLOATING_WINDOW -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.updateWindowConfig { config ->
-                    val newMode = when (config.mode) {
-                        ImeWindowMode.FIXED -> ImeWindowMode.FLOATING
-                        ImeWindowMode.FLOATING -> ImeWindowMode.FIXED
-                    }
-                    config.copy(mode = newMode)
-                }
-            }
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.updateWindowConfig { config ->
-                    val newFixedMode = when (config.fixedMode) {
-                        ImeWindowMode.Fixed.NORMAL -> ImeWindowMode.Fixed.COMPACT
-                        else -> ImeWindowMode.Fixed.NORMAL
-                    }
-                    config.copy(fixedMode = newFixedMode)
-                }
-            }
-            KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
-                compactLayoutToSide { size ->
-                    size.copy(
-                        paddingLeft = min(size.paddingLeft, size.paddingRight),
-                        paddingRight = max(size.paddingLeft, size.paddingRight),
-                    )
-                }
-            }
-            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
-                compactLayoutToSide { size ->
-                    size.copy(
-                        paddingLeft = max(size.paddingLeft, size.paddingRight),
-                        paddingRight = min(size.paddingLeft, size.paddingRight),
-                    )
-                }
-            }
-            KeyCode.TOGGLE_RESIZE_MODE -> scope.launch {
-                val windowController = FlorisImeService.windowControllerOrNull() ?: return@launch
-                windowController.editor.toggleEnabled()
-            }
+            KeyCode.TOGGLE_FLOATING_WINDOW -> windowController.actions.toggleFloatingWindow()
+            KeyCode.TOGGLE_COMPACT_LAYOUT -> windowController.actions.toggleCompactLayout()
+            KeyCode.COMPACT_LAYOUT_TO_LEFT -> windowController.actions.compactLayoutToLeft()
+            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> windowController.actions.compactLayoutToRight()
+            KeyCode.TOGGLE_RESIZE_MODE -> windowController.editor.toggleEnabled()
             KeyCode.DELETE -> handleBackwardDelete(OperationUnit.CHARACTERS)
             KeyCode.DELETE_WORD -> handleBackwardDelete(OperationUnit.WORDS)
             KeyCode.ENTER -> handleEnter()
@@ -892,28 +853,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         val devtoolsEnabled = prefs.devtools.enabled.get()
         activeState.batchEdit {
             activeState.debugShowDragAndDropHelpers = devtoolsEnabled && prefs.devtools.showDragAndDropHelpers.get()
-        }
-    }
-
-    private inline fun compactLayoutToSide(crossinline calculateSide: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed) {
-        val windowController = FlorisImeService.windowControllerOrNull() ?: return
-        windowController.updateWindowConfig { config ->
-            when (config.fixedMode) {
-                ImeWindowMode.Fixed.COMPACT -> {
-                    config.copy(fixedMode = ImeWindowMode.Fixed.NORMAL)
-                }
-                else -> {
-                    val rootInsets = windowController.activeRootInsets.value ?: return@updateWindowConfig config
-                    val constraints = ImeWindowConstraints.of(ImeWindowMode.Fixed.COMPACT, rootInsets)
-                    val size = config.fixedProps[config.fixedMode] ?: constraints.defaultProps()
-                    config.copy(
-                        fixedMode = ImeWindowMode.Fixed.COMPACT,
-                        fixedProps = config.fixedProps.plus(
-                            ImeWindowMode.Fixed.COMPACT to calculateSide(size),
-                        ),
-                    )
-                }
-            }
         }
     }
 

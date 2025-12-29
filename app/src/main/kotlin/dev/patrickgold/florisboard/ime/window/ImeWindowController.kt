@@ -19,6 +19,8 @@ package dev.patrickgold.florisboard.ime.window
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.min
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +34,7 @@ import org.florisboard.lib.kotlin.collectIn
 class ImeWindowController(val scope: CoroutineScope) {
     private val prefs by FlorisPreferenceStore
 
+    val actions = Actions()
     val editor = Editor()
 
     val activeRootInsets: StateFlow<ImeInsets?>
@@ -189,6 +192,81 @@ class ImeWindowController(val scope: CoroutineScope) {
                     props = props.constrained(constraints),
                     fontScale = fontScale,
                     constraints = constraints,
+                )
+            }
+        }
+    }
+
+    inner class Actions {
+        fun toggleFloatingWindow() {
+            updateWindowConfig { config ->
+                val newMode = when (config.mode) {
+                    ImeWindowMode.FIXED -> ImeWindowMode.FLOATING
+                    ImeWindowMode.FLOATING -> ImeWindowMode.FIXED
+                }
+                config.copy(mode = newMode)
+            }
+        }
+
+        fun toggleCompactLayout() {
+            updateWindowConfig { config ->
+                when (config.mode) {
+                    ImeWindowMode.FIXED -> {
+                        val newFixedMode = when (config.fixedMode) {
+                            ImeWindowMode.Fixed.COMPACT -> ImeWindowMode.Fixed.NORMAL
+                            else -> ImeWindowMode.Fixed.COMPACT
+                        }
+                        config.copy(fixedMode = newFixedMode)
+                    }
+                    ImeWindowMode.FLOATING -> {
+                        config.copy(
+                            mode = ImeWindowMode.FIXED,
+                            fixedMode = ImeWindowMode.Fixed.COMPACT,
+                        )
+                    }
+                }
+            }
+        }
+
+        private inline fun doCompactLayout(
+            crossinline updateProps: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed,
+        ) {
+            val rootInsets = activeRootInsets.value ?: return
+            val constraints = ImeWindowConstraints.of(ImeWindowMode.Fixed.COMPACT, rootInsets)
+            updateWindowConfig { config ->
+                val props = config.fixedProps[ImeWindowMode.Fixed.COMPACT] ?: constraints.defaultProps()
+                val newProps = updateProps(props)
+                config.copy(
+                    mode = ImeWindowMode.FIXED,
+                    fixedMode = ImeWindowMode.Fixed.COMPACT,
+                    fixedProps = config.fixedProps.plus(ImeWindowMode.Fixed.COMPACT to newProps)
+                )
+            }
+        }
+
+        fun compactLayoutToLeft() {
+            doCompactLayout { props ->
+                props.copy(
+                    paddingLeft = min(props.paddingLeft, props.paddingRight),
+                    paddingRight = max(props.paddingLeft, props.paddingRight),
+                )
+            }
+        }
+
+        fun compactLayoutToRight() {
+            doCompactLayout { props ->
+                props.copy(
+                    paddingLeft = max(props.paddingLeft, props.paddingRight),
+                    paddingRight = min(props.paddingLeft, props.paddingRight),
+                )
+            }
+        }
+
+        fun compactLayoutFlipSide() {
+            doCompactLayout { props ->
+                props.copy(
+                    paddingLeft = props.paddingRight,
+                    paddingRight = props.paddingLeft,
                 )
             }
         }
