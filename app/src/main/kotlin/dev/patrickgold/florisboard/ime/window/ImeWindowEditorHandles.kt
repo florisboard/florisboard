@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -51,6 +52,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawableRes
@@ -281,6 +283,18 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
+
+    val isFloatingAndEditorAndNoGestureActive by remember {
+        derivedStateOf {
+            editorState.isEnabled && !editorState.isAnyGesture && windowSpec is ImeWindowSpec.Floating
+        }
+    }
+    LaunchedEffect(isFloatingAndEditorAndNoGestureActive) {
+        if (isFloatingAndEditorAndNoGestureActive) {
+            delay(3000L)
+            windowController.editor.disable()
+        }
+    }
 
     val visible by remember {
         derivedStateOf {

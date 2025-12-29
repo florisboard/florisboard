@@ -39,7 +39,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.Icon
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -118,9 +117,22 @@ fun ImeSystemUiFloating() {
             windowSpec is ImeWindowSpec.Floating
         }
     }
-    val showReset by remember {
+    val showHideAndSwitch by remember {
         derivedStateOf {
             editor.isEnabled
+        }
+    }
+    val isNonDefaultSize by remember {
+        derivedStateOf {
+            when (val spec = windowSpec) {
+                is ImeWindowSpec.Fixed -> false // wtf
+                is ImeWindowSpec.Floating -> {
+                    val defaultProps = spec.constraints.defaultProps()
+                    val props = spec.props
+                    defaultProps.keyboardHeight != props.keyboardHeight ||
+                        defaultProps.keyboardWidth != props.keyboardWidth
+                }
+            }
         }
     }
 
@@ -134,7 +146,7 @@ fun ImeSystemUiFloating() {
         ) {
             val weightModifier = Modifier.weight(1f)
 
-            if (!showReset) {
+            if (!showHideAndSwitch) {
                 Box(
                     modifier = weightModifier,
                     contentAlignment = Alignment.Center,
@@ -158,7 +170,7 @@ fun ImeSystemUiFloating() {
 
             NavigationPill()
 
-            if (!showReset) {
+            if (!showHideAndSwitch) {
                 Box(
                     modifier = weightModifier,
                     contentAlignment = Alignment.Center,
@@ -179,16 +191,17 @@ fun ImeSystemUiFloating() {
                     modifier = weightModifier,
                     contentAlignment = Alignment.Center,
                 ) {
-                    SnyggButton(
-                        elementName = FlorisImeUi.FloatingSystemUiReset.elementName,
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                        modifier = Modifier.minimumInteractiveComponentSize(),
-                        onClick = {
-                            windowController.actions.resetFloatingSize()
+                    if (isNonDefaultSize) {
+                        SnyggButton(
+                            elementName = FlorisImeUi.FloatingSystemUiReset.elementName,
+                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+                            onClick = {
+                                windowController.actions.resetFloatingSize()
+                            }
+                        ) {
+                            SnyggIcon(imageVector = drawableRes(R.drawable.ic_restart_alt))
+                            SnyggText(text = "Reset")
                         }
-                    ) {
-                        SnyggIcon(imageVector = drawableRes(R.drawable.ic_restart_alt))
-                        SnyggText(text = "Reset")
                     }
                 }
             }
@@ -229,7 +242,7 @@ private fun RowScope.NavigationPill() {
                 windowController.editor.toggleEnabled()
             })
             .padding(vertical = 20.dp)
-            .align(Alignment.CenterVertically)
+            .align(Alignment.CenterVertically),
     ) {
         Box(
             modifier = Modifier

@@ -194,7 +194,6 @@ fun FlorisIconButton(
     Box(
         modifier =
             modifier
-                .minimumInteractiveComponentSize()
                 .size(size)
                 .clip(shape)
                 .background(
