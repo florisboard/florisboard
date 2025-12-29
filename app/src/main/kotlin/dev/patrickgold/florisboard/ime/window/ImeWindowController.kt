@@ -209,6 +209,30 @@ class ImeWindowController(
             }
         }
 
+        fun resetFloatingSize() {
+            val rootInsets = activeRootInsets.value ?: return
+            updateWindowConfig { config ->
+                when (config.mode) {
+                    ImeWindowMode.FLOATING -> {
+                        val constraints = ImeWindowConstraints.of(rootInsets, config.floatingMode)
+                        val defaultProps = constraints.defaultProps()
+                        val newProps = config.floatingProps[config.floatingMode]?.copy(
+                            keyboardHeight = defaultProps.keyboardHeight,
+                            keyboardWidth = defaultProps.keyboardWidth,
+                        ) ?: defaultProps
+                        config.copy(
+                            floatingProps = config.floatingProps.plus(
+                                config.floatingMode to newProps.constrained(constraints)
+                            ),
+                        )
+                    }
+                    ImeWindowMode.FIXED -> {
+                        config
+                    }
+                }
+            }
+        }
+
         fun toggleCompactLayout() {
             updateWindowConfig { config ->
                 when (config.mode) {
@@ -224,25 +248,6 @@ class ImeWindowController(
                             mode = ImeWindowMode.FIXED,
                             fixedMode = ImeWindowMode.Fixed.COMPACT,
                         )
-                    }
-                }
-            }
-        }
-
-        fun resetFloatingSize() {
-            updateWindowConfig { config ->
-                when(config.mode) {
-                    ImeWindowMode.FLOATING -> {
-                        //TODO: Reset only the sizing and not the position
-                        editor.toggleEnabled()
-                        config.copy(
-                            floatingProps = config.floatingProps.filterNot {
-                                it.key == config.floatingMode
-                            }
-                        )
-                    }
-                    ImeWindowMode.FIXED -> {
-                        config
                     }
                 }
             }
