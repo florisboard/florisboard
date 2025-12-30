@@ -19,12 +19,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.application)
-    alias(libs.plugins.kotest)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.mikepenz.aboutlibraries)
+    alias(libs.plugins.kotest)
 }
 
 val projectMinSdk: String by project

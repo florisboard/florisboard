@@ -17,14 +17,13 @@
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import org.junit.jupiter.api.assertAll
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
+import io.kotest.matchers.shouldBe
 
-class QuickActionArrangementTest {
-    @Test
-    fun `contains behavior`() {
-        val arrangementToAction = listOf(
+class QuickActionArrangementTest : FunSpec({
+    context("contains behavior") {
+        withData(
             Triple(
                 QuickActionArrangement(
                     stickyAction = null,
@@ -61,16 +60,13 @@ class QuickActionArrangementTest {
                 QuickAction.InsertKey(TextKeyData.SETTINGS),
                 true,
             ),
-        )
-
-        assertAll(arrangementToAction.map { (arrangement, action, expectedContains) -> {
-            assertEquals(expectedContains, arrangement.contains(action))
-        } })
+        ) { (arrangement, action, expectedContains) ->
+            arrangement.contains(action) shouldBe expectedContains
+        }
     }
 
-    @Test
-    fun `distinct behavior`() {
-        val beforeToAfterDistinct = listOf(
+    context("distinct behavior") {
+        withData(
             QuickActionArrangement(
                 stickyAction = null,
                 dynamicActions = listOf(),
@@ -165,10 +161,8 @@ class QuickActionArrangementTest {
                     QuickAction.InsertKey(TextKeyData.VIEW_SYMBOLS),
                 ),
             ),
-        )
-
-        assertAll(beforeToAfterDistinct.map { (beforeDistinct, afterDistinct) -> {
-            assertEquals(afterDistinct, beforeDistinct.distinct())
-        } })
+        ) { (beforeDistinct, afterDistinct) ->
+            beforeDistinct.distinct() shouldBe afterDistinct
+        }
     }
-}
+})
