@@ -18,13 +18,10 @@ package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntRect
-import androidx.compose.ui.unit.dp
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.float
 import io.kotest.property.arbitrary.int
-
-val epsilon = 1e-3f.dp
 
 val densitiesArb = arbitrary {
     val density = Arb.float(0.75f, 4.0f).bind()
