@@ -18,57 +18,50 @@ package dev.patrickgold.florisboard.ime.window
 
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
-import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Nested
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.engine.coroutines.backgroundScope
+import io.kotest.matchers.shouldBe
 
-class ImeWindowControllerTest {
-    val dataStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
+class ImeWindowControllerTest : FunSpec({
+    coroutineTestScope = true
 
-    @Nested
-    inner class IsWindowShownState {
-        @Test
-        fun `simple onShown onHidden`() = runTest {
+    context("isWindowShown state") {
+        test("simple onShown onHidden") {
+            val dataStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
             val prefs by dataStore
             val windowController = ImeWindowController(prefs, backgroundScope)
 
-            assertFalse(windowController.isWindowShown.value)
-            assertTrue { windowController.onWindowShown() }
-            assertTrue(windowController.isWindowShown.value)
-            assertTrue { windowController.onWindowHidden() }
-            assertFalse(windowController.isWindowShown.value)
+            windowController.isWindowShown.value shouldBe false
+            windowController.onWindowShown() shouldBe true
+            windowController.isWindowShown.value shouldBe true
+            windowController.onWindowHidden() shouldBe true
+            windowController.isWindowShown.value shouldBe false
         }
 
-        @Test
-        fun `duplicate onWindowShown is detected`() = runTest {
+        test("duplicate onWindowShown is detected") {
+            val dataStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
             val prefs by dataStore
             val windowController = ImeWindowController(prefs, backgroundScope)
 
-            assertFalse(windowController.isWindowShown.value)
-            assertTrue { windowController.onWindowShown() }
-            assertTrue(windowController.isWindowShown.value)
-            assertFalse("duplicate onWindowShown is detected") {
-                windowController.onWindowShown()
-            }
-            assertTrue(windowController.isWindowShown.value)
+            windowController.isWindowShown.value shouldBe false
+            windowController.onWindowShown() shouldBe true
+            windowController.isWindowShown.value shouldBe true
+            windowController.onWindowShown().shouldBe(false, "duplicate onWindowShown is detected")
+            windowController.isWindowShown.value shouldBe true
         }
 
-        @Test
-        fun `duplicate onWindowHidden is detected`() = runTest {
+        test("duplicate onWindowHidden is detected") {
+            val dataStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
             val prefs by dataStore
             val windowController = ImeWindowController(prefs, backgroundScope)
 
-            assertFalse(windowController.isWindowShown.value)
-            assertTrue { windowController.onWindowShown() }
-            assertTrue(windowController.isWindowShown.value)
-            assertTrue { windowController.onWindowHidden() }
-            assertFalse(windowController.isWindowShown.value)
-            assertFalse("duplicate onWindowHidden should fail") {
-                windowController.onWindowHidden()
-            }
-            assertFalse(windowController.isWindowShown.value)
+            windowController.isWindowShown.value shouldBe false
+            windowController.onWindowShown() shouldBe true
+            windowController.isWindowShown.value shouldBe true
+            windowController.onWindowHidden() shouldBe true
+            windowController.isWindowShown.value shouldBe false
+            windowController.onWindowHidden().shouldBe(false, "duplicate onWindowHidden should fail")
+            windowController.isWindowShown.value shouldBe false
         }
     }
-}
+})

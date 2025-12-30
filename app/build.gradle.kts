@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.application)
+    alias(libs.plugins.kotest)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
@@ -43,15 +45,12 @@ kotlin {
         jvmTarget.set(JvmTarget.JVM_11)
         freeCompilerArgs.set(listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
+            "-jvm-default=enable",
             "-Xwhen-guards",
             "-Xexplicit-backing-fields",
             "-XXLanguage:+ContextParameters",
             "-XXLanguage:+LocalTypeAliases",
-            "-Xnullability-annotations=@org.jspecify.annotations:strict", // jqwik
-            "-Xemit-jvm-type-annotations", // jqwik
         ))
-        javaParameters = true
     }
 }
 
@@ -186,6 +185,9 @@ android {
 }
 
 tasks.withType<Test> {
+    testLogging {
+        events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+    }
     useJUnitPlatform()
 }
 
@@ -233,7 +235,9 @@ dependencies {
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
 
-    testImplementation(libs.jqwik)
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.test.ext)

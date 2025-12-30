@@ -69,10 +69,16 @@ fun getSystemAccent(): Color {
 
 @Composable
 fun systemAccentOrDefault(default: Color): Color {
-    return if (default.isUnspecified && AndroidVersion.ATLEAST_API31_S) {
-        getSystemAccent()
-    } else {
-        default
+    return when {
+        default.isUnspecified && AndroidVersion.ATLEAST_API31_S -> {
+            getSystemAccent()
+        }
+        default.isUnspecified -> {
+            DEFAULT_GREEN
+        }
+        else -> {
+            default
+        }
     }
 }
 
