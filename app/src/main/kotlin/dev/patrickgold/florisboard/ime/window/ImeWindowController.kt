@@ -29,6 +29,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.collectIn
 
 class ImeWindowController(
@@ -56,13 +58,10 @@ class ImeWindowController(
     init {
         combine(
             activeRootInsets,
-            prefs.keyboard.windowConfigPortrait.asFlow(),
-            prefs.keyboard.windowConfigLandscape.asFlow(),
-        ) { rootInsets, windowConfigP, windowConfigL ->
-            when (rootInsets.inferredOrientation) {
-                ImeOrientation.PORTRAIT -> windowConfigP
-                ImeOrientation.LANDSCAPE -> windowConfigL
-            }
+            prefs.keyboard.windowConfig.asFlow(),
+        ) { rootInsets, windowConfigByType ->
+            val typeGuess = rootInsets?.formFactor?.typeGuess ?: ImeFormFactor.Type.PHONE_PORTRAIT
+            windowConfigByType[typeGuess] ?: ImeWindowConfig.Default
         }.collectIn(scope) { windowConfig ->
             activeWindowConfig.value = windowConfig
         }
@@ -98,11 +97,17 @@ class ImeWindowController(
         activeWindowInsets.value = newInsets
     }
 
+    private val mutex = Mutex()
     fun updateWindowConfig(function: (ImeWindowConfig) -> ImeWindowConfig) {
-        val pref = windowConfigPref(activeRootInsets.value.inferredOrientation)
-        val newWindowConfig = activeWindowConfig.updateAndGet(function)
+        val rootInsets = activeRootInsets.value
+        val typeGuess = rootInsets?.formFactor?.typeGuess ?: ImeFormFactor.Type.PHONE_PORTRAIT
         scope.launch {
-            val result = pref.set(newWindowConfig)
+            // not bullet-proof sync, but good enough considering this is only triggered by tap actions
+            mutex.withLock {
+                val newWindowConfig = activeWindowConfig.updateAndGet(function)
+                val byType = prefs.keyboard.windowConfig.get()
+                prefs.keyboard.windowConfig.set(byType.plus(typeGuess to newWindowConfig))
+            }
         }
     }
 
@@ -160,12 +165,6 @@ class ImeWindowController(
         editor.disable()
         return isWindowShown.compareAndSet(expect = true, update = false)
     }
-
-    private fun windowConfigPref(orientation: ImeOrientation) =
-        when (orientation) {
-            ImeOrientation.PORTRAIT -> prefs.keyboard.windowConfigPortrait
-            ImeOrientation.LANDSCAPE -> prefs.keyboard.windowConfigLandscape
-        }
 
     private fun doComputeWindowSpec(
         rootInsets: ImeInsets.Root,

@@ -207,8 +207,8 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = false,
         )
         val showWindowResizeHandleBoundaries = boolean(
-            key = "devtools__show_window_resize_handle_bounderies",
-            default = false
+            key = "devtools__show_window_resize_handle_boundaries",
+            default = false,
         )
     }
 
@@ -472,15 +472,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
     val keyboard = Keyboard()
     inner class Keyboard {
-        val windowConfigPortrait = custom(
-            key = "keyboard__window_config_portrait",
-            default = ImeWindowConfig.Default,
-            serializer = ImeWindowConfig.Serializer,
-        )
-        val windowConfigLandscape = custom(
-            key = "keyboard__window_config_landscape",
-            default = ImeWindowConfig.Default,
-            serializer = ImeWindowConfig.Serializer,
+        val windowConfig = custom(
+            key = "keyboard__window_config",
+            default = emptyMap(),
+            serializer = ImeWindowConfig.ByTypeSerializer,
         )
         val numberRow = boolean(
             key = "keyboard__number_row",

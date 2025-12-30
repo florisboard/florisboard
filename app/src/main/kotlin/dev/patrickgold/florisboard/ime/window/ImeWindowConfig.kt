@@ -21,6 +21,8 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+typealias ImeWindowConfigByType = Map<ImeFormFactor.Type, ImeWindowConfig>
+
 @Serializable
 data class ImeWindowConfig(
     val mode: ImeWindowMode,
@@ -29,17 +31,17 @@ data class ImeWindowConfig(
     val floatingMode: ImeWindowMode.Floating,
     val floatingProps: Map<ImeWindowMode.Floating, ImeWindowProps.Floating> = emptyMap(),
 ) {
-    object Serializer : PreferenceSerializer<ImeWindowConfig> {
-        override fun serialize(value: ImeWindowConfig): String {
+    object ByTypeSerializer : PreferenceSerializer<ImeWindowConfigByType> {
+        override fun serialize(value: ImeWindowConfigByType): String {
             return Json.encodeToString(value)
         }
 
-        override fun deserialize(value: String): ImeWindowConfig {
+        override fun deserialize(value: String): ImeWindowConfigByType {
             return try {
                 Json.decodeFromString(value)
             } catch (e: Throwable) {
-                flogError { "Failed to deserialize ImeWindowConfig: ${e.message}" }
-                Default
+                flogError { "Failed to deserialize ImeWindowConfig.ByType: ${e.message}" }
+                emptyMap()
             }
         }
     }

@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,10 +29,8 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
-import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -156,18 +153,22 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = stringRes(R.string.devtools__show_window_resize_handle_boundaries__summary),
             )
             Preference(
-                title = stringRes(R.string.devtools__reset_window_config_portrait__label),
+                title = stringRes(R.string.devtools__reset_window_config__label),
                 summary = stringRes(R.string.devtools__reset_window_config__summary),
                 onClick = {
-                    scope.launch { prefs.keyboard.windowConfigPortrait.resetWithToast(context) }
-                },
-                enabledIf = { prefs.devtools.enabled isEqualTo true },
-            )
-            Preference(
-                title = stringRes(R.string.devtools__reset_window_config_landscape__label),
-                summary = stringRes(R.string.devtools__reset_window_config__summary),
-                onClick = {
-                    scope.launch { prefs.keyboard.windowConfigLandscape.resetWithToast(context) }
+                    scope.launch {
+                        prefs.keyboard.windowConfig.reset().fold(
+                            onSuccess = {
+                                context.showLongToast(R.string.devtools__reset_window_config__toast_success)
+                            },
+                            onFailure = { error ->
+                                context.showLongToast(
+                                    R.string.devtools__reset_window_config__toast_failure,
+                                    "message" to "${error.localizedMessage}",
+                                )
+                            },
+                        )
+                    }
                 },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
@@ -261,18 +262,4 @@ fun DevtoolsScreen() = FlorisScreen {
             )
         }
     }
-}
-
-private suspend fun PreferenceData<ImeWindowConfig>.resetWithToast(context: Context) {
-    reset().fold(
-        onSuccess = {
-            context.showLongToast(R.string.devtools__reset_window_config__toast_success)
-        },
-        onFailure = { error ->
-            context.showLongToast(
-                R.string.devtools__reset_window_config__toast_failure,
-                "message" to "${error.localizedMessage}",
-            )
-        }
-    )
 }
