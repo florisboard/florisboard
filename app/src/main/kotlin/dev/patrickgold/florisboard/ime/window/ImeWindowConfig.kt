@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.window
 
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -29,25 +30,22 @@ data class ImeWindowConfig(
     val floatingProps: Map<ImeWindowMode.Floating, ImeWindowProps.Floating> = emptyMap(),
 ) {
     object Serializer : PreferenceSerializer<ImeWindowConfig> {
-        private val coercingJson = Json { coerceInputValues = true }
-
         override fun serialize(value: ImeWindowConfig): String {
-            return coercingJson.encodeToString(value)
+            return Json.encodeToString(value)
         }
 
         override fun deserialize(value: String): ImeWindowConfig {
-            return coercingJson.decodeFromString(value)
+            return try {
+                Json.decodeFromString(value)
+            } catch (e: Throwable) {
+                flogError { "Failed to deserialize ImeWindowConfig: ${e.message}" }
+                Default
+            }
         }
     }
 
     companion object {
-        val DefaultPortrait = ImeWindowConfig(
-            mode = ImeWindowMode.FIXED,
-            fixedMode = ImeWindowMode.Fixed.NORMAL,
-            floatingMode = ImeWindowMode.Floating.NORMAL,
-        )
-
-        val DefaultLandscape = ImeWindowConfig(
+        val Default = ImeWindowConfig(
             mode = ImeWindowMode.FIXED,
             fixedMode = ImeWindowMode.Fixed.NORMAL,
             floatingMode = ImeWindowMode.Floating.NORMAL,

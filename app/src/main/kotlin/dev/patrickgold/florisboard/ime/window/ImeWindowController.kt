@@ -45,7 +45,7 @@ class ImeWindowController(
         field = MutableStateFlow(null)
 
     val activeWindowConfig: StateFlow<ImeWindowConfig>
-        field = MutableStateFlow(ImeWindowConfig.DefaultPortrait)
+        field = MutableStateFlow(ImeWindowConfig.Default)
 
     val activeWindowSpec: StateFlow<ImeWindowSpec>
         field = MutableStateFlow<ImeWindowSpec>(ImeWindowConstraints.FallbackSpec)
@@ -102,7 +102,7 @@ class ImeWindowController(
         val pref = windowConfigPref(activeRootInsets.value.inferredOrientation)
         val newWindowConfig = activeWindowConfig.updateAndGet(function)
         scope.launch {
-            pref.set(newWindowConfig)
+            val result = pref.set(newWindowConfig)
         }
     }
 

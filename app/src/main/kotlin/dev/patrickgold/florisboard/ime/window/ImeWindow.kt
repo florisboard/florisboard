@@ -95,7 +95,6 @@ fun ImeRootWindow() {
             .conditional(isEditorEnabled) {
                 Modifier.pointerInput(isEditorEnabled) {
                     detectTapGestures {
-                        android.util.Log.d("UPSIIII", "lol")
                         windowController.editor.disableIfNoGestureInProgress()
                     }
                 }

@@ -476,12 +476,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     inner class Keyboard {
         val windowConfigPortrait = custom(
             key = "keyboard__window_config_portrait",
-            default = ImeWindowConfig.DefaultPortrait,
+            default = ImeWindowConfig.Default,
             serializer = ImeWindowConfig.Serializer,
         )
         val windowConfigLandscape = custom(
             key = "keyboard__window_config_landscape",
-            default = ImeWindowConfig.DefaultLandscape,
+            default = ImeWindowConfig.Default,
             serializer = ImeWindowConfig.Serializer,
         )
         val numberRow = boolean(
