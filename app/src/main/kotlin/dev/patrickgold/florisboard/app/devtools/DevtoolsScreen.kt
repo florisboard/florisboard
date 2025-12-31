@@ -151,6 +151,7 @@ fun DevtoolsScreen() = FlorisScreen {
                 prefs.devtools.showWindowResizeHandleBoundaries,
                 title = stringRes(R.string.devtools__show_window_resize_handle_boundaries__label),
                 summary = stringRes(R.string.devtools__show_window_resize_handle_boundaries__summary),
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
             Preference(
                 title = stringRes(R.string.devtools__reset_window_config__label),

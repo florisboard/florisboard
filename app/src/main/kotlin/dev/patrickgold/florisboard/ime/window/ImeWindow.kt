@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -156,7 +157,8 @@ fun BoxScope.ImeWindow() {
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
                 val newInsets = with(density) { ImeInsets.Window.of(boundsPx) }
                 windowController.updateWindowInsets(newInsets)
-            },
+            }
+            .systemGestureExclusion(),
         supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
         allowClip = false,
     ) {

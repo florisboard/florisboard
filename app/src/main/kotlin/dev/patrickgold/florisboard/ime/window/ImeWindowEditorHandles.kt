@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -112,6 +113,7 @@ private fun ImeWindowResizeHandle(
                 Modifier
                     .background(Color.Yellow)
             }
+            .systemGestureExclusion()
             .padding(windowSpec.constraints.resizeHandleDrawPadding)
             .drawBehind {
                 val thickness = windowSpec.constraints.resizeHandleDrawThickness.toPx()
