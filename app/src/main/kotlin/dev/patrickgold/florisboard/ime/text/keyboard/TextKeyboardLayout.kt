@@ -37,6 +37,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
@@ -104,7 +105,6 @@ import kotlin.math.sqrt
 fun TextKeyboardLayout(
     modifier: Modifier = Modifier,
     evaluator: ComputingEvaluator,
-    isPreview: Boolean = false,
 ): Unit = with(LocalDensity.current) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
@@ -121,7 +121,7 @@ fun TextKeyboardLayout(
 
     val controller = remember { TextKeyboardLayoutController(context) }.also {
         it.keyboard = keyboard
-        if (glideEnabled && !isPreview && keyboard.mode == KeyboardMode.CHARACTERS) {
+        if (glideEnabled && keyboard.mode == KeyboardMode.CHARACTERS) {
             val keys = keyboard.keys().asSequence().toList()
             glideTypingManager.setLayout(keys)
         }
@@ -162,7 +162,6 @@ fun TextKeyboardLayout(
                 controller.size = coords.size.toSize()
             }
             .pointerInteropFilter { event ->
-                if (isPreview) return@pointerInteropFilter false
                 when (event.actionMasked) {
                     MotionEvent.ACTION_DOWN,
                     MotionEvent.ACTION_POINTER_DOWN,
@@ -210,6 +209,7 @@ fun TextKeyboardLayout(
                 }
             },
     ) {
+        // FIXME (when rewriting TextKeyboardLayout): constrains.maxWidth is not stable!
         val keyboardWidth = constraints.maxWidth.toFloat()
         val keyboardHeight = constraints.maxHeight.toFloat()
         val keyMarginH by prefs.keyboard.keySpacingHorizontal.observeAsTransformingState { it.dp.toPx() }
@@ -239,20 +239,21 @@ fun TextKeyboardLayout(
             }
         }
 
+        val desiredKeyHack = rememberUpdatedState(desiredKey) // TODO quick'n'dirty hack
         val popupUiController = rememberPopupUiController(
             key1 = keyboard,
-            key2 = desiredKey,
+            key2 = Unit, // TODO quick'n'dirty hack
             boundsProvider = { key ->
                 val keyPopupWidth: Float
                 val keyPopupHeight: Float
                 when {
                     configuration.isOrientationLandscape() -> {
-                        keyPopupWidth = desiredKey.visibleBounds.width * 1.0f
-                        keyPopupHeight = desiredKey.visibleBounds.height * 3.0f
+                        keyPopupWidth = desiredKeyHack.value.visibleBounds.width * 1.0f
+                        keyPopupHeight = desiredKeyHack.value.visibleBounds.height * 3.0f
                     }
                     else -> {
-                        keyPopupWidth = desiredKey.visibleBounds.width * 1.1f
-                        keyPopupHeight = desiredKey.visibleBounds.height * 2.5f
+                        keyPopupWidth = desiredKeyHack.value.visibleBounds.width * 1.1f
+                        keyPopupHeight = desiredKeyHack.value.visibleBounds.height * 2.5f
                     }
                 }
                 val keyPopupDiffX = (key.visibleBounds.width - keyPopupWidth) / 2.0f

@@ -263,8 +263,6 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     private val activeState get() = keyboardManager.activeState
     val inputFeedbackController by lazy { InputFeedbackController.new(this) }
-    private var isFullscreenUiMode by mutableStateOf(false)
-    private var isExtractUiShown by mutableStateOf(false)
     var resourcesContext by mutableStateOf(this as Context)
         private set
 
@@ -444,11 +442,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    override fun updateFullscreenMode() {
-        super.updateFullscreenMode()
-        isFullscreenUiMode = isFullscreenMode
-    }
-
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
             editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info), isRestart = true)
@@ -458,11 +451,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             LandscapeInputUiMode.NEVER_SHOW -> isExtractViewShown = false
             LandscapeInputUiMode.ALWAYS_SHOW -> isExtractViewShown = true
         }
-    }
-
-    override fun setExtractViewShown(shown: Boolean) {
-        super.setExtractViewShown(shown)
-        isExtractUiShown = shown
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
