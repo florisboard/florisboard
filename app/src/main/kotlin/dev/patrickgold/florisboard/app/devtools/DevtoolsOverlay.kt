@@ -34,10 +34,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -54,10 +52,10 @@ import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-import java.text.SimpleDateFormat
-import java.util.*
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.SnyggMissingSchemaException
+import java.text.SimpleDateFormat
+import java.util.*
 
 private val CardBackground = Color.Black.copy(0.6f)
 private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
@@ -82,7 +80,6 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White,
-        LocalLayoutDirection provides LayoutDirection.Ltr,
     ) {
         Column(modifier = modifier.fillMaxSize()) {
             if (devtoolsEnabled && showPrimaryClip) {

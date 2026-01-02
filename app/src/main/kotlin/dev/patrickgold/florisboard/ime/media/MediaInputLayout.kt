@@ -34,7 +34,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,9 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -74,43 +71,41 @@ fun MediaInputLayout(
         emojiLayoutDataMap = EmojiData.get(context, "ime/media/emoji/root.txt")
     }
 
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-        SnyggColumn(
-            elementName = FlorisImeUi.Media.elementName,
-            modifier = modifier
+    SnyggColumn(
+        elementName = FlorisImeUi.Media.elementName,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(FlorisImeSizing.imeUiHeight()),
+    ) {
+        EmojiPaletteView(
+            modifier = Modifier.weight(1f),
+            fullEmojiMappings = emojiLayoutDataMap,
+        )
+        SnyggRow(
+            elementName = FlorisImeUi.MediaBottomRow.elementName,
+            modifier = Modifier
                 .fillMaxWidth()
-                .height(FlorisImeSizing.imeUiHeight()),
+                .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
         ) {
-            EmojiPaletteView(
-                modifier = Modifier.weight(1f),
-                fullEmojiMappings = emojiLayoutDataMap,
-            )
-            SnyggRow(
-                elementName = FlorisImeUi.MediaBottomRow.elementName,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(FlorisImeSizing.keyboardRowBaseHeight * 0.8f),
+            KeyboardLikeButton(
+                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                inputEventDispatcher = keyboardManager.inputEventDispatcher,
+                keyData = TextKeyData.IME_UI_MODE_TEXT,
+                modifier = Modifier.fillMaxHeight(),
             ) {
-                KeyboardLikeButton(
-                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-                    inputEventDispatcher = keyboardManager.inputEventDispatcher,
-                    keyData = TextKeyData.IME_UI_MODE_TEXT,
-                    modifier = Modifier.fillMaxHeight(),
-                ) {
-                    Text(
-                        text = "ABC",
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                KeyboardLikeButton(
-                    elementName = FlorisImeUi.MediaBottomRowButton.elementName,
-                    inputEventDispatcher = keyboardManager.inputEventDispatcher,
-                    keyData = TextKeyData.DELETE,
-                    modifier = Modifier.fillMaxHeight(),
-                ) {
-                    Icon(imageVector = Icons.AutoMirrored.Outlined.Backspace, contentDescription = null)
-                }
+                Text(
+                    text = "ABC",
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            KeyboardLikeButton(
+                elementName = FlorisImeUi.MediaBottomRowButton.elementName,
+                inputEventDispatcher = keyboardManager.inputEventDispatcher,
+                keyData = TextKeyData.DELETE,
+                modifier = Modifier.fillMaxHeight(),
+            ) {
+                Icon(imageVector = Icons.AutoMirrored.Outlined.Backspace, contentDescription = null)
             }
         }
     }

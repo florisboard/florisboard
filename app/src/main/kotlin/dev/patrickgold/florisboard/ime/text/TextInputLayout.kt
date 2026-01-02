@@ -21,15 +21,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -56,31 +53,29 @@ fun TextInputLayout(
 
     InlineSuggestionsStyleCache()
 
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-        ) {
-            Smartbar()
-            if (state.isActionsOverflowVisible) {
-                QuickActionsOverflowPanel()
-            } else {
-                Box {
-                    val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.observeAsState()
-                    val showIncognitoIcon = evaluator.state.isIncognitoMode &&
-                        incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
-                    if (showIncognitoIcon) {
-                        SnyggIcon(
-                            FlorisImeUi.IncognitoModeIndicator.elementName,
-                            modifier = Modifier
-                                .matchParentSize()
-                                .align(Alignment.Center),
-                            painter = painterResource(R.drawable.ic_incognito),
-                        )
-                    }
-                    TextKeyboardLayout(evaluator = evaluator)
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+    ) {
+        Smartbar()
+        if (state.isActionsOverflowVisible) {
+            QuickActionsOverflowPanel()
+        } else {
+            Box {
+                val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.observeAsState()
+                val showIncognitoIcon = evaluator.state.isIncognitoMode &&
+                    incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
+                if (showIncognitoIcon) {
+                    SnyggIcon(
+                        FlorisImeUi.IncognitoModeIndicator.elementName,
+                        modifier = Modifier
+                            .matchParentSize()
+                            .align(Alignment.Center),
+                        painter = painterResource(R.drawable.ic_incognito),
+                    )
                 }
+                TextKeyboardLayout(evaluator = evaluator)
             }
         }
     }

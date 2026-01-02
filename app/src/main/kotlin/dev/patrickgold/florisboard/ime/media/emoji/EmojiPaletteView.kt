@@ -53,7 +53,6 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -360,34 +359,32 @@ fun EmojiPaletteView(
                     }
                 }
                 else -> key(emojiMapping) {
-                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                        LazyVerticalGrid(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .florisScrollbar(lazyGridState),
-                            columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
-                            state = lazyGridState,
-                        ) {
-                            if (emojiMapping.pinned.isNotEmpty()) {
-                                header("header_pinned") {
-                                    GridHeader(text = stringRes(R.string.emoji__history__pinned))
-                                }
-                                items(emojiMapping.pinned) { emojiSet ->
-                                    EmojiKeyWrapper(emojiSet, isPinned = true)
-                                }
+                    LazyVerticalGrid(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .florisScrollbar(lazyGridState),
+                        columns = GridCells.Adaptive(minSize = EmojiBaseWidth),
+                        state = lazyGridState,
+                    ) {
+                        if (emojiMapping.pinned.isNotEmpty()) {
+                            header("header_pinned") {
+                                GridHeader(text = stringRes(R.string.emoji__history__pinned))
                             }
-                            if (emojiMapping.recent.isNotEmpty()) {
-                                header("header_recent") {
-                                    GridHeader(text = stringRes(R.string.emoji__history__recent))
-                                }
-                                items(emojiMapping.recent) { emojiSet ->
-                                    EmojiKeyWrapper(emojiSet, isRecent = true)
-                                }
+                            items(emojiMapping.pinned) { emojiSet ->
+                                EmojiKeyWrapper(emojiSet, isPinned = true)
                             }
-                            if (emojiMapping.simple.isNotEmpty()) {
-                                items(emojiMapping.simple) { emojiSet ->
-                                    EmojiKeyWrapper(emojiSet)
-                                }
+                        }
+                        if (emojiMapping.recent.isNotEmpty()) {
+                            header("header_recent") {
+                                GridHeader(text = stringRes(R.string.emoji__history__recent))
+                            }
+                            items(emojiMapping.recent) { emojiSet ->
+                                EmojiKeyWrapper(emojiSet, isRecent = true)
+                            }
+                        }
+                        if (emojiMapping.simple.isNotEmpty()) {
+                            items(emojiMapping.simple) { emojiSet ->
+                                EmojiKeyWrapper(emojiSet)
                             }
                         }
                     }

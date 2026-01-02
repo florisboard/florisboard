@@ -68,6 +68,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.delay
 import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.ProvideActualLayoutDirection
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawBorder
 import org.florisboard.lib.compose.drawableRes
@@ -124,9 +125,11 @@ fun BoxScope.ImeWindow() {
     val state by keyboardManager.activeState.collectAsState()
     val windowSpec by windowController.activeWindowSpec.collectAsState()
 
-    val layoutDirection = LocalLayoutDirection.current
-    LaunchedEffect(layoutDirection) {
-        keyboardManager.activeState.layoutDirection = layoutDirection
+    ProvideActualLayoutDirection {
+        val layoutDirection = LocalLayoutDirection.current
+        LaunchedEffect(layoutDirection) {
+            keyboardManager.activeState.layoutDirection = layoutDirection
+        }
     }
 
     val attributes = remember(state.keyboardMode, state.inputShiftState) {
@@ -209,8 +212,8 @@ private fun ImeInnerWindow() {
         Column {
             when (state.imeUiMode) {
                 ImeUiMode.TEXT -> TextInputLayout()
-                ImeUiMode.MEDIA -> MediaInputLayout()
-                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
+                ImeUiMode.MEDIA -> ProvideActualLayoutDirection { MediaInputLayout() }
+                ImeUiMode.CLIPBOARD -> ProvideActualLayoutDirection { ClipboardInputLayout() }
             }
             ImeSystemUiFloating()
         }

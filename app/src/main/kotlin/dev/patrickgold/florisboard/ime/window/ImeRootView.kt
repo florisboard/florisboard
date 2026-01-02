@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.AbstractComposeView
+import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
@@ -50,6 +51,7 @@ class ImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
             ProvideLocalizedResources(
                 resourcesContext = ims.resourcesContext,
                 appName = R.string.app_name,
+                forceLayoutDirection = LayoutDirection.Ltr,
             ) {
                 FlorisImeTheme {
                     ImeRootWindow()
