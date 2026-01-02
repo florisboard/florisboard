@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.DpRect
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.width
 import androidx.window.core.layout.WindowSizeClass
@@ -39,10 +40,7 @@ data class ImeFormFactor(
     }
 
     companion object {
-        val Zero = ImeFormFactor(
-            sizeClass = WindowSizeClass(0f, 0f),
-            typeGuess = Type.PHONE_PORTRAIT,
-        )
+        val Zero = of(DpRect(0.dp, 0.dp, 0.dp, 0.dp))
 
         fun of(boundsDp: DpRect): ImeFormFactor {
             typealias BP = WindowSizeClass.Companion

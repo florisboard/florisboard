@@ -40,8 +40,8 @@ class ImeWindowController(
     val actions = Actions()
     val editor = Editor()
 
-    val activeRootInsets: StateFlow<ImeInsets.Root?>
-        field = MutableStateFlow(null)
+    val activeRootInsets: StateFlow<ImeInsets.Root>
+        field = MutableStateFlow(ImeInsets.Root.Zero)
 
     val activeWindowInsets: StateFlow<ImeInsets.Window?>
         field = MutableStateFlow(null)
@@ -60,7 +60,7 @@ class ImeWindowController(
             activeRootInsets,
             prefs.keyboard.windowConfig.asFlow(),
         ) { rootInsets, windowConfigByType ->
-            val typeGuess = rootInsets?.formFactor?.typeGuess ?: ImeFormFactor.Type.PHONE_PORTRAIT
+            val typeGuess = rootInsets.formFactor.typeGuess
             windowConfigByType[typeGuess] ?: ImeWindowConfig.Default
         }.collectIn(scope) { windowConfig ->
             activeWindowConfig.value = windowConfig
@@ -83,9 +83,9 @@ class ImeWindowController(
             userFontScale,
             editor.version,
         ) { rootInsets, windowConfig, userFontScale, _ ->
-            rootInsets?.let { doComputeWindowSpec(rootInsets, windowConfig, userFontScale) }
+            doComputeWindowSpec(rootInsets, windowConfig, userFontScale)
         }.collectIn(scope) { windowSpec ->
-            windowSpec?.let { activeWindowSpec.value = windowSpec }
+            activeWindowSpec.value = windowSpec
         }
     }
 
@@ -100,7 +100,7 @@ class ImeWindowController(
     private val mutex = Mutex()
     fun updateWindowConfig(function: (ImeWindowConfig) -> ImeWindowConfig) {
         val rootInsets = activeRootInsets.value
-        val typeGuess = rootInsets?.formFactor?.typeGuess ?: ImeFormFactor.Type.PHONE_PORTRAIT
+        val typeGuess = rootInsets.formFactor.typeGuess
         scope.launch {
             // not bullet-proof sync, but good enough considering this is only triggered by tap actions
             mutex.withLock {
@@ -115,7 +115,7 @@ class ImeWindowController(
         outInsets: InputMethodService.Insets,
         isFullscreenInputRequired: Boolean,
     ) {
-        val rootInsets = activeRootInsets.value ?: return
+        val rootInsets = activeRootInsets.value
         val windowInsets = activeWindowInsets.value ?: return
         val rootBounds = rootInsets.boundsPx
         val windowBounds = windowInsets.boundsPx
@@ -208,30 +208,6 @@ class ImeWindowController(
             }
         }
 
-        fun resetFloatingSize() {
-            val rootInsets = activeRootInsets.value ?: return
-            updateWindowConfig { config ->
-                when (config.mode) {
-                    ImeWindowMode.FLOATING -> {
-                        val constraints = ImeWindowConstraints.of(rootInsets, config.floatingMode)
-                        val defaultProps = constraints.defaultProps()
-                        val newProps = config.floatingProps[config.floatingMode]?.copy(
-                            keyboardHeight = defaultProps.keyboardHeight,
-                            keyboardWidth = defaultProps.keyboardWidth,
-                        ) ?: defaultProps
-                        config.copy(
-                            floatingProps = config.floatingProps.plus(
-                                config.floatingMode to newProps.constrained(constraints)
-                            ),
-                        )
-                    }
-                    ImeWindowMode.FIXED -> {
-                        config
-                    }
-                }
-            }
-        }
-
         fun toggleCompactLayout() {
             updateWindowConfig { config ->
                 when (config.mode) {
@@ -255,7 +231,7 @@ class ImeWindowController(
         private inline fun doCompactLayout(
             crossinline updateProps: (ImeWindowProps.Fixed) -> ImeWindowProps.Fixed,
         ) {
-            val rootInsets = activeRootInsets.value ?: return
+            val rootInsets = activeRootInsets.value
             val constraints = ImeWindowConstraints.of(rootInsets, ImeWindowMode.Fixed.COMPACT)
             updateWindowConfig { config ->
                 val props = config.fixedProps[ImeWindowMode.Fixed.COMPACT] ?: constraints.defaultProps()
@@ -292,6 +268,38 @@ class ImeWindowController(
                     paddingLeft = props.paddingRight,
                     paddingRight = props.paddingLeft,
                 )
+            }
+        }
+
+        fun resetFixedSize() {
+            updateWindowConfig { config ->
+                config.copy(
+                    fixedProps = config.fixedProps.minus(config.fixedMode),
+                )
+            }
+        }
+
+        fun resetFloatingSize() {
+            val rootInsets = activeRootInsets.value
+            updateWindowConfig { config ->
+                when (config.mode) {
+                    ImeWindowMode.FLOATING -> {
+                        val constraints = ImeWindowConstraints.of(rootInsets, config.floatingMode)
+                        val defaultProps = constraints.defaultProps()
+                        val newProps = config.floatingProps[config.floatingMode]?.copy(
+                            keyboardHeight = defaultProps.keyboardHeight,
+                            keyboardWidth = defaultProps.keyboardWidth,
+                        ) ?: defaultProps
+                        config.copy(
+                            floatingProps = config.floatingProps.plus(
+                                config.floatingMode to newProps.constrained(constraints)
+                            ),
+                        )
+                    }
+                    ImeWindowMode.FIXED -> {
+                        config
+                    }
+                }
             }
         }
     }

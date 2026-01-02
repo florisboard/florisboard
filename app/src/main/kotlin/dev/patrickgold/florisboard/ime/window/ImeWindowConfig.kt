@@ -26,9 +26,9 @@ typealias ImeWindowConfigByType = Map<ImeFormFactor.Type, ImeWindowConfig>
 @Serializable
 data class ImeWindowConfig(
     val mode: ImeWindowMode,
-    val fixedMode: ImeWindowMode.Fixed,
+    val fixedMode: ImeWindowMode.Fixed = ImeWindowMode.Fixed.NORMAL,
     val fixedProps: Map<ImeWindowMode.Fixed, ImeWindowProps.Fixed> = emptyMap(),
-    val floatingMode: ImeWindowMode.Floating,
+    val floatingMode: ImeWindowMode.Floating = ImeWindowMode.Floating.NORMAL,
     val floatingProps: Map<ImeWindowMode.Floating, ImeWindowProps.Floating> = emptyMap(),
 ) {
     object ByTypeSerializer : PreferenceSerializer<ImeWindowConfigByType> {

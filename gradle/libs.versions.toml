@@ -31,6 +31,7 @@ androidx-test-espresso = "3.7.0"
 androidx-test-uiautomator = "2.3.0"
 kotest = "6.0.7"
 kotlinx-kover = "0.9.4"
+turbine = "1.2.1"
 
 
 [libraries]
@@ -81,7 +82,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 
 [plugins]

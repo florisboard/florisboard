@@ -50,7 +50,6 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawableRes
 import org.florisboard.lib.compose.toDp
@@ -181,19 +180,11 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                 .matchParentSize()
                 .padding(vertical = windowSpec.constraints.resizeHandleTouchSize),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIconButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
-                onClick = {
-                    windowController.scope.launch {
-                        windowController.updateWindowConfig { config ->
-                            config.copy(
-                                fixedProps = config.fixedProps.filterNot { it.key == config.fixedMode },
-                            )
-                        }
-                    }
-                },
+                onClick = { windowController.actions.resetFixedSize() },
             ) {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
@@ -211,13 +202,12 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
 
             SnyggIconButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
-                onClick = {
-                    windowController.editor.disable()
-                },
+                onClick = { windowController.editor.disable() },
             ) {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
-                    imageVector = drawableRes(R.drawable.ic_check))
+                    imageVector = drawableRes(R.drawable.ic_check),
+                )
             }
         }
 
