@@ -24,14 +24,11 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.systemGestureExclusion
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,7 +45,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -57,12 +53,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawableRes
-import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.compose.toDp
-import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
-import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 enum class ImeWindowResizeHandle(
@@ -183,14 +176,14 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                 .background(Color.Gray.copy(alpha = 0.5f))
         )
 
-        Column(
+        Row(
             modifier = Modifier
                 .matchParentSize()
                 .padding(vertical = windowSpec.constraints.resizeHandleTouchSize),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            SnyggButton(
+            SnyggIconButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
                 onClick = {
                     windowController.scope.launch {
@@ -201,10 +194,11 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                         }
                     }
                 },
-                contentPadding = PaddingValues(all = 4.dp)
             ) {
-                Icon(drawableRes(R.drawable.ic_restart_alt), null)
-                SnyggText(text = stringRes(R.string.action__reset))
+                SnyggIcon(
+                    elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                    imageVector = drawableRes(R.drawable.ic_restart_alt),
+                )
             }
 
             SnyggIconButton(FlorisImeUi.WindowMoveHandleFixed.elementName, onClick = {}) {
@@ -215,15 +209,15 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                 )
             }
 
-            SnyggButton(
+            SnyggIconButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
                 onClick = {
                     windowController.editor.disable()
                 },
-                contentPadding = PaddingValues(all = 4.dp)
             ) {
-                Icon(drawableRes(R.drawable.ic_check), null)
-                Text(stringRes(R.string.action__done))
+                SnyggIcon(
+                    elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                    imageVector = drawableRes(R.drawable.ic_check))
             }
         }
 

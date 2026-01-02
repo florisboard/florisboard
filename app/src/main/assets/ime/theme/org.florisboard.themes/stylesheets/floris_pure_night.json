@@ -34,7 +34,9 @@
   "window-move-handle-fixed": {
     "background": "var(--surface)",
     "foreground": "var(--primary)",
-    "font-size": "40sp",
+    "font-size": "24sp",
+    "margin": "16dp 0dp",
+    "padding": "8dp",
     "shape": "circle()"
   },
   "window-resize-handle-fixed": {
@@ -44,8 +46,10 @@
     "background": "var(--primary)"
   },
   "window-resize-action-fixed": {
-    "background": "var(--surface)",
-    "foreground": "var(--primary)",
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)",
+    "font-size": "24sp",
+    "padding": "8dp",
     "shape": "circle()"
   },
   "floating-dock-to-fixed-indicator": {
