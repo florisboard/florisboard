@@ -124,6 +124,7 @@ fun BoxScope.ImeWindow() {
 
     val state by keyboardManager.activeState.collectAsState()
     val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val windowConfig by windowController.activeWindowConfig.collectAsState()
 
     ProvideActualLayoutDirection {
         val layoutDirection = LocalLayoutDirection.current
@@ -132,10 +133,9 @@ fun BoxScope.ImeWindow() {
         }
     }
 
-    val attributes = remember(state.keyboardMode, state.inputShiftState) {
+    val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
-            FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
+            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString(),
         )
     }
 
@@ -301,6 +301,13 @@ private fun BoxScope.OneHandedPanel() {
 private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
     val windowController = LocalWindowController.current
     val editorState by windowController.editor.state.collectAsState()
+    val windowConfig by windowController.activeWindowConfig.collectAsState()
+
+    val attributes = remember(windowConfig.mode) {
+        mapOf(
+            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString()
+        )
+    }
 
     if (!editorState.isEnabled) {
         Box(Modifier.matchParentSize()) {
@@ -327,31 +334,46 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
             ) {
                 SnyggIconButton(
                     elementName = FlorisImeUi.OneHandedPanelButton.elementName,
+                    attributes = attributes,
                     onClick = {
                         windowController.actions.toggleCompactLayout()
                     },
                 ) {
-                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_zoom_out_map))
+                    SnyggIcon(
+                        attributes = attributes,
+                        imageVector = drawableRes(R.drawable.ic_zoom_out_map),
+                    )
                 }
                 SnyggIconButton(
                     elementName = FlorisImeUi.OneHandedPanelButton.elementName,
+                    attributes = attributes,
                     onClick = {
                         windowController.actions.compactLayoutFlipSide()
                     },
                 ) {
                     if (spec.props.paddingLeft > spec.props.paddingRight) {
-                        SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_left))
+                        SnyggIcon(
+                            imageVector = drawableRes(R.drawable.ic_chevron_left),
+                            attributes = attributes,
+                        )
                     } else {
-                        SnyggIcon(imageVector = drawableRes(R.drawable.ic_chevron_right))
+                        SnyggIcon(
+                            attributes = attributes,
+                            imageVector = drawableRes(R.drawable.ic_chevron_right),
+                        )
                     }
                 }
                 SnyggIconButton(
                     elementName = FlorisImeUi.OneHandedPanelButton.elementName,
+                    attributes = attributes,
                     onClick = {
                         windowController.editor.toggleEnabled()
                     },
                 ) {
-                    SnyggIcon(imageVector = drawableRes(R.drawable.ic_resize))
+                    SnyggIcon(
+                        imageVector = drawableRes(R.drawable.ic_resize),
+                        attributes = attributes,
+                    )
                 }
             }
         }

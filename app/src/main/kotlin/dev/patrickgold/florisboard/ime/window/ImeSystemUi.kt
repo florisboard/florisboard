@@ -213,9 +213,17 @@ fun ImeSystemUiFloating() {
 private fun RowScope.NavigationPill() {
     val windowController = LocalWindowController.current
 
+    val windowConfig by windowController.activeWindowConfig.collectAsState()
+
     val backgroundQuery = rememberSnyggThemeQuery(FlorisImeUi.Window.elementName)
     val backgroundColor = backgroundQuery.background()
     val backgroundImage = backgroundQuery.backgroundImage.uriOrNull()
+
+    val attributes = remember(windowConfig.mode) {
+        mapOf(
+            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString()
+        )
+    }
 
     val useDarkIcons = if (backgroundImage == null) {
         backgroundColor.luminance() >= 0.5
@@ -229,7 +237,7 @@ private fun RowScope.NavigationPill() {
         Color.White
     }.copy(0.5f)
 
-    val style = rememberSnyggThemeQuery(FlorisImeUi.WindowMoveHandleFloating.elementName)
+    val style = rememberSnyggThemeQuery(FlorisImeUi.WindowMoveHandle.elementName, attributes)
     val scrimColor = style.background(defaultScrimColor)
 
     val size = DpSize(80.dp, 5.dp)

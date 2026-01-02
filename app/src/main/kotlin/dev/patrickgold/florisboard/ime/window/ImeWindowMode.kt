@@ -29,4 +29,6 @@ enum class ImeWindowMode {
     enum class Floating {
         NORMAL;
     }
+
+    override fun toString() = name.lowercase()
 }

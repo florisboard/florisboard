@@ -237,10 +237,8 @@
     <string name="snygg__rule_element__window">Window</string>
     <string name="snygg__rule_element__window_inner">Window Inner</string>
 
-    <string name="snygg__rule_element__window_move_handle_fixed">Window move handle fixed</string>
-    <string name="snygg__rule_element__window_move_handle_floating">Window move handle floating</string>
-    <string name="snygg__rule_element__window_resize_handle_fixed">Window resize handle fixed</string>
-    <string name="snygg__rule_element__window_resize_handle_floating">Window resize handle floating</string>
+    <string name="snygg__rule_element__window_move_handle">Window move handle</string>
+    <string name="snygg__rule_element__window_resize_handle">Window resize handle</string>
     <string name="snygg__rule_element__window_resize_action_fixed">Window resize action fixed</string>
     <string name="snygg__rule_element__floating_dock_to_fixed_indicator">Floating dock to fixed indicator</string>
 

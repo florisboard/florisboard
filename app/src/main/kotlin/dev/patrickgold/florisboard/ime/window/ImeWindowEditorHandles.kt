@@ -82,19 +82,17 @@ private fun ImeWindowResizeHandle(
     val prefs by FlorisPreferenceStore
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val windowConfig by windowController.activeWindowConfig.collectAsState()
 
     val showWindowResizeHandleBoundaries by prefs.devtools.showWindowResizeHandleBoundaries.observeAsState()
 
-    val elementName by remember {
-        derivedStateOf {
-            when (windowSpec) {
-                is ImeWindowSpec.Fixed -> FlorisImeUi.WindowResizeHandleFixed.elementName
-                is ImeWindowSpec.Floating -> FlorisImeUi.WindowResizeHandleFloating.elementName
-            }
-        }
+    val attributes = remember(windowConfig.mode) {
+        mapOf(
+            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString(),
+        )
     }
 
-    val style = rememberSnyggThemeQuery(elementName)
+    val style = rememberSnyggThemeQuery(FlorisImeUi.WindowResizeHandle.elementName, attributes)
     val handleColor = style.background()
 
     Box(
@@ -147,6 +145,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
     val windowController = LocalWindowController.current
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
+    val windowConfig by windowController.activeWindowConfig.collectAsState()
     val editorState by windowController.editor.state.collectAsState()
 
     val visible by remember {
@@ -159,6 +158,12 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
         animationSpec = tween(350),
     )
     val alphaModifier = Modifier.graphicsLayer { alpha = animatedAlpha }
+
+    val attributes = remember(windowConfig.mode) {
+        mapOf(
+            FlorisImeUi.Attr.WindowMode to windowConfig.mode
+        )
+    }
 
     if (visible) {
         Box(
@@ -184,6 +189,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
         ) {
             SnyggIconButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                attributes = attributes,
                 onClick = { windowController.actions.resetFixedSize() },
             ) {
                 SnyggIcon(
@@ -192,9 +198,13 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                 )
             }
 
-            SnyggIconButton(FlorisImeUi.WindowMoveHandleFixed.elementName, onClick = {}) {
+            SnyggIconButton(
+                FlorisImeUi.WindowMoveHandle.elementName,
+                attributes = attributes,
+                onClick = {}
+            ) {
                 SnyggIcon(
-                    elementName = FlorisImeUi.WindowMoveHandleFixed.elementName,
+                    elementName = FlorisImeUi.WindowMoveHandle.elementName,
                     imageVector = drawableRes(R.drawable.ic_drag_pan),
                     modifier = Modifier.imeWindowMoveHandle(windowController),
                 )
@@ -202,6 +212,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
 
             SnyggIconButton(
                 elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                attributes = attributes,
                 onClick = { windowController.editor.disable() },
             ) {
                 SnyggIcon(

@@ -31,7 +31,10 @@
     "background": "var(--background)",
     "foreground": "var(--on-background)"
   },
-  "window-move-handle-fixed": {
+  "window[windowmode=`floating`]": {
+    "shape": "rounded-corner(5%, 5%, 5%, 5%)"
+  },
+  "window-move-handle[windowmode=`fixed`]": {
     "background": "var(--surface)",
     "foreground": "var(--primary)",
     "font-size": "24sp",
@@ -39,10 +42,7 @@
     "padding": "8dp",
     "shape": "circle()"
   },
-  "window-resize-handle-fixed": {
-    "background": "var(--primary)"
-  },
-  "window-resize-handle-floating": {
+  "window-resize-handle": {
     "background": "var(--primary)"
   },
   "window-resize-action-fixed": {

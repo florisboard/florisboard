@@ -34,13 +34,19 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.asAndroidPath
 import androidx.compose.ui.graphics.toAndroidRectF
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.times
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toRect
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -88,6 +94,7 @@ fun SnyggSurfaceView(
         val assetResolver = LocalSnyggAssetResolver.current
         val context = LocalContext.current
         val imageLoader = SingletonImageLoader.get(context)
+        val shape = style.shape()
 
         val backgroundColor = style.background(Color.Black)
         val imagePath = remember(style, assetResolver) {
@@ -153,7 +160,7 @@ fun SnyggSurfaceView(
                     }
                 )
             }
-            LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale, parentSize) {
+            LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale, parentSize, shape) {
                 val image = loadedImage
                 if (image is DrawableImage && image.drawable is Animatable) {
                     // Slow path, need animation
@@ -162,7 +169,7 @@ fun SnyggSurfaceView(
                     try {
                         animatedDrawable.start()
                         while (isActive) {
-                            surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                            surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale, shape)
                             delay(1000L / fps)
                         }
                     } finally {
@@ -170,7 +177,7 @@ fun SnyggSurfaceView(
                     }
                 } else {
                     // Fast path, render once and be done with it
-                    surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale)
+                    surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale, shape)
                 }
             }
         }
@@ -181,6 +188,7 @@ private fun SurfaceView.drawToSurface(
     color: Color,
     image: Image?,
     contentScale: ContentScale,
+    shape: Shape,
 ) {
     Log.d("SnyggSurfaceView", "drawToSurface(color=$color, image=$image)")
     val surface = holder.surface
@@ -190,6 +198,11 @@ private fun SurfaceView.drawToSurface(
     }
     val canvas = surface.lockCanvas(null)
     try {
+        val size = Size(canvas.width.toFloat(), canvas.height.toFloat())
+        val density = Density(canvas.density.toFloat())
+        canvas.save()
+        shape.applyClipTo(size, density, canvas)
+
         canvas.drawColor(color.toArgb())
         when (image) {
             is BitmapImage -> image.bitmap.drawToSurface(canvas, contentScale)
@@ -222,3 +235,24 @@ private fun DrawableImage.drawToSurface(canvas: Canvas, contentScale: ContentSca
     this.toBitmap().drawToSurface(canvas, contentScale)
 }
 
+fun Shape.applyClipTo(
+    size: Size,
+    density: Density,
+    canvas: Canvas,
+) {
+    val outline = createOutline(
+        size = size,
+        layoutDirection = LayoutDirection.Ltr,
+        density = density,
+    )
+    Log.d("applyClipTo", "applyClipTo(${outline})")
+    val path =
+        when (outline) {
+            is Outline.Rectangle -> Path().apply { addRect(outline.rect) }
+            is Outline.Rounded -> {
+                Path().apply { addRoundRect(outline.roundRect) }
+            }
+            is Outline.Generic -> outline.path
+        }
+    canvas.clipPath(path.asAndroidPath())
+}
