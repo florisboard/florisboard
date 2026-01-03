@@ -35,16 +35,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -70,7 +78,48 @@ enum class ImeWindowResizeHandle(
     RIGHT(right = true),
     BOTTOM_RIGHT(bottom = true, right = true),
     BOTTOM(bottom = true),
-    BOTTOM_LEFT(bottom = true, left = true),
+    BOTTOM_LEFT(bottom = true, left = true);
+
+    fun shape(thickness: Dp, cornerRadius: Dp): Shape {
+        return object : Shape {
+            override fun createOutline(
+                size: Size,
+                layoutDirection: LayoutDirection,
+                density: Density,
+            ): Outline = with(density) {
+                val path = Path()
+                val radius = CornerRadius(cornerRadius.toPx(), cornerRadius.toPx())
+
+                if (top || bottom) {
+                    val topLeftOffset = if (bottom) Offset(0f, size.height - thickness.toPx()) else Offset.Zero
+                    path.addRoundRect(
+                        RoundRect(
+                            left = topLeftOffset.x,
+                            top = topLeftOffset.y,
+                            right = topLeftOffset.x + size.width,
+                            bottom = topLeftOffset.y + thickness.toPx(),
+                            cornerRadius = radius,
+                        )
+                    )
+                }
+
+                if (left || right) {
+                    val topLeftOffset = if (right) Offset(size.width - thickness.toPx(), 0f) else Offset.Zero
+                    path.addRoundRect(
+                        RoundRect(
+                            left = topLeftOffset.x,
+                            top = topLeftOffset.y,
+                            right = topLeftOffset.x + thickness.toPx(),
+                            bottom = topLeftOffset.y + size.height,
+                            cornerRadius = radius,
+                        )
+                    )
+                }
+
+                return Outline.Generic(path)
+            }
+        }
+    }
 }
 
 @Composable
@@ -93,7 +142,7 @@ private fun ImeWindowResizeHandle(
     }
 
     val style = rememberSnyggThemeQuery(FlorisImeUi.WindowResizeHandle.elementName, attributes)
-    val handleColor = style.background()
+    val handleColor by rememberUpdatedState(style.background(Color.Black))
 
     Box(
         modifier = modifier
@@ -104,40 +153,19 @@ private fun ImeWindowResizeHandle(
                     .background(Color.Yellow)
             }
             .systemGestureExclusion()
-            .padding(windowSpec.constraints.resizeHandleDrawPadding)
-            .drawBehind {
-                val thickness = windowSpec.constraints.resizeHandleDrawThickness.toPx()
-                val cornerRadius = windowSpec.constraints.resizeHandleDrawCornerRadius.toPx().let { CornerRadius(it, it) }
-                if (handle.top || handle.bottom) {
-                    val handleSize = Size(
-                        width = size.width,
-                        height = thickness,
-                    )
-                    val topLeft = when {
-                        handle.bottom -> Offset(
-                            x = 0f,
-                            y = size.height - handleSize.height,
-                        )
-                        else -> Offset.Zero
-                    }
-                    drawRoundRect(handleColor, topLeft, handleSize, cornerRadius)
-                }
-                if (handle.left || handle.right) {
-                    val handleSize = Size(
-                        width = thickness,
-                        height = size.height,
-                    )
-                    val topLeft = when {
-                        handle.right -> Offset(
-                            x = size.width - handleSize.width,
-                            y = 0f,
-                        )
-                        else -> Offset.Zero
-                    }
-                    drawRoundRect(handleColor, topLeft, handleSize, cornerRadius)
-                }
-            },
-    )
+            .padding(windowSpec.constraints.resizeHandleDrawPadding),
+    ) {
+        val handleShape = handle.shape(
+            thickness = windowSpec.constraints.resizeHandleDrawThickness,
+            cornerRadius = windowSpec.constraints.resizeHandleDrawCornerRadius,
+        )
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .clip(handleShape)
+                .background(handleColor),
+        )
+    }
 }
 
 @Composable
