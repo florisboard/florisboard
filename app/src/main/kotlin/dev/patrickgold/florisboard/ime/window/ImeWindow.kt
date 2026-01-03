@@ -160,8 +160,7 @@ fun BoxScope.ImeWindow() {
                 val boundsPx = coords.boundsInRoot().roundToIntRect()
                 val newInsets = with(density) { ImeInsets.Window.of(boundsPx) }
                 windowController.updateWindowInsets(newInsets)
-            }
-            .systemGestureExclusion(),
+            },
         supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
         allowClip = false,
     ) {
@@ -201,11 +200,15 @@ private fun ImeInnerWindow() {
             .ifIsInstance<ImeWindowProps.Fixed>(windowSpec.props) { props ->
                 Modifier
                     .safeDrawingPadding()
+                    .systemGestureExclusion()
                     .padding(
                         start = props.paddingLeft.coerceAtLeast(0.dp),
                         end = props.paddingRight.coerceAtLeast(0.dp),
                         bottom = props.paddingBottom.coerceAtLeast(0.dp),
                     )
+            }
+            .ifIsInstance<ImeWindowProps.Floating>(windowSpec.props) {
+                Modifier.systemGestureExclusion()
             },
         allowClip = false,
     ) {
