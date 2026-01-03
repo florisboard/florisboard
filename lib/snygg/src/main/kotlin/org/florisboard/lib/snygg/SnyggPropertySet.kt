@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.JsonArray
@@ -38,6 +39,7 @@ import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggContentScaleValue
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
@@ -253,6 +255,20 @@ data class SnyggSinglePropertySet internal constructor(
     fun lineHeight(default: TextUnit = TextUnit.Unspecified): TextUnit {
         return when (lineHeight) {
             is SnyggSpSizeValue -> lineHeight.sp
+            else -> default
+        }
+    }
+
+    fun shadowColor(default: Color = Color.Unspecified): Color {
+        return when (shadowColor) {
+            is SnyggStaticColorValue -> shadowColor.color
+            else -> default
+        }
+    }
+
+    fun shadowElevation(default: Dp = Dp.Unspecified): Dp {
+        return when (shadowElevation) {
+            is SnyggDpSizeValue -> shadowElevation.dp
             else -> default
         }
     }

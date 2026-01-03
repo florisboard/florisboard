@@ -51,6 +51,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toRect
 import coil3.Bitmap
 import coil3.BitmapImage
@@ -98,6 +99,9 @@ fun SnyggSurfaceView(
 
         val backgroundColor by rememberUpdatedState(style.background(Color.Black))
         val shape by rememberUpdatedState(style.shape())
+        val shadowColor by rememberUpdatedState(style.shadowColor(default = Color.Black))
+        val shadowElevation by rememberUpdatedState(style.shadowElevation(default = 8.dp))
+
         val imageLoader = SingletonImageLoader.get(context)
         val imagePath = remember(style, assetResolver) {
             style.backgroundImage.uriOrNull()?.let { imageUri ->
@@ -133,7 +137,10 @@ fun SnyggSurfaceView(
                     .matchParentSize()
                     .graphicsLayer {
                         this.shape = shape
-                        clip = true
+                        this.shadowElevation = with(density) { shadowElevation.toPx() }
+                        this.ambientShadowColor = shadowColor
+                        this.spotShadowColor = shadowColor
+                        this.clip = true
                     },
                 isOpaque = false,
                 zOrder = AndroidExternalSurfaceZOrder.Behind,
