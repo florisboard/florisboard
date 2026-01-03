@@ -1040,6 +1040,9 @@
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shifted (automatic)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
 
+    <string name="enum__ime_window_mode__fixed" comment="Enum value label">Fixed</string>
+    <string name="enum__ime_window_mode__floating" comment="Enum value label">Floating</string>
+
     <string name="enum__keyboard_mode__characters" comment="Enum value label">Characters</string>
     <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbols</string>
     <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbols 2</string>

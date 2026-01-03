@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
@@ -407,6 +408,18 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = InputShiftState.CAPS_LOCK,
                 label = stringRes(R.string.enum__input_shift_state__caps_lock),
+            )
+        }
+    },
+    ImeWindowMode::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = ImeWindowMode.FIXED,
+                label = stringRes(R.string.enum__ime_window_mode__fixed),
+            )
+            entry(
+                key = ImeWindowMode.FLOATING,
+                label = stringRes(R.string.enum__ime_window_mode__floating),
             )
         }
     },
