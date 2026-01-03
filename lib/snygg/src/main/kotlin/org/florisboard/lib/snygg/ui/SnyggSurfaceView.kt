@@ -17,18 +17,22 @@
 package org.florisboard.lib.snygg.ui
 
 import android.graphics.Canvas
-import android.graphics.PixelFormat
+import android.graphics.PorterDuff
 import android.graphics.drawable.Animatable
 import android.util.Log
 import android.view.SurfaceView
-import android.view.ViewGroup
+import androidx.compose.foundation.AndroidExternalSurface
+import androidx.compose.foundation.AndroidExternalSurfaceZOrder
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
@@ -38,18 +42,16 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asAndroidPath
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toAndroidRectF
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.times
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.toRect
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import coil3.Bitmap
 import coil3.BitmapImage
 import coil3.DrawableImage
@@ -59,11 +61,10 @@ import coil3.request.ImageRequest
 import coil3.request.SuccessResult
 import coil3.request.allowHardware
 import coil3.toBitmap
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
+import android.graphics.Path as PlatformPath
+import android.view.Surface as PlatformSurface
 
 /**
  * Specialized layout composable rendering a background color/image to a [SurfaceView].
@@ -93,16 +94,17 @@ fun SnyggSurfaceView(
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
         val assetResolver = LocalSnyggAssetResolver.current
         val context = LocalContext.current
-        val imageLoader = SingletonImageLoader.get(context)
-        val shape = style.shape()
+        val density = LocalDensity.current
 
-        val backgroundColor = style.background(Color.Black)
+        val backgroundColor by rememberUpdatedState(style.background(Color.Black))
+        val shape by rememberUpdatedState(style.shape())
+        val imageLoader = SingletonImageLoader.get(context)
         val imagePath = remember(style, assetResolver) {
             style.backgroundImage.uriOrNull()?.let { imageUri ->
                 assetResolver.resolveAbsolutePath(imageUri).getOrNull()
             }
         }
-        var loadedImage by remember { mutableStateOf<Image?>(null) }
+        var loadedImage by remember { mutableStateOf<Image?>(null, referentialEqualityPolicy()) }
         val contentScale = style.contentScale()
 
         LaunchedEffect(imagePath) {
@@ -125,91 +127,87 @@ fun SnyggSurfaceView(
             }
         }
 
-        var showSurfaceView by remember { mutableStateOf(false) }
-        LifecycleResumeEffect(Unit) {
-            showSurfaceView = true
-            onPauseOrDispose {
-                showSurfaceView = false
-            }
-        }
-
-        val surfaceView = remember {
-            Log.d("SnyggSurfaceView", "creating new instance")
-            SurfaceView(context).apply {
-                if (AndroidVersion.ATLEAST_API34_U) {
-                    setSurfaceLifecycle(SurfaceView.SURFACE_LIFECYCLE_FOLLOWS_ATTACHMENT)
-                }
-                setZOrderOnTop(false)
-                holder.setFormat(PixelFormat.TRANSPARENT)
-            }
-        }
-
-        if (showSurfaceView) {
-            var parentSize by remember { mutableStateOf(IntSize.Zero) }
-            Box(modifier.onSizeChanged { parentSize = it }) {
-                AndroidView(
-                    modifier = Modifier.matchParentSize(),
-                    factory = { surfaceView },
-                    update = { view ->
-                        val lp = view.layoutParams
-                        if (lp == null || lp.width != parentSize.width || lp.height != parentSize.height) {
-                            view.layoutParams = ViewGroup.LayoutParams(parentSize.width, parentSize.height)
-                            view.requestLayout()
-                        }
-                        Log.d("SnyggSurfaceView", "updateSize(height=${view.height},width=${view.width})")
+        Box(modifier) {
+            AndroidExternalSurface(
+                modifier = Modifier
+                    .matchParentSize()
+                    .graphicsLayer {
+                        this.shape = shape
+                        clip = true
+                    },
+                isOpaque = false,
+                zOrder = AndroidExternalSurfaceZOrder.Behind,
+            ) {
+                onSurface { surface, initWidth, initHeight ->
+                    var lastImage: Image? = null
+                    var size = Size(initWidth.toFloat(), initHeight.toFloat())
+                    surface.onChanged { newWidth, newHeight ->
+                        size = Size(newWidth.toFloat(), newHeight.toFloat())
                     }
-                )
-            }
-            LaunchedEffect(surfaceView, backgroundColor, loadedImage, contentScale, parentSize, shape) {
-                val image = loadedImage
-                if (image is DrawableImage && image.drawable is Animatable) {
-                    // Slow path, need animation
-                    val fps = 30L // TODO: read frame delays from drawable
-                    val animatedDrawable = image.drawable as Animatable
-                    try {
-                        animatedDrawable.start()
-                        while (isActive) {
-                            surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale, shape)
-                            delay(1000L / fps)
-                        }
-                    } finally {
-                        animatedDrawable.stop()
+                    surface.onDestroyed {
+                        lastImage.stopIfIsAnimatable()
                     }
-                } else {
-                    // Fast path, render once and be done with it
-                    surfaceView.drawToSurface(backgroundColor, loadedImage, contentScale, shape)
+                    while (true) {
+                        withFrameMillis {
+                            if (lastImage !== loadedImage) {
+                                lastImage.stopIfIsAnimatable()
+                                loadedImage.startIfIsAnimatable()
+                                lastImage = loadedImage
+                            }
+                            surface.drawLocked { canvas ->
+                                canvas.drawColor(Color.Transparent.toArgb(), PorterDuff.Mode.CLEAR)
+                                val clipPath = shape.toAndroidPath(size, density)
+                                canvas.clipPath(clipPath)
+                                canvas.doDraw(
+                                    backgroundColor = backgroundColor,
+                                    image = loadedImage,
+                                    contentScale = contentScale,
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-private fun SurfaceView.drawToSurface(
-    color: Color,
+private fun Image?.startIfIsAnimatable() {
+    if (this is DrawableImage) {
+        val animatedDrawable = drawable
+        if (animatedDrawable is Animatable) {
+            animatedDrawable.start()
+        }
+    }
+}
+
+private fun Image?.stopIfIsAnimatable() {
+    if (this is DrawableImage) {
+        val animatedDrawable = drawable
+        if (animatedDrawable is Animatable) {
+            animatedDrawable.stop()
+        }
+    }
+}
+
+private inline fun PlatformSurface.drawLocked(block: (canvas: Canvas) -> Unit) {
+    val canvas = lockCanvas(null)
+    try {
+        block(canvas)
+    } finally {
+        unlockCanvasAndPost(canvas)
+    }
+}
+
+private fun Canvas.doDraw(
+    backgroundColor: Color,
     image: Image?,
     contentScale: ContentScale,
-    shape: Shape,
 ) {
-    Log.d("SnyggSurfaceView", "drawToSurface(color=$color, image=$image)")
-    val surface = holder.surface
-    if (!surface.isValid) {
-        Log.w("SnyggSurfaceView", "drawToSurface: surface.isValid=false, may indicate state issue")
-        return
-    }
-    val canvas = surface.lockCanvas(null)
-    try {
-        val size = Size(canvas.width.toFloat(), canvas.height.toFloat())
-        val density = Density(canvas.density.toFloat())
-        canvas.save()
-        shape.applyClipTo(size, density, canvas)
-
-        canvas.drawColor(color.toArgb())
-        when (image) {
-            is BitmapImage -> image.bitmap.drawToSurface(canvas, contentScale)
-            is DrawableImage -> image.drawToSurface(canvas, contentScale)
-        }
-    } finally {
-        surface.unlockCanvasAndPost(canvas)
+    drawColor(backgroundColor.toArgb())
+    when (image) {
+        is BitmapImage -> image.bitmap.drawToSurface(this, contentScale)
+        is DrawableImage -> image.drawToSurface(this, contentScale)
     }
 }
 
@@ -235,24 +233,16 @@ private fun DrawableImage.drawToSurface(canvas: Canvas, contentScale: ContentSca
     this.toBitmap().drawToSurface(canvas, contentScale)
 }
 
-fun Shape.applyClipTo(
-    size: Size,
-    density: Density,
-    canvas: Canvas,
-) {
+private fun Shape.toAndroidPath(size: Size, density: Density): PlatformPath {
     val outline = createOutline(
         size = size,
         layoutDirection = LayoutDirection.Ltr,
         density = density,
     )
-    Log.d("applyClipTo", "applyClipTo(${outline})")
-    val path =
-        when (outline) {
-            is Outline.Rectangle -> Path().apply { addRect(outline.rect) }
-            is Outline.Rounded -> {
-                Path().apply { addRoundRect(outline.roundRect) }
-            }
-            is Outline.Generic -> outline.path
-        }
-    canvas.clipPath(path.asAndroidPath())
+    val path = when (outline) {
+        is Outline.Rectangle -> Path().apply { addRect(outline.rect) }
+        is Outline.Rounded -> Path().apply { addRoundRect(outline.roundRect) }
+        is Outline.Generic -> outline.path
+    }
+    return path.asAndroidPath()
 }
