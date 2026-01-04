@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.systemGestureExclusion
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -38,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -126,12 +127,18 @@ enum class ImeWindowResizeHandle(
 private fun ImeWindowResizeHandle(
     handle: ImeWindowResizeHandle,
     modifier: Modifier,
+    alphaState: State<Float>,
 ) {
     val windowController = LocalWindowController.current
     val prefs by FlorisPreferenceStore
 
+    val currentAlpha by alphaState
+
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val windowConfig by windowController.activeWindowConfig.collectAsState()
+
+    val thickness = windowSpec.constraints.resizeHandleDrawThickness
+    val cornerRadius = windowSpec.constraints.resizeHandleDrawCornerRadius
 
     val showWindowResizeHandleBoundaries by prefs.devtools.showWindowResizeHandleBoundaries.observeAsState()
 
@@ -142,7 +149,9 @@ private fun ImeWindowResizeHandle(
     }
 
     val style = rememberSnyggThemeQuery(FlorisImeUi.WindowResizeHandle.elementName, attributes)
-    val handleColor by rememberUpdatedState(style.background(Color.Black))
+    val handleColor by rememberUpdatedState(style.background(default = Color.Black))
+    val shadowColor by rememberUpdatedState(style.shadowColor(default = Color.Black))
+    val shadowElevation by rememberUpdatedState(style.shadowElevation(default = 8.dp))
 
     Box(
         modifier = modifier
@@ -155,14 +164,20 @@ private fun ImeWindowResizeHandle(
             .systemGestureExclusion()
             .padding(windowSpec.constraints.resizeHandleDrawPadding),
     ) {
-        val handleShape = handle.shape(
-            thickness = windowSpec.constraints.resizeHandleDrawThickness,
-            cornerRadius = windowSpec.constraints.resizeHandleDrawCornerRadius,
-        )
+        val handleShape = remember(handle, thickness, cornerRadius) {
+            handle.shape(thickness, cornerRadius)
+        }
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .clip(handleShape)
+                .graphicsLayer {
+                    this.shape = handleShape
+                    this.clip = true
+                    this.shadowElevation = shadowElevation.toPx()
+                    this.ambientShadowColor = shadowColor
+                    this.spotShadowColor = shadowColor
+                    this.alpha = currentAlpha
+                }
                 .background(handleColor),
         )
     }
@@ -181,11 +196,10 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             editorState.isEnabled && windowSpec is ImeWindowSpec.Fixed
         }
     }
-    val animatedAlpha by animateFloatAsState(
+    val animatedAlpha = animateFloatAsState(
         targetValue = if (visible) 1f else 0f,
         animationSpec = tween(350),
     )
-    val alphaModifier = Modifier.graphicsLayer { alpha = animatedAlpha }
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
@@ -253,50 +267,50 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.LEFT,
             modifier = Modifier
-                .align(Alignment.CenterStart)
-                .then(alphaModifier),
+                .align(Alignment.CenterStart),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.TOP_LEFT,
             modifier = Modifier
-                .align(Alignment.TopStart)
-                .then(alphaModifier),
+                .align(Alignment.TopStart),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.TOP,
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .then(alphaModifier),
+                .align(Alignment.TopCenter),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.TOP_RIGHT,
             modifier = Modifier
-                .align(Alignment.TopEnd)
-                .then(alphaModifier),
+                .align(Alignment.TopEnd),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.RIGHT,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .then(alphaModifier),
+                .align(Alignment.CenterEnd),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM_RIGHT,
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .then(alphaModifier),
+                .align(Alignment.BottomEnd),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM,
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .then(alphaModifier),
+                .align(Alignment.BottomCenter),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM_LEFT,
             modifier = Modifier
-                .align(Alignment.BottomStart)
-                .then(alphaModifier),
+                .align(Alignment.BottomStart),
+            alphaState = animatedAlpha,
         )
     }
 
@@ -326,11 +340,10 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
             editorState.isEnabled && !editorState.isMoveGesture && windowSpec is ImeWindowSpec.Floating
         }
     }
-    val animatedAlpha by animateFloatAsState(
+    val animatedAlpha = animateFloatAsState(
         targetValue = if (visible) 1f else 0f,
         animationSpec = tween(350),
     )
-    val alphaModifier = Modifier.graphicsLayer { alpha = animatedAlpha }
 
     val offset = windowSpec.constraints.resizeHandleTouchOffsetFloating
     if (visible) {
@@ -338,29 +351,29 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
             handle = ImeWindowResizeHandle.TOP_LEFT,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .offset(-offset, -offset)
-                .then(alphaModifier),
+                .offset(-offset, -offset),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.TOP_RIGHT,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .offset(offset, -offset)
-                .then(alphaModifier),
+                .offset(offset, -offset),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM_RIGHT,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .offset(offset, offset)
-                .then(alphaModifier),
+                .offset(offset, offset),
+            alphaState = animatedAlpha,
         )
         ImeWindowResizeHandle(
             handle = ImeWindowResizeHandle.BOTTOM_LEFT,
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .offset(-offset, offset)
-                .then(alphaModifier),
+                .offset(-offset, offset),
+            alphaState = animatedAlpha,
         )
     }
 }
