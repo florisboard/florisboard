@@ -25,6 +25,7 @@ import androidx.compose.foundation.AndroidExternalSurface
 import androidx.compose.foundation.AndroidExternalSurfaceZOrder
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +33,7 @@ import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.withFrameMillis
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
@@ -62,10 +63,18 @@ import coil3.request.ImageRequest
 import coil3.request.SuccessResult
 import coil3.request.allowHardware
 import coil3.toBitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import android.graphics.Path as PlatformPath
 import android.view.Surface as PlatformSurface
+
+private const val TAG = "SnyggSurfaceView"
+private const val DEBUG = false
 
 /**
  * Specialized layout composable rendering a background color/image to a [SurfaceView].
@@ -98,6 +107,7 @@ fun SnyggSurfaceView(
         val density = LocalDensity.current
 
         val backgroundColor by rememberUpdatedState(style.background(Color.Black))
+        val contentScale by rememberUpdatedState(style.contentScale())
         val shape by rememberUpdatedState(style.shape())
         val shadowColor by rememberUpdatedState(style.shadowColor(default = Color.Black))
         val shadowElevation by rememberUpdatedState(style.shadowElevation(default = 8.dp))
@@ -109,7 +119,6 @@ fun SnyggSurfaceView(
             }
         }
         var loadedImage by remember { mutableStateOf<Image?>(null, referentialEqualityPolicy()) }
-        val contentScale = style.contentScale()
 
         LaunchedEffect(imagePath) {
             if (imagePath == null) {
@@ -131,6 +140,11 @@ fun SnyggSurfaceView(
             }
         }
 
+        DisposableEffect(loadedImage) {
+            loadedImage.startIfIsAnimatable()
+            onDispose { loadedImage.stopIfIsAnimatable() }
+        }
+
         Box(modifier) {
             AndroidExternalSurface(
                 modifier = Modifier
@@ -146,30 +160,28 @@ fun SnyggSurfaceView(
                 zOrder = AndroidExternalSurfaceZOrder.Behind,
             ) {
                 onSurface { surface, initWidth, initHeight ->
-                    var lastImage: Image? = null
+                    if (DEBUG) Log.d(TAG, "onCreated: w=$initWidth h=$initHeight")
                     var size = Size(initWidth.toFloat(), initHeight.toFloat())
                     surface.onChanged { newWidth, newHeight ->
                         size = Size(newWidth.toFloat(), newHeight.toFloat())
+                        if (DEBUG) Log.d(TAG, "onChanged: w=$newWidth h=$newHeight")
                     }
                     surface.onDestroyed {
-                        lastImage.stopIfIsAnimatable()
+                        if (DEBUG) Log.d(TAG, "onDestroyed")
                     }
-                    while (true) {
-                        withFrameMillis {
-                            if (lastImage !== loadedImage) {
-                                lastImage.stopIfIsAnimatable()
-                                loadedImage.startIfIsAnimatable()
-                                lastImage = loadedImage
-                            }
-                            surface.drawLocked { canvas ->
-                                canvas.drawColor(Color.Transparent.toArgb(), PorterDuff.Mode.CLEAR)
-                                val clipPath = shape.toAndroidPath(size, density)
-                                canvas.clipPath(clipPath)
-                                canvas.doDraw(
-                                    backgroundColor = backgroundColor,
-                                    image = loadedImage,
-                                    contentScale = contentScale,
-                                )
+                    withContext(Dispatchers.Default) {
+                        while (true) {
+                            withFrameNanos {
+                                surface.drawLocked { canvas ->
+                                    canvas.doDraw(
+                                        backgroundColor = backgroundColor,
+                                        image = loadedImage,
+                                        contentScale = contentScale,
+                                        shape = shape,
+                                        size = size,
+                                        density = density,
+                                    )
+                                }
                             }
                         }
                     }
@@ -197,12 +209,29 @@ private fun Image?.stopIfIsAnimatable() {
     }
 }
 
+@OptIn(ExperimentalContracts::class)
 private inline fun PlatformSurface.drawLocked(block: (canvas: Canvas) -> Unit) {
-    val canvas = lockCanvas(null)
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+    val canvas: Canvas?
+    try {
+        canvas = lockCanvas(null)
+    } catch (e: Throwable) {
+        if (DEBUG) Log.d(TAG, "failed to lock canvas: ${e.message}")
+        return
+    }
+    if (canvas == null) {
+        return
+    }
     try {
         block(canvas)
     } finally {
-        unlockCanvasAndPost(canvas)
+        try {
+            unlockCanvasAndPost(canvas)
+        } catch (e: Throwable) {
+            if (DEBUG) Log.d(TAG, "failed to unlock canvas: ${e.message}")
+        }
     }
 }
 
@@ -210,34 +239,36 @@ private fun Canvas.doDraw(
     backgroundColor: Color,
     image: Image?,
     contentScale: ContentScale,
+    shape: Shape,
+    size: Size,
+    density: Density,
 ) {
+    if (DEBUG) Log.d(TAG, "doDraw: size=$size, backgroundColor=$backgroundColor image=$image shape=$shape")
+    drawColor(android.graphics.Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+    val clipPath = shape.toAndroidPath(size, density) // TODO cache between draws
+    clipPath(clipPath)
     drawColor(backgroundColor.toArgb())
     when (image) {
-        is BitmapImage -> image.bitmap.drawToSurface(this, contentScale)
-        is DrawableImage -> image.drawToSurface(this, contentScale)
+        is BitmapImage -> image.bitmap.drawToSurface(this, contentScale, size)
+        is DrawableImage -> image.drawToSurface(this, contentScale, size)
     }
 }
 
-private fun Bitmap.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
+private fun Bitmap.drawToSurface(canvas: Canvas, contentScale: ContentScale, size: Size) {
     val bitmap = this
     val srcSize = Size(bitmap.width.toFloat(), bitmap.height.toFloat())
-    val canvasSize = Size(canvas.width.toFloat(), canvas.height.toFloat())
-    val scaleFactor = contentScale.computeScaleFactor(srcSize, canvasSize)
-    Log.d(
-        "SnyggSurfaceView",
-        "drawToSurface: srcSize=$srcSize, dstSize=$canvasSize, scaleFactor=$scaleFactor"
-    )
+    val scaleFactor = contentScale.computeScaleFactor(srcSize, size)
     val dstSize = srcSize.times(scaleFactor)
     val srcRect = srcSize.toRect().toAndroidRectF().toRect()
     val dstRect = dstSize.toRect().let {
         // Align center behavior
-        it.translate(canvasSize.center - it.center)
+        it.translate(size.center - it.center)
     }.toAndroidRectF().toRect()
     canvas.drawBitmap(bitmap, srcRect, dstRect, null)
 }
 
-private fun DrawableImage.drawToSurface(canvas: Canvas, contentScale: ContentScale) {
-    this.toBitmap().drawToSurface(canvas, contentScale)
+private fun DrawableImage.drawToSurface(canvas: Canvas, contentScale: ContentScale, size: Size) {
+    this.toBitmap().drawToSurface(canvas, contentScale, size)
 }
 
 private fun Shape.toAndroidPath(size: Size, density: Density): PlatformPath {
