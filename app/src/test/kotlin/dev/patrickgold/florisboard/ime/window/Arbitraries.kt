@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,26 +17,62 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
+import androidx.compose.ui.unit.width
+import dev.patrickgold.florisboard.floatMaybeConstant
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.float
 import io.kotest.property.arbitrary.int
 
-val densitiesArb = arbitrary {
+fun Arb.Companion.density() = arbitrary {
     val density = Arb.float(0.75f, 4.0f).bind()
     val fontScale = Arb.float(0.85f, 2.0f).bind()
     Density(density, fontScale)
 }
 
-val rootBoundsPxArb = arbitrary {
+fun Arb.Companion.rootBoundsPx() = arbitrary {
     val widthPx = Arb.int(0, 4000).bind()
     val heightPx = Arb.int(0, 4000).bind()
     IntRect(0, 0, widthPx, heightPx)
 }
 
-val rootInsetsArb = arbitrary {
-    val density = densitiesArb.bind()
-    val boundsPx = rootBoundsPxArb.bind()
+fun Arb.Companion.rootInsets() = arbitrary {
+    val density = Arb.density().bind()
+    val boundsPx = Arb.rootBoundsPx().bind()
     with(density) { ImeInsets.Root.of(boundsPx) }
+}
+
+fun Arb.Companion.rootInsetsWithAnyOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val x = Arb.floatMaybeConstant(-rootInsets.boundsDp.width.value, rootInsets.boundsDp.width.value).bind()
+    val y = Arb.floatMaybeConstant(-rootInsets.boundsDp.height.value, rootInsets.boundsDp.height.value).bind()
+    rootInsets to DpOffset(x.dp, y.dp)
+}
+
+fun Arb.Companion.rootInsetsWithUpwardOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val y = Arb.floatMaybeConstant(-rootInsets.boundsDp.height.value, 0f).bind()
+    rootInsets to DpOffset(0.dp, y.dp)
+}
+
+fun Arb.Companion.rootInsetsWithDownwardOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val y = Arb.floatMaybeConstant(0f, rootInsets.boundsDp.height.value).bind()
+    rootInsets to DpOffset(0.dp, y.dp)
+}
+
+fun Arb.Companion.rootInsetsWithLeftwardOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val x = Arb.floatMaybeConstant(-rootInsets.boundsDp.width.value, 0f).bind()
+    rootInsets to DpOffset(x.dp, 0.dp)
+}
+
+fun Arb.Companion.rootInsetsWithRightwardOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val x = Arb.floatMaybeConstant(0f, rootInsets.boundsDp.width.value).bind()
+    rootInsets to DpOffset(x.dp, 0.dp)
 }

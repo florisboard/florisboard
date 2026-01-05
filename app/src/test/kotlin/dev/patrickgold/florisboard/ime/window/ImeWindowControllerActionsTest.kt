@@ -94,7 +94,7 @@ class ImeWindowControllerActionsTest : FunSpec({
     }
 
     test("compactLayoutToLeft()") {
-        checkAll(rootInsetsArb) { rootInsets ->
+        checkAll(Arb.rootInsets()) { rootInsets ->
             val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
             val windowController = ImeWindowController(prefs, backgroundScope)
 
@@ -113,7 +113,7 @@ class ImeWindowControllerActionsTest : FunSpec({
     }
 
     test("compactLayoutToRight()") {
-        checkAll(rootInsetsArb) { rootInsets ->
+        checkAll(Arb.rootInsets()) { rootInsets ->
             val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
             val windowController = ImeWindowController(prefs, backgroundScope)
 
@@ -132,7 +132,7 @@ class ImeWindowControllerActionsTest : FunSpec({
     }
 
     test("compactLayoutFlipSide()") {
-        checkAll(rootInsetsArb) { rootInsets ->
+        checkAll(Arb.rootInsets()) { rootInsets ->
             val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
             val windowController = ImeWindowController(prefs, backgroundScope)
 
@@ -167,7 +167,7 @@ class ImeWindowControllerActionsTest : FunSpec({
     }
 
     test("resetFixedSize()") {
-        checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
+        checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
             val config = ImeWindowConfig(
                 mode = ImeWindowMode.FIXED,
                 fixedMode = fixedMode,
@@ -197,7 +197,7 @@ class ImeWindowControllerActionsTest : FunSpec({
     }
 
     test("resetFloatingSize()") {
-        checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
+        checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
             val config = ImeWindowConfig(
                 mode = ImeWindowMode.FLOATING,
                 floatingMode = floatingMode,

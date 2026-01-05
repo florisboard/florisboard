@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.shouldBeGreaterThanOrEqualTo
 import dev.patrickgold.florisboard.shouldBeLessThanOrEqualTo
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.enum
 import io.kotest.property.checkAll
@@ -32,7 +33,7 @@ class ImeWindowConstraintsTest : FunSpec({
 
     context("for all root insets and fixed modes") {
         test("default props are fully visible") {
-            checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, fixedMode)
                 val props = constraints.defaultProps()
                 val rootBounds = rootInsets.boundsDp
@@ -46,25 +47,27 @@ class ImeWindowConstraintsTest : FunSpec({
         }
 
         test("0.dp <= min <= def <= max keyboard width") {
-            checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, fixedMode)
 
                 assertSoftly {
-                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardWidth, tolerance)
-                    constraints.minKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.defKeyboardWidth, tolerance)
-                    constraints.defKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.maxKeyboardWidth, tolerance)
+                    // no tolerance here, potential rounding errors must be mitigated by constraints itself
+                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardWidth)
+                    constraints.minKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.defKeyboardWidth)
+                    constraints.defKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.maxKeyboardWidth)
                 }
             }
         }
 
         test("0.dp <= min <= def <= max keyboard height") {
-            checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, fixedMode)
 
                 assertSoftly {
-                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardHeight, tolerance)
-                    constraints.minKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.defKeyboardHeight, tolerance)
-                    constraints.defKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.maxKeyboardHeight, tolerance)
+                    // no tolerance here, potential rounding errors must be mitigated by constraints itself
+                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardHeight)
+                    constraints.minKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.defKeyboardHeight)
+                    constraints.defKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.maxKeyboardHeight)
                 }
             }
         }
@@ -72,7 +75,7 @@ class ImeWindowConstraintsTest : FunSpec({
 
     context("for all root insets and floating modes") {
         test("default props are fully visible") {
-            checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, floatingMode)
                 val props = constraints.defaultProps()
                 val rootBounds = rootInsets.boundsDp
@@ -87,25 +90,27 @@ class ImeWindowConstraintsTest : FunSpec({
         }
 
         test("0.dp <= min <= def <= max keyboard width") {
-            checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, floatingMode)
 
                 assertSoftly {
-                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardWidth, tolerance)
-                    constraints.minKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.defKeyboardWidth, tolerance)
-                    constraints.defKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.maxKeyboardWidth, tolerance)
+                    // no tolerance here, potential rounding errors must be mitigated by constraints itself
+                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardWidth)
+                    constraints.minKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.defKeyboardWidth)
+                    constraints.defKeyboardWidth.shouldBeLessThanOrEqualTo(constraints.maxKeyboardWidth)
                 }
             }
         }
 
         test("0.dp <= min <= def <= max keyboard height") {
-            checkAll(rootInsetsArb, Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, floatingMode)
 
                 assertSoftly {
-                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardHeight, tolerance)
-                    constraints.minKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.defKeyboardHeight, tolerance)
-                    constraints.defKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.maxKeyboardHeight, tolerance)
+                    // no tolerance here, potential rounding errors must be mitigated by constraints itself
+                    0.dp.shouldBeLessThanOrEqualTo(constraints.minKeyboardHeight)
+                    constraints.minKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.defKeyboardHeight)
+                    constraints.defKeyboardHeight.shouldBeLessThanOrEqualTo(constraints.maxKeyboardHeight)
                 }
             }
         }

@@ -130,7 +130,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                     paddingLeft = 0.dp,
                     paddingRight = 0.dp,
                     paddingBottom = 0.dp,
-                )
+                ).constrained(this)
             }
         }
 
@@ -162,7 +162,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                     paddingLeft = defPaddingHorizontal,
                     paddingRight = 0.dp,
                     paddingBottom = defKeyboardHeight * 0.2f,
-                )
+                ).constrained(this)
             }
         }
 
@@ -173,7 +173,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                     paddingLeft = 0.dp,
                     paddingRight = 0.dp,
                     paddingBottom = 0.dp,
-                )
+                ).constrained(this)
             }
         }
     }
@@ -248,9 +248,9 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 return ImeWindowProps.Floating(
                     keyboardHeight = defKeyboardHeight,
                     keyboardWidth = defKeyboardWidth,
-                    offsetLeft = 60.dp.coerceAtMost(rootBounds.width - defKeyboardWidth),
-                    offsetBottom = 60.dp.coerceAtMost(rootBounds.height - defKeyboardHeight),
-                )
+                    offsetLeft = 60.dp,
+                    offsetBottom = 60.dp,
+                ).constrained(this)
             }
         }
     }
