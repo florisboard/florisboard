@@ -209,6 +209,9 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
         )
     }
 
+    val overlayStyle = rememberSnyggThemeQuery(FlorisImeUi.WindowResizeOverlayFixed.elementName)
+    val overlayColor by rememberUpdatedState(overlayStyle.background(Color.Gray.copy(alpha = 0.5f)))
+
     if (visible) {
         Box(
             modifier = Modifier
@@ -221,7 +224,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
                         }
                     }
                 }
-                .background(Color.Gray.copy(alpha = 0.5f))
+                .background(overlayColor)
         )
 
         Row(

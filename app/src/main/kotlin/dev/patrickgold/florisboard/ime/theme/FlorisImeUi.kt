@@ -35,13 +35,17 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "window-move-handle",
         resId = R.string.snygg__rule_element__window_move_handle,
     ),
+    WindowResizeAction(
+        elementName = "window-resize-action",
+        resId = R.string.snygg__rule_element__window_resize_action,
+    ),
     WindowResizeHandle(
         elementName = "window-resize-handle",
         resId = R.string.snygg__rule_element__window_resize_handle,
     ),
-    WindowResizeAction(
-        elementName = "window-resize-action",
-        resId = R.string.snygg__rule_element__window_resize_action,
+    WindowResizeOverlayFixed(
+        elementName = "winow-resize-overlay-fixed",
+        resId = R.string.snygg__rule_element__window_resize_overlay_fixed
     ),
     FloatingDockToFixedIndicator(
         elementName = "floating-dock-to-fixed-indicator",
