@@ -31,7 +31,7 @@ sealed interface ImeWindowSpec {
 
     fun movedBy(offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
 
-    fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
+    fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset, rowCount: Int): Pair<ImeWindowSpec, DpOffset>
 
     data class Fixed(
         val fixedMode: ImeWindowMode.Fixed,
@@ -89,19 +89,23 @@ sealed interface ImeWindowSpec {
         override fun resizedBy(
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
+            rowCount: Int,
         ): Pair<ImeWindowSpec, DpOffset> {
-            var keyboardHeight = props.keyboardHeight
+            val toActualHeight = (constraints.smartbarHeightFactor + rowCount) / constraints.keyboardHeightFactor
+            val toBaselineHeight = 1f / toActualHeight
+
+            var keyboardHeight = props.keyboardHeight * toActualHeight
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
             var paddingBottom = props.paddingBottom
 
             if (handle.top) {
                 keyboardHeight = (keyboardHeight - offset.y)
-                    .coerceAtLeast(constraints.minKeyboardHeight)
-                    .coerceAtMost(constraints.maxKeyboardHeight - paddingBottom)
+                    .coerceAtLeast(constraints.minKeyboardHeight * toActualHeight)
+                    .coerceAtMost((constraints.maxKeyboardHeight - paddingBottom) * toActualHeight)
             } else if (handle.bottom) {
                 val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtMost(paddingBottom))
-                    .coerceIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
+                    .coerceIn((constraints.minKeyboardHeight * toActualHeight)..(constraints.maxKeyboardHeight * toActualHeight))
                 paddingBottom -= (newKeyboardHeight - keyboardHeight)
                 keyboardHeight = newKeyboardHeight
             }
@@ -121,7 +125,7 @@ sealed interface ImeWindowSpec {
             }
 
             val newProps = ImeWindowProps.Fixed(
-                keyboardHeight = keyboardHeight,
+                keyboardHeight = keyboardHeight * toBaselineHeight,
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
@@ -168,18 +172,22 @@ sealed interface ImeWindowSpec {
         override fun resizedBy(
             handle: ImeWindowResizeHandle,
             offset: DpOffset,
+            rowCount: Int,
         ): Pair<ImeWindowSpec, DpOffset> {
-            var keyboardHeight = props.keyboardHeight
+            val toActualHeight = (constraints.smartbarHeightFactor + rowCount) / constraints.keyboardHeightFactor
+            val toBaselineHeight = 1f / toActualHeight
+
+            var keyboardHeight = props.keyboardHeight * toActualHeight
             var keyboardWidth = props.keyboardWidth
             var offsetLeft = props.offsetLeft
             var offsetBottom = props.offsetBottom
 
             if (handle.top) {
                 keyboardHeight = (keyboardHeight - offset.y)
-                    .coerceIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
+                    .coerceIn((constraints.minKeyboardHeight * toActualHeight)..(constraints.maxKeyboardHeight * toActualHeight))
             } else if (handle.bottom) {
                 val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtLeast(-offsetBottom))
-                    .coerceIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
+                    .coerceIn((constraints.minKeyboardHeight * toActualHeight)..(constraints.maxKeyboardHeight * toActualHeight))
                 offsetBottom -= (newKeyboardHeight - keyboardHeight)
                 keyboardHeight = newKeyboardHeight
             }
@@ -197,7 +205,7 @@ sealed interface ImeWindowSpec {
             }
 
             val newProps = ImeWindowProps.Floating(
-                keyboardHeight = keyboardHeight,
+                keyboardHeight = keyboardHeight * toBaselineHeight,
                 keyboardWidth = keyboardWidth,
                 offsetLeft = offsetLeft,
                 offsetBottom = offsetBottom,

@@ -384,10 +384,10 @@ class ImeWindowController(
             syncFromPrefs()
         }
 
-        fun resizeBy(handle: ImeWindowResizeHandle, offset: DpOffset): DpOffset {
+        fun resizeBy(handle: ImeWindowResizeHandle, offset: DpOffset, rowCount: Int): DpOffset {
             var consumed = DpOffset.Zero
             activeWindowSpec.update { spec ->
-                val (newSpec, newConsumed) = spec.resizedBy(handle, offset)
+                val (newSpec, newConsumed) = spec.resizedBy(handle, offset, rowCount)
                 consumed = newConsumed
                 newSpec
             }

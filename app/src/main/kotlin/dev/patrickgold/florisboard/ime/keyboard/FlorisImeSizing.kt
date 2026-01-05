@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.State
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -65,6 +66,14 @@ object FlorisImeSizing {
             else -> evaluator.keyboard as TextKeyboard
         }.rowCount.coerceAtLeast(4)
         return (keyboardRowBaseHeight * rowCount)
+    }
+
+    @Composable
+    fun rowCountAsState(): State<Int> {
+        val context = LocalContext.current
+        val keyboardManager by context.keyboardManager()
+        val lastCharactersEvaluator by keyboardManager.lastCharactersEvaluator.collectAsState()
+        return remember { derivedStateOf { (lastCharactersEvaluator.keyboard as TextKeyboard).rowCount } }
     }
 
     @Composable

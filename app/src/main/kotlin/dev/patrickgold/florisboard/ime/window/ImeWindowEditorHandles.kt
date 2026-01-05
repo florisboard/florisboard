@@ -39,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
@@ -56,6 +57,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import kotlinx.coroutines.delay
@@ -417,7 +419,8 @@ fun Modifier.imeWindowResizeHandle(
     windowController: ImeWindowController,
     handle: ImeWindowResizeHandle,
     onTap: () -> Unit = {},
-): Modifier = this.then(
+): Modifier = this.composed {
+    val rowCount by FlorisImeSizing.rowCountAsState()
     Modifier
         .pointerInput(Unit) {
             detectTapGestures {
@@ -434,7 +437,7 @@ fun Modifier.imeWindowResizeHandle(
                 onDrag = { change, dragAmount ->
                     change.consume()
                     unconsumed += dragAmount.toDp()
-                    val consumed = windowController.editor.resizeBy(handle, unconsumed)
+                    val consumed = windowController.editor.resizeBy(handle, unconsumed, rowCount)
                     unconsumed -= consumed
                 },
                 onDragEnd = {
@@ -447,4 +450,4 @@ fun Modifier.imeWindowResizeHandle(
                 },
             )
         }
-)
+}
