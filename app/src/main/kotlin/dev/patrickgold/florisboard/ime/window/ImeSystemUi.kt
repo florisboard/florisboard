@@ -60,6 +60,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.drawableRes
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggButton
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggText
@@ -109,6 +110,7 @@ fun ImeSystemUi() {
 @Composable
 fun ImeSystemUiFloating() {
     val windowController = LocalWindowController.current
+    val windowConfig by windowController.activeWindowConfig.collectAsState()
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val editor by windowController.editor.state.collectAsState()
 
@@ -134,6 +136,12 @@ fun ImeSystemUiFloating() {
                 }
             }
         }
+    }
+
+    val attributes = remember(windowConfig.mode) {
+        mapOf(
+            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString()
+        )
     }
 
     if (visible) {
@@ -193,14 +201,15 @@ fun ImeSystemUiFloating() {
                 ) {
                     if (isNonDefaultSize) {
                         SnyggButton(
-                            elementName = FlorisImeUi.FloatingSystemUiReset.elementName,
+                            elementName = FlorisImeUi.WindowResizeAction.elementName,
+                            attributes = attributes,
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
                             onClick = {
                                 windowController.actions.resetFloatingSize()
                             }
                         ) {
                             SnyggIcon(imageVector = drawableRes(R.drawable.ic_restart_alt))
-                            SnyggText(text = "Reset")
+                            SnyggText(text = stringRes(R.string.action__reset))
                         }
                     }
                 }

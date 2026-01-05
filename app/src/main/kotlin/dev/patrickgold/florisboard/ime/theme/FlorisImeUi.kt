@@ -39,23 +39,13 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "window-resize-handle",
         resId = R.string.snygg__rule_element__window_resize_handle,
     ),
-    WindowResizeActionFixed(
-        elementName = "window-resize-action-fixed",
-        resId = R.string.snygg__rule_element__window_resize_action_fixed,
+    WindowResizeAction(
+        elementName = "window-resize-action",
+        resId = R.string.snygg__rule_element__window_resize_action,
     ),
     FloatingDockToFixedIndicator(
         elementName = "floating-dock-to-fixed-indicator",
-        resId = null,
-    ),
-
-    FloatingSystemUiIcon(
-        elementName = "floating-system-ui-icon",
-        resId = null
-    ),
-
-    FloatingSystemUiReset(
-        elementName = "floating-system-ui-reset",
-        resId = null
+        resId = R.string.snygg__rule_element__floating_dock_to_fixed_indicator,
     ),
 
     Key(

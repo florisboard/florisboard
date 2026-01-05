@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -252,7 +253,7 @@ private fun BoxScope.FloatingDockToFixedIndicator() {
         if (visible) 1f else 0f
     }
     val indicatorTheme = rememberSnyggThemeQuery(FlorisImeUi.FloatingDockToFixedIndicator.elementName)
-    val color = indicatorTheme.background()
+    val color = indicatorTheme.background(default = Color.Gray)
 
     LaunchedEffect(visible) {
         if (visible) {

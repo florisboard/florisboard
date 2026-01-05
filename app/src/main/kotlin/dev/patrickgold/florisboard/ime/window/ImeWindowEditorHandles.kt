@@ -230,12 +230,12 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SnyggIconButton(
-                elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                elementName = FlorisImeUi.WindowResizeAction.elementName,
                 attributes = attributes,
                 onClick = { windowController.actions.resetFixedSize() },
             ) {
                 SnyggIcon(
-                    elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                    elementName = FlorisImeUi.WindowResizeAction.elementName,
                     imageVector = drawableRes(R.drawable.ic_restart_alt),
                 )
             }
@@ -253,12 +253,12 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             }
 
             SnyggIconButton(
-                elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                elementName = FlorisImeUi.WindowResizeAction.elementName,
                 attributes = attributes,
                 onClick = { windowController.editor.disable() },
             ) {
                 SnyggIcon(
-                    elementName = FlorisImeUi.WindowResizeActionFixed.elementName,
+                    elementName = FlorisImeUi.WindowResizeAction.elementName,
                     imageVector = drawableRes(R.drawable.ic_check),
                 )
             }
