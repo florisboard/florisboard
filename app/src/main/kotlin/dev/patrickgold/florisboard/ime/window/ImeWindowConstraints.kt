@@ -63,20 +63,22 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
     protected fun <T> calculation(initializer: () -> T) = lazy(LazyThreadSafetyMode.PUBLICATION, initializer)
 
     sealed class Fixed(rootInsets: ImeInsets.Root) : ImeWindowConstraints(rootInsets) {
-        open val minPaddingHorizontal = 0.dp
-        open val defPaddingHorizontal = 0.dp
+        protected open val desiredMinPaddingHorizontal = 0.dp
+        protected open val desiredDefPaddingHorizontal = 0.dp
+        open val minPaddingHorizontal by calculation { rootBounds.width - maxKeyboardWidth }
+        open val defPaddingHorizontal by calculation { rootBounds.width - defKeyboardWidth }
 
         override val minKeyboardWidth by calculation {
             when (formFactor.typeGuess) {
-                ImeFormFactor.Type.TABLET_PORTRAIT -> min(rootBounds.width - minPaddingHorizontal, 400.dp)
-                else -> min(rootBounds.width - minPaddingHorizontal, 250.dp)
+                ImeFormFactor.Type.TABLET_PORTRAIT -> min(rootBounds.width - desiredMinPaddingHorizontal, 400.dp)
+                else -> min(rootBounds.width - desiredMinPaddingHorizontal, 250.dp)
             }.coerceAtLeast(0.dp).coerceAtMost(rootBounds.width)
         }
         override val maxKeyboardWidth by calculation {
-            (rootBounds.width - minPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
+            (rootBounds.width - desiredMinPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
         }
         override val defKeyboardWidth by calculation {
-            (rootBounds.width - defPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
+            (rootBounds.width - desiredDefPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
         }
 
         override val minKeyboardHeight by calculation {
@@ -135,7 +137,11 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
         }
 
         class Compact(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
-            override val minPaddingHorizontal by calculation {
+            override val defKeyboardHeight by calculation {
+                (super.defKeyboardHeight * 0.8f).coerceAtLeast(minKeyboardHeight)
+            }
+
+            override val desiredMinPaddingHorizontal by calculation {
                 when (formFactor.typeGuess) {
                     ImeFormFactor.Type.DESKTOP,
                     ImeFormFactor.Type.LARGE_TABLET,
@@ -145,7 +151,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                     ImeFormFactor.Type.PHONE_PORTRAIT -> 50.dp
                 }
             }
-            override val defPaddingHorizontal by calculation {
+            override val desiredDefPaddingHorizontal by calculation {
                 when (formFactor.typeGuess) {
                     ImeFormFactor.Type.DESKTOP,
                     ImeFormFactor.Type.LARGE_TABLET,
@@ -158,10 +164,10 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
 
             override fun defaultProps(): ImeWindowProps.Fixed {
                 return ImeWindowProps.Fixed(
-                    keyboardHeight = defKeyboardHeight * 0.8f,
+                    keyboardHeight = defKeyboardHeight,
                     paddingLeft = defPaddingHorizontal,
                     paddingRight = 0.dp,
-                    paddingBottom = defKeyboardHeight * 0.2f,
+                    paddingBottom = super.defKeyboardHeight - defKeyboardHeight,
                 ).constrained(this)
             }
         }

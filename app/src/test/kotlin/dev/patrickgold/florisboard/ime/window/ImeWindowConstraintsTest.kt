@@ -17,10 +17,6 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.height
-import androidx.compose.ui.unit.width
-import dev.patrickgold.florisboard.shouldBeGreaterThanOrEqualTo
-import dev.patrickgold.florisboard.shouldBeLessThanOrEqualTo
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
@@ -36,12 +32,9 @@ class ImeWindowConstraintsTest : FunSpec({
             checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, fixedMode)
                 val props = constraints.defaultProps()
-                val rootBounds = rootInsets.boundsDp
 
                 assertSoftly {
-                    // TODO width enforcement test
-                    props.paddingBottom.shouldBeGreaterThanOrEqualTo(0.dp, tolerance)
-                    (props.paddingBottom + props.keyboardHeight).shouldBeLessThanOrEqualTo(rootBounds.height, tolerance)
+                    props.shouldBeConstrainedTo(constraints, tolerance)
                 }
             }
         }
@@ -78,13 +71,9 @@ class ImeWindowConstraintsTest : FunSpec({
             checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, floatingMode)
                 val props = constraints.defaultProps()
-                val rootBounds = rootInsets.boundsDp
 
                 assertSoftly {
-                    props.offsetLeft.shouldBeGreaterThanOrEqualTo(0.dp, tolerance)
-                    (props.offsetLeft + props.keyboardWidth).shouldBeLessThanOrEqualTo(rootBounds.width, tolerance)
-                    props.offsetBottom.shouldBeGreaterThanOrEqualTo(0.dp, tolerance)
-                    (props.offsetBottom + props.keyboardHeight).shouldBeLessThanOrEqualTo(rootBounds.height, tolerance)
+                    props.shouldBeConstrainedTo(constraints, tolerance)
                 }
             }
         }
