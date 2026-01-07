@@ -31,10 +31,10 @@ class ImeWindowConstraintsTest : FunSpec({
         test("default props are fully visible") {
             checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, fixedMode)
-                val props = constraints.defaultProps()
+                val defaultProps = constraints.defaultProps
 
                 assertSoftly {
-                    props.shouldBeConstrainedTo(constraints, tolerance)
+                    defaultProps.shouldBeConstrainedTo(constraints, tolerance)
                 }
             }
         }
@@ -64,16 +64,29 @@ class ImeWindowConstraintsTest : FunSpec({
                 }
             }
         }
+
+        test("0.dp <= min <= def <= max padding horizontal") {
+            checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Fixed>()) { rootInsets, fixedMode ->
+                val constraints = ImeWindowConstraints.of(rootInsets, fixedMode)
+
+                assertSoftly {
+                    // no tolerance here, potential rounding errors must be mitigated by constraints itself
+                    0.dp.shouldBeLessThanOrEqualTo(constraints.minPaddingHorizontal)
+                    constraints.minPaddingHorizontal.shouldBeLessThanOrEqualTo(constraints.defPaddingHorizontal)
+                    constraints.defPaddingHorizontal.shouldBeLessThanOrEqualTo(constraints.maxPaddingHorizontal)
+                }
+            }
+        }
     }
 
     context("for all root insets and floating modes") {
         test("default props are fully visible") {
             checkAll(Arb.rootInsets(), Arb.enum<ImeWindowMode.Floating>()) { rootInsets, floatingMode ->
                 val constraints = ImeWindowConstraints.of(rootInsets, floatingMode)
-                val props = constraints.defaultProps()
+                val defaultProps = constraints.defaultProps
 
                 assertSoftly {
-                    props.shouldBeConstrainedTo(constraints, tolerance)
+                    defaultProps.shouldBeConstrainedTo(constraints, tolerance)
                 }
             }
         }

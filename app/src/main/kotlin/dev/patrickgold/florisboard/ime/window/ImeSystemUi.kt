@@ -129,7 +129,7 @@ fun ImeSystemUiFloating() {
             when (val spec = windowSpec) {
                 is ImeWindowSpec.Fixed -> false // wtf
                 is ImeWindowSpec.Floating -> {
-                    val defaultProps = spec.constraints.defaultProps()
+                    val defaultProps = spec.constraints.defaultProps
                     val props = spec.props
                     defaultProps.keyboardHeight != props.keyboardHeight ||
                         defaultProps.keyboardWidth != props.keyboardWidth

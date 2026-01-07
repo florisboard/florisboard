@@ -31,7 +31,7 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.enum
-import io.kotest.property.arbitrary.filter
+import io.kotest.property.assume
 import io.kotest.property.checkAll
 
 class ImeWindowControllerActionsTest : FunSpec({
@@ -133,11 +133,9 @@ class ImeWindowControllerActionsTest : FunSpec({
     }
 
     test("compactLayoutFlipSide()") {
-        checkAll(
-            Arb.rootInsets().filter { rootInsets ->
-                ImeWindowConstraints.of(rootInsets, ImeWindowMode.Fixed.COMPACT).minPaddingHorizontal > 0.dp
-            },
-        ) { rootInsets ->
+        checkAll(Arb.rootInsets()) { rootInsets ->
+            assume(ImeWindowConstraints.of(rootInsets, ImeWindowMode.Fixed.COMPACT).minPaddingHorizontal > 0.dp)
+
             val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
             val windowController = ImeWindowController(prefs, backgroundScope)
 

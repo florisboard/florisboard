@@ -19,9 +19,11 @@
 package dev.patrickgold.florisboard.ime.window
 
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
+import androidx.compose.ui.unit.takeOrElse
 import androidx.compose.ui.unit.width
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
@@ -29,8 +31,6 @@ import org.florisboard.lib.compose.DpSizeSerializer
 
 sealed interface ImeWindowProps {
     val keyboardHeight: Dp
-
-    fun constrained(constraints: ImeWindowConstraints): ImeWindowProps
 
     fun calcFontScale(constraints: ImeWindowConstraints): Float
 
@@ -41,9 +41,31 @@ sealed interface ImeWindowProps {
         val paddingRight: Dp,
         val paddingBottom: Dp,
     ) : ImeWindowProps {
-        override fun constrained(constraints: ImeWindowConstraints): Fixed {
-            // TODO impl
-            return this
+        fun constrained(constraints: ImeWindowConstraints.Fixed): Fixed {
+            val rootBounds = constraints.rootBounds
+            val defaultProps = constraints.defaultProps
+            val newKeyboardHeight = keyboardHeight
+                .takeOrElse { defaultProps.keyboardHeight }
+                .coerceIn(constraints.minKeyboardHeight, constraints.maxKeyboardHeight)
+            var newPaddingLeft = paddingLeft
+                .takeOrElse { constraints.defPaddingHorizontal }
+                .coerceIn(0.dp, rootBounds.width)
+            var newPaddingRight = paddingRight
+                .takeOrElse { 0.dp }
+                .coerceIn(0.dp, rootBounds.width)
+            val newPaddingHorizontal = (newPaddingLeft + newPaddingRight)
+                .coerceIn(constraints.minPaddingHorizontal, constraints.maxPaddingHorizontal)
+            newPaddingLeft = newPaddingHorizontal.coerceAtMost(newPaddingLeft)
+            newPaddingRight = newPaddingHorizontal - newPaddingLeft
+            val newPaddingBottom = paddingBottom
+                .takeOrElse { 0.dp }
+                .coerceIn(0.dp, constraints.maxKeyboardHeight - newKeyboardHeight)
+            return Fixed(
+                keyboardHeight = newKeyboardHeight,
+                paddingLeft = newPaddingLeft,
+                paddingRight = newPaddingRight,
+                paddingBottom = newPaddingBottom,
+            )
         }
 
         override fun calcFontScale(constraints: ImeWindowConstraints): Float {
@@ -59,23 +81,20 @@ sealed interface ImeWindowProps {
         val offsetLeft: Dp,
         val offsetBottom: Dp,
     ) : ImeWindowProps {
-        override fun constrained(constraints: ImeWindowConstraints): Floating {
-            val newKeyboardHeight = keyboardHeight.coerceIn(
-                minimumValue = constraints.minKeyboardHeight,
-                maximumValue = constraints.maxKeyboardHeight,
-            )
-            val newKeyboardWidth = keyboardWidth.coerceIn(
-                minimumValue = constraints.minKeyboardWidth,
-                maximumValue = constraints.maxKeyboardWidth,
-            )
-            val newOffsetLeft = offsetLeft.coerceIn(
-                minimumValue = 0.dp,
-                maximumValue = constraints.rootBounds.width - newKeyboardWidth,
-            )
-            val newOffsetBottom = offsetBottom.coerceIn(
-                minimumValue = 0.dp,
-                maximumValue = constraints.rootBounds.height - newKeyboardHeight,
-            )
+        fun constrained(constraints: ImeWindowConstraints.Floating): Floating {
+            val defaultProps = constraints.defaultProps
+            val newKeyboardHeight = keyboardHeight
+                .takeOrElse { defaultProps.keyboardHeight }
+                .coerceIn(constraints.minKeyboardHeight, constraints.maxKeyboardHeight)
+            val newKeyboardWidth = keyboardWidth
+                .takeOrElse { defaultProps.keyboardWidth }
+                .coerceIn(constraints.minKeyboardWidth, constraints.maxKeyboardWidth)
+            val newOffsetLeft = offsetLeft
+                .takeOrElse { defaultProps.offsetLeft }
+                .coerceIn(0.dp, constraints.rootBounds.width - newKeyboardWidth)
+            val newOffsetBottom = offsetBottom
+                .takeOrElse { defaultProps.offsetBottom }
+                .coerceIn(0.dp, constraints.rootBounds.height - newKeyboardHeight)
             return Floating(
                 keyboardHeight = newKeyboardHeight,
                 keyboardWidth = newKeyboardWidth,

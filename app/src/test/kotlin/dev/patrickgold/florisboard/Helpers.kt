@@ -17,32 +17,33 @@
 package dev.patrickgold.florisboard
 
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
-import io.kotest.matchers.comparables.gt
-import io.kotest.matchers.comparables.gte
-import io.kotest.matchers.comparables.lt
-import io.kotest.matchers.comparables.lte
 import io.kotest.matchers.floats.FloatToleranceMatcher
+import io.kotest.matchers.floats.gt
+import io.kotest.matchers.floats.gte
+import io.kotest.matchers.floats.lt
+import io.kotest.matchers.floats.lte
 import io.kotest.matchers.shouldBe
 
-fun Dp.shouldBeLessThan(other: Dp, tolerance: Dp): Dp {
-    this shouldBe lt(other + tolerance)
+fun Dp.shouldBeLessThan(other: Dp, tolerance: Dp = 0.dp): Dp {
+    this.value shouldBe lt((other + tolerance).value)
     return this
 }
 
-fun Dp.shouldBeLessThanOrEqualTo(other: Dp, tolerance: Dp): Dp {
-    this shouldBe lte(other + tolerance)
+fun Dp.shouldBeLessThanOrEqualTo(other: Dp, tolerance: Dp = 0.dp): Dp {
+    this.value shouldBe lte((other + tolerance).value)
     return this
 }
 
-fun Dp.shouldBeGreaterThan(other: Dp, tolerance: Dp): Dp {
-    this shouldBe gt(other - tolerance)
+fun Dp.shouldBeGreaterThan(other: Dp, tolerance: Dp = 0.dp): Dp {
+    this.value shouldBe gt((other - tolerance).value)
     return this
 }
 
-fun Dp.shouldBeGreaterThanOrEqualTo(other: Dp, tolerance: Dp): Dp {
-    this shouldBe gte(other - tolerance)
+fun Dp.shouldBeGreaterThanOrEqualTo(other: Dp, tolerance: Dp = 0.dp): Dp {
+    this.value shouldBe gte((other - tolerance).value)
     return this
 }
 

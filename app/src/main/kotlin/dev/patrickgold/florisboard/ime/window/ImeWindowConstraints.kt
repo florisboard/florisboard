@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.window
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.coerceAtMost
+import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.min
@@ -58,7 +59,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
     }
     open val dockToFixedBorder: Dp = 2.dp
 
-    abstract fun defaultProps(): ImeWindowProps
+    abstract val defaultProps: ImeWindowProps
 
     protected fun <T> calculation(initializer: () -> T) = lazy(LazyThreadSafetyMode.PUBLICATION, initializer)
 
@@ -66,13 +67,14 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
         protected open val desiredMinPaddingHorizontal = 0.dp
         protected open val desiredDefPaddingHorizontal = 0.dp
         open val minPaddingHorizontal by calculation { rootBounds.width - maxKeyboardWidth }
+        open val maxPaddingHorizontal by calculation { rootBounds.width - minKeyboardWidth }
         open val defPaddingHorizontal by calculation { rootBounds.width - defKeyboardWidth }
 
         override val minKeyboardWidth by calculation {
             when (formFactor.typeGuess) {
                 ImeFormFactor.Type.TABLET_PORTRAIT -> min(rootBounds.width - desiredMinPaddingHorizontal, 400.dp)
                 else -> min(rootBounds.width - desiredMinPaddingHorizontal, 250.dp)
-            }.coerceAtLeast(0.dp).coerceAtMost(rootBounds.width)
+            }.coerceIn(0.dp, rootBounds.width)
         }
         override val maxKeyboardWidth by calculation {
             (rootBounds.width - desiredMinPaddingHorizontal).coerceAtLeast(minKeyboardWidth)
@@ -123,16 +125,16 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             }
         }
 
-        abstract override fun defaultProps(): ImeWindowProps.Fixed
+        abstract override val defaultProps: ImeWindowProps.Fixed
 
         class Normal(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
-            override fun defaultProps(): ImeWindowProps.Fixed {
-                return ImeWindowProps.Fixed(
+            override val defaultProps by calculation {
+                ImeWindowProps.Fixed(
                     keyboardHeight = defKeyboardHeight,
                     paddingLeft = 0.dp,
                     paddingRight = 0.dp,
                     paddingBottom = 0.dp,
-                ).constrained(this)
+                )
             }
         }
 
@@ -162,24 +164,24 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 }
             }
 
-            override fun defaultProps(): ImeWindowProps.Fixed {
-                return ImeWindowProps.Fixed(
+            override val defaultProps by calculation {
+                ImeWindowProps.Fixed(
                     keyboardHeight = defKeyboardHeight,
                     paddingLeft = defPaddingHorizontal,
                     paddingRight = 0.dp,
                     paddingBottom = super.defKeyboardHeight - defKeyboardHeight,
-                ).constrained(this)
+                )
             }
         }
 
         class Thumbs(rootInsets: ImeInsets.Root) : Fixed(rootInsets) {
-            override fun defaultProps(): ImeWindowProps.Fixed {
-                return ImeWindowProps.Fixed(
+            override val defaultProps by calculation {
+                ImeWindowProps.Fixed(
                     keyboardHeight = defKeyboardHeight,
                     paddingLeft = 0.dp,
                     paddingRight = 0.dp,
                     paddingBottom = 0.dp,
-                ).constrained(this)
+                )
             }
         }
     }
@@ -247,16 +249,16 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             }
         }
 
-        abstract override fun defaultProps(): ImeWindowProps.Floating
+        abstract override val defaultProps: ImeWindowProps.Floating
 
         class Normal(rootInsets: ImeInsets.Root) : Floating(rootInsets) {
-            override fun defaultProps(): ImeWindowProps.Floating {
-                return ImeWindowProps.Floating(
+            override val defaultProps by calculation {
+                ImeWindowProps.Floating(
                     keyboardHeight = defKeyboardHeight,
                     keyboardWidth = defKeyboardWidth,
-                    offsetLeft = 60.dp,
-                    offsetBottom = 60.dp,
-                ).constrained(this)
+                    offsetLeft = 60.dp.coerceAtMost(rootBounds.width - defKeyboardWidth),
+                    offsetBottom = 60.dp.coerceAtMost(rootBounds.height - defKeyboardHeight),
+                )
             }
         }
     }

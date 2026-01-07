@@ -22,11 +22,14 @@ import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.width
+import dev.patrickgold.florisboard.dp
 import dev.patrickgold.florisboard.floatMaybeConstant
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.arbitrary
+import io.kotest.property.arbitrary.enum
 import io.kotest.property.arbitrary.float
 import io.kotest.property.arbitrary.int
+import io.kotest.property.arbitrary.merge
 
 fun Arb.Companion.density() = arbitrary {
     val density = Arb.float(0.75f, 4.0f).bind()
@@ -75,4 +78,48 @@ fun Arb.Companion.rootInsetsWithRightwardOffset() = arbitrary {
     val rootInsets = Arb.rootInsets().bind()
     val x = Arb.floatMaybeConstant(0f, rootInsets.boundsDp.width.value).bind()
     rootInsets to DpOffset(x.dp, 0.dp)
+}
+
+fun Arb.Companion.anyWindowConfig() = anyWindowConfigFixed().merge(anyWindowConfigFloating())
+
+fun Arb.Companion.anyWindowConfigFixed() = arbitrary {
+    val keyboardHeight = Arb.dp().bind()
+    val paddingLeft = Arb.dp().bind()
+    val paddingRight = Arb.dp().bind()
+    val paddingBottom = Arb.dp().bind()
+    val fixedMode = Arb.enum<ImeWindowMode.Fixed>().bind()
+
+    val props = ImeWindowProps.Fixed(
+        keyboardHeight = keyboardHeight,
+        paddingLeft = paddingLeft,
+        paddingRight = paddingRight,
+        paddingBottom = paddingBottom,
+    )
+
+    ImeWindowConfig(
+        mode = ImeWindowMode.FIXED,
+        fixedMode = fixedMode,
+        fixedProps = mapOf(fixedMode to props),
+    )
+}
+
+fun Arb.Companion.anyWindowConfigFloating() = arbitrary {
+    val keyboardHeight = Arb.dp().bind()
+    val keyboardWidth = Arb.dp().bind()
+    val offsetLeft = Arb.dp().bind()
+    val offsetBottom = Arb.dp().bind()
+    val floatingMode = Arb.enum<ImeWindowMode.Floating>().bind()
+
+    val props = ImeWindowProps.Floating(
+        keyboardHeight = keyboardHeight,
+        keyboardWidth = keyboardWidth,
+        offsetLeft = offsetLeft,
+        offsetBottom = offsetBottom,
+    )
+
+    ImeWindowConfig(
+        mode = ImeWindowMode.FLOATING,
+        floatingMode = floatingMode,
+        floatingProps = mapOf(floatingMode to props),
+    )
 }

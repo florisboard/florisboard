@@ -20,10 +20,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.width
+import dev.patrickgold.florisboard.shouldBeGreaterThanOrEqualTo
 import dev.patrickgold.florisboard.shouldBeLessThanOrEqualTo
 import io.kotest.assertions.withClue
-import io.kotest.matchers.comparables.shouldBeGreaterThanOrEqualTo
-import io.kotest.matchers.ranges.shouldBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
@@ -35,18 +34,17 @@ fun ImeWindowSpec.shouldBeFixedCompact() = this
     .shouldBeInstanceOf<ImeWindowSpec.Fixed>()
     .also { fixedMode shouldBe ImeWindowMode.Fixed.COMPACT }
 
-fun ImeWindowProps.Fixed.shouldBeConstrainedTo(constraints: ImeWindowConstraints, tolerance: Dp) {
+fun ImeWindowProps.Fixed.shouldBeConstrainedTo(constraints: ImeWindowConstraints.Fixed, tolerance: Dp) {
     val rootBounds = constraints.rootBounds
     withClue("keyboard height should be constrained") {
-        keyboardHeight.shouldBeIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
+        keyboardHeight.shouldBeGreaterThanOrEqualTo(constraints.minKeyboardHeight)
+        keyboardHeight.shouldBeLessThanOrEqualTo(constraints.maxKeyboardHeight)
     }
-    withClue("padding left should not push window out of root bounds") {
+    withClue("padding left+right should not push window out of root bounds") {
         paddingLeft.shouldBeGreaterThanOrEqualTo(0.dp)
-        paddingLeft.shouldBeLessThanOrEqualTo(rootBounds.width - paddingRight - constraints.minKeyboardWidth, tolerance)
-    }
-    withClue("padding right should not push window out of root bounds") {
         paddingRight.shouldBeGreaterThanOrEqualTo(0.dp)
-        paddingRight.shouldBeLessThanOrEqualTo(rootBounds.width - paddingLeft - constraints.minKeyboardWidth, tolerance)
+        (paddingLeft + paddingRight).shouldBeGreaterThanOrEqualTo(constraints.minPaddingHorizontal, tolerance)
+        (paddingLeft + paddingRight).shouldBeLessThanOrEqualTo(constraints.maxPaddingHorizontal, tolerance)
     }
     withClue("padding bottom should not push window out of root bounds") {
         paddingBottom.shouldBeGreaterThanOrEqualTo(0.dp)
@@ -54,13 +52,15 @@ fun ImeWindowProps.Fixed.shouldBeConstrainedTo(constraints: ImeWindowConstraints
     }
 }
 
-fun ImeWindowProps.Floating.shouldBeConstrainedTo(constraints: ImeWindowConstraints, tolerance: Dp) {
+fun ImeWindowProps.Floating.shouldBeConstrainedTo(constraints: ImeWindowConstraints.Floating, tolerance: Dp) {
     val rootBounds = constraints.rootBounds
     withClue("keyboard height should be constrained") {
-        keyboardHeight.shouldBeIn(constraints.minKeyboardHeight..constraints.maxKeyboardHeight)
+        keyboardHeight.shouldBeGreaterThanOrEqualTo(constraints.minKeyboardHeight)
+        keyboardHeight.shouldBeLessThanOrEqualTo(constraints.maxKeyboardHeight)
     }
     withClue("keyboard width should be constrained") {
-        keyboardWidth.shouldBeIn(constraints.minKeyboardWidth..constraints.maxKeyboardWidth)
+        keyboardWidth.shouldBeGreaterThanOrEqualTo(constraints.minKeyboardWidth)
+        keyboardWidth.shouldBeLessThanOrEqualTo(constraints.maxKeyboardWidth)
     }
     withClue("offset left should not push window out of root bounds") {
         offsetLeft.shouldBeGreaterThanOrEqualTo(0.dp)

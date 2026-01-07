@@ -174,7 +174,7 @@ class ImeWindowController(
         return when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
                 val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.fixedMode)
-                val props = windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps()
+                val props = windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps
                 val fontScale = props.calcFontScale(constraints) * userFontScale
                 ImeWindowSpec.Fixed(
                     fixedMode = windowConfig.fixedMode,
@@ -185,7 +185,7 @@ class ImeWindowController(
             }
             ImeWindowMode.FLOATING -> {
                 val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.floatingMode)
-                val props = windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps()
+                val props = windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps
                 val fontScale = props.calcFontScale(constraints) * userFontScale
                 ImeWindowSpec.Floating(
                     floatingMode = windowConfig.floatingMode,
@@ -234,7 +234,7 @@ class ImeWindowController(
             val rootInsets = activeRootInsets.value
             val constraints = ImeWindowConstraints.of(rootInsets, ImeWindowMode.Fixed.COMPACT)
             updateWindowConfig { config ->
-                val props = config.fixedProps[ImeWindowMode.Fixed.COMPACT] ?: constraints.defaultProps()
+                val props = config.fixedProps[ImeWindowMode.Fixed.COMPACT] ?: constraints.defaultProps
                 val newProps = updateProps(props)
                 config.copy(
                     mode = ImeWindowMode.FIXED,
@@ -285,7 +285,7 @@ class ImeWindowController(
                 when (config.mode) {
                     ImeWindowMode.FLOATING -> {
                         val constraints = ImeWindowConstraints.of(rootInsets, config.floatingMode)
-                        val defaultProps = constraints.defaultProps()
+                        val defaultProps = constraints.defaultProps
                         val newProps = config.floatingProps[config.floatingMode]?.copy(
                             keyboardHeight = defaultProps.keyboardHeight,
                             keyboardWidth = defaultProps.keyboardWidth,
