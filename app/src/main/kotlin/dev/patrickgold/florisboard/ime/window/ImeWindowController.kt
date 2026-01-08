@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.window
 
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
@@ -50,7 +49,7 @@ class ImeWindowController(
         field = MutableStateFlow(ImeWindowConfig.Default)
 
     val activeWindowSpec: StateFlow<ImeWindowSpec>
-        field = MutableStateFlow<ImeWindowSpec>(ImeWindowConstraints.FallbackSpec)
+        field = MutableStateFlow<ImeWindowSpec>(ImeWindowSpec.Fallback)
 
     val isWindowShown: StateFlow<Boolean>
         field = MutableStateFlow(false)
@@ -341,23 +340,12 @@ class ImeWindowController(
             syncFromPrefs()
         }
 
-        fun beginMoveGesture() {
+        fun beginMoveGesture(): ImeWindowSpec {
             state.value = EditorState.ACTIVE_MOVE_GESTURE
-            syncFromPrefs()
+            return activeWindowSpec.value
         }
 
-        fun moveBy(offset: DpOffset, rowCount: Int, smartbarRowCount: Int): DpOffset {
-            var consumed = DpOffset.Zero
-            activeWindowSpec.update { spec ->
-                val (newSpec, newConsumed) = spec.movedBy(offset, rowCount, smartbarRowCount)
-                consumed = newConsumed
-                newSpec
-            }
-            return consumed
-        }
-
-        fun endMoveGesture() {
-            val spec = activeWindowSpec.value
+        fun endMoveGesture(spec: ImeWindowSpec) {
             var keepEnabled = true
             updateWindowConfig { config ->
                 when (spec) {
@@ -379,23 +367,12 @@ class ImeWindowController(
             state.value = editorStateOf(keepEnabled)
         }
 
-        fun beginResizeGesture() {
+        fun beginResizeGesture(): ImeWindowSpec {
             state.value = EditorState.ACTIVE_RESIZE_GESTURE
-            syncFromPrefs()
+            return activeWindowSpec.value
         }
 
-        fun resizeBy(offset: DpOffset, handle: ImeWindowResizeHandle, rowCount: Int, smartbarRowCount: Int): DpOffset {
-            var consumed = DpOffset.Zero
-            activeWindowSpec.update { spec ->
-                val (newSpec, newConsumed) = spec.resizedBy(offset, handle, rowCount, smartbarRowCount)
-                consumed = newConsumed
-                newSpec
-            }
-            return consumed
-        }
-
-        fun endResizeGesture() {
-            val spec = activeWindowSpec.value
+        fun endResizeGesture(spec: ImeWindowSpec) {
             var keepEnabled = true
             updateWindowConfig { config ->
                 when (spec) {
@@ -410,6 +387,12 @@ class ImeWindowController(
                 }
             }
             state.value = editorStateOf(keepEnabled)
+        }
+
+        fun onSpecUpdated(spec: ImeWindowSpec) {
+            if (state.value.isEnabled) {
+                activeWindowSpec.value = spec
+            }
         }
 
         fun cancelGesture() {

@@ -265,18 +265,6 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
     }
 
     companion object {
-        val FallbackSpec = ImeWindowSpec.Fixed(
-            fixedMode = ImeWindowMode.Fixed.NORMAL,
-            props = ImeWindowProps.Fixed(
-                keyboardHeight = 250.dp,
-                paddingLeft = 0.dp,
-                paddingRight = 0.dp,
-                paddingBottom = 0.dp,
-            ),
-            fontScale = 1f,
-            constraints = Fixed.Normal(ImeInsets.Root.Zero),
-        )
-
         fun of(rootInsets: ImeInsets.Root, fixedMode: ImeWindowMode.Fixed): Fixed {
             return when (fixedMode) {
                 ImeWindowMode.Fixed.NORMAL -> Fixed.Normal(rootInsets)

@@ -29,7 +29,6 @@ import io.kotest.property.arbitrary.arbitrary
 import io.kotest.property.arbitrary.enum
 import io.kotest.property.arbitrary.float
 import io.kotest.property.arbitrary.int
-import io.kotest.property.arbitrary.merge
 
 fun Arb.Companion.density() = arbitrary {
     val density = Arb.float(0.75f, 4.0f).bind()
@@ -80,9 +79,7 @@ fun Arb.Companion.rootInsetsWithRightwardOffset() = arbitrary {
     rootInsets to DpOffset(x.dp, 0.dp)
 }
 
-fun Arb.Companion.anyWindowConfig() = anyWindowConfigFixed().merge(anyWindowConfigFloating())
-
-fun Arb.Companion.anyWindowConfigFixed() = arbitrary {
+fun Arb.Companion.windowConfigFixed() = arbitrary {
     val keyboardHeight = Arb.dp().bind()
     val paddingLeft = Arb.dp().bind()
     val paddingRight = Arb.dp().bind()
@@ -103,7 +100,7 @@ fun Arb.Companion.anyWindowConfigFixed() = arbitrary {
     )
 }
 
-fun Arb.Companion.anyWindowConfigFloating() = arbitrary {
+fun Arb.Companion.windowConfigFloating() = arbitrary {
     val keyboardHeight = Arb.dp().bind()
     val keyboardWidth = Arb.dp().bind()
     val offsetLeft = Arb.dp().bind()

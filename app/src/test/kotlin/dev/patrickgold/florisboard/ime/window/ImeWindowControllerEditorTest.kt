@@ -52,14 +52,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Fixed>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -92,14 +94,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Fixed>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -132,14 +136,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Fixed>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -172,14 +178,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Fixed>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -194,53 +202,6 @@ class ImeWindowControllerEditorTest : FunSpec({
                     }
                     withClue("move operations rightward must not push window out of root bounds") {
                         specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)
-                    }
-                }
-            }
-        }
-
-        test("for all moves with inversion") {
-            checkAll(
-                Arb.rootInsetsWithAnyOffset(),
-                Arb.enum<ImeWindowMode.Fixed>(),
-            ) { (rootInsets, offset), fixedMode ->
-                val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
-                val windowController = ImeWindowController(prefs, backgroundScope)
-                windowController.updateRootInsets(rootInsets)
-                windowController.updateWindowConfig {
-                    ImeWindowConfig(ImeWindowMode.FIXED, fixedMode = fixedMode)
-                }
-
-                windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                var unconsumed = offset
-                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
-                unconsumed += offset.copy(-offset.x, -offset.y)
-                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
-                val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
-
-                assertSoftly {
-                    val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
-                    val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Fixed>()
-                    withClue("move operations with inversion must not alter keyboard height") {
-                        specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not alter padding left") {
-                        specAfter.props.paddingLeft shouldBe specBefore.props.paddingLeft.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not alter padding right") {
-                        specAfter.props.paddingRight shouldBe specBefore.props.paddingRight.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not alter padding bottom") {
-                        specAfter.props.paddingBottom shouldBe specBefore.props.paddingBottom.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not push window out of root bounds") {
-                        specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)
-                    }
-                    withClue("move operations with inversion should not have unconsumed offset left") {
-                        unconsumed.x shouldBe 0.dp.plusOrMinus(tolerance)
-                        unconsumed.y shouldBe 0.dp.plusOrMinus(tolerance)
                     }
                 }
             }
@@ -263,14 +224,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Floating>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Floating>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Floating>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -303,14 +266,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Floating>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Floating>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Floating>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -343,14 +308,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Floating>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Floating>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Floating>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -383,14 +350,16 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
 
                 windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset, 4, 0)
+                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
+                val specCalculated = specBefore.movedBy(offset, 4, 0)
+                windowController.editor.onSpecUpdated(specCalculated)
                 val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
+                windowController.editor.endMoveGesture(specAfter)
 
                 assertSoftly {
                     val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Floating>()
                     val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Floating>()
+                    specCalculated.shouldBeInstanceOf<ImeWindowSpec.Floating>().shouldBe(specAfter)
                     withClue("move operations must not alter keyboard height") {
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
@@ -405,53 +374,6 @@ class ImeWindowControllerEditorTest : FunSpec({
                     }
                     withClue("move operations rightward must not push window out of root bounds") {
                         specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)
-                    }
-                }
-            }
-        }
-
-        test("for all moves with inversion") {
-            checkAll(
-                Arb.rootInsetsWithAnyOffset(),
-                Arb.enum<ImeWindowMode.Floating>(),
-            ) { (rootInsets, offset), floatingMode ->
-                val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
-                val windowController = ImeWindowController(prefs, backgroundScope)
-                windowController.updateRootInsets(rootInsets)
-                windowController.updateWindowConfig {
-                    ImeWindowConfig(ImeWindowMode.FLOATING, floatingMode = floatingMode)
-                }
-
-                windowController.editor.beginMoveGesture()
-                val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                var unconsumed = offset
-                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
-                unconsumed += offset.copy(-offset.x, -offset.y)
-                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
-                val specAfter = windowController.activeWindowSpec.value
-                windowController.editor.endMoveGesture()
-
-                assertSoftly {
-                    val specBefore = specBefore.shouldBeInstanceOf<ImeWindowSpec.Floating>()
-                    val specAfter = specAfter.shouldBeInstanceOf<ImeWindowSpec.Floating>()
-                    withClue("move operations with inversion must not alter keyboard height") {
-                        specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not alter keyboard width") {
-                        specAfter.props.keyboardWidth shouldBe specBefore.props.keyboardWidth.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not alter offset left") {
-                        specAfter.props.offsetLeft shouldBe specBefore.props.offsetLeft.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not alter offset bottom") {
-                        specAfter.props.offsetBottom shouldBe specBefore.props.offsetBottom.plusOrMinus(tolerance)
-                    }
-                    withClue("move operations with inversion must not push window out of root bounds") {
-                        specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)
-                    }
-                    withClue("move operations with inversion should not have unconsumed offset left") {
-                        unconsumed.x shouldBe 0.dp.plusOrMinus(tolerance)
-                        unconsumed.y shouldBe 0.dp.plusOrMinus(tolerance)
                     }
                 }
             }

@@ -74,14 +74,14 @@ class ImeWindowControllerTest : FunSpec({
         test("for all fixed window configs in prefs") {
             checkAll(
                 Arb.rootInsets(),
-                Arb.anyWindowConfigFixed(),
+                Arb.windowConfigFixed(),
             ) { rootInsets, windowConfig ->
                 val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
                 prefs.keyboard.windowConfig.set(mapOf(rootInsets.formFactor.typeGuess to windowConfig))
                 val windowController = ImeWindowController(prefs, backgroundScope)
                 windowController.updateRootInsets(rootInsets)
 
-                val spec = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
+                val spec = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
 
                 assertSoftly {
                     val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.fixedMode)
@@ -94,14 +94,14 @@ class ImeWindowControllerTest : FunSpec({
         test("for all floating window configs in prefs") {
             checkAll(
                 Arb.rootInsets(),
-                Arb.anyWindowConfigFloating(),
+                Arb.windowConfigFloating(),
             ) { rootInsets, windowConfig ->
                 val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
                 prefs.keyboard.windowConfig.set(mapOf(rootInsets.formFactor.typeGuess to windowConfig))
                 val windowController = ImeWindowController(prefs, backgroundScope)
                 windowController.updateRootInsets(rootInsets)
 
-                val spec = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
+                val spec = windowController.activeWindowSpec.first { it !== ImeWindowSpec.Fallback }
 
                 assertSoftly {
                     val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.floatingMode)

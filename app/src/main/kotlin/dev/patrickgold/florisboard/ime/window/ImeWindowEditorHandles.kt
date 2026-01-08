@@ -386,44 +386,40 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
 fun Modifier.imeWindowMoveHandle(
     windowController: ImeWindowController,
     onTap: () -> Unit = {},
-): Modifier = this.composed {
-    val rowCount by FlorisImeSizing.rowCountAsState()
-    val smartbarRowCount by FlorisImeSizing.smartbarRowCountAsState()
-    Modifier
-        .pointerInput(Unit) {
-            detectTapGestures {
-                onTap()
-            }
+): Modifier = imeWindowEditorHandle(
+    onTap = onTap,
+    onBeginGesture = { windowController.editor.beginMoveGesture() },
+    onGesture = { initialSpec, offset, rowCount, smartbarRowCount ->
+        initialSpec.movedBy(offset, rowCount, smartbarRowCount).also { updatedSpec ->
+            windowController.editor.onSpecUpdated(updatedSpec)
         }
-        .pointerInput(Unit) {
-            var unconsumed = DpOffset.Zero
-            detectDragGestures(
-                onDragStart = {
-                    windowController.editor.beginMoveGesture()
-                    unconsumed = DpOffset.Zero
-                },
-                onDrag = { change, dragAmount ->
-                    change.consume()
-                    unconsumed += dragAmount.toDp()
-                    val consumed = windowController.editor.moveBy(unconsumed, rowCount, smartbarRowCount)
-                    unconsumed -= consumed
-                },
-                onDragEnd = {
-                    windowController.editor.endMoveGesture()
-                    unconsumed = DpOffset.Zero
-                },
-                onDragCancel = {
-                    windowController.editor.cancelGesture()
-                    unconsumed = DpOffset.Zero
-                },
-            )
-        }
-}
+    },
+    onEndGesture = { windowController.editor.endMoveGesture(it) },
+    onCancelGesture = { windowController.editor.cancelGesture() },
+)
 
 fun Modifier.imeWindowResizeHandle(
     windowController: ImeWindowController,
     handle: ImeWindowResizeHandle,
     onTap: () -> Unit = {},
+): Modifier = imeWindowEditorHandle(
+    onTap = onTap,
+    onBeginGesture = { windowController.editor.beginResizeGesture() },
+    onGesture = { initialSpec, offset, rowCount, smartbarRowCount ->
+        initialSpec.resizedBy(offset, handle, rowCount, smartbarRowCount).also { updatedSpec ->
+            windowController.editor.onSpecUpdated(updatedSpec)
+        }
+    },
+    onEndGesture = { windowController.editor.endResizeGesture(it) },
+    onCancelGesture = { windowController.editor.cancelGesture() },
+)
+
+private fun Modifier.imeWindowEditorHandle(
+    onTap: () -> Unit,
+    onBeginGesture: () -> ImeWindowSpec,
+    onGesture: (initialSpec: ImeWindowSpec, offset: DpOffset, rowCount: Int, smartbarRowCount: Int) -> ImeWindowSpec,
+    onEndGesture: (finalSpec: ImeWindowSpec) -> Unit,
+    onCancelGesture: () -> Unit,
 ): Modifier = this.composed {
     val rowCount by FlorisImeSizing.rowCountAsState()
     val smartbarRowCount by FlorisImeSizing.smartbarRowCountAsState()
@@ -434,25 +430,27 @@ fun Modifier.imeWindowResizeHandle(
             }
         }
         .pointerInput(Unit) {
-            var unconsumed = DpOffset.Zero
+            // TODO evaluate if using (current - initial position) results in less rounding errors
+            //  drawback: we need the coords via onGloballyPositioned
+            var accumulatedOffset = Offset.Zero
+            var initialSpec = ImeWindowSpec.Fallback
+            var currentSpec = ImeWindowSpec.Fallback
             detectDragGestures(
                 onDragStart = {
-                    windowController.editor.beginResizeGesture()
-                    unconsumed = DpOffset.Zero
+                    accumulatedOffset = Offset.Zero
+                    initialSpec = onBeginGesture()
+                    currentSpec = initialSpec
                 },
                 onDrag = { change, dragAmount ->
                     change.consume()
-                    unconsumed += dragAmount.toDp()
-                    val consumed = windowController.editor.resizeBy(unconsumed, handle, rowCount, smartbarRowCount)
-                    unconsumed -= consumed
+                    accumulatedOffset += dragAmount
+                    currentSpec = onGesture(initialSpec, accumulatedOffset.toDp(), rowCount, smartbarRowCount)
                 },
                 onDragEnd = {
-                    windowController.editor.endResizeGesture()
-                    unconsumed = DpOffset.Zero
+                    onEndGesture(currentSpec)
                 },
                 onDragCancel = {
-                    windowController.editor.cancelGesture()
-                    unconsumed = DpOffset.Zero
+                    onCancelGesture()
                 },
             )
         }
