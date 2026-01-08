@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.window
 
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.coerceAtMost
@@ -24,23 +25,62 @@ import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.width
 import kotlin.math.abs
 
-sealed interface ImeWindowSpec {
-    val props: ImeWindowProps
-    val fontScale: Float
-    val constraints: ImeWindowConstraints
+sealed class ImeWindowSpec {
+    abstract val props: ImeWindowProps
+    abstract val fontScale: Float
+    abstract val constraints: ImeWindowConstraints
 
-    fun movedBy(offset: DpOffset): Pair<ImeWindowSpec, DpOffset>
+    abstract fun movedBy(
+        offset: DpOffset,
+        rowCount: Int,
+        smartbarRowCount: Int,
+    ): Pair<ImeWindowSpec, DpOffset>
 
-    fun resizedBy(handle: ImeWindowResizeHandle, offset: DpOffset, rowCount: Int): Pair<ImeWindowSpec, DpOffset>
+    abstract fun resizedBy(
+        offset: DpOffset,
+        handle: ImeWindowResizeHandle,
+        rowCount: Int,
+        smartbarRowCount: Int,
+    ): Pair<ImeWindowSpec, DpOffset>
+
+    fun calcRowHeight(keyboardHeight: Dp): Dp {
+        return keyboardHeight / constraints.baselineRowCount
+    }
+
+    fun calcSmartbarRowHeight(keyboardHeight: Dp): Dp {
+        val defRowHeight = calcRowHeight(constraints.defKeyboardHeight)
+        val rowHeight = calcRowHeight(keyboardHeight)
+        return defRowHeight * constraints.smartbarStaticScalingFactor +
+            rowHeight * constraints.smartbarDynamicScalingFactor
+    }
+
+    protected fun Dp.toEffective(rowCount: Int, smartbarRowCount: Int): Dp = let { keyboardHeight ->
+        require(rowCount in 4..6)
+        require(smartbarRowCount in 0..2)
+        val effKeyboardHeight = calcRowHeight(keyboardHeight * rowCount)
+        val effSmartbarHeight = calcSmartbarRowHeight(keyboardHeight * smartbarRowCount)
+        return effKeyboardHeight + effSmartbarHeight
+    }
+
+    protected fun Dp.toBaseline(rowCount: Int, smartbarRowCount: Int): Dp  = let { effKeyboardHeight ->
+        require(rowCount in 4..6)
+        require(smartbarRowCount in 0..2)
+        val staticSmartbarHeight = calcRowHeight(constraints.defKeyboardHeight * constraints.smartbarStaticScalingFactor * smartbarRowCount)
+        val keyboardHeight = ((effKeyboardHeight - staticSmartbarHeight) * constraints.baselineRowCount) /
+            (rowCount + constraints.smartbarDynamicScalingFactor * smartbarRowCount)
+        return keyboardHeight
+    }
 
     data class Fixed(
         val fixedMode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
         override val fontScale: Float,
         override val constraints: ImeWindowConstraints.Fixed,
-    ) : ImeWindowSpec {
+    ) : ImeWindowSpec() {
         override fun movedBy(
             offset: DpOffset,
+            rowCount: Int,
+            smartbarRowCount: Int,
         ): Pair<ImeWindowSpec, DpOffset> {
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
@@ -70,8 +110,8 @@ sealed interface ImeWindowSpec {
             }
 
             paddingBottom = (paddingBottom - offset.y)
+                .coerceAtMost(constraints.maxKeyboardHeight - props.keyboardHeight.toEffective(rowCount, smartbarRowCount))
                 .coerceAtLeast(0.dp)
-                .coerceAtMost(max(constraints.maxKeyboardHeight - props.keyboardHeight, 0.dp))
 
             val newProps = props.copy(
                 paddingLeft = paddingLeft,
@@ -87,26 +127,25 @@ sealed interface ImeWindowSpec {
         }
 
         override fun resizedBy(
-            handle: ImeWindowResizeHandle,
             offset: DpOffset,
+            handle: ImeWindowResizeHandle,
             rowCount: Int,
+            smartbarRowCount: Int,
         ): Pair<ImeWindowSpec, DpOffset> {
-            val toActualHeight = (constraints.smartbarHeightFactor + rowCount) / constraints.keyboardHeightFactor
-            val toBaselineHeight = 1f / toActualHeight
-
-            var keyboardHeight = props.keyboardHeight * toActualHeight
+            var keyboardHeight = props.keyboardHeight.toEffective(rowCount, smartbarRowCount)
             var paddingLeft = props.paddingLeft
             var paddingRight = props.paddingRight
             var paddingBottom = props.paddingBottom
 
             if (handle.top) {
                 keyboardHeight = (keyboardHeight - offset.y)
-                    .coerceAtLeast(constraints.minKeyboardHeight * toActualHeight)
-                    .coerceAtMost((constraints.maxKeyboardHeight - paddingBottom) * toActualHeight)
+                    .coerceAtLeast(constraints.minKeyboardHeight.toEffective(rowCount, smartbarRowCount))
+                    .coerceAtMost(constraints.maxKeyboardHeight - paddingBottom)
             } else if (handle.bottom) {
-                val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtMost(paddingBottom))
-                    .coerceIn((constraints.minKeyboardHeight * toActualHeight)..(constraints.maxKeyboardHeight * toActualHeight))
-                paddingBottom -= (newKeyboardHeight - keyboardHeight)
+                val newKeyboardHeight = (keyboardHeight + offset.y)
+                    .coerceAtLeast(constraints.minKeyboardHeight.toEffective(rowCount, smartbarRowCount))
+                    .coerceAtMost(keyboardHeight + paddingBottom)
+                paddingBottom += (keyboardHeight - newKeyboardHeight)
                 keyboardHeight = newKeyboardHeight
             }
 
@@ -125,23 +164,20 @@ sealed interface ImeWindowSpec {
             }
 
             val newProps = ImeWindowProps.Fixed(
-                keyboardHeight = keyboardHeight * toBaselineHeight,
+                keyboardHeight = keyboardHeight.toBaseline(rowCount, smartbarRowCount),
                 paddingLeft = paddingLeft,
                 paddingRight = paddingRight,
                 paddingBottom = paddingBottom,
             ).constrained(constraints)
-            val newSpec = copy(
-                props = newProps,
-                //fontScale = newProps.calcFontScale(rootInsets, orientation),
-            )
+            val newSpec = copy(props = newProps)
             val consumed = DpOffset(
                 x = when {
                     handle.left -> newProps.paddingLeft - props.paddingLeft
                     else -> -(newProps.paddingRight - props.paddingRight)
                 },
                 y = when {
-                    handle.top -> -(newProps.keyboardHeight - props.keyboardHeight)
-                    else -> (newProps.keyboardHeight - props.keyboardHeight)
+                    handle.top -> -(newProps.keyboardHeight.toEffective(rowCount, smartbarRowCount) - props.keyboardHeight.toEffective(rowCount, smartbarRowCount))
+                    else -> (newProps.keyboardHeight.toEffective(rowCount, smartbarRowCount) - props.keyboardHeight.toEffective(rowCount, smartbarRowCount))
                 },
             )
             return newSpec to consumed
@@ -153,9 +189,11 @@ sealed interface ImeWindowSpec {
         override val props: ImeWindowProps.Floating,
         override val fontScale: Float,
         override val constraints: ImeWindowConstraints.Floating,
-    ) : ImeWindowSpec {
+    ) : ImeWindowSpec() {
         override fun movedBy(
             offset: DpOffset,
+            rowCount: Int,
+            smartbarRowCount: Int,
         ): Pair<ImeWindowSpec, DpOffset> {
             val newProps = props.copy(
                 offsetLeft = props.offsetLeft + offset.x,
@@ -170,24 +208,24 @@ sealed interface ImeWindowSpec {
         }
 
         override fun resizedBy(
-            handle: ImeWindowResizeHandle,
             offset: DpOffset,
+            handle: ImeWindowResizeHandle,
             rowCount: Int,
+            smartbarRowCount: Int,
         ): Pair<ImeWindowSpec, DpOffset> {
-            val toActualHeight = (constraints.smartbarHeightFactor + rowCount) / constraints.keyboardHeightFactor
-            val toBaselineHeight = 1f / toActualHeight
-
-            var keyboardHeight = props.keyboardHeight * toActualHeight
+            var keyboardHeight = props.keyboardHeight.toEffective(rowCount, smartbarRowCount)
             var keyboardWidth = props.keyboardWidth
             var offsetLeft = props.offsetLeft
             var offsetBottom = props.offsetBottom
 
             if (handle.top) {
                 keyboardHeight = (keyboardHeight - offset.y)
-                    .coerceIn((constraints.minKeyboardHeight * toActualHeight)..(constraints.maxKeyboardHeight * toActualHeight))
+                    .coerceAtLeast(constraints.minKeyboardHeight.toEffective(rowCount, smartbarRowCount))
+                    .coerceAtMost(constraints.maxKeyboardHeight)
             } else if (handle.bottom) {
                 val newKeyboardHeight = (keyboardHeight + offset.y.coerceAtLeast(-offsetBottom))
-                    .coerceIn((constraints.minKeyboardHeight * toActualHeight)..(constraints.maxKeyboardHeight * toActualHeight))
+                    .coerceAtLeast(constraints.minKeyboardHeight.toEffective(rowCount, smartbarRowCount))
+                    .coerceAtMost(constraints.maxKeyboardHeight)
                 offsetBottom -= (newKeyboardHeight - keyboardHeight)
                 keyboardHeight = newKeyboardHeight
             }
@@ -205,23 +243,20 @@ sealed interface ImeWindowSpec {
             }
 
             val newProps = ImeWindowProps.Floating(
-                keyboardHeight = keyboardHeight * toBaselineHeight,
+                keyboardHeight = keyboardHeight.toBaseline(rowCount, smartbarRowCount),
                 keyboardWidth = keyboardWidth,
                 offsetLeft = offsetLeft,
                 offsetBottom = offsetBottom,
             ).constrained(constraints)
-            val newSpec = copy(
-                props = newProps,
-                //fontScale = newProps.calcFontScale(rootInsets, orientation),
-            )
+            val newSpec = copy(props = newProps)
             val consumed = DpOffset(
                 x = when {
                     handle.left -> -(newProps.keyboardWidth - props.keyboardWidth)
                     else -> (newProps.keyboardWidth - props.keyboardWidth)
                 },
                 y = when {
-                    handle.top -> -(newProps.keyboardHeight - props.keyboardHeight)
-                    else -> (newProps.keyboardHeight - props.keyboardHeight)
+                    handle.top -> -(newProps.keyboardHeight.toEffective(rowCount, smartbarRowCount) - props.keyboardHeight.toEffective(rowCount, smartbarRowCount))
+                    else -> (newProps.keyboardHeight.toEffective(rowCount, smartbarRowCount) - props.keyboardHeight.toEffective(rowCount, smartbarRowCount))
                 },
             )
             return newSpec to consumed

@@ -77,24 +77,32 @@ object FlorisImeSizing {
     }
 
     @Composable
-    fun smartbarUiHeight(): Dp {
+    fun smartbarRowCountAsState(): State<Int> {
         val prefs by FlorisPreferenceStore
         val smartbarEnabled by prefs.smartbar.enabled.observeAsState()
         val smartbarLayout by prefs.smartbar.layout.observeAsState()
         val extendedActionsExpanded by prefs.smartbar.extendedActionsExpanded.observeAsState()
         val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.observeAsState()
-        val height =
-            if (smartbarEnabled) {
-                if (smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED && extendedActionsExpanded &&
-                    extendedActionsPlacement != ExtendedActionsPlacement.OVERLAY_APP_UI) {
-                    smartbarHeight * 2
+        return remember {
+            derivedStateOf {
+                if (smartbarEnabled) {
+                    if (smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED && extendedActionsExpanded &&
+                        extendedActionsPlacement != ExtendedActionsPlacement.OVERLAY_APP_UI) {
+                        2
+                    } else {
+                        1
+                    }
                 } else {
-                    smartbarHeight
+                    0
                 }
-            } else {
-                0.dp
             }
-        return height
+        }
+    }
+
+    @Composable
+    fun smartbarUiHeight(): Dp {
+        val smartbarRowCount by smartbarRowCountAsState()
+        return smartbarHeight * smartbarRowCount
     }
 
     @Composable
@@ -117,20 +125,20 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
 
     val heights by remember {
         derivedStateOf {
-            val rowHeight = windowSpec.props.keyboardHeight / windowSpec.constraints.keyboardHeightFactor
-            val smartbarHeight = rowHeight * windowSpec.constraints.smartbarHeightFactor
-            rowHeight to smartbarHeight
+            val rowHeight = windowSpec.calcRowHeight(windowSpec.props.keyboardHeight)
+            val smartbarRowHeight = windowSpec.calcSmartbarRowHeight(windowSpec.props.keyboardHeight)
+            rowHeight to smartbarRowHeight
         }
     }
-    val (rowHeight, smartbarHeight) = heights
+    val (rowHeight, smartbarRowHeight) = heights
 
     SideEffect {
-        FlorisImeSizing.Static.smartbarHeightPx = with(density) { smartbarHeight.roundToPx() }
+        FlorisImeSizing.Static.smartbarHeightPx = with(density) { smartbarRowHeight.roundToPx() }
     }
 
     CompositionLocalProvider(
         LocalKeyboardRowBaseHeight provides rowHeight,
-        LocalSmartbarHeight provides smartbarHeight,
+        LocalSmartbarHeight provides smartbarRowHeight,
     ) {
         content()
     }

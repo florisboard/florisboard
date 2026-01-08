@@ -386,7 +386,9 @@ fun BoxScope.ImeWindowResizeHandlesFloating() {
 fun Modifier.imeWindowMoveHandle(
     windowController: ImeWindowController,
     onTap: () -> Unit = {},
-): Modifier = this.then(
+): Modifier = this.composed {
+    val rowCount by FlorisImeSizing.rowCountAsState()
+    val smartbarRowCount by FlorisImeSizing.smartbarRowCountAsState()
     Modifier
         .pointerInput(Unit) {
             detectTapGestures {
@@ -403,7 +405,7 @@ fun Modifier.imeWindowMoveHandle(
                 onDrag = { change, dragAmount ->
                     change.consume()
                     unconsumed += dragAmount.toDp()
-                    val consumed = windowController.editor.moveBy(unconsumed)
+                    val consumed = windowController.editor.moveBy(unconsumed, rowCount, smartbarRowCount)
                     unconsumed -= consumed
                 },
                 onDragEnd = {
@@ -416,7 +418,7 @@ fun Modifier.imeWindowMoveHandle(
                 },
             )
         }
-)
+}
 
 fun Modifier.imeWindowResizeHandle(
     windowController: ImeWindowController,
@@ -424,6 +426,7 @@ fun Modifier.imeWindowResizeHandle(
     onTap: () -> Unit = {},
 ): Modifier = this.composed {
     val rowCount by FlorisImeSizing.rowCountAsState()
+    val smartbarRowCount by FlorisImeSizing.smartbarRowCountAsState()
     Modifier
         .pointerInput(Unit) {
             detectTapGestures {
@@ -440,7 +443,7 @@ fun Modifier.imeWindowResizeHandle(
                 onDrag = { change, dragAmount ->
                     change.consume()
                     unconsumed += dragAmount.toDp()
-                    val consumed = windowController.editor.resizeBy(handle, unconsumed, rowCount)
+                    val consumed = windowController.editor.resizeBy(unconsumed, handle, rowCount, smartbarRowCount)
                     unconsumed -= consumed
                 },
                 onDragEnd = {

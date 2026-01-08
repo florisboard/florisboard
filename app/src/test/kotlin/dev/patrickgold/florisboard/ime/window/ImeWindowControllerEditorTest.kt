@@ -53,7 +53,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -93,7 +93,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -133,7 +133,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -173,7 +173,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -214,9 +214,9 @@ class ImeWindowControllerEditorTest : FunSpec({
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
                 var unconsumed = offset
-                unconsumed -= windowController.editor.moveBy(unconsumed)
+                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
                 unconsumed += offset.copy(-offset.x, -offset.y)
-                unconsumed -= windowController.editor.moveBy(unconsumed)
+                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -264,7 +264,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -304,7 +304,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -344,7 +344,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -384,7 +384,7 @@ class ImeWindowControllerEditorTest : FunSpec({
 
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
-                windowController.editor.moveBy(offset)
+                windowController.editor.moveBy(offset, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 
@@ -425,9 +425,9 @@ class ImeWindowControllerEditorTest : FunSpec({
                 windowController.editor.beginMoveGesture()
                 val specBefore = windowController.activeWindowSpec.first { it !== ImeWindowConstraints.FallbackSpec }
                 var unconsumed = offset
-                unconsumed -= windowController.editor.moveBy(unconsumed)
+                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
                 unconsumed += offset.copy(-offset.x, -offset.y)
-                unconsumed -= windowController.editor.moveBy(unconsumed)
+                unconsumed -= windowController.editor.moveBy(unconsumed, 4, 0)
                 val specAfter = windowController.activeWindowSpec.value
                 windowController.editor.endMoveGesture()
 

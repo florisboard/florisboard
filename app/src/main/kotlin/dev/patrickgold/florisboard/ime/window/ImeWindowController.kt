@@ -346,10 +346,10 @@ class ImeWindowController(
             syncFromPrefs()
         }
 
-        fun moveBy(offset: DpOffset): DpOffset {
+        fun moveBy(offset: DpOffset, rowCount: Int, smartbarRowCount: Int): DpOffset {
             var consumed = DpOffset.Zero
             activeWindowSpec.update { spec ->
-                val (newSpec, newConsumed) = spec.movedBy(offset)
+                val (newSpec, newConsumed) = spec.movedBy(offset, rowCount, smartbarRowCount)
                 consumed = newConsumed
                 newSpec
             }
@@ -384,10 +384,10 @@ class ImeWindowController(
             syncFromPrefs()
         }
 
-        fun resizeBy(handle: ImeWindowResizeHandle, offset: DpOffset, rowCount: Int): DpOffset {
+        fun resizeBy(offset: DpOffset, handle: ImeWindowResizeHandle, rowCount: Int, smartbarRowCount: Int): DpOffset {
             var consumed = DpOffset.Zero
             activeWindowSpec.update { spec ->
-                val (newSpec, newConsumed) = spec.resizedBy(handle, offset, rowCount)
+                val (newSpec, newConsumed) = spec.resizedBy(offset, handle, rowCount, smartbarRowCount)
                 consumed = newConsumed
                 newSpec
             }
