@@ -98,7 +98,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             when (formFactor.typeGuess) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
-                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.70f)
+                ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.64f)
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.38f)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.66f)
                 ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.46f)
@@ -215,7 +215,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.width * 0.30f)
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.width * 0.45f)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.width * 0.28f)
-                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.width * 0.60f)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.width * 0.65f)
             }.coerceAtLeast(minKeyboardWidth)
         }
 
@@ -246,7 +246,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> (rootBounds.height * 0.35f)
                 ImeFormFactor.Type.TABLET_PORTRAIT -> (rootBounds.height * 0.22f)
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> (rootBounds.height * 0.25f)
-                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.25f)
+                ImeFormFactor.Type.PHONE_PORTRAIT -> (rootBounds.height * 0.22f)
             }.coerceAtLeast(minKeyboardHeight)
         }
 
