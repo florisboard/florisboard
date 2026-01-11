@@ -39,7 +39,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
 
     open val baselineRowCount: Float = 4f
     open val smartbarDynamicScalingFactor = 0.20f
-    open val smartbarStaticScalingFactor = 0.753f - smartbarDynamicScalingFactor
+    open val smartbarStaticScalingFactor by calculation { 0.753f - smartbarDynamicScalingFactor }
 
     open val resizeHandleTouchSize: Dp = 48.dp
     open val resizeHandleTouchOffsetFloating: Dp by calculation { resizeHandleTouchSize / 2 }

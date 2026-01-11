@@ -57,8 +57,8 @@ sealed class ImeWindowSpec {
     protected fun Dp.toEffective(rowCount: Int, smartbarRowCount: Int): Dp = let { keyboardHeight ->
         require(rowCount in 4..6)
         require(smartbarRowCount in 0..2)
-        val effKeyboardHeight = calcRowHeight(keyboardHeight * rowCount)
-        val effSmartbarHeight = calcSmartbarRowHeight(keyboardHeight * smartbarRowCount)
+        val effKeyboardHeight = calcRowHeight(keyboardHeight) * rowCount
+        val effSmartbarHeight = calcSmartbarRowHeight(keyboardHeight) * smartbarRowCount
         return effKeyboardHeight + effSmartbarHeight
     }
 
