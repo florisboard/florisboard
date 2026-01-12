@@ -18,8 +18,10 @@ package dev.patrickgold.florisboard.ime.window
 
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
+import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
+import androidx.compose.ui.unit.width
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,27 +34,74 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.collectIn
 
+/**
+ * The window controller is responsible for managing everything related to window config, spec, insets,
+ * actions, editor move, and editor resize.
+ *
+ * This class is designed so it does not contain any references to Android framework classes, allowing it
+ * and its inner classes to be unit tested on JVM desktop.
+ *
+ * @property prefs The preference data store from which the window config is read from / where the window
+ *  config is written to.
+ * @property scope The coroutine scope in which suspending operations and flow collection should run in.
+ */
 class ImeWindowController(
     private val prefs: FlorisPreferenceModel,
     val scope: CoroutineScope,
 ) {
+    /**
+     * Access to window-related actions.
+     */
     val actions = Actions()
+
+    /**
+     * Access to window config editor.
+     */
     val editor = Editor()
 
+    /**
+     * The active root insets describe the size and position of the root window.
+     *
+     * Typically, the root insets corresponds to the screen bounds, however this is not guaranteed. For
+     * consistency reasons, all sub sizes and positions should be derived from the root insets.
+     *
+     * @see ImeRootWindow
+     */
     val activeRootInsets: StateFlow<ImeInsets.Root>
         field = MutableStateFlow(ImeInsets.Root.Zero)
 
+    /**
+     * The active window insets describe the size and position of the window within the root window.
+     *
+     * This value is used for responding to [onComputeInsets] by the accompanying IME service class.
+     *
+     * May be null. If null, this indicates the window insets are unknown, and no insets will be reported
+     * back to the IME service class in this case.
+     *
+     * @see ImeWindow
+     */
     val activeWindowInsets: StateFlow<ImeInsets.Window?>
         field = MutableStateFlow(null)
 
+    /**
+     * Holds the active window config for the current type guess based on the root insets.
+     */
     val activeWindowConfig: StateFlow<ImeWindowConfig>
         field = MutableStateFlow(ImeWindowConfig.Default)
 
+    /**
+     * Holds the active window spec, which is computed based on the root insets and window config.
+     */
     val activeWindowSpec: StateFlow<ImeWindowSpec>
         field = MutableStateFlow<ImeWindowSpec>(ImeWindowSpec.Fallback)
 
+    /**
+     * Holds the state if the window is currently shown to the user, as reported by the IME service class.
+     */
     val isWindowShown: StateFlow<Boolean>
         field = MutableStateFlow(false)
+
+    private val updateConfigMutex = Mutex()
 
     init {
         combine(
@@ -70,9 +119,12 @@ class ImeWindowController(
             prefs.keyboard.fontSizeMultiplierPortrait.asFlow(),
             prefs.keyboard.fontSizeMultiplierLandscape.asFlow(),
         ) { rootInsets, multiplierP, multiplierL ->
-            when (rootInsets.inferredOrientation) {
-                ImeOrientation.PORTRAIT -> multiplierP / 100f
-                ImeOrientation.LANDSCAPE -> multiplierL / 100f
+            // TODO: this should adhere to form factor
+            // TODO: font scale needs a rework anyways, change this in font scale rework PR!
+            val rootBounds = rootInsets.boundsDp
+            when {
+                rootBounds.width <= rootBounds.height -> multiplierP / 100f
+                else -> multiplierL / 100f
             }
         }
 
@@ -88,21 +140,36 @@ class ImeWindowController(
         }
     }
 
+    /**
+     * Updates the active root window insets. Should be called exclusively by [ImeRootWindow].
+     */
     fun updateRootInsets(newInsets: ImeInsets.Root) {
         activeRootInsets.value = newInsets
     }
 
+    /**
+     * Updates the active window insets. Should be called exclusively by [ImeWindow].
+     */
     fun updateWindowInsets(newInsets: ImeInsets.Window) {
         activeWindowInsets.value = newInsets
     }
 
-    private val mutex = Mutex()
+    /**
+     * Updates the window config in the preferences. It will only update the window config for the type guess of
+     * the active root insets, and will keep other window configs intact.
+     *
+     * This function is thread-safe under the assumption that:
+     * a) The window config pref is only written to by this update function. On other concurrent write accesses
+     *    to the underlying pref the behavior is undefined.
+     * b) The active root insets do not change while the update in ongoing. A snapshot of the active root insets
+     *    will be taken once before any update attempt, and any inset change afterward will not be reflected.
+     */
     fun updateWindowConfig(function: (ImeWindowConfig) -> ImeWindowConfig) {
         val rootInsets = activeRootInsets.value
         val typeGuess = rootInsets.formFactor.typeGuess
         scope.launch {
             // not bullet-proof sync, but good enough considering this is only triggered by tap actions
-            mutex.withLock {
+            updateConfigMutex.withLock {
                 val newWindowConfig = activeWindowConfig.updateAndGet(function)
                 val byType = prefs.keyboard.windowConfig.get()
                 prefs.keyboard.windowConfig.set(byType.plus(typeGuess to newWindowConfig))
@@ -110,6 +177,24 @@ class ImeWindowController(
         }
     }
 
+    /**
+     * Called by the accompanying IME service class to request the current window insets.
+     *
+     * The window controller will honor the request for computation only if it knows where the window is
+     * located within the root window. If unknown, no response will be given.
+     *
+     * The response's touchable insets mode will always be [InputMethodService.Insets.TOUCHABLE_INSETS_REGION],
+     * even if the touchable area needs to be fullscreen, or matches the visible/content top. This is due to a
+     * bug that affects other modes, where no touch input is propagated to the root window in some cases.
+     *
+     * If the current window spec is of floating mode, the reported visible/content bounds will be empty. This
+     * causes the underlying application to not resize at all when the floating window is shown.
+     *
+     * @param outInsets The out insets to write the response into.
+     * @param isFullscreenInputRequired Flag indicating if, despite the current window config not requiring
+     *  it, a fullscreen touch area should be reported back. This can be used e.g. for bottom sheets that
+     *  cover a good portion of the screen, or other overlays requiring touch interaction.
+     */
     fun onComputeInsets(
         outInsets: InputMethodService.Insets,
         isFullscreenInputRequired: Boolean,
@@ -152,7 +237,8 @@ class ImeWindowController(
         outInsets.touchableInsets = InputMethodService.Insets.TOUCHABLE_INSETS_REGION
     }
 
-    fun onConfigurationChanged(newConfig: Configuration) {
+    fun onConfigurationChanged(@Suppress("UNUSED_PARAMETER") newConfig: Configuration) {
+        // As of writing newConfig is unused, but kept for forward-compatibility.
         editor.disable()
     }
 
@@ -196,6 +282,9 @@ class ImeWindowController(
         }
     }
 
+    /**
+     * Wrapper class for window-related actions.
+     */
     inner class Actions {
         fun toggleFloatingWindow() {
             updateWindowConfig { config ->
@@ -303,10 +392,22 @@ class ImeWindowController(
         }
     }
 
+    /**
+     * The window config editor is the in-window UI for moving and/or resizing the window without having to
+     * go to the settings. It both manages the state of the editor, and contains some utility functions.
+     */
     inner class Editor {
+        /**
+         * The state of the editor.
+         *
+         * @see EditorState
+         */
         val state: StateFlow<EditorState>
             field = MutableStateFlow(EditorState.INACTIVE)
 
+        /**
+         * The version of the editor. Is used to force spec re-computation.
+         */
         val version: StateFlow<Int>
             field = MutableStateFlow(0)
 
@@ -410,16 +511,43 @@ class ImeWindowController(
         }
     }
 
+    /**
+     * The window config editor state.
+     *
+     * @property isEnabled If the editor is currently enabled.
+     * @property isMoveGesture If an editor move gesture is ongoing. If true, implies that the editor is enabled.
+     * @property isResizeGesture If an editor resize gesture is ongoing. If true, implies that the editor is enabled.
+     *
+     * @see Editor
+     */
     enum class EditorState(
         val isEnabled: Boolean = false,
         val isMoveGesture: Boolean = false,
         val isResizeGesture: Boolean = false,
     ) {
+        /**
+         * The editor is disabled.
+         */
         INACTIVE,
+
+        /**
+         * The editor is enabled without any ongoing gesture.
+         */
         ACTIVE(isEnabled = true),
+
+        /**
+         * The editor is enabled and a move gesture is ongoing.
+         */
         ACTIVE_MOVE_GESTURE(isEnabled = true, isMoveGesture = true),
+
+        /**
+         * The editor is enabled and a resize gesture is ongoing.
+         */
         ACTIVE_RESIZE_GESTURE(isEnabled = true, isResizeGesture = true);
 
+        /**
+         * Indicates if any editor gesture is ongoing. If true, implies that the editor is enabled.
+         */
         val isAnyGesture: Boolean
             get() = isMoveGesture || isResizeGesture
     }

@@ -24,12 +24,20 @@ import androidx.window.core.layout.WindowSizeClass
 import androidx.window.core.layout.computeWindowSizeClass
 
 /**
- * See https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes
+ * The form factor describes the size class of a window, and takes a guess at the type of device and orientation.
+ *
+ * @property sizeClass The size class of the window, as calculated by androidx. Refer to the
+ *  [Android documentation](https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes)
+ *  for more information.
+ * @property typeGuess The type guess of device and orientation on a best-effort basis. May be incorrect.
  */
 data class ImeFormFactor(
     val sizeClass: WindowSizeClass,
     val typeGuess: Type,
 ) {
+    /**
+     * Identifies a type guess.
+     */
     enum class Type {
         PHONE_PORTRAIT,
         PHONE_LANDSCAPE,
@@ -40,8 +48,16 @@ data class ImeFormFactor(
     }
 
     companion object {
+        /**
+         * The form factor for a zero-size window.
+         */
         val Zero = of(DpRect(0.dp, 0.dp, 0.dp, 0.dp))
 
+        /**
+         * Constructs a new form factor based on a given root window size.
+         *
+         * @param boundsDp The root window bounds in dp.
+         */
         fun of(boundsDp: DpRect): ImeFormFactor {
             typealias BP = WindowSizeClass.Companion
             val sizeClass = WindowSizeClass.BREAKPOINTS_V2.computeWindowSizeClass(

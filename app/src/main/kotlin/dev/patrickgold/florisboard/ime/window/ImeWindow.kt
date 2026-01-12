@@ -81,10 +81,24 @@ import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
+/**
+ * The main entry point of the IME user interface. This includes the keyboard itself, devtools overlays,
+ * bottom sheets, and system bars management.
+ *
+ * Typically, the root window corresponds to the screen bounds, however this is not guaranteed. For
+ * consistency reasons, all sub sizes and positions should be derived from the root window.
+ *
+ * The size and position of this composable are used to calculate [ImeWindowController.activeRootInsets].
+ *
+ * @see ImeWindow
+ * @see BottomSheetWindow
+ * @see DevtoolsOverlay
+ */
 @Composable
 fun ImeRootWindow() {
     val density = LocalDensity.current
     val windowController = LocalWindowController.current
+
     val editorState by windowController.editor.state.collectAsState()
     val isEditorEnabled by remember {
         derivedStateOf {
@@ -115,24 +129,32 @@ fun ImeRootWindow() {
     }
 }
 
+/**
+ * The IME window contains all components that users would describe as the keyboard user interface.
+ *
+ * Visually and functionally, the IME window can be positioned in two modes:
+ * - Fixed:
+ *      The window is docked to the bottom edge of the root window and fills the maximum available
+ *      root window width. The height is dependent on the layout and smartbar configuration.
+ * - Floating:
+ *      The window may be positioned anywhere within the root window, similar to a window on a desktop.
+ *
+ * Most of the time all draw operations are contained within the bounds of this composable. Exceptions to
+ * this may be resize handles, popups, tooltips, and any other composable positioned absolutely.
+ *
+ * The size and position of this composable are used to calculate [ImeWindowController.activeWindowInsets].
+ *
+ * @see ImeWindow
+ * @see BottomSheetWindow
+ * @see DevtoolsOverlay
+ */
 @Composable
 fun BoxScope.ImeWindow() {
-    val context = LocalContext.current
     val density = LocalDensity.current
     val windowController = LocalWindowController.current
 
-    val keyboardManager by context.keyboardManager()
-
-    val state by keyboardManager.activeState.collectAsState()
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val windowConfig by windowController.activeWindowConfig.collectAsState()
-
-    ProvideActualLayoutDirection {
-        val layoutDirection = LocalLayoutDirection.current
-        LaunchedEffect(layoutDirection) {
-            keyboardManager.activeState.layoutDirection = layoutDirection
-        }
-    }
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
@@ -192,6 +214,13 @@ private fun ImeInnerWindow() {
 
     val state by keyboardManager.activeState.collectAsState()
     val windowSpec by windowController.activeWindowSpec.collectAsState()
+
+    ProvideActualLayoutDirection {
+        val layoutDirection = LocalLayoutDirection.current
+        LaunchedEffect(layoutDirection) {
+            keyboardManager.activeState.layoutDirection = layoutDirection
+        }
+    }
 
     SnyggBox(
         elementName = FlorisImeUi.WindowInner.elementName,
