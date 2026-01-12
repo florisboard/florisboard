@@ -68,7 +68,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.delay
-import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.ProvideActualLayoutDirection
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.drawBorder
@@ -78,7 +77,6 @@ import org.florisboard.lib.compose.ifIsInstance
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
-import org.florisboard.lib.snygg.ui.SnyggSurfaceView
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 
 /**
@@ -143,10 +141,6 @@ fun ImeRootWindow() {
  * this may be resize handles, popups, tooltips, and any other composable positioned absolutely.
  *
  * The size and position of this composable are used to calculate [ImeWindowController.activeWindowInsets].
- *
- * @see ImeWindow
- * @see BottomSheetWindow
- * @see DevtoolsOverlay
  */
 @Composable
 fun BoxScope.ImeWindow() {
@@ -184,19 +178,9 @@ fun BoxScope.ImeWindow() {
                 val newInsets = with(density) { ImeInsets.Window.of(boundsPx) }
                 windowController.updateWindowInsets(newInsets)
             },
-        supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
+        supportsBackgroundImage = true,
         allowClip = false,
     ) {
-        // The SurfaceView is used to render the background image under inline-autofill chips. These are only
-        // available on Android >=11, and SurfaceView causes trouble on Android 8/9, thus we render the image
-        // in the SurfaceView for Android >=11, and in the Compose View Tree for Android <=10.
-        if (AndroidVersion.ATLEAST_API30_R) {
-            SnyggSurfaceView(
-                elementName = FlorisImeUi.Window.elementName,
-                attributes = attributes,
-                modifier = Modifier.matchParentSize(),
-            )
-        }
         OneHandedPanel()
         ProvideKeyboardRowBaseHeight {
             ImeInnerWindow()

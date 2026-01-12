@@ -3,6 +3,8 @@
     <dimen name="key_width">33dp</dimen>
     <dimen name="key_height">42dp</dimen>
 
+    <dimen name="suggestions_chip_corner_radius">32dp</dimen>
+
     <dimen name="suggestion_chip_bg_padding_start">13dp</dimen>
     <dimen name="suggestion_chip_bg_padding_top">0dp</dimen>
     <dimen name="suggestion_chip_bg_padding_end">13dp</dimen>

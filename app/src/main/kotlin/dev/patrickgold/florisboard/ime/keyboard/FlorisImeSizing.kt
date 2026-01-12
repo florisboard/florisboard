@@ -31,7 +31,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
+import dev.patrickgold.florisboard.ime.smartbar.InlineSuggestionsChipMargin
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
@@ -109,10 +111,6 @@ object FlorisImeSizing {
     fun imeUiHeight(): Dp {
         return keyboardUiHeight() + smartbarUiHeight()
     }
-
-    object Static {
-        var smartbarHeightPx: Int = 0
-    }
 }
 
 @Deprecated("TODO: move logic fully into ImeWindow impl")
@@ -133,7 +131,11 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
     val (rowHeight, smartbarRowHeight) = heights
 
     SideEffect {
-        FlorisImeSizing.Static.smartbarHeightPx = with(density) { smartbarRowHeight.roundToPx() }
+        val marginV = InlineSuggestionsChipMargin.calculateTopPadding() +
+            InlineSuggestionsChipMargin.calculateBottomPadding()
+        NlpInlineAutofill.suggestionsChipHeightPx = with(density) {
+            (smartbarRowHeight - marginV).roundToPx()
+        }
     }
 
     CompositionLocalProvider(
