@@ -30,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import org.florisboard.lib.compose.conditional
 
 private val SheetOutOfBoundsBgColorInactive = Color(0x00000000)
@@ -68,8 +67,4 @@ fun BottomSheetHostUi(
             content = { content() },
         )
     }
-}
-
-fun KeyboardState.isBottomSheetShowing(): Boolean {
-    return isActionsEditorVisible
 }

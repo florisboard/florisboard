@@ -1,0 +1,37 @@
+/*
+ * Copyright (C) 2026 The FlorisBoard Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.patrickgold.florisboard
+
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.constant
+import io.kotest.property.arbitrary.float
+import io.kotest.property.arbitrary.map
+
+fun Arb.Companion.floatMaybeConstant(
+    min: Float = -Float.MAX_VALUE,
+    max: Float = Float.MAX_VALUE,
+    includeNonFiniteEdgeCases: Boolean = true,
+) = if (min == max) Arb.constant(min) else Arb.float(min, max, includeNonFiniteEdgeCases)
+
+fun Arb.Companion.dp(
+    min: Dp = -Float.MAX_VALUE.dp,
+    max: Dp = Float.MAX_VALUE.dp,
+    includeNonFiniteEdgeCases: Boolean = true,
+): Arb<Dp> = float(min.value..max.value, includeNonFiniteEdgeCases).map { it.dp }
+

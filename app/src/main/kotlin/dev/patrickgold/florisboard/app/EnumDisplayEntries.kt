@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -43,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
@@ -411,6 +411,18 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
+    ImeWindowMode::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = ImeWindowMode.FIXED,
+                label = stringRes(R.string.enum__ime_window_mode__fixed),
+            )
+            entry(
+                key = ImeWindowMode.FLOATING,
+                label = stringRes(R.string.enum__ime_window_mode__floating),
+            )
+        }
+    },
     KeyboardMode::class to DEFAULT to {
         listPrefEntries {
             entry(
@@ -456,18 +468,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = LandscapeInputUiMode.DYNAMICALLY_SHOW,
                 label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
-            )
-        }
-    },
-    OneHandedMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = OneHandedMode.START,
-                label = stringRes(R.string.enum__one_handed_mode__start),
-            )
-            entry(
-                key = OneHandedMode.END,
-                label = stringRes(R.string.enum__one_handed_mode__end),
             )
         }
     },

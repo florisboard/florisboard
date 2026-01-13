@@ -16,14 +16,15 @@
 
 package org.florisboard.lib.snygg.ui
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 
 /**
  * Simple interactive Box with integrated clickable state management.
@@ -58,38 +60,41 @@ fun SnyggIconButton(
     attributes: SnyggQueryAttributes = emptyMap(),
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val interactionSource = interactionSource ?: remember { MutableInteractionSource() }
     val selector = if (enabled) SnyggSelector.NONE else SnyggSelector.DISABLED
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
-
         Box(
             modifier = Modifier
                 .snyggMargin(style)
-                //TODO: We need to apply a size and a clip here
-                // otherwise the indication is wrong (see: OnHandedPanel buttons)
                 .snyggShadow(style)
                 .snyggBorder(style)
-                .snyggBackground(style)
+                .snyggBackground(style, allowClip = true)
                 .then(modifier)
-                .snyggPadding(style)
-                .clickable(
+                .combinedClickable(
                     onClick = onClick,
+                    onLongClick = onLongClick,
                     enabled = enabled,
                     role = Role.Button,
                     interactionSource = interactionSource,
                     indication = ripple(),
-                ),
+                )
+                .snyggPadding(style),
             contentAlignment = Alignment.Center,
         ) {
-            content()
+            val foreground = style.foreground
+            if (foreground is SnyggStaticColorValue) {
+                CompositionLocalProvider(LocalContentColor provides foreground.color, content = content)
+            } else {
+                content()
+            }
         }
     }
 }
-
 
 @Preview
 @Composable

@@ -28,6 +28,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -192,7 +194,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             val isIncognitoMode = keyboardManager.activeState.isIncognitoMode
             val icon = if (isIncognitoMode) {
                 when (incognitoDisplayMode.value) {
-                    IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE -> incognitoIcon!!
+                    IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE -> incognitoIcon
                     IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD -> arrowIcon
                 }
             } else {
@@ -211,11 +213,11 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(FlorisImeSizing.smartbarHeight),
+                .fillMaxHeight(),
         ) {
             val enterTransition = if (shouldAnimate) HorizontalEnterTransition else NoEnterTransition
             val exitTransition = if (shouldAnimate) HorizontalExitTransition else NoExitTransition
-            androidx.compose.animation.AnimatedVisibility(
+            this@CenterContent.AnimatedVisibility(
                 visible = !expanded,
                 enter = enterTransition,
                 exit = exitTransition,
@@ -226,16 +228,14 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     CandidatesRow()
                 }
             }
-            androidx.compose.animation.AnimatedVisibility(
+            this@CenterContent.AnimatedVisibility(
                 visible = expanded,
                 enter = enterTransition,
                 exit = exitTransition,
             ) {
                 QuickActionsRow(
                     FlorisImeUi.SmartbarSharedActionsRow.elementName,
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(FlorisImeSizing.smartbarHeight),
+                    modifier = modifier.fillMaxSize(),
                 )
             }
         }

@@ -47,6 +47,7 @@ import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.ui.graphics.vector.ImageVector
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -55,6 +56,7 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.vectorResource
 import org.florisboard.lib.compose.icons.ForwardDelete
@@ -211,6 +213,18 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         KeyCode.COMPACT_LAYOUT_TO_RIGHT,
         KeyCode.TOGGLE_COMPACT_LAYOUT -> {
             context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
+        }
+        KeyCode.TOGGLE_FLOATING_WINDOW -> {
+            val enabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard)
+            val disabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard_disable)
+            val windowController = FlorisImeService.windowControllerOrNull() ?: return enabledIcon
+            when (windowController.activeWindowConfig.value.mode) {
+                ImeWindowMode.FIXED -> enabledIcon
+                ImeWindowMode.FLOATING -> disabledIcon
+            }
+        }
+        KeyCode.TOGGLE_RESIZE_MODE -> {
+            context()?.vectorResource(id = R.drawable.ic_resize)
         }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice

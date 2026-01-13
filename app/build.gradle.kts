@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -23,6 +24,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.mikepenz.aboutlibraries)
+    alias(libs.plugins.kotest)
 }
 
 val projectMinSdk: String by project
@@ -43,8 +45,11 @@ kotlin {
         jvmTarget.set(JvmTarget.JVM_11)
         freeCompilerArgs.set(listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
+            "-jvm-default=enable",
             "-Xwhen-guards",
+            "-Xexplicit-backing-fields",
+            "-XXLanguage:+ContextParameters",
+            "-XXLanguage:+LocalTypeAliases",
         ))
     }
 }
@@ -148,8 +153,14 @@ android {
 
         create("benchmark") {
             initWith(getByName("release"))
+
+            applicationIdSuffix = ".bench"
+            versionNameSuffix = "-bench+${getGitCommitHash(short = true).get()}"
+
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
+
+            resValue("string", "floris_app_name", "FlorisBoard Bench")
         }
     }
 
@@ -174,6 +185,9 @@ android {
 }
 
 tasks.withType<Test> {
+    testLogging {
+        events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+    }
     useJUnitPlatform()
 }
 
@@ -201,6 +215,7 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)
@@ -220,7 +235,12 @@ dependencies {
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
 
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

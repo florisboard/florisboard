@@ -24,110 +24,51 @@ import android.inputmethodservice.ExtractEditText
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.AbstractComposeView
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.devtools.DevtoolsOverlay
 import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.clipboard.ClipboardInputLayout
-import dev.patrickgold.florisboard.ime.core.SelectSubtypePanel
-import dev.patrickgold.florisboard.ime.core.isSubtypeSelectionShowing
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.input.InputFeedbackController
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
+import dev.patrickgold.florisboard.ime.keyboard.isFullscreenInputRequired
+import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
-import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
-import dev.patrickgold.florisboard.ime.sheet.BottomSheetHostUi
-import dev.patrickgold.florisboard.ime.sheet.isBottomSheetShowing
-import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
-import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsEditorPanel
-import dev.patrickgold.florisboard.ime.text.TextInputLayout
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
-import dev.patrickgold.florisboard.lib.compose.SystemUiIme
+import dev.patrickgold.florisboard.ime.window.ImeRootView
+import dev.patrickgold.florisboard.ime.window.ImeWindowController
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
-import dev.patrickgold.florisboard.lib.util.ViewUtils
+import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.isOrientationLandscape
-import org.florisboard.lib.android.isOrientationPortrait
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.kotlin.collectIn
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggButton
-import org.florisboard.lib.snygg.ui.SnyggRow
-import org.florisboard.lib.snygg.ui.SnyggSurfaceView
-import org.florisboard.lib.snygg.ui.SnyggText
-import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.florisboard.lib.kotlin.collectLatestIn
+import java.lang.ref.WeakReference
 
 /**
  * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
@@ -170,104 +111,160 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         fun showUi() {
             val ims = FlorisImeServiceReference.get() ?: return
-            if (AndroidVersion.ATLEAST_API28_P) {
-                ims.requestShowSelf(0)
-            } else {
-                @Suppress("DEPRECATION")
-                ims.systemServiceOrNull(InputMethodManager::class)
-                    ?.showSoftInputFromInputMethod(ims.currentInputBinding.connectionToken, 0)
-            }
+            ims.showUi()
         }
 
         fun hideUi() {
             val ims = FlorisImeServiceReference.get() ?: return
-            if (AndroidVersion.ATLEAST_API28_P) {
-                ims.requestHideSelf(0)
-            } else {
-                @Suppress("DEPRECATION")
-                ims.systemServiceOrNull(InputMethodManager::class)
-                    ?.hideSoftInputFromInputMethod(ims.currentInputBinding.connectionToken, 0)
-            }
-            FlorisImeServiceReference.get()?.requestHideSelf(0)
+            ims.hideUi()
         }
 
         fun switchToPrevInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
-            val imm = ims.systemServiceOrNull(InputMethodManager::class)
-            try {
-                if (AndroidVersion.ATLEAST_API28_P) {
-                    return ims.switchToPreviousInputMethod()
-                } else {
-                    ims.window.window?.let { window ->
-                        @Suppress("DEPRECATION")
-                        return imm?.switchToLastInputMethod(window.attributes.token) == true
-                    }
-                }
-            } catch (e: Exception) {
-                flogError { "Unable to switch to the previous IME" }
-                imm?.showInputMethodPicker()
-            }
-            return false
+            return ims.switchToPrevInputMethod()
         }
 
         fun switchToNextInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
-            val imm = ims.systemServiceOrNull(InputMethodManager::class)
-            try {
-                if (AndroidVersion.ATLEAST_API28_P) {
-                    return ims.switchToNextInputMethod(false)
-                } else {
-                    ims.window.window?.let { window ->
-                        @Suppress("DEPRECATION")
-                        return imm?.switchToNextInputMethod(window.attributes.token, false) == true
-                    }
-                }
-            } catch (e: Exception) {
-                flogError { "Unable to switch to the next IME" }
-                imm?.showInputMethodPicker()
-            }
-            return false
+            return ims.switchToNextInputMethod()
         }
 
         fun switchToVoiceInputMethod(): Boolean {
             val ims = FlorisImeServiceReference.get() ?: return false
-            val imm = ims.systemServiceOrNull(InputMethodManager::class) ?: return false
-            val list: List<InputMethodInfo> = imm.enabledInputMethodList
-            for (el in list) {
-                for (i in 0 until el.subtypeCount) {
-                    if (el.getSubtypeAt(i).mode != "voice") continue
-                    if (AndroidVersion.ATLEAST_API28_P) {
-                        ims.switchInputMethod(el.id, el.getSubtypeAt(i))
-                        return true
-                    } else {
-                        ims.window.window?.let { window ->
-                            @Suppress("DEPRECATION")
-                            imm.setInputMethod(window.attributes.token, el.id)
-                            return true
-                        }
-                    }
-                }
-            }
-            ims.showShortToastSync("Failed to find voice IME, do you have one installed?")
-            return false
+            return ims.switchToVoiceInputMethod()
+        }
+
+        fun showImePicker(): Boolean {
+            val ims = FlorisImeServiceReference.get() ?: return false
+            return InputMethodUtils.showImePicker(ims)
+        }
+
+        fun windowControllerOrNull(): ImeWindowController? {
+            val ims = FlorisImeServiceReference.get() ?: return null
+            return ims.windowController
         }
     }
 
+    fun hideUi() {
+        requestHideSelf(0)
+    }
+
+    /**
+     * Show the Ime UI
+     *
+     * Note: This function can be replaced with a `requestShowSelf(0)`
+     * call once we've set the minApiLevel to 28 (Android 9)
+     */
+    fun showUi() {
+        if (AndroidVersion.ATLEAST_API28_P) {
+            requestShowSelf(0)
+        } else {
+            @Suppress("DEPRECATION")
+            systemServiceOrNull(InputMethodManager::class)
+                ?.showSoftInputFromInputMethod(currentInputBinding.connectionToken, 0)
+        }
+    }
+
+
+    /**
+     * Switch to previous input method
+     *
+     * Note: This function can be replaced with a `switchToPreviousInputMethod()`
+     * call once we've set the minApiLevel to 28 (Android 9)
+     *
+     * @return true if the switch was successful
+     */
+    fun switchToPrevInputMethod(): Boolean {
+        val imm = systemServiceOrNull(InputMethodManager::class)
+        try {
+            if (AndroidVersion.ATLEAST_API28_P) {
+                return switchToPreviousInputMethod()
+            } else {
+                window.window?.let { window ->
+                    @Suppress("DEPRECATION")
+                    return imm?.switchToLastInputMethod(window.attributes.token) == true
+                }
+            }
+        } catch (e: Exception) {
+            flogError { "Unable to switch to the previous IME" }
+            imm?.showInputMethodPicker()
+        }
+        return false
+    }
+
+    /**
+     * Switch to next input method
+     *
+     * Note: This function can be replaced with a `switchToNextInputMethod(false)`
+     * call once we've set the minApiLevel to 28 (Android 9)
+     *
+     * @return true if the switch was successful
+     */
+    fun switchToNextInputMethod(): Boolean {
+        val imm = systemServiceOrNull(InputMethodManager::class)
+        try {
+            if (AndroidVersion.ATLEAST_API28_P) {
+                return switchToNextInputMethod(false)
+            } else {
+                window.window?.let { window ->
+                    @Suppress("DEPRECATION")
+                    return imm?.switchToNextInputMethod(window.attributes.token, false) == true
+                }
+            }
+        } catch (e: Exception) {
+            flogError { "Unable to switch to the next IME" }
+            imm?.showInputMethodPicker()
+        }
+        return false
+    }
+
+    /**
+     * Switch to next input method
+     *
+     * Note: The inner part of this function can be replaced with a
+     *
+     * `switchInputMethod(el.id, el.getSubtypeAt(i))` call once we've set the minApiLevel to 28 (Android 9)
+     *
+     * @return true if the switch was successful
+     */
+    fun switchToVoiceInputMethod(): Boolean {
+        val imm = systemServiceOrNull(InputMethodManager::class) ?: return false
+        val list: List<InputMethodInfo> = imm.enabledInputMethodList
+        for (el in list) {
+            for (i in 0 until el.subtypeCount) {
+                // Check if the subtype is a voice input method.
+                // We need to hardcode 'voice' here because the SUBTYPE_MODE_VOICE constant is private.
+                // https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/base/core/java/android/view/inputmethod/InputMethodManager.java;drc=2b278ab3ac73bb5596327aac1298df85cd94e454;l=309
+                if (el.getSubtypeAt(i).mode != "voice") continue
+                if (AndroidVersion.ATLEAST_API28_P) {
+                    switchInputMethod(el.id, el.getSubtypeAt(i))
+                    return true
+                } else {
+                    window.window?.let { window ->
+                        @Suppress("DEPRECATION")
+                        imm.setInputMethod(window.attributes.token, el.id)
+                        return true
+                    }
+                }
+            }
+        }
+        showShortToastSync("Failed to find voice IME, do you have one installed?")
+        return false
+    }
+
     private val prefs by FlorisPreferenceStore
-    private val editorInstance by editorInstance()
+    val editorInstance by editorInstance()
     private val keyboardManager by keyboardManager()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
 
+    val windowController = ImeWindowController(prefs, lifecycleScope)
+
     private val activeState get() = keyboardManager.activeState
-    private var inputWindowView by mutableStateOf<View?>(null)
-    private var inputViewSize by mutableStateOf(IntSize.Zero)
-    private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
-    private var isWindowShown: Boolean = false
-    private var isFullscreenUiMode by mutableStateOf(false)
-    private var isExtractUiShown by mutableStateOf(false)
-    private var resourcesContext by mutableStateOf(this as Context)
+    val inputFeedbackController by lazy { InputFeedbackController.new(this) }
+    var resourcesContext by mutableStateOf(this as Context)
+        private set
 
     private val wallpaperChangeReceiver = WallpaperChangeReceiver()
 
@@ -279,6 +276,10 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
+        windowController.onConfigurationChanged(resources.configuration)
+        windowController.activeWindowConfig.collectLatestIn(lifecycleScope) {
+            keyboardManager.updateActiveEvaluators() // TODO: wacky solution, but works for now
+        }
         subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
             val config = Configuration(resources.configuration)
             if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
@@ -300,15 +301,12 @@ class FlorisImeService : LifecycleInputMethodService() {
         registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
 
-    override fun onCreateInputView(): View {
+    override fun onCreateInputView(): View? {
         super.installViewTreeOwners()
-        // Instantiate and install bottom sheet host UI view
-        val bottomSheetView = FlorisBottomSheetHostUiView()
-        window.window!!.findViewById<ViewGroup>(android.R.id.content).addView(bottomSheetView)
-        // Instantiate and return input view
-        val composeView = ComposeInputView()
-        inputWindowView = composeView
-        return composeView
+        val content = window.window!!.findViewById<ViewGroup>(android.R.id.content)
+        content.addView(ImeRootView(this))
+        // Disable the default input view placement
+        return null
     }
 
     override fun onCreateCandidatesView(): View? {
@@ -323,13 +321,13 @@ class FlorisImeService : LifecycleInputMethodService() {
         // is a known one to break AOSP standards...
         val defaultExtractView = super.onCreateExtractTextView()
         if (defaultExtractView == null || defaultExtractView !is ViewGroup) {
-            return ComposeExtractedLandscapeInputView(null)
+            return ExtractedInputRootView(this, null)
         }
         val extractEditText = defaultExtractView.findViewById<ExtractEditText>(android.R.id.inputExtractEditText)
         (extractEditText?.parent as? ViewGroup)?.removeView(extractEditText)
-        defaultExtractView.apply {
-            removeAllViews()
-            addView(ComposeExtractedLandscapeInputView(extractEditText))
+        defaultExtractView.let {
+            it.removeAllViews()
+            it.addView(ExtractedInputRootView(this, extractEditText))
         }
         return defaultExtractView
     }
@@ -337,13 +335,13 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         themeManager.configurationChangeCounter.update { it + 1 }
+        windowController.onConfigurationChanged(newConfig)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
-        inputWindowView = null
     }
 
     override fun onStartInput(info: EditorInfo?, restarting: Boolean) {
@@ -410,29 +408,25 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onWindowShown() {
         super.onWindowShown()
-        if (isWindowShown) {
-            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
-            return
-        } else {
+        if (windowController.onWindowShown()) {
             flogInfo(LogTopic.IMS_EVENTS)
+            inputFeedbackController.updateSystemPrefsState()
+        } else {
+            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
         }
-        isWindowShown = true
-        inputFeedbackController.updateSystemPrefsState()
     }
 
     override fun onWindowHidden() {
         super.onWindowHidden()
-        if (!isWindowShown) {
-            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
-            return
-        } else {
+        if (windowController.onWindowHidden()) {
             flogInfo(LogTopic.IMS_EVENTS)
-        }
-        isWindowShown = false
-        activeState.batchEdit {
-            activeState.imeUiMode = ImeUiMode.TEXT
-            activeState.isActionsOverflowVisible = false
-            activeState.isActionsEditorVisible = false
+            activeState.batchEdit {
+                activeState.imeUiMode = ImeUiMode.TEXT
+                activeState.isActionsOverflowVisible = false
+                activeState.isActionsEditorVisible = false
+            }
+        } else {
+            flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
         }
     }
 
@@ -448,12 +442,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    override fun updateFullscreenMode() {
-        super.updateFullscreenMode()
-        isFullscreenUiMode = isFullscreenMode
-        updateSoftInputWindowLayoutParameters()
-    }
-
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
             editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info), isRestart = true)
@@ -463,11 +451,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             LandscapeInputUiMode.NEVER_SHOW -> isExtractViewShown = false
             LandscapeInputUiMode.ALWAYS_SHOW -> isExtractViewShown = true
         }
-    }
-
-    override fun setExtractViewShown(shown: Boolean) {
-        super.setExtractViewShown(shown)
-        isExtractUiShown = shown
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -509,57 +492,9 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
-        super.onComputeInsets(outInsets)
         if (outInsets == null) return
-
-        val inputWindowView = inputWindowView ?: return
-        // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
-        if (!isInputViewShown) {
-            outInsets.contentTopInsets = inputWindowView.height
-            outInsets.visibleTopInsets = inputWindowView.height
-            return
-        }
-
-        val visibleTopY = inputWindowView.height - inputViewSize.height
-        val needAdditionalOverlay =
-            prefs.smartbar.enabled.get() &&
-                prefs.smartbar.layout.get() == SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED &&
-                prefs.smartbar.extendedActionsExpanded.get() &&
-                prefs.smartbar.extendedActionsPlacement.get() == ExtendedActionsPlacement.OVERLAY_APP_UI &&
-                keyboardManager.activeState.imeUiMode == ImeUiMode.TEXT
-
-        outInsets.contentTopInsets = visibleTopY
-        outInsets.visibleTopInsets = visibleTopY
-        outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_REGION
-        val left = 0
-        val top = if (keyboardManager.activeState.isBottomSheetShowing() || keyboardManager.activeState.isSubtypeSelectionShowing()) {
-            0
-        } else {
-            visibleTopY - if (needAdditionalOverlay) FlorisImeSizing.Static.smartbarHeightPx else 0
-        }
-        val right = inputViewSize.width
-        val bottom = inputWindowView.height
-        outInsets.touchableRegion.set(left, top, right, bottom)
-    }
-
-    /**
-     * Updates the layout params of the window and compose input view.
-     */
-    private fun updateSoftInputWindowLayoutParameters() {
-        val w = window?.window ?: return
-        // TODO: Verify that this doesn't give us a padding problem
-        WindowCompat.setDecorFitsSystemWindows(w, false)
-        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val layoutHeight = if (isFullscreenUiMode) {
-            WindowManager.LayoutParams.WRAP_CONTENT
-        } else {
-            WindowManager.LayoutParams.MATCH_PARENT
-        }
-        val inputArea = w.findViewById<View>(android.R.id.inputArea) ?: return
-        ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
-        ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-        val inputWindowView = inputWindowView ?: return
-        ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
+        val state = keyboardManager.activeState.snapshot()
+        windowController.onComputeInsets(outInsets, state.isFullscreenInputRequired())
     }
 
     override fun getTextForImeAction(imeOptions: Int): String? {
@@ -579,290 +514,11 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    @Composable
-    private fun ImeUiWrapper() {
-        ProvideLocalizedResources(
-            resourcesContext,
-            appName = R.string.app_name,
-        ) {
-            ProvideKeyboardRowBaseHeight {
-                CompositionLocalProvider(LocalInputFeedbackController provides inputFeedbackController) {
-                    FlorisImeTheme {
-                        // Do not apply system bar padding here yet, we want to draw it ourselves
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            if (!(isFullscreenUiMode && isExtractUiShown)) {
-                                DevtoolsOverlay(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(1f),
-                                )
-                            }
-                            ImeUi()
-                            SystemUiIme()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @OptIn(ExperimentalComposeUiApi::class)
-    @Composable
-    private fun ImeUi() {
-        val state by keyboardManager.activeState.collectAsState()
-        val attributes = mapOf(
-            FlorisImeUi.Attr.Mode to state.keyboardMode.toString(),
-            FlorisImeUi.Attr.ShiftState to state.inputShiftState.toString(),
-        )
-        val layoutDirection = LocalLayoutDirection.current
-        LaunchedEffect(layoutDirection) {
-            keyboardManager.activeState.layoutDirection = layoutDirection
-        }
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-            SnyggBox(
-                elementName = FlorisImeUi.Window.elementName,
-                attributes = attributes,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .onGloballyPositioned { coords -> inputViewSize = coords.size },
-                supportsBackgroundImage = !AndroidVersion.ATLEAST_API30_R,
-                allowClip = false,
-            ) {
-                // The SurfaceView is used to render the background image under inline-autofill chips. These are only
-                // available on Android >=11, and SurfaceView causes trouble on Android 8/9, thus we render the image
-                // in the SurfaceView for Android >=11, and in the Compose View Tree for Android <=10.
-                if (AndroidVersion.ATLEAST_API30_R) {
-                    SnyggSurfaceView(
-                        elementName = FlorisImeUi.Window.elementName,
-                        attributes = attributes,
-                        modifier = Modifier.matchParentSize(),
-                    )
-                }
-                val configuration = LocalConfiguration.current
-                val bottomOffset by if (configuration.isOrientationPortrait()) {
-                    prefs.keyboard.bottomOffsetPortrait
-                } else {
-                    prefs.keyboard.bottomOffsetLandscape
-                }.observeAsTransformingState { it.dp }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        // Apply system bars padding here (we already drew our keyboard background)
-                        .safeDrawingPadding()
-                        .padding(bottom = bottomOffset),
-                ) {
-                    val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                    val oneHandedModeEnabled by prefs.keyboard.oneHandedModeEnabled.observeAsState()
-                    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
-                    val keyboardWeight = when {
-                        !oneHandedModeEnabled || configuration.isOrientationLandscape() -> 1f
-                        else -> oneHandedModeScaleFactor / 100f
-                    }
-                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
-                        OneHandedPanel(
-                            panelSide = OneHandedMode.START,
-                            weight = 1f - keyboardWeight,
-                        )
-                    }
-                    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
-                        Box(
-                            modifier = Modifier
-                                .weight(keyboardWeight)
-                                .wrapContentHeight(),
-                        ) {
-                            when (state.imeUiMode) {
-                                ImeUiMode.TEXT -> TextInputLayout()
-                                ImeUiMode.MEDIA -> MediaInputLayout()
-                                ImeUiMode.CLIPBOARD -> ClipboardInputLayout()
-                            }
-                        }
-                    }
-                    if (oneHandedModeEnabled && oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
-                        OneHandedPanel(
-                            panelSide = OneHandedMode.END,
-                            weight = 1f - keyboardWeight,
-                        )
-                    }
-                }
-            }
-        }
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return keyboardManager.onHardwareKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
-    }
-
-    private inner class ComposeInputView : AbstractComposeView(this) {
-        init {
-            isHapticFeedbackEnabled = true
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        }
-
-        @Composable
-        override fun Content() {
-            ImeUiWrapper()
-        }
-
-        override fun getAccessibilityClassName(): CharSequence {
-            return javaClass.name
-        }
-
-        override fun onAttachedToWindow() {
-            super.onAttachedToWindow()
-            updateSoftInputWindowLayoutParameters()
-        }
-    }
-
-    private inner class FlorisBottomSheetHostUiView : AbstractComposeView(this) {
-        init {
-            isHapticFeedbackEnabled = true
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        }
-
-        @Composable
-        override fun Content() {
-            val context = LocalContext.current
-            val keyboardManager by context.keyboardManager()
-            val state by keyboardManager.activeState.collectAsState()
-
-            ProvideLocalizedResources(
-                resourcesContext,
-                appName = R.string.app_name,
-                forceLayoutDirection = LayoutDirection.Ltr,
-            ) {
-                FlorisImeTheme {
-                    BottomSheetHostUi(
-                        isShowing = state.isBottomSheetShowing() || state.isSubtypeSelectionShowing(),
-                        onHide = {
-                            if (state.isBottomSheetShowing()) {
-                                keyboardManager.activeState.isActionsEditorVisible = false
-                            }
-                            if (state.isSubtypeSelectionShowing()) {
-                                keyboardManager.activeState.isSubtypeSelectionVisible = false
-                            }
-                        },
-                    ) {
-                        if (state.isBottomSheetShowing()) {
-                            QuickActionsEditorPanel()
-                        }
-                        if (state.isSubtypeSelectionShowing()) {
-                            SelectSubtypePanel()
-                        }
-                    }
-                }
-            }
-        }
-
-        override fun getAccessibilityClassName(): CharSequence {
-            return javaClass.name
-        }
-    }
-
-    private inner class ComposeExtractedLandscapeInputView(eet: ExtractEditText?) : FrameLayout(this) {
-        val composeView: ComposeView
-        val extractEditText: ExtractEditText
-
-        init {
-            isHapticFeedbackEnabled = true
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-
-            extractEditText = (eet ?: ExtractEditText(context)).also {
-                it.id = android.R.id.inputExtractEditText
-                it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-                it.background = null
-                it.gravity = Gravity.TOP
-                it.isVerticalScrollBarEnabled = true
-            }
-            addView(extractEditText)
-
-            composeView = ComposeView(context).also { it.setContent { Content() } }
-            addView(composeView)
-        }
-
-        @Composable
-        fun Content() {
-            ProvideLocalizedResources(
-                resourcesContext,
-                appName = R.string.app_name,
-                forceLayoutDirection = LayoutDirection.Ltr,
-            ) {
-                FlorisImeTheme {
-                    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
-                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
-                        SnyggRow(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            SnyggBox(
-                                elementName = FlorisImeUi.ExtractedLandscapeInputLayout.elementName,
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
-                            ) {
-                                val fieldStyle = rememberSnyggThemeQuery(FlorisImeUi.ExtractedLandscapeInputField.elementName)
-                                val foreground = fieldStyle.foreground()
-                                AndroidView(
-                                    factory = { extractEditText },
-                                    update = { view ->
-                                        view.background = null
-                                        view.backgroundTintList = null
-                                        view.foregroundTintList = null
-                                        view.setTextColor(foreground.toArgb())
-                                        view.setHintTextColor(foreground.copy(foreground.alpha * 0.6f).toArgb())
-                                        view.setTextSize(
-                                            TypedValue.COMPLEX_UNIT_SP,
-                                            fieldStyle.fontSize(default = 16.sp).value,
-                                        )
-                                    },
-                                )
-                            }
-                            SnyggButton(
-                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
-                                onClick = {
-                                    if (activeEditorInfo.extractedActionId != 0) {
-                                        currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
-                                    } else {
-                                        editorInstance.performEnterAction(activeEditorInfo.imeOptions.action)
-                                    }
-                                },
-                                modifier = Modifier.padding(horizontal = 8.dp),
-                            ) {
-                                SnyggText(
-                                    text = activeEditorInfo.extractedActionLabel
-                                        ?: getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
-                                        ?: "ACTION",
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        override fun getAccessibilityClassName(): CharSequence {
-            return javaClass.name
-        }
-
-        override fun onAttachedToWindow() {
-            removeView(extractEditText)
-            super.onAttachedToWindow()
-            try {
-                (parent as LinearLayout).let { extractEditLayout ->
-                    extractEditLayout.layoutParams = LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                    ).also { it.setMargins(0, 0, 0, 0) }
-                    extractEditLayout.setPadding(0, 0, 0, 0)
-                }
-            } catch (e: Throwable) {
-                flogError { e.message.toString() }
-            }
-        }
     }
 }

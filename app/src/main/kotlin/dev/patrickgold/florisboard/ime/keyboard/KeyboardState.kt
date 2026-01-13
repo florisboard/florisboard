@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.sheet.isAnyBottomSheetVisible
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -278,4 +279,8 @@ class ObservableKeyboardState private constructor(
             endBatchEdit()
         }
     }
+}
+
+fun KeyboardState.isFullscreenInputRequired(): Boolean {
+    return isAnyBottomSheetVisible()
 }

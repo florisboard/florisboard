@@ -47,7 +47,6 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -175,7 +174,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }
 
-    private fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
+    fun updateActiveEvaluators(action: () -> Unit = { }) = scope.launch {
         activeEvaluatorGuard.withLock {
             action()
             val editorInfo = editorInstance.activeInfo
@@ -237,10 +236,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes.size > 1
-    }
-
-    suspend fun toggleOneHandedMode() {
-        prefs.keyboard.oneHandedModeEnabled.set(!prefs.keyboard.oneHandedModeEnabled.get())
     }
 
     fun executeSwipeAction(swipeAction: SwipeAction) {
@@ -678,6 +673,8 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyDown(data: KeyData) {
+        val windowController = FlorisImeService.windowControllerOrNull()
+        windowController?.editor?.disableIfNoGestureInProgress()
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -694,6 +691,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyUp(data: KeyData) = activeState.batchEdit {
+        val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -724,15 +722,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
             }
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> scope.launch { toggleOneHandedMode() }
-            KeyCode.COMPACT_LAYOUT_TO_LEFT -> scope.launch {
-                prefs.keyboard.oneHandedMode.set(OneHandedMode.START)
-                toggleOneHandedMode()
-            }
-            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> scope.launch {
-                prefs.keyboard.oneHandedMode.set(OneHandedMode.END)
-                toggleOneHandedMode()
-            }
+            KeyCode.TOGGLE_FLOATING_WINDOW -> windowController.actions.toggleFloatingWindow()
+            KeyCode.TOGGLE_COMPACT_LAYOUT -> windowController.actions.toggleCompactLayout()
+            KeyCode.COMPACT_LAYOUT_TO_LEFT -> windowController.actions.compactLayoutToLeft()
+            KeyCode.COMPACT_LAYOUT_TO_RIGHT -> windowController.actions.compactLayoutToRight()
+            KeyCode.TOGGLE_RESIZE_MODE -> windowController.editor.toggleEnabled()
             KeyCode.DELETE -> handleBackwardDelete(OperationUnit.CHARACTERS)
             KeyCode.DELETE_WORD -> handleBackwardDelete(OperationUnit.WORDS)
             KeyCode.ENTER -> handleEnter()

@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlinx.kover)
+    alias(libs.plugins.kotest)
 }
 
 val projectGroupId: String by project
@@ -65,7 +66,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines)
 
-    testImplementation(libs.junit.jupiter.params)
-    testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner.junit5)
 }
 

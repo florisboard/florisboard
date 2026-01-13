@@ -36,6 +36,36 @@
     "background": "var(--background)",
     "foreground": "var(--on-background)"
   },
+  "window[windowmode=`floating`]": {
+    "shadow-elevation": "8dp",
+    "shape": "rounded-corner(5%, 5%, 5%, 5%)"
+  },
+  "window-move-handle[windowmode=`fixed`]": {
+    "background": "var(--surface)",
+    "foreground": "var(--primary)",
+    "font-size": "24sp",
+    "margin": "16dp 0dp",
+    "padding": "8dp",
+    "shape": "circle()"
+  },
+  "window-resize-handle": {
+    "background": "var(--primary)"
+  },
+  "window-resize-action[windowmode=`fixed`]": {
+    "background": "var(--primary)",
+    "foreground": "var(--on-primary)",
+    "font-size": "24sp",
+    "padding": "8dp",
+    "shape": "circle()"
+  },
+  "window-resize-action[windowmode=`floating`]": {
+    "background": "var(--surface)",
+    "foreground": "var(--primary)",
+    "shape": "circle()"
+  },
+  "floating-dock-to-fixed-indicator": {
+    "background": "var(--primary)"
+  },
 
   "key": {
     "background": "transparent",
@@ -442,6 +472,11 @@
   "one-handed-panel": {
     "background": "var(--one-hand-background)",
     "foreground": "var(--one-hand-foreground)"
+  },
+  "one-handed-panel-button": {
+    "padding": "8dp",
+    "font-size": "24sp",
+    "shape": "circle()"
   },
 
   "subtype-panel": {

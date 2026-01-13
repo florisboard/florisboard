@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -92,7 +93,9 @@ fun SnyggBox(
         ) {
             if (imagePath != null) {
                 AsyncImage(
-                    modifier = Modifier.matchParentSize(),
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(style.shape()),
                     // https://github.com/coil-kt/coil/issues/159
                     model = ImageRequest.Builder(context)
                         .data(imagePath)

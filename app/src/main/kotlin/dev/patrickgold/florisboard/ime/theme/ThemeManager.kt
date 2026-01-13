@@ -18,17 +18,10 @@ package dev.patrickgold.florisboard.ime.theme
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.Icon
-import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.RippleDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.TypedValue
-import androidx.annotation.AttrRes
 import androidx.annotation.RequiresApi
 import androidx.autofill.inline.UiVersions
 import androidx.autofill.inline.common.ImageViewStyle
@@ -37,7 +30,6 @@ import androidx.autofill.inline.common.ViewStyle
 import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -49,9 +41,6 @@ import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.util.TimeUtils.javaLocalTime
-import dev.patrickgold.florisboard.lib.util.ViewUtils
-import java.time.LocalTime
-import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -67,6 +56,8 @@ import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import java.time.LocalTime
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -212,7 +203,7 @@ class ThemeManager(context: Context) {
         val bgColor = styleSet.background(default = Color.White)
         val fgColor = styleSet.foreground(default = Color.Black)
 
-        val bgDrawableId = androidx.autofill.R.drawable.autofill_inline_suggestion_chip_background
+        val bgDrawableId = R.drawable.inline_autofill_chip_bg
         val bgDrawable = Icon.createWithResource(context, bgDrawableId).apply {
             setTint(bgColor.toArgb())
         }
@@ -267,20 +258,6 @@ class ThemeManager(context: Context) {
         }
     }
 
-    private fun getColorFromThemeAttribute(
-        context: Context, typedValue: TypedValue, @AttrRes attr: Int,
-    ): Int? {
-        return if (context.theme.resolveAttribute(attr, typedValue, true)) {
-            if (typedValue.type == TypedValue.TYPE_REFERENCE) {
-                ContextCompat.getColor(context, typedValue.resourceId)
-            } else {
-                typedValue.data
-            }
-        } else {
-            null
-        }
-    }
-
     data class ThemeInfo(
         val name: ExtensionComponentName,
         val config: ThemeExtensionComponent,
@@ -318,49 +295,5 @@ class ThemeManager(context: Context) {
         companion object {
             val DEFAULT = RemoteColors("undefined", null, null, null)
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.R)
-    private fun autofillChipBackgroundOf(
-        bgColor: Color,
-        rippleColor: Color,
-    ): Drawable {
-        val cornerRadius = ViewUtils.dp2px(32f)
-        val shadowColors = intArrayOf(
-            Color.Transparent.toArgb(),
-            Color.Transparent.toArgb(),
-            Color(red = 0x00, green = 0x00, blue = 0x00, alpha = 0x1F).toArgb(),
-        )
-        val shadowDistribution = floatArrayOf(0f, 0.5f, 1f)
-        val padding = ViewUtils.dp2px(5f).toInt()
-
-        fun gradientDrawableOf() = GradientDrawable().also {
-            it.shape = GradientDrawable.RECTANGLE
-            it.cornerRadius = cornerRadius
-            it.setGradientCenter(0.5f, 0.5f)
-            it.gradientType = GradientDrawable.LINEAR_GRADIENT
-            it.setColors(shadowColors, shadowDistribution)
-        }
-
-        val layerList = LayerDrawable(arrayOf(
-            gradientDrawableOf().also {
-                it.orientation = GradientDrawable.Orientation.BOTTOM_TOP
-            },
-            gradientDrawableOf().also {
-                it.orientation = GradientDrawable.Orientation.LEFT_RIGHT
-            },
-            gradientDrawableOf().also {
-                it.orientation = GradientDrawable.Orientation.TOP_BOTTOM
-            },
-            gradientDrawableOf().also {
-                it.orientation = GradientDrawable.Orientation.RIGHT_LEFT
-            },
-            GradientDrawable().also {
-                it.shape = GradientDrawable.RECTANGLE
-                it.cornerRadius = cornerRadius
-                it.setColor(bgColor.toArgb())
-            },
-        )).also { it.setLayerInset(4, padding, padding, padding, padding) }
-        return RippleDrawable(ColorStateList.valueOf(rippleColor.toArgb()), layerList, null)
     }
 }

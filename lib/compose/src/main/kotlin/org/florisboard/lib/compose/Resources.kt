@@ -18,14 +18,17 @@ package org.florisboard.lib.compose
 
 import android.content.Context
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -49,6 +52,10 @@ val LocalLocalizedDateTimeFormatter = staticCompositionLocalOf {
         .withZone(ZoneId.systemDefault())
 }
 
+private val LocalActualLayoutDirection = staticCompositionLocalOf {
+    LayoutDirection.Ltr
+}
+
 @Composable
 fun ProvideLocalizedResources(
     resourcesContext: Context,
@@ -56,11 +63,8 @@ fun ProvideLocalizedResources(
     forceLayoutDirection: LayoutDirection? = null,
     content: @Composable () -> Unit,
 ) {
-    val layoutDirection = forceLayoutDirection ?: when (resourcesContext.resources.configuration.layoutDirection) {
-        View.LAYOUT_DIRECTION_LTR -> LayoutDirection.Ltr
-        View.LAYOUT_DIRECTION_RTL -> LayoutDirection.Rtl
-        else -> error("Given configuration specifies invalid layout direction!")
-    }
+    val actualLayoutDirection = LocalLayoutDirection.current
+    val layoutDirection = forceLayoutDirection ?: actualLayoutDirection
     val localeList = resourcesContext.resources.configuration.locales
     val dateTimeFormatter = remember(resourcesContext) {
         DateTimeFormatter
@@ -71,11 +75,18 @@ fun ProvideLocalizedResources(
     CompositionLocalProvider(
         LocalResourcesContext provides resourcesContext,
         LocalLocalizedDateTimeFormatter provides dateTimeFormatter,
+        LocalActualLayoutDirection provides LocalLayoutDirection.current,
         LocalLayoutDirection provides layoutDirection,
         LocalAppNameString provides stringResource(appName),
     ) {
         content()
     }
+}
+
+@Composable
+fun ProvideActualLayoutDirection(content: @Composable () -> Unit) {
+    val actualLayoutDirection = LocalActualLayoutDirection.current
+    CompositionLocalProvider(LocalLayoutDirection provides actualLayoutDirection, content)
 }
 
 @Composable
@@ -108,4 +119,9 @@ private fun formatString(
         "app_name" to LocalAppNameString.current,
         *args
     )
+}
+
+@Composable
+fun drawableRes(@DrawableRes resId: Int): ImageVector {
+    return ImageVector.vectorResource(resId)
 }

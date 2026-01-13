@@ -68,11 +68,13 @@ object KeyCode {
     const val CLIPBOARD_CLEAR_FULL_HISTORY = -37
     const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -38
 
+    const val TOGGLE_FLOATING_WINDOW =      -109
     const val TOGGLE_COMPACT_LAYOUT =       -110
     const val COMPACT_LAYOUT_TO_LEFT =      -111
     const val COMPACT_LAYOUT_TO_RIGHT =     -112
     const val SPLIT_LAYOUT =                -113
     const val MERGE_LAYOUT =                -114
+    const val TOGGLE_RESIZE_MODE =          -115
 
     const val UNDO =                        -131
     const val REDO =                        -132
