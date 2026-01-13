@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,30 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import org.florisboard.lib.compose.DpSizeSerializer
 
+/**
+ * The window props describe the necessary properties for window placement and sizing.
+ */
 sealed interface ImeWindowProps {
+    /**
+     * The keyboard height describes the baseline height the keyboard would have for 4 rows and 0 smartbar rows.
+     */
     val keyboardHeight: Dp
 
     fun calcFontScale(constraints: ImeWindowConstraints): Float
 
+    /**
+     * The window props for fixed mode. It assumes the window is docked to the bottom root window edge and
+     * fills the maximum available root window width.
+     *
+     * @property keyboardHeight The baseline keyboard height, which may increase for more layout rows or
+     *  Smartbar configuration. Must be a non-negative real number.
+     * @property paddingLeft The padding from the left window edge to the inner window.
+     *  Must be a non-negative real number.
+     * @property paddingRight The padding from the right window edge to the inner window.
+     *  Must be a non-negative real number.
+     * @property paddingBottom The padding from the bottom window edge to the inner window.
+     *  Must be a non-negative real number.
+     */
     @Serializable
     data class Fixed(
         override val keyboardHeight: Dp,
@@ -41,6 +60,10 @@ sealed interface ImeWindowProps {
         val paddingRight: Dp,
         val paddingBottom: Dp,
     ) : ImeWindowProps {
+        /**
+         * Constrains the props using given [constraints]. This function ensures that the props do not push
+         * the window out of the root window, which would render the IME non-interactive.
+         */
         fun constrained(constraints: ImeWindowConstraints.Fixed): Fixed {
             val rootBounds = constraints.rootBounds
             val defaultProps = constraints.defaultProps
@@ -74,6 +97,18 @@ sealed interface ImeWindowProps {
         }
     }
 
+    /**
+     * The window props for floating mode. It assumes the window can be freely placed within the root window.
+     *
+     * @property keyboardHeight The baseline keyboard height, which may increase for more layout rows or
+     *  Smartbar configuration. Must be a non-negative real number.
+     * @property keyboardWidth The keyboard width, which is fixed and cannot increase.
+     *  Must be a non-negative real number.
+     * @property offsetLeft The offset from the left root window edge to the left window edge.
+     *  Must be a non-negative real number.
+     * @property offsetBottom The offset from the bottom root window edge to the bottom window edge.
+     *  Must be a non-negative real number.
+     */
     @Serializable
     data class Floating(
         override val keyboardHeight: Dp,
@@ -81,6 +116,10 @@ sealed interface ImeWindowProps {
         val offsetLeft: Dp,
         val offsetBottom: Dp,
     ) : ImeWindowProps {
+        /**
+         * Constrains the props using given [constraints]. This function ensures that the props do not push
+         * the window out of the root window, which would render the IME non-interactive.
+         */
         fun constrained(constraints: ImeWindowConstraints.Floating): Floating {
             val defaultProps = constraints.defaultProps
             val newKeyboardHeight = keyboardHeight

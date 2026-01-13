@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,17 +25,50 @@ import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.width
 import kotlin.math.abs
 
+/**
+ * The window spec describes the computed window props and constraints which is used within the UI.
+ */
 sealed class ImeWindowSpec {
+    /**
+     * The computed window props, constrained to the root bounds.
+     */
     abstract val props: ImeWindowProps
+
+    /**
+     * TODO rework
+     */
     abstract val fontScale: Float
+
+    /**
+     * The constraints accompanying the root bounds and props.
+     */
     abstract val constraints: ImeWindowConstraints
 
+    /**
+     * Calculate how a move gesture would change the computed props.
+     *
+     * @param offset The offset by which the gesture moved. Must be a real number pair.
+     * @param rowCount The effective row count. Must be between 4 and 6.
+     * @param smartbarRowCount The effective Smartbar row count.
+     *
+     * @return A moved window spec, possibly unchanged.
+     */
     abstract fun movedBy(
         offset: DpOffset,
         rowCount: Int,
         smartbarRowCount: Int,
     ): ImeWindowSpec
 
+    /**
+     * Calculate how a resize gesture would change the computed props.
+     *
+     * @param offset The offset by which the gesture resized. Must be a real number pair.
+     * @param handle The resize handle. Determines from which angle the keyboard is resized.
+     * @param rowCount The effective row count. Must be between 4 and 6.
+     * @param smartbarRowCount The effective Smartbar row count.
+     *
+     * @return A resized window spec, possibly unchanged.
+     */
     abstract fun resizedBy(
         offset: DpOffset,
         handle: ImeWindowResizeHandle,
@@ -43,10 +76,16 @@ sealed class ImeWindowSpec {
         smartbarRowCount: Int,
     ): ImeWindowSpec
 
+    /**
+     * Calculates the row height for given baseline [keyboardHeight].
+     */
     fun calcRowHeight(keyboardHeight: Dp): Dp {
         return keyboardHeight / constraints.baselineRowCount
     }
 
+    /**
+     * Calculates the Smartbar row height for given baseline [keyboardHeight].
+     */
     fun calcSmartbarRowHeight(keyboardHeight: Dp): Dp {
         val defRowHeight = calcRowHeight(constraints.defKeyboardHeight)
         val rowHeight = calcRowHeight(keyboardHeight)
@@ -71,6 +110,9 @@ sealed class ImeWindowSpec {
         return keyboardHeight
     }
 
+    /**
+     * Specialized spec for fixed mode.
+     */
     data class Fixed(
         val fixedMode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
@@ -170,6 +212,9 @@ sealed class ImeWindowSpec {
         }
     }
 
+    /**
+     * Specialized spec for floating mode.
+     */
     data class Floating(
         val floatingMode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
@@ -236,6 +281,11 @@ sealed class ImeWindowSpec {
     }
 
     companion object {
+        /**
+         * The fallback window spec. It does not guarantee the window fits into the root window, and assumes
+         * the root window is zero-sized. In practice this is never used, but allows for always having rootInsets,
+         * simplifying sme of the calculation logic.
+         */
         val Fallback: ImeWindowSpec = Fixed(
             fixedMode = ImeWindowMode.Fixed.NORMAL,
             props = ImeWindowProps.Fixed(

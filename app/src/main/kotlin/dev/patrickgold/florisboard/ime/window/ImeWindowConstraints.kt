@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,23 @@ import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.width
 
+/**
+ * The window constraints describe all relevant sizing minimums, maximums, defaults, and scaling factors
+ * for given root bounds and window mode + sub-mode.
+ *
+ * From a definition standpoint, constraints follows a strict inheritance hierarchy, mirroring the window
+ * mode + sub-mode model, with this class serving as the base class for all modes and sub-modes.
+ *
+ * All calculations should be wrapped in [calculation], to ensure they are lazily evaluated in-case a child
+ * class overrides a property used in the calculation.
+ *
+ * All constraints for a specific property and mode + sub-mode should be designed in a way that the
+ * condition `0dp >= min >= def >= max` always holds. Any potential floating point rounding errors must
+ * be handled by the calculation, e.g. by using proper coerce{AtLeast,AtMost,In} rules.
+ *
+ * Additionally, all of the above must be valid for all non-negative root bounds, including zero bounds.
+ * Negative bounds, or non-real bounds are undefined behavior and most likely lead to a crash.
+ */
 sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
     val rootBounds = rootInsets.boundsDp
     val formFactor = rootInsets.formFactor
@@ -265,6 +282,9 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
     }
 
     companion object {
+        /**
+         * Constructs a new fixed constraints instance inheriting from given [rootInsets] and [fixedMode].
+         */
         fun of(rootInsets: ImeInsets.Root, fixedMode: ImeWindowMode.Fixed): Fixed {
             return when (fixedMode) {
                 ImeWindowMode.Fixed.NORMAL -> Fixed.Normal(rootInsets)
@@ -273,6 +293,9 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             }
         }
 
+        /**
+         * Constructs a new floating constraints instance inheriting from given [rootInsets] and [floatingMode].
+         */
         fun of(rootInsets: ImeInsets.Root, floatingMode: ImeWindowMode.Floating): Floating {
             return when (floatingMode) {
                 ImeWindowMode.Floating.NORMAL -> Floating.Normal(rootInsets)

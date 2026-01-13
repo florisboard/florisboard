@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,6 +67,11 @@ import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 import org.florisboard.lib.snygg.ui.uriOrNull
 
+/**
+ * Configures the system navigation and caption bar.
+ *
+ * Itself this composable does not take up any space in the layout.
+ */
 @Composable
 fun ImeSystemUi() {
     val windowController = LocalWindowController.current
@@ -107,6 +112,9 @@ fun ImeSystemUi() {
     }
 }
 
+/**
+ * Mimics a system caption bar in a floating window.
+ */
 @Composable
 fun ImeSystemUiFloating() {
     val windowController = LocalWindowController.current

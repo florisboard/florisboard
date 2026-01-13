@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,19 +128,15 @@ fun ImeRootWindow() {
 }
 
 /**
- * The IME window contains all components that users would describe as the keyboard user interface.
- *
- * Visually and functionally, the IME window can be positioned in two modes:
- * - Fixed:
- *      The window is docked to the bottom edge of the root window and fills the maximum available
- *      root window width. The height is dependent on the layout and smartbar configuration.
- * - Floating:
- *      The window may be positioned anywhere within the root window, similar to a window on a desktop.
+ * The IME window contains all components that users would describe as the keyboard user interface. Its placement
+ * and size is dependent on the window config, with the main factor being the window mode.
  *
  * Most of the time all draw operations are contained within the bounds of this composable. Exceptions to
  * this may be resize handles, popups, tooltips, and any other composable positioned absolutely.
  *
  * The size and position of this composable are used to calculate [ImeWindowController.activeWindowInsets].
+ *
+ * @see ImeWindowMode
  */
 @Composable
 fun BoxScope.ImeWindow() {

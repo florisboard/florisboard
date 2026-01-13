@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,9 +39,9 @@ val LocalWindowController = staticCompositionLocalOf<ImeWindowController> {
  * The main entry point and bridge between the IME dialog view and the composables. It will fill the maximum area
  * available within the accompanying dialog view, and also draw under system bars.
  *
- * The layout direction will be forced to [LayoutDirection.Ltr], to ensure the window positioning logic's
- * left/right corresponds to the physical left/right. For UI subparts that need to conform to the actual system
- * layout direction, the UI subpart should be wrapped with [org.florisboard.lib.compose.ProvideActualLayoutDirection].
+ * The layout direction will be forced to [LayoutDirection.Ltr], to ensure the window positioning logic's left/right
+ * corresponds to the physical left/right. For UI components that need to conform to the actual system layout
+ * direction, the UI components should be wrapped with [org.florisboard.lib.compose.ProvideActualLayoutDirection].
  *
  * @see ImeRootWindow
  */
