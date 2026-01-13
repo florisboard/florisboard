@@ -147,10 +147,7 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Çalakiya bişkojka avît</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pirjimara mezinahiya curenivîsê</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raxistin</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Moda yek-destî</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Firehiya klavyeya moda yek-destî</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Têveka dîmendera tije ya peyzgeh</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Bilindahiya klavyeyê</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Kilît ji bo veqetandinê</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Çapemeniya kilît</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">PopUp Dîtinî</string>
@@ -365,8 +362,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Tu carî nîşan nede</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Herdem nîşan bide</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dînamîk nîşan bide</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Moda destê-çepê</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Moda destê-rastê</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Bingehîn</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Pêşketî</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Pêşdebir</string>

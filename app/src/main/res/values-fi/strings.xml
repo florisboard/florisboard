@@ -159,12 +159,8 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Toimintopainikkeen toiminto</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Kirjasinkoon kerroin</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Ulkoasu</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Yksikätinen tila</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Yksikätisen tilan näppäimistön leveys</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vaakatason kokonäytön syöttö</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Näppäimistön korkeus</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Näppäinten välitys</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alareunan siirto</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Ponnahdusikkunan näkyvyys</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>
@@ -431,8 +427,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Älä näytä koskaan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Näytä aina</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Näytä dynaamisesti</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Vasemman käden tila</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Oikean käden tila</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">Lisäasetukset</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Kehittäjä</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Kaikki ominaisuudet näytetään; ominaisuudet ja säännöt näytetään niinkuin tyylisäännöstötiedostoon on tallennettuna.</string>

@@ -213,12 +213,8 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Verktøytastfunksjon</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Skriftstørrelse multiplikator</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Oppsett</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Enhåndsmodus</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Tastaturbredde i enhåndsmodus</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landskap fullskjerm input</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastaturhøyde</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Tasteavstand</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Nedre forskyving</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetrykk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup-synlighet</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vis popup når du trykker en tast</string>
@@ -471,8 +467,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis alltid</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisk visning</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Venstrehåndsmodus</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Høyrehåndsmodus</string>
     <string name="enum__smartbar_layout__suggestions_only" comment="Enum value label">Bare råd</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Bare gjerninger</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Enkel</string>

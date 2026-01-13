@@ -204,8 +204,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Нощна тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Грешка в стила</string>
     <string name="settings__theme_editor__stylesheet_error_description">Приложението {app_name} може надоверие да зареди стиловете и да добави липсващите схеми и правила или да премахне неправилните правила, свойства и стойности. Желаете ли приложението {app_name} да приложи тези промени?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Стил на палитрата</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Цветови контраст</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Издание на спецификацията</string>
     <string name="snygg__rule_annotation__defines">Променливи</string>
     <string name="snygg__rule_annotation__defines_description">Създайте променливи в това правило, за да използвате общи цветове или размери в стиловия лист.</string>
     <string name="snygg__rule_annotation__font">Шрифт</string>
@@ -401,12 +405,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Главни букви</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Размер на надписите на клавишите</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Режим за работа с една ръка</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина на клавиатурата при работа с една ръка</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Клавиатура на цял екран (пейзаж)</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Височина на клавиатурата</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Разстояние между клавишите</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Отстъп отдолу</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Докосване на клавишите</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видима изскачаща подсказка</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показва се изскачаща подсказка при докосване на клавиш</string>
@@ -943,8 +943,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не се показва</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Винаги се показва</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Показва се динамично</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>

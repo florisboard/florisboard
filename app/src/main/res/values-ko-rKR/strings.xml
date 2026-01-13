@@ -229,10 +229,7 @@
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">스페이스 바 라벨</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">글꼴 크기 배율</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">레이아웃</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한손 모드</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한손 모드 키보드 너비</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">가로 모드 전체 화면 입력</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">키보드 높이</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">키 간격</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">팝업 표시</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">키를 눌렀을 때 팝업 표시</string>
@@ -506,8 +503,6 @@
     <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 따라 진동합니다.</string>
     <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 관계없이 항상 진동합니다.</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">캡스락</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">왼손 모드</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">오른손 모드</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">기본</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">색상 속성만 보여줍니다. 속성과 규칙은 번역한 명칭을 보여줍니다.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">고급</string>

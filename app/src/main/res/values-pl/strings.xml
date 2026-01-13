@@ -205,8 +205,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Jest nocnym motywem</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Jest bezramkowy</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Ścieżka arkusza stylów</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Błąd arkusza stylów</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} może próbować pobłażliwie załadować arkusz stylów i dodać brakujące schematy, reguły lub usunąć nieprawidłowe reguły, właściwości lub wartości. Czy potwierdzasz zastosowanie zmian przez {app_name}?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Styl palety</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Kontrast kolorów</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Wersja specyfikacji</string>
     <string name="snygg__rule_annotation__defines">Zmienne</string>
     <string name="snygg__rule_annotation__defines_description">Zdefiniuj zmienne w tej regule, aby ponownie użyć popularnych kolorów lub rozmiarów w arkuszu stylów.</string>
     <string name="snygg__rule_annotation__font">Czcionka</string>
@@ -402,12 +406,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Zachowanie związane z dużymi literami</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tryb jednoręczny</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Szerokość klawiatury w trybie jednoręcznym</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Wprowadzanie pełnoekranowe w poziomie</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Wysokość klawiatury</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Rozstaw klawiszy</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Przesunięcie dolne</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Widoczność Pop-Up</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pokaż Pop-Up po naciśnięciu klawiszów</string>
@@ -947,8 +947,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nigdy nie pokazuj</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Zawsze pokazuj</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Pokazuj dynamicznie</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Tryb lewej ręki</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Tryb prawej ręki</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Lewy górny róg</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Prawy górny róg</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Prawy dolny róg</string>

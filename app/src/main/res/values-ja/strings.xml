@@ -387,12 +387,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">大文字化の動作</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズ倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">片手モード</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">片手モード時のキーボード幅</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーン入力</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">キーボードの高さ</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">キー間隔</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">下部オフセット</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キー入力</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">キーポップアップの表示</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">キーを押すとポップアップを表示</string>
@@ -906,8 +902,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">表示しない</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">常に表示</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">動的に表示</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">左利きモード</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">右利きモード</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">左上</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">右上</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">右下</string>

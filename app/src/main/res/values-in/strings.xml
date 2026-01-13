@@ -401,12 +401,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Perilaku kapitalisasi</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pengganda ukuran font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Tata letak</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode satu tangan</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Lebar papan ketik mode satu tangan</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Masukan layar penuh lanskap</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Ketinggian papan ketik</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spasi tombol</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Offset bawah</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tekanan tombol</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitas munculan</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Tampilkan munculan ketika Anda menekan tombol</string>
@@ -929,8 +925,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Jangan tampilkan</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Selalu tampilkan</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Tampilkan secara dinamis</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Mode tangan kiri</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Mode tangan kanan</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Awalan atas</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Akhiran atas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Akhiran bawah</string>

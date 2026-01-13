@@ -400,12 +400,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Büyük harf kullanımı davranışı</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Yazı tipi boyutu çarpanı</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Düzen</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tek el modu</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Tek el modu klavye genişliği</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Yatay tam ekran girişi</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Klavye yüksekliği</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Tuş aralığı</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alt boşluk</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tuşa basma</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Açılır Pencere Görünürlüğü</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Bir tuşa bastığınızda açılır pencere göster</string>
@@ -930,8 +926,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Asla gösterme</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Her zaman göster</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamik olarak göster</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Sol el modu</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Sağ el modu</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Üst başlangıç</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Üst bitiş</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Alt bitiş</string>

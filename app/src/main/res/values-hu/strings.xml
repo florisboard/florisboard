@@ -58,6 +58,8 @@
     <string name="quick_action__arrow_left__tooltip">Balra nyíl végrehajtása</string>
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Jobbra nyíl</string>
     <string name="quick_action__arrow_right__tooltip">Jobbra nyíl végrehajtása</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Billentyűzet elrejtése</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Billentyűzet elrejtésének végrehajtása</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Vágólapürítő</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Elsődleges vágólap ürítésének végrehajtása</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Másolás</string>
@@ -68,6 +70,7 @@
     <string name="quick_action__clipboard_paste__tooltip">Vágólapról beillesztés végrehajtása</string>
     <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Mind kijelöl</string>
     <string name="quick_action__clipboard_select_all__tooltip">Összes kijelölése vágólapra végrehajtása</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Törlés előre</string>
     <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Vágólap</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Vágólap-előzmények megnyitása</string>
     <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emodzsi</string>
@@ -202,8 +205,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Éjszakai téma</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Szegély nélküli</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stíluslap útvonala</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Stíluslaphiba</string>
     <string name="settings__theme_editor__stylesheet_error_description">A(z) {app_name} megpróbálhatja elnézően betölteni a stíluslapot, és hozzáadhatja a hiányzó sémákat, szabályokat, vagy eltávolíthatja az érvénytelen szabályokat, tulajdonságokat vagy értékeket. Szeretné, ha a(z) {app_name} alkalmazná ezeket a módosításokat?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Palettastílus</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Színkontraszt</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Specifikáció verziója</string>
     <string name="snygg__rule_annotation__defines">Változók</string>
     <string name="snygg__rule_annotation__defines_description">Határozzon meg változókat ebben a szabályban, hogy újra felhasználhassa a közös színeket vagy méreteket a stíluslapon.</string>
     <string name="snygg__rule_annotation__font">Betűtípus</string>
@@ -391,7 +398,7 @@
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Számsor megjelenítése a karakterelrendezés felett</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Tipp számsor</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Tipp szimbólumok</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Javasolt szimbólumok</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Kellékgomb megjelenítése</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Egy beállítható kellékgomb megjelenítése a szóköz mellett</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Kellékgomb művelet</string>
@@ -399,20 +406,16 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Nagybetűsítési viselkedés</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Betűméret szorzó</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Egykezes mód</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Billentyűzet szélessége egykezes módban</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Teljes képernyős fekvő elrendezés bemenet</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Billentyűzet magassága</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Gomb térköz</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alsó eltolás</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Felugró gomb megjelenítése</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Felugró gomb megjelenítése gombnyomáskor</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Szimbólumok megjeneítése az ékezeteknél</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Szimbólumok hozzáadása az alap ékezet kiosztáshoz</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Szimbólumok megjenelítése az ékezeteknél</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Szimbólumok hozzáadása az alapértelmezett kiosztás ékezeteihez</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz karaktert vált</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatikusan visszavált karakter oldalra a szimbólumokról és számokról</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatikusan visszavált a karakter oldalra a szimbólumokról és számokról</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Inkognitó jelző</string>
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Okossáv</string>
@@ -563,6 +566,12 @@
     <string name="setup__finish_up__description_p2">Ha bármilyen hibával vagy összeomlással találkozik, vagy csak javaslatot szeretne tenni, nézze meg a projekt kódtárját a névjegy képernyőn!</string>
     <string name="setup__finish_up__finish_btn">Személyre szabás megkezdése</string>
     <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Fizikai billentyűzet</string>
+    <string name="physical_keyboard__system_settings__title">Rendszer fizikai billentyűzetének beállításai</string>
+    <string name="physical_keyboard__system_settings__summary">Kiosztások, gyorsbillentyűk és módosító billentyűk</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Csak akkor érhető el, ha a billenytyűzet csatlakozik</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Képernyő-billentyűzet megjelenítése</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Képernyő-billentyűzet megjelenítése a fizikai billentyűzet használata során</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Mentés és helyreállítás</string>
     <string name="backup_and_restore__back_up__title">Adatok biztonsági mentése</string>
@@ -633,6 +642,8 @@
     <string name="clipboard__cleared_primary_clip">Elsődleges vágólap törölve</string>
     <string name="clipboard__cleared_history">Előzmények törölve</string>
     <string name="clipboard__cleared_full_history">Az összes előzmény törölve</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Biztos, hogy törli az összes vágólapelőzményt? Ez hatással lesz az összes elemre, kivéve a rögzítetteket.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Biztos, hogy törli a vágólapelőzményeket? Ez hatással lesz az összes jelenleg leszűrt elemre, kivéve a rögzítetteket.</string>
     <string name="settings__clipboard__title">Vágólap</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Belső vágólap használata</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Belső vágólap használata a rendszer vágólapja helyett</string>
@@ -653,6 +664,8 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Érzékeny elemek automatikus törlése ennyi idő után</string>
     <string name="pref__clipboard__limit_history_size__label">Előzmények méretének korlátozása</string>
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Előzmények elrejtése beillesztéskor</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Előzmények elrejtése a következő mezőnél</string>
     <string name="send_to_clipboard__unknown_error">Ismeretlen hiba történt. Kérjük próbálja újra!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ez a médiatípus nem támogatott.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Az alábbi kép a vágólapra lett másolva.</string>
@@ -847,6 +860,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dinamikus szélesség és görgethető</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Capslock engedélyezése a shift dupla lenyomásával</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">A shift billentyű minden egyes lenyomásakor átvált a következő nagybetűsítési lépésre</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Nincs esemény</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">Nincs esemény szinkronizálva ebbe az irányba. Ebben a módban a szinkronizálás nem tartalmazza a szöveges tartalmat.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Csak törlési események</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Csak a vágólapadatok törlése van szinkronizálva ebbe az irányba. Ebben a módban a szinkronizálás nem tartalmazza a szöveges tartalmat.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Csak beállítási események</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Csak a vágólapadatok beállítása van szinkronizálva ebbe az irányba. Ebben a módban a szinkronizálás tartalmazza a szöveges tartalmat is.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Összes esemény</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">A vágólapadatok beállítása és törlése is szinkronizálva van ebbe az irányba. Ebben a módban a szinkronizálás tartalmazza a szöveges tartalmat is.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimális</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Piros Zöld Kék</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Árnyalattelítettség értéke</string>
@@ -894,11 +915,11 @@
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Használjon haptic feedback felületet</string>
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">A(z) {app_name} haptikus visszajelzési felületet használ, hogy előre beállított rezgéseket váltson ki a gombok megnyomásakor. Ez egyes eszközökön kiválóan működhet, de másokon teljesen meghiúsulhat, vagy elégtelenül teljesíthet.</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Ékezetesek az elsődlegesek</string>
-    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál mindig az alap ékezetes változatok az elsődlegesek, vagy a tipp szimbólum ha ez nem elérhető</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál mindig az alap ékezetes változatok az elsődlegesek, vagy a tippelt szimbólum, ha ez nem érhető el</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Tipp az elsődleges</string>
-    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál mindig a tipp szimbólum az elsődleges, vagy az alap ékezetes változatok ha ez nem elérhető</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál mindig a tippelt szimbólum az elsődleges, vagy az alap ékezetes változatok, ha ez nem érhető el</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Okos prioritizálás</string>
-    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál dinamikusan eldöntésre kerül hogy az ékezetek vagy szimbólumok az elsődlegesek a nyelvtől függően</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">A megjelenő karakterválasztásnál a nyelvtől és a kiosztástól függően dinamikusan dől el, hogy az ékezetek vagy a tippelt szimbólum jelenjen meg</string>
     <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Cserélje ki a megosztott műveletek kapcsoló ikonját az inkognitó jelzővel</string>
     <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Az inkognitó jelző megjelenítése a billentyűzet mögött</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">Kényszerítés kikapcsolása</string>
@@ -925,8 +946,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Soha ne jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mindig jelenjen meg</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamikus megjelenítés</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Balkezes mód</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Jobbkezes mód</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Felső kezdet</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Felső vég</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Alsó vég</string>
@@ -968,6 +987,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Kurzor mozgatása a lap elejére</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Kurzor mozgatása a lap végére</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Vágólapkezelő/vágólapelőzmények megnyitása</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Emodzsi panel megnyitása</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Újra</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Visszavonás</string>

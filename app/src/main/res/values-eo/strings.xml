@@ -251,12 +251,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Majuskliga kondukto</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multobligo grandon de la tiparo</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Unu-mana moduso</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Unu-manan modusan klavaron larĝo</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Pejzaĝa plenekrana enigo</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Alteco klavaron</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Interspaco inter la klavoj</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Suba senenhava spaco</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavojn tuŝo</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Ŝprucojn videblo</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vidigi ŝprucon kiam vi tuŝas klavon</string>
@@ -680,8 +676,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Neniam montri</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Ĉiam montri</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dinamike montri</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Maldekstramana moduso</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Dekstramana moduso</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Supre maldekstre</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Supre dekstre</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Sube dekstre</string>

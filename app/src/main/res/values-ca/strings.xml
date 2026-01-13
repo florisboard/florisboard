@@ -319,12 +319,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportament de les majúscules</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador de la mida de la font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode d\'una sola mà</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Amplada del teclat en mode una sola mà</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa apaïsada</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Alçada del teclat</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espai entre tecles</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Espai a sota</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitat de les tecles emergents</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
@@ -844,8 +840,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Mode esquerrà</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Mode dretà</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Dalt a l\'esquerra</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Dalt a la dreta</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">A sota a la dreta</string>

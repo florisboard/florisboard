@@ -309,12 +309,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportamento de capitalização</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho de fonte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo uma mão</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Largura do teclado no modo uma mão</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada do modo paisagem em tela cheia</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura do teclado</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espaçamento de teclas</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Deslocamento inferior</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidade do popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar popup quando você pressionar uma tecla</string>
@@ -777,8 +773,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nunca mostrar</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Sempre mostrar</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinamicamente</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Modo canhoto</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Modo destro</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Início da parte superior</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Final da parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Final da parte inferior</string>

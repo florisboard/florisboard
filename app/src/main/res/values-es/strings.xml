@@ -205,8 +205,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Es tema oscuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Es sin borde</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Ruta de la hoja de estilo</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Error en la hoja de estilos</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} puede intentar cargar con flexibilidad las hojas de estilo y añadir esquemas, reglas, o remover reglas inválidas, propiedades, o valores. ¿Desea que {app_name} aplique esos cambios? </string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Paleta de colores</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Contraste de color</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Versión de las especificaciones</string>
     <string name="snygg__rule_annotation__defines">Variables</string>
     <string name="snygg__rule_annotation__defines_description">Defina variables dentro de esta regla para reutilizar colores o tamaños comunes en su hoja de estilo.</string>
     <string name="snygg__rule_annotation__font">Fuente</string>
@@ -225,6 +229,8 @@
     <string name="snygg__rule_element__clipboard_content">Contenido del portapapeles</string>
     <string name="snygg__rule_element__clipboard_filter_row">Fila del filtro del portapapeles</string>
     <string name="snygg__rule_element__clipboard_filter_chip">Elemento de filtro de memoria intermedia</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Icono del filtro del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Texto del chip del filtro del portapapeles</string>
     <string name="snygg__rule_element__clipboard_grid">Rejilla de portapapeles</string>
     <string name="snygg__rule_element__clipboard_item">Ítem de portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_description">Descripción de objeto en el portapapeles</string>
@@ -400,12 +406,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportamiento de las mayúsculas</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamaño de fuente</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo a una mano</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ancho del teclado en modo de una mano</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa horizontal</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura del teclado</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espacio entre teclas</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Compensación inferior</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Presionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar emergente al pulsar una tecla</string>
@@ -945,8 +947,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar nunca</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar siempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinámicamente</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Modo para zurdos</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Modo para diestros</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inicio superior</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Parte inferior</string>

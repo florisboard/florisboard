@@ -114,7 +114,6 @@
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Amuesa la filera de númberos enriba de la distribución de tecles</string>
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Etiqueta de la barra d\'espaciu</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamañu de la fonte</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altor del tecláu</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pulsación de tecles</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidá d\'indicadores emerxentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Amuesa un indicador emerxente cuando primes una tecla</string>

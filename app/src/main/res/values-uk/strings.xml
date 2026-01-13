@@ -300,12 +300,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Написання з великої букви</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множник шрифту</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Розкладка</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Керування однією рукою</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина в режимі однієї руки</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Ввід на цілий екран (пейзаж)</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Висота клавіатури</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Відстань між клавішами</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Відступ знизу</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видимість спливних вікон</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>
@@ -802,8 +798,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Ніколи не відображати</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Завжди відображати</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамічно показувати</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Режим лівші</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Режим правші</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Вгорі початок</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Вгорі кінець</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ кінець</string>

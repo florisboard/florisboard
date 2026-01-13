@@ -205,8 +205,6 @@
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">מראה מפתח שירות הניתן להגדרה לצד סרגל הרווח</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">פעולת מפתח השירות</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">אופן תצוגה</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">מצב יד אחת</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">גובה המקלדת</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">לחיצת מקש</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">הצד חלונית בעת לחיצה על מקש</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">השהיית לחיצה מקש ארוכה</string>
@@ -310,8 +308,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">לעולם אל תציג</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">הצג תמיד</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">להציג באופן דינמי</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">מצב לשמאליים</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">מצב ליד ימין</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">ללא פעולה</string>
     <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">מחיקת תווים בקפדנות</string>
     <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">מחיקת מילים בקפדנות</string>

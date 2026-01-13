@@ -59,6 +59,7 @@
     <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Вправо</string>
     <string name="quick_action__arrow_right__tooltip">Переместить курсор вправо</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Скрыть клавиатуру</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Скрыть клавиатуру</string>
     <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Очистить</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Выполнить очистку основного клипа буфера обмена</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копировать</string>
@@ -204,8 +205,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Ошибка таблицы стилей</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} может попытаться мягко загрузить таблицу стилей и добавить недостающие схемы, правила или удалить недействительные правила, свойства или значения. Хотите ли вы, чтобы {app_name} применило эти изменения?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Стиль палитры</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Цветовой контраст</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Специальная версия</string>
     <string name="snygg__rule_annotation__defines">Переменные</string>
     <string name="snygg__rule_annotation__defines_description">Определите переменные в этом правиле, чтобы повторно использовать общие цвета или размеры в таблице стилей.</string>
     <string name="snygg__rule_annotation__font">Шрифт</string>
@@ -401,12 +406,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Поведение кнопки изменения регистра</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина в режиме одной руки</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">На весь экран в альбомном режиме</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Высота клавиатуры</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Расстояние между кнопками</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Отступ снизу</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Нажатие клавиши</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Превью символов</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показывать всплывающую подсказку при нажатии кнопки</string>
@@ -647,7 +648,7 @@
     <string name="pref__clipboard__use_internal_clipboard__summary">Использовать внутренний буфер обмена вместо системного</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Единый буфер обмена</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронизировать с системным буфером обмена</string>
-    <string name="pref__clipboard__group_clipboard_suggestion__label">Предлагать буфер обмена</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Подсказки буфера обмена</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлагать ранее скопированное содержимое буфера обмена</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Количество столбцов в сетке</string>
@@ -948,8 +949,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Автоматически</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Для левши</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Для правши</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Верх начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>

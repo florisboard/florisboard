@@ -74,6 +74,7 @@
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otevřít historii schránky</string>
     <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emotikony</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Otevřít panel emotikonů</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Změnit jazyk</string>
     <string name="quick_action__language_switch__tooltip">Provést přepnutí jazyku</string>
     <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Nastavení</string>
     <string name="quick_action__settings__tooltip">Otevřít nastavení</string>
@@ -203,8 +204,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Cesta tabulky stylů</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Chyba stylů</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} se přesto může pokusit načíst soubor stylů a přidat chybějící schémata, pravidla nebo odstranit neplatná pravidla, vlastnosti nebo hodnoty. Chcete, aby aplikace {app_name} tyto změny použila?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Styl palety</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Barevný kontrast</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Verze specifikací</string>
     <string name="snygg__rule_annotation__defines">Proměnné</string>
     <string name="snygg__rule_annotation__defines_description">Pomocí tohoto pravidla definujte proměnné pro opětovné použití běžných barev nebo velikostí ve vaší tabulce stylů.</string>
     <string name="snygg__rule_annotation__font">Písmo</string>
@@ -400,12 +405,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Chování při psaní velkých písmen</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim jedné ruky</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Šířka klávesnice v režimu jedné ruky</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vstupní okno v celoobrazovkovém režimu na šířku</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Výška klávesnice</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Mezery mezi klávesami</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Spodní odsazení</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
@@ -945,8 +946,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Vpravo nahoře</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Vpravo dole</string>
@@ -988,6 +987,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Přesunout kurzor na začátek stránky</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Přesunout kurzor na konec stránky</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Otevřít správce schránky / historii</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Otevřít panel emotikonů</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Přepnout shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Vpřed</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Zpět</string>

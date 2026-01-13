@@ -115,12 +115,8 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ενέργεια πλήκτρου χρηστικότητας</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Λειτουργία ενός χεριού</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Πλάτος πληκτρολογίου στη λειτουργία ενός χεριού</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Εισαγωγή πλήρους οθόνης τοπίου</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Ύψος πληκτρολογίου</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Μετατόπιση βάσης</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
@@ -380,8 +376,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Να μην εμφανίζεται ποτέ</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Να εμφανίζεται πάντα</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Να εμφανίζεται δυναμικά</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Λειτουργία για αριστερόχειρες</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Λειτουργία για δεξιόχειρες</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Χρήση γλωσσών συστήματος</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Καμία ενέργεια</string>

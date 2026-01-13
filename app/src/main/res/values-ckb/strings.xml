@@ -284,12 +284,8 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">فرمانی دوگمەی ئامراز</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">قەبارەی فۆنت</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">شێوازەکان</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">بەکارهێنان بە یەک دەست</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">فراوانی شێوازی یەکدەست</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">بەرزی تەختەکلیل</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">بۆشایی نێوان دوگمەکان</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">مەودای بەشی خوارەوە</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">بچووککراوەی پیت</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
@@ -678,8 +674,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">شاردنەوە</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">هەمیشە پیشاندان</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">پیشاندانی زیرەکانە</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">بەکارهێنان بۆ دەستی چەپ</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">بەکارهێنان بۆ دەستی ڕاست</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">سەرەتای سەرەوە</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>
