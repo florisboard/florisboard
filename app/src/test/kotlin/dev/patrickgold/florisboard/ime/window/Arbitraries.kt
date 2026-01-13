@@ -48,6 +48,18 @@ fun Arb.Companion.rootInsets() = arbitrary {
     with(density) { ImeInsets.Root.of(boundsPx) }
 }
 
+fun Arb.Companion.rootInsetsWithHorizontalOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val x = Arb.floatMaybeConstant(-rootInsets.boundsDp.width.value, rootInsets.boundsDp.width.value).bind()
+    rootInsets to DpOffset(x.dp, 0.dp)
+}
+
+fun Arb.Companion.rootInsetsWithVerticalOffset() = arbitrary {
+    val rootInsets = Arb.rootInsets().bind()
+    val y = Arb.floatMaybeConstant(-rootInsets.boundsDp.height.value, rootInsets.boundsDp.height.value).bind()
+    rootInsets to DpOffset(0.dp, y.dp)
+}
+
 fun Arb.Companion.rootInsetsWithAnyOffset() = arbitrary {
     val rootInsets = Arb.rootInsets().bind()
     val x = Arb.floatMaybeConstant(-rootInsets.boundsDp.width.value, rootInsets.boundsDp.width.value).bind()

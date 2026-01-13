@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import io.kotest.property.arbitrary.enum
 import io.kotest.property.checkAll
 import kotlinx.coroutines.flow.first
 
-class ImeWindowControllerEditorTest : FunSpec({
+class ImeWindowControllerEditorMoveTest : FunSpec({
     val tolerance = 1e-3f.dp
 
     coroutineTestScope = true
@@ -206,8 +206,6 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
             }
         }
-
-        // TODO resize tests
     }
 
     context("for all root insets and floating modes") {
@@ -378,7 +376,5 @@ class ImeWindowControllerEditorTest : FunSpec({
                 }
             }
         }
-
-        // TODO resize tests
     }
 })
