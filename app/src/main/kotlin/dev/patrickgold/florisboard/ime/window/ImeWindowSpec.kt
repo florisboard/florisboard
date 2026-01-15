@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.width
 import kotlin.math.abs
@@ -246,7 +247,8 @@ sealed class ImeWindowSpec {
             var offsetBottom = props.offsetBottom
 
             if (handle.top) {
-                keyboardHeight = (keyboardHeight - offset.y)
+                val offsetTop = constraints.rootBounds.height - keyboardHeight - offsetBottom
+                keyboardHeight = (keyboardHeight - offset.y.coerceAtLeast(-offsetTop))
                     .coerceAtLeast(constraints.minKeyboardHeight.toEffective(rowCount, smartbarRowCount))
                     .coerceAtMost(constraints.maxKeyboardHeight)
             } else if (handle.bottom) {
