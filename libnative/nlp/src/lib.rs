@@ -259,10 +259,13 @@ impl NlpEngine {
                     conf += EXACT_MATCH_BONUS;
                 }
 
+                // Only mark high-confidence suggestions as eligible for auto-commit
+                let auto_commit = conf >= 0.8 && freq >= 100;
+
                 heap.push(Suggestion {
                     text: display,
                     confidence: conf,
-                    is_eligible_for_auto_commit: true,
+                    is_eligible_for_auto_commit: auto_commit,
                 });
             }
         }
