@@ -36,14 +36,17 @@ sealed class ImeWindowSpec {
     abstract val props: ImeWindowProps
 
     /**
-     * TODO rework
-     */
-    abstract val fontScale: Float
-
-    /**
      * The constraints accompanying the root bounds and props.
      */
     abstract val constraints: ImeWindowConstraints
+
+    abstract val userPreferredOptions: UserPreferredOptions
+
+    val keyMarginH: Dp by lazy { props.calcKeyMarginH(constraints) * userPreferredOptions.keySpacingFactorH }
+
+    val keyMarginV: Dp by lazy { props.calcKeyMarginV(constraints) * userPreferredOptions.keySpacingFactorV }
+
+    val fontScale: Float by lazy { props.calcFontScale(constraints) * userPreferredOptions.fontScale }
 
     /**
      * Calculate how a move gesture would change the computed props.
@@ -117,8 +120,8 @@ sealed class ImeWindowSpec {
     data class Fixed(
         val fixedMode: ImeWindowMode.Fixed,
         override val props: ImeWindowProps.Fixed,
-        override val fontScale: Float,
         override val constraints: ImeWindowConstraints.Fixed,
+        override val userPreferredOptions: UserPreferredOptions,
     ) : ImeWindowSpec() {
         override fun movedBy(
             offset: DpOffset,
@@ -219,8 +222,8 @@ sealed class ImeWindowSpec {
     data class Floating(
         val floatingMode: ImeWindowMode.Floating,
         override val props: ImeWindowProps.Floating,
-        override val fontScale: Float,
         override val constraints: ImeWindowConstraints.Floating,
+        override val userPreferredOptions: UserPreferredOptions,
     ) : ImeWindowSpec() {
         override fun movedBy(
             offset: DpOffset,
@@ -282,6 +285,12 @@ sealed class ImeWindowSpec {
         }
     }
 
+    data class UserPreferredOptions(
+        val keySpacingFactorH: Float,
+        val keySpacingFactorV: Float,
+        val fontScale: Float,
+    )
+
     companion object {
         /**
          * The fallback window spec. It does not guarantee the window fits into the root window, and assumes
@@ -296,7 +305,11 @@ sealed class ImeWindowSpec {
                 paddingRight = 0.dp,
                 paddingBottom = 0.dp,
             ),
-            fontScale = 1f,
+            userPreferredOptions = UserPreferredOptions(
+                keySpacingFactorH = 1f,
+                keySpacingFactorV = 1f,
+                fontScale = 1f,
+            ),
             constraints = ImeWindowConstraints.Fixed.Normal(ImeInsets.Root.Zero),
         )
     }
