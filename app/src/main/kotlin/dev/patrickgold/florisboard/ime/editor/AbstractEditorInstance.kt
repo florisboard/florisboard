@@ -107,7 +107,11 @@ abstract class AbstractEditorInstance(context: Context) {
         activeInfo = editorInfo
         activeCursorCapsMode = editorInfo.initialCapsMode
         activeContent = EditorContent.Unspecified
-        currentInputConnection()?.requestCursorUpdates(CursorUpdateAll)
+        // Skip cursor updates for numeric inputs to avoid crashes in apps with buggy
+        // Compose TextFields (e.g., banking apps) - see issue #3100
+        if (editorInfo.inputAttributes.type != InputAttributes.Type.NUMBER) {
+            currentInputConnection()?.requestCursorUpdates(CursorUpdateAll)
+        }
     }
 
     open fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
