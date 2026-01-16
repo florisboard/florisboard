@@ -50,48 +50,49 @@
     <string name="emoji__history__pinned">Selezionata</string>
     <string name="emoji__history__recent">Recente</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Freccia su</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Freccia su</string>
     <string name="quick_action__arrow_up__tooltip">Eseguire freccia su</string>
-    <string name="quick_action__arrow_down" maxLength="12">Freccia giù</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Freccia giù</string>
     <string name="quick_action__arrow_down__tooltip">Eseguire freccia giù</string>
-    <string name="quick_action__arrow_left" maxLength="12">Sinistra</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Sinistra</string>
     <string name="quick_action__arrow_left__tooltip">Eseguire freccia sinistra</string>
-    <string name="quick_action__arrow_right" maxLength="12">Destra</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Destra</string>
     <string name="quick_action__arrow_right__tooltip">Eseguire freccia destra</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Pulire clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Pulire clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Esegui sgombro degli appunti primari</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copia</string>
     <string name="quick_action__clipboard_copy__tooltip">Esegui copia negli appunti</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Taglia</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Taglia</string>
     <string name="quick_action__clipboard_cut__tooltip">Esegui taglia negli appunti</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Incolla</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Incolla</string>
     <string name="quick_action__clipboard_paste__tooltip">Esegui incolla negli appunti</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Selez. tutto</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Selez. tutto</string>
     <string name="quick_action__clipboard_select_all__tooltip">Esegui seleziona tutti negli appunti</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Appunti</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Appunti</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Apri cronologia degli appunti</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Apri pannello degli emoji</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Lingue</string>
     <string name="quick_action__language_switch__tooltip">Esegui cambio lingua</string>
-    <string name="quick_action__settings" maxLength="12">Impostazioni</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Impostazioni</string>
     <string name="quick_action__settings__tooltip">Apri impostazioni</string>
-    <string name="quick_action__undo" maxLength="12">Annulla</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Annulla</string>
     <string name="quick_action__undo__tooltip">Annulla l\'ultima azione</string>
-    <string name="quick_action__redo" maxLength="12">Ripristina</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Ripristina</string>
     <string name="quick_action__redo__tooltip">Ripristina l\'ultima azione</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Altre azioni</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Altre azioni</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Mostra o nascondi azioni aggiuntive</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Attiva o disattiva modalità in incognito</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Auto-correz.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Auto-correz.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Attiva o disattiva correzione automatica</string>
-    <string name="quick_action__voice_input" maxLength="12">Input vocale</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Input vocale</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Apri fornitore d\'immissione di voce</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">A una mano</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">A una mano</string>
     <string name="quick_action__one_handed_mode__tooltip">Attiva o disattiva modalità a una mano</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Trascina</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Trascina</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posizione dell\'attuale marcatore di trascinamento</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nessuna operazione</string>
     <string name="quick_actions_overflow__customize_actions_button">Riordina azioni</string>
     <string name="quick_actions_editor__header">Riordina ordine azioni</string>
@@ -113,6 +114,7 @@
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard non è la tastiera predefinita. Clicca qui per risolvere il problema.</string>
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Lingue &amp; Layout</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Visualizza i nomi delle lingue in</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Visualizza le etichette della tastiera nella lingua secondaria</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Stili di input</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Gestisci pacchetti di lingua installati</string>
@@ -153,6 +155,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ora del tramonto</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema giorno</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema scuro</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Colore dell\'accentMateria</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Gestisci temi installati</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Risorse dell\'app FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Memoria interna</string>
@@ -161,6 +164,7 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Seleziona tema scuro</string>
     <string name="settings__theme_editor__fine_tune__title">Editor delle regolazioni</string>
     <string name="settings__theme_editor__fine_tune__level">Livello di modifica</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Colore</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Mostra la tastiera dopo le finestre di dialogo</string>
     <string name="settings__theme_editor__add_rule">Aggiungi regola</string>
     <string name="settings__theme_editor__edit_rule">Modifica regola</string>
@@ -261,6 +265,8 @@
     <string name="snygg__property_name__var_shape_variant">Forma comune (variante)</string>
     <string name="snygg__property_value__explicit_inherit">Eredita</string>
     <string name="snygg__property_value__defined_var">Riferimento Var</string>
+    <string name="snygg__property_value__yes">Sì</string>
+    <string name="snygg__property_value__no">No</string>
     <string name="snygg__property_value__solid_color">Tinta unita</string>
     <string name="snygg__property_value__material_you_light_color">Material You (Chiaro)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You (Scuro)</string>
@@ -313,12 +319,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportamento delle maiuscole</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Moltiplicatore dimensione carattere</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modalità ad una mano</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Larghezza della tastiera in modalità a una mano</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Inserimento a schermo intero orizzontale</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altezza tastiera</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spaziatura tasti</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Spaziatura in basso</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
@@ -464,6 +466,7 @@
     <string name="setup__finish_up__description_p1">{app_name} è stata abilitata nel sistema ed è pronta per essere personalizzata.</string>
     <string name="setup__finish_up__description_p2">Se riscontri problemi, bug, arresti anomali o vuoi semplicemente dare un suggerimento, controlla il repository del progetto dalla schermata informazioni!</string>
     <string name="setup__finish_up__finish_btn">Inizia la personalizzazione</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Backup &amp; Ripristino</string>
     <string name="backup_and_restore__back_up__title">Backup dei dati</string>
@@ -530,14 +533,12 @@
     <string name="clipboard__cleared_primary_clip">Clip principale cancellata</string>
     <string name="clipboard__cleared_history">Cronologia cancellata</string>
     <string name="clipboard__cleared_full_history">Tutta la cronologia cancellata</string>
-    <string name="clipboard__confirm_clear_history__message">Sei sicuro di voler cancellare la cronologia degli appunti? Questa azione cancellerà tutti gli appunti tranne quelli spuntati, indipendentemente dai filtri attivi.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Vuoi cancellare lo storico della clipboard? Questa azione cancellerà tutto lo storico tranne i messaggi con spunta.</string>
     <string name="settings__clipboard__title">Appunti</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizza dagli appunti di sistema</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Gli aggiornamenti degli appunti di sistema aggiornano anche gli appunti di Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizza con gli appunti di sistema</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Gli aggiornamenti degli appunti di Floris aggiornano anche gli appunti di sistema</string>
     <string name="pref__clipboard__group_clipboard_history__label">Cronologia appunti</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Attiva la cronologia degli appunti</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli elementi degli appunti per un accesso rapido</string>
@@ -545,8 +546,9 @@
     <string name="pref__clipboard__clean_up_after__label">Elimina appunti vecchi dopo</string>
     <string name="pref__clipboard__limit_history_size__label">Limita le dimensioni della cronologia</string>
     <string name="pref__clipboard__max_history_size__label">Dimensione massima della cronologia</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">La cancellazione della clip principale influisce sulla cronologia</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">La cancellazione della clip principale cancella anche l\'ultima voce della cronologia</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Nascondi dallo storico le parole incollate</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Non mostrare lo storico quando scrivi nel campo di testo</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Cancellare la prima clip influisce sulla cronologia</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Strumenti da sviluppatore</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Abilita strumenti da sviluppatore</string>
@@ -759,8 +761,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Non visualizzare mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostra sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostra dinamicamente</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Modalità per mancini</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Modalità per destri</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inizio parte superiore</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Fine parte superiore</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Fine parte inferiore</string>

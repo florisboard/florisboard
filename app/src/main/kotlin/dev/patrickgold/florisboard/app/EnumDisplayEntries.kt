@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
@@ -33,7 +34,6 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -42,10 +42,11 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import kotlin.reflect.KClass
 
@@ -101,6 +102,30 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = CapitalizationBehavior.CAPSLOCK_BY_CYCLE,
                 label = stringRes(R.string.enum__capitalization_behavior__capslock_by_cycle),
+            )
+        }
+    },
+    ClipboardSyncBehavior::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = ClipboardSyncBehavior.NO_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__no_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__no_events__description),
+            )
+            entry(
+                key = ClipboardSyncBehavior.ONLY_CLEAR_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__only_clear_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__only_clear_events__description),
+            )
+            entry(
+                key = ClipboardSyncBehavior.ONLY_SET_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__only_set_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__only_set_events__description),
+            )
+            entry(
+                key = ClipboardSyncBehavior.ALL_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__all_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__all_events__description),
             )
         }
     },
@@ -386,6 +411,18 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
+    ImeWindowMode::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = ImeWindowMode.FIXED,
+                label = stringRes(R.string.enum__ime_window_mode__fixed),
+            )
+            entry(
+                key = ImeWindowMode.FLOATING,
+                label = stringRes(R.string.enum__ime_window_mode__floating),
+            )
+        }
+    },
     KeyboardMode::class to DEFAULT to {
         listPrefEntries {
             entry(
@@ -431,18 +468,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = LandscapeInputUiMode.DYNAMICALLY_SHOW,
                 label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
-            )
-        }
-    },
-    OneHandedMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = OneHandedMode.START,
-                label = stringRes(R.string.enum__one_handed_mode__start),
-            )
-            entry(
-                key = OneHandedMode.END,
-                label = stringRes(R.string.enum__one_handed_mode__end),
             )
         }
     },
@@ -593,6 +618,10 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT,
                 label = stringRes(R.string.enum__swipe_action__switch_to_clipboard_context),
+            )
+            entry(
+                key = SwipeAction.SWITCH_TO_MEDIA_CONTEXT,
+                label = stringRes(R.string.enum__swipe_action__switch_to_media_context)
             )
             entry(
                 key = SwipeAction.SHOW_INPUT_METHOD_PICKER,

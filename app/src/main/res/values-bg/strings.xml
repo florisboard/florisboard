@@ -50,49 +50,52 @@
     <string name="emoji__history__pinned">Закачени</string>
     <string name="emoji__history__recent">Последни</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Нагоре</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Нагоре</string>
     <string name="quick_action__arrow_up__tooltip">Извършва стрелка нагоре</string>
-    <string name="quick_action__arrow_down" maxLength="12">Надолу</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Надолу</string>
     <string name="quick_action__arrow_down__tooltip">Извършва стрелка надолу</string>
-    <string name="quick_action__arrow_left" maxLength="12">Наляво</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Наляво</string>
     <string name="quick_action__arrow_left__tooltip">Извършва стрелка наляво</string>
-    <string name="quick_action__arrow_right" maxLength="12">Надясно</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Надясно</string>
     <string name="quick_action__arrow_right__tooltip">Извършва стрелка надясно</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Изпр. буфера</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Скриване на клавиатурата</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Извършва скриване на клавиатурата</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Изпр. буфера</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Изчиства последното копирано от междинната памет</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Копиране</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копиране</string>
     <string name="quick_action__clipboard_copy__tooltip">Извършва копиране в междинната памет</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Изрязване</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Изрязване</string>
     <string name="quick_action__clipboard_cut__tooltip">Изрязва в междинната памет</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Поставяне</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Поставяне</string>
     <string name="quick_action__clipboard_paste__tooltip">Поставя от междинната памет</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Избор всички</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Избор всички</string>
     <string name="quick_action__clipboard_select_all__tooltip">Избира всичко</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Премахване →</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Буфер</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Хронология на междинната памет</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Емоции</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Емоции</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Отваря панела с емоции</string>
-    <string name="quick_action__language_switch" maxLength="12">Превкл. език</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Превкл. език</string>
     <string name="quick_action__language_switch__tooltip">Изпълнява превключване на езика</string>
-    <string name="quick_action__settings" maxLength="12">Настройки</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Настройки</string>
     <string name="quick_action__settings__tooltip">Отваря настройките</string>
-    <string name="quick_action__undo" maxLength="12">Отменяне</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Отменяне</string>
     <string name="quick_action__undo__tooltip">Отменя последното въведено</string>
-    <string name="quick_action__redo" maxLength="12">Възстанов.</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Възстанов.</string>
     <string name="quick_action__redo__tooltip">Възстановява последното въведено</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Още действия</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Още действия</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Превключва допълнителните действия</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Инкогнито</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Инкогнито</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Превключва режим инкогнито</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Поправки</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Поправки</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Превключва автоматичните поправки</string>
-    <string name="quick_action__voice_input" maxLength="12">Въвежд. глас</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Въвежд. глас</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Отваря доставчика на гласово въеждане</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">С една ръка</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">С една ръка</string>
     <string name="quick_action__one_handed_mode__tooltip">Превключва режима за работа с една ръка</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Манипулатор</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Манипулатор</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Позиция на влачения елемент</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Липсва</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Липсва</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Без действие</string>
     <string name="quick_actions_overflow__customize_actions_button">Подреждане на действията</string>
     <string name="quick_actions_editor__header">Промяна на подредбата на действията</string>
@@ -201,8 +204,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Нощна тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без кант</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Път към стиловия лист</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Грешка в стила</string>
     <string name="settings__theme_editor__stylesheet_error_description">Приложението {app_name} може надоверие да зареди стиловете и да добави липсващите схеми и правила или да премахне неправилните правила, свойства и стойности. Желаете ли приложението {app_name} да приложи тези промени?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Стил на палитрата</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Цветови контраст</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Издание на спецификацията</string>
     <string name="snygg__rule_annotation__defines">Променливи</string>
     <string name="snygg__rule_annotation__defines_description">Създайте променливи в това правило, за да използвате общи цветове или размери в стиловия лист.</string>
     <string name="snygg__rule_annotation__font">Шрифт</string>
@@ -398,12 +405,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Главни букви</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Размер на надписите на клавишите</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Режим за работа с една ръка</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина на клавиатурата при работа с една ръка</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Клавиатура на цял екран (пейзаж)</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Височина на клавиатурата</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Разстояние между клавишите</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Отстъп отдолу</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Докосване на клавишите</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видима изскачаща подсказка</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показва се изскачаща подсказка при докосване на клавиш</string>
@@ -557,6 +560,13 @@
     <string name="setup__finish_up__description_p1">Клавииатурата на {app_name} вече е включена в системата и готова да я настроите според вашите предпочитения.</string>
     <string name="setup__finish_up__description_p2">Акосе сблъскате с проблеми, дефекти, сривове или просто искате да направите предложение, разгледайте хранилището на проекта от екрана Относно!</string>
     <string name="setup__finish_up__finish_btn">Започнете да настройвате</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Физическа клавиатура</string>
+    <string name="physical_keyboard__system_settings__title">Системни настройки на физическа клавиатура</string>
+    <string name="physical_keyboard__system_settings__summary">Подредби, клав. комбинации и специални клавиши</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Достъпно само при включена клавиатура</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Екранна клавиатура</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Показване на екранна клавиатура при използване на физкческа клавиатура</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Резервно копие и възстановяване</string>
     <string name="backup_and_restore__back_up__title">Резервно копие на данни</string>
@@ -627,14 +637,13 @@
     <string name="clipboard__cleared_primary_clip">Текущото съдържание на междинната памет е изчистено</string>
     <string name="clipboard__cleared_history">Историята е изчистена</string>
     <string name="clipboard__cleared_full_history">Цялата история е изчистена</string>
-    <string name="clipboard__confirm_clear_history__message">Желаете ли историята на междинната памет да бъде изчистена? Всички елементи, с изключение на закачените ще бъдат премахнати без значение на използвания филтър.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Потвърждавате ли изчистване на междинната памет? Всички филтрирани елементи без закачените ще бъдат премахнати.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Потвърждавате ли изчистване на междинната памет? Всички елементи без закачените ще бъдат премахнати.</string>
     <string name="settings__clipboard__title">Междинна памет</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Междинна памет на приложението</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Използва се междинната памет на приложението вместо системната</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Внасяне от системната междинна памет</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Промените в системната памет се отразяват в тази на приложението</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Изнасяне в системната междинна памет</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Промените в междинната памет на приложението се отразяват и в системната</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Предложения от междинната памет</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предложения от съдържанието на междинната памет</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
@@ -650,8 +659,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Почистване на чувствителни елементи след</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя елементи</string>
     <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Изчистване на текущата межд. памет влияе на историята</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Изчистване на текущото съдържание на междинната памет изчиства и последния елемент от историята</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Скриване при поставяне</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Скриване при смяна на полето</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Изчистването на първия елемент влияе на историята</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Изчистването на първия елемент го премахва от историята ако не е залачен</string>
     <string name="send_to_clipboard__unknown_error">Възникна неизвестна грешка. Опитайте отново!</string>
     <string name="send_to_clipboard__type_not_supported_error">Този вид медия не се поддържа.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Долното изображение е копирано в междинната памет.</string>
@@ -846,6 +857,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамична ширина с плъзгач</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Само главни букви при двойно докосване на клавиша Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Превключва способите за въвеждане на главни букви при всяко докосване на Shift</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Никакви събития</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">Никакви събития не се синхронизират в тази посока. Този режим не включва текстово съдържание.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Събития на изчистване</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Само събитията, изчистващи елементи от историята се синхронизират в тази посока. Този режим не включва текстово съдържание.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Събития на създаване</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Само събитията, добавящи елементи към историята се синхронизират в тази посока. Този режим включва текстово съдържание.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Всички събития</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">И двата вида събития, добавящи и изчистващи елементи от историята се синхронизират в тази посока. Този режим включва текстово съдържание.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Шестнадесетично</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Червено, зелено, синьо</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Нюанс, наситеност, стойност</string>
@@ -924,8 +943,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не се показва</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Винаги се показва</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Показва се динамично</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">За лява ръка</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">За дясна ръка</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Горе, начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Горе, край</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Долу, край</string>
@@ -967,6 +984,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Курсорът се премества в началото на страницата</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Курсорът се премества в края на страницата</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Управление на междинната памет</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Отваря панела с емоции</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Възстановяване</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Отменяне</string>

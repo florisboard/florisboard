@@ -35,13 +35,13 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
 import dev.patrickgold.florisboard.lib.util.launchUrl
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.FlorisTextButton
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 
 @Composable

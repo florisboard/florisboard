@@ -63,17 +63,19 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material.icons.outlined.ContentPaste
+import androidx.compose.material.icons.outlined.ContentPasteGo
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,7 +89,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
@@ -101,21 +103,22 @@ import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
-import dev.patrickgold.florisboard.lib.compose.autoMirrorForRtl
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import java.time.Instant
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showShortToast
+import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
+import org.florisboard.lib.compose.autoMirrorForRtl
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
@@ -125,7 +128,6 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
-import java.time.Instant
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -136,7 +138,8 @@ const val CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO: Int = 0
 fun ClipboardInputLayout(
     modifier: Modifier = Modifier,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
     val keyboardManager by context.keyboardManager()
@@ -144,23 +147,23 @@ fun ClipboardInputLayout(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.observeAsState()
-    val unfilteredHistory by clipboardManager.history.observeAsNonNullState()
 
     var isFilterRowShown by remember { mutableStateOf(false) }
     val activeFilterTypes = remember { mutableStateSetOf<ItemType>() }
 
-    val history = remember(unfilteredHistory, activeFilterTypes.toSet()) {
+    val unfilteredHistory by clipboardManager.historyFlow.collectAsState()
+    val filteredHistory = remember(unfilteredHistory, activeFilterTypes.toSet()) {
         if (activeFilterTypes.isEmpty()) {
             unfilteredHistory
         } else {
             unfilteredHistory.all
                 .filter { activeFilterTypes.contains(it.type) }
-                .let { ClipboardManager.ClipboardHistory(it) }
+                .let { ClipboardHistory(it) }
         }
     }
 
     val gridState = rememberLazyStaggeredGridState()
-    var popupItem by remember(history) { mutableStateOf<ClipboardItem?>(null) }
+    var popupItem by remember(filteredHistory) { mutableStateOf<ClipboardItem?>(null) }
     var showClearAllHistory by remember { mutableStateOf(false) }
 
     fun isPopupSurfaceActive() = popupItem != null || showClearAllHistory
@@ -203,7 +206,7 @@ fun ClipboardInputLayout(
             )
             SnyggIconButton(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
-                onClick = { prefs.clipboard.historyEnabled.set(!historyEnabled) },
+                onClick = { scope.launch { prefs.clipboard.historyEnabled.set(!historyEnabled) } },
                 modifier = sizeModifier.autoMirrorForRtl(),
                 enabled = !deviceLocked && !isPopupSurfaceActive(),
             ) {
@@ -219,7 +222,7 @@ fun ClipboardInputLayout(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
                 onClick = { showClearAllHistory = true },
                 modifier = sizeModifier.autoMirrorForRtl(),
-                enabled = !deviceLocked && historyEnabled && unfilteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
+                enabled = !deviceLocked && historyEnabled && filteredHistory.all.isNotEmpty() && !isPopupSurfaceActive(),
             ) {
                 SnyggIcon(
                     imageVector = Icons.Default.DeleteSweep,
@@ -367,7 +370,7 @@ fun ClipboardInputLayout(
             modifier = Modifier.fillMaxSize(),
         ) {
             val historyAlpha by animateFloatAsState(targetValue = if (isPopupSurfaceActive()) 0.12f else 1f)
-            val staggeredGridCells by prefs.clipboard.numHistoryGridColumns()
+            val staggeredGridCells by prefs.clipboard.historyNumGridColumns()
                 .observeAsTransformingState { numGridColumns ->
                     if (numGridColumns == CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO) {
                         StaggeredGridCells.Adaptive(160.dp)
@@ -464,17 +467,17 @@ fun ClipboardInputLayout(
                         columns = staggeredGridCells,
                     ) {
                         clipboardItems(
-                            items = history.pinned,
+                            items = filteredHistory.pinned,
                             key = "pinned-header",
                             title = R.string.clipboard__group_pinned,
                         )
                         clipboardItems(
-                            items = history.recent,
+                            items = filteredHistory.recent,
                             key = "recent-header",
                             title = R.string.clipboard__group_recent,
                         )
                         clipboardItems(
-                            items = history.other,
+                            items = filteredHistory.other,
                             key = "other-header",
                             title = R.string.clipboard__group_other,
                         )
@@ -495,7 +498,9 @@ fun ClipboardInputLayout(
                     SnyggColumn(modifier = Modifier.weight(0.5f)) {
                         ClipItemView(
                             elementName = FlorisImeUi.ClipboardItemPopup.elementName,
-                            modifier = Modifier.widthIn(max = ItemWidth),
+                            modifier = Modifier
+                                .widthIn(max = ItemWidth)
+                                .weight(1f, fill = false),
                             item = popupItem!!,
                             contentScrollInsteadOfClip = true,
                         )
@@ -528,11 +533,11 @@ fun ClipboardInputLayout(
                                 icon = Icons.Default.Delete,
                                 text = stringRes(R.string.clip__delete_item),
                             ) {
-                                clipboardManager.deleteClip(popupItem!!)
+                                clipboardManager.deleteClip(popupItem!!, onlyIfUnpinned = false)
                                 popupItem = null
                             }
                             PopupAction(
-                                icon = Icons.Outlined.ContentPaste,
+                                icon = Icons.Outlined.ContentPasteGo,
                                 text = stringRes(R.string.clip__paste_item),
                             ) {
                                 clipboardManager.pasteItem(popupItem!!)
@@ -563,7 +568,13 @@ fun ClipboardInputLayout(
                     ) {
                         SnyggText(
                             elementName = FlorisImeUi.ClipboardClearAllDialogMessage.elementName,
-                            text = stringRes(R.string.clipboard__confirm_clear_history__message),
+                            text = stringRes(
+                                if (isFilterRowShown) {
+                                    R.string.clipboard__confirm_clear_filtered_history__message
+                                } else {
+                                    R.string.clipboard__confirm_clear_unfiltered_history__message
+                                }
+                            ),
                         )
                         SnyggRow(FlorisImeUi.ClipboardClearAllDialogButtons.elementName) {
                             Spacer(modifier = Modifier.weight(1f))
@@ -582,10 +593,9 @@ fun ClipboardInputLayout(
                                 elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
                                 attributes = mapOf("action" to "yes"),
                                 onClick = {
-                                    clipboardManager.clearHistory()
-                                    context.showShortToast(R.string.clipboard__cleared_history)
+                                    clipboardManager.clearExactHistory(filteredHistory.unpinned)
+                                    context.showShortToastSync(R.string.clipboard__cleared_history)
                                     showClearAllHistory = false
-                                    isFilterRowShown = false
                                 },
                             ) {
                                 SnyggText(
@@ -629,7 +639,7 @@ fun ClipboardInputLayout(
                 text = stringRes(R.string.clipboard__disabled__message),
             )
             SnyggButton(FlorisImeUi.ClipboardHistoryDisabledButton.elementName,
-                onClick = { prefs.clipboard.historyEnabled.set(true) },
+                onClick = { scope.launch { prefs.clipboard.historyEnabled.set(true) } },
                 modifier = Modifier.align(Alignment.End),
             ) {
                 SnyggText(
@@ -666,7 +676,7 @@ fun ClipboardInputLayout(
             HistoryLockedView()
         } else {
             if (historyEnabled) {
-                if (history.all.isNotEmpty() || !activeFilterTypes.isEmpty()) {
+                if (filteredHistory.all.isNotEmpty() || !activeFilterTypes.isEmpty()) {
                     HistoryMainView()
                 } else {
                     HistoryEmptyView()

@@ -20,14 +20,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
+import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
+import com.mikepenz.aboutlibraries.ui.compose.m3.chipColors
 import com.mikepenz.aboutlibraries.ui.compose.m3.libraryColors
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.florisScrollbar
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ThirdPartyLicensesScreen() = FlorisScreen {
@@ -36,17 +39,21 @@ fun ThirdPartyLicensesScreen() = FlorisScreen {
     iconSpaceReserved = false
 
     val lazyListState = rememberLazyListState()
+    val libs by produceLibraries()
 
     content {
         LibrariesContainer(
+            libraries = libs,
             modifier = Modifier
                 .fillMaxSize()
                 .florisScrollbar(lazyListState, isVertical = true),
             colors = LibraryDefaults.libraryColors(
-                backgroundColor = MaterialTheme.colorScheme.background,
-                badgeBackgroundColor = MaterialTheme.colorScheme.primaryContainer,
-                badgeContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                contentColor = MaterialTheme.colorScheme.onBackground,
+                libraryBackgroundColor = MaterialTheme.colorScheme.background,
+                licenseChipColors = LibraryDefaults.chipColors(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.onPrimaryContainer,
+                ),
+                libraryContentColor = MaterialTheme.colorScheme.onBackground,
                 dialogConfirmButtonColor = MaterialTheme.colorScheme.primary,
             ),
             lazyListState = lazyListState,

@@ -29,22 +29,24 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
+import kotlinx.coroutines.launch
 
 enum class ThemeManagerScreenAction(val id: String) {
     SELECT_DAY("select-day"),
@@ -60,10 +62,11 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     })
     previewFieldVisible = true
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
     val themeManager by context.themeManager()
+    val scope = rememberCoroutineScope()
 
     val indexedThemeExtensions by extensionManager.themes.observeAsNonNullState()
     val extGroupedThemes = remember(indexedThemeExtensions) {
@@ -83,7 +86,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         val extComponentName = ExtensionComponentName(extId, componentId)
         when (action) {
             ThemeManagerScreenAction.SELECT_DAY,
-            ThemeManagerScreenAction.SELECT_NIGHT -> {
+            ThemeManagerScreenAction.SELECT_NIGHT -> scope.launch {
                 getThemeIdPref().set(extComponentName)
             }
         }
@@ -96,9 +99,9 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
 
     content {
         DisposableEffect(activeThemeId) {
-            themeManager.previewThemeId = activeThemeId
+            themeManager.previewThemeId.value = activeThemeId
             onDispose {
-                themeManager.previewThemeId = null
+                themeManager.previewThemeId.value = null
             }
         }
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)

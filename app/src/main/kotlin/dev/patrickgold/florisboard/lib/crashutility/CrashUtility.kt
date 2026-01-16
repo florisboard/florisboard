@@ -35,12 +35,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
-import org.florisboard.lib.android.AndroidVersion
+import java.lang.ref.WeakReference
 import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.FsFile
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
-import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 
 /**
@@ -113,7 +112,7 @@ abstract class CrashUtility private constructor() {
                     application.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
                         override fun onActivityCreated(
                             activity: Activity,
-                            savedInstanceState: Bundle?
+                            savedInstanceState: Bundle?,
                         ) {
                             if (activity !is CrashDialogActivity) {
                                 lastActivityCreated = WeakReference(activity)
@@ -125,28 +124,26 @@ abstract class CrashUtility private constructor() {
                         override fun onActivityStopped(activity: Activity) {}
                         override fun onActivitySaveInstanceState(
                             activity: Activity,
-                            outState: Bundle
+                            outState: Bundle,
                         ) {}
                         override fun onActivityDestroyed(activity: Activity) {}
                     })
-                    if (AndroidVersion.ATLEAST_API26_O) {
-                        try {
-                            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
-                            if (notificationManager != null && notificationManager is NotificationManager) {
-                                val notificationChannel = NotificationChannel(
-                                    NOTIFICATION_CHANNEL_ID,
-                                    context.resources.getString(R.string.crash_notification_channel__title),
-                                    NotificationManager.IMPORTANCE_HIGH
-                                )
-                                notificationManager.createNotificationChannel(notificationChannel)
-                            }
-                            flogInfo(LogTopic.CRASH_UTILITY) {
-                                "Successfully created crash handler notification channel!"
-                            }
-                        } catch (e: Exception) {
-                            flogError(LogTopic.CRASH_UTILITY) {
-                                "Failed to create crash handler notification channel due to an unspecified error:\n$e"
-                            }
+                    try {
+                        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
+                        if (notificationManager != null && notificationManager is NotificationManager) {
+                            val notificationChannel = NotificationChannel(
+                                NOTIFICATION_CHANNEL_ID,
+                                context.resources.getString(R.string.crash_notification_channel__title),
+                                NotificationManager.IMPORTANCE_HIGH
+                            )
+                            notificationManager.createNotificationChannel(notificationChannel)
+                        }
+                        flogInfo(LogTopic.CRASH_UTILITY) {
+                            "Successfully created crash handler notification channel!"
+                        }
+                    } catch (e: Exception) {
+                        flogError(LogTopic.CRASH_UTILITY) {
+                            "Failed to create crash handler notification channel due to an unspecified error:\n$e"
                         }
                     }
                 } else {
@@ -274,14 +271,7 @@ abstract class CrashUtility private constructor() {
             context ?: return
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
             if (notificationManager != null && notificationManager is NotificationManager) {
-                val notificationBuilder = if (AndroidVersion.ATLEAST_API26_O) {
-                    Notification.Builder(context.applicationContext, NOTIFICATION_CHANNEL_ID)
-                } else {
-                    @Suppress("DEPRECATION")
-                    Notification.Builder(context.applicationContext).apply {
-                        setPriority(Notification.PRIORITY_MAX)
-                    }
-                }
+                val notificationBuilder = Notification.Builder(context.applicationContext, NOTIFICATION_CHANNEL_ID)
                 val crashDialogIntent = Intent(context, CrashDialogActivity::class.java)
                 val notification = notificationBuilder.run {
                     setContentTitle(title)
@@ -369,7 +359,7 @@ abstract class CrashUtility private constructor() {
      */
     data class Stacktrace(
         val name: String,
-        val details: String
+        val details: String,
     )
 
     /**

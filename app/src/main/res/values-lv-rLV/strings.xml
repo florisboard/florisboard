@@ -50,46 +50,48 @@
     <string name="emoji__history__pinned">Piesprausta</string>
     <string name="emoji__history__recent">Nesena</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Uz augšu</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Uz augšu</string>
     <string name="quick_action__arrow_up__tooltip">Izpildīt bultu uz augšu</string>
-    <string name="quick_action__arrow_down" maxLength="12">Uz leju</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Uz leju</string>
     <string name="quick_action__arrow_down__tooltip">Izpildīt bultu uz leju</string>
-    <string name="quick_action__arrow_left" maxLength="12">Pa kreisi</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Pa kreisi</string>
     <string name="quick_action__arrow_left__tooltip">Izpildīt bultu pa kreisi</string>
-    <string name="quick_action__arrow_right" maxLength="12">Pa labi</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Pa labi</string>
     <string name="quick_action__arrow_right__tooltip">Izpildīt bultu pa labi</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Paslēpt tastatūru</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Veikt tastatūras paslēpšanu</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Izpildīt galvenā starliktuves vienuma notīrīšanu</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopēt</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopēt</string>
     <string name="quick_action__clipboard_copy__tooltip">Izpildīt starpliktuves kopēšanu</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Izgriezt</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Izgriezt</string>
     <string name="quick_action__clipboard_cut__tooltip">Izpildīt starpliktuves izgriešanu</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Ielīmēt</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Ielīmēt</string>
     <string name="quick_action__clipboard_paste__tooltip">Izpildīt starpliktuves ielīmēšanu</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Iezīmēt visu</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Iezīmēt visu</string>
     <string name="quick_action__clipboard_select_all__tooltip">Veikt visu starpliktuves vienumu atlasīšanu</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Starpliktuve</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Starpliktuve</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Atvērt starpliktuves vēsturi</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emocijzīmes</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emocijzīmes</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Atvērt emocijzīmju izvēlni</string>
-    <string name="quick_action__language_switch" maxLength="12">Mainīt val.</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Mainīt val.</string>
     <string name="quick_action__language_switch__tooltip">Veikt valodas nomainīšanu</string>
-    <string name="quick_action__settings" maxLength="12">Iestatījumi</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Iestatījumi</string>
     <string name="quick_action__settings__tooltip">Atvērt iestatījumus</string>
-    <string name="quick_action__undo" maxLength="12">Atsaukt</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Atsaukt</string>
     <string name="quick_action__undo__tooltip">Atsaukt pēdējo ievadi</string>
-    <string name="quick_action__redo" maxLength="12">Atatsaukt</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Atatsaukt</string>
     <string name="quick_action__redo__tooltip">Atkārtoti veikt pēdējo ievadi</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Parādīt vai paslēpt papildu darbības</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Slepenība</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Slepenība</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Pārslēgt slepenību</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autolabošana</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autolabošana</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Pārslēgt automātisko labošanu</string>
-    <string name="quick_action__voice_input" maxLength="12">Balss ievade</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Balss ievade</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Atvērt balss ievades nodrošinātāju</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Vienrocīgs</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Vienrocīgs</string>
     <string name="quick_action__one_handed_mode__tooltip">Pārslēgt vienrocīgo ievadi</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Pašreizējā rādītāja vilkšanas atrašanās vieta</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nekas</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nekas</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Nav darbības</string>
     <string name="quick_actions_overflow__customize_actions_button">Mainīt darbības secību</string>
     <string name="quick_actions_editor__header">Pielāgot darbību secību</string>
@@ -199,6 +201,7 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Ir nakts izskats</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Ir bezapmales</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stilu lapas ceļš</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Stila lapas kļūda</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} var mēģināt saudzīgi ielādēt stila lapu un pievienot trūkstošās shēmas, kārtulas vai noņemt nederīgās kārtulas, īpašības vai vērtības. Vai ļaut {app_name} pielietot šīs izmaiņas?</string>
     <string name="snygg__rule_annotation__defines">Mainīgie</string>
@@ -324,7 +327,7 @@
     <string name="snygg__property_value__content_scale">Satura mērogs</string>
     <string name="snygg__property_value__text_align">Teksta līdzinājums</string>
     <string name="snygg__property_value__text_overflow">Teksta pārplūde</string>
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Skaņas un trīcēšana</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Skaņas un vibrācija</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Nekad neatskaņot ievades notikumu skaņas neatkarīgi no tā, kādi ir sistēmas uzstādījumi</string>
@@ -334,19 +337,19 @@
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanās skaņas</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustību skaņas</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības skaņas</string>
-    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Sajūtu atgriezeniskā saite / Trīcēšana</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Taustes efekti / Vibrācija</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Iespējot sajūtu atgriezenisko saiti</string>
-    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Nekad netrīcēt pie ievades notikumiem neatkarīgi no tā, kādi ir sistēmas uzstādījumi</string>
-    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Trīcēšanas režīms</string>
-    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trīcēšanas ilgums</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trīcēšanas stiprums</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Šai iespējai ir nepieciešams trīcinātājs, kā šķietami nav šajā iekārtā</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Šīs iespējas izmantošanai ir nepieciešama aparatūras starpības vadības atbalsts, kā nav šajā iekārtā</string>
-    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Taustiņa nospiešanas trīcēšana</string>
-    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Ilgas taustiņa nospiešanas trīcēšana</string>
-    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanās darbības trīcēšana</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustības trīcēšana</string>
-    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības trīcēšana</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Izslēgt vibrāciju neatkarīgi no sistēmas iestatījumiem</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibrācijas režīms</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrācijas ilgums</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrācijas stiprums</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">Šai iespējai ir vajadzīgs vibrācijas motors, kas jūsu ierīcē šķietami nav pieejams</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Lai izmantotu šo funkciju, ierīcei ir jāatbalsta vibrācijas stipruma regulēšana, kas jūsu ierīcē nav pieejama</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Taustiņa nospiešanas vibrācija</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Taustiņa ilgās nospiešanas vibrācija</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanas darbības vibrācija</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Pārvilkšanas žesta vibrācija</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Pārvilkšanas žesta vibrācija kustības laikā</string>
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">piemēram, taustiņi, pogas, sajūtu rakstzīmju cilnes</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">piemēram, uznirstošā izvēlne</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">piemēram, dzēšanas taustiņš</string>
@@ -364,12 +367,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Lielo burtu rakstīšanas uzvedība</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Fonta izmēra reizinātājs</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Vienrocīga ievade</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Vienrocīgās ievades tastatūras platums</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Līmeniska pilnekrāna ievade</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastatūras augstums</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Atstarpe starp taustiņiem</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Apakšējā nobīde</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Taustiņa piespiešana</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>
@@ -526,6 +525,13 @@
     <string name="setup__finish_up__description_p1">{app_name} tagad ir iespējots un ir gatavs pielāgojumiem.</string>
     <string name="setup__finish_up__description_p2">Ja tiek pamanītas kādas nepilnības, kļūdas, avārijas vai ir vēlme kaut ko ieteikt, apskati projekta glabātavu, kuras saite ir sadaļā \"Par\"!</string>
     <string name="setup__finish_up__finish_btn">Sākt pielāgošanu</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Fiziska tastatūra</string>
+    <string name="physical_keyboard__system_settings__title">Sistēmas fiziskās tastatūras iestatījumi</string>
+    <string name="physical_keyboard__system_settings__summary">Izkārtojumi, tastatūras saīsnes un pārveidotājtaustiņi</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Pieejams tikai tad, kad ir pievienotat tastatūra</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Rādīt ekrāna tastatūru</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Rādīt ekrāna tastatūru, kamēr izmanto fizisko tastatūru</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Rezerves kopēšana un atjaunošana</string>
     <string name="backup_and_restore__back_up__title">Veikt datu rezerves kopēšanu</string>
@@ -596,14 +602,13 @@
     <string name="clipboard__cleared_primary_clip">Galvenais vienums notīrīts</string>
     <string name="clipboard__cleared_history">Vēsture notīrīta</string>
     <string name="clipboard__cleared_full_history">Visa vēsture notīrīta</string>
-    <string name="clipboard__confirm_clear_history__message">Vai tiešām iztīrīt starpliktuves vēsturi? Tas notīrīs visus vienumus (izņemot piespraustos) neatkarīgi no spēkā esošajiem atlasītājiem.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Vai tiešām iztīrīt visu starpliktuves vēseturi? Tas ietekmēs visus vienums, izņemot piespraustos.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Vai tiešām iztīrīt starpliktuves vēseturi? Tas ietekmēs visus pašreiz atsijātos vienumus, izņemot piespraustos.</string>
     <string name="settings__clipboard__title">Starpliktuve</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinhronizēt no sistēmas starpliktuves</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Starpliktuves ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Starpliktuves satura ieteikumi</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Ieteikt iepriekš starpliktuvē ievietotu saturu</string>
@@ -619,8 +624,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Autmātiski notīrīt jutīgus vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Galvenā vienuma notīrīšana dzēš arī jaunāko vēstures ierakstu</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Paslēpt vēsturi pēc ielīmēšanas</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Paslēpt vēsturi pēc pāriešanas uz nākamo teksta lauku</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Galvenā vienuma notīrīšana ietekmē vēsturi</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Galvenā vienuma notīrīšana noņem to arī no vēstures, ja tas nav piesprausts</string>
     <string name="send_to_clipboard__unknown_error">Radusies nezināma kļūda. Lūgums vēlāk mēģināt vēlreiz.</string>
     <string name="send_to_clipboard__type_not_supported_error">Šis informācijas nesēja veids netiek atbalstīts.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Zemāk esošais attēls ir ievietots starpliktuvē.</string>
@@ -815,6 +822,10 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Mainīgs platums un ritināms</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Iespējot burtslēgu ar divkāršu piesitienu pārslēgšanas taustiņam</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Pārslēgties uz nākamo lielā burta rakstīšānas soli katru reizi, kad tiek nospiests pārslēgšanas taustiņš</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Nav notikumu</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">Šajā virzienā netiek sinhronizēts neviens notikums. Šajā režīmā sinhronizēšana neiekļauj teksta saturu.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Tikai notīrīt notikumus</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Visi notikumi</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Sarkans Zaļš Zils</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Nokrāsas piesātinājuma vērtība</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Rādīt vienmēr</string>
@@ -856,10 +867,10 @@
     <string name="enum__extended_actions_placement__below_candidates__description" comment="Enum value description">Ievieto paplašināto darbību rindu starp ieteikumu rindu un tastatūru</string>
     <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Pārklāt lietotnes saskarni</string>
     <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Novieto paplašināto darbību rindu kā pārklājumu virs lietotnes saskarnes, neietekmējot izrietošo tastatūras saskarnes augstumu. Jāņem vērā, ka šis novietojums var izraisīt lietotnes ievades lauka daļēju pārklāšanu</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Tieši izmantot trīcinātāju</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} tieši mijiedarbojas ar noklusējuma trīcinātāju. Tas nodrošina vairāk kontroles pār trīcēšanas ilgumu un stiprumu, bet tā var nebūt tik laba kā izmantojot sajūtu atgriezeniskās saites saskarni</string>
-    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Izmantot sajūtu atgriezeniskās saites saskarni</string>
-    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} izmanto sajūtu atgriezeniskās saites saskarni, lai izsauktu iepriekšnosacītu trīcēšanas secību taustiņu nospiešanas brīdī. Tas dažās iekārtās var darboties izcili, bet citās pilnībā nedarboties vai darboties ļoti slikti</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Vibrēt tieši no motora</string>
+    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} tieši mijiedarbosies ar ierīces noklusēto vibrācijas motoru, kas nodrošinās lielāku kontroli pār vibrācijas ilgumu un stiprumu, taču vibrācija var nebūt tik vienmērīga kā izmantojot taustes efektu (haptic feedback) saskarni</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Izmantot taustes efektu (haptic feedback) saskarni</string>
+    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} izmanto taustes efektu (haptic feedback) saskarni, lai taustiņu nospiešanas laikā aktivizētu iepriekš definētu vibrāciju. Dažās ierīcēs šis darbojas nevainojami, citās var nedarboties vai darboties neparedzami</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Uzsvara zīmēm ir priekšroka</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Sākotnējā atlasītā rakstzīme pēc ilga piespiediena vienmēr ir galvenā uzsvara zīme vai norādes rakstzīme, ja galvenā uzsvara zīme nav pieejama</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Norādei ir priekšroka</string>
@@ -876,8 +887,8 @@
     <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Ieteicamā iespēja. Slepenības iespējošana vai atspējošāna pielāgosies mērķa lietotnes padotajām vērtībām vai pašrocīgi pārslēdzot to viedjoslā ar slepenības ātro darbību.</string>
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dinamiski atskaņot ievades notikumu skaņas atkarībā no sistēmas uzstādījumiem</string>
     <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Vienmēr atskaņot ievades notikumu skaņas neatkarīgi no tā, kādi ir sistēmas uzstādījumi</string>
-    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dinamiska trīcēšana ievades notikumiem atkarībā no sistēmas uzstādījumiem</string>
-    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Vienmēr trīcēt pie ievades notikumiem neatkarīgi no tā, kādi ir sistēmas uzstādījumi</string>
+    <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dinamiska vibrācija ievades notikumiem, atkarībā no sistēmas iestatījumiem</string>
+    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Vibrē vienmēr neatkarīgi no sistēmas iestatījumiem</string>
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Nepārslēgts</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Pārslēgts (pašrocīgi)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Pārslēgts (automātiski)</string>
@@ -892,8 +903,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nerādīt nekad</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Rādīt vienmēr</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Rādīt pielāgojoties</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Ievade ar kreiso roku</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Ievade ar labo roku</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Augšas sākums</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Augšas beigas</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Apakšas sākums</string>

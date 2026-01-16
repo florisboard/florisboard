@@ -30,8 +30,8 @@ import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppPrefs
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import org.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -39,14 +39,14 @@ import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, AppPrefs?> {
+private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, FlorisPreferenceModel?> {
     val cachedPreferenceModel = try {
-        florisPreferenceModel()
+        FlorisPreferenceStore
     } catch (_: Throwable) {
         null
     }
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): AppPrefs? {
+    override fun getValue(thisRef: Any?, property: KProperty<*>): FlorisPreferenceModel? {
         return cachedPreferenceModel?.getValue(thisRef, property)
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun FlorisConfirmDeleteDialog(

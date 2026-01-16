@@ -50,47 +50,51 @@
     <string name="emoji__history__pinned">Připnuté</string>
     <string name="emoji__history__recent">Nedávné</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Šipka nahoru</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Šipka nahoru</string>
     <string name="quick_action__arrow_up__tooltip">Vykonat šipku nahoru</string>
-    <string name="quick_action__arrow_down" maxLength="12">Šipka dolů</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Šipka dolů</string>
     <string name="quick_action__arrow_down__tooltip">Vykonat šipku dolů</string>
-    <string name="quick_action__arrow_left" maxLength="12">Šipka vlevo</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Šipka vlevo</string>
     <string name="quick_action__arrow_left__tooltip">Vykonat šipku vlevo</string>
-    <string name="quick_action__arrow_right" maxLength="12">Šipka vpravo</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Šipka vpravo</string>
     <string name="quick_action__arrow_right__tooltip">Vykonat šipku vpravo</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Skrýt klávesnici</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Provést skrytí klávesnice</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Vykonat vymazání primární položky schránky</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopírovat</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopírovat</string>
     <string name="quick_action__clipboard_copy__tooltip">Vykonat kopírování do schránky</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Vyjmout</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Vyjmout</string>
     <string name="quick_action__clipboard_cut__tooltip">Vykonat vyjmutí do schránky</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Vložit</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Vložit</string>
     <string name="quick_action__clipboard_paste__tooltip">Vykonat vložení schránky</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Vybrat vše</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Vybrat vše</string>
     <string name="quick_action__clipboard_select_all__tooltip">Vykonat vybrání všeho do schránky</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schránka</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Smazat za</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Schránka</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otevřít historii schránky</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emotikony</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emotikony</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Otevřít panel emotikonů</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Změnit jazyk</string>
     <string name="quick_action__language_switch__tooltip">Provést přepnutí jazyku</string>
-    <string name="quick_action__settings" maxLength="12">Nastavení</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Nastavení</string>
     <string name="quick_action__settings__tooltip">Otevřít nastavení</string>
-    <string name="quick_action__undo" maxLength="12">Vrátit zpět</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Vrátit zpět</string>
     <string name="quick_action__undo__tooltip">Vrátit zpět poslední vstup</string>
-    <string name="quick_action__redo" maxLength="12">Znovu</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Znovu</string>
     <string name="quick_action__redo__tooltip">Provést znovu poslední vstup</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Další akce</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Další akce</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Zobrazit nebo skrýt další akce</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Anonymní</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Anonymní</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Přepnout anonymní režim</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Auto-oprava</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Auto-oprava</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Přepnout automatickou opravu</string>
-    <string name="quick_action__voice_input" maxLength="12">Hlas. vstup</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Hlas. vstup</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Otevřít poskytovatele hlasového zadávání</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Jedna ruka</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Jedna ruka</string>
     <string name="quick_action__one_handed_mode__tooltip">Přepnout režim jedné ruky</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Značka přes.</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Značka přes.</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Aktuální pozice značky přesouvání</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Žádné</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Žádné</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Žádná operace</string>
     <string name="quick_actions_overflow__customize_actions_button">Změnit pořadí akcí</string>
     <string name="quick_actions_editor__header">Přizpůsobit pořadí akcí</string>
@@ -200,8 +204,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Noční motiv</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Bez okrajů</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Cesta tabulky stylů</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Chyba stylů</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} se přesto může pokusit načíst soubor stylů a přidat chybějící schémata, pravidla nebo odstranit neplatná pravidla, vlastnosti nebo hodnoty. Chcete, aby aplikace {app_name} tyto změny použila?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Styl palety</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Barevný kontrast</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Verze specifikací</string>
     <string name="snygg__rule_annotation__defines">Proměnné</string>
     <string name="snygg__rule_annotation__defines_description">Pomocí tohoto pravidla definujte proměnné pro opětovné použití běžných barev nebo velikostí ve vaší tabulce stylů.</string>
     <string name="snygg__rule_annotation__font">Písmo</string>
@@ -397,12 +405,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Chování při psaní velkých písmen</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Násobitel velikosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim jedné ruky</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Šířka klávesnice v režimu jedné ruky</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vstupní okno v celoobrazovkovém režimu na šířku</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Výška klávesnice</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Mezery mezi klávesami</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Spodní odsazení</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
@@ -559,6 +563,13 @@
     <string name="setup__finish_up__description_p1">{app_name} je nyní povolena ve vašem systému a je připravena na přizpůsobení.</string>
     <string name="setup__finish_up__description_p2">Pokud objevíte jakékoli problémy, chyby, pády nebo prostě jen budete chtít podat návrh, podívejte se na repozitář projektu na obrazovce O aplikaci!</string>
     <string name="setup__finish_up__finish_btn">Začít přizpůsobovat</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Fyzická klávesnice</string>
+    <string name="physical_keyboard__system_settings__title">Systémová nastavení fyzické klávesnice</string>
+    <string name="physical_keyboard__system_settings__summary">Rozložení, klávesové zkratky a modifikátory</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Dostupné pouze při připojené klávesnici</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Zobrazit klávesnici na obrazovce</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Zobrazí klávesnici na obrazovce při používání fyzické klávesnice</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Záloha a obnovení</string>
     <string name="backup_and_restore__back_up__title">Zálohovat data</string>
@@ -629,14 +640,13 @@
     <string name="clipboard__cleared_primary_clip">Primární zkopírovaná položka vymazána</string>
     <string name="clipboard__cleared_history">Historie vymazána</string>
     <string name="clipboard__cleared_full_history">Celá historie vymazána</string>
-    <string name="clipboard__confirm_clear_history__message">Opravdu chcete vymazat historii schránky? Smažete tím všechny položky kromě připnutých, nezávisle na aktivních filtrech.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Opravdu chcete vymazat celou vaší historii schránky? Toto ovlivní všechny položky, kromě připnutých.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Opravdu chcete vymazat vaší historii schránky? Toto ovlivní všechny aktuálně vyfiltrované položky, kromě připnutých.</string>
     <string name="settings__clipboard__title">Schránka</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchronizovat ze systémovou schránkou</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Aktualizace systémové schránky také zahrnují schránku Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizovat do systémové schránky</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualizace schránky Floris také zahrnují systémovou schránku</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Návrhy schránky</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Obsah návrhu schránky</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Navrhnout obsah dříve zkopírovaný do schránky</string>
@@ -652,8 +662,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Automaticky mazat citlivé položky po uplynutí</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Vymazání primární položky ovlivní historii</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Vymazání primární položky také vymaže poslední zápis v historii</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Skrýt historii při vložení</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Skrýt historii u dalšího textového pole</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Vymazání primární položky ovlivní historii</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Vymazání primární položky ji také odstraní z historie, pokud není připnutá</string>
     <string name="send_to_clipboard__unknown_error">Došlo k neznámé chybě. Zkuste to prosím znovu!</string>
     <string name="send_to_clipboard__type_not_supported_error">Tento typ médií není podporován.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Obrázek níže zkopírován do schránky.</string>
@@ -848,6 +860,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamická šířka a skrolovatelné</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Zapnout Caps Lock při dvojitém klepnutí na Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Přepnout na další krok kapitalizace při každém stisknutí klávesy Shift</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Žádné události</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">V tomto směru nejsou synchronizovány žádné události. V tomto režimu synchronizace nezahrnuje textový obsah.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Pouze události vymazání</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">V tomto směru jsou synchronizovány pouze události vymazání dat položek. V tomto režimu synchronizace nezahrnuje textový obsah.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Pouze události nastavení</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">V tomto směru jsou synchronizovány pouze události nastavení dat položek. V tomto režimu synchronizace nezahrnuje textový obsah.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Všechny události</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">V tomto směru jsou synchronizovány události nastavení i vymazání dat položek. V tomto režimu synchronizace zahrnuje textový obsah.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimální</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Červená Zelená Modrá</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Odstín Sytost Hodnota</string>
@@ -926,8 +946,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nikdy nezobrazovat</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vždy zobrazovat</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamicky zobrazovat</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Režim pro leváky</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Režim pro praváky</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Vlevo nahoře</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Vpravo nahoře</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Vpravo dole</string>
@@ -969,6 +987,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Přesunout kurzor na začátek stránky</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Přesunout kurzor na konec stránky</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Otevřít správce schránky / historii</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Otevřít panel emotikonů</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Přepnout shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Vpřed</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Zpět</string>

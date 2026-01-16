@@ -158,6 +158,13 @@
         "modifier": "org.florisboard.layouts:dvorak"
       },
       {
+        "id": "dvorak_se",
+        "label": "Dvorak (SE)",
+        "authors": [ "iceaway" ],
+        "direction": "ltr",
+        "modifier": "org.florisboard.layouts:dvorak_se"
+      },
+      {
         "id": "esperanto",
         "label": "Esperanto",
         "authors": [ "jeremiah-miller", "patrickgold" ],
@@ -179,6 +186,12 @@
         "id": "faroese",
         "label": "Faroese (QWERTY)",
         "authors": [ "BinFlush" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "georgian_standard",
+        "label": "Georgian Standard Keyboard",
+        "authors": [ "nE" ],
         "direction": "ltr"
       },
       {
@@ -265,6 +278,12 @@
         "id": "korean",
         "label": "South Korean standard",
         "authors": [ "patrickgold", "Hayleia" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "korean_phonetic",
+        "label": "South Korean Phonetic",
+        "authors": [ "Shunnuo" ],
         "direction": "ltr"
       },
       {
@@ -511,6 +530,12 @@
         "direction": "ltr"
       },
       {
+        "id": "dvorak_se",
+        "label": "Dvorak (SE)",
+        "authors": [ "iceaway" ],
+        "direction": "ltr"
+      },
+      {
         "id": "hebrew",
         "label": "עברית",
         "authors": [ "Antony" ],
@@ -606,6 +631,12 @@
         "id": "cjk",
         "label": "CJK",
         "authors": [ "waelwindows" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "czech",
+        "label": "Czech",
+        "authors": [ "bmondream" ],
         "direction": "ltr"
       },
       {

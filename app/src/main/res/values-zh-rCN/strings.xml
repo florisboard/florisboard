@@ -50,47 +50,52 @@
     <string name="emoji__history__pinned">已置顶</string>
     <string name="emoji__history__recent">最近使用</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">向上键</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">向上键</string>
     <string name="quick_action__arrow_up__tooltip">执行向上方向键</string>
-    <string name="quick_action__arrow_down" maxLength="12">向下键</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">向下键</string>
     <string name="quick_action__arrow_down__tooltip">执行向下方向键</string>
-    <string name="quick_action__arrow_left" maxLength="12">向左键</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">向左键</string>
     <string name="quick_action__arrow_left__tooltip">执行向左方向键</string>
-    <string name="quick_action__arrow_right" maxLength="12">向右键</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">向右键</string>
     <string name="quick_action__arrow_right__tooltip">执行向右方向键</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">清除主要剪贴板条目</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">隐藏键盘</string>
+    <string name="quick_action__ime_hide_ui__tooltip">执行隐藏键盘</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">清除主要剪贴板条目</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">执行清除主要剪贴板条目</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">复制</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">复制</string>
     <string name="quick_action__clipboard_copy__tooltip">执行剪贴板复制</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">剪切</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">剪切</string>
     <string name="quick_action__clipboard_cut__tooltip">执行剪贴板剪切</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">粘贴</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">粘贴</string>
     <string name="quick_action__clipboard_paste__tooltip">执行剪贴板粘贴</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">全选</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">全选</string>
     <string name="quick_action__clipboard_select_all__tooltip">执行剪贴板全选</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">剪贴板</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">向前删除</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">剪贴板</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">打开剪贴板历史</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">表情符号</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">表情符号</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">打开表情符号面板</string>
-    <string name="quick_action__settings" maxLength="12">设置</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">切换语言</string>
+    <string name="quick_action__language_switch__tooltip">执行切换语言</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">设置</string>
     <string name="quick_action__settings__tooltip">打开设置</string>
-    <string name="quick_action__undo" maxLength="12">撤销</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">撤销</string>
     <string name="quick_action__undo__tooltip">撤销上次输入</string>
-    <string name="quick_action__redo" maxLength="12">恢复</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">恢复</string>
     <string name="quick_action__redo__tooltip">恢复上次输入</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">更多操作</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">更多操作</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">显示或隐藏其他操作</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">无痕模式</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">无痕模式</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">无痕模式开关</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">自动更正</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">自动更正</string>
     <string name="quick_action__toggle_autocorrect__tooltip">自动更正开关</string>
-    <string name="quick_action__voice_input" maxLength="12">语音输入</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">语音输入</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">打开语音输入提供者</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">单手模式</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">单手模式</string>
     <string name="quick_action__one_handed_mode__tooltip">单手模式开关</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">拖动标记</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">拖动标记</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">当前拖动标记位置</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无操作</string>
     <string name="quick_actions_overflow__customize_actions_button">重新排列操作</string>
     <string name="quick_actions_editor__header">自定义操作顺序</string>
@@ -153,6 +158,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">日落时间</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">日间主题</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">夜间主题</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">强调色（Material You 主题）</string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">管理已安装的主题</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard应用资源</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">内部存储空间</string>
@@ -161,17 +167,22 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">选择夜间主题</string>
     <string name="settings__theme_editor__fine_tune__title">微调编辑器</string>
     <string name="settings__theme_editor__fine_tune__level">编辑等级</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">颜色表示</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">对话框后显示键盘</string>
     <string name="settings__theme_editor__add_rule">添加规则</string>
     <string name="settings__theme_editor__edit_rule">编辑规则</string>
     <string name="settings__theme_editor__no_rules_defined">此样式表没有定义任何规则。添加规则以开始自定义此样式表。</string>
     <string name="settings__theme_editor__rule_already_exists">此样式表规则已定义。</string>
+    <string name="settings__theme_editor__rule_name">元素 / 注释</string>
     <string name="settings__theme_editor__rule_codes">目标键码</string>
     <string name="settings__theme_editor__rule_groups">规则组</string>
+    <string name="settings__theme_editor__rule_modes">目标模式（层）</string>
+    <string name="settings__theme_editor__rule_shift_states">目标转换状态</string>
     <string name="settings__theme_editor__rule_selectors">选择器</string>
     <string name="settings__theme_editor__add_code">添加键码</string>
     <string name="settings__theme_editor__edit_code">编辑键码</string>
     <string name="settings__theme_editor__no_codes_defined">将规则应用于所有目标元件。</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">所有可能的值都已添加。</string>
     <string name="settings__theme_editor__code_already_exists">此键码已定义。</string>
     <string name="settings__theme_editor__code_invalid">此键码无效。请确保键码在 {c_min} 到 {c_max} 范围内，如果是内部特殊键，在 {i_min} 到 {i_max} 范围内。</string>
     <string name="settings__theme_editor__code_help_text">或者，以下链接将帮助您找到相应的键码：</string>
@@ -188,19 +199,64 @@
     <string name="settings__theme_editor__property_value">属性值</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">应用于所有角落</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">编辑颜色字符串</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">选择文件</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">此扩展尚未添加任何文件。请在上一屏幕中使用“{action_title}”操作来导入文件。</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">是夜间主题</string>
     <string name="settings__theme_editor__component_meta_is_borderless">无边框</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">样式表路径</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
+    <string name="settings__theme_editor__stylesheet_error_title">样式表错误</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} 可以尝试宽松地加载样式表，并添加缺失的模式、规则，或删除无效的规则、属性或值。您希望 {app_name} 应用这些更改吗？</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">调色板风格</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">颜色对比</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">规格版本</string>
+    <string name="snygg__rule_annotation__defines">变量</string>
+    <string name="snygg__rule_annotation__defines_description">在此规则中定义变量，以便在样式表中重复使用常用的颜色或尺寸。</string>
+    <string name="snygg__rule_annotation__font">字体</string>
+    <string name="snygg__rule_annotation__font_name">字体名称</string>
+    <string name="snygg__rule_element__root">Root</string>
+    <string name="snygg__rule_element__window">窗口</string>
     <string name="snygg__rule_element__key">键</string>
     <string name="snygg__rule_element__key_hint">键提示</string>
+    <string name="snygg__rule_element__key_popup_box"></string>
     <string name="snygg__rule_element__clipboard_header">剪贴板标题</string>
+    <string name="snygg__rule_element__clipboard_header_button">剪贴板标题按钮</string>
+    <string name="snygg__rule_element__clipboard_header_text">剪贴板标题文本</string>
+    <string name="snygg__rule_element__clipboard_subheader">剪贴板子标题</string>
+    <string name="snygg__rule_element__clipboard_content">剪贴板内容</string>
+    <string name="snygg__rule_element__clipboard_filter_row">剪贴板筛选行</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text"></string>
+    <string name="snygg__rule_element__clipboard_grid">剪贴板网格</string>
     <string name="snygg__rule_element__clipboard_item">剪贴板条目</string>
+    <string name="snygg__rule_element__clipboard_item_description">剪贴板条目描述</string>
     <string name="snygg__rule_element__clipboard_item_popup">剪贴板条目弹出</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">剪贴板条目时间戳</string>
+    <string name="snygg__rule_element__clipboard_item_actions">剪贴板条目操作</string>
+    <string name="snygg__rule_element__clipboard_item_action">剪贴板条目操作</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">剪贴板项目操作图标</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">剪贴板项目操作文本</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">清除所有剪贴板对话框</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">清空剪贴板的对话消息</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">清空剪贴板对话框按钮</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">清空剪贴板对话框按钮</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">剪贴板历史已禁用消息</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">剪贴板历史记录已禁用消息</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">剪贴板历史记录已禁用按钮</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">剪贴板历史已锁定标题</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">剪贴板历史已锁定消息</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">横向输入布局</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">横向输入框</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">横向输入框操作</string>
     <string name="snygg__rule_element__glide_trail">滑动轨迹</string>
     <string name="snygg__rule_element__incognito_mode_indicator">无痕模式指示器</string>
+    <string name="snygg__rule_element__inline_autofill_chip">内联自动填充</string>
+    <string name="snygg__rule_element__media">媒体</string>
+    <string name="snygg__rule_element__media_emoji_subheader"></string>
+    <string name="snygg__rule_element__media_emoji_key">媒体表情符号键</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">媒体表情符号快捷键弹出框</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">媒体表情符号键弹出扩展指示器</string>
+    <string name="snygg__rule_element__media_emoji_tab">媒体表情符号标签</string>
+    <string name="snygg__rule_element__media_bottom_row"></string>
     <string name="snygg__rule_element__one_handed_panel">单手面板</string>
     <string name="snygg__rule_element__smartbar">智能栏</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">智能栏共用操作行</string>
@@ -216,13 +272,23 @@
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">智能栏操作编辑器副标题</string>
     <string name="snygg__rule_element__smartbar_candidates_row">智能栏候选行</string>
     <string name="snygg__rule_element__smartbar_candidate_word">智能栏候选词</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">智能栏操作候选词文本</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">智能栏操作候选词辅助文本</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>
+    <string name="snygg__rule_element__subtype_panel">子类型面板</string>
+    <string name="snygg__rule_element__subtype_panel_header">子类型面板标题</string>
+    <string name="snygg__rule_element__subtype_panel_list">子类型面板列表</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">子类型面板列表项</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">子类型面板列表项文本</string>
     <string name="snygg__rule_selector__pressed">已按下</string>
     <string name="snygg__rule_selector__focus">已聚焦</string>
+    <string name="snygg__rule_selector__hover">悬停</string>
     <string name="snygg__rule_selector__disabled">已停用</string>
     <string name="snygg__property_name__background">背景</string>
     <string name="snygg__property_name__foreground">前景</string>
+    <string name="snygg__property_name__background_image">背景图片</string>
+    <string name="snygg__property_name__content_scale">内容规模</string>
     <string name="snygg__property_name__border_color">边框颜色</string>
     <string name="snygg__property_name__border_style">边框样式</string>
     <string name="snygg__property_name__border_width">边框宽度</string>
@@ -230,8 +296,19 @@
     <string name="snygg__property_name__font_size">字体大小</string>
     <string name="snygg__property_name__font_style">字体样式</string>
     <string name="snygg__property_name__font_weight">字体粗细</string>
+    <string name="snygg__property_name__letter_spacing">字母间距</string>
+    <string name="snygg__property_name__line_height">行高</string>
+    <string name="snygg__property_name__margin">边距</string>
+    <string name="snygg__property_name__padding">填充</string>
+    <string name="snygg__property_name__shadow_color">阴影颜色</string>
     <string name="snygg__property_name__shadow_elevation">阴影深度</string>
     <string name="snygg__property_name__shape">形状</string>
+    <string name="snygg__property_name__clip">剪切</string>
+    <string name="snygg__property_name__src">源</string>
+    <string name="snygg__property_name__text_align">文本对齐</string>
+    <string name="snygg__property_name__text_decoration_line">文本装饰线</string>
+    <string name="snygg__property_name__text_max_lines">文本最大行数</string>
+    <string name="snygg__property_name__text_overflow">文本溢出</string>
     <string name="snygg__property_name__var_primary">主要颜色</string>
     <string name="snygg__property_name__var_primary_variant">主要颜色（变体）</string>
     <string name="snygg__property_name__var_secondary">次要颜色</string>
@@ -248,9 +325,16 @@
     <string name="snygg__property_name__var_shape_variant">通用形状（变体）</string>
     <string name="snygg__property_value__explicit_inherit">继承</string>
     <string name="snygg__property_value__defined_var">参考变量</string>
+    <string name="snygg__property_value__yes">是</string>
+    <string name="snygg__property_value__no">否</string>
     <string name="snygg__property_value__solid_color">纯色</string>
     <string name="snygg__property_value__material_you_light_color">Material You 颜色（浅）</string>
     <string name="snygg__property_value__material_you_dark_color">Material You 颜色（深）</string>
+    <string name="snygg__property_value__font_family_generic">字体系列（通用）</string>
+    <string name="snygg__property_value__font_family_custom">字体系列（自定义）</string>
+    <string name="snygg__property_value__font_style">字体样式</string>
+    <string name="snygg__property_value__font_weight">字体粗细</string>
+    <string name="snygg__property_value__padding">内边距或外边距</string>
     <string name="snygg__property_value__rectangle_shape">矩形形状</string>
     <string name="snygg__property_value__circle_shape">圆形形状</string>
     <string name="snygg__property_value__cut_corner_shape_dp">切角形状 (dp)</string>
@@ -260,6 +344,12 @@
     <string name="snygg__property_value__dp_size">尺寸 (dp)</string>
     <string name="snygg__property_value__sp_size">尺寸 (sp)</string>
     <string name="snygg__property_value__percentage_size">尺寸 (%)</string>
+    <string name="snygg__property_value__content_scale">内容规模</string>
+    <string name="snygg__property_value__text_align">文本对齐</string>
+    <string name="snygg__property_value__text_decoration_line">文本装饰线</string>
+    <string name="snygg__property_value__text_max_lines">文本最大行数</string>
+    <string name="snygg__property_value__text_overflow">文本溢出</string>
+    <string name="snygg__property_value__uri">URI 引用</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">声音 &amp; 振动</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">声音反馈 / 声音</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">启用声音反馈</string>
@@ -300,12 +390,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">大小写行为模式</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">单手模式</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">单手模式键盘宽度</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向全屏输入</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">键盘高度</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">键间距</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">底部偏移</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">按键</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">弹出键可见</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">按键时显示弹出提示</string>
@@ -461,6 +547,13 @@
     <string name="setup__finish_up__description_p1">{app_name} 现在已在系统中启用，可供您自定义。</string>
     <string name="setup__finish_up__description_p2">如果您遇到任何问题、错误、崩溃或只是想提出建议，请从“关于”界面中查看项目源码库！</string>
     <string name="setup__finish_up__finish_btn">开始自定义</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">实体键盘</string>
+    <string name="physical_keyboard__system_settings__title">系统物理键盘设置</string>
+    <string name="physical_keyboard__system_settings__summary">布局、键盘快捷键和修饰键</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached"></string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">显示屏幕键盘</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">使用实体键盘时显示屏幕键盘</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">备份 &amp; 还原</string>
     <string name="backup_and_restore__back_up__title">备份数据</string>
@@ -531,16 +624,17 @@
     <string name="clipboard__cleared_primary_clip">已清除主要剪贴板条目</string>
     <string name="clipboard__cleared_history">已清除历史记录</string>
     <string name="clipboard__cleared_full_history">已清除全部历史记录</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">您确定要清除完整的剪贴板历史记录吗？这将影响所有项目，固定的项目除外。</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">您确定要清除剪贴板历史记录吗？这将影响所有当前已筛选的项目，但已固定的除外。</string>
     <string name="settings__clipboard__title">剪贴板</string>
     <string name="pref__clipboard__use_internal_clipboard__label">使用内部剪贴板</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">使用内部剪贴板，而不是系统剪贴板</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">从系统剪贴板同步</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">当安卓底层剪贴板系统更新时，同步更新到 Floris 的独立剪贴板系统中</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">同步到系统剪贴板</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">当 Floris 的独立剪贴板系统更新时，同步到安卓底层的剪贴板系统</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">根据剪切板内容给出的建议</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">剪贴板内容建议</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">建议之前复制的内容</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">网格列数</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">将剪贴板建议限制为</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">在过去 {v} 秒内复制的项目</string>
     <string name="pref__clipboard__group_clipboard_history__label">剪贴板历史记录</string>
@@ -552,8 +646,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">在多久之后自动删除敏感项目</string>
     <string name="pref__clipboard__limit_history_size__label">限制最大历史条目数</string>
     <string name="pref__clipboard__max_history_size__label">限制最大历史条目数</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">清除主要剪贴板条目时影响历史</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">清除主要剪贴板条目时还会删除最新的历史记录条目</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">在粘贴时隐藏历史记录</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">在下一个文本字段中隐藏历史记录</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">清除主剪辑会影响历史记录</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">清除主剪贴板也会将其从历史记录中删除，如果没有被固定的话</string>
     <string name="send_to_clipboard__unknown_error">发生未知错误。请重试！</string>
     <string name="send_to_clipboard__type_not_supported_error">不支持这一媒体类型。</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">已将以下图像复制到剪贴板。</string>
@@ -575,6 +671,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">在拖放界面中显示本来不可见的辅助项以进行调试</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">清空内部用户词典数据库</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">从词典数据库表中清除所有词语</string>
+    <string name="devtools__reset_quick_actions_to_default__label">重置智能栏快捷操作</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">将 Smartbar 快捷操作重置为默认排列</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">已成功将 Smartbar 快捷操作重置为默认</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">重置“{flag_name}”标志</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">调试操作，重新显示初次设定界面</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">测试崩溃报告界面</string>
@@ -623,6 +722,8 @@
     <string name="ext__editor__metadata__message_invalid">此扩展的元数据无效，详情请查看元数据编辑器！</string>
     <string name="ext__editor__dependencies__title">管理依赖项</string>
     <string name="ext__editor__files__title">管理档案文件</string>
+    <string name="ext__editor__files__type_fonts">字体</string>
+    <string name="ext__editor__files__type_images">图片</string>
     <string name="ext__editor__create_component__title">添加组件</string>
     <string name="ext__editor__create_component__title_theme">添加主题</string>
     <string name="ext__editor__create_component__from_empty">空白</string>
@@ -652,10 +753,23 @@
     <string name="ext__validation__enter_title">请输入标题</string>
     <string name="ext__validation__enter_maintainer">请输入至少一个有效的维护者</string>
     <string name="ext__validation__enter_license">请输入许可证标识符</string>
+    <string name="ext__validation__enter_component_id">请输入组件ID</string>
+    <string name="ext__validation__error_component_id">请输入与 {component_id_regex} 匹配的组件 ID</string>
+    <string name="ext__validation__enter_component_label">请输入组件标签</string>
+    <string name="ext__validation__hint_component_label_to_long">你的组件标签很长，可能会导致界面显示被截断</string>
+    <string name="ext__validation__error_author">请输入至少一位有效作者</string>
+    <string name="ext__validation__error_stylesheet_path_blank">样式表路径不能为空</string>
+    <string name="ext__validation__error_stylesheet_path">请输入与 {stylesheet_path_regex} 匹配的有效样式表路径</string>
     <string name="ext__validation__enter_property">请输入变量名称</string>
+    <string name="ext__validation__error_property">请输入一个符合 {variable_name_regex} 的有效变量名</string>
+    <string name="ext__validation__enter_color">请输入颜色字符串</string>
     <string name="ext__validation__error_color">请输入一个有效的颜色字符串</string>
+    <string name="ext__validation__enter_dp_size">请输入 dp 尺寸</string>
     <string name="ext__validation__enter_valid_number">请输入有效的数字</string>
+    <string name="ext__validation__enter_positive_number">请输入一个正数（>=0）</string>
+    <string name="ext__validation__enter_percent_size">请输入百分比大小</string>
     <string name="ext__validation__enter_number_between_0_100">请输入值为0～100的正数</string>
+    <string name="ext__validation__hint_value_above_50_percent">任何高于50%的数值都会表现得像设置为50%一样，建议降低你的百分比大小</string>
     <string name="ext__update_box__internet_permission_hint">由于此应用程序没有互联网权限，无法自行获取更新，因此必须要您手动检查已安装扩展的更新。</string>
     <string name="ext__update_box__search_for_updates">搜索更新</string>
     <string name="ext__addon_management_box__managing_placeholder">管理 {extensions}</string>
@@ -676,13 +790,18 @@
     <string name="action__delete">删除</string>
     <string name="action__delete_confirm_title">确认删除</string>
     <string name="action__delete_confirm_message">您确定要删除“{name}”吗？此操作一旦执行，无法撤消。</string>
+    <string name="action__reset_confirm_title">确认重置</string>
     <string name="action__reset_confirm_message">您确定要重置“{name}”吗？此操作一旦执行将无法撤销。</string>
     <string name="action__discard">放弃</string>
     <string name="action__discard_confirm_title">未保存的更改</string>
     <string name="action__discard_confirm_message">您确定要放弃未保存的更改吗？此操作一旦执行，无法撤消。</string>
     <string name="action__edit">编辑</string>
     <string name="action__export">导出</string>
+    <string name="action__export_file">导入文件</string>
+    <string name="action__export_files">导入文件</string>
     <string name="action__import">导入</string>
+    <string name="action__import_file">导入文件</string>
+    <string name="action__import_files">导入文件</string>
     <string name="action__no">否</string>
     <string name="action__ok">确定</string>
     <string name="action__restore">还原</string>
@@ -704,6 +823,9 @@
     <string name="general__no_browser_app_found_for_url">未找到用于处理 URL {url} 的浏览器应用</string>
     <string name="general__select_dropdown_value_placeholder">&#45; 选择 &#45;</string>
     <string name="general__unlimited">无限</string>
+    <string name="general__file_name">文件名</string>
+    <string name="general__properties">属性</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">自动</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">纵向</string>
     <string name="screen_orientation__landscape">横向</string>
@@ -722,6 +844,17 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">动态宽度 &amp; 可滚动</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">点击 Shift 键两次来开启大写锁定</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">每次按下 Shift 键时切换到下一个大小写状态</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">无事件</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">此方向没有同步任何事件。在此模式下，同步不包括文本内容。</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">仅清除事件</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">在此方向上，只有清除剪贴板数据的事件会被同步。在此模式下，同步不包括文本内容。</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">仅设置事件</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">只有设置剪辑数据的事件会在此方向同步。在此模式下，同步包括文本内容。</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">全部事件</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">在这个方向上，设置和清除剪贴板数据的两个事件都是同步的。在此模式下，同步包括文本内容。</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">十六进制</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">红 绿 蓝</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">色相 饱和度 明度</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">始终显示</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">关闭任何编辑器对话框后始终显示键盘</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">从不显示</string>
@@ -732,9 +865,13 @@
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">应用和键盘界面中的语言名称，用整个设备设置的语言来显示</string>
     <string name="enum__display_language_names_in__native_locale" comment="Enum value label">自身语言环境</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">应用和键盘界面中的语言名称，用其自身所指的语言来显示</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">自动排序（前置）</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Emoji表情使用后自动重新排序。新emoji表情一律添加到首位。</string>
+    <string name="enum__emoji_history_update_strategy__auto_sort_append" comment="Enum value label">自动排序（追加）</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_append__description" comment="Enum value description">Emoji表情使用后自动重新排序。新emoji表情一律添加到末尾。</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_prepend" comment="Enum value label">手动排序（前置）</string>
     <string name="enum__emoji_history_update_strategy__manual_sort_prepend__description" comment="Enum value description">不要emoji表情使用时自动重新排序。将新emoji表情添加到首位。</string>
+    <string name="enum__emoji_history_update_strategy__manual_sort_append" comment="Enum value label">手动排序（追加）</string>
     <string name="enum__emoji_history_update_strategy__manual_sort_append__description" comment="Enum value description">不要在emoji表情使用时自动重新排序。将新emoji表情添加到末尾。</string>
     <string name="enum__emoji_skin_tone__default" comment="Enum value label">{emoji} 默认肤色</string>
     <string name="enum__emoji_skin_tone__light_skin_tone" comment="Enum value label">{emoji} 浅肤色</string>
@@ -747,6 +884,10 @@
     <string name="enum__emoji_hair_style__curly_hair" comment="Enum value label">{emoji} 卷发</string>
     <string name="enum__emoji_hair_style__white_hair" comment="Enum value label">{emoji} 白发</string>
     <string name="enum__emoji_hair_style__bald" comment="Enum value label">{emoji} 光头</string>
+    <string name="enum__emoji_suggestion_type__leading_colon">冒号</string>
+    <string name="enum__emoji_suggestion_type__leading_colon__description" comment="Keep the :emoji_name while translating, this is a syntax guide">使用 :emoji_name 语法建议表情符号</string>
+    <string name="enum__emoji_suggestion_type__inline_text">行内文本</string>
+    <string name="enum__emoji_suggestion_type__inline_text__description">只需将表情名称作为单词输入即可建议表情符号</string>
     <string name="enum__extended_actions_placement__above_candidates" comment="Enum value label">候选行上方</string>
     <string name="enum__extended_actions_placement__above_candidates__description" comment="Enum value description">将扩展操作行放置在应用界面和候选行之间</string>
     <string name="enum__extended_actions_placement__below_candidates" comment="Enum value label">候选行下方</string>
@@ -763,6 +904,8 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">长按后自动选择的字符始终是提示符号，如果没有提示符号可用，则为主重音</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">智能优先</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">长按后自动选择的字符根据当前语言和布局，动态决定是主重音还是提示符号</string>
+    <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">将共享操作切换图标替换为隐身模式指示器</string>
+    <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">在键盘后显示隐身指示器</string>
     <string name="enum__incognito_mode__force_off" comment="Enum value label">强制关闭</string>
     <string name="enum__incognito_mode__force_off__description" comment="Enum value description">无论目标应用传递什么选项，无痕模式将始终被禁用。 使用此选项时，智能栏中的无痕模式快捷操作将无法使用。</string>
     <string name="enum__incognito_mode__force_on" comment="Enum value label">强制开启</string>
@@ -777,11 +920,13 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">已 Shift（手动）</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">已 Shift（自动）</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">大写锁定</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">字符</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">符号</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">符号2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">数字</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">从不显示</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">始终显示</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">动态显示</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">左手模式</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">右手模式</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">顶部起始</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">顶部末尾</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">底部末尾</string>
@@ -823,6 +968,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">移动光标到页首</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">移动光标到页尾</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">打开剪贴板管理器 / 历史</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">打开表情符号面板</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift 键</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">恢复</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">撤销</string>

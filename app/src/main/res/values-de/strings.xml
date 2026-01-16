@@ -50,48 +50,48 @@
     <string name="emoji__history__pinned">Angepinnt</string>
     <string name="emoji__history__recent">Kürzlich</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Pfeil hoch</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Pfeil hoch</string>
     <string name="quick_action__arrow_up__tooltip">Pfeil nach oben ausführen</string>
-    <string name="quick_action__arrow_down" maxLength="12">Pfeil unten</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Pfeil unten</string>
     <string name="quick_action__arrow_down__tooltip">Pfeil nach unten ausführen</string>
-    <string name="quick_action__arrow_left" maxLength="12">Pfeil links</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Pfeil links</string>
     <string name="quick_action__arrow_left__tooltip">Pfeil nach links ausführen</string>
-    <string name="quick_action__arrow_right" maxLength="12">Pfeil rechts</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Pfeil rechts</string>
     <string name="quick_action__arrow_right__tooltip">Pfeil nach rechts ausführen</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Clip löschen</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Clip löschen</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Hauptclip von der Zwischenablage löschen</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopieren</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopieren</string>
     <string name="quick_action__clipboard_copy__tooltip">Zur Zwischenablage kopieren</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Ausschneiden</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Ausschneiden</string>
     <string name="quick_action__clipboard_cut__tooltip">Zur Zwischenablage ausschneiden</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Einfügen</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Einfügen</string>
     <string name="quick_action__clipboard_paste__tooltip">Einfügen aus der Zwischenablage</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Alles ausw.</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Alles ausw.</string>
     <string name="quick_action__clipboard_select_all__tooltip">Alles auswählen in der Zwischenablage</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Zwischenab.</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Zwischenab.</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Zwischenablage Verlauf öffnen</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Öffne Emoji-Panel</string>
     <string name="quick_action__language_switch__tooltip">Sprachwechsel ausführen</string>
-    <string name="quick_action__settings" maxLength="12">Einstellung</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Einstellung</string>
     <string name="quick_action__settings__tooltip">Einstellungen öffnen</string>
-    <string name="quick_action__undo" maxLength="12">Rückgängig</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Rückgängig</string>
     <string name="quick_action__undo__tooltip">Letzte Aktion rückgängig machen</string>
-    <string name="quick_action__redo" maxLength="12">Wiederholen</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Wiederholen</string>
     <string name="quick_action__redo__tooltip">Letzte rückgängig gemachte Aktion wiederholen</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Mehr</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Mehr</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Zusätzliche Aktionen anzeigen oder verstecken</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Inkognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Inkognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Inkognitomodus umschalten</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autokorrekt.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autokorrekt.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Autokorrektur umschalten</string>
-    <string name="quick_action__voice_input" maxLength="12">Spracheinga.</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Spracheinga.</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Öffne Anbieter für Spracheingabe</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Einhändig</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Einhändig</string>
     <string name="quick_action__one_handed_mode__tooltip">Einhandmodus umschalten</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Zug-Marker</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Zug-Marker</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Aktuelle Marker-Position</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Keine Operation</string>
     <string name="quick_actions_overflow__customize_actions_button">Aktionen neu ordnen</string>
     <string name="quick_actions_editor__header">Passe Reihenfolge der Aktionen an</string>
@@ -162,11 +162,13 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Nacht-Design auswählen</string>
     <string name="settings__theme_editor__fine_tune__title">Editoreinstellungen</string>
     <string name="settings__theme_editor__fine_tune__level">Bearbeitungsmodus</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Farbdarstellung</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Zeige Tastatur nach Dialogen</string>
     <string name="settings__theme_editor__add_rule">Regel hinzufügen</string>
     <string name="settings__theme_editor__edit_rule">Regel bearbeiten</string>
     <string name="settings__theme_editor__no_rules_defined">Für das Stylesheet sind keine Regeln definiert. Füge eine Regel hinzu, um dieses Stylesheet anzupassen.</string>
     <string name="settings__theme_editor__rule_already_exists">Diese Stylesheetregel ist schon definiert.</string>
+    <string name="settings__theme_editor__rule_name">Element / Anmerkung</string>
     <string name="settings__theme_editor__rule_codes">Ziel-Codes</string>
     <string name="settings__theme_editor__rule_groups">Gruppen</string>
     <string name="settings__theme_editor__rule_selectors">Selektoren</string>
@@ -324,12 +326,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Großschreibverhalten</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Schriftgröße</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Einhandmodus</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Breite der Tastatur im Einhandmodus</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Querformat Vollbild Eingabe</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastaturhöhe</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Platz zwischen Tasten</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Abstand nach unten</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
@@ -482,6 +480,7 @@
     <string name="setup__finish_up__description_p1">{app_name} ist nun im System aktiviert und bereit von dir angepasst zu werden.</string>
     <string name="setup__finish_up__description_p2">Falls dir irgendwelche Probleme, Bugs oder Abstürze begegnen, oder du einfach einen Vorschlag machen möchtest, besuche einfach die GitHub Seite des Projekts (zu finden im About \"Über die App\" Screen)!</string>
     <string name="setup__finish_up__finish_btn">Anpassung beginnen</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Sichern &amp; Wiederherstellen</string>
     <string name="backup_and_restore__back_up__title">Daten sichern</string>
@@ -556,9 +555,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Interne Zwischenablage nutzen</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Interne Zwischenablage anstatt der Systemzwischenablage verwenden</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Von Systemzwischenablage synchronisieren</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Änderungen in der Systemzwischenablage aktualisieren auch die interne Zwischenablage</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Vorschläge aus der Zwischenablage</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zuvor kopierte Inhalte vorschlagen</string>
@@ -573,8 +570,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Lösche Zwischenablageinhalte automatisch nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Das Löschen des aktiven Elements betrifft den Verlauf</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Durch das Löschen des aktiven Elements wird auch das neueste Verlaufselement entfernt</string>
     <string name="send_to_clipboard__unknown_error">Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut!</string>
     <string name="send_to_clipboard__type_not_supported_error">Dieser Media-Typ wird nicht unterstützt.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Nachfolgendes Bild wurde in die Zwischenablage kopiert.</string>
@@ -839,8 +834,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nie anzeigen</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Immer anzeigen</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamisch anzeigen</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Linkshänder-Modus</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Rechtshänder-Modus</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Anfang oben</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Ende oben</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Ende unten</string>

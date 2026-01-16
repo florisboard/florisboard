@@ -5,7 +5,7 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Ожидание</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Значок троеточия. Если отображается, показывает, что можно использовать больше знаков при долгом нажатии.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Закрыть режим одной руки.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Закрыть режим \"одной руки\".</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Переместить клавиатуру влево.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Переместить клавиатуру вправо.</string>
     <!-- Media strings -->
@@ -50,49 +50,52 @@
     <string name="emoji__history__pinned">Закреплено</string>
     <string name="emoji__history__recent">Недавние</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Вверх</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Вверх</string>
     <string name="quick_action__arrow_up__tooltip">Переместить курсор вверх</string>
-    <string name="quick_action__arrow_down" maxLength="12">Вниз</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Вниз</string>
     <string name="quick_action__arrow_down__tooltip">Переместить курсор вниз</string>
-    <string name="quick_action__arrow_left" maxLength="12">Влево</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Влево</string>
     <string name="quick_action__arrow_left__tooltip">Переместить курсор влево</string>
-    <string name="quick_action__arrow_right" maxLength="12">Вправо</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Вправо</string>
     <string name="quick_action__arrow_right__tooltip">Переместить курсор вправо</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Очистить</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Скрыть клавиатуру</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Скрыть клавиатуру</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Очистить</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Выполнить очистку основного клипа буфера обмена</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Копировать</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копировать</string>
     <string name="quick_action__clipboard_copy__tooltip">Выполнить копирование из буфера обмена</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Вырезать</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Вырезать</string>
     <string name="quick_action__clipboard_cut__tooltip">Выполнить вырезку из буфера обмена</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Вставить</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Вставить</string>
     <string name="quick_action__clipboard_paste__tooltip">Выполнить вставку из буфера обмена</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Выбрать все</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Выбрать все</string>
     <string name="quick_action__clipboard_select_all__tooltip">Выполнить выделение всего буфера обмена</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Буфер обмена</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Прям удалить</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Буфер обмена</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Включить историю буфера обмена</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Эмодзи</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Эмодзи</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Открыть панель эмодзи</string>
-    <string name="quick_action__language_switch" maxLength="12">Сменить язык</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Сменить язык</string>
     <string name="quick_action__language_switch__tooltip">Выполнить переключение языка</string>
-    <string name="quick_action__settings" maxLength="12">Настройки</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Настройки</string>
     <string name="quick_action__settings__tooltip">Открыть настройки</string>
-    <string name="quick_action__undo" maxLength="12">Отменить</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Отменить</string>
     <string name="quick_action__undo__tooltip">Отменить последний ввод</string>
-    <string name="quick_action__redo" maxLength="12">Повторить</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Повторить</string>
     <string name="quick_action__redo__tooltip">Повторить последний ввод</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Ещё действия</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Ещё действия</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Показать или убрать дополнительные действия</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Инкогнито</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Инкогнито</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Включить режим инкогнито</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Автоисправ.</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Автоисправ.</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Включить автоисправление</string>
-    <string name="quick_action__voice_input" maxLength="12">Голос. ввод</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Голос. ввод</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Открытый провайдер голосового ввода</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Одной рукой</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Одной рукой</string>
     <string name="quick_action__one_handed_mode__tooltip">Включить режим управления одной рукой</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Текущее положение маркера перетаскивания</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Отсутствует</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Отсутствует</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Нет операции</string>
     <string name="quick_actions_overflow__customize_actions_button">Изменить порядок действий</string>
     <string name="quick_actions_editor__header">Настроить порядок действий</string>
@@ -155,7 +158,7 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Время заката</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневная тема</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Ночная тема</string>
-    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Цвет акцента (для тем Material you)
+    <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">        Цвет акцента (для тем Material You)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Установленные темы</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Наборы приложений FlorisBoard</string>
@@ -202,24 +205,67 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Это ночная тема</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Без контура</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Путь таблицы стилей</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Ошибка таблицы стилей</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} может попытаться мягко загрузить таблицу стилей и добавить недостающие схемы, правила или удалить недействительные правила, свойства или значения. Хотите ли вы, чтобы {app_name} применило эти изменения?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Стиль палитры</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Цветовой контраст</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Специальная версия</string>
     <string name="snygg__rule_annotation__defines">Переменные</string>
     <string name="snygg__rule_annotation__defines_description">Определите переменные в этом правиле, чтобы повторно использовать общие цвета или размеры в таблице стилей.</string>
     <string name="snygg__rule_annotation__font">Шрифт</string>
     <string name="snygg__rule_annotation__font_name">Название шрифта</string>
+    <string name="snygg__rule_element__root">Корень</string>
     <string name="snygg__rule_element__window">Окно</string>
     <string name="snygg__rule_element__key">Кнопка</string>
     <string name="snygg__rule_element__key_hint">Подсказка кнопки</string>
+    <string name="snygg__rule_element__key_popup_box">Обертка всплывающей клавиши</string>
+    <string name="snygg__rule_element__key_popup_element">Элемент всплывающей клавиши</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Расширенный индикатор всплывающей клавиши</string>
     <string name="snygg__rule_element__clipboard_header">Заголовок буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_header_button">Кнопка заголовка буфера</string>
+    <string name="snygg__rule_element__clipboard_header_text">Заголовок буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_subheader">Подзаголовок буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_content">Содержание буфера</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Фильтр ряда буфера</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Чип фильтра буфера</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Значок чипа фильтра буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Текст чипа фильтра буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_grid">Сетка буфера</string>
     <string name="snygg__rule_element__clipboard_item">Элемент буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_item_description">Описание элемента буфера</string>
     <string name="snygg__rule_element__clipboard_item_popup">Всплывающее окно элемента буфера обмена</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Время элемента буфера</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Действия элемента буфера</string>
+    <string name="snygg__rule_element__clipboard_item_action">Действие элемента буфера</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Иконка действия элемента буфера</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Текст действия элемента буфера</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Диалоговое окно «Очистить буфер обмена»</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Текст диалога «Очистить буфер обмена»</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Кнопки диалога «Очистить буфер обмена»</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Кнопка диалога «Очистить буфер обмена»</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Заголовок \"История буфера обмена выключена\"</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Текст \"История буфера обмена выключена\"</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Кнопка \"История буфера обмена выключена\"</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Заголовок \"История буфера обмена заблокирована\"</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Текст \"История буфера обмена заблокирована\"</string>
     <string name="snygg__rule_element__extracted_landscape_input_layout">Схема горизонтального ввода</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Горизонтальное поле ввода</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Действие горизонтального ввода</string>
     <string name="snygg__rule_element__glide_trail">Непрерывный след</string>
     <string name="snygg__rule_element__incognito_mode_indicator">Индикатор режима инкогнито</string>
+    <string name="snygg__rule_element__inline_autofill_chip">Встроенный чип автозаполнения</string>
+    <string name="snygg__rule_element__media">Медиа</string>
+    <string name="snygg__rule_element__media_emoji_subheader">Подзаголовок эмодзи</string>
+    <string name="snygg__rule_element__media_emoji_key">Кнопка эмодзи</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Всплывающее окно с ключом эмодзи для медиа</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Всплывающий элемент эмодзи</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Всплывающий расширенный индикатор клавиши эмодзи</string>
+    <string name="snygg__rule_element__media_emoji_tab">Вкладка эмодзи</string>
+    <string name="snygg__rule_element__media_bottom_row">Нижний ряд вкладки эмодзи</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Кнопка нижнего ряда вкладки эмодзи</string>
     <string name="snygg__rule_element__one_handed_panel">Панель для одной руки</string>
+    <string name="snygg__rule_element__one_handed_panel_button">Кнопка панели режима \"одной руки\"</string>
     <string name="snygg__rule_element__smartbar">Умная панель навигации</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Ряд основных действий умной панели</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Переключатель основных действий умной панели</string>
@@ -227,20 +273,38 @@
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Переключатель расширенных действий умной панели</string>
     <string name="snygg__rule_element__smartbar_action_key">Кнопка действия умной панели</string>
     <string name="snygg__rule_element__smartbar_action_tile">Кнопка действия умной панели</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Значок области действия Smartbar</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Текст области действия Smartbar</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Порядок действий умной панели</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Кнопка изменения порядка действий умной панели</string>
     <string name="snygg__rule_element__smartbar_actions_editor">Редактор действий умной панели</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Заголовок редактора действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Кнопка заголовка редактора действий Smartbar</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Подзаголовок редактора действий умной панели</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Сетка области редактора действий Smartbar</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Область редактора действий Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidates_row">Ряд предложений умной панели</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Слово-предложение умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Предложение слова на Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Вторичный текст предложения слова на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Запись-предложение умной панели</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Значок клипа кандидата на Smartbar</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Текст клипа кандидата на Smartbar</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Разделитель-предложение умной панели</string>
+    <string name="snygg__rule_element__subtype_panel">Панель раскладок</string>
+    <string name="snygg__rule_element__subtype_panel_header">Заголовок панели раскладок</string>
+    <string name="snygg__rule_element__subtype_panel_list">Список панелей раскладок</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Элемент списка панели раскладок</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Значок элемента списка панели раскладок (ведущий)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Текст элемента списка панели раскладок</string>
     <string name="snygg__rule_selector__pressed">При нажатии</string>
     <string name="snygg__rule_selector__focus">При фокусе</string>
+    <string name="snygg__rule_selector__hover"></string>
     <string name="snygg__rule_selector__disabled">Отключено</string>
     <string name="snygg__property_name__background">Фон</string>
     <string name="snygg__property_name__foreground">Передний план</string>
+    <string name="snygg__property_name__background_image">Фоновое изображение</string>
+    <string name="snygg__property_name__content_scale">Размер контента</string>
     <string name="snygg__property_name__border_color">Цвет контура</string>
     <string name="snygg__property_name__border_style">Стиль контура</string>
     <string name="snygg__property_name__border_width">Ширина контура</string>
@@ -248,8 +312,19 @@
     <string name="snygg__property_name__font_size">Размер шрифта</string>
     <string name="snygg__property_name__font_style">Стиль шрифта</string>
     <string name="snygg__property_name__font_weight">Начертание шрифта</string>
+    <string name="snygg__property_name__letter_spacing">Межбуквенный отступ</string>
+    <string name="snygg__property_name__line_height">Высота строки</string>
+    <string name="snygg__property_name__margin">Отступ</string>
+    <string name="snygg__property_name__padding">Отступ</string>
+    <string name="snygg__property_name__shadow_color">Цвет тени</string>
     <string name="snygg__property_name__shadow_elevation">Высота тени</string>
     <string name="snygg__property_name__shape">Форма</string>
+    <string name="snygg__property_name__clip">Обрезать</string>
+    <string name="snygg__property_name__src">Исходник</string>
+    <string name="snygg__property_name__text_align">Выравнивание текста</string>
+    <string name="snygg__property_name__text_decoration_line">Декорация строки</string>
+    <string name="snygg__property_name__text_max_lines">Максимальное кол-во строк</string>
+    <string name="snygg__property_name__text_overflow">Переполнение текста</string>
     <string name="snygg__property_name__var_primary">Основной цвет</string>
     <string name="snygg__property_name__var_primary_variant">Основной цвет (вариант)</string>
     <string name="snygg__property_name__var_secondary">Дополнительный цвет</string>
@@ -266,9 +341,16 @@
     <string name="snygg__property_name__var_shape_variant">Обычная форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследование</string>
     <string name="snygg__property_value__defined_var">Ссылка на значение</string>
+    <string name="snygg__property_value__yes">Да</string>
+    <string name="snygg__property_value__no">Нет</string>
     <string name="snygg__property_value__solid_color">Сплошной цвет</string>
     <string name="snygg__property_value__material_you_light_color">Динамический цвет (из светлой темы)</string>
     <string name="snygg__property_value__material_you_dark_color">Динамический цвет (из тёмной темы)</string>
+    <string name="snygg__property_value__font_family_generic">Семейство шрифтов (общее)</string>
+    <string name="snygg__property_value__font_family_custom">Семейство шрифтов (кастомное)</string>
+    <string name="snygg__property_value__font_style">Стиль шрифта</string>
+    <string name="snygg__property_value__font_weight">Начертание шрифта</string>
+    <string name="snygg__property_value__padding">Отступы или поля</string>
     <string name="snygg__property_value__rectangle_shape">Прямоугольная форма</string>
     <string name="snygg__property_value__circle_shape">Круглая форма</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Форма со срезанием углов (dp)</string>
@@ -278,6 +360,12 @@
     <string name="snygg__property_value__dp_size">Размер (dp)</string>
     <string name="snygg__property_value__sp_size">Размер (sp)</string>
     <string name="snygg__property_value__percentage_size">Размер (%)</string>
+    <string name="snygg__property_value__content_scale">Размер контента</string>
+    <string name="snygg__property_value__text_align">Выравнивание текста</string>
+    <string name="snygg__property_value__text_decoration_line">Декорация строки</string>
+    <string name="snygg__property_value__text_max_lines">Максимальное кол-во строк</string>
+    <string name="snygg__property_value__text_overflow">Переполнение текста</string>
+    <string name="snygg__property_value__uri">URI-ссылка</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Звук &amp; Вибрация</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
@@ -286,7 +374,7 @@
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук нажатия кнопки</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук долгого нажатия кнопки</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Звук автоповтора ввода кнопки</string>
-    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Звук жестов смахиваний</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Звук жестов свайпа</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Звук жестов перетаскивания</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Виброотклик / вибрация</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Использовать виброотклик</string>
@@ -318,12 +406,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Поведение кнопки изменения регистра</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина в режиме одной руки</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">На весь экран в альбомном режиме</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Высота клавиатуры</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Расстояние между кнопками</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Отступ снизу</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Нажатие клавиши</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Превью символов</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показывать всплывающую подсказку при нажатии кнопки</string>
@@ -356,7 +440,7 @@
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
-    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Авто-пробел после знаков препинания</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Пробел после знаков препинания</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Автоматически вставлять пробел после знака препинания</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
@@ -392,7 +476,7 @@
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Изменить слово</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Слово</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Введите слово</string>
-    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Введите соответствие слов {regex}</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Введите слово соответствующее {regex}</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Частота (между {f_min} и {f_max})</string>
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите значение частоты</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите корректное число в указанных пределах</string>
@@ -480,6 +564,13 @@
     <string name="setup__finish_up__description_p1">Клавиатура {app_name} активирована и готова к дальнейшей настройке.</string>
     <string name="setup__finish_up__description_p2">Если столкнетесь с какими-либо трудностями, ошибками, сбоями или просто захотите предложить идею, загляните в репозиторий проекта в разделе «О программе»!</string>
     <string name="setup__finish_up__finish_btn">Перейти к настройке</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Физическая клавиатура</string>
+    <string name="physical_keyboard__system_settings__title">Настройки системной физической клавиатуры</string>
+    <string name="physical_keyboard__system_settings__summary">Раскладки, сочетания клавиш и клавиши-модификаторы</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Доступно только при подключенной клавиатуре</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Показывать экранную клавиатуру</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Показывать экранную клавиатуру когда используется физическая</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Резервное копирование и восстановление</string>
     <string name="backup_and_restore__back_up__title">Резервирование данных</string>
@@ -550,16 +641,17 @@
     <string name="clipboard__cleared_primary_clip">Очищена основная запись</string>
     <string name="clipboard__cleared_history">Очищена история</string>
     <string name="clipboard__cleared_full_history">Очищена полная история</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Вы уверены, что хотите очистить всю историю буфера обмена? Это затронет все элементы, кроме закреплённых.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Вы уверены, что хотите очистить историю буфера обмена? Это затронет все отфильтрованные элементы, кроме закреплённых.</string>
     <string name="settings__clipboard__title">Буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Использовать внутренний буфер обмена</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Использовать внутренний буфер обмена вместо системного</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Единый буфер обмена</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Изменения в буфере обмена системы отражаются в буфере Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Синхронизировать с системным буфером обмена</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Буфер обмена Floris так же обновляет системный буфер обмена</string>
-    <string name="pref__clipboard__group_clipboard_suggestion__label">Предлагать буфер обмена</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Подсказки буфера обмена</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предлагать содержимое буфера обмена</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлагать ранее скопированное содержимое буфера обмена</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Количество столбцов в сетке</string>
     <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ограничить предложения буфера обмена до</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Элементы, скопированные за последние {v} с</string>
     <string name="pref__clipboard__group_clipboard_history__label">История буфера обмена</string>
@@ -571,8 +663,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Автоматическая очистка чувствительных элементов спустя</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничить размер истории</string>
     <string name="pref__clipboard__max_history_size__label">Максимальный размер истории</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Очистка основного клипа влияет на историю</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">При очистке основного клипа также удаляется последняя запись в истории</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Скрыть историю при вставке</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Скрыть историю в следующем текстовом поле</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Очистка основной клипа влияет на историю</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Очистка основного клипа также удаляет его из истории, если он не закреплен</string>
     <string name="send_to_clipboard__unknown_error">Неизвестная ошибка. Попробуйте еще раз!</string>
     <string name="send_to_clipboard__type_not_supported_error">Данный формат файла не поддерживается.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Изображение ниже скопировано в буфер обмена.</string>
@@ -594,6 +688,9 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Показывать невидимые вспомогательные элементы на экранах перетаскивания для отладки</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Очистить внутренний словарь пользователя</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Удаление всех слов из базы внутреннего пользовательского словаря</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Сбросить быстрые действия Smartbar</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Сбросить быстрые действия Smartbar к расположению по умолчанию</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Успешно выполнен сброс быстрых действий Smartbar до значений по умолчанию</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Сбросить флаг \"{flag_name}\"</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Действие отладки для повторного отображения экрана настройки</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Тест отчёта об ошибке</string>
@@ -609,7 +706,7 @@
     <string name="devtools__debuglog__copy_for_github">Скопировать журнал (формат GitHub)</string>
     <string name="devtools__debuglog__loading">Загрузка…</string>
     <!-- Extension strings -->
-    <string name="ext__home__title">Расширения и дополнения</string>
+    <string name="ext__home__title">Расширения &amp; Дополнения</string>
     <string name="ext__list__ext_theme">Расширения темы</string>
     <string name="ext__list__ext_keyboard">Расширения клавиатуры</string>
     <string name="ext__list__ext_languagepack">Языковые пакеты</string>
@@ -642,6 +739,8 @@
     <string name="ext__editor__metadata__message_invalid">Неправильные метаданные для этого расширения, проверьте редактор метаданных для получения подробной информации!</string>
     <string name="ext__editor__dependencies__title">Управление зависимостями</string>
     <string name="ext__editor__files__title">Управление файлами архивов</string>
+    <string name="ext__editor__files__type_fonts">Шрифты</string>
+    <string name="ext__editor__files__type_images">Изображения</string>
     <string name="ext__editor__create_component__title">Создать компонент</string>
     <string name="ext__editor__create_component__title_theme">Создать тему</string>
     <string name="ext__editor__create_component__from_empty">Пустой</string>
@@ -715,7 +814,11 @@
     <string name="action__discard_confirm_message">Вы уверены, что хотите отменить несохранённые изменения? Это действие нельзя отменить после выполнения.</string>
     <string name="action__edit">Изменить</string>
     <string name="action__export">Экспорт</string>
+    <string name="action__export_file">Импорт файла</string>
+    <string name="action__export_files">Импорт файлов</string>
     <string name="action__import">Импорт</string>
+    <string name="action__import_file">Импорт файла</string>
+    <string name="action__import_files">Импорт файлов</string>
     <string name="action__no">Нет</string>
     <string name="action__ok">OK</string>
     <string name="action__restore">Восстановление</string>
@@ -736,7 +839,10 @@
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">например, {example}</string>
     <string name="general__no_browser_app_found_for_url">Не найдено браузера для использования URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; не выбрано &#45;</string>
-    <string name="general__unlimited">Без ограничений</string>
+    <string name="general__unlimited">Безлимитный</string>
+    <string name="general__file_name">Имя файла</string>
+    <string name="general__properties">Свойства</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Авто</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портретная</string>
     <string name="screen_orientation__landscape">Альбомная</string>
@@ -752,18 +858,29 @@
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Классика (3 колонки)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамическая ширина</string>
-    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамическая ширина и прокрутка</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамическая ширина &amp; прокрутка</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Активировать Capslock двойным нажатием</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Переключать режимы регистра с каждым нажатием</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Нет событий</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">События в этом направлении не синхронизируются. В этом режиме синхронизация исключает текстовый контент.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Только четкие события</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">В этом направлении синхронизируются только события, очищающие данные клипов. В этом режиме синхронизация исключает текстовый контент.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Только заданные события</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">В этом направлении синхронизируются только данные клипов, задающие события. В этом режиме синхронизация включает текстовый контент.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Все события</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">В этом направлении синхронизируются как события установки, так и данные об очистке клипов. В этом режиме синхронизация включает текстовый контент.</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">Шестнадцатеричный</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Красный Зеленый Синий</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">Оттенок Насыщенность Значение</string>
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Отображать всегда</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Отображать клавиатуру всегда после закрытия любого диалогового окна редактора</string>
     <string name="enum__display_kbd_after_dialogs__never" comment="Enum value label">Не показывать</string>
     <string name="enum__display_kbd_after_dialogs__never__description" comment="Enum value description">Не отображать клавиатуру после закрытия любого диалогового окна редактора</string>
     <string name="enum__display_kbd_after_dialogs__remember" comment="Enum value label">Запомнить последнее состояние</string>
     <string name="enum__display_kbd_after_dialogs__remember__description" comment="Enum value description">Показывать клавиатуру только после закрытия любого диалогового окна редактора, если она была видна ранее</string>
-    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Переведенные</string>
+    <string name="enum__display_language_names_in__system_locale" comment="Enum value label">Язык Системы</string>
     <string name="enum__display_language_names_in__system_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры указаны на языке, используемом в системе по умолчанию</string>
-    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">В исходном виде</string>
+    <string name="enum__display_language_names_in__native_locale" comment="Enum value label">Родной язык</string>
     <string name="enum__display_language_names_in__native_locale__description" comment="Enum value description">Подписи в приложении и интерфейсе клавиатуры приводятся на родных языках</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend" comment="Enum value label">Автоматическая сортировка (добавление в начало)</string>
     <string name="enum__emoji_history_update_strategy__auto_sort_prepend__description" comment="Enum value description">Автоматическое изменение порядка расположения эмодзи в зависимости от их использования. Новые эмодзи добавляются в начало.</string>
@@ -822,11 +939,16 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Сдвиг (вручную)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Сдвиг (авто)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps Lock</string>
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Символы</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Символы</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Символы 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Цифры</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Цифровая расширенная</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Телефон</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Телефон 2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Автоматически</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Для левши</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Для правши</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Верх начало</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Верх конец</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Низ конец</string>
@@ -841,7 +963,7 @@
     <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Статическая строка предложений и дополнительная строка действий с возможностью переключения, с закрепленными действиями</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">Базовый</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">Отображаются только свойства цвета, переводятся свойства и правила.</string>
-    <string name="enum__snygg_level__advanced" comment="Enum value label">Ещё</string>
+    <string name="enum__snygg_level__advanced" comment="Enum value label">Расширенный</string>
     <string name="enum__snygg_level__advanced__description" comment="Enum value description">Отображаются все свойства, переводятся свойства и правила.</string>
     <string name="enum__snygg_level__developer" comment="Enum value label">Разработчик</string>
     <string name="enum__snygg_level__developer__description" comment="Enum value description">Отображаются все свойства. Свойства и правила отображаются так, как прописано в самом файле таблицы стилей.</string>
@@ -868,6 +990,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Переместить курсор в начало страницы</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Переместить курсор в конец страницы</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Открыть буфер обмена/историю</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Открыть панель эмодзи</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Повторить</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Отменить</string>

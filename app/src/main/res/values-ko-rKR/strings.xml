@@ -45,47 +45,47 @@
     <string name="emoji__history__pinned">고정됨</string>
     <string name="emoji__history__recent">최근</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">화살표 위로</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">화살표 위로</string>
     <string name="quick_action__arrow_up__tooltip">위쪽 화살표 동작 실행</string>
-    <string name="quick_action__arrow_down" maxLength="12">화살표 아래로</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">화살표 아래로</string>
     <string name="quick_action__arrow_down__tooltip">아래쪽 화살표 동작 실행</string>
-    <string name="quick_action__arrow_left" maxLength="12">화살표 왼쪽으로</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">화살표 왼쪽으로</string>
     <string name="quick_action__arrow_left__tooltip">왼쪽 화살표 동작 실행</string>
-    <string name="quick_action__arrow_right" maxLength="12">화살표 오른쪽으로</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">화살표 오른쪽으로</string>
     <string name="quick_action__arrow_right__tooltip">오른쪽 화살표 동작 실행</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">주 클립보드 비우기</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">주 클립보드 비우기</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">주 클립보드 내용 비우기 실행</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">복사</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">복사</string>
     <string name="quick_action__clipboard_copy__tooltip">클립보드에서 복사 실행</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">잘라내기</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">잘라내기</string>
     <string name="quick_action__clipboard_cut__tooltip">클립보드에서 잘라내기 실행</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">붙여넣기</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">붙여넣기</string>
     <string name="quick_action__clipboard_paste__tooltip">클립보드에서 붙여넣기 실행</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">모두 선택</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">모두 선택</string>
     <string name="quick_action__clipboard_select_all__tooltip">클립보드에서 모두 선택 실행</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">클립보드</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">클립보드</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">클립보드 기록 열기</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">이모지</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">이모지</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">이모지 패널 열기</string>
-    <string name="quick_action__settings" maxLength="12">설정</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">설정</string>
     <string name="quick_action__settings__tooltip">설정 열기</string>
-    <string name="quick_action__undo" maxLength="12">실행 취소</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">실행 취소</string>
     <string name="quick_action__undo__tooltip">마지막 입력 실행 취소</string>
-    <string name="quick_action__redo" maxLength="12">다시 실행</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">다시 실행</string>
     <string name="quick_action__redo__tooltip">마지막 입력 다시 실행</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">추가 동작</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">추가 동작</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">추가 동작 표시 / 숨기기</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">시크릿</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">시크릿</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">시크릿 모드 켜기 / 끄기</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">자동 수정</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">자동 수정</string>
     <string name="quick_action__toggle_autocorrect__tooltip">자동 수정 켜기 / 끄기</string>
-    <string name="quick_action__voice_input" maxLength="12">음성 입력</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">음성 입력</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">음성 입력 제공자 열기</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">한손</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">한손</string>
     <string name="quick_action__one_handed_mode__tooltip">한손 모드 켜기 / 끄기</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">드래그 마커</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">드래그 마커</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">현재 드래그 마커 위치</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">없음</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">없음</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">작업 없음</string>
     <string name="quick_actions_overflow__customize_actions_button">액션 재배치</string>
     <string name="quick_actions_editor__header">액션 순서 사용자 정의</string>
@@ -229,10 +229,7 @@
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">스페이스 바 라벨</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">글꼴 크기 배율</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">레이아웃</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">한손 모드</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">한손 모드 키보드 너비</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">가로 모드 전체 화면 입력</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">키보드 높이</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">키 간격</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">팝업 표시</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">키를 눌렀을 때 팝업 표시</string>
@@ -328,6 +325,7 @@
     <string name="setup__finish_up__description_p1">이제 {app_name} 키보드를 마음껏 꾸미고 써볼 수 있어요.</string>
     <string name="setup__finish_up__description_p2">문제가 생기거나, 버그를 발견하거나, 제안할 내용이 있다면 정보 화면에서 프로젝트 리포지터리에 방문해 주세요!</string>
     <string name="setup__finish_up__finish_btn">꾸미기 시작</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">백업 및 복원</string>
     <string name="backup_and_restore__back_up__title">데이터 백업</string>
@@ -377,9 +375,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">앱 자체 클립보드 사용</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">시스템 클립보드 대신 앱 자체에서 제공하는 클립보드를 사용합니다.</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">시스템 클립보드와 동기화</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">시스템 클립보드의 항목이 업데이트되면 앱 자체 클립보드에도 적용합니다.</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">시스템 클립보드로 동기화</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">앱 자체 클립보드의 항목이 업데이트되면 시스템 클립보드에도 적용합니다.</string>
     <string name="pref__clipboard__group_clipboard_history__label">클립보드 기록</string>
     <string name="pref__clipboard__enable_clipboard_history__label">클립보드 기록 켜기</string>
     <string name="pref__clipboard__limit_history_size__label">기록 크기 제한</string>
@@ -507,8 +503,6 @@
     <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 따라 진동합니다.</string>
     <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">입력 이벤트가 발생하면 시스템 설정에 관계없이 항상 진동합니다.</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">캡스락</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">왼손 모드</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">오른손 모드</string>
     <string name="enum__snygg_level__basic" comment="Enum value label">기본</string>
     <string name="enum__snygg_level__basic__description" comment="Enum value description">색상 속성만 보여줍니다. 속성과 규칙은 번역한 명칭을 보여줍니다.</string>
     <string name="enum__snygg_level__advanced" comment="Enum value label">고급</string>

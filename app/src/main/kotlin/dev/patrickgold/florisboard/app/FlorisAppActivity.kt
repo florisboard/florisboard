@@ -39,26 +39,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.conditional
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.compose.conditional
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.collectIn
+import java.util.concurrent.atomic.AtomicBoolean
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -73,7 +77,8 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 }
 
 class FlorisAppActivity : ComponentActivity() {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
+    private val appContext by appContext()
     private val cacheManager by cacheManager()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
@@ -83,40 +88,43 @@ class FlorisAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash screen should be installed before calling super.onCreate()
         installSplashScreen().apply {
-            setKeepOnScreenCondition { !prefs.datastoreReadyStatus.get() }
+            setKeepOnScreenCondition { !appContext.preferenceStoreLoaded.value }
         }
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        prefs.other.settingsTheme.observe(this) {
+        prefs.other.settingsTheme.asFlow().collectIn(lifecycleScope) {
             appTheme = it
         }
-        prefs.other.settingsLanguage.observe(this) {
+        prefs.other.settingsLanguage.asFlow().collectIn(lifecycleScope) {
             val config = Configuration(resources.configuration)
             val locale = if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it)
             config.setLocale(locale.base)
             resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_API28_P) {
-            prefs.other.showAppIcon.observe(this) {
+            prefs.other.showAppIcon.asFlow().collectIn(lifecycleScope) {
                 showAppIcon = it
             }
         }
 
-        //Check if android 13+ is running and the NotificationPermission is not set
-        if (AndroidVersion.ATLEAST_API33_T &&
-            prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
-        ) {
-            // update pref value to show the setup screen again again
-            prefs.internal.isImeSetUp.set(false)
-        }
-
         // We defer the setContent call until the datastore model is loaded, until then the splash screen stays drawn
-        prefs.datastoreReadyStatus.observe(this) { isModelLoaded ->
-            if (!isModelLoaded) return@observe
+        val isModelLoaded = AtomicBoolean(false)
+        appContext.preferenceStoreLoaded.collectIn(lifecycleScope) { loaded ->
+            if (!loaded || isModelLoaded.getAndSet(true)) return@collectIn
+            // Check if android 13+ is running and the NotificationPermission is not set
+            if (AndroidVersion.ATLEAST_API33_T &&
+                prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
+            ) {
+                // update pref value to show the setup screen again
+                prefs.internal.isImeSetUp.set(false)
+            }
             AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
             setContent {
-                ProvideLocalizedResources(resourcesContext) {
+                ProvideLocalizedResources(
+                    resourcesContext,
+                    appName = R.string.app_name,
+                ) {
                     FlorisAppTheme(theme = appTheme) {
                         Surface(color = MaterialTheme.colorScheme.background) {
                             AppContent()
@@ -189,7 +197,7 @@ class FlorisAppActivity : ComponentActivity() {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),
                         navController = navController,
-                        startDestination = if (isImeSetUp) Routes.Settings.Home else Routes.Setup.Screen,
+                        startDestination = if (isImeSetUp) Routes.Settings.Home::class else Routes.Setup.Screen::class,
                     )
                     PreviewKeyboardField(previewFieldController)
                 }

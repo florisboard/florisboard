@@ -23,8 +23,10 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
+import android.util.Log
 import androidx.core.os.UserManagerCompat
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -40,7 +42,11 @@ import dev.patrickgold.florisboard.lib.devtools.Flog
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.runtime.initAndroid
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.tryOrNull
 import org.florisboard.libnative.dummyAdd
@@ -63,8 +69,9 @@ class FlorisApplication : Application() {
         }
     }
 
-    private val prefs by florisPreferenceModel()
     private val mainHandler by lazy { Handler(mainLooper) }
+    private val scope = CoroutineScope(Dispatchers.Default)
+    val preferenceStoreLoaded = MutableStateFlow(false)
 
     val cacheManager = lazy { CacheManager(this) }
     val clipboardManager = lazy { ClipboardManager(this) }
@@ -80,7 +87,6 @@ class FlorisApplication : Application() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
         try {
-            JetPref.configure(saveIntervalMs = 500)
             Flog.install(
                 context = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
@@ -108,7 +114,14 @@ class FlorisApplication : Application() {
 
     fun init() {
         cacheDir?.deleteContentsRecursively()
-        prefs.initializeBlocking(this)
+        scope.launch {
+            val result = FlorisPreferenceStore.initAndroid(
+                context = this@FlorisApplication,
+                datastoreName = FlorisPreferenceModel.NAME,
+            )
+            Log.i("PREFS", result.toString())
+            preferenceStoreLoaded.value = true
+        }
         extensionManager.value.init()
         clipboardManager.value.initializeForContext(this)
         DictionaryManager.init(this)

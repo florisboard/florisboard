@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.DefaultShadowColor
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFontFamilyResolver
 import androidx.compose.ui.text.font.FontFamily
@@ -45,10 +44,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
+import com.materialkolor.dynamicColorScheme
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.color.MaterialYouFlags
+import org.florisboard.lib.color.systemAccentOrDefault
 import org.florisboard.lib.snygg.CompiledFontFamilyData
-import org.florisboard.lib.snygg.SnyggAttributes
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSelector
@@ -150,11 +150,24 @@ fun ProvideSnyggTheme(
     fontSizeMultiplier: Float = 1.0f,
     assetResolver: SnyggAssetResolver = SnyggDefaultAssetResolver,
     rootAttributes: SnyggQueryAttributes = emptyMap(),
+    materialYouFlags: MaterialYouFlags = MaterialYouFlags(),
     content: @Composable () -> Unit,
 ) {
-    val context = LocalContext.current
-    val lightScheme = ColorMappings.dynamicLightColorScheme(context, dynamicAccentColor)
-    val darkScheme = ColorMappings.dynamicDarkColorScheme(context, dynamicAccentColor)
+    val (colorPalette, contrastLevel, specVersion) = materialYouFlags
+    val lightScheme = dynamicColorScheme(
+        primary = systemAccentOrDefault(dynamicAccentColor),
+        isDark = false,
+        style = colorPalette,
+        contrastLevel = contrastLevel.value,
+        specVersion = specVersion
+    )
+    val darkScheme = dynamicColorScheme(
+        primary = systemAccentOrDefault(dynamicAccentColor),
+        isDark = true,
+        style = colorPalette,
+        contrastLevel = contrastLevel.value,
+        specVersion = specVersion
+    )
 
     val resolver = LocalFontFamilyResolver.current
     val customFontFamilies = remember(snyggTheme) {
@@ -364,7 +377,7 @@ internal fun SnyggValue.dpSize(default: Dp = Dp.Unspecified): Dp {
     }
 }
 
-internal fun SnyggValue.uriOrNull(): String? {
+fun SnyggValue.uriOrNull(): String? {
     return when (this) {
         is SnyggUriValue -> this.uri
         else -> null

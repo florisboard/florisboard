@@ -1,4 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 /*
  * Copyright (C) 2025 The FlorisBoard Contributors
@@ -26,6 +27,16 @@ plugins {
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.set(listOf(
+            "-Xconsistent-data-class-copy-visibility",
+            "-Xwhen-guards",
+        ))
+    }
+}
 
 android {
     namespace = "org.florisboard.lib.snygg"
@@ -60,13 +71,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-Xconsistent-data-class-copy-visibility",
-            "-Xwhen-guards",
-        )
-    }
 }
 
 tasks.withType<Test> {
@@ -81,9 +85,9 @@ kover {
 }
 
 dependencies {
-    implementation(project(":lib:android"))
-    implementation(project(":lib:color"))
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.color)
+    implementation(projects.lib.kotlin)
 
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
@@ -93,6 +97,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material.icons)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.coil.compose)

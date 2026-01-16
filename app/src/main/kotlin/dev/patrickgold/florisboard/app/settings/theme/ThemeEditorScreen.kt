@@ -20,6 +20,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -69,10 +70,13 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.materialkolor.Contrast
+import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamiccolor.ColorSpec
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
@@ -80,26 +84,28 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.florisVerticalScroll
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.color.MaterialYouFlagsSaver
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.florisVerticalScroll
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
@@ -113,8 +119,6 @@ import org.florisboard.lib.snygg.SnyggSpecDecl
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
 import org.florisboard.lib.snygg.ui.Saver
-import kotlin.Boolean
-import kotlin.String
 
 internal val PrettyPrintConfig = SnyggJsonConfiguration.of(
     prettyPrint = true,
@@ -145,7 +149,7 @@ fun ThemeEditorScreen(
     title = stringRes(R.string.ext__editor__edit_component__title_theme)
     scrollable = false
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val themeManager by context.themeManager()
@@ -309,14 +313,14 @@ fun ThemeEditorScreen(
         }
 
         DisposableEffect(workspace.version) {
-            themeManager.previewThemeInfo = ThemeManager.ThemeInfo.DEFAULT.copy(
+            themeManager.previewThemeInfo.value = ThemeManager.ThemeInfo.DEFAULT.copy(
                 name = extPreviewTheme(System.currentTimeMillis().toString()),
                 config = editor.build(),
                 stylesheet = stylesheetEditor.build(),
                 loadedDir = workspace.extDir,
             )
             onDispose {
-                themeManager.previewThemeInfo = null
+                themeManager.previewThemeInfo.value = null
             }
         }
 
@@ -619,6 +623,7 @@ private fun ComponentMetaEditorDialog(
     var authors by rememberSaveable { mutableStateOf(editor.authors.joinToString("\n")) }
     val authorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, authors)
     var isNightTheme by rememberSaveable { mutableStateOf(editor.isNightTheme) }
+    var materialYouFlags by rememberSaveable(stateSaver = MaterialYouFlagsSaver) { mutableStateOf(editor.materialYouFlags) }
     var stylesheetPath by rememberSaveable { mutableStateOf(editor.stylesheetPath) }
     val stylesheetPathValidation = rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath)
 
@@ -633,7 +638,7 @@ private fun ComponentMetaEditorDialog(
             if (!allFieldsValid) {
                 showValidationErrors = true
             } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
-                context.showLongToast("A theme with this ID already exists!")
+                context.showLongToastSync("A theme with this ID already exists!")
             } else {
                 workspace.update {
                     editor.id = id.trim()
@@ -641,12 +646,14 @@ private fun ComponentMetaEditorDialog(
                     editor.authors = authors.lines().map { it.trim() }.filter { it.isNotBlank() }
                     editor.isNightTheme = isNightTheme
                     editor.stylesheetPath = stylesheetPath.trim()
+                    editor.materialYouFlags = materialYouFlags
                 }
                 onConfirm()
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
+        contentPadding = PaddingValues(horizontal = 8.dp),
         scrollModifier = Modifier.florisVerticalScroll(),
     ) {
         Column {
@@ -695,6 +702,46 @@ private fun ComponentMetaEditorDialog(
                     },
                 )
                 Validation(showValidationErrors, stylesheetPathValidation)
+            }
+
+            DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_material_you__title)) {
+                JetPrefDropdown(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    labelText = stringRes(R.string.settings__theme_editor__component_meta_material_you__palette_style),
+                    optionsLabelProvider = {
+                        it.name
+                    },
+                    options = PaletteStyle.entries,
+                    onSelectOption = {
+                        materialYouFlags = materialYouFlags.copy(paletteStyle = PaletteStyle.entries[it])
+                    },
+                    selectedOptionIndex = materialYouFlags.paletteStyle.ordinal
+                )
+                JetPrefDropdown(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    labelText = stringRes(R.string.settings__theme_editor__component_meta_material_you__color_contrast),
+                    optionsLabelProvider = {
+                        it.name
+                    },
+                    options = Contrast.entries,
+                    onSelectOption = {
+                        materialYouFlags = materialYouFlags.copy(contrastLevel = Contrast.entries[it])
+                    },
+                    selectedOptionIndex = materialYouFlags.contrastLevel.ordinal
+                )
+                JetPrefDropdown(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    labelText = stringRes(R.string.settings__theme_editor__component_meta_material_you__spec_version),
+                    optionsLabelProvider = {
+                        it.name
+                    },
+                    options = ColorSpec.SpecVersion.entries,
+                    onSelectOption = {
+                        materialYouFlags =
+                            materialYouFlags.copy(specVersion = ColorSpec.SpecVersion.entries[it])
+                    },
+                    selectedOptionIndex = materialYouFlags.specVersion.ordinal
+                )
             }
         }
     }

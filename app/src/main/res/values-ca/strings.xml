@@ -50,49 +50,49 @@
     <string name="emoji__history__pinned">Fixats</string>
     <string name="emoji__history__recent">Recents</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Amunt</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Amunt</string>
     <string name="quick_action__arrow_up__tooltip">Ves amunt</string>
-    <string name="quick_action__arrow_down" maxLength="12">Avall</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Avall</string>
     <string name="quick_action__arrow_down__tooltip">Ves avall</string>
-    <string name="quick_action__arrow_left" maxLength="12">Esquerra</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Esquerra</string>
     <string name="quick_action__arrow_left__tooltip">Cap a l\'esquerra</string>
-    <string name="quick_action__arrow_right" maxLength="12">Dreta</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Dreta</string>
     <string name="quick_action__arrow_right__tooltip">Cap a la dreta</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Buidar clip</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Buidar clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Suprimeix l\'entrada del porta-retalls principal</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copia</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copia</string>
     <string name="quick_action__clipboard_copy__tooltip">Copia el contingut al porta-retalls</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Retalla</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Retalla</string>
     <string name="quick_action__clipboard_cut__tooltip">Retalla i desa al porta-retalls</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Enganxa</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Enganxa</string>
     <string name="quick_action__clipboard_paste__tooltip">Enganxa del porta-retalls</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Escull tot</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Escull tot</string>
     <string name="quick_action__clipboard_select_all__tooltip">Selecciona-ho tot i desa-ho al porta-retalls</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Porta-retall</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Porta-retall</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Obre l\'historial del porta-retalls</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Obre el tauler d\'emojis</string>
-    <string name="quick_action__language_switch" maxLength="12">Canvi idioma</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Canvi idioma</string>
     <string name="quick_action__language_switch__tooltip">Canvia l\'idioma</string>
-    <string name="quick_action__settings" maxLength="12">Paràmetres</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Paràmetres</string>
     <string name="quick_action__settings__tooltip">Obre la configuració</string>
-    <string name="quick_action__undo" maxLength="12">Desfés</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Desfés</string>
     <string name="quick_action__undo__tooltip">Desfà la darrera acció</string>
-    <string name="quick_action__redo" maxLength="12">Refés</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Refés</string>
     <string name="quick_action__redo__tooltip">Refà la darrera acció</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Més accions</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Més accions</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Mostra o amaga les accions addicionals</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incògnit</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incògnit</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Passa al mode incògnit</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Correc. auto</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Correc. auto</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Habilita la correcció automàtica</string>
-    <string name="quick_action__voice_input" maxLength="12">Entrada veu</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Entrada veu</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Obre el proveïdor d\'entrada de veu</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Amb una mà</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Amb una mà</string>
     <string name="quick_action__one_handed_mode__tooltip">Passa al mode d\'Amb una mà</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrossega</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posició actual del cursor</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Cap operació</string>
     <string name="quick_actions_overflow__customize_actions_button">Reorganitza les accions</string>
     <string name="quick_actions_editor__header">Personalitza l\'ordre de les accions</string>
@@ -319,12 +319,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportament de les majúscules</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador de la mida de la font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode d\'una sola mà</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Amplada del teclat en mode una sola mà</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa apaïsada</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Alçada del teclat</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espai entre tecles</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Espai a sota</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitat de les tecles emergents</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
@@ -481,6 +477,7 @@
     <string name="setup__finish_up__description_p1">{app_name} s\'habilitat al sistema i està preparat perquè el personalitzis.</string>
     <string name="setup__finish_up__description_p2">Si trobes cap incidència, error, fallada o simplement vols suggerir alguna cosa, només has d\'anar al repositori del projecte des de la pantalla Quant a!</string>
     <string name="setup__finish_up__finish_btn">Comença a personalitzar</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Còpia de seguretat &amp; Restauració</string>
     <string name="backup_and_restore__back_up__title">Còpia de seguretat de les dades</string>
@@ -555,9 +552,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Usa el porta-retalls intern</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usa un porta-retalls intern en lloc del porta-retalls del sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronitza des del porta-retalls del sistema</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Les actualitzacions al porta-retalls del sistema també s\'actualitzaran al port-retalls de Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronitza cap al porta-retalls del sistema</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Les actualitzacions al porta-retalls de Floris també s\'actualitzaran al port-retalls del sistema</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Suggeriments del porta-retalls</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Suggeriments del contingut del porta-retalls</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggereix continguts copiats prèviament al porta-retalls</string>
@@ -573,8 +568,6 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Suprimeix automàticament les entrades sensibles després de</string>
     <string name="pref__clipboard__limit_history_size__label">Límit de la mida de l\'historial</string>
     <string name="pref__clipboard__max_history_size__label">Mida màxima de l\'historial</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Suprimir l\'entrada principal afecta l\'historial</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Si suprimeixes l\'entrada principal, també suprimiràs la darrera entrada de l\'historial</string>
     <string name="send_to_clipboard__unknown_error">S\'ha produït un error desconegut. Torna-ho a provar!</string>
     <string name="send_to_clipboard__type_not_supported_error">Aquest tipus de mitjà no és compatible.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">La imatge de sota s\'ha copiat al porta-retalls.</string>
@@ -847,8 +840,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar mai</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar sempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinàmicament</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Mode esquerrà</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Mode dretà</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Dalt a l\'esquerra</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Dalt a la dreta</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">A sota a la dreta</string>

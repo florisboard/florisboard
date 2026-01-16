@@ -44,15 +44,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.florisScrollbar
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 
 const val SelectLocaleScreenResultLanguageTag = "SelectLocaleScreen.languageTag"
 
@@ -61,7 +61,7 @@ fun SelectLocaleScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__subtype_select_locale)
     scrollable = false
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()

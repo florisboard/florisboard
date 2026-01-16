@@ -27,6 +27,7 @@ import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
+import org.florisboard.lib.android.showLongToastSync
 
 @Composable
 fun ExtensionExportScreen(id: String) {
@@ -61,9 +62,9 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
                 return@rememberLauncherForActivityResult
             }
             runCatching { extensionManager.export(ext, uri) }.onSuccess {
-                context.showLongToast(R.string.ext__export__success)
+                context.showLongToastSync(R.string.ext__export__success)
             }.onFailure { error ->
-                context.showLongToast(R.string.ext__export__failure, "error_message" to error.localizedMessage)
+                context.showLongToastSync(R.string.ext__export__failure, "error_message" to error.localizedMessage)
             }
             navController.popBackStack()
         },

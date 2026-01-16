@@ -27,6 +27,30 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         elementName = "window",
         resId = R.string.snygg__rule_element__window,
     ),
+    WindowInner(
+        elementName = "window-inner",
+        resId = R.string.snygg__rule_element__window_inner,
+    ),
+    WindowMoveHandle(
+        elementName = "window-move-handle",
+        resId = R.string.snygg__rule_element__window_move_handle,
+    ),
+    WindowResizeAction(
+        elementName = "window-resize-action",
+        resId = R.string.snygg__rule_element__window_resize_action,
+    ),
+    WindowResizeHandle(
+        elementName = "window-resize-handle",
+        resId = R.string.snygg__rule_element__window_resize_handle,
+    ),
+    WindowResizeOverlayFixed(
+        elementName = "winow-resize-overlay-fixed",
+        resId = R.string.snygg__rule_element__window_resize_overlay_fixed
+    ),
+    FloatingDockToFixedIndicator(
+        elementName = "floating-dock-to-fixed-indicator",
+        resId = R.string.snygg__rule_element__floating_dock_to_fixed_indicator,
+    ),
 
     Key(
         elementName = "key",
@@ -391,5 +415,6 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         const val Code = "code"
         const val Mode = "mode"
         const val ShiftState = "shiftstate"
+        const val WindowMode = "windowmode"
     }
 }

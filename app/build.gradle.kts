@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import java.io.ByteArrayOutputStream
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.application)
@@ -23,13 +24,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.mikepenz.aboutlibraries)
+    alias(libs.plugins.kotest)
 }
 
 val projectMinSdk: String by project
 val projectTargetSdk: String by project
 val projectCompileSdk: String by project
-val projectBuildToolsVersion: String by project
-val projectNdkVersion: String by project
 val projectVersionCode: String by project
 val projectVersionName: String by project
 val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { suffix ->
@@ -40,24 +40,35 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.set(listOf(
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-jvm-default=enable",
+            "-Xwhen-guards",
+            "-Xexplicit-backing-fields",
+            "-XXLanguage:+ContextParameters",
+            "-XXLanguage:+LocalTypeAliases",
+        ))
+    }
+}
+
 android {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = projectCompileSdk.toInt()
-    buildToolsVersion = projectBuildToolsVersion
-    ndkVersion = projectNdkVersion
+    buildToolsVersion = tools.versions.buildTools.get()
+    ndkVersion = tools.versions.ndk.get()
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
-            "-Xwhen-guards",
-        )
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("room.incremental", "true")
+        arg("room.expandProjection", "true")
     }
 
     defaultConfig {
@@ -69,15 +80,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash()}\"")
+        buildConfigField("String", "BUILD_COMMIT_HASH", "\"${getGitCommitHash().get()}\"")
         buildConfigField("String", "FLADDONS_API_VERSION", "\"v~draft2\"")
         buildConfigField("String", "FLADDONS_STORE_URL", "\"beta.addons.florisboard.org\"")
-
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
 
         sourceSets {
             maybeCreate("main").apply {
@@ -108,7 +113,7 @@ android {
     buildTypes {
         named("debug") {
             applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug+${getGitCommitHash(short = true)}"
+            versionNameSuffix = "-debug+${getGitCommitHash(short = true).get()}"
 
             isDebuggable = true
             isJniDebuggable = false
@@ -148,8 +153,14 @@ android {
 
         create("benchmark") {
             initWith(getByName("release"))
+
+            applicationIdSuffix = ".bench"
+            versionNameSuffix = "-bench+${getGitCommitHash(short = true).get()}"
+
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
+
+            resValue("string", "floris_app_name", "FlorisBoard Bench")
         }
     }
 
@@ -174,6 +185,9 @@ android {
 }
 
 tasks.withType<Test> {
+    testLogging {
+        events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+    }
     useJUnitPlatform()
 }
 
@@ -202,40 +216,47 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
+    implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
     implementation(libs.patrickgold.compose.tooltip)
     implementation(libs.patrickgold.jetpref.datastore.model)
+    ksp(libs.patrickgold.jetpref.datastore.model.processor)
     implementation(libs.patrickgold.jetpref.datastore.ui)
     implementation(libs.patrickgold.jetpref.material.ui)
 
-    implementation(project(":lib:android"))
-    implementation(project(":lib:color"))
-    implementation(project(":lib:kotlin"))
-    implementation(project(":lib:native"))
-    implementation(project(":lib:snygg"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.color)
+    implementation(projects.lib.compose)
+    implementation(projects.lib.kotlin)
+    implementation(projects.lib.native)
+    implementation(projects.lib.snygg)
 
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.property)
+    testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotlin.test.junit5)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
 
-fun getGitCommitHash(short: Boolean = false): String {
+fun getGitCommitHash(short: Boolean = false): Provider<String> {
     if (!File(".git").exists()) {
-        return "null"
+        return providers.provider { "null" }
     }
 
-    val stdout = ByteArrayOutputStream()
-    exec {
+    val execProvider = providers.exec {
         if (short) {
             commandLine("git", "rev-parse", "--short", "HEAD")
         } else {
             commandLine("git", "rev-parse", "HEAD")
         }
-        standardOutput = stdout
     }
-    return stdout.toString().trim()
+    return execProvider.standardOutput.asText.map { it.trim() }
 }

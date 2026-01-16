@@ -27,7 +27,9 @@ import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -36,7 +38,6 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -47,6 +48,7 @@ import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.compose.stringRes
 
 
 @Composable
@@ -71,7 +73,7 @@ fun OtherScreen() = FlorisScreen {
             icon = Icons.Default.FormatColorFill,
             defaultColors = ColorMappings.colors,
             showAlphaSlider = false,
-            enableAdvancedLayout = false,
+            enableAdvancedLayout = true,
             colorOverride = {
                 if (it.isMaterialYou(context)) {
                     Color.Unspecified
@@ -153,6 +155,11 @@ fun OtherScreen() = FlorisScreen {
                 else -> null
             },
             enabledIf = { AndroidVersion.ATMOST_API28_P },
+        )
+        Preference(
+            icon = ImageVector.vectorResource(R.drawable.ic_keyboard_keys),
+            title = stringRes(R.string.physical_keyboard__title),
+            onClick = { navController.navigate(Routes.Settings.PhysicalKeyboard) },
         )
         Preference(
             icon = Icons.Default.Adb,

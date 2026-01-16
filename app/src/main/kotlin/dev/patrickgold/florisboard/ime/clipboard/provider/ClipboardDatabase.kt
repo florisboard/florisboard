@@ -55,6 +55,7 @@ import org.florisboard.lib.android.UriSerializer
 import org.florisboard.lib.android.query
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.tryOrNull
+import androidx.core.net.toUri
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
 private const val CLIPBOARD_FILES_TABLE = "clipboard_files"
@@ -89,7 +90,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     val uri: Uri?,
     val creationTimestampMs: Long,
     val isPinned: Boolean,
-    val mimeTypes: Array<String>,
+    val mimeTypes: List<String>,
     @EncodeDefault
     @ColumnInfo(name = "is_sensitive", defaultValue = "0")
     val isSensitive: Boolean = false,
@@ -101,7 +102,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
         /**
          * So that every item doesn't have to allocate its own array.
          */
-        private val TEXT_PLAIN = arrayOf("text/plain")
+        private val TEXT_PLAIN = listOf("text/plain")
         private val MEDIA_PROJECTION = arrayOf(OpenableColumns.DISPLAY_NAME)
 
         const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
@@ -177,7 +178,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
             val mimeTypes = when (type) {
                 ItemType.TEXT -> TEXT_PLAIN
                 ItemType.IMAGE, ItemType.VIDEO -> {
-                    Array(data.description.mimeTypeCount) { data.description.getMimeType(it) }
+                    List(data.description.mimeTypeCount) { data.description.getMimeType(it) }
                 }
             }
 
@@ -230,34 +231,6 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
         }
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ClipboardItem
-
-        if (id != other.id) return false
-        if (type != other.type) return false
-        if (text != other.text) return false
-        if (uri != other.uri) return false
-        if (creationTimestampMs != other.creationTimestampMs) return false
-        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
-        if (isSensitive != other.isSensitive) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + type.hashCode()
-        result = 31 * result + (text?.hashCode() ?: 0)
-        result = 31 * result + (uri?.hashCode() ?: 0)
-        result = 31 * result + creationTimestampMs.hashCode()
-        result = 31 * result + mimeTypes.contentHashCode()
-        result = 31 * result + isSensitive.hashCode()
-        return result
-    }
-
     fun stringRepresentation(): String {
         return when {
             text != null -> text
@@ -270,7 +243,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
 class Converters {
     @TypeConverter
     fun uriFromString(value: String?): Uri? {
-        return Uri.parse(value)
+        return value?.toUri()
     }
 
     @TypeConverter
@@ -293,13 +266,13 @@ class Converters {
      * DOES NOT USE A GENERALIZED FORMAT.
      */
     @TypeConverter
-    fun mimeTypesToString(mimeTypes: Array<String>): String {
+    fun mimeTypesToString(mimeTypes: List<String>): String {
         return mimeTypes.joinToString(",")
     }
 
     @TypeConverter
-    fun stringToMimeTypes(value: String): Array<String> {
-        return value.split(",").toTypedArray()
+    fun stringToMimeTypes(value: String): List<String> {
+        return value.split(",")
     }
 }
 
@@ -320,11 +293,11 @@ interface ClipboardHistoryDao {
     @Update
     fun update(items: List<ClipboardItem>)
 
-    @Delete
-    fun delete(item: ClipboardItem)
-
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id")
     fun delete(id: Long)
+
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id AND not isPinned ")
+    fun deleteIfUnpinned(id: Long)
 
     @Delete
     fun delete(items: List<ClipboardItem>)
@@ -382,30 +355,8 @@ data class ClipboardFileInfo(
     @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
     @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
     @ColumnInfo(name=Media.ORIENTATION) val orientation: Int,
-    val mimeTypes: Array<String>,
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ClipboardFileInfo
-
-        if (id != other.id) return false
-        if (displayName != other.displayName) return false
-        if (size != other.size) return false
-        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + displayName.hashCode()
-        result = 31 * result + size.hashCode()
-        result = 31 * result + mimeTypes.contentHashCode()
-        return result
-    }
-}
+    val mimeTypes: List<String>,
+)
 
 @Dao
 interface ClipboardFilesDao {

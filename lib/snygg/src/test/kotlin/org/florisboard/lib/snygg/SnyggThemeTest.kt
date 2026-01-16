@@ -5,8 +5,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.florisboard.lib.color.schemes.yellowDarkScheme
-import org.florisboard.lib.color.schemes.yellowLightScheme
+import com.materialkolor.dynamicColorScheme
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
@@ -25,6 +24,15 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class SnyggThemeTest {
+    val lightScheme = dynamicColorScheme(
+        primary = Color.Yellow,
+        isDark = false,
+    )
+    val darkScheme = dynamicColorScheme(
+        primary = Color.Yellow,
+        isDark = true,
+    )
+
     private fun SnyggTheme.helperQuery(
         elementName: String,
         attributes: SnyggQueryAttributes = emptyMap(),
@@ -37,8 +45,8 @@ class SnyggThemeTest {
             attributes,
             selector,
             parentStyle,
-            dynamicLightColorScheme = yellowLightScheme,
-            dynamicDarkColorScheme = yellowDarkScheme,
+            dynamicLightColorScheme = lightScheme,
+            dynamicDarkColorScheme = darkScheme,
             fontSizeMultiplier = fontSizeMultiplier,
         )
     }
@@ -77,9 +85,9 @@ class SnyggThemeTest {
         val keyBackground = assertIs<SnyggStaticColorValue>(key.background)
         assertEquals(Color.White, keyBackground.color)
         val keyForeground = assertIs<SnyggStaticColorValue>(key.foreground)
-        assertEquals(yellowDarkScheme.primary, keyForeground.color)
+        assertEquals(darkScheme.primary, keyForeground.color)
         val keyBorderColor = assertIs<SnyggStaticColorValue>(key.borderColor)
-        assertEquals(yellowLightScheme.secondary, keyBorderColor.color)
+        assertEquals(lightScheme.secondary, keyBorderColor.color)
 
         val keyPressed = theme.helperQuery("key", selector = SnyggSelector.PRESSED)
         assertEquals(keyBackground, keyPressed.background)
@@ -93,7 +101,7 @@ class SnyggThemeTest {
         assertEquals(keyForeground, keyFocus.foreground)
         assertNotEquals(keyBorderColor, keyFocus.borderColor)
         val keyFocusBorderColor = assertIs<SnyggStaticColorValue>(keyFocus.borderColor)
-        assertEquals(yellowDarkScheme.primary, keyFocusBorderColor.color)
+        assertEquals(darkScheme.primary, keyFocusBorderColor.color)
 
         val keyDisabled = theme.helperQuery("key", selector = SnyggSelector.DISABLED)
         assertEquals(keyBackground, keyDisabled.background)

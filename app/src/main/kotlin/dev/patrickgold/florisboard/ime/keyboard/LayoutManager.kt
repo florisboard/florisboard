@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -78,7 +78,7 @@ data class DebugLayoutComputationResult(
  * Class which manages layout loading and caching.
  */
 class LayoutManager(context: Context) {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()

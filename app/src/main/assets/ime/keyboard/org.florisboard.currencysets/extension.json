@@ -94,6 +94,18 @@
       ]
     },
     {
+      "id": "georgian_lari",
+      "label": "Georgian lari, GEL (₾)",
+      "slots": [
+        { "code": 8382, "label": "₾" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
       "id": "indian_rupee",
       "label": "Indian rupee (₹)",
       "slots": [

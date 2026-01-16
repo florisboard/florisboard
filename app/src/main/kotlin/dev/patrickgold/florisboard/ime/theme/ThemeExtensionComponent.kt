@@ -18,9 +18,12 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import org.florisboard.lib.snygg.SnyggStylesheetEditor
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.florisboard.lib.color.MaterialYouFlags
+import org.florisboard.lib.snygg.SnyggStylesheetEditor
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun extCoreTheme(id: String) = ExtensionComponentName(
@@ -45,11 +48,13 @@ interface ThemeExtensionComponent : ExtensionComponent {
     override val label: String
     override val authors: List<String>
     val isNightTheme: Boolean
+    val materialYouFlags: MaterialYouFlags
     val stylesheetPath: String?
 
     fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ThemeExtensionComponentImpl(
     override val id: String,
@@ -57,12 +62,14 @@ data class ThemeExtensionComponentImpl(
     override val authors: List<String>,
     @SerialName("isNight")
     override val isNightTheme: Boolean = true,
+    @EncodeDefault
+    override val materialYouFlags: MaterialYouFlags = MaterialYouFlags(),
     @SerialName("stylesheet")
     override val stylesheetPath: String? = null,
 ) : ThemeExtensionComponent {
 
     fun edit() = ThemeExtensionComponentEditor(
-        id, label, authors, isNightTheme, stylesheetPath ?: "",
+        id, label, authors, isNightTheme, materialYouFlags, stylesheetPath ?: "",
     )
 }
 
@@ -71,6 +78,7 @@ class ThemeExtensionComponentEditor(
     override var label: String = "",
     override var authors: List<String> = emptyList(),
     override var isNightTheme: Boolean = true,
+    override var materialYouFlags: MaterialYouFlags = MaterialYouFlags(),
     override var stylesheetPath: String = "",
 ) : ThemeExtensionComponent {
 
@@ -83,6 +91,7 @@ class ThemeExtensionComponentEditor(
             label = label.trim(),
             authors = authors.filterNot { it.isBlank() },
             isNightTheme = isNightTheme,
+            materialYouFlags = materialYouFlags,
             stylesheetPath = stylesheetPath.takeUnless { it.isBlank() },
         )
         check(id.isNotBlank()) { "Theme component ID cannot be blank" }

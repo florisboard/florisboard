@@ -42,7 +42,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -60,15 +62,9 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -85,11 +81,16 @@ import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import java.util.*
-import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisInfoCard
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.io.deleteContentsRecursively
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
@@ -287,7 +288,7 @@ private fun EditScreen(
                             stylesheetFile.writeText(stylesheet)
                         }.onFailure {
                             // TODO: better error handling
-                            context.showLongToast(it.message.toString())
+                            context.showLongToastSync(it.message.toString())
                             return
                         }
                     } else {
@@ -352,7 +353,7 @@ private fun EditScreen(
             )
             Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageFiles },
-                icon = vectorResource(R.drawable.ic_file_blank),
+                icon = ImageVector.vectorResource(R.drawable.ic_file_blank),
                 title = stringRes(R.string.ext__editor__files__title),
             )
         }
@@ -627,7 +628,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 for (theme in editor.themes) {
                     put(ExtensionComponentName(extId, theme.id), theme)
                 }
-                for ((componentName, theme) in themeManager.indexedThemeConfigs.value ?: emptyMap()) {
+                for ((componentName, theme) in themeManager.indexedThemeConfigs.value.first) {
                     if (componentName.extensionId != extId) {
                         put(componentName, theme)
                     }
@@ -665,7 +666,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                     when (createFrom) {
                         CreateFrom.EMPTY -> {
                             if (editor.themes.any { it.id == newId.trim() }) {
-                                context.showLongToast("A theme with this ID already exists!")
+                                context.showLongToastSync("A theme with this ID already exists!")
                             } else {
                                 val componentEditor = ThemeExtensionComponentEditor(
                                     id = newId.trim(),
@@ -709,7 +710,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 }
                                 editor.themes.add(componentEditor)
                             } else {
-                                val component = themeManager.indexedThemeConfigs.value?.get(componentName) ?: return
+                                val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
                                 val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
                                 componentEditor.id = componentId
                                 componentEditor.stylesheetPath = ""

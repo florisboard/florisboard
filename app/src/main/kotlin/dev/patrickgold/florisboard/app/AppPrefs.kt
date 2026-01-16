@@ -17,13 +17,14 @@
 package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import dev.patrickgold.florisboard.app.settings.theme.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
@@ -37,7 +38,6 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -53,86 +53,41 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
-import dev.patrickgold.florisboard.lib.compose.ColorPreferenceSerializer
+import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.VersionName
-import dev.patrickgold.jetpref.datastore.JetPref
+import dev.patrickgold.jetpref.datastore.annotations.Preferences
+import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
+import dev.patrickgold.jetpref.datastore.model.LocalTime
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.PreferenceType
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import kotlinx.serialization.json.Json
-import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.isOrientationPortrait
-import org.florisboard.lib.color.DEFAULT_GREEN
 
-fun florisPreferenceModel() = JetPref.getOrCreatePreferenceModel(AppPrefs::class, ::AppPrefs)
+val FlorisPreferenceStore = jetprefDataStoreOf(FlorisPreferenceModel::class)
 
-class AppPrefs : PreferenceModel("florisboard-app-prefs") {
+@Preferences
+abstract class FlorisPreferenceModel : PreferenceModel() {
+    companion object {
+        const val NAME = "florisboard-app-prefs"
+    }
+
     val clipboard = Clipboard()
     inner class Clipboard {
         val useInternalClipboard = boolean(
             key = "clipboard__use_internal_clipboard",
             default = false,
         )
-        val syncToFloris = boolean(
+        val syncToFloris = enum(
             key = "clipboard__sync_to_floris",
-            default = true,
+            default = ClipboardSyncBehavior.ALL_EVENTS,
         )
-        val syncToSystem = boolean(
+        val syncToSystem = enum(
             key = "clipboard__sync_to_system",
-            default = false,
-        )
-        val historyEnabled = boolean(
-            key = "clipboard__history_enabled",
-            default = false,
-        )
-        val numHistoryGridColumnsPortrait = int(
-            key = "clipboard__num_history_grid_columns_portrait",
-            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
-        )
-        val numHistoryGridColumnsLandscape = int(
-            key = "clipboard__num_history_grid_columns_landscape",
-            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
-        )
-        @Composable
-        fun numHistoryGridColumns(): PreferenceData<Int> {
-            val configuration = LocalConfiguration.current
-            return if (configuration.isOrientationPortrait()) {
-                numHistoryGridColumnsPortrait
-            } else {
-                numHistoryGridColumnsLandscape
-            }
-        }
-        val cleanUpOld = boolean(
-            key = "clipboard__clean_up_old",
-            default = false,
-        )
-        val cleanUpAfter = int(
-            key = "clipboard__clean_up_after",
-            default = 20,
-        )
-        val autoCleanSensitive = boolean(
-            key = "clipboard__auto_clean_sensitive",
-            default = false,
-        )
-        val autoCleanSensitiveAfter = int(
-            key = "clipboard__auto_clean_sensitive_after",
-            default = 20,
-        )
-        val limitHistorySize = boolean(
-            key = "clipboard__limit_history_size",
-            default = true,
-        )
-        val maxHistorySize = int(
-            key = "clipboard__max_history_size",
-            default = 20,
-        )
-        val clearPrimaryClipDeletesLastItem = boolean(
-            key = "clipboard__clear_primary_clip_deletes_last_item",
-            default = true,
+            default = ClipboardSyncBehavior.NO_EVENTS,
         )
         val suggestionEnabled = boolean(
             key = "clipboard__suggestion_enabled",
@@ -141,6 +96,63 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val suggestionTimeout = int(
             key = "clipboard__suggestion_timeout",
             default = 60,
+        )
+        val historyEnabled = boolean(
+            key = "clipboard__history_enabled",
+            default = false,
+        )
+        val historyNumGridColumnsPortrait = int(
+            key = "clipboard__history_num_grid_columns_portrait",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        val historyNumGridColumnsLandscape = int(
+            key = "clipboard__history_num_grid_columns_landscape",
+            default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
+        )
+        @Composable
+        fun historyNumGridColumns(): PreferenceData<Int> {
+            val configuration = LocalConfiguration.current
+            return if (configuration.isOrientationPortrait()) {
+                historyNumGridColumnsPortrait
+            } else {
+                historyNumGridColumnsLandscape
+            }
+        }
+        val historyAutoCleanOldEnabled = boolean(
+            key = "clipboard__history_auto_clean_old_enabled",
+            default = false,
+        )
+        val historyAutoCleanOldAfter = int(
+            key = "clipboard__history_auto_clean_old_after",
+            default = 20,
+        )
+        val historyAutoCleanSensitiveEnabled = boolean(
+            key = "clipboard__history_auto_clean_sensitive_enabled",
+            default = false,
+        )
+        val historyAutoCleanSensitiveAfter = int(
+            key = "clipboard__history_auto_clean_sensitive_after",
+            default = 20,
+        )
+        val historySizeLimitEnabled = boolean(
+            key = "clipboard__history_size_limit_enabled",
+            default = true,
+        )
+        val historySizeLimit = int(
+            key = "clipboard__history_size_limit",
+            default = 20,
+        )
+        val historyHideOnPaste = boolean(
+            key = "clipboard__history_hide_on_paste",
+            default = false,
+        )
+        val historyHideOnNextTextField = boolean(
+            key = "clipboard__history_hide_on_next_text_field",
+            default = true,
+        )
+        val clearPrimaryClipAffectsHistoryIfUnpinned = boolean(
+            key = "clipboard__clear_primary_clip_affects_history_if_unpinned",
+            default = true,
         )
     }
 
@@ -192,6 +204,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val showDragAndDropHelpers = boolean(
             key = "devtools__show_drag_and_drop_helpers",
+            default = false,
+        )
+        val showWindowResizeHandleBoundaries = boolean(
+            key = "devtools__show_window_resize_handle_boundaries",
             default = false,
         )
     }
@@ -456,6 +472,11 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     val keyboard = Keyboard()
     inner class Keyboard {
+        val windowConfig = custom(
+            key = "keyboard__window_config",
+            default = emptyMap(),
+            serializer = ImeWindowConfig.ByTypeSerializer,
+        )
         val numberRow = boolean(
             key = "keyboard__number_row",
             default = false,
@@ -500,29 +521,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__font_size_multiplier_landscape",
             default = 100,
         )
-        val oneHandedMode = enum(
-            key = "keyboard__one_handed_mode",
-            default = OneHandedMode.END,
-        )
-        val oneHandedModeEnabled = boolean(
-            key = "keyboard__one_handed_mode_enabled",
-            default = false,
-        )
-        val oneHandedModeScaleFactor = int(
-            key = "keyboard__one_handed_mode_scale_factor",
-            default = 87,
-        )
         val landscapeInputUiMode = enum(
             key = "keyboard__landscape_input_ui_mode",
             default = LandscapeInputUiMode.DYNAMICALLY_SHOW,
-        )
-        val heightFactorPortrait = int(
-            key = "keyboard__height_factor_portrait",
-            default = 100,
-        )
-        val heightFactorLandscape = int(
-            key = "keyboard__height_factor_landscape",
-            default = 100,
         )
         val keySpacingVertical = float(
             key = "keyboard__key_spacing_vertical",
@@ -531,14 +532,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val keySpacingHorizontal = float(
             key = "keyboard__key_spacing_horizontal",
             default = 2.0f,
-        )
-        val bottomOffsetPortrait = int(
-            key = "keyboard__bottom_offset_portrait",
-            default = 0,
-        )
-        val bottomOffsetLandscape = int(
-            key = "keyboard__bottom_offset_landscape",
-            default = 0,
         )
         val popupEnabled = boolean(
             key = "keyboard__popup_enabled",
@@ -574,24 +567,6 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 mergeHintPopups = mergeHintPopupsEnabled.get(),
             )
         }
-
-        @Composable
-        fun fontSizeMultiplier(): Float {
-            val configuration = LocalConfiguration.current
-            val oneHandedModeEnabled by oneHandedModeEnabled.observeAsState()
-            val oneHandedModeFactor by oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
-            val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
-                fontSizeMultiplierPortrait
-            } else {
-                fontSizeMultiplierLandscape
-            }.observeAsTransformingState { it / 100.0f }
-            val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedModeEnabled && configuration.isOrientationPortrait()) {
-                oneHandedModeFactor
-            } else {
-                1.0f
-            }
-            return fontSizeMultiplier
-        }
     }
 
     val localization = Localization()
@@ -622,10 +597,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val accentColor = custom(
             key = "other__accent_color",
-            default = when (AndroidVersion.ATLEAST_API31_S) {
-                true -> Color.Unspecified
-                false -> DEFAULT_GREEN
-            },
+            default = Color.Unspecified,
             serializer = ColorPreferenceSerializer,
         )
         val settingsLanguage = string(
@@ -635,6 +607,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val showAppIcon = boolean(
             key = "other__show_app_icon",
             default = true,
+        )
+    }
+
+    val physicalKeyboard = PhysicalKeyboard()
+    inner class PhysicalKeyboard {
+        val showOnScreenKeyboard = boolean(
+            key = "physical_keyboard__show_on_screen_keyboard",
+            default = false,
         )
     }
 
@@ -743,20 +723,17 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val accentColor = custom(
             key = "theme__accent_color",
-            default = when (AndroidVersion.ATLEAST_API31_S) {
-                true -> Color.Unspecified
-                false -> DEFAULT_GREEN
-            },
+            default = Color.Unspecified,
             serializer = ColorPreferenceSerializer,
         )
-        //val sunriseTime = localTime(
-        //    key = "theme__sunrise_time",
-        //    default = LocalTime.of(6, 0),
-        //)
-        //val sunsetTime = localTime(
-        //    key = "theme__sunset_time",
-        //    default = LocalTime.of(18, 0),
-        //)
+        val sunriseTime = localTime(
+            key = "theme__sunrise_time",
+            default = LocalTime(6, 0),
+        )
+        val sunsetTime = localTime(
+            key = "theme__sunset_time",
+            default = LocalTime(18, 0),
+        )
         val editorColorRepresentation = enum(
             key = "theme__editor_color_representation",
             default = ColorRepresentation.HEX,
@@ -828,7 +805,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             "smartbar__action_arrangement" -> {
                 fun migrateAction(action: QuickAction): QuickAction {
                     return if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
-                        action.copy(TextKeyData.TOGGLE_COMPACT_LAYOUT)
+                        action.copy(data = TextKeyData.TOGGLE_COMPACT_LAYOUT)
                     } else {
                         action
                     }
@@ -843,6 +820,26 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 if (QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH) !in newArrangement) {
                     newArrangement = newArrangement.copy(
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH))
+                    )
+                }
+                if (QuickAction.InsertKey(TextKeyData.FORWARD_DELETE) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.FORWARD_DELETE))
+                    )
+                }
+                if (QuickAction.InsertKey(TextKeyData.IME_HIDE_UI) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.IME_HIDE_UI))
+                    )
+                }
+                if (QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW))
+                    )
+                }
+                if (QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE))
                     )
                 }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
@@ -862,6 +859,45 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 )
             }
 
+            // Migrate clipboard history pref names
+            // Keep migration rules until: 0.7 dev cycle
+            "clipboard__sync_to_floris", "clipboard__sync_to_system" -> {
+                entry.transform(
+                    type = PreferenceType.string(),
+                    rawValue = when (entry.rawValue) {
+                        "true" -> ClipboardSyncBehavior.ALL_EVENTS.name
+                        "false" -> ClipboardSyncBehavior.NO_EVENTS.name
+                        else -> entry.rawValue
+                    },
+                )
+            }
+            "clipboard__num_history_grid_columns_portrait" -> {
+                entry.transform(key = "clipboard__history_num_grid_columns_portrait")
+            }
+            "clipboard__num_history_grid_columns_landscape" -> {
+                entry.transform(key = "clipboard__history_num_grid_columns_landscape")
+            }
+            "clipboard__clean_up_old" -> {
+                entry.transform(key = "clipboard__history_auto_clean_old_enabled")
+            }
+            "clipboard__clean_up_after" -> {
+                entry.transform(key = "clipboard__history_auto_clean_old_after")
+            }
+            "clipboard__auto_clean_sensitive" -> {
+                entry.transform(key = "clipboard__history_auto_clean_sensitive_enabled")
+            }
+            "clipboard__auto_clean_sensitive_after" -> {
+                entry.transform(key = "clipboard__history_auto_clean_sensitive_after")
+            }
+            "clipboard__limit_history_size" -> {
+                entry.transform(key = "clipboard__history_size_limit_enabled")
+            }
+            "clipboard__max_history_size" -> {
+                entry.transform(key = "clipboard__history_size_limit")
+            }
+            "clipboard__clear_primary_clip_deletes_last_item" -> {
+                entry.transform(key = "clipboard__clear_primary_clip_affects_history_if_unpinned")
+            }
 
             // Default: keep entry
             else -> entry.keepAsIs()

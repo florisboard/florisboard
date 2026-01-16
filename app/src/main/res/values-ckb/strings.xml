@@ -41,49 +41,49 @@
     <string name="emoji__history__pinned">جێگیرکراو</string>
     <string name="emoji__history__recent">دوایین</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">چونە سەرەوە</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">چونە سەرەوە</string>
     <string name="quick_action__arrow_up__tooltip">چوونە سەرەتای دێڕ</string>
-    <string name="quick_action__arrow_down" maxLength="12">چونە خوارەوە</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">چونە خوارەوە</string>
     <string name="quick_action__arrow_down__tooltip">چوونە کۆتایی دێڕ</string>
-    <string name="quick_action__arrow_left" maxLength="12">چونە لای چەپ</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">چونە لای چەپ</string>
     <string name="quick_action__arrow_left__tooltip">چوونە لای چەپی نووسین</string>
-    <string name="quick_action__arrow_right" maxLength="12">چونەلای ڕاست</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">چونەلای ڕاست</string>
     <string name="quick_action__arrow_right__tooltip">چوونە لای ڕاستی نووسین</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">لابردنی گشتی</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">لابردنی گشتی</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">سڕینەوەی سەرجەم لەبەرگیراوەکان</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">لەبەرگرتنەوە</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">لەبەرگرتنەوە</string>
     <string name="quick_action__clipboard_copy__tooltip">لەبەرگرتنەوەی شتەکان</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">بڕین</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">بڕین</string>
     <string name="quick_action__clipboard_cut__tooltip">برینی شتەکان</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">دانان</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">دانان</string>
     <string name="quick_action__clipboard_paste__tooltip">دانانی لەبەرگیراوە</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">دیاریکردن</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">دیاریکردن</string>
     <string name="quick_action__clipboard_select_all__tooltip">دیاریکردنی تەواوی نووسین</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">کۆپیکراوەکان</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">کۆپیکراوەکان</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">پیشاندانی لەبەرگیراوەکان</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">ئیمۆجی</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">ئیمۆجی</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">کردنەوەی لیستی ئیمۆجیەکان</string>
-    <string name="quick_action__language_switch" maxLength="12">گۆڕینی زمان</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">گۆڕینی زمان</string>
     <string name="quick_action__language_switch__tooltip">گۆڕینی زمانی تەختەکلیل</string>
-    <string name="quick_action__settings" maxLength="12">ڕێکخستنەکان</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">ڕێکخستنەکان</string>
     <string name="quick_action__settings__tooltip">کردنەوەی ڕێکخستنەکان</string>
-    <string name="quick_action__undo" maxLength="12">دواتر</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">دواتر</string>
     <string name="quick_action__undo__tooltip">گێڕانەوەی دوایین هەنگاو</string>
-    <string name="quick_action__redo" maxLength="12">پێشتر</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">پێشتر</string>
     <string name="quick_action__redo__tooltip">هێنانەوەی هەنگاوی پێشتر</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">فرمانی زیاتر</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">فرمانی زیاتر</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">پیشاندانی ئامرازی زیاتر</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">دۆخی نادیار</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">دۆخی نادیار</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">چالاککردنی دۆخی نادیار</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">ڕاستکردنەوە</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">ڕاستکردنەوە</string>
     <string name="quick_action__toggle_autocorrect__tooltip">چالاککردنی ڕاستکردنەوەی نووسین</string>
-    <string name="quick_action__voice_input" maxLength="12">گەڕانی دەنگی</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">گەڕانی دەنگی</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">کردنەوەی تایبەتمەندی گەڕانی دەنگی</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">دۆخی یەکدەست</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">دۆخی یەکدەست</string>
     <string name="quick_action__one_handed_mode__tooltip">چالاککردنی بەکارهێنان بەیەکدەست</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامراز</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامراز</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">شوێنی ئامرازەکانی ئێستا</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ نییە</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ نییە</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ فرمانێک</string>
     <string name="quick_actions_overflow__customize_actions_button">گۆڕینی شوێن</string>
     <string name="quick_actions_editor__header">دەستکاریکردنی شوێنی دوگمەکان</string>
@@ -284,12 +284,8 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">فرمانی دوگمەی ئامراز</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">قەبارەی فۆنت</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">شێوازەکان</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">بەکارهێنان بە یەک دەست</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">فراوانی شێوازی یەکدەست</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">بەرزی تەختەکلیل</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">بۆشایی نێوان دوگمەکان</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">مەودای بەشی خوارەوە</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">بچووککراوەی پیت</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
@@ -423,6 +419,7 @@
     <string name="setup__finish_up__description_p1">{app_name} ئێستا چالاکە بۆ بەکارهێنان و نووسین لەسەر مۆبایلەکەت.</string>
     <string name="setup__finish_up__description_p2">لەکاتی بوونی هەر پرسیار و سەرنج و پێشنیارێک ئەتوانن سەردانی بەشی تایبەتی یارمەتیدان بکەن!</string>
     <string name="setup__finish_up__finish_btn">ڕێکخستنەکانی تەختەکلیل</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">پاشەکەوتکردن و گێڕانەوە</string>
     <string name="backup_and_restore__back_up__title">پاشەکەوتکردنی داتاکان</string>
@@ -494,9 +491,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">بەشی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">بەکارهێنانی بەشی لەبەرگیراوەکان بۆ هەڵگرتنی شتەکان</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">لەبەرگیراوەی سیستەم</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی سیستەم</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">لەبەرگیراوەی بەرنامەکە</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">هەڵگرتنی شتە لەبەرگیراوەکانی بەرنامەکە</string>
     <string name="pref__clipboard__group_clipboard_history__label">لەبەرگیراوەکان</string>
     <string name="pref__clipboard__enable_clipboard_history__label">بەکارهێنانی بەشی لەبەرگیراوەکان</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">هێشتنەوەی لەبەرگیراوەکان لەسەر شاشە بۆ خێرا دەست پێگەیشتن</string>
@@ -504,8 +499,6 @@
     <string name="pref__clipboard__clean_up_after__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
     <string name="pref__clipboard__limit_history_size__label">سنوردارکردنی مێژووی هەڵگرتن</string>
     <string name="pref__clipboard__max_history_size__label">زۆررین ڕێژەی هەڵگرتن</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">سرینەوەی مێژوو لەبەرگیراوەکان</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">سڕێنەوەی سەرجەم شتە لەبەرگیراوەکانی بەشی مێژوو بەیەکجاری</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">ئامرازەکان</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">پیشاندانی زانیاری تایبەتمەندی</string>
@@ -681,8 +674,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">شاردنەوە</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">هەمیشە پیشاندان</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">پیشاندانی زیرەکانە</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">بەکارهێنان بۆ دەستی چەپ</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">بەکارهێنان بۆ دەستی ڕاست</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">سەرەتای سەرەوە</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">کۆتایی سەرەوە</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">کۆتایی خوارەوە</string>

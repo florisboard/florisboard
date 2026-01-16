@@ -30,7 +30,6 @@ import androidx.compose.material.icons.automirrored.filled.FormatAlignLeft
 import androidx.compose.material.icons.automirrored.filled.FormatAlignRight
 import androidx.compose.material.icons.automirrored.filled.WrapText
 import androidx.compose.material.icons.filled.AttachFile
-import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.FormatAlignCenter
@@ -57,21 +56,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import com.materialkolor.dynamicColorScheme
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.material.ui.checkeredBackground
+import org.florisboard.lib.color.getColor
+import org.florisboard.lib.color.systemAccentOrDefault
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
+import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue
-import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
-import org.florisboard.lib.snygg.value.SnyggShapeValue
-import org.florisboard.lib.snygg.value.SnyggStaticColorValue
-import org.florisboard.lib.snygg.value.SnyggSpSizeValue
-import org.florisboard.lib.snygg.value.SnyggValue
-import dev.patrickgold.jetpref.material.ui.checkeredBackground
-import org.florisboard.lib.color.ColorMappings
-import org.florisboard.lib.color.getColor
-import org.florisboard.lib.snygg.value.SnyggContentScaleValue
-import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
@@ -79,10 +74,15 @@ import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
+import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue
+import org.florisboard.lib.snygg.value.SnyggShapeValue
+import org.florisboard.lib.snygg.value.SnyggSpSizeValue
+import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import org.florisboard.lib.snygg.value.SnyggTextAlignValue
 import org.florisboard.lib.snygg.value.SnyggTextDecorationLineValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
+import org.florisboard.lib.snygg.value.SnyggValue
 import org.florisboard.lib.snygg.value.SnyggYesValue
 
 object SnyggValueIcon {
@@ -121,7 +121,7 @@ internal fun SnyggValueIcon(
     modifier: Modifier = Modifier,
     spec: SnyggValueIcon.Spec = SnyggValueIcon.Normal,
 ) {
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val accentColor by prefs.theme.accentColor.observeAsState()
 
@@ -130,11 +130,11 @@ internal fun SnyggValueIcon(
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
         is SnyggDynamicLightColorValue -> {
-            val colorScheme = ColorMappings.dynamicLightColorScheme(context, accentColor)
+            val colorScheme = dynamicColorScheme(systemAccentOrDefault(accentColor), isDark = false)
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
         }
         is SnyggDynamicDarkColorValue -> {
-            val colorScheme = ColorMappings.dynamicDarkColorScheme(context, accentColor)
+            val colorScheme = dynamicColorScheme(systemAccentOrDefault(accentColor), isDark = true)
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
         }
 

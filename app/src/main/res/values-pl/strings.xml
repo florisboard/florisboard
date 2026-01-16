@@ -50,49 +50,52 @@
     <string name="emoji__history__pinned">Przypięte</string>
     <string name="emoji__history__recent">Ostatnie</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">W górę</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">W górę</string>
     <string name="quick_action__arrow_up__tooltip">Wykonaj strzałkę w górę</string>
-    <string name="quick_action__arrow_down" maxLength="12">W dół</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">W dół</string>
     <string name="quick_action__arrow_down__tooltip">Wykonaj strzałkę w dół</string>
-    <string name="quick_action__arrow_left" maxLength="12">W lewo</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">W lewo</string>
     <string name="quick_action__arrow_left__tooltip">Wykonaj strzałkę w lewo</string>
-    <string name="quick_action__arrow_right" maxLength="12">W prawo</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">W prawo</string>
     <string name="quick_action__arrow_right__tooltip">Wykonaj strzałkę w prawo</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Czyść schow.</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Ukryj klawiaturę</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Ukrywa klawiaturę</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Czyść schow.</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Powoduję wyczyszczenie głównego schowka</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Kopiuj</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopiuj</string>
     <string name="quick_action__clipboard_copy__tooltip">Kopiuj do schowka</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Wytnij</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Wytnij</string>
     <string name="quick_action__clipboard_cut__tooltip">Wytnij do schowka</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Wklej</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Wklej</string>
     <string name="quick_action__clipboard_paste__tooltip">Wklej ze schowka</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Wszystko</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Wszystko</string>
     <string name="quick_action__clipboard_select_all__tooltip">Zaznacz wszystko</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Schowek</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Usuń w przód</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Schowek</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Otwórz historię schowka</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emotki</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emotki</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Otwórz panel emoji</string>
-    <string name="quick_action__language_switch" maxLength="12">Zmień język</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Zmień język</string>
     <string name="quick_action__language_switch__tooltip">Przełączanie języka</string>
-    <string name="quick_action__settings" maxLength="12">Ustawienia</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Ustawienia</string>
     <string name="quick_action__settings__tooltip">Otwórz ustawienia</string>
-    <string name="quick_action__undo" maxLength="12">Cofnij</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Cofnij</string>
     <string name="quick_action__undo__tooltip">Cofnij ostatnią zmianę</string>
-    <string name="quick_action__redo" maxLength="12">Powtórz</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Powtórz</string>
     <string name="quick_action__redo__tooltip">Przywróć ostatnią zmianę</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Więcej akcji</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Więcej akcji</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Pokaż lub schowaj dodatkowe działania</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Przełącz tryb incognito</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autokorekta</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autokorekta</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Przełącz autokorektę</string>
-    <string name="quick_action__voice_input" maxLength="12">Wprow. głos</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Wprow. głos</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Otwórz dostawcę wprowadzania głosowego</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Jednoręczny</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Jednoręczny</string>
     <string name="quick_action__one_handed_mode__tooltip">Przełącz tryb jednoręczny</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Znacznik</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Znacznik</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Obecna pozycja znacznika przeciągania</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Brak</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Brak</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Brak operacji</string>
     <string name="quick_actions_overflow__customize_actions_button">Zmień kolejność działań</string>
     <string name="quick_actions_editor__header">Dostosuj kolejność działań</string>
@@ -202,8 +205,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Jest nocnym motywem</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Jest bezramkowy</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Ścieżka arkusza stylów</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Błąd arkusza stylów</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} może próbować pobłażliwie załadować arkusz stylów i dodać brakujące schematy, reguły lub usunąć nieprawidłowe reguły, właściwości lub wartości. Czy potwierdzasz zastosowanie zmian przez {app_name}?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Styl palety</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Kontrast kolorów</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Wersja specyfikacji</string>
     <string name="snygg__rule_annotation__defines">Zmienne</string>
     <string name="snygg__rule_annotation__defines_description">Zdefiniuj zmienne w tej regule, aby ponownie użyć popularnych kolorów lub rozmiarów w arkuszu stylów.</string>
     <string name="snygg__rule_annotation__font">Czcionka</string>
@@ -399,12 +406,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Zachowanie związane z dużymi literami</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tryb jednoręczny</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Szerokość klawiatury w trybie jednoręcznym</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Wprowadzanie pełnoekranowe w poziomie</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Wysokość klawiatury</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Rozstaw klawiszy</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Przesunięcie dolne</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Widoczność Pop-Up</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pokaż Pop-Up po naciśnięciu klawiszów</string>
@@ -561,6 +564,13 @@
     <string name="setup__finish_up__description_p1">Aplikacja {app_name} jest teraz włączona w systemie i gotowa do dostosowania przez Ciebie.</string>
     <string name="setup__finish_up__description_p2">Jeśli napotkasz jakieś problemy, błędy, awarie lub po prostu chcesz coś zasugerować, sprawdź repozytorium projektu z ekranu \"Informacje o oprogramowaniu\"!</string>
     <string name="setup__finish_up__finish_btn">Rozpocznij personalizowanie</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Klawiatura fizyczna</string>
+    <string name="physical_keyboard__system_settings__title">Ustawienia klawiatury fizycznej systemu</string>
+    <string name="physical_keyboard__system_settings__summary">Układy, skróty klawiaturowe i klawisze modyfikujące</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Dostępne tylko po podłączeniu klawiatury</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Pokazuj klawiaturę ekranową</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Wyświetlaj klawiaturę ekranową podczas korzystania z klawiatury fizycznej</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Kopia zapasowa i przywracanie</string>
     <string name="backup_and_restore__back_up__title">Utwórz kopię zapasową</string>
@@ -631,14 +641,13 @@
     <string name="clipboard__cleared_primary_clip">Wyczyść główny schowek</string>
     <string name="clipboard__cleared_history">Historia została usunięta</string>
     <string name="clipboard__cleared_full_history">Cała historia została usunięta</string>
-    <string name="clipboard__confirm_clear_history__message">Czy na pewno chcesz wyczyścić historię schowka? Spowoduje to wyczyszczenie wszystkich elementów z wyjątkiem przypiętych, niezależnie od aktywnych filtrów.</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Czy na pewno chcesz wyczyścić całą historię schowka? Spowoduje to usunięcie wszystkich elementów z wyjątkiem przypiętych.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Czy na pewno chcesz wyczyścić historię schowka? Spowoduje to usunięcie wszystkich obecnie filtrowanych elementów, z wyjątkiem przypiętych.</string>
     <string name="settings__clipboard__title">Schowek</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Użyj wewnętrznego schowka</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Użyj wewnętrznego schowka zamiast systemowego schowka</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchronizuj ze schowkiem systemowym</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Zmiana w schowku systemowym również zmienia schowek Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchronizuj do schowka systemowego</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Zmiana w schowku Floris również zmienia schowek systemowy</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugestie schowka</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Zasugeruj poprzednio skopiowaną zawartość schowka</string>
@@ -654,8 +663,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Automatyczne czyszczenie wrażliwych elementów po</string>
     <string name="pref__clipboard__limit_history_size__label">Ograniczenie rozmiaru historii</string>
     <string name="pref__clipboard__max_history_size__label">Maksymalny rozmiar historii</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Wyczyszczenie głównego schowka wpływa na historię</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Wyczyszczenie głównego schowka również usuwa najnowsze pozycje w historii</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Ukryj historię wklejania</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Ukryj historię w następnym polu tekstowym</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Czyszczenie głównego klipu wpływa na historię</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Usunięcie głównego klipu powoduje również usunięcie go z historii, jeśli nie został przypięty</string>
     <string name="send_to_clipboard__unknown_error">Wystąpił nieoczekiwany błąd. Proszę spróbować ponownie!</string>
     <string name="send_to_clipboard__type_not_supported_error">Ten typ mediów nie jest wspierany.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Skopiowano poniższy obraz do schowka.</string>
@@ -850,6 +861,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Szerokość dynamiczna i przewijalna</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Włącz Capslock poprzez dwukrotne dotknięcie Shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Zmieniaj na pisanie wielkimi literami po każdym dotknięciu klawisza Shift</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Brak wydarzeń</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">W tym kierunku nie są synchronizowane żadne zdarzenia. W tym trybie synchronizacja nie obejmuje treści tekstowych.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Tylko czyste wydarzenia</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">W tym kierunku synchronizowane są tylko zdarzenia czyszczące dane klipu. W tym trybie synchronizacja nie obejmuje treści tekstowych.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Tylko ustawione wydarzenia</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">W tym kierunku synchronizowane są tylko zdarzenia ustawiające dane klipu. W tym trybie synchronizacja obejmuje treść tekstową.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Wszystkie wydarzenia</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">W tym trybie synchronizowane są zarówno zdarzenia ustawiania, jak i kasowania danych klipów. W tym trybie synchronizacja obejmuje również treść tekstową.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Szesnastkowy</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Czerwony Zielony Niebieski</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Barwa Nasycenie</string>
@@ -928,8 +947,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Nigdy nie pokazuj</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Zawsze pokazuj</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Pokazuj dynamicznie</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Tryb lewej ręki</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Tryb prawej ręki</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Lewy górny róg</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Prawy górny róg</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Prawy dolny róg</string>
@@ -971,6 +988,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Przesuń kursor na początek strony</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Przesuń kursor na koniec strony</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Otwórz menedżera/historię schowka</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Otwórz panel emotikonów</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Powtórz</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Cofnij</string>

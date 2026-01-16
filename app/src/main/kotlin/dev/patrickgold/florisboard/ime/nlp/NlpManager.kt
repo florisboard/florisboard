@@ -20,7 +20,7 @@ import android.content.Context
 import android.os.SystemClock
 import android.util.LruCache
 import androidx.lifecycle.MutableLiveData
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
@@ -43,8 +43,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.guardedByLock
+import org.florisboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
@@ -54,7 +54,7 @@ private const val BLANK_STR_PATTERN = "^\\s*$"
 class NlpManager(context: Context) {
     private val blankStrRegex = Regex(BLANK_STR_PATTERN)
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
@@ -93,13 +93,13 @@ class NlpManager(context: Context) {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.suggestion.enabled.observeForever {
+        prefs.suggestion.enabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.clipboard.suggestionEnabled.observeForever {
+        prefs.clipboard.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        prefs.emoji.suggestionEnabled.observeForever {
+        prefs.emoji.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
         subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
@@ -317,8 +317,10 @@ class NlpManager(context: Context) {
         }*/
         val isSelection = editorInstance.activeContent.selection.isSelectionMode
         val isExpanded = list1.isNullOrEmpty() && list2.isNullOrEmpty() || isSelection
-        prefs.smartbar.sharedActionsExpandWithAnimation.set(false)
-        prefs.smartbar.sharedActionsExpanded.set(isExpanded)
+        scope.launch {
+            prefs.smartbar.sharedActionsExpandWithAnimation.set(false)
+            prefs.smartbar.sharedActionsExpanded.set(isExpanded)
+        }
     }
 
     fun addToDebugOverlay(word: String, info: SpellingResult) {

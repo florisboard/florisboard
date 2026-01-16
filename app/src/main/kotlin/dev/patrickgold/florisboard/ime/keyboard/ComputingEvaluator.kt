@@ -30,13 +30,14 @@ import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
-import androidx.compose.material.icons.filled.ContentPaste
+import androidx.compose.material.icons.filled.ContentPasteGo
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardCapslock
+import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.KeyboardVoice
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreHoriz
@@ -46,6 +47,7 @@ import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.ui.graphics.vector.ImageVector
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -54,8 +56,10 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
+import dev.patrickgold.florisboard.lib.compose.vectorResource
+import org.florisboard.lib.compose.icons.ForwardDelete
 
 interface ComputingEvaluator {
     val version: Int
@@ -197,7 +201,7 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             Icons.Default.ContentCut
         }
         KeyCode.CLIPBOARD_PASTE -> {
-            Icons.Default.ContentPaste
+            Icons.Default.ContentPasteGo
         }
         KeyCode.CLIPBOARD_SELECT_ALL -> {
             Icons.Default.SelectAll
@@ -210,8 +214,23 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         KeyCode.TOGGLE_COMPACT_LAYOUT -> {
             context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
         }
+        KeyCode.TOGGLE_FLOATING_WINDOW -> {
+            val enabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard)
+            val disabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard_disable)
+            val windowController = FlorisImeService.windowControllerOrNull() ?: return enabledIcon
+            when (windowController.activeWindowConfig.value.mode) {
+                ImeWindowMode.FIXED -> enabledIcon
+                ImeWindowMode.FLOATING -> disabledIcon
+            }
+        }
+        KeyCode.TOGGLE_RESIZE_MODE -> {
+            context()?.vectorResource(id = R.drawable.ic_resize)
+        }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice
+        }
+        KeyCode.IME_HIDE_UI -> {
+            Icons.Default.KeyboardHide
         }
         KeyCode.DELETE -> {
             Icons.AutoMirrored.Outlined.Backspace
@@ -233,6 +252,9 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                     ImeOptions.Action.UNSPECIFIED -> Icons.AutoMirrored.Filled.KeyboardReturn
                 }
             }
+        }
+        KeyCode.FORWARD_DELETE -> {
+            Icons.AutoMirrored.Default.ForwardDelete
         }
         KeyCode.IME_UI_MODE_MEDIA -> {
             Icons.Default.SentimentSatisfiedAlt

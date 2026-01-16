@@ -24,12 +24,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -38,6 +41,8 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 
+val GlobalStateNumPopupsShowing = MutableStateFlow(0)
+
 @Composable
 fun PopupBaseBox(
     modifier: Modifier = Modifier,
@@ -45,6 +50,13 @@ fun PopupBaseBox(
     key: Key,
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
+    DisposableEffect(key) {
+        GlobalStateNumPopupsShowing.update { it + 1 }
+        onDispose {
+            GlobalStateNumPopupsShowing.update { it - 1 }
+        }
+    }
+
     SnyggBox(
         elementName = FlorisImeUi.KeyPopupBox.elementName,
         attributes = attributes,
@@ -98,9 +110,10 @@ fun PopupExtBox(
                     } else {
                         null
                     }
+                    val localAttrs = attributes.plus(FlorisImeUi.Attr.Code to element.data.code)
                     SnyggBox(
                         elementName = FlorisImeUi.KeyPopupElement.elementName,
-                        attributes = attributes,
+                        attributes = localAttrs,
                         selector = selector,
                         modifier = Modifier.size(elemWidth, elemHeight),
                     ) {

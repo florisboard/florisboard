@@ -26,34 +26,34 @@
     <string name="emoji__category__symbols" comment="Emoji category name">نمادها</string>
     <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">فلش بالا</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">فلش بالا</string>
     <string name="quick_action__arrow_up__tooltip">فلش به سمت بالا</string>
-    <string name="quick_action__arrow_down" maxLength="12">فلش پایین</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">فلش پایین</string>
     <string name="quick_action__arrow_down__tooltip">فلش به سمت پایین</string>
-    <string name="quick_action__arrow_left" maxLength="12">فلش چپ</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">فلش چپ</string>
     <string name="quick_action__arrow_left__tooltip">فلش به سمت چپ</string>
-    <string name="quick_action__arrow_right" maxLength="12">فلش راست</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">جابه جایی</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">برش</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">فلش راست</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">جابه جایی</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">برش</string>
     <string name="quick_action__clipboard_cut__tooltip">برش کلیپ بورد را انجام دهید</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">جای گذاری</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">جای گذاری</string>
     <string name="quick_action__clipboard_paste__tooltip">چسباندن کلیپ بورد را انجام دهید</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">انتخاب همه</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">کلیپ‌بورد</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">انتخاب همه</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">کلیپ‌بورد</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">باز کردن تاریخچه کلیپ بورد</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">شکلک</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">شکلک</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">باز کردن پنل شکلک ها</string>
-    <string name="quick_action__settings" maxLength="12">تنظیمات</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">تنظیمات</string>
     <string name="quick_action__settings__tooltip">باز کردن تنظیمات</string>
-    <string name="quick_action__undo" maxLength="12">بازگرد</string>
-    <string name="quick_action__redo" maxLength="12">انجام مجدد</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">ناشناس</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">بازگرد</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">انجام مجدد</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">ناشناس</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">غیر فعال کردن حالت ناشناس</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">تصحیح خودکار</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">تصحیح خودکار</string>
     <string name="quick_action__toggle_autocorrect__tooltip">غیر فعال کردن تصحیح خودکار</string>
-    <string name="quick_action__voice_input" maxLength="12">ورودی صدا</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">یک دستی</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ کدام</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">ورودی صدا</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">یک دستی</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ کدام</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">هیچ عملی</string>
     <!-- Incognito mode strings -->
     <!-- Settings UI strings -->
@@ -158,10 +158,7 @@
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">یک کلید ابزار قابل تنظیم در کنار نوار فاصله نشان می دهد</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">عملکرد کلید ابزار</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">چیدمان</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">حالت تک دستی</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">عرض کیبورد در حالت یک دستی</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">ورودی تمام صفحه افقی</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع صفحه کلید</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
@@ -244,6 +241,7 @@
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">خوش آمدید!</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سیاست حفظ حریم خصوصی</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
@@ -274,9 +272,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">استفاده از کلیپ‌بورد داخلی</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">استفاده از کلیپ‌بورد داخل برنامه بجای کلیپ‌بورد سیستم</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">هماهنگ سازی از کلیپ‌بورد سیستم</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد سیستم، کلیپ‌بورد فلوریس کیبورد را نیز بروز می کند</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">هماهنگ سازی به کلیپ‌بورد سیستم</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد فلوریس کیبورد، کلیپ‌بورد سیستم را نیز بروز می کند</string>
     <string name="pref__clipboard__group_clipboard_history__label">تاریخچه کلیپ بورد</string>
     <string name="pref__clipboard__enable_clipboard_history__label">فعالسازی تاریخچه کلیپ‌بورد</string>
     <string name="pref__clipboard__clean_up_old__label">پاکسازی موارد قدیمی</string>
@@ -318,8 +314,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">هرگز نشان نده</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">همیشه نشان بده</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">به صورت پویا نشان بده</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">حالت دست چپی</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">حالت دست راستی</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استفاده از زبان سیستم</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">استفاده از زیرنوع های صفحه کلید</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">بدون عمل</string>

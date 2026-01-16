@@ -337,6 +337,12 @@ data class TextKeyData(
             label = "clipboard_clear_primary_clip",
         )
 
+        /** Predefined key data for [KeyCode.TOGGLE_FLOATING_WINDOW] */
+        val TOGGLE_FLOATING_WINDOW = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_FLOATING_WINDOW,
+            label = "toggle_floating_window",
+        )
         /** Predefined key data for [KeyCode.TOGGLE_COMPACT_LAYOUT] */
         val TOGGLE_COMPACT_LAYOUT = TextKeyData(
             type = KeyType.SYSTEM_GUI,
@@ -354,6 +360,12 @@ data class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.COMPACT_LAYOUT_TO_RIGHT,
             label = "compact_layout_to_right",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_RESIZE_MODE] */
+        val TOGGLE_RESIZE_MODE = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_RESIZE_MODE,
+            label = "toggle_resize_mode",
         )
 
         /** Predefined key data for [KeyCode.UNDO] */

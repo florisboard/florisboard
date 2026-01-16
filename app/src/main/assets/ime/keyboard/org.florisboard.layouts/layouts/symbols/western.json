@@ -23,13 +23,17 @@
     { "code":   45, "label": "-", "popup": {
       "main": { "code":   95, "label": "_" },
       "relevant": [
+        { "code": 8315, "label": "⁻" },
         { "code": 8212, "label": "—" },
         { "code": 8211, "label": "–" },
         { "code":  183, "label": "·" }
       ]
     } },
     { "code":   43, "label": "+", "popup": {
-      "main": { "code":  177, "label": "±" }
+      "main": { "code":  177, "label": "±" },
+      "relevant": [
+        { "code": 8314, "label": "⁺" }
+      ]
     } },
     { "$": "layout_direction_selector",
       "ltr": { "code":   40, "label": "(", "popup": {

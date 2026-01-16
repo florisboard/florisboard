@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Paus</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Oota</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Kolme punktiga ikoon. Kui nähtav, siis saab pikemal vajutusel kasutada rohkem tähti.</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Sule ühe käe režiim.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Liiguta klaviatuur vasakule.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Liiguta klaviatuur paremale.</string>
+    <!-- Media strings -->
+    <string name="settings__media__title">Emojid</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojid</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emootikonid</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Eelistatud emoji nahavärv</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Eelistatud emoji soeng</string>
+    <string name="prefs__media__emoji_history__title" comment="Preference group title">Emojide ajalugu</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Preference title">Luba emojide ajalugu</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Säilita hijuti kasutatud emojid kiireks juurdepääsuks</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Uuendusmeetod (Kinnitatud)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Uuendusmeetod (Hiljutine)</string>
+    <string name="prefs__media__emoji_history_max_size">Maksimum säilitatud emojide arv</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Lähtesta kinnitatud emojid</string>
+    <string name="prefs__media__emoji_history_reset">Lähtesta hiljutised emojid</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Preference group title">Emojide soovitused</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Preference title">Luba emojide soovitused</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Preference summary">Kirjutamisel emojide soovitamine</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Preference title">Käivitusmeetod</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Preference title">UUenda emojide ajalugu</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Preference summary">Soovitatud emojide kasutamine lisab need emojidde ajalukku</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Preference title">Näita emoji nime</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Preference summary">Soovitatud emoji kõrval nime kuvamine</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Preference title">Miinimum päringu pikkus</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maksimum kandidaatide arv</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Naerunäod &amp; Emotsioonid</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Inimesed &amp; Keha</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Loomad &amp; Loodus</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Toit &amp; Jook</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Reisimine &amp; Kohad</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Tegevused</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Objektid</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Sümbolid</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Lipud</string>
+    <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">Hiljuti kasutatud emojisid ei leitud. Kui hakkad emojisid sisestama, siis need ilmuvad automaatselt siia</string>
+    <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">Et emojide ajaloole ligi pääseda, palun avage oma seade lukust.</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Hea näpunäide: Vajuta pikalt emojide ajaloos nende peale, et neid kinnitada või eemaldada!</string>
+    <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">{emoji} on emojide ajaloost eemaldatud</string>
+    <string name="emoji__history__pinned">Kinnitatud</string>
+    <string name="emoji__history__recent">Hiljutine</string>
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Nool üles</string>
+    <string name="quick_action__arrow_up__tooltip">Soorita nool üles</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Nool alla</string>
+    <string name="quick_action__arrow_down__tooltip">Soorita nool alla</string>
+    <string name="quick_action__arrow_left__tooltip">Soorita nool vasakule</string>
+    <string name="quick_action__arrow_right__tooltip">Soorita nool paremale</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Soorita põhilõikelaua tühjendus</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Kopeeri</string>
+    <string name="quick_action__clipboard_copy__tooltip">Soorita lõikelaual kopeeri</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Lõika</string>
+    <string name="quick_action__clipboard_cut__tooltip">Soorita lõikelaual lõika</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Kleebi</string>
+    <string name="quick_action__clipboard_paste__tooltip">Soorita lõikelaual kleebi</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Vali kõik</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Soorita lõikelaual vali kõik</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Lõikelaud</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Ava lõikelaua ajalugu</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Ava emojide paneel</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Vaheta keelt</string>
+    <string name="quick_action__language_switch__tooltip">Soorita keelevahetus</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Sätted</string>
+    <string name="quick_action__settings__tooltip">Ava sätted</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Võta tagasi</string>
+    <string name="quick_action__undo__tooltip">Võta viimane sisestus tagasi</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Tee uuesti</string>
+    <string name="quick_action__redo__tooltip">Tee viimane sisestus uuesti</string>
+    <!-- Incognito mode strings -->
+    <!-- Settings UI strings -->
+    <!-- Smartbar strings -->
+    <!-- Typing strings -->
+    <!-- About UI strings -->
+    <!-- Setup UI strings -->
+    <!-- Physical keyboard -->
+    <!-- Back up & Restore -->
+    <!-- Crash Dialog strings -->
+    <!-- Clipboard strings -->
+    <!-- Devtools strings -->
+    <!-- Extension strings -->
+    <!-- Action strings -->
+    <!-- Error strings (generic) -->
+    <!-- General strings -->
+    <!-- Screen orientation strings -->
+    <!-- State strings -->
+    <!-- Enum label and description strings -->
+    <!-- Unit strings (symbols) -->
+    <!-- Unit strings (written words) -->
+</resources>

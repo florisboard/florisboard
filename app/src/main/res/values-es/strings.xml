@@ -50,49 +50,52 @@
     <string name="emoji__history__pinned">Fijado</string>
     <string name="emoji__history__recent">Reciente</string>
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Arriba</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Arriba</string>
     <string name="quick_action__arrow_up__tooltip">Realizar flecha hacia arriba</string>
-    <string name="quick_action__arrow_down" maxLength="12">Abajo</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Abajo</string>
     <string name="quick_action__arrow_down__tooltip">Realizar flecha hacia abajo</string>
-    <string name="quick_action__arrow_left" maxLength="12">Izquierda</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Izquierda</string>
     <string name="quick_action__arrow_left__tooltip">Realizar flecha hacia la izquierda</string>
-    <string name="quick_action__arrow_right" maxLength="12">Derecha</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Derecha</string>
     <string name="quick_action__arrow_right__tooltip">Realizar flecha hacia la derecha</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Borrar clip</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Ten en cuenta el limitado espacio disponible para la tira de acción rápida</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Ejecutar ocultar el teclado</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Borrar clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Realizar limpiar portapapeles principal</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copiar</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copiar</string>
     <string name="quick_action__clipboard_copy__tooltip">Realizar copia del portapapeles</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Cortar</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Cortar</string>
     <string name="quick_action__clipboard_cut__tooltip">Cortar al portapapeles</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Pegar</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Pegar</string>
     <string name="quick_action__clipboard_paste__tooltip">Pegar del portapapeles</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Marcar todo</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Marcar todo</string>
     <string name="quick_action__clipboard_select_all__tooltip">Seleccionar todo en el portapapeles</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Portapapeles</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Suprimir</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Portapapeles</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Abrir historial del portapapeles</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Abrir el panel de emojis</string>
-    <string name="quick_action__language_switch" maxLength="12">Mudar idioma</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Mudar idioma</string>
     <string name="quick_action__language_switch__tooltip">Realizar el cambio del idioma</string>
-    <string name="quick_action__settings" maxLength="12">Ajustes</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Ajustes</string>
     <string name="quick_action__settings__tooltip">Abrir ajustes</string>
-    <string name="quick_action__undo" maxLength="12">Deshacer</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Deshacer</string>
     <string name="quick_action__undo__tooltip">Deshacer la última entrada</string>
-    <string name="quick_action__redo" maxLength="12">Rehacer</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Rehacer</string>
     <string name="quick_action__redo__tooltip">Rehacer la última entrada</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">Más acciones</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">Más acciones</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Mostrar u ocultar las operaciones adicionales</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incógnito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incógnito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Activar el modo incógnito</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorregir</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autocorregir</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Activar la autocorrección</string>
-    <string name="quick_action__voice_input" maxLength="12">Entrada voz</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Entrada voz</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Abrir proveedor de entrada de voz</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">Con una mano</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Con una mano</string>
     <string name="quick_action__one_handed_mode__tooltip">Activar el modo de una mano</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastrar</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Arrastrar</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Posición actual del cursor</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ninguno</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ninguno</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Ninguna operación</string>
     <string name="quick_actions_overflow__customize_actions_button">Reorganizar operaciones</string>
     <string name="quick_actions_editor__header">Personalizar el orden de las operaciones</string>
@@ -202,8 +205,12 @@
     <string name="settings__theme_editor__component_meta_is_night_theme">Es tema oscuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Es sin borde</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Ruta de la hoja de estilo</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
     <string name="settings__theme_editor__stylesheet_error_title">Error en la hoja de estilos</string>
     <string name="settings__theme_editor__stylesheet_error_description">{app_name} puede intentar cargar con flexibilidad las hojas de estilo y añadir esquemas, reglas, o remover reglas inválidas, propiedades, o valores. ¿Desea que {app_name} aplique esos cambios? </string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Paleta de colores</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Contraste de color</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Versión de las especificaciones</string>
     <string name="snygg__rule_annotation__defines">Variables</string>
     <string name="snygg__rule_annotation__defines_description">Defina variables dentro de esta regla para reutilizar colores o tamaños comunes en su hoja de estilo.</string>
     <string name="snygg__rule_annotation__font">Fuente</string>
@@ -220,8 +227,15 @@
     <string name="snygg__rule_element__clipboard_header_text">Texto de encabezado del portapapeles</string>
     <string name="snygg__rule_element__clipboard_subheader">Subencabezado del portapapeles</string>
     <string name="snygg__rule_element__clipboard_content">Contenido del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Fila del filtro del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Elemento de filtro de memoria intermedia</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Icono del filtro del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Texto del chip del filtro del portapapeles</string>
+    <string name="snygg__rule_element__clipboard_grid">Rejilla de portapapeles</string>
     <string name="snygg__rule_element__clipboard_item">Ítem de portapapeles</string>
+    <string name="snygg__rule_element__clipboard_item_description">Descripción de objeto en el portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_popup">Ítem de portapapeles emergente</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Fecha y hora del objeto en el portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_actions">Acciones de elemento del portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_action">Acción de elemento del portapapeles</string>
     <string name="snygg__rule_element__clipboard_item_action_icon">Icono de acción de elemento del portapapeles</string>
@@ -392,12 +406,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Comportamiento de las mayúsculas</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador del tamaño de fuente</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo a una mano</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ancho del teclado en modo de una mano</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa horizontal</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura del teclado</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espacio entre teclas</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Compensación inferior</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Presionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar emergente al pulsar una tecla</string>
@@ -554,6 +564,13 @@
     <string name="setup__finish_up__description_p1">{app_name} ahora está habilitado en su sistema y listo para ser personalizado.</string>
     <string name="setup__finish_up__description_p2">Si encuentra algún problema, errores, fallos o sólo desea hacer alguna sugerencia, ¡revise el repositorio del proyecto en el menú de \"Acerca de\"!</string>
     <string name="setup__finish_up__finish_btn">Empiece a personalizar</string>
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Teclado físico</string>
+    <string name="physical_keyboard__system_settings__title">Configuración del teclado físico del sistema</string>
+    <string name="physical_keyboard__system_settings__summary">Distribuciones, atajos de teclado y teclas modificadoras</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Solo disponible cuando el teclado está conectado</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Mostrar teclado en pantalla</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Mostrar el teclado en pantalla mientras se utiliza el teclado físico</string>
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Respaldar &amp; Restaurar</string>
     <string name="backup_and_restore__back_up__title">Respaldar datos</string>
@@ -624,13 +641,13 @@
     <string name="clipboard__cleared_primary_clip">Clip principal borrado</string>
     <string name="clipboard__cleared_history">Historial borrado</string>
     <string name="clipboard__cleared_full_history">Historial completo borrado</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">¿Estás seguro de que quieres borrar todo el historial del portapapeles? Esto afectará a todos los elementos, excepto los fijados.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">¿Estás seguro de que quieres borrar el historial del portapapeles? Esto afectará a todos los elementos filtrados actualmente, excepto los fijados.</string>
     <string name="settings__clipboard__title">Portapapeles</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Usar portapapeles interno</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Usar portapapeles interno en vez del portapapeles del sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar portapapeles del sistema</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Las actualizaciones en el portapapeles del sistema también actualizan el portapapeles de Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar al portapapeles del sistema</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Las actualizaciones del portapapeles de Floris también actualizan el portapapeles del sistema</string>
     <string name="pref__clipboard__group_clipboard_suggestion__label">Sugerencias del portapapeles</string>
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Sugerencias del contenido del portapapeles</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Sugerir contenido del portapapeles copiado anteriormente</string>
@@ -646,8 +663,10 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Limpiar automáticamente elementos sensibles después de</string>
     <string name="pref__clipboard__limit_history_size__label">Limite de tamaño del historial</string>
     <string name="pref__clipboard__max_history_size__label">Tamaño máximo del historial</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Borrar el clip principal afecta al historial</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Al borrar el clip principal también se borra la última entrada del historial</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Ocultar el historial al pegar</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Ocultar historial en el siguiente campo de texto</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Eliminar el clip primario afecta al historial</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Eliminar el clip principal también lo quita del historial, si no está fijado</string>
     <string name="send_to_clipboard__unknown_error">Ha ocurrido un error desconocido. Por favor, vuelve a intentarlo.</string>
     <string name="send_to_clipboard__type_not_supported_error">Este tipo de medio no está soportado.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Imagen copiada en el portapapeles.</string>
@@ -842,6 +861,14 @@
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Ancho dinámico &amp; desplazable</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Permitr Bloq May haciendo doble toque en mayúscula</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Cambiar modo de capitalización cada vez que se pulsa la tecla Mayús</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Sin eventos</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">No se sincronizan eventos en esta dirección. En este modo, la sincronización excluye el contenido del texto.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Limpiar solo los eventos</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Solo se sincronizan en esta dirección los datos del clip de borrado de eventos. En este modo, sync excluye el contenido de texto.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Fijar solo los eventos</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Solo los datos del clip de configuración de los eventos se sincronizan en esta dirección. En este modo, la sincronización incluye el contenido del texto.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">Todos los eventos</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">Tanto la configuración de los eventos como el borrado de los datos del clip se sincronizan en esta dirección. En este modo, sync incluye el contenido del texto.</string>
     <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
     <string name="enum__color_representation__rgb" comment="Enum value label">Rojo Verde Azul</string>
     <string name="enum__color_representation__hsv" comment="Enum value label">Tono Saturación Valor</string>
@@ -920,8 +947,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">No mostrar nunca</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Mostrar siempre</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Mostrar dinámicamente</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Modo para zurdos</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Modo para diestros</string>
     <string name="enum__shape_corner__top_start" comment="Enum value label">Inicio superior</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Parte superior</string>
     <string name="enum__shape_corner__bottom_end" comment="Enum value label">Parte inferior</string>
@@ -963,6 +988,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Mover cursor al inicio de la página</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Mover cursor al final de la página</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Abrir gestor/historial del portapapeles</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Abrir panel de emojis</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Mayúsculas</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Rehacer</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Deshacer</string>

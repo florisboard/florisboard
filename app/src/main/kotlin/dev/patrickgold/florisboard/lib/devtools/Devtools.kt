@@ -22,7 +22,7 @@ import android.os.Build
 import android.os.Debug
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppPrefs
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
@@ -35,7 +35,7 @@ import java.io.InputStreamReader
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Devtools {
-    fun generateDebugLog(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLog(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             append(generateDebugLogHeader(context, prefs))
             if (includeLogcat) {
@@ -45,7 +45,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogHeader(context: Context, prefs: AppPrefs? = null): String {
+    fun generateDebugLogHeader(context: Context, prefs: FlorisPreferenceModel? = null): String {
         return buildString {
             append(generateSystemInfoLog(context))
             appendLine()
@@ -61,7 +61,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogForGithub(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLogForGithub(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             appendLine("<details>")
             appendLine("<summary>Detailed info (Debug log header)</summary>")
@@ -113,7 +113,7 @@ object Devtools {
         }
     }
 
-    fun generateFeatureConfigLog(prefs: AppPrefs, withTitle: Boolean = true): String {
+    fun generateFeatureConfigLog(prefs: FlorisPreferenceModel, withTitle: Boolean = true): String {
         return buildString {
             if (withTitle) appendLine("======= FEATURE CONFIG =======")
             append("Smartbar enabled            : ").appendLine(prefs.smartbar.enabled.get())

@@ -40,6 +40,16 @@ import org.florisboard.lib.kotlin.guardedByLock
 import kotlin.math.max
 import kotlin.math.min
 
+enum class OperationUnit {
+    CHARACTERS,
+    WORDS;
+}
+
+enum class OperationScope {
+    BEFORE_CURSOR,
+    AFTER_CURSOR;
+}
+
 @Suppress("BlockingMethodInNonBlockingContext")
 abstract class AbstractEditorInstance(context: Context) {
     companion object {
@@ -428,41 +438,69 @@ abstract class AbstractEditorInstance(context: Context) {
         return true
     }
 
-    protected fun deleteBeforeCursor(type: TextType, n: Int): Boolean {
+    protected suspend fun deleteAroundCursor(unit: OperationUnit, scope: OperationScope, n: Int = 0): Boolean {
         val ic = currentInputConnection()
         if (ic == null || n < 1) return false
         val content = activeContent
         // Cannot perform below check due to editors which lie about their correct selection
         //if (content.selection.isValid && content.selection.start == 0) return true
-        val oldTextBeforeSelection = content.textBeforeSelection
-        return (if (activeInfo.isRawInputEditor || oldTextBeforeSelection.isEmpty()) {
+        val scopeText = when (scope) {
+            OperationScope.BEFORE_CURSOR -> content.textBeforeSelection
+            OperationScope.AFTER_CURSOR -> content.textAfterSelection
+        }
+        return (if (activeInfo.isRawInputEditor || scopeText.isEmpty()) {
             // If editor is rich and text before selection is empty we seem to have an invalid state here, so we fall
-            // back to emulating a hardware backspace.
-            when (type) {
-                TextType.CHARACTERS -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, count = n)
-                TextType.WORDS -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true), count = n)
+            // back to emulating a hardware backspace/forward delete.
+            val keyEventCode = when (scope) {
+                OperationScope.BEFORE_CURSOR -> KeyEvent.KEYCODE_DEL
+                OperationScope.AFTER_CURSOR -> KeyEvent.KEYCODE_FORWARD_DEL
             }
+            val metaState = when (unit) {
+                OperationUnit.CHARACTERS -> meta()
+                OperationUnit.WORDS -> meta(ctrl = true)
+            }
+            sendDownUpKeyEvent(keyEventCode, metaState, count = n)
         } else {
-            runBlocking {
-                val locale = subtypeManager.activeSubtype.primaryLocale
-                val length = when (type) {
-                    TextType.CHARACTERS -> breakIterators.measureLastUChars(oldTextBeforeSelection, n, locale)
-                    TextType.WORDS -> breakIterators.measureLastUWords(oldTextBeforeSelection, n, locale)
+            val locale = subtypeManager.activeSubtype.primaryLocale
+            when (scope) {
+                OperationScope.BEFORE_CURSOR -> {
+                    val length = when (unit) {
+                        OperationUnit.CHARACTERS -> breakIterators.measureLastUChars(scopeText, n, locale)
+                        OperationUnit.WORDS -> breakIterators.measureLastUWords(scopeText, n, locale)
+                    }
+                    val selection = content.selection
+                    val newSelection = selection.translatedBy(-length)
+                    val newContent = content.generateCopy(
+                        selection = newSelection,
+                        textBeforeSelection = scopeText.dropLast(length),
+                    )
+                    expectedContentQueue.push(newContent)
+                    ic.beginBatchEdit()
+                    ic.finishComposingText()
+                    ic.deleteSurroundingText(length, 0)
+                    ic.setComposingRegion(newContent.composing)
+                    ic.endBatchEdit()
                 }
-                val selection = content.selection
-                val newSelection = selection.translatedBy(-length)
-                val newContent = content.generateCopy(
-                    selection = newSelection,
-                    textBeforeSelection = oldTextBeforeSelection.dropLast(length),
-                )
-                expectedContentQueue.push(newContent)
-                ic.beginBatchEdit()
-                ic.finishComposingText()
-                ic.deleteSurroundingText(length, 0)
-                ic.setComposingRegion(newContent.composing)
-                ic.endBatchEdit()
-                true
+                OperationScope.AFTER_CURSOR -> {
+                    val length = when (unit) {
+                        OperationUnit.CHARACTERS -> breakIterators.measureUChars(scopeText, n, locale)
+                        OperationUnit.WORDS -> breakIterators.measureUWords(scopeText, n, locale)
+                    }
+                    val selection = content.selection
+                    val newSelection = selection.translatedBy(length)
+                    val newContent = content.generateCopy(
+                        selection = newSelection,
+                        textAfterSelection = scopeText.drop(length),
+                    )
+                    expectedContentQueue.push(newContent)
+                    ic.beginBatchEdit()
+                    ic.finishComposingText()
+                    ic.deleteSurroundingText(0, length)
+                    ic.setComposingRegion(newContent.composing)
+                    ic.endBatchEdit()
+                }
             }
+            true
         }).also {
             deleteMoveLastCommitPosition()
         }
@@ -621,11 +659,6 @@ abstract class AbstractEditorInstance(context: Context) {
         }
         ic.endBatchEdit()
         return true
-    }
-
-    protected enum class TextType {
-        CHARACTERS,
-        WORDS;
     }
 
     private class ExpectedContentQueue {

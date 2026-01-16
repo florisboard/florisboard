@@ -32,11 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.subtypeManager
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggListItem
@@ -94,8 +93,4 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-fun KeyboardState.isSubtypeSelectionShowing(): Boolean {
-    return isSubtypeSelectionVisible
 }
