@@ -206,49 +206,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
    override fun commitChar(char: String): Boolean {
-        if (char == " ") {
-            val topSuggestion = nlpManager.activeCandidates
-                .maxByOrNull { it.confidence }
-
-            if (topSuggestion != null && topSuggestion.isEligibleForAutoCommit && topSuggestion.confidence > 0.75) {
-                val word = topSuggestion.text.toString()
-                val currentWord = activeContent.currentWordText
-
-                // Prevent re-committing if the user has edited the suggestion or typed something different
-                if (currentWord.isBlank() || !word.lowercase().startsWith(currentWord.lowercase())) {
-                    // Proceed without auto-committing
-                    return super.commitChar(char)
-                }
-
-                currentInputConnection()?.finishComposingText()
-
-                val finalWord = when {
-                    currentWord == currentWord.uppercase() -> currentWord
-                    word == word.uppercase() -> word
-                    activeState.inputShiftState != InputShiftState.UNSHIFTED ->
-                        word.replaceFirstChar { it.uppercaseChar() }
-                    else -> word
-                }
-
-                deleteBeforeCursor(TextType.CHARACTERS, currentWord.length)
-                commitText("$finalWord ")
-
-                runBlocking {
-                    topSuggestion.sourceProvider?.notifySuggestionAccepted(
-                        subtypeManager.activeSubtype,
-                        topSuggestion
-                    )
-                }
-
-                phantomSpace.setInactive()
-                activeState.inputShiftState = InputShiftState.UNSHIFTED
-                return true
-            }
-        }
-
-        // Clear revert candidate only if not auto-committing
-        clearRevertCandidateIfNeeded()
-
         val isInsertAutoSpaceBeforeChar = shouldInsertAutoSpaceBefore(char)
         val isInsertAutoSpaceAfterChar = shouldInsertAutoSpaceAfter(char)
         val isDeletePreviousSpace = isInsertAutoSpaceAfterChar && autoSpace.isActive

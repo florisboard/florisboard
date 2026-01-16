@@ -604,10 +604,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     /**
      * Handles a [KeyCode.TOGGLE_AUTOCORRECT] event.
      */
-    private fun handleToggleAutocorrect() {
+    private suspend fun handleToggleAutocorrect() {
+        prefs.smartbar.autocorrect.let { it.set(!it.get()) }
         lastToastReference.get()?.cancel()
+        val isEnabled = prefs.smartbar.autocorrect.get()
+        val message = if (isEnabled) "Autocorrect enabled" else "Autocorrect disabled"
         lastToastReference = WeakReference(
-            appContext.showLongToastSync("Autocorrect toggle is a placeholder and not yet implemented")
+            appContext.showShortToastSync(message)
         )
     }
 
@@ -765,7 +768,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
             KeyCode.TOGGLE_INCOGNITO_MODE -> scope.launch { handleToggleIncognitoMode() }
-            KeyCode.TOGGLE_AUTOCORRECT -> handleToggleAutocorrect()
+            KeyCode.TOGGLE_AUTOCORRECT -> scope.launch { handleToggleAutocorrect() }
             KeyCode.UNDO -> editorInstance.performUndo()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
