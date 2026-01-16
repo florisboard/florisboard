@@ -47,6 +47,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private val contextMapFile = File(appContext.filesDir, "context_map.json")
 
     private var latestEditorContent: EditorContent? = null
+    private var isPrivateSession: Boolean = false
     private var isDictionaryLoaded = false
 
     override suspend fun create() {
@@ -95,6 +96,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         isPrivateSession: Boolean
     ): List<SuggestionCandidate> {
         latestEditorContent = content
+        this.isPrivateSession = isPrivateSession
         val prefix = content.composingText.trim()
         if (prefix.length < 2) {
             return emptyList()
@@ -144,6 +146,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
+        if (isPrivateSession) return
+        
         val word = candidate.text.toString().lowercase().trim()
         if (word.length < 2) return
 
@@ -152,6 +156,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
+        if (isPrivateSession) return
+        
         val word = candidate.text.toString().lowercase().trim()
         NlpBridge.penalizeWord(word)
     }

@@ -108,6 +108,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             }
         }
         activeState.keyboardMode = keyboardMode
+        // Keep composing enabled in incognito mode to allow suggestions from main dictionary
+        // Learning is blocked at the NLP provider level based on isPrivateSession flag
         activeState.isComposingEnabled = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
@@ -148,8 +150,11 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
-        return super.shouldDetermineComposingRegion(editorInfo) &&
+        // Allow composing region even when app sets TYPE_TEXT_FLAG_NO_SUGGESTIONS
+        // if user has suggestions enabled in settings (e.g., Chrome incognito)
+        val baseCheck = editorInfo.isRichInputEditor && 
             (phantomSpace.isInactive || phantomSpace.showComposingRegion)
+        return baseCheck
     }
 
     /**
