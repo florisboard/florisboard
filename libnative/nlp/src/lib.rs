@@ -1,3 +1,5 @@
+pub mod binary_trie;
+
 use serde::{Deserialize, Serialize};
 use std::cmp::{min, Ordering};
 use std::collections::{BinaryHeap, HashMap};
