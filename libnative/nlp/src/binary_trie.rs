@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use lz4_flex::{compress_prepend_size, decompress_size_prepended};
 
 const MAGIC: &[u8; 4] = b"FBTD"; // FlorisBoard Trie Dictionary
-const VERSION: u32 = 2;
+const VERSION: u32 = 3; // v3: Added canonical forms section
 
 #[repr(C, packed)]
 pub struct FileHeader {
@@ -11,18 +11,20 @@ pub struct FileHeader {
     pub word_count: u32,
     pub node_count: u32,
     pub checksum: u32,
+    pub canonical_count: u32,
 }
 
 impl FileHeader {
-    pub const SIZE: usize = 20;
+    pub const SIZE: usize = 24;
 
-    pub fn new(word_count: u32, node_count: u32, checksum: u32) -> Self {
+    pub fn new(word_count: u32, node_count: u32, checksum: u32, canonical_count: u32) -> Self {
         Self {
             magic: *MAGIC,
             version: VERSION,
             word_count,
             node_count,
             checksum,
+            canonical_count,
         }
     }
 
@@ -33,6 +35,7 @@ impl FileHeader {
         buf[8..12].copy_from_slice(&self.word_count.to_le_bytes());
         buf[12..16].copy_from_slice(&self.node_count.to_le_bytes());
         buf[16..20].copy_from_slice(&self.checksum.to_le_bytes());
+        buf[20..24].copy_from_slice(&self.canonical_count.to_le_bytes());
         buf
     }
 
@@ -55,6 +58,7 @@ impl FileHeader {
             word_count: u32::from_le_bytes([buf[8], buf[9], buf[10], buf[11]]),
             node_count: u32::from_le_bytes([buf[12], buf[13], buf[14], buf[15]]),
             checksum: u32::from_le_bytes([buf[16], buf[17], buf[18], buf[19]]),
+            canonical_count: u32::from_le_bytes([buf[20], buf[21], buf[22], buf[23]]),
         })
     }
 }
@@ -98,6 +102,7 @@ impl BinaryTrieNode {
 pub struct BinaryTrie {
     nodes: Vec<BinaryTrieNode>,
     words: Vec<String>,
+    canonical_forms: HashMap<String, String>, // normalized_key -> original_form
 }
 
 impl BinaryTrie {
@@ -105,9 +110,14 @@ impl BinaryTrie {
         let mut trie = Self {
             nodes: Vec::new(),
             words: Vec::new(),
+            canonical_forms: HashMap::new(),
         };
         trie.nodes.push(BinaryTrieNode::default());
         trie
+    }
+
+    pub fn canonical_forms(&self) -> &HashMap<String, String> {
+        &self.canonical_forms
     }
 
     pub fn insert(&mut self, word: &str, frequency: u8) {
@@ -172,6 +182,7 @@ impl BinaryTrie {
             self.words.len() as u32,
             self.nodes.len() as u32,
             checksum,
+            self.canonical_forms.len() as u32,
         );
 
         let mut node_data = Vec::with_capacity(self.nodes.len() * BinaryTrieNode::SIZE);
@@ -179,11 +190,20 @@ impl BinaryTrie {
             node_data.extend_from_slice(&node.to_bytes());
         }
         
-        let compressed = compress_prepend_size(&node_data);
+        let compressed_nodes = compress_prepend_size(&node_data);
         
-        let mut data = Vec::with_capacity(FileHeader::SIZE + compressed.len());
+        // Serialize canonical forms as JSON
+        let canonical_json = serde_json::to_string(&self.canonical_forms).unwrap_or_default();
+        let canonical_bytes = canonical_json.as_bytes();
+        let compressed_canonical = compress_prepend_size(canonical_bytes);
+        
+        let mut data = Vec::with_capacity(
+            FileHeader::SIZE + 4 + compressed_nodes.len() + compressed_canonical.len()
+        );
         data.extend_from_slice(&header.to_bytes());
-        data.extend_from_slice(&compressed);
+        data.extend_from_slice(&(compressed_nodes.len() as u32).to_le_bytes());
+        data.extend_from_slice(&compressed_nodes);
+        data.extend_from_slice(&compressed_canonical);
         
         data
     }
@@ -191,13 +211,31 @@ impl BinaryTrie {
     pub fn deserialize(data: &[u8]) -> Result<Self, &'static str> {
         let header = FileHeader::from_bytes(data)?;
         
-        let compressed = &data[FileHeader::SIZE..];
-        let node_data = decompress_size_prepended(compressed)
-            .map_err(|_| "LZ4 decompression failed")?;
+        // Read compressed nodes length
+        let nodes_len_offset = FileHeader::SIZE;
+        if data.len() < nodes_len_offset + 4 {
+            return Err("Data too small for nodes length");
+        }
+        let compressed_nodes_len = u32::from_le_bytes([
+            data[nodes_len_offset],
+            data[nodes_len_offset + 1],
+            data[nodes_len_offset + 2],
+            data[nodes_len_offset + 3],
+        ]) as usize;
+        
+        let nodes_start = nodes_len_offset + 4;
+        let nodes_end = nodes_start + compressed_nodes_len;
+        if data.len() < nodes_end {
+            return Err("Data too small for nodes");
+        }
+        
+        let compressed_nodes = &data[nodes_start..nodes_end];
+        let node_data = decompress_size_prepended(compressed_nodes)
+            .map_err(|_| "LZ4 decompression failed for nodes")?;
         
         let expected_size = (header.node_count as usize) * BinaryTrieNode::SIZE;
         if node_data.len() < expected_size {
-            return Err("Decompressed data too small");
+            return Err("Decompressed node data too small");
         }
 
         let mut nodes = Vec::with_capacity(header.node_count as usize);
@@ -207,10 +245,27 @@ impl BinaryTrie {
             nodes.push(BinaryTrieNode::from_bytes(&node_data[offset..offset + BinaryTrieNode::SIZE]));
             offset += BinaryTrieNode::SIZE;
         }
+        
+        // Deserialize canonical forms
+        let canonical_forms = if header.canonical_count > 0 && data.len() > nodes_end {
+            let compressed_canonical = &data[nodes_end..];
+            match decompress_size_prepended(compressed_canonical) {
+                Ok(canonical_data) => {
+                    match std::str::from_utf8(&canonical_data) {
+                        Ok(json_str) => serde_json::from_str(json_str).unwrap_or_default(),
+                        Err(_) => HashMap::new(),
+                    }
+                }
+                Err(_) => HashMap::new(),
+            }
+        } else {
+            HashMap::new()
+        };
 
         let trie = Self {
             nodes,
             words: Vec::new(),
+            canonical_forms,
         };
 
         if trie.calculate_checksum() != header.checksum {
@@ -283,21 +338,60 @@ impl BinaryTrie {
     pub fn word_count(&self) -> usize {
         self.words.len()
     }
+    
+    pub fn canonical_count(&self) -> usize {
+        self.canonical_forms.len()
+    }
 }
 
-pub fn build_from_json(json_data: &str) -> Result<BinaryTrie, String> {
+/// Check if a word should have its canonical form preserved
+pub fn should_preserve_canonical(word: &str) -> bool {
+    is_contraction(word) || is_acronym(word) || is_proper_noun(word)
+}
+
+pub fn is_contraction(word: &str) -> bool {
+    word.contains('\'')
+}
+
+pub fn is_acronym(word: &str) -> bool {
+    word.len() >= 2 && word.len() <= 5 && word.chars().all(|c| c.is_ascii_uppercase())
+}
+
+pub fn is_proper_noun(word: &str) -> bool {
+    let chars: Vec<char> = word.chars().collect();
+    if chars.len() < 2 {
+        return false;
+    }
+    chars[0].is_uppercase() 
+        && chars[1..].iter().all(|c| c.is_lowercase())
+        && !word.contains('\'')
+}
+
+pub fn normalize_for_lookup(word: &str) -> String {
+    word.to_lowercase().chars().filter(|&c| c != '\'').collect()
+}
+
+/// Build trie from JSON with canonical forms extracted
+pub fn build_from_json_with_canonical(json_data: &str) -> Result<BinaryTrie, String> {
     let dict: HashMap<String, u8> = serde_json::from_str(json_data)
         .map_err(|e| format!("JSON parse error: {}", e))?;
     
     let mut trie = BinaryTrie::new();
+    let mut canonical_forms = HashMap::new();
     
     let mut words: Vec<_> = dict.into_iter().collect();
     words.sort_by(|a, b| b.1.cmp(&a.1));
     
     for (word, freq) in words {
+        let trimmed = word.trim();
+        if should_preserve_canonical(trimmed) {
+            let normalized_key = normalize_for_lookup(trimmed);
+            canonical_forms.insert(normalized_key, trimmed.to_string());
+        }
         trie.insert(&word.to_lowercase(), freq);
     }
     
+    trie.canonical_forms = canonical_forms;
     Ok(trie)
 }
 
@@ -321,11 +415,16 @@ mod tests {
         let mut trie = BinaryTrie::new();
         trie.insert("test", 100);
         trie.insert("testing", 50);
+        trie.canonical_forms.insert("im".to_string(), "I'm".to_string());
+        trie.canonical_forms.insert("dont".to_string(), "don't".to_string());
 
         let data = trie.serialize();
         let loaded = BinaryTrie::deserialize(&data).unwrap();
 
         assert_eq!(loaded.node_count(), trie.node_count());
+        assert_eq!(loaded.canonical_count(), 2);
+        assert_eq!(loaded.canonical_forms().get("im"), Some(&"I'm".to_string()));
+        assert_eq!(loaded.canonical_forms().get("dont"), Some(&"don't".to_string()));
     }
 
     #[test]
@@ -340,5 +439,17 @@ mod tests {
         trie.collect_words(idx, "hel", &mut results, 10);
 
         assert_eq!(results.len(), 3);
+    }
+    
+    #[test]
+    fn test_build_with_canonical() {
+        let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "hello": 100}"#;
+        let trie = build_from_json_with_canonical(json).unwrap();
+        
+        assert_eq!(trie.canonical_count(), 3); // I'm, don't, USA
+        assert_eq!(trie.canonical_forms().get("im"), Some(&"I'm".to_string()));
+        assert_eq!(trie.canonical_forms().get("dont"), Some(&"don't".to_string()));
+        assert_eq!(trie.canonical_forms().get("usa"), Some(&"USA".to_string()));
+        assert!(trie.canonical_forms().get("hello").is_none());
     }
 }

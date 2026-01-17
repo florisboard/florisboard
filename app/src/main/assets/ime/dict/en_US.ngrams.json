@@ -1,80 +1,1064 @@
 {
-  "i": {"am": 100, "have": 90, "was": 85, "will": 80, "can": 75, "would": 70, "think": 65, "know": 60, "want": 55, "need": 50, "love": 45, "like": 40, "feel": 35, "hope": 30, "believe": 25},
-  "you": {"are": 100, "have": 90, "can": 85, "will": 80, "would": 75, "should": 70, "want": 65, "need": 60, "know": 55, "like": 50, "think": 45, "look": 40},
-  "it": {"is": 100, "was": 90, "will": 80, "would": 75, "can": 70, "has": 65, "looks": 60, "seems": 55, "works": 50},
-  "we": {"are": 100, "have": 90, "can": 85, "will": 80, "would": 75, "should": 70, "need": 65, "want": 60},
-  "they": {"are": 100, "have": 90, "will": 80, "would": 75, "can": 70, "should": 65, "want": 60, "need": 55},
-  "he": {"is": 100, "was": 90, "has": 85, "will": 80, "would": 75, "can": 70, "said": 65},
-  "she": {"is": 100, "was": 90, "has": 85, "will": 80, "would": 75, "can": 70, "said": 65},
-  "the": {"best": 60, "same": 55, "first": 50, "last": 45, "next": 40, "only": 35, "new": 30, "other": 25, "most": 20},
-  "to": {"be": 100, "do": 90, "get": 85, "have": 80, "go": 75, "make": 70, "see": 65, "know": 60, "take": 55, "come": 50},
-  "a": {"lot": 80, "bit": 70, "few": 65, "little": 60, "great": 55, "good": 50, "new": 45, "big": 40},
-  "is": {"a": 80, "the": 75, "not": 70, "it": 65, "that": 60, "this": 55, "very": 50, "so": 45, "really": 40},
-  "for": {"you": 80, "me": 75, "the": 70, "a": 65, "this": 60, "that": 55, "your": 50},
-  "and": {"i": 70, "the": 65, "it": 60, "that": 55, "you": 50, "we": 45, "then": 40},
-  "that": {"is": 80, "was": 75, "would": 70, "will": 65, "i": 60, "you": 55, "it": 50},
-  "have": {"a": 80, "to": 75, "been": 70, "you": 65, "the": 60, "no": 55, "any": 50},
-  "how": {"are": 100, "is": 90, "do": 85, "did": 80, "was": 75, "can": 70, "about": 65, "much": 60, "many": 55, "long": 50},
-  "what": {"is": 100, "are": 90, "do": 85, "did": 80, "was": 75, "about": 70, "if": 65, "time": 60, "happened": 55},
-  "where": {"is": 90, "are": 85, "do": 80, "did": 75, "can": 70, "were": 65},
-  "when": {"i": 80, "you": 75, "it": 70, "we": 65, "the": 60, "will": 55, "is": 50, "did": 45},
-  "why": {"is": 80, "are": 75, "do": 70, "did": 65, "would": 60, "not": 55, "don't": 50},
-  "do": {"you": 90, "it": 80, "not": 75, "that": 70, "this": 65, "we": 60},
-  "can": {"i": 80, "you": 75, "we": 70, "be": 65, "do": 60, "help": 55, "get": 50},
-  "will": {"be": 90, "you": 80, "have": 75, "do": 70, "get": 65, "not": 60},
-  "would": {"be": 90, "like": 85, "you": 80, "have": 75, "love": 70, "not": 65},
-  "just": {"a": 70, "wanted": 65, "like": 60, "want": 55, "need": 50, "got": 45, "had": 40},
-  "be": {"a": 70, "able": 65, "the": 60, "there": 55, "good": 50, "happy": 45, "nice": 40},
-  "not": {"a": 70, "the": 65, "sure": 60, "be": 55, "have": 50, "to": 45, "only": 40},
-  "are": {"you": 90, "there": 80, "we": 75, "they": 70, "not": 65, "the": 60, "so": 55},
-  "this": {"is": 90, "was": 80, "will": 70, "one": 65, "year": 60, "time": 55},
-  "but": {"i": 80, "it": 75, "the": 70, "that": 65, "you": 60, "we": 55},
-  "with": {"the": 80, "a": 75, "you": 70, "me": 65, "my": 60, "this": 55, "your": 50},
-  "so": {"i": 80, "much": 75, "that": 70, "far": 65, "many": 60, "good": 55, "happy": 50},
-  "if": {"you": 90, "i": 85, "it": 80, "the": 75, "we": 70, "that": 65, "there": 60},
-  "my": {"name": 70, "friend": 65, "life": 60, "family": 55, "phone": 50, "car": 45, "house": 40},
-  "your": {"name": 70, "phone": 65, "email": 60, "address": 55, "family": 50, "life": 45},
-  "about": {"the": 80, "it": 75, "that": 70, "this": 65, "you": 60, "what": 55, "a": 50},
-  "get": {"a": 70, "the": 65, "it": 60, "to": 55, "back": 50, "out": 45, "some": 40},
-  "like": {"a": 70, "the": 65, "it": 60, "this": 55, "that": 50, "to": 45, "you": 40},
-  "good": {"morning": 90, "night": 85, "luck": 80, "job": 75, "idea": 70, "time": 65, "day": 60, "to": 55},
-  "thank": {"you": 100, "god": 60},
-  "thanks": {"for": 90, "a": 70, "so": 65},
-  "yes": {"i": 80, "it": 70, "please": 65, "of": 60, "that": 55},
-  "no": {"i": 80, "problem": 75, "one": 70, "thanks": 65, "worries": 60, "way": 55, "more": 50},
-  "please": {"let": 70, "be": 65, "help": 60, "don't": 55, "do": 50, "give": 45, "send": 40},
-  "sorry": {"for": 80, "i": 75, "about": 70, "to": 65, "but": 60},
-  "see": {"you": 90, "the": 70, "if": 65, "what": 60, "it": 55, "how": 50},
-  "know": {"what": 80, "how": 75, "if": 70, "that": 65, "you": 60, "about": 55},
-  "think": {"about": 80, "that": 75, "it": 70, "so": 65, "i": 60, "of": 55, "you": 50},
-  "want": {"to": 100, "you": 70, "me": 65, "a": 60, "it": 55, "the": 50},
-  "need": {"to": 100, "a": 70, "you": 65, "the": 60, "some": 55, "help": 50},
-  "go": {"to": 90, "back": 75, "out": 70, "home": 65, "ahead": 60, "away": 55},
-  "take": {"a": 80, "care": 75, "the": 70, "it": 65, "me": 60, "your": 55},
-  "come": {"on": 80, "back": 75, "to": 70, "here": 65, "in": 60, "over": 55},
-  "make": {"a": 80, "sure": 75, "it": 70, "me": 65, "the": 60, "you": 55},
-  "look": {"at": 80, "like": 75, "for": 70, "good": 65, "forward": 60, "into": 55},
-  "let": {"me": 90, "you": 80, "us": 75, "it": 70, "the": 65, "him": 60, "her": 55},
-  "give": {"me": 80, "you": 75, "it": 70, "a": 65, "the": 60, "up": 55},
-  "call": {"me": 80, "you": 75, "back": 70, "the": 65, "it": 60},
-  "tell": {"me": 80, "you": 75, "him": 70, "her": 65, "the": 60, "them": 55},
-  "send": {"me": 80, "you": 75, "it": 70, "the": 65, "a": 60},
-  "try": {"to": 90, "it": 70, "again": 65, "this": 60, "that": 55},
-  "help": {"me": 80, "you": 75, "with": 70, "the": 65, "us": 60},
-  "find": {"a": 75, "the": 70, "out": 65, "it": 60, "some": 55},
-  "really": {"good": 75, "like": 70, "want": 65, "need": 60, "appreciate": 55, "sorry": 50, "happy": 45},
-  "very": {"much": 80, "good": 75, "nice": 70, "well": 65, "happy": 60, "sorry": 55, "important": 50},
-  "more": {"than": 80, "about": 70, "information": 65, "time": 60, "details": 55},
-  "too": {"much": 80, "many": 70, "bad": 65, "late": 60, "early": 55, "long": 50},
-  "happy": {"birthday": 90, "new": 80, "to": 70, "for": 65, "with": 60},
-  "nice": {"to": 90, "meeting": 75, "day": 70, "work": 65, "job": 60},
-  "great": {"to": 80, "job": 75, "work": 70, "day": 65, "idea": 60, "time": 55},
-  "had": {"a": 80, "to": 70, "been": 65, "no": 60, "the": 55},
-  "been": {"a": 70, "to": 65, "there": 60, "working": 55, "doing": 50, "waiting": 45},
-  "going": {"to": 100, "on": 70, "well": 60, "home": 55, "out": 50},
-  "looking": {"for": 90, "forward": 85, "at": 70, "good": 65, "great": 60},
-  "working": {"on": 90, "with": 80, "hard": 70, "from": 65, "at": 60},
-  "waiting": {"for": 90, "on": 70, "to": 65},
-  "coming": {"soon": 80, "back": 75, "to": 70, "up": 65, "over": 60},
-  "getting": {"a": 70, "the": 65, "better": 60, "ready": 55, "back": 50, "closer": 45}
+  "i": {
+    "am": 100,
+    "have": 90,
+    "was": 85,
+    "will": 80,
+    "can": 75,
+    "would": 70,
+    "think": 65,
+    "know": 60,
+    "want": 55,
+    "need": 50,
+    "love": 45,
+    "like": 40,
+    "feel": 35,
+    "hope": 30,
+    "believe": 25,
+    "don't": 85,
+    "can't": 80,
+    "won't": 75,
+    "didn't": 70,
+    "wouldn't": 65,
+    "I'm": 60,
+    "I've": 55,
+    "I'll": 50
+  },
+  "you": {
+    "are": 100,
+    "have": 90,
+    "can": 85,
+    "will": 80,
+    "would": 75,
+    "should": 70,
+    "want": 65,
+    "need": 60,
+    "know": 55,
+    "like": 50,
+    "think": 45,
+    "look": 40,
+    "don't": 80,
+    "can't": 75,
+    "won't": 70,
+    "didn't": 65,
+    "wouldn't": 60,
+    "you're": 55,
+    "you've": 50,
+    "you'll": 45
+  },
+  "it": {
+    "is": 100,
+    "was": 90,
+    "will": 80,
+    "would": 75,
+    "can": 70,
+    "has": 65,
+    "looks": 60,
+    "seems": 55,
+    "works": 50,
+    "doesn't": 85,
+    "isn't": 80,
+    "wasn't": 75,
+    "won't": 70,
+    "can't": 65,
+    "it's": 60
+  },
+  "we": {
+    "are": 100,
+    "have": 90,
+    "can": 85,
+    "will": 80,
+    "would": 75,
+    "should": 70,
+    "need": 65,
+    "want": 60,
+    "don't": 85,
+    "didn't": 80,
+    "aren't": 75,
+    "weren't": 70,
+    "won't": 65,
+    "can't": 60,
+    "we're": 55,
+    "we've": 50,
+    "we'll": 45
+  },
+  "they": {
+    "are": 100,
+    "have": 90,
+    "will": 80,
+    "would": 75,
+    "can": 70,
+    "should": 65,
+    "want": 60,
+    "need": 55,
+    "don't": 85,
+    "didn't": 80,
+    "aren't": 75,
+    "weren't": 70,
+    "won't": 65,
+    "can't": 60,
+    "they're": 55,
+    "they've": 50,
+    "they'll": 45
+  },
+  "he": {
+    "is": 100,
+    "was": 90,
+    "has": 85,
+    "will": 80,
+    "would": 75,
+    "can": 70,
+    "said": 65,
+    "doesn't": 80,
+    "didn't": 75,
+    "isn't": 70,
+    "wasn't": 65,
+    "won't": 60,
+    "can't": 55,
+    "he's": 50,
+    "he'll": 45
+  },
+  "she": {
+    "is": 100,
+    "was": 90,
+    "has": 85,
+    "will": 80,
+    "would": 75,
+    "can": 70,
+    "said": 65,
+    "doesn't": 80,
+    "didn't": 75,
+    "isn't": 70,
+    "wasn't": 65,
+    "won't": 60,
+    "can't": 55,
+    "she's": 50,
+    "she'll": 45
+  },
+  "the": {
+    "best": 60,
+    "same": 55,
+    "first": 50,
+    "last": 45,
+    "next": 40,
+    "only": 35,
+    "new": 30,
+    "other": 25,
+    "most": 20
+  },
+  "to": {
+    "be": 100,
+    "do": 90,
+    "get": 85,
+    "have": 80,
+    "go": 75,
+    "make": 70,
+    "see": 65,
+    "know": 60,
+    "take": 55,
+    "come": 50
+  },
+  "a": {
+    "lot": 80,
+    "bit": 70,
+    "few": 65,
+    "little": 60,
+    "great": 55,
+    "good": 50,
+    "new": 45,
+    "big": 40
+  },
+  "is": {
+    "a": 80,
+    "the": 75,
+    "not": 70,
+    "it": 65,
+    "that": 60,
+    "this": 55,
+    "very": 50,
+    "so": 45,
+    "really": 40
+  },
+  "for": {
+    "you": 80,
+    "me": 75,
+    "the": 70,
+    "a": 65,
+    "this": 60,
+    "that": 55,
+    "your": 50
+  },
+  "and": {
+    "i": 70,
+    "the": 65,
+    "it": 60,
+    "that": 55,
+    "you": 50,
+    "we": 45,
+    "then": 40
+  },
+  "that": {
+    "is": 80,
+    "was": 75,
+    "would": 70,
+    "will": 65,
+    "i": 60,
+    "you": 55,
+    "it": 50,
+    "doesn't": 70,
+    "isn't": 65,
+    "wasn't": 60,
+    "won't": 55,
+    "can't": 50,
+    "that's": 45
+  },
+  "have": {
+    "a": 80,
+    "to": 75,
+    "been": 70,
+    "you": 65,
+    "the": 60,
+    "no": 55,
+    "any": 50
+  },
+  "how": {
+    "are": 100,
+    "is": 90,
+    "do": 85,
+    "did": 80,
+    "was": 75,
+    "can": 70,
+    "about": 65,
+    "much": 60,
+    "many": 55,
+    "long": 50
+  },
+  "what": {
+    "is": 100,
+    "are": 90,
+    "do": 85,
+    "did": 80,
+    "was": 75,
+    "about": 70,
+    "if": 65,
+    "time": 60,
+    "happened": 55,
+    "doesn't": 65,
+    "isn't": 60,
+    "wasn't": 55,
+    "won't": 50,
+    "can't": 45,
+    "what's": 40
+  },
+  "where": {
+    "is": 90,
+    "are": 85,
+    "do": 80,
+    "did": 75,
+    "can": 70,
+    "were": 65
+  },
+  "when": {
+    "i": 80,
+    "you": 75,
+    "it": 70,
+    "we": 65,
+    "the": 60,
+    "will": 55,
+    "is": 50,
+    "did": 45
+  },
+  "why": {
+    "is": 80,
+    "are": 75,
+    "do": 70,
+    "did": 65,
+    "would": 60,
+    "not": 55,
+    "don't": 50,
+    "doesn't": 70,
+    "isn't": 65,
+    "wasn't": 60,
+    "won't": 55,
+    "can't": 50
+  },
+  "do": {
+    "you": 90,
+    "it": 80,
+    "not": 75,
+    "that": 70,
+    "this": 65,
+    "we": 60
+  },
+  "can": {
+    "i": 80,
+    "you": 75,
+    "we": 70,
+    "be": 65,
+    "do": 60,
+    "help": 55,
+    "get": 50
+  },
+  "will": {
+    "be": 90,
+    "you": 80,
+    "have": 75,
+    "do": 70,
+    "get": 65,
+    "not": 60
+  },
+  "would": {
+    "be": 90,
+    "like": 85,
+    "you": 80,
+    "have": 75,
+    "love": 70,
+    "not": 65
+  },
+  "just": {
+    "a": 70,
+    "wanted": 65,
+    "like": 60,
+    "want": 55,
+    "need": 50,
+    "got": 45,
+    "had": 40
+  },
+  "be": {
+    "a": 70,
+    "able": 65,
+    "the": 60,
+    "there": 55,
+    "good": 50,
+    "happy": 45,
+    "nice": 40
+  },
+  "not": {
+    "a": 70,
+    "the": 65,
+    "sure": 60,
+    "be": 55,
+    "have": 50,
+    "to": 45,
+    "only": 40
+  },
+  "are": {
+    "you": 90,
+    "there": 80,
+    "we": 75,
+    "they": 70,
+    "not": 65,
+    "the": 60,
+    "so": 55
+  },
+  "this": {
+    "is": 90,
+    "was": 80,
+    "will": 70,
+    "one": 65,
+    "year": 60,
+    "time": 55
+  },
+  "but": {
+    "i": 80,
+    "it": 75,
+    "the": 70,
+    "that": 65,
+    "you": 60,
+    "we": 55
+  },
+  "with": {
+    "the": 80,
+    "a": 75,
+    "you": 70,
+    "me": 65,
+    "my": 60,
+    "this": 55,
+    "your": 50
+  },
+  "so": {
+    "i": 80,
+    "much": 75,
+    "that": 70,
+    "far": 65,
+    "many": 60,
+    "good": 55,
+    "happy": 50
+  },
+  "if": {
+    "you": 90,
+    "i": 85,
+    "it": 80,
+    "the": 75,
+    "we": 70,
+    "that": 65,
+    "there": 60
+  },
+  "my": {
+    "name": 70,
+    "friend": 65,
+    "life": 60,
+    "family": 55,
+    "phone": 50,
+    "car": 45,
+    "house": 40
+  },
+  "your": {
+    "name": 70,
+    "phone": 65,
+    "email": 60,
+    "address": 55,
+    "family": 50,
+    "life": 45
+  },
+  "about": {
+    "the": 80,
+    "it": 75,
+    "that": 70,
+    "this": 65,
+    "you": 60,
+    "what": 55,
+    "a": 50
+  },
+  "get": {
+    "a": 70,
+    "the": 65,
+    "it": 60,
+    "to": 55,
+    "back": 50,
+    "out": 45,
+    "some": 40
+  },
+  "like": {
+    "a": 70,
+    "the": 65,
+    "it": 60,
+    "this": 55,
+    "that": 50,
+    "to": 45,
+    "you": 40
+  },
+  "good": {
+    "morning": 90,
+    "night": 85,
+    "luck": 80,
+    "job": 75,
+    "idea": 70,
+    "time": 65,
+    "day": 60,
+    "to": 55
+  },
+  "thank": {
+    "you": 100,
+    "god": 60
+  },
+  "thanks": {
+    "for": 90,
+    "a": 70,
+    "so": 65
+  },
+  "yes": {
+    "i": 80,
+    "it": 70,
+    "please": 65,
+    "of": 60,
+    "that": 55
+  },
+  "no": {
+    "i": 80,
+    "problem": 75,
+    "one": 70,
+    "thanks": 65,
+    "worries": 60,
+    "way": 55,
+    "more": 50
+  },
+  "please": {
+    "let": 70,
+    "be": 65,
+    "help": 60,
+    "don't": 55,
+    "do": 50,
+    "give": 45,
+    "send": 40
+  },
+  "sorry": {
+    "for": 80,
+    "i": 75,
+    "about": 70,
+    "to": 65,
+    "but": 60
+  },
+  "see": {
+    "you": 90,
+    "the": 70,
+    "if": 65,
+    "what": 60,
+    "it": 55,
+    "how": 50
+  },
+  "know": {
+    "what": 80,
+    "how": 75,
+    "if": 70,
+    "that": 65,
+    "you": 60,
+    "about": 55
+  },
+  "think": {
+    "about": 80,
+    "that": 75,
+    "it": 70,
+    "so": 65,
+    "i": 60,
+    "of": 55,
+    "you": 50
+  },
+  "want": {
+    "to": 100,
+    "you": 70,
+    "me": 65,
+    "a": 60,
+    "it": 55,
+    "the": 50
+  },
+  "need": {
+    "to": 100,
+    "a": 70,
+    "you": 65,
+    "the": 60,
+    "some": 55,
+    "help": 50
+  },
+  "go": {
+    "to": 90,
+    "back": 75,
+    "out": 70,
+    "home": 65,
+    "ahead": 60,
+    "away": 55
+  },
+  "take": {
+    "a": 80,
+    "care": 75,
+    "the": 70,
+    "it": 65,
+    "me": 60,
+    "your": 55
+  },
+  "come": {
+    "on": 80,
+    "back": 75,
+    "to": 70,
+    "here": 65,
+    "in": 60,
+    "over": 55
+  },
+  "make": {
+    "a": 80,
+    "sure": 75,
+    "it": 70,
+    "me": 65,
+    "the": 60,
+    "you": 55
+  },
+  "look": {
+    "at": 80,
+    "like": 75,
+    "for": 70,
+    "good": 65,
+    "forward": 60,
+    "into": 55
+  },
+  "let": {
+    "me": 90,
+    "you": 80,
+    "us": 85,
+    "it": 80,
+    "the": 65,
+    "him": 70,
+    "her": 65,
+    "them": 75,
+    "let's": 60
+  },
+  "give": {
+    "me": 80,
+    "you": 75,
+    "it": 70,
+    "a": 65,
+    "the": 60,
+    "up": 55
+  },
+  "call": {
+    "me": 80,
+    "you": 75,
+    "back": 70,
+    "the": 65,
+    "it": 60
+  },
+  "tell": {
+    "me": 80,
+    "you": 75,
+    "him": 70,
+    "her": 65,
+    "the": 60,
+    "them": 55
+  },
+  "send": {
+    "me": 80,
+    "you": 75,
+    "it": 70,
+    "the": 65,
+    "a": 60
+  },
+  "try": {
+    "to": 90,
+    "it": 70,
+    "again": 65,
+    "this": 60,
+    "that": 55
+  },
+  "help": {
+    "me": 80,
+    "you": 75,
+    "with": 70,
+    "the": 65,
+    "us": 60
+  },
+  "find": {
+    "a": 75,
+    "the": 70,
+    "out": 65,
+    "it": 60,
+    "some": 55
+  },
+  "really": {
+    "good": 75,
+    "like": 70,
+    "want": 65,
+    "need": 60,
+    "appreciate": 55,
+    "sorry": 50,
+    "happy": 45
+  },
+  "very": {
+    "much": 80,
+    "good": 75,
+    "nice": 70,
+    "well": 65,
+    "happy": 60,
+    "sorry": 55,
+    "important": 50
+  },
+  "more": {
+    "than": 80,
+    "about": 70,
+    "information": 65,
+    "time": 60,
+    "details": 55
+  },
+  "too": {
+    "much": 80,
+    "many": 70,
+    "bad": 65,
+    "late": 60,
+    "early": 55,
+    "long": 50
+  },
+  "happy": {
+    "birthday": 90,
+    "new": 80,
+    "to": 70,
+    "for": 65,
+    "with": 60
+  },
+  "nice": {
+    "to": 90,
+    "meeting": 75,
+    "day": 70,
+    "work": 65,
+    "job": 60
+  },
+  "great": {
+    "to": 80,
+    "job": 75,
+    "work": 70,
+    "day": 65,
+    "idea": 60,
+    "time": 55
+  },
+  "had": {
+    "a": 80,
+    "to": 70,
+    "been": 65,
+    "no": 60,
+    "the": 55
+  },
+  "been": {
+    "a": 70,
+    "to": 65,
+    "there": 60,
+    "working": 55,
+    "doing": 50,
+    "waiting": 45
+  },
+  "going": {
+    "to": 100,
+    "on": 70,
+    "well": 60,
+    "home": 55,
+    "out": 50
+  },
+  "looking": {
+    "for": 90,
+    "forward": 85,
+    "at": 70,
+    "good": 65,
+    "great": 60
+  },
+  "working": {
+    "on": 90,
+    "with": 80,
+    "hard": 70,
+    "from": 65,
+    "at": 60
+  },
+  "waiting": {
+    "for": 90,
+    "on": 70,
+    "to": 65
+  },
+  "coming": {
+    "soon": 80,
+    "back": 75,
+    "to": 70,
+    "up": 65,
+    "over": 60
+  },
+  "getting": {
+    "a": 70,
+    "the": 65,
+    "better": 60,
+    "ready": 55,
+    "back": 50,
+    "closer": 45
+  },
+  "there": {
+    "isn't": 80,
+    "aren't": 75,
+    "wasn't": 70,
+    "weren't": 65,
+    "won't": 60,
+    "there's": 55
+  },
+  "who": {
+    "doesn't": 65,
+    "isn't": 60,
+    "wasn't": 55,
+    "won't": 50,
+    "can't": 45,
+    "who's": 40
+  },
+  "don't": {
+    "know": 90,
+    "think": 85,
+    "want": 80,
+    "have": 75,
+    "like": 70,
+    "need": 65,
+    "worry": 60,
+    "forget": 55
+  },
+  "doesn't": {
+    "matter": 90,
+    "work": 85,
+    "make": 80,
+    "mean": 75,
+    "have": 70,
+    "seem": 65,
+    "look": 60
+  },
+  "didn't": {
+    "know": 90,
+    "think": 85,
+    "want": 80,
+    "have": 75,
+    "see": 70,
+    "mean": 65,
+    "expect": 60
+  },
+  "can't": {
+    "wait": 90,
+    "believe": 85,
+    "help": 80,
+    "stop": 75,
+    "find": 70,
+    "remember": 65,
+    "understand": 60
+  },
+  "won't": {
+    "be": 90,
+    "work": 85,
+    "happen": 80,
+    "let": 75,
+    "help": 70,
+    "last": 65,
+    "matter": 60
+  },
+  "isn't": {
+    "it": 90,
+    "that": 85,
+    "there": 80,
+    "he": 75,
+    "she": 70,
+    "this": 65
+  },
+  "aren't": {
+    "you": 90,
+    "they": 85,
+    "we": 80,
+    "there": 75
+  },
+  "wasn't": {
+    "it": 90,
+    "that": 85,
+    "there": 80,
+    "he": 75,
+    "she": 70,
+    "I": 65
+  },
+  "weren't": {
+    "you": 90,
+    "they": 85,
+    "we": 80,
+    "there": 75
+  },
+  "I'm": {
+    "not": 90,
+    "sorry": 85,
+    "going": 80,
+    "sure": 75,
+    "glad": 70,
+    "happy": 65,
+    "here": 60,
+    "fine": 55,
+    "just": 50
+  },
+  "I've": {
+    "been": 90,
+    "got": 85,
+    "had": 80,
+    "never": 75,
+    "always": 70,
+    "just": 65,
+    "already": 60
+  },
+  "I'll": {
+    "be": 90,
+    "do": 85,
+    "get": 80,
+    "have": 75,
+    "take": 70,
+    "try": 65,
+    "let": 60,
+    "call": 55,
+    "see": 50
+  },
+  "I'd": {
+    "like": 90,
+    "love": 85,
+    "rather": 80,
+    "say": 75,
+    "think": 70,
+    "prefer": 65
+  },
+  "you're": {
+    "right": 90,
+    "welcome": 85,
+    "not": 80,
+    "going": 75,
+    "looking": 70,
+    "so": 65
+  },
+  "you've": {
+    "got": 90,
+    "been": 85,
+    "done": 80,
+    "made": 75,
+    "never": 70
+  },
+  "you'll": {
+    "be": 90,
+    "have": 85,
+    "get": 80,
+    "see": 75,
+    "need": 70,
+    "find": 65,
+    "love": 60
+  },
+  "it's": {
+    "a": 90,
+    "not": 85,
+    "the": 80,
+    "just": 75,
+    "been": 70,
+    "so": 65,
+    "really": 60,
+    "going": 55,
+    "like": 50
+  },
+  "that's": {
+    "a": 90,
+    "the": 85,
+    "not": 80,
+    "why": 75,
+    "what": 70,
+    "right": 65,
+    "good": 60,
+    "great": 55,
+    "it": 50
+  },
+  "there's": {
+    "a": 90,
+    "no": 85,
+    "nothing": 80,
+    "something": 75,
+    "always": 70,
+    "still": 65
+  },
+  "here's": {
+    "a": 90,
+    "the": 85,
+    "what": 80,
+    "my": 75,
+    "your": 70
+  },
+  "what's": {
+    "the": 90,
+    "up": 85,
+    "going": 80,
+    "wrong": 75,
+    "happening": 70,
+    "that": 65,
+    "your": 60,
+    "this": 55
+  },
+  "who's": {
+    "that": 90,
+    "there": 85,
+    "the": 80,
+    "going": 75,
+    "your": 70
+  },
+  "let's": {
+    "go": 90,
+    "see": 85,
+    "do": 80,
+    "try": 75,
+    "get": 70,
+    "make": 65,
+    "talk": 60,
+    "be": 55,
+    "start": 50
+  },
+  "he's": {
+    "a": 90,
+    "not": 85,
+    "the": 80,
+    "going": 75,
+    "been": 70,
+    "just": 65,
+    "so": 60
+  },
+  "she's": {
+    "a": 90,
+    "not": 85,
+    "the": 80,
+    "going": 75,
+    "been": 70,
+    "just": 65,
+    "so": 60
+  },
+  "they're": {
+    "not": 90,
+    "going": 85,
+    "all": 80,
+    "just": 75,
+    "the": 70,
+    "so": 65
+  },
+  "we're": {
+    "going": 90,
+    "not": 85,
+    "all": 80,
+    "here": 75,
+    "looking": 70,
+    "trying": 65
+  },
+  "we've": {
+    "got": 90,
+    "been": 85,
+    "had": 80,
+    "all": 75,
+    "never": 70
+  },
+  "we'll": {
+    "be": 90,
+    "have": 85,
+    "see": 80,
+    "get": 75,
+    "do": 70,
+    "need": 65
+  },
+  "they've": {
+    "got": 90,
+    "been": 85,
+    "had": 80,
+    "all": 75,
+    "never": 70
+  },
+  "they'll": {
+    "be": 90,
+    "have": 85,
+    "get": 80,
+    "do": 75,
+    "need": 70
+  },
+  "wouldn't": {
+    "be": 90,
+    "have": 85,
+    "want": 80,
+    "do": 75,
+    "say": 70,
+    "mind": 65
+  },
+  "couldn't": {
+    "be": 90,
+    "have": 85,
+    "help": 80,
+    "do": 75,
+    "find": 70,
+    "believe": 65
+  },
+  "shouldn't": {
+    "be": 90,
+    "have": 85,
+    "do": 80,
+    "we": 75,
+    "you": 70
+  },
+  "haven't": {
+    "been": 90,
+    "had": 85,
+    "seen": 80,
+    "done": 75,
+    "heard": 70,
+    "you": 65
+  },
+  "hasn't": {
+    "been": 90,
+    "had": 85,
+    "done": 80,
+    "changed": 75
+  }
 }

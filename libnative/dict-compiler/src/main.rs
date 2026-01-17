@@ -1,5 +1,5 @@
 use clap::Parser;
-use nlp::binary_trie::{BinaryTrie, build_from_json};
+use nlp::binary_trie::build_from_json_with_canonical;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
@@ -43,11 +43,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let word_count = dict.len();
     println!("  Loaded {} words", word_count);
 
-    // Build trie
-    println!("Building trie...");
-    let trie = build_from_json(&json_data)?;
+    // Build trie with canonical forms
+    println!("Building trie with canonical forms...");
+    let trie = build_from_json_with_canonical(&json_data)?;
     let node_count = trie.node_count();
+    let canonical_count = trie.canonical_count();
     println!("  Created {} nodes", node_count);
+    println!("  Extracted {} canonical forms (contractions/acronyms)", canonical_count);
 
     // Serialize
     println!("Serializing...");
@@ -62,7 +64,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if args.verify {
         println!("Verifying...");
         let read_back = fs::read(&args.output)?;
-        let loaded = BinaryTrie::deserialize(&read_back)
+        let loaded = nlp::binary_trie::BinaryTrie::deserialize(&read_back)
             .map_err(|e| format!("Verification failed: {}", e))?;
         
         if loaded.node_count() != node_count {
@@ -70,6 +72,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "Node count mismatch: expected {}, got {}",
                 node_count,
                 loaded.node_count()
+            ).into());
+        }
+        
+        if loaded.canonical_count() != canonical_count {
+            return Err(format!(
+                "Canonical count mismatch: expected {}, got {}",
+                canonical_count,
+                loaded.canonical_count()
             ).into());
         }
         
@@ -92,6 +102,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("=== Statistics ===");
         println!("Words:        {:>10}", word_count);
         println!("Nodes:        {:>10}", node_count);
+        println!("Canonical:    {:>10}", canonical_count);
         println!("JSON size:    {:>10} bytes ({:.2} MB)", json_data.len(), json_data.len() as f64 / 1024.0 / 1024.0);
         println!("Binary size:  {:>10} bytes ({:.2} MB)", binary_size, binary_size as f64 / 1024.0 / 1024.0);
         println!("Compression:  {:>10.1}%", (1.0 - binary_size as f64 / json_data.len() as f64) * 100.0);
