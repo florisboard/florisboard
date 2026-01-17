@@ -51,6 +51,7 @@ private external fun nativeExportContextMap(): String?
 private external fun nativeImportContextMap(jsonData: String): Boolean
 private external fun nativeClear()
 private external fun nativePredictNextWord(contextJson: String, maxCount: Int): String?
+private external fun nativeLoadNgramsForLanguage(language: String, jsonData: String): Boolean
 
 object NlpBridge {
     private val json = Json { ignoreUnknownKeys = true }
@@ -106,6 +107,9 @@ object NlpBridge {
     fun importContextMap(jsonData: String): Boolean = nativeImportContextMap(jsonData)
 
     fun clear() = nativeClear()
+
+    fun loadNgramsForLanguage(language: String, jsonData: String): Boolean =
+        nativeLoadNgramsForLanguage(language, jsonData)
 
     fun predictNextWord(context: List<String>, maxCount: Int): List<NativeSuggestion> {
         val contextJson = json.encodeToString(context)

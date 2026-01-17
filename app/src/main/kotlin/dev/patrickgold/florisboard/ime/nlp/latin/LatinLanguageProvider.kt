@@ -74,6 +74,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
 
             if (binaryLoaded) {
+                try {
+                    appContext.assets.open("ime/dict/$langCode.ngrams.json").use { inputStream ->
+                        val jsonData = inputStream.bufferedReader().readText()
+                        NlpBridge.loadNgramsForLanguage(langCode, jsonData)
+                    }
+                } catch (_: Exception) { }
+                
                 loadedLanguages.add(langCode)
             }
         }

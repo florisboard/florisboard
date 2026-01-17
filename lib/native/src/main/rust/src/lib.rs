@@ -280,6 +280,27 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeClear(
 }
 
 #[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadNgramsForLanguage(
+    mut env: JNIEnv,
+    _class: JClass,
+    language: JString,
+    json_data: JString,
+) -> jboolean {
+    let lang: String = match env.get_string(&language) {
+        Ok(s) => s.into(),
+        Err(_) => return JNI_FALSE,
+    };
+    let json: String = match env.get_string(&json_data) {
+        Ok(s) => s.into(),
+        Err(_) => return JNI_FALSE,
+    };
+    match ENGINE.load_ngrams_for_language(&lang, &json) {
+        Ok(_) => JNI_TRUE,
+        Err(_) => JNI_FALSE,
+    }
+}
+
+#[no_mangle]
 pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativePredictNextWord(
     mut env: JNIEnv,
     _class: JClass,

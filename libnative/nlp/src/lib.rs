@@ -91,6 +91,7 @@ pub struct LanguageDictionary {
     trie: TrieNode,
     binary_trie: Option<BinaryTrie>,
     dict: HashMap<String, u32>,
+    ngrams: HashMap<String, HashMap<String, u32>>,
 }
 
 impl Default for LanguageDictionary {
@@ -99,6 +100,7 @@ impl Default for LanguageDictionary {
             trie: TrieNode::default(),
             binary_trie: None,
             dict: HashMap::new(),
+            ngrams: HashMap::new(),
         }
     }
 }
@@ -155,10 +157,14 @@ impl NlpEngine {
         }
         
         let mut languages = self.languages.write().unwrap();
+        let existing_ngrams = languages.get(lang_code)
+            .map(|ld| ld.ngrams.clone())
+            .unwrap_or_default();
         languages.insert(lang_code.to_string(), LanguageDictionary {
             trie: TrieNode::default(),
             binary_trie: Some(trie),
             dict,
+            ngrams: existing_ngrams,
         });
         Ok(())
     }
@@ -183,12 +189,40 @@ impl NlpEngine {
         }
 
         let mut languages = self.languages.write().unwrap();
+        let existing_ngrams = languages.get(lang_code)
+            .map(|ld| ld.ngrams.clone())
+            .unwrap_or_default();
         languages.insert(lang_code.to_string(), LanguageDictionary {
             trie,
             binary_trie: None,
             dict: dict_copy,
+            ngrams: existing_ngrams,
         });
         Ok(())
+    }
+
+    pub fn load_ngrams_for_language(&self, lang_code: &str, json_data: &str) -> Result<(), String> {
+        let ngrams: HashMap<String, HashMap<String, u32>> =
+            serde_json::from_str(json_data).map_err(|e| e.to_string())?;
+
+        let mut languages = self.languages.write().unwrap();
+        if let Some(ld) = languages.get_mut(lang_code) {
+            ld.ngrams = ngrams;
+        } else {
+            languages.insert(lang_code.to_string(), LanguageDictionary {
+                ngrams,
+                ..Default::default()
+            });
+        }
+        Ok(())
+    }
+
+    fn get_active_ngrams(&self) -> HashMap<String, HashMap<String, u32>> {
+        let lang = self.active_language.read().unwrap();
+        let languages = self.languages.read().unwrap();
+        languages.get(&*lang)
+            .map(|ld| ld.ngrams.clone())
+            .unwrap_or_default()
     }
 
     pub fn spell_check(&self, word: &str, context: &[String], max_suggestions: usize) -> SpellCheckResult {
@@ -496,25 +530,36 @@ impl NlpEngine {
         }
 
         let ctx_map = self.context_map.read().unwrap();
+        let ngrams = self.get_active_ngrams();
         let mut candidates: Vec<(String, u32)> = Vec::new();
 
         let context_set: std::collections::HashSet<String> = 
             context.iter().map(|w| w.to_lowercase()).collect();
 
-        // Check each context word, with more weight on recent words
+        let add_candidate = |candidates: &mut Vec<(String, u32)>, word: &str, score: u32, context_set: &std::collections::HashSet<String>| {
+            if context_set.contains(&word.to_lowercase()) {
+                return;
+            }
+            if let Some(existing) = candidates.iter_mut().find(|(w, _)| w.to_lowercase() == word.to_lowercase()) {
+                existing.1 += score;
+            } else {
+                candidates.push((word.to_string(), score));
+            }
+        };
+
         for (i, prev_word) in context.iter().rev().enumerate() {
             let weight = (context.len() - i) as u32;
-            if let Some(following_words) = ctx_map.get(&prev_word.to_lowercase()) {
+            let prev_lower = prev_word.to_lowercase();
+            
+            if let Some(following_words) = ctx_map.get(&prev_lower) {
                 for (word, freq) in following_words {
-                    // Skip words already in context
-                    if context_set.contains(&word.to_lowercase()) {
-                        continue;
-                    }
-                    if let Some(existing) = candidates.iter_mut().find(|(w, _)| w == word) {
-                        existing.1 += freq * weight;
-                    } else {
-                        candidates.push((word.clone(), freq * weight));
-                    }
+                    add_candidate(&mut candidates, word, freq * weight * 10, &context_set);
+                }
+            }
+            
+            if let Some(following_words) = ngrams.get(&prev_lower) {
+                for (word, freq) in following_words {
+                    add_candidate(&mut candidates, word, freq * weight, &context_set);
                 }
             }
         }
@@ -768,5 +813,36 @@ mod tests {
 
         let predictions = engine.predict_next_word(&["how".to_string(), "are".to_string()], 5);
         assert!(predictions.iter().any(|s| s.text.to_lowercase() == "you"));
+    }
+
+    #[test]
+    fn test_ngrams_prediction() {
+        let engine = NlpEngine::new();
+        let ngrams = r#"{"how": {"are": 100, "is": 90}, "good": {"morning": 80, "night": 70}}"#;
+        engine.load_ngrams_for_language("en_US", ngrams).unwrap();
+        engine.set_language("en_US");
+
+        let predictions = engine.predict_next_word(&["how".to_string()], 5);
+        assert!(!predictions.is_empty());
+        assert!(predictions.iter().any(|s| s.text == "are"));
+
+        let predictions = engine.predict_next_word(&["good".to_string()], 5);
+        assert!(predictions.iter().any(|s| s.text == "morning"));
+    }
+
+    #[test]
+    fn test_learned_beats_ngrams() {
+        let engine = NlpEngine::new();
+        let ngrams = r#"{"how": {"is": 10}}"#;
+        engine.load_ngrams_for_language("en_US", ngrams).unwrap();
+        engine.set_language("en_US");
+
+        for _ in 0..5 {
+            engine.learn_word("are", &["how".to_string()]);
+        }
+
+        let predictions = engine.predict_next_word(&["how".to_string()], 5);
+        assert!(!predictions.is_empty());
+        assert_eq!(predictions[0].text.to_lowercase(), "are");
     }
 }
