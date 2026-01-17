@@ -115,10 +115,10 @@ fun KeyboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__keyboard__key_spacing__label),
                 primaryLabel = stringRes(R.string.screen_orientation__vertical),
                 secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
-                valueLabel = { stringRes(R.string.unit__display_pixel__symbol, "v" to it) },
-                min = 0.0f,
-                max = 10.0f,
-                stepIncrement = 0.5f,
+                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+                min = 50,
+                max = 150,
+                stepIncrement = 5,
             )
         }
 

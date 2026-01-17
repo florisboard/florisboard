@@ -114,27 +114,33 @@ class ImeWindowController(
             activeWindowConfig.value = windowConfig
         }
 
-        val userFontScale = combine(
+        val userPreferredOptions = combine(
             activeRootInsets,
+            prefs.keyboard.keySpacingHorizontal.asFlow(),
+            prefs.keyboard.keySpacingVertical.asFlow(),
             prefs.keyboard.fontSizeMultiplierPortrait.asFlow(),
             prefs.keyboard.fontSizeMultiplierLandscape.asFlow(),
-        ) { rootInsets, multiplierP, multiplierL ->
+        ) { rootInsets, keySpacingFactorH, keySpacingFactorV, multiplierP, multiplierL ->
             // TODO: this should adhere to form factor
             // TODO: font scale needs a rework anyways, change this in font scale rework PR!
             val rootBounds = rootInsets.boundsDp
-            when {
-                rootBounds.width <= rootBounds.height -> multiplierP / 100f
-                else -> multiplierL / 100f
-            }
+            ImeWindowSpec.UserPreferredOptions(
+                keySpacingFactorH = keySpacingFactorH / 100f,
+                keySpacingFactorV = keySpacingFactorV / 100f,
+                fontScale = when {
+                    rootBounds.width <= rootBounds.height -> multiplierP / 100f
+                    else -> multiplierL / 100f
+                },
+            )
         }
 
         combine(
             activeRootInsets,
             activeWindowConfig,
-            userFontScale,
+            userPreferredOptions,
             editor.version,
-        ) { rootInsets, windowConfig, userFontScale, _ ->
-            doComputeWindowSpec(rootInsets, windowConfig, userFontScale)
+        ) { rootInsets, windowConfig, userConfig, _ ->
+            doComputeWindowSpec(rootInsets, windowConfig, userConfig)
         }.collectIn(scope) { windowSpec ->
             activeWindowSpec.value = windowSpec
         }
@@ -254,28 +260,28 @@ class ImeWindowController(
     private fun doComputeWindowSpec(
         rootInsets: ImeInsets.Root,
         windowConfig: ImeWindowConfig,
-        userFontScale: Float,
+        userPreferredOptions: ImeWindowSpec.UserPreferredOptions,
     ): ImeWindowSpec {
         return when (windowConfig.mode) {
             ImeWindowMode.FIXED -> {
                 val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.fixedMode)
-                val props = windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps
-                val fontScale = props.calcFontScale(constraints) * userFontScale
+                val props = (windowConfig.fixedProps[windowConfig.fixedMode] ?: constraints.defaultProps)
+                    .constrained(constraints)
                 ImeWindowSpec.Fixed(
                     fixedMode = windowConfig.fixedMode,
-                    props = props.constrained(constraints),
-                    fontScale = fontScale,
+                    props = props,
+                    userPreferredOptions = userPreferredOptions,
                     constraints = constraints,
                 )
             }
             ImeWindowMode.FLOATING -> {
                 val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.floatingMode)
-                val props = windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps
-                val fontScale = props.calcFontScale(constraints) * userFontScale
+                val props = (windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps)
+                    .constrained(constraints)
                 ImeWindowSpec.Floating(
                     floatingMode = windowConfig.floatingMode,
-                    props = props.constrained(constraints),
-                    fontScale = fontScale,
+                    props = props,
+                    userPreferredOptions = userPreferredOptions,
                     constraints = constraints,
                 )
             }

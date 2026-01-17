@@ -525,13 +525,13 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__landscape_input_ui_mode",
             default = LandscapeInputUiMode.DYNAMICALLY_SHOW,
         )
-        val keySpacingVertical = float(
+        val keySpacingVertical = int(
             key = "keyboard__key_spacing_vertical",
-            default = 5.0f,
+            default = 100,
         )
-        val keySpacingHorizontal = float(
+        val keySpacingHorizontal = int(
             key = "keyboard__key_spacing_horizontal",
-            default = 2.0f,
+            default = 100,
         )
         val popupEnabled = boolean(
             key = "keyboard__popup_enabled",
@@ -897,6 +897,23 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             }
             "clipboard__clear_primary_clip_deletes_last_item" -> {
                 entry.transform(key = "clipboard__clear_primary_clip_affects_history_if_unpinned")
+            }
+
+            // Migrate key spacing rules
+            // Keep migration rules until: 0.8 dev cycle
+            "keyboard__key_spacing_horizontal" -> {
+                if (entry.type.isFloat()) {
+                    entry.reset()
+                } else {
+                    entry.keepAsIs()
+                }
+            }
+            "keyboard__key_spacing_vertical" -> {
+                if (entry.type.isFloat()) {
+                    entry.reset()
+                } else {
+                    entry.keepAsIs()
+                }
             }
 
             // Default: keep entry
