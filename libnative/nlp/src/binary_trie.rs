@@ -94,6 +94,7 @@ impl BinaryTrieNode {
     }
 }
 
+#[derive(Clone)]
 pub struct BinaryTrie {
     nodes: Vec<BinaryTrieNode>,
     words: Vec<String>,

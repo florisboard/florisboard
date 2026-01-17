@@ -48,34 +48,42 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     private var latestEditorContent: EditorContent? = null
     private var isPrivateSession: Boolean = false
-    private var isDictionaryLoaded = false
+    private val loadedLanguages = mutableSetOf<String>()
+    private var currentLanguage: String? = null
 
     override suspend fun create() {
         loadPersistedData()
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
-        if (!isDictionaryLoaded) {
-            // Try binary dictionary first (faster loading)
+        val langCode = getLanguageCode(subtype)
+        
+        if (langCode !in loadedLanguages) {
             val binaryLoaded = try {
-                appContext.assets.open("ime/dict/en_US.dict").use { inputStream ->
+                appContext.assets.open("ime/dict/$langCode.dict").use { inputStream ->
                     val data = inputStream.readBytes()
-                    NlpBridge.loadDictionaryBinary(data)
+                    NlpBridge.loadDictionaryBinaryForLanguage(langCode, data)
                 }
             } catch (e: Exception) {
                 false
             }
 
             if (binaryLoaded) {
-                isDictionaryLoaded = true
-            } else {
-                // Fall back to JSON dictionary
-                val rawData = appContext.assets.readText("ime/dict/en_US.json")
-                if (NlpBridge.loadDictionary(rawData)) {
-                    isDictionaryLoaded = true
-                }
+                loadedLanguages.add(langCode)
             }
         }
+        
+        if (currentLanguage != langCode && langCode in loadedLanguages) {
+            NlpBridge.setLanguage(langCode)
+            currentLanguage = langCode
+        }
+    }
+
+    private fun getLanguageCode(subtype: Subtype): String {
+        val locale = subtype.primaryLocale
+        val lang = locale.language
+        val country = locale.country
+        return if (country.isNotBlank()) "${lang}_$country" else lang
     }
 
     override suspend fun spell(
@@ -209,6 +217,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     override suspend fun destroy() {
         savePersistedData()
         NlpBridge.clear()
-        isDictionaryLoaded = false
+        loadedLanguages.clear()
+        currentLanguage = null
     }
 }

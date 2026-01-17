@@ -201,6 +201,50 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeImportPe
 }
 
 #[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSetLanguage(
+    mut env: JNIEnv,
+    _class: JClass,
+    language: JString,
+) {
+    if let Ok(s) = env.get_string(&language) {
+        let lang: String = s.into();
+        ENGINE.set_language(&lang);
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeGetLanguage(
+    env: JNIEnv,
+    _class: JClass,
+) -> jstring {
+    let lang = ENGINE.get_language();
+    env.new_string(lang)
+        .map(|s| s.into_raw())
+        .unwrap_or(std::ptr::null_mut())
+}
+
+#[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadDictionaryBinaryForLanguage(
+    mut env: JNIEnv,
+    _class: JClass,
+    language: JString,
+    data: JByteArray,
+) -> jboolean {
+    let lang: String = match env.get_string(&language) {
+        Ok(s) => s.into(),
+        Err(_) => return JNI_FALSE,
+    };
+    let bytes = match env.convert_byte_array(&data) {
+        Ok(b) => b,
+        Err(_) => return JNI_FALSE,
+    };
+    match ENGINE.load_dictionary_binary_for_language(&lang, &bytes) {
+        Ok(_) => JNI_TRUE,
+        Err(_) => JNI_FALSE,
+    }
+}
+
+#[no_mangle]
 pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeExportContextMap(
     env: JNIEnv,
     _class: JClass,

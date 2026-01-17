@@ -87,11 +87,26 @@ pub struct SpellCheckResult {
     pub suggestions: Vec<String>,
 }
 
+pub struct LanguageDictionary {
+    trie: TrieNode,
+    binary_trie: Option<BinaryTrie>,
+    dict: HashMap<String, u32>,
+}
+
+impl Default for LanguageDictionary {
+    fn default() -> Self {
+        Self {
+            trie: TrieNode::default(),
+            binary_trie: None,
+            dict: HashMap::new(),
+        }
+    }
+}
+
 pub struct NlpEngine {
-    main_trie: RwLock<TrieNode>,
-    binary_trie: RwLock<Option<BinaryTrie>>,
+    languages: RwLock<HashMap<String, LanguageDictionary>>,
+    active_language: RwLock<String>,
     personal_trie: RwLock<TrieNode>,
-    main_dict: RwLock<HashMap<String, u32>>,
     personal_dict: RwLock<HashMap<String, u32>>,
     context_map: RwLock<HashMap<String, HashMap<String, u32>>>,
 }
@@ -99,45 +114,80 @@ pub struct NlpEngine {
 impl NlpEngine {
     pub fn new() -> Self {
         Self {
-            main_trie: RwLock::new(TrieNode::default()),
-            binary_trie: RwLock::new(None),
+            languages: RwLock::new(HashMap::new()),
+            active_language: RwLock::new(String::from("en_US")),
             personal_trie: RwLock::new(TrieNode::default()),
-            main_dict: RwLock::new(HashMap::new()),
             personal_dict: RwLock::new(HashMap::new()),
             context_map: RwLock::new(HashMap::new()),
         }
     }
 
+    pub fn set_language(&self, lang_code: &str) {
+        *self.active_language.write().unwrap() = lang_code.to_string();
+    }
+
+    pub fn get_language(&self) -> String {
+        self.active_language.read().unwrap().clone()
+    }
+
+    fn get_active_dict(&self) -> (HashMap<String, u32>, Option<BinaryTrie>) {
+        let lang = self.active_language.read().unwrap();
+        let languages = self.languages.read().unwrap();
+        if let Some(ld) = languages.get(&*lang) {
+            (ld.dict.clone(), ld.binary_trie.clone())
+        } else {
+            (HashMap::new(), None)
+        }
+    }
+
     pub fn load_dictionary_binary(&self, data: &[u8]) -> Result<(), String> {
+        self.load_dictionary_binary_for_language("en_US", data)
+    }
+
+    pub fn load_dictionary_binary_for_language(&self, lang_code: &str, data: &[u8]) -> Result<(), String> {
         let trie = BinaryTrie::deserialize(data).map_err(|e| e.to_string())?;
         
-        let mut main_dict = self.main_dict.write().unwrap();
-        main_dict.clear();
-        
+        let mut dict = HashMap::new();
         let mut words = Vec::new();
         trie.collect_words(0, "", &mut words, 100000);
         for (word, freq) in words {
-            main_dict.insert(word, freq as u32);
+            dict.insert(word, freq as u32);
         }
         
-        *self.binary_trie.write().unwrap() = Some(trie);
+        let mut languages = self.languages.write().unwrap();
+        languages.insert(lang_code.to_string(), LanguageDictionary {
+            trie: TrieNode::default(),
+            binary_trie: Some(trie),
+            dict,
+        });
         Ok(())
     }
 
     pub fn load_dictionary(&self, json_data: &str) -> Result<(), String> {
+        self.load_dictionary_for_language("en_US", json_data)
+    }
+
+    pub fn load_dictionary_for_language(&self, lang_code: &str, json_data: &str) -> Result<(), String> {
         let dict: HashMap<String, u32> =
             serde_json::from_str(json_data).map_err(|e| e.to_string())?;
 
-        let mut main_trie = self.main_trie.write().unwrap();
-        let mut main_dict = self.main_dict.write().unwrap();
+        let mut trie = TrieNode::default();
+        let mut dict_copy = HashMap::new();
 
         for (word, freq) in dict {
             let trimmed = word.trim().to_string();
             if !trimmed.is_empty() {
-                main_trie.insert(&trimmed.to_lowercase(), freq);
-                main_dict.insert(trimmed.to_lowercase(), freq);
+                trie.insert(&trimmed.to_lowercase(), freq);
+                dict_copy.insert(trimmed.to_lowercase(), freq);
             }
         }
+
+        let mut languages = self.languages.write().unwrap();
+        languages.insert(lang_code.to_string(), LanguageDictionary {
+            trie,
+            binary_trie: None,
+            dict: dict_copy,
+        });
         Ok(())
     }
 
@@ -168,7 +218,7 @@ impl NlpEngine {
     }
 
     fn is_known_word(&self, word: &str) -> bool {
-        let main = self.main_dict.read().unwrap();
+        let (main_dict, _) = self.get_active_dict();
         let personal = self.personal_dict.read().unwrap();
 
         let variants = [
@@ -177,16 +227,16 @@ impl NlpEngine {
             word.to_uppercase(),
         ];
 
-        variants.iter().any(|v| main.contains_key(v) || personal.contains_key(v))
+        variants.iter().any(|v| main_dict.contains_key(v) || personal.contains_key(v))
     }
 
     fn suggest_corrections(&self, word: &str, context: &[String], max: usize) -> Vec<String> {
         let mut heap: BinaryHeap<(i64, String)> = BinaryHeap::new();
 
-        let main = self.main_dict.read().unwrap();
+        let (main_dict, _) = self.get_active_dict();
         let personal = self.personal_dict.read().unwrap();
 
-        for (candidate, freq) in main.iter() {
+        for (candidate, freq) in main_dict.iter() {
             let dist = edit_distance(word, candidate);
             if dist <= MAX_EDIT_DISTANCE {
                 let score = self.spelling_score(word, candidate, *freq, dist, 0.0, context);
@@ -245,29 +295,27 @@ impl NlpEngine {
         let normalized = prefix.to_lowercase();
         let mut suggestions: BinaryHeap<Suggestion> = BinaryHeap::new();
 
-        // Check if the typed word is a valid dictionary word
-        // If so, we should NOT auto-commit any corrections
+        let (main_dict, binary_trie) = self.get_active_dict();
+        
         let typed_is_valid_word = {
-            let main = self.main_dict.read().unwrap();
             let personal = self.personal_dict.read().unwrap();
-            main.contains_key(&normalized) || personal.contains_key(&normalized)
+            main_dict.contains_key(&normalized) || personal.contains_key(&normalized)
         };
 
-        // Personal dictionary always uses old trie
         self.collect_from_trie(&self.personal_trie.read().unwrap(), &normalized, prefix, context, PERSONAL_BONUS, typed_is_valid_word, &mut suggestions);
         
-        // Main dictionary: use binary trie if loaded, else fall back to old trie
-        let binary_trie = self.binary_trie.read().unwrap();
-        if let Some(ref bt) = *binary_trie {
+        if let Some(ref bt) = binary_trie {
             self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &mut suggestions);
         } else {
-            self.collect_from_trie(&self.main_trie.read().unwrap(), &normalized, prefix, context, 0.0, typed_is_valid_word, &mut suggestions);
+            let languages = self.languages.read().unwrap();
+            let lang = self.active_language.read().unwrap();
+            if let Some(ld) = languages.get(&*lang) {
+                self.collect_from_trie(&ld.trie, &normalized, prefix, context, 0.0, typed_is_valid_word, &mut suggestions);
+            }
         }
-        drop(binary_trie);
 
-        // Also add typo corrections (edit distance based) ONLY if typed word is NOT valid
         if !typed_is_valid_word {
-            self.collect_typo_corrections(&normalized, prefix, context, &mut suggestions);
+            self.collect_typo_corrections(&normalized, prefix, context, &main_dict, &mut suggestions);
         }
 
         let mut results = Vec::with_capacity(max_count);
@@ -287,16 +335,16 @@ impl NlpEngine {
         normalized_input: &str,
         original_input: &str,
         context: &[String],
+        main_dict: &HashMap<String, u32>,
         heap: &mut BinaryHeap<Suggestion>,
     ) {
         if normalized_input.len() < 2 {
             return;
         }
 
-        let main = self.main_dict.read().unwrap();
         let personal = self.personal_dict.read().unwrap();
 
-        for (candidate, freq) in main.iter() {
+        for (candidate, freq) in main_dict.iter() {
             if candidate.starts_with(normalized_input) {
                 continue;
             }
@@ -305,9 +353,7 @@ impl NlpEngine {
             if dist > 0 && dist <= MAX_EDIT_DISTANCE {
                 let display = format_case(candidate, original_input);
                 let conf = self.typo_correction_score(*freq, dist, context, candidate);
-                
                 let auto_commit = conf >= 0.65 && *freq >= 100 && dist <= 1;
-
                 heap.push(Suggestion {
                     text: display,
                     confidence: conf,
@@ -325,9 +371,7 @@ impl NlpEngine {
             if dist > 0 && dist <= MAX_EDIT_DISTANCE {
                 let display = format_case(candidate, original_input);
                 let conf = self.typo_correction_score(*freq, dist, context, candidate) + PERSONAL_BONUS;
-                
                 let auto_commit = conf >= 0.65 && *freq >= 50 && dist <= 1;
-
                 heap.push(Suggestion {
                     text: display,
                     confidence: conf,
@@ -340,9 +384,9 @@ impl NlpEngine {
     fn typo_correction_score(&self, freq: u32, dist: usize, context: &[String], word: &str) -> f64 {
         let freq_score = self.frequency_score(freq);
         let dist_penalty = match dist {
-            1 => 0.0,   // Single character error - no penalty
-            2 => 0.2,   // Two errors - moderate penalty
-            _ => 0.4,   // More errors - larger penalty
+            1 => 0.0,
+            2 => 0.2,
+            _ => 0.4,
         };
         let ctx_score = self.context_score(word, context);
         
@@ -493,10 +537,10 @@ impl NlpEngine {
 
     pub fn get_frequency(&self, word: &str) -> f64 {
         let normalized = word.to_lowercase();
-        let main = self.main_dict.read().unwrap();
+        let (main_dict, _) = self.get_active_dict();
         let personal = self.personal_dict.read().unwrap();
 
-        let main_freq = main.get(&normalized).copied().unwrap_or(0);
+        let main_freq = main_dict.get(&normalized).copied().unwrap_or(0);
         let personal_freq = personal.get(&normalized).copied().unwrap_or(0) * 2;
         self.frequency_score(main_freq.max(personal_freq))
     }
@@ -536,11 +580,11 @@ impl NlpEngine {
     }
 
     pub fn clear(&self) {
-        *self.main_trie.write().unwrap() = TrieNode::default();
         *self.personal_trie.write().unwrap() = TrieNode::default();
-        self.main_dict.write().unwrap().clear();
         self.personal_dict.write().unwrap().clear();
         self.context_map.write().unwrap().clear();
+        self.languages.write().unwrap().clear();
+        *self.active_language.write().unwrap() = String::from("en_US");
     }
 }
 
