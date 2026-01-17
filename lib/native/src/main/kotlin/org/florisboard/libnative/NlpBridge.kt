@@ -50,6 +50,7 @@ private external fun nativeImportPersonalDict(jsonData: String): Boolean
 private external fun nativeExportContextMap(): String?
 private external fun nativeImportContextMap(jsonData: String): Boolean
 private external fun nativeClear()
+private external fun nativePredictNextWord(contextJson: String, maxCount: Int): String?
 
 object NlpBridge {
     private val json = Json { ignoreUnknownKeys = true }
@@ -105,4 +106,14 @@ object NlpBridge {
     fun importContextMap(jsonData: String): Boolean = nativeImportContextMap(jsonData)
 
     fun clear() = nativeClear()
+
+    fun predictNextWord(context: List<String>, maxCount: Int): List<NativeSuggestion> {
+        val contextJson = json.encodeToString(context)
+        val resultJson = nativePredictNextWord(contextJson, maxCount) ?: return emptyList()
+        return try {
+            json.decodeFromString<List<NativeSuggestion>>(resultJson)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 }

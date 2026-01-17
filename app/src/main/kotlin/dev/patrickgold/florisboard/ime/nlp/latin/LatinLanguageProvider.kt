@@ -37,6 +37,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     companion object {
         const val ProviderId = "org.florisboard.nlp.providers.latin"
         private const val MAX_PRECEDING_WORDS = 3
+        private const val MAX_CONTEXT_BUFFER = 5
     }
 
     override val providerId = ProviderId
@@ -50,6 +51,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private var isPrivateSession: Boolean = false
     private val loadedLanguages = mutableSetOf<String>()
     private var currentLanguage: String? = null
+    
+    // Context buffer to maintain word history reliably
+    private val contextBuffer = mutableListOf<String>()
+    private var lastSelectionEnd: Int = 0
 
     override suspend fun create() {
         loadPersistedData()
@@ -121,11 +126,69 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         latestEditorContent = content
         this.isPrivateSession = isPrivateSession
         val prefix = content.composingText.trim()
-        if (prefix.length < 2) {
-            return emptyList()
+        
+        // Extract current context from text before cursor
+        val extractedContext = extractContextWords(content, subtype)
+        
+        // Detect new input session: cursor at start with no/little text, or text field changed
+        val currentSelectionEnd = content.selection.end
+        val textLength = content.textBeforeSelection.length + content.composingText.length
+        
+        if (textLength <= 1 && currentSelectionEnd <= 1) {
+            if (contextBuffer.isNotEmpty()) {
+                contextBuffer.clear()
+            }
+        } else if (currentSelectionEnd < lastSelectionEnd - 1) {
+            // Cursor jumped backwards significantly - reset context buffer
+            contextBuffer.clear()
+            contextBuffer.addAll(extractedContext)
+        }
+        lastSelectionEnd = currentSelectionEnd
+        
+        val context = if (extractedContext.size >= 2) {
+            extractedContext
+        } else if (extractedContext.isNotEmpty() && contextBuffer.isNotEmpty()) {
+            val lastExtracted = extractedContext.last()
+            if (contextBuffer.contains(lastExtracted)) {
+                val idx = contextBuffer.lastIndexOf(lastExtracted)
+                contextBuffer.subList(0, idx).toList() + extractedContext
+            } else {
+                extractedContext
+            }
+        } else {
+            extractedContext
+        }.takeLast(MAX_CONTEXT_BUFFER)
+
+        if (prefix.length < 2 && extractedContext.isNotEmpty() && !isPrivateSession) {
+            val lastWord = extractedContext.last()
+            val precedingContext = if (extractedContext.size >= 2) {
+                extractedContext.dropLast(1)
+            } else if (contextBuffer.isNotEmpty() && contextBuffer.last() != lastWord) {
+                contextBuffer.takeLast(2)
+            } else {
+                emptyList()
+            }
+            
+            // Learn word association (what word follows previous words)
+            if (precedingContext.isNotEmpty()) {
+                NlpBridge.learnWord(lastWord, precedingContext)
+            }
+            // Also boost the word itself in personal dictionary
+            NlpBridge.learnWord(lastWord, emptyList())
+            
+            // Update context buffer with the new word
+            if (contextBuffer.lastOrNull() != lastWord) {
+                contextBuffer.add(lastWord)
+                if (contextBuffer.size > MAX_CONTEXT_BUFFER) {
+                    contextBuffer.removeAt(0)
+                }
+            }
         }
 
-        val context = extractContextWords(content, subtype)
+        if (prefix.length < 2) {
+            return predictNextWord(context, maxCandidateCount)
+        }
+
         val suggestions = NlpBridge.suggest(prefix, context, maxCandidateCount - 1)
 
         val candidates = suggestions.map { suggestion ->
@@ -148,6 +211,19 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             listOf(typedWordCandidate) + candidates
         } else {
             candidates
+        }
+    }
+
+    private fun predictNextWord(context: List<String>, maxCount: Int): List<SuggestionCandidate> {
+        if (context.isEmpty()) return emptyList()
+        
+        return NlpBridge.predictNextWord(context, maxCount).map { suggestion ->
+            WordSuggestionCandidate(
+                text = suggestion.text,
+                confidence = suggestion.confidence,
+                isEligibleForAutoCommit = false,
+                sourceProvider = this
+            )
         }
     }
 
@@ -219,5 +295,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         NlpBridge.clear()
         loadedLanguages.clear()
         currentLanguage = null
+        contextBuffer.clear()
+        lastSelectionEnd = 0
     }
 }

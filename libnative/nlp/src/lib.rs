@@ -490,6 +490,57 @@ impl NlpEngine {
         score.min(1.0)
     }
 
+    pub fn predict_next_word(&self, context: &[String], max_count: usize) -> Vec<Suggestion> {
+        if context.is_empty() {
+            return vec![];
+        }
+
+        let ctx_map = self.context_map.read().unwrap();
+        let mut candidates: Vec<(String, u32)> = Vec::new();
+
+        let context_set: std::collections::HashSet<String> = 
+            context.iter().map(|w| w.to_lowercase()).collect();
+
+        // Check each context word, with more weight on recent words
+        for (i, prev_word) in context.iter().rev().enumerate() {
+            let weight = (context.len() - i) as u32;
+            if let Some(following_words) = ctx_map.get(&prev_word.to_lowercase()) {
+                for (word, freq) in following_words {
+                    // Skip words already in context
+                    if context_set.contains(&word.to_lowercase()) {
+                        continue;
+                    }
+                    if let Some(existing) = candidates.iter_mut().find(|(w, _)| w == word) {
+                        existing.1 += freq * weight;
+                    } else {
+                        candidates.push((word.clone(), freq * weight));
+                    }
+                }
+            }
+        }
+
+        if candidates.is_empty() {
+            return vec![];
+        }
+
+        candidates.sort_by(|a, b| b.1.cmp(&a.1));
+        candidates.truncate(max_count);
+
+        let max_freq = candidates.first().map(|(_, f)| *f).unwrap_or(1) as f64;
+
+        candidates
+            .into_iter()
+            .map(|(word, freq)| {
+                let confidence = (freq as f64 / max_freq).min(1.0);
+                Suggestion {
+                    text: word,
+                    confidence,
+                    is_eligible_for_auto_commit: false,
+                }
+            })
+            .collect()
+    }
+
     pub fn learn_word(&self, word: &str, context: &[String]) {
         let normalized = word.to_lowercase().trim().to_string();
         if normalized.len() < MIN_WORD_LENGTH {
@@ -701,5 +752,21 @@ mod tests {
 
         let personal = engine.personal_dict.read().unwrap();
         assert!(personal.contains_key("floris"));
+    }
+
+    #[test]
+    fn test_predict_next_word() {
+        let engine = NlpEngine::new();
+        engine.learn_word("are", &["how".to_string()]);
+        engine.learn_word("are", &["how".to_string()]);
+        engine.learn_word("you", &["are".to_string()]);
+        engine.learn_word("doing", &["you".to_string()]);
+
+        let predictions = engine.predict_next_word(&["how".to_string()], 5);
+        assert!(!predictions.is_empty());
+        assert_eq!(predictions[0].text.to_lowercase(), "are");
+
+        let predictions = engine.predict_next_word(&["how".to_string(), "are".to_string()], 5);
+        assert!(predictions.iter().any(|s| s.text.to_lowercase() == "you"));
     }
 }

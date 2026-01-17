@@ -278,3 +278,26 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeClear(
 ) {
     ENGINE.clear();
 }
+
+#[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativePredictNextWord(
+    mut env: JNIEnv,
+    _class: JClass,
+    context_json: JString,
+    max_count: jint,
+) -> jstring {
+    let context: Vec<String> = match env.get_string(&context_json) {
+        Ok(s) => {
+            let json: String = s.into();
+            serde_json::from_str(&json).unwrap_or_default()
+        }
+        Err(_) => vec![],
+    };
+
+    let predictions = ENGINE.predict_next_word(&context, max_count as usize);
+    let json = serde_json::to_string(&predictions).unwrap_or_default();
+
+    env.new_string(json)
+        .map(|s| s.into_raw())
+        .unwrap_or(std::ptr::null_mut())
+}
