@@ -1,7 +1,8 @@
 use std::collections::HashMap;
+use lz4_flex::{compress_prepend_size, decompress_size_prepended};
 
 const MAGIC: &[u8; 4] = b"FBTD"; // FlorisBoard Trie Dictionary
-const VERSION: u32 = 1;
+const VERSION: u32 = 2;
 
 #[repr(C, packed)]
 pub struct FileHeader {
@@ -58,8 +59,7 @@ impl FileHeader {
     }
 }
 
-/// Array-based trie node with fixed 12 bytes per node
-/// Using array indices instead of pointers for cache efficiency and serialization
+/// 12-byte node optimized for cache efficiency
 #[repr(C, packed)]
 #[derive(Clone, Copy, Default)]
 pub struct BinaryTrieNode {
@@ -174,14 +174,16 @@ impl BinaryTrie {
             checksum,
         );
 
-        let mut data = Vec::with_capacity(
-            FileHeader::SIZE + self.nodes.len() * BinaryTrieNode::SIZE
-        );
-        
-        data.extend_from_slice(&header.to_bytes());
+        let mut node_data = Vec::with_capacity(self.nodes.len() * BinaryTrieNode::SIZE);
         for node in &self.nodes {
-            data.extend_from_slice(&node.to_bytes());
+            node_data.extend_from_slice(&node.to_bytes());
         }
+        
+        let compressed = compress_prepend_size(&node_data);
+        
+        let mut data = Vec::with_capacity(FileHeader::SIZE + compressed.len());
+        data.extend_from_slice(&header.to_bytes());
+        data.extend_from_slice(&compressed);
         
         data
     }
@@ -189,16 +191,20 @@ impl BinaryTrie {
     pub fn deserialize(data: &[u8]) -> Result<Self, &'static str> {
         let header = FileHeader::from_bytes(data)?;
         
-        let expected_size = FileHeader::SIZE + (header.node_count as usize) * BinaryTrieNode::SIZE;
-        if data.len() < expected_size {
-            return Err("Data too small for declared node count");
+        let compressed = &data[FileHeader::SIZE..];
+        let node_data = decompress_size_prepended(compressed)
+            .map_err(|_| "LZ4 decompression failed")?;
+        
+        let expected_size = (header.node_count as usize) * BinaryTrieNode::SIZE;
+        if node_data.len() < expected_size {
+            return Err("Decompressed data too small");
         }
 
         let mut nodes = Vec::with_capacity(header.node_count as usize);
-        let mut offset = FileHeader::SIZE;
+        let mut offset = 0;
         
         for _ in 0..header.node_count {
-            nodes.push(BinaryTrieNode::from_bytes(&data[offset..offset + BinaryTrieNode::SIZE]));
+            nodes.push(BinaryTrieNode::from_bytes(&node_data[offset..offset + BinaryTrieNode::SIZE]));
             offset += BinaryTrieNode::SIZE;
         }
 
@@ -284,7 +290,11 @@ pub fn build_from_json(json_data: &str) -> Result<BinaryTrie, String> {
         .map_err(|e| format!("JSON parse error: {}", e))?;
     
     let mut trie = BinaryTrie::new();
-    for (word, freq) in dict {
+    
+    let mut words: Vec<_> = dict.into_iter().collect();
+    words.sort_by(|a, b| b.1.cmp(&a.1));
+    
+    for (word, freq) in words {
         trie.insert(&word.to_lowercase(), freq);
     }
     
