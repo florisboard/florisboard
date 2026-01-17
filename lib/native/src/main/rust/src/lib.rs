@@ -2,7 +2,7 @@ use dummy;
 use nlp::NlpEngine;
 use once_cell::sync::Lazy;
 
-use jni::objects::{JClass, JString};
+use jni::objects::{JByteArray, JClass, JString};
 use jni::sys::{jboolean, jdouble, jint, jstring, JNI_FALSE, JNI_TRUE};
 use jni::JNIEnv;
 
@@ -29,6 +29,22 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadDict
         Err(_) => return JNI_FALSE,
     };
     match ENGINE.load_dictionary(&json) {
+        Ok(_) => JNI_TRUE,
+        Err(_) => JNI_FALSE,
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadDictionaryBinary(
+    mut env: JNIEnv,
+    _class: JClass,
+    data: JByteArray,
+) -> jboolean {
+    let bytes = match env.convert_byte_array(&data) {
+        Ok(b) => b,
+        Err(_) => return JNI_FALSE,
+    };
+    match ENGINE.load_dictionary_binary(&bytes) {
         Ok(_) => JNI_TRUE,
         Err(_) => JNI_FALSE,
     }

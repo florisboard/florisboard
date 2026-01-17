@@ -56,9 +56,24 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
         if (!isDictionaryLoaded) {
-            val rawData = appContext.assets.readText("ime/dict/en_US.json")
-            if (NlpBridge.loadDictionary(rawData)) {
+            // Try binary dictionary first (faster loading)
+            val binaryLoaded = try {
+                appContext.assets.open("ime/dict/en_US.dict").use { inputStream ->
+                    val data = inputStream.readBytes()
+                    NlpBridge.loadDictionaryBinary(data)
+                }
+            } catch (e: Exception) {
+                false
+            }
+
+            if (binaryLoaded) {
                 isDictionaryLoaded = true
+            } else {
+                // Fall back to JSON dictionary
+                val rawData = appContext.assets.readText("ime/dict/en_US.json")
+                if (NlpBridge.loadDictionary(rawData)) {
+                    isDictionaryLoaded = true
+                }
             }
         }
     }

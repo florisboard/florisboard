@@ -35,6 +35,7 @@ data class NativeSpellCheckResult(
 )
 
 private external fun nativeLoadDictionary(jsonData: String): Boolean
+private external fun nativeLoadDictionaryBinary(data: ByteArray): Boolean
 private external fun nativeSpellCheck(word: String, contextJson: String, maxSuggestions: Int): String?
 private external fun nativeSuggest(prefix: String, contextJson: String, maxCount: Int): String?
 private external fun nativeLearnWord(word: String, contextJson: String)
@@ -51,6 +52,8 @@ object NlpBridge {
     private val json = Json { ignoreUnknownKeys = true }
 
     fun loadDictionary(jsonData: String): Boolean = nativeLoadDictionary(jsonData)
+
+    fun loadDictionaryBinary(data: ByteArray): Boolean = nativeLoadDictionaryBinary(data)
 
     fun spellCheck(word: String, context: List<String>, maxSuggestions: Int): NativeSpellCheckResult? {
         val contextJson = json.encodeToString(context)

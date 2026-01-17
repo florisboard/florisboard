@@ -1,5 +1,6 @@
 pub mod binary_trie;
 
+use binary_trie::BinaryTrie;
 use serde::{Deserialize, Serialize};
 use std::cmp::{min, Ordering};
 use std::collections::{BinaryHeap, HashMap};
@@ -10,7 +11,7 @@ const MAX_EDIT_DISTANCE: usize = 2;
 const MAX_CONTEXT_WORDS: usize = 3;
 const PERSONAL_BONUS: f64 = 0.25;
 const CONTEXT_BONUS: f64 = 0.15;
-const EXACT_MATCH_BONUS: f64 = 0.5;
+const EXACT_MATCH_BONUS: f64 = 1.0;
 const DECAY_FACTOR: f64 = 0.95;
 const MAX_PERSONAL_FREQ: u32 = 255;
 
@@ -88,6 +89,7 @@ pub struct SpellCheckResult {
 
 pub struct NlpEngine {
     main_trie: RwLock<TrieNode>,
+    binary_trie: RwLock<Option<BinaryTrie>>,
     personal_trie: RwLock<TrieNode>,
     main_dict: RwLock<HashMap<String, u32>>,
     personal_dict: RwLock<HashMap<String, u32>>,
@@ -98,11 +100,28 @@ impl NlpEngine {
     pub fn new() -> Self {
         Self {
             main_trie: RwLock::new(TrieNode::default()),
+            binary_trie: RwLock::new(None),
             personal_trie: RwLock::new(TrieNode::default()),
             main_dict: RwLock::new(HashMap::new()),
             personal_dict: RwLock::new(HashMap::new()),
             context_map: RwLock::new(HashMap::new()),
         }
+    }
+
+    pub fn load_dictionary_binary(&self, data: &[u8]) -> Result<(), String> {
+        let trie = BinaryTrie::deserialize(data).map_err(|e| e.to_string())?;
+        
+        let mut main_dict = self.main_dict.write().unwrap();
+        main_dict.clear();
+        
+        let mut words = Vec::new();
+        trie.collect_words(0, "", &mut words, 100000);
+        for (word, freq) in words {
+            main_dict.insert(word, freq as u32);
+        }
+        
+        *self.binary_trie.write().unwrap() = Some(trie);
+        Ok(())
     }
 
     pub fn load_dictionary(&self, json_data: &str) -> Result<(), String> {
@@ -226,8 +245,30 @@ impl NlpEngine {
         let normalized = prefix.to_lowercase();
         let mut suggestions: BinaryHeap<Suggestion> = BinaryHeap::new();
 
-        self.collect_from_trie(&self.personal_trie.read().unwrap(), &normalized, prefix, context, PERSONAL_BONUS, &mut suggestions);
-        self.collect_from_trie(&self.main_trie.read().unwrap(), &normalized, prefix, context, 0.0, &mut suggestions);
+        // Check if the typed word is a valid dictionary word
+        // If so, we should NOT auto-commit any corrections
+        let typed_is_valid_word = {
+            let main = self.main_dict.read().unwrap();
+            let personal = self.personal_dict.read().unwrap();
+            main.contains_key(&normalized) || personal.contains_key(&normalized)
+        };
+
+        // Personal dictionary always uses old trie
+        self.collect_from_trie(&self.personal_trie.read().unwrap(), &normalized, prefix, context, PERSONAL_BONUS, typed_is_valid_word, &mut suggestions);
+        
+        // Main dictionary: use binary trie if loaded, else fall back to old trie
+        let binary_trie = self.binary_trie.read().unwrap();
+        if let Some(ref bt) = *binary_trie {
+            self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &mut suggestions);
+        } else {
+            self.collect_from_trie(&self.main_trie.read().unwrap(), &normalized, prefix, context, 0.0, typed_is_valid_word, &mut suggestions);
+        }
+        drop(binary_trie);
+
+        // Also add typo corrections (edit distance based) ONLY if typed word is NOT valid
+        if !typed_is_valid_word {
+            self.collect_typo_corrections(&normalized, prefix, context, &mut suggestions);
+        }
 
         let mut results = Vec::with_capacity(max_count);
         let mut seen = std::collections::HashSet::new();
@@ -241,6 +282,108 @@ impl NlpEngine {
         results
     }
 
+    fn collect_typo_corrections(
+        &self,
+        normalized_input: &str,
+        original_input: &str,
+        context: &[String],
+        heap: &mut BinaryHeap<Suggestion>,
+    ) {
+        if normalized_input.len() < 2 {
+            return;
+        }
+
+        let main = self.main_dict.read().unwrap();
+        let personal = self.personal_dict.read().unwrap();
+
+        for (candidate, freq) in main.iter() {
+            if candidate.starts_with(normalized_input) {
+                continue;
+            }
+
+            let dist = edit_distance(normalized_input, candidate);
+            if dist > 0 && dist <= MAX_EDIT_DISTANCE {
+                let display = format_case(candidate, original_input);
+                let conf = self.typo_correction_score(*freq, dist, context, candidate);
+                
+                let auto_commit = conf >= 0.65 && *freq >= 100 && dist <= 1;
+
+                heap.push(Suggestion {
+                    text: display,
+                    confidence: conf,
+                    is_eligible_for_auto_commit: auto_commit,
+                });
+            }
+        }
+
+        for (candidate, freq) in personal.iter() {
+            if candidate.starts_with(normalized_input) {
+                continue;
+            }
+
+            let dist = edit_distance(normalized_input, candidate);
+            if dist > 0 && dist <= MAX_EDIT_DISTANCE {
+                let display = format_case(candidate, original_input);
+                let conf = self.typo_correction_score(*freq, dist, context, candidate) + PERSONAL_BONUS;
+                
+                let auto_commit = conf >= 0.65 && *freq >= 50 && dist <= 1;
+
+                heap.push(Suggestion {
+                    text: display,
+                    confidence: conf,
+                    is_eligible_for_auto_commit: auto_commit,
+                });
+            }
+        }
+    }
+
+    fn typo_correction_score(&self, freq: u32, dist: usize, context: &[String], word: &str) -> f64 {
+        let freq_score = self.frequency_score(freq);
+        let dist_penalty = match dist {
+            1 => 0.0,   // Single character error - no penalty
+            2 => 0.2,   // Two errors - moderate penalty
+            _ => 0.4,   // More errors - larger penalty
+        };
+        let ctx_score = self.context_score(word, context);
+        
+        // Higher weight on frequency, lower threshold for common words
+        freq_score * 0.7 + ctx_score * 0.2 - dist_penalty
+    }
+
+    fn collect_from_binary_trie(
+        &self,
+        trie: &BinaryTrie,
+        normalized_prefix: &str,
+        original_prefix: &str,
+        context: &[String],
+        typed_is_valid_word: bool,
+        heap: &mut BinaryHeap<Suggestion>,
+    ) {
+        if let Some(idx) = trie.search_prefix(normalized_prefix) {
+            let mut words = Vec::new();
+            trie.collect_words(idx, normalized_prefix, &mut words, 100);
+
+            for (word, freq) in words {
+                let display = format_case(&word, original_prefix);
+                let is_exact_match = word.eq_ignore_ascii_case(original_prefix);
+                
+                let prefix_bonus = 0.3;
+                let mut conf = self.frequency_score(freq as u32) * 0.6 + self.context_score(&word, context) * 0.2 + prefix_bonus;
+                if is_exact_match {
+                    conf += EXACT_MATCH_BONUS;
+                }
+
+                let auto_commit = !typed_is_valid_word && !is_exact_match && conf >= 0.7 && freq >= 100;
+
+                heap.push(Suggestion {
+                    text: display,
+                    confidence: conf,
+                    is_eligible_for_auto_commit: auto_commit,
+                });
+            }
+        }
+    }
+
     fn collect_from_trie(
         &self,
         trie: &TrieNode,
@@ -248,6 +391,7 @@ impl NlpEngine {
         original_prefix: &str,
         context: &[String],
         bonus: f64,
+        typed_is_valid_word: bool,
         heap: &mut BinaryHeap<Suggestion>,
     ) {
         if let Some(node) = trie.search_prefix(normalized_prefix) {
@@ -256,13 +400,15 @@ impl NlpEngine {
 
             for (word, freq) in words {
                 let display = format_case(&word, original_prefix);
-                let mut conf = self.frequency_score(freq) * 0.6 + self.context_score(&word, context) * 0.2 + bonus;
-                if word.eq_ignore_ascii_case(original_prefix) {
+                let is_exact_match = word.eq_ignore_ascii_case(original_prefix);
+                
+                let prefix_bonus = 0.3;
+                let mut conf = self.frequency_score(freq) * 0.6 + self.context_score(&word, context) * 0.2 + bonus + prefix_bonus;
+                if is_exact_match {
                     conf += EXACT_MATCH_BONUS;
                 }
 
-                // Only mark high-confidence suggestions as eligible for auto-commit
-                let auto_commit = conf >= 0.8 && freq >= 100;
+                let auto_commit = !typed_is_valid_word && !is_exact_match && conf >= 0.7 && freq >= 100;
 
                 heap.push(Suggestion {
                     text: display,
@@ -274,13 +420,15 @@ impl NlpEngine {
     }
 
     fn frequency_score(&self, freq: u32) -> f64 {
+        // Our dictionary uses 0-255 range after normalization
         match freq {
-            f if f >= 5000 => 1.0,
-            f if f >= 1000 => 0.9,
-            f if f >= 500 => 0.75,
-            f if f >= 100 => 0.5,
-            f if f >= 10 => 0.25,
-            _ => 0.1,
+            f if f >= 250 => 1.0,    // Top-tier words (the, and, is, etc.)
+            f if f >= 200 => 0.9,    // Very common words
+            f if f >= 150 => 0.8,    // Common words
+            f if f >= 100 => 0.7,    // Moderately common
+            f if f >= 50 => 0.5,     // Less common
+            f if f >= 10 => 0.3,     // Rare
+            _ => 0.1,                // Very rare
         }
     }
 
@@ -427,6 +575,10 @@ fn edit_distance(a: &str, b: &str) -> usize {
         for j in 1..=n {
             let cost = if a[i - 1] == b[j - 1] { 0 } else { 1 };
             dp[i][j] = min(min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i - 1][j - 1] + cost);
+            
+            if i > 1 && j > 1 && a[i - 1] == b[j - 2] && a[i - 2] == b[j - 1] {
+                dp[i][j] = min(dp[i][j], dp[i - 2][j - 2] + 1);
+            }
         }
     }
     dp[m][n]
