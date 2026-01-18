@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.nlp
 import android.content.Context
 import android.os.SystemClock
 import android.util.LruCache
-import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
@@ -39,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
@@ -46,7 +46,6 @@ import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.guardedByLock
 import org.florisboard.lib.kotlin.collectLatestIn
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.properties.Delegates
 
 private const val BLANK_STR_PATTERN = "^\\s*$"
@@ -86,8 +85,7 @@ class NlpManager(context: Context) {
         }
 
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
-    var debugOverlayVersion = MutableLiveData(0)
-    private val debugOverlayVersionSource = AtomicInteger(0)
+    var debugOverlayVersion = MutableStateFlow(0)
 
     init {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
@@ -124,8 +122,7 @@ class NlpManager(context: Context) {
      * @return The punctuation rule or a fallback.
      */
     fun getPunctuationRule(subtype: Subtype): PunctuationRule {
-        return keyboardManager.resources.punctuationRules.value
-            ?.get(subtype.punctuationRule) ?: PunctuationRule.Fallback
+        return keyboardManager.resources.punctuationRules.value[subtype.punctuationRule] ?: PunctuationRule.Fallback
     }
 
     private suspend fun getSpellingProvider(subtype: Subtype): SpellingProvider {
@@ -324,15 +321,13 @@ class NlpManager(context: Context) {
     }
 
     fun addToDebugOverlay(word: String, info: SpellingResult) {
-        val version = debugOverlayVersionSource.incrementAndGet()
         debugOverlaySuggestionsInfos.put(System.currentTimeMillis(), word to info)
-        debugOverlayVersion.postValue(version)
+        debugOverlayVersion.update { it + 1 }
     }
 
     fun clearDebugOverlay() {
-        val version = debugOverlayVersionSource.incrementAndGet()
         debugOverlaySuggestionsInfos.evictAll()
-        debugOverlayVersion.postValue(version)
+        debugOverlayVersion.update { it + 1 }
     }
 
     private class ProviderInstanceWrapper(val provider: NlpProvider) {

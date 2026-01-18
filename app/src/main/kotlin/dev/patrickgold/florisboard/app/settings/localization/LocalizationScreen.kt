@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -122,8 +121,8 @@ fun LocalizationScreen() = FlorisScreen {
                     text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),
                 )
             } else {
-                val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
-                val layouts by keyboardManager.resources.layouts.observeAsNonNullState()
+                val currencySets by keyboardManager.resources.currencySets.collectAsState()
+                val layouts by keyboardManager.resources.layouts.collectAsState()
                 val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
                 for (subtype in subtypes) {
                     val cMeta = layouts[LayoutType.CHARACTERS]?.get(subtype.layoutMap.characters)
