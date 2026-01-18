@@ -48,7 +48,6 @@ import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
@@ -179,7 +178,7 @@ private fun DevtoolsSpellingOverlay() {
     val context = LocalContext.current
     val nlpManager by context.nlpManager()
 
-    val debugOverlayVersion by nlpManager.debugOverlayVersion.observeAsNonNullState()
+    val debugOverlayVersion by nlpManager.debugOverlayVersion.collectAsState()
     val suggestionsInfos = remember(debugOverlayVersion) { nlpManager.debugOverlaySuggestionsInfos.snapshot() }
 
     val sortedEntries = suggestionsInfos.entries.sortedByDescending { it.key }

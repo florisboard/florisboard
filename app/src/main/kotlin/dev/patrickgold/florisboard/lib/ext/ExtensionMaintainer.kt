@@ -31,7 +31,7 @@ data class ExtensionMaintainer(
     val url: String? = null,
 ) {
     companion object {
-        private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*${'$'}""".toRegex()
+        private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*$""".toRegex()
 
         fun from(str: String): ExtensionMaintainer? {
             if (str.isBlank() || !ValidationRegex.matches(str)) {
@@ -60,10 +60,10 @@ data class ExtensionMaintainer(
 
     override fun toString() = buildString {
         append(name)
-        if (email != null && email.isNotBlank()) {
+        if (!email.isNullOrBlank()) {
             append(" <$email>")
         }
-        if (url != null && url.isNotBlank()) {
+        if (!url.isNullOrBlank()) {
             append(" ($url)")
         }
     }

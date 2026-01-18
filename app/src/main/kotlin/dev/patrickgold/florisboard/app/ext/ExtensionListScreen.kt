@@ -37,6 +37,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,7 +55,6 @@ import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
@@ -96,7 +96,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
     val context = LocalContext.current
     val navController = LocalNavController.current
     val extensionManager by context.extensionManager()
-    val extensionIndex by type.getExtensionIndex(extensionManager).observeAsNonNullState()
+    val extensionIndex by type.getExtensionIndex(extensionManager).collectAsState()
 
     var fabHeight by remember {
         mutableStateOf(0)

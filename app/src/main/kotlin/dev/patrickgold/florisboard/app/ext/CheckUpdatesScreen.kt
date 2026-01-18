@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.extensionManager
@@ -29,7 +31,7 @@ fun CheckUpdatesScreen() = FlorisScreen {
 
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
-    val extensionIndex = extensionManager.combinedExtensionList()
+    val extensionIndex by extensionManager.extensions.collectAsState()
 
     content {
         UpdateBox(extensionIndex)

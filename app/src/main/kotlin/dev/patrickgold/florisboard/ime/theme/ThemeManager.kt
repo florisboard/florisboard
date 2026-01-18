@@ -85,7 +85,7 @@ class ThemeManager(context: Context) {
     val activeThemeInfo get() = _activeThemeInfo.asStateFlow()
 
     init {
-        extensionManager.themes.observeForever { themeExtensions ->
+        extensionManager.themes.collectIn(scope) { themeExtensions ->
             val version = indexedThemeConfigVersion.incrementAndGet()
             _indexedThemeConfigs.value = buildMap {
                 for (themeExtension in themeExtensions) {

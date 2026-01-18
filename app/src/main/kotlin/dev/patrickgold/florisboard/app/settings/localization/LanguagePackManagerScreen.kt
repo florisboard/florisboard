@@ -32,6 +32,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -46,22 +47,19 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.rippleClickable
 import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.android.showLongToastSync
 
 enum class LanguagePackManagerScreenAction(val id: String) {
     MANAGE("manage-installed-language-packs");
@@ -81,10 +79,10 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val indexedLanguagePackExtensions by extensionManager.languagePacks.observeAsNonNullState()
+    val indexedLanguagePackExtensions by extensionManager.languagePacks.collectAsState()
     val selectedManagerLanguagePackId = remember { mutableStateOf<ExtensionComponentName?>(null) }
     val extGroupedLanguagePacks = remember(indexedLanguagePackExtensions) {
-        buildMap<String, List<LanguagePackComponent>> {
+        buildMap {
             for (ext in indexedLanguagePackExtensions) {
                 put(ext.meta.id, ext.items)
             }

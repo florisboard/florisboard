@@ -42,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -77,7 +78,6 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -154,7 +154,7 @@ private class SubtypeEditorState(init: Subtype?) {
         layoutMap.value = subtype.layoutMap
     }
 
-    fun toSubtype() = runCatching<Subtype> {
+    fun toSubtype() = runCatching {
         check(primaryLocale.value != SelectLocale)
         check(nlpProviders.value.spelling != SelectNlpProviderId)
         check(nlpProviders.value.suggestion != SelectNlpProviderId)
@@ -197,11 +197,11 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val subtypeManager by context.subtypeManager()
 
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
-    val composers by keyboardManager.resources.composers.observeAsNonNullState()
-    val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
-    val layoutExtensions by keyboardManager.resources.layouts.observeAsNonNullState()
-    val popupMappings by keyboardManager.resources.popupMappings.observeAsNonNullState()
-    val subtypePresets by keyboardManager.resources.subtypePresets.observeAsNonNullState()
+    val composers by keyboardManager.resources.composers.collectAsState()
+    val currencySets by keyboardManager.resources.currencySets.collectAsState()
+    val layoutExtensions by keyboardManager.resources.layouts.collectAsState()
+    val popupMappings by keyboardManager.resources.popupMappings.collectAsState()
+    val subtypePresets by keyboardManager.resources.subtypePresets.collectAsState()
 
     val subtypeEditor = rememberSaveable(saver = SubtypeEditorState.Saver) {
         val subtype = id?.let { subtypeManager.getSubtypeById(id) }

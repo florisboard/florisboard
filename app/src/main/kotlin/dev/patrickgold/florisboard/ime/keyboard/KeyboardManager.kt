@@ -23,7 +23,6 @@ import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -70,6 +69,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -125,7 +125,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     init {
         scope.launch(Dispatchers.Main.immediate) {
-            resources.anyChanged.observeForever {
+            resources.anyChangedVersion.collectIn(scope) {
                 updateActiveEvaluators {
                     keyboardCache.clear()
                 }
@@ -885,25 +885,18 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     inner class KeyboardManagerResources {
-        val composers = MutableLiveData<Map<ExtensionComponentName, Composer>>(emptyMap())
-        val currencySets = MutableLiveData<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
-        val layouts = MutableLiveData<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
-        val popupMappings = MutableLiveData<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
-        val punctuationRules = MutableLiveData<Map<ExtensionComponentName, PunctuationRule>>(emptyMap())
-        val subtypePresets = MutableLiveData<List<SubtypePreset>>(emptyList())
+        val composers = MutableStateFlow<Map<ExtensionComponentName, Composer>>(emptyMap())
+        val currencySets = MutableStateFlow<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
+        val layouts = MutableStateFlow<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
+        val popupMappings = MutableStateFlow<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
+        val punctuationRules = MutableStateFlow<Map<ExtensionComponentName, PunctuationRule>>(emptyMap())
+        val subtypePresets = MutableStateFlow<List<SubtypePreset>>(emptyList())
 
-        private val anyChangedGuard = Mutex(locked = false)
-        val anyChanged = MutableLiveData(Unit)
+        val anyChangedVersion = MutableStateFlow(0)
 
         init {
-            scope.launch(Dispatchers.Main.immediate) {
-                extensionManager.keyboardExtensions.observeForever { keyboardExtensions ->
-                    scope.launch {
-                        anyChangedGuard.withLock {
-                            parseKeyboardExtensions(keyboardExtensions)
-                        }
-                    }
-                }
+            extensionManager.keyboardExtensions.collectIn(scope) { keyboardExtensions ->
+                parseKeyboardExtensions(keyboardExtensions)
             }
         }
 
@@ -944,13 +937,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     localSubtypePresets.add(0, localSubtypePresets.removeAt(index))
                 }
             }
-            subtypePresets.postValue(localSubtypePresets)
-            composers.postValue(localComposers)
-            currencySets.postValue(localCurrencySets)
-            layouts.postValue(localLayouts)
-            popupMappings.postValue(localPopupMappings)
-            punctuationRules.postValue(localPunctuationRules)
-            anyChanged.postValue(Unit)
+            subtypePresets.value = localSubtypePresets
+            composers.value = localComposers
+            currencySets.value = localCurrencySets
+            layouts.value = localLayouts
+            popupMappings.value = localPopupMappings
+            punctuationRules.value = localPunctuationRules
+            anyChangedVersion.update { it + 1 }
         }
     }
 
