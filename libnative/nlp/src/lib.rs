@@ -109,7 +109,7 @@ impl Default for LanguageDictionary {
 
 pub struct NlpEngine {
     languages: RwLock<HashMap<String, LanguageDictionary>>,
-    active_language: RwLock<String>,
+    active_languages: RwLock<Vec<String>>,
     personal_trie: RwLock<TrieNode>,
     personal_dict: RwLock<HashMap<String, u32>>,
     context_map: RwLock<HashMap<String, HashMap<String, u32>>>,
@@ -119,7 +119,7 @@ impl NlpEngine {
     pub fn new() -> Self {
         Self {
             languages: RwLock::new(HashMap::new()),
-            active_language: RwLock::new(String::from("en_US")),
+            active_languages: RwLock::new(vec![String::from("en_US")]),
             personal_trie: RwLock::new(TrieNode::default()),
             personal_dict: RwLock::new(HashMap::new()),
             context_map: RwLock::new(HashMap::new()),
@@ -127,28 +127,76 @@ impl NlpEngine {
     }
 
     pub fn set_language(&self, lang_code: &str) {
-        *self.active_language.write().unwrap() = lang_code.to_string();
+        *self.active_languages.write().unwrap() = vec![lang_code.to_string()];
+    }
+
+    pub fn set_languages(&self, lang_codes: &[&str]) {
+        *self.active_languages.write().unwrap() = lang_codes.iter().map(|s| s.to_string()).collect();
     }
 
     pub fn get_language(&self) -> String {
-        self.active_language.read().unwrap().clone()
+        self.active_languages.read().unwrap().first().cloned().unwrap_or_default()
+    }
+
+    pub fn get_languages(&self) -> Vec<String> {
+        self.active_languages.read().unwrap().clone()
     }
 
     pub fn get_canonical_form(&self, word: &str) -> Option<String> {
-        let lang = self.active_language.read().unwrap();
+        let langs = self.active_languages.read().unwrap();
         let languages = self.languages.read().unwrap();
-        languages.get(&*lang)
-            .and_then(|ld| ld.canonical_forms.get(&normalize_for_lookup(word)).cloned())
+        let normalized = normalize_for_lookup(word);
+        for lang in langs.iter() {
+            if let Some(ld) = languages.get(lang) {
+                if let Some(canonical) = ld.canonical_forms.get(&normalized) {
+                    return Some(canonical.clone());
+                }
+            }
+        }
+        None
     }
 
-    fn get_active_dict(&self) -> (HashMap<String, u32>, Option<BinaryTrie>, HashMap<String, String>) {
-        let lang = self.active_language.read().unwrap();
+    fn get_active_dicts(&self) -> (HashMap<String, u32>, Vec<BinaryTrie>, HashMap<String, String>) {
+        let langs = self.active_languages.read().unwrap();
         let languages = self.languages.read().unwrap();
-        if let Some(ld) = languages.get(&*lang) {
-            (ld.dict.clone(), ld.binary_trie.clone(), ld.canonical_forms.clone())
-        } else {
-            (HashMap::new(), None, HashMap::new())
+        
+        let mut merged_dict = HashMap::new();
+        let mut tries = Vec::new();
+        let mut merged_canonical = HashMap::new();
+        
+        for lang in langs.iter() {
+            if let Some(ld) = languages.get(lang) {
+                for (word, freq) in &ld.dict {
+                    merged_dict.entry(word.clone())
+                        .and_modify(|f: &mut u32| *f = (*f).max(*freq))
+                        .or_insert(*freq);
+                }
+                if let Some(bt) = &ld.binary_trie {
+                    tries.push(bt.clone());
+                }
+                merged_canonical.extend(ld.canonical_forms.clone());
+            }
         }
+        (merged_dict, tries, merged_canonical)
+    }
+
+    fn get_active_ngrams(&self) -> HashMap<String, HashMap<String, u32>> {
+        let langs = self.active_languages.read().unwrap();
+        let languages = self.languages.read().unwrap();
+        let mut merged = HashMap::new();
+        for lang in langs.iter() {
+            if let Some(ld) = languages.get(lang) {
+                for (key, followers) in &ld.ngrams {
+                    let entry = merged.entry(key.clone()).or_insert_with(HashMap::new);
+                    for (word, freq) in followers {
+                        entry.entry(word.clone())
+                            .and_modify(|f: &mut u32| *f = (*f).max(*freq))
+                            .or_insert(*freq);
+                    }
+                }
+            }
+        }
+        merged
     }
 
     pub fn load_dictionary_binary(&self, data: &[u8]) -> Result<(), String> {
@@ -245,14 +293,6 @@ impl NlpEngine {
         Ok(())
     }
 
-    fn get_active_ngrams(&self) -> HashMap<String, HashMap<String, u32>> {
-        let lang = self.active_language.read().unwrap();
-        let languages = self.languages.read().unwrap();
-        languages.get(&*lang)
-            .map(|ld| ld.ngrams.clone())
-            .unwrap_or_default()
-    }
-
     pub fn spell_check(&self, word: &str, context: &[String], max_suggestions: usize) -> SpellCheckResult {
         let normalized = word.to_lowercase();
         if normalized.is_empty() {
@@ -288,7 +328,7 @@ impl NlpEngine {
     }
 
     fn is_known_word(&self, word: &str) -> bool {
-        let (main_dict, _, _) = self.get_active_dict();
+        let (main_dict, _, _) = self.get_active_dicts();
         let personal = self.personal_dict.read().unwrap();
 
         let variants = [
@@ -303,7 +343,7 @@ impl NlpEngine {
     fn suggest_corrections(&self, word: &str, context: &[String], max: usize) -> Vec<String> {
         let mut heap: BinaryHeap<(i64, String)> = BinaryHeap::new();
 
-        let (main_dict, _, canonical_forms) = self.get_active_dict();
+        let (main_dict, _, canonical_forms) = self.get_active_dicts();
         let personal = self.personal_dict.read().unwrap();
 
         let normalized_key = normalize_for_lookup(word);
@@ -371,35 +411,38 @@ impl NlpEngine {
         let normalized = prefix.to_lowercase();
         let mut suggestions: BinaryHeap<Suggestion> = BinaryHeap::new();
 
-        let (main_dict, binary_trie, canonical_forms) = self.get_active_dict();
+        let (main_dict, binary_tries, canonical_forms) = self.get_active_dicts();
         
         let typed_is_valid_word = {
             let personal = self.personal_dict.read().unwrap();
             main_dict.contains_key(&normalized) || personal.contains_key(&normalized)
         };
 
-        // Check for direct canonical form match (e.g., "im" -> "I'm", "usa" -> "USA")
         let normalized_key = normalize_for_lookup(&normalized);
         if let Some(canonical) = canonical_forms.get(&normalized_key) {
             let dict_key = canonical.to_lowercase();
             let freq = main_dict.get(&dict_key).copied().unwrap_or(200) as u32;
-            let conf = self.frequency_score(freq) + 0.3 + EXACT_MATCH_BONUS; // High priority for exact canonical match
+            let conf = self.frequency_score(freq) + 0.3 + EXACT_MATCH_BONUS;
             suggestions.push(Suggestion {
                 text: canonical.clone(),
                 confidence: conf,
-                is_eligible_for_auto_commit: true, // Canonical forms should auto-commit
+                is_eligible_for_auto_commit: true,
             });
         }
 
         self.collect_from_trie(&self.personal_trie.read().unwrap(), &normalized, prefix, context, PERSONAL_BONUS, typed_is_valid_word, &canonical_forms, &mut suggestions);
         
-        if let Some(ref bt) = binary_trie {
-            self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &canonical_forms, &mut suggestions);
+        if !binary_tries.is_empty() {
+            for bt in &binary_tries {
+                self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &canonical_forms, &mut suggestions);
+            }
         } else {
             let languages = self.languages.read().unwrap();
-            let lang = self.active_language.read().unwrap();
-            if let Some(ld) = languages.get(&*lang) {
-                self.collect_from_trie(&ld.trie, &normalized, prefix, context, 0.0, typed_is_valid_word, &canonical_forms, &mut suggestions);
+            let langs = self.active_languages.read().unwrap();
+            for lang in langs.iter() {
+                if let Some(ld) = languages.get(lang) {
+                    self.collect_from_trie(&ld.trie, &normalized, prefix, context, 0.0, typed_is_valid_word, &canonical_forms, &mut suggestions);
+                }
             }
         }
 
@@ -589,7 +632,7 @@ impl NlpEngine {
 
         let ctx_map = self.context_map.read().unwrap();
         let ngrams = self.get_active_ngrams();
-        let (_, _, canonical_forms) = self.get_active_dict();
+        let (_, _, canonical_forms) = self.get_active_dicts();
         let mut candidates: Vec<(String, u32)> = Vec::new();
 
         let context_set: std::collections::HashSet<String> = 
@@ -695,7 +738,7 @@ impl NlpEngine {
 
     pub fn get_frequency(&self, word: &str) -> f64 {
         let normalized = word.to_lowercase();
-        let (main_dict, _, _) = self.get_active_dict();
+        let (main_dict, _, _) = self.get_active_dicts();
         let personal = self.personal_dict.read().unwrap();
 
         let main_freq = main_dict.get(&normalized).copied().unwrap_or(0);
@@ -742,7 +785,7 @@ impl NlpEngine {
         self.personal_dict.write().unwrap().clear();
         self.context_map.write().unwrap().clear();
         self.languages.write().unwrap().clear();
-        *self.active_language.write().unwrap() = String::from("en_US");
+        *self.active_languages.write().unwrap() = vec![String::from("en_US")];
     }
 }
 
@@ -990,5 +1033,31 @@ mod tests {
         // "hello" should be valid
         let result = engine.spell_check("hello", &[], 3);
         assert!(result.is_valid);
+    }
+
+    #[test]
+    fn test_multi_language_support() {
+        let engine = NlpEngine::new();
+        
+        let en_json = r#"{"hello": 200, "world": 180, "computer": 150}"#;
+        engine.load_dictionary_for_language("en_US", en_json).unwrap();
+        
+        let de_json = r#"{"hallo": 200, "welt": 180, "computer": 140}"#;
+        engine.load_dictionary_for_language("de_DE", de_json).unwrap();
+        
+        engine.set_languages(&["en_US", "de_DE"]);
+        assert_eq!(engine.get_languages(), vec!["en_US", "de_DE"]);
+        
+        let suggestions = engine.suggest("hal", &[], 5);
+        let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
+        assert!(texts.contains(&"hallo"), "Expected hallo from de_DE: {:?}", texts);
+        
+        let suggestions = engine.suggest("hel", &[], 5);
+        let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
+        assert!(texts.contains(&"hello"), "Expected hello from en_US: {:?}", texts);
+        
+        let suggestions = engine.suggest("comp", &[], 5);
+        let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
+        assert!(texts.contains(&"computer"), "Expected computer (shared): {:?}", texts);
     }
 }

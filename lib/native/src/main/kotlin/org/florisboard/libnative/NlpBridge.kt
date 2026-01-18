@@ -37,6 +37,7 @@ data class NativeSpellCheckResult(
 private external fun nativeLoadDictionary(jsonData: String): Boolean
 private external fun nativeLoadDictionaryBinary(data: ByteArray): Boolean
 private external fun nativeSetLanguage(language: String)
+private external fun nativeSetLanguages(languages: Array<String>)
 private external fun nativeGetLanguage(): String?
 private external fun nativeLoadDictionaryBinaryForLanguage(language: String, data: ByteArray): Boolean
 private external fun nativeSpellCheck(word: String, contextJson: String, maxSuggestions: Int): String?
@@ -61,6 +62,8 @@ object NlpBridge {
     fun loadDictionaryBinary(data: ByteArray): Boolean = nativeLoadDictionaryBinary(data)
 
     fun setLanguage(language: String) = nativeSetLanguage(language)
+
+    fun setLanguages(languages: Array<String>) = nativeSetLanguages(languages)
 
     fun getLanguage(): String = nativeGetLanguage() ?: "en_US"
 

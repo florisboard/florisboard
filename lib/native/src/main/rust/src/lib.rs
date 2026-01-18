@@ -2,7 +2,7 @@ use dummy;
 use nlp::NlpEngine;
 use once_cell::sync::Lazy;
 
-use jni::objects::{JByteArray, JClass, JString};
+use jni::objects::{JByteArray, JClass, JObjectArray, JString};
 use jni::sys::{jboolean, jdouble, jint, jstring, JNI_FALSE, JNI_TRUE};
 use jni::JNIEnv;
 
@@ -210,6 +210,33 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSetLangu
         let lang: String = s.into();
         ENGINE.set_language(&lang);
     }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSetLanguages(
+    mut env: JNIEnv,
+    _class: JClass,
+    languages: JObjectArray,
+) {
+    let len = match env.get_array_length(&languages) {
+        Ok(l) => l as usize,
+        Err(_) => return,
+    };
+    let mut lang_vec: Vec<String> = Vec::with_capacity(len);
+    for i in 0..len {
+        let obj = match env.get_object_array_element(&languages, i as i32) {
+            Ok(o) => o,
+            Err(_) => continue,
+        };
+        let jstr: JString = obj.into();
+        let java_str = match env.get_string(&jstr) {
+            Ok(s) => s,
+            Err(_) => continue,
+        };
+        lang_vec.push(java_str.into());
+    }
+    let refs: Vec<&str> = lang_vec.iter().map(|s| s.as_str()).collect();
+    ENGINE.set_languages(&refs);
 }
 
 #[no_mangle]

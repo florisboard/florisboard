@@ -50,7 +50,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private var latestEditorContent: EditorContent? = null
     private var isPrivateSession: Boolean = false
     private val loadedLanguages = mutableSetOf<String>()
-    private var currentLanguage: String? = null
+    private var activeLanguages = listOf<String>()
     
     // Context buffer to maintain word history reliably
     private val contextBuffer = mutableListOf<String>()
@@ -82,12 +82,26 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                 } catch (_: Exception) { }
                 
                 loadedLanguages.add(langCode)
+                updateActiveLanguages()
             }
         }
-        
-        if (currentLanguage != langCode && langCode in loadedLanguages) {
-            NlpBridge.setLanguage(langCode)
-            currentLanguage = langCode
+    }
+
+    fun preloadSubtypes(subtypes: List<Subtype>) {
+        val langCodes = subtypes.mapNotNull { subtype ->
+            val code = getLanguageCode(subtype)
+            if (code in loadedLanguages) code else null
+        }
+        if (langCodes.isNotEmpty() && langCodes != activeLanguages) {
+            activeLanguages = langCodes
+            NlpBridge.setLanguages(langCodes.toTypedArray())
+        }
+    }
+
+    private fun updateActiveLanguages() {
+        if (loadedLanguages.isNotEmpty() && loadedLanguages.toList() != activeLanguages) {
+            activeLanguages = loadedLanguages.toList()
+            NlpBridge.setLanguages(activeLanguages.toTypedArray())
         }
     }
 
@@ -301,7 +315,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         savePersistedData()
         NlpBridge.clear()
         loadedLanguages.clear()
-        currentLanguage = null
+        activeLanguages = emptyList()
         contextBuffer.clear()
         lastSelectionEnd = 0
     }
