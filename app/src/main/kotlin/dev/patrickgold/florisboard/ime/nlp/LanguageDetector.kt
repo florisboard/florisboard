@@ -172,7 +172,8 @@ class LanguageDetector {
     private fun updateCache(text: String, detected: DetectedLanguage) {
         if (detectionCache.size >= maxCacheSize) {
             // Remove oldest entry (first entry in LinkedHashMap with accessOrder=true)
-            detectionCache.remove(detectionCache.keys.first())
+            val firstKey = detectionCache.keys.iterator().next()
+            detectionCache.remove(firstKey)
         }
         detectionCache[text] = detected
     }
