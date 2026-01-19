@@ -164,7 +164,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val autoSpacePunctuation = boolean(
             key = "correction__auto_space_punctuation",
-            default = false,
+            default = true,
         )
         val doubleSpacePeriod = boolean(
             key = "correction__double_space_period",

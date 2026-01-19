@@ -2,7 +2,7 @@ name: FlorisBoard CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, my-changes ]
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
       - ".github/PULL_REQUEST_TEMPLATE.md"
