@@ -423,8 +423,9 @@ impl NlpEngine {
             let dict_key = canonical.to_lowercase();
             let freq = main_dict.get(&dict_key).copied().unwrap_or(200) as u32;
             let conf = self.frequency_score(freq) + 0.3 + EXACT_MATCH_BONUS;
+            let display_text = format_with_canonical(canonical, prefix, &canonical_forms);
             suggestions.push(Suggestion {
-                text: canonical.clone(),
+                text: display_text,
                 confidence: conf,
                 is_eligible_for_auto_commit: true,
             });
@@ -850,7 +851,13 @@ fn format_case(word: &str, reference: &str) -> String {
 fn format_with_canonical(word: &str, reference: &str, canonical_forms: &HashMap<String, String>) -> String {
     let normalized_key = normalize_for_lookup(word);
     if let Some(canonical) = canonical_forms.get(&normalized_key) {
-        if is_contraction(canonical) || is_acronym(canonical) {
+        // Always preserve contractions (e.g., "don't", "I'm")
+        if is_contraction(canonical) {
+            return canonical.clone();
+        }
+        // Only preserve acronym capitalization if user typed in uppercase
+        // This prevents "us" from becoming "US" while allowing "US" -> "US"
+        if is_acronym(canonical) && reference.chars().all(|c| c.is_uppercase()) {
             return canonical.clone();
         }
     }
@@ -992,14 +999,20 @@ mod tests {
     #[test]
     fn test_suggest_returns_canonical_forms() {
         let engine = NlpEngine::new();
-        let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "hello": 100, "image": 90}"#;
+        let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "us": 160, "hello": 100, "image": 90}"#;
         engine.load_dictionary(json).unwrap();
 
         let suggestions = engine.suggest("im", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"I'm"), "Expected I'm in suggestions: {:?}", texts);
 
+        // Typing "us" (lowercase) should return "us", not "US" or "USA"
         let suggestions = engine.suggest("us", &[], 5);
+        let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
+        assert!(texts.contains(&"us"), "Expected us in suggestions: {:?}", texts);
+
+        // Typing "US" (uppercase) SHOULD give "USA"
+        let suggestions = engine.suggest("US", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"USA"), "Expected USA in suggestions: {:?}", texts);
 
