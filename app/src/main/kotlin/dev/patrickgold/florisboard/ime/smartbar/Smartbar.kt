@@ -241,7 +241,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                             .padding(4.dp)
                     )
                 }
-                }
             }
             this@CenterContent.AnimatedVisibility(
                 visible = expanded,
