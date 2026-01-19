@@ -205,7 +205,7 @@ class NlpManager(context: Context) {
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
         // Detect language from current word/text
-        val currentText = content.selection.text.toString()
+        val currentText = content.currentWordText
         detectedLanguage = languageDetector.detectLanguage(currentText)
         
         scope.launch {
