@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -287,6 +288,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         when (candidate) {
             is ClipboardSuggestionCandidate -> editorInstance.commitClipboardItem(candidate.clipboardItem)
+            is WordSuggestionCandidate -> {
+                val casedText = fixCase(candidate.text.toString())
+                val casedCandidate = candidate.copy(text = casedText)
+                editorInstance.commitCompletion(casedCandidate)
+            }
             else -> editorInstance.commitCompletion(candidate)
         }
     }

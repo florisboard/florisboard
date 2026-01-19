@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -69,6 +70,9 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 
     val displayMode by prefs.suggestion.displayMode.observeAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
+    val keyboardState by keyboardManager.activeState.collectAsState()
+    val shiftState = keyboardState.inputShiftState
+    val locale = subtypeManager.activeSubtype.primaryLocale
 
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
@@ -116,6 +120,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     modifier = candidateModifier,
                     candidate = candidate,
                     displayMode = displayMode,
+                    shiftState = shiftState,
+                    locale = locale,
                     onClick = {
                         // Can't use candidate directly
                         keyboardManager.commitCandidate(candidates[n])
@@ -140,6 +146,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 private fun CandidateItem(
     candidate: SuggestionCandidate,
     displayMode: CandidatesDisplayMode,
+    shiftState: InputShiftState,
+    locale: dev.patrickgold.florisboard.lib.FlorisLocale,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     onLongPress: () -> Boolean = { false },
@@ -200,11 +208,12 @@ private fun CandidateItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            val displayText = applyCaseToSuggestion(candidate.text.toString(), shiftState, locale)
             SnyggText(
                 elementName = "$elementName-text",
                 attributes = attributes,
                 selector = selector,
-                text = candidate.text.toString(),
+                text = displayText,
             )
             if (candidate.secondaryText != null) {
                 SnyggText(
@@ -215,5 +224,16 @@ private fun CandidateItem(
                 )
             }
         }
+    }
+}
+
+private fun applyCaseToSuggestion(text: String, shiftState: InputShiftState, locale: dev.patrickgold.florisboard.lib.FlorisLocale): String {
+    val javaLocale = locale.base
+    return when (shiftState) {
+        InputShiftState.CAPS_LOCK -> text.uppercase(javaLocale)
+        InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> text.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(javaLocale) else it.toString()
+        }
+        else -> text
     }
 }
