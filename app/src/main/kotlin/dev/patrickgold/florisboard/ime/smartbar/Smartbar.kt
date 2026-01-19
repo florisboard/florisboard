@@ -210,7 +210,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun RowScope.CenterContent() {
         val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED
-        val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
         val detectedLanguage by nlpManager.detectedLanguageFlow.collectAsState()
         
         Box(
@@ -232,17 +231,16 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         CandidatesRow()
                     }
                     
-                    // Debug label for language detection (only when devtools enabled)
-                    if (devtoolsEnabled) {
-                        androidx.compose.material3.Text(
-                            text = "Mode: ${detectedLanguage.name}",
-                            style = androidx.compose.material3.MaterialTheme.typography.labelSmall,
-                            color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .padding(4.dp)
-                        )
-                    }
+                    // Language detection label (always visible)
+                    androidx.compose.material3.Text(
+                        text = "Mode: ${detectedLanguage.name}",
+                        style = androidx.compose.material3.MaterialTheme.typography.labelSmall,
+                        color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(4.dp)
+                    )
+                }
                 }
             }
             this@CenterContent.AnimatedVisibility(
