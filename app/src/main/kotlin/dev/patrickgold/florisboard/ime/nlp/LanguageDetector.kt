@@ -92,11 +92,7 @@ class LanguageDetector {
     }
     
     // Simple cache to avoid re-detecting the same text
-    private val detectionCache = LinkedHashMap<String, DetectedLanguage>(
-        initialCapacity = 10,
-        loadFactor = 0.75f,
-        accessOrder = true
-    )
+    private val detectionCache = LinkedHashMap<String, DetectedLanguage>(10, 0.75f, true)
     private val maxCacheSize = 10
     
     /**
