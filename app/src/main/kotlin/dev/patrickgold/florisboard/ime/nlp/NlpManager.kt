@@ -62,6 +62,7 @@ class NlpManager(context: Context) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider(context)
     private val emojiSuggestionProvider = EmojiSuggestionProvider(context)
+    private val languageDetector = LanguageDetector()
     private val providers = guardedByLock {
         mapOf(
             LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
@@ -82,6 +83,14 @@ class NlpManager(context: Context) {
         get() = activeCandidatesFlow.value
         private set(v) {
             _activeCandidatesFlow.value = v
+        }
+
+    private val _detectedLanguageFlow = MutableStateFlow(DetectedLanguage.UNKNOWN)
+    val detectedLanguageFlow = _detectedLanguageFlow.asStateFlow()
+    inline var detectedLanguage
+        get() = detectedLanguageFlow.value
+        private set(v) {
+            _detectedLanguageFlow.value = v
         }
 
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
@@ -195,6 +204,10 @@ class NlpManager(context: Context) {
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
+        // Detect language from current word/text
+        val currentText = content.selection.text.toString()
+        detectedLanguage = languageDetector.detectLanguage(currentText)
+        
         scope.launch {
             val emojiSuggestions = when {
                 prefs.emoji.suggestionEnabled.get() -> {
