@@ -57,10 +57,14 @@ import org.florisboard.lib.compose.stringRes
 
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun TypingScreen() = FlorisScreen {
     val prefs by FlorisPreferenceStore
+    val scope = rememberCoroutineScope()
 
     title = stringRes(R.string.settings__typing__title)
     previewFieldVisible = true
@@ -147,8 +151,10 @@ fun TypingScreen() = FlorisScreen {
                         title = stringRes(R.string.pref__ai_integration__gemini_api_key__label),
                         confirmLabel = stringRes(android.R.string.ok),
                         onConfirm = {
-                            prefs.aiIntegration.geminiApiKey.set(tempApiKey)
-                            showApiKeyDialog = false
+                            scope.launch {
+                                prefs.aiIntegration.geminiApiKey.set(tempApiKey)
+                                showApiKeyDialog = false
+                            }
                         },
                         dismissLabel = stringRes(android.R.string.cancel),
                         onDismiss = { showApiKeyDialog = false },
