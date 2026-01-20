@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -259,7 +260,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     val showLanguageIndicator by prefs.languageDetection.showVisualIndicator.observeAsState()
                     if (showLanguageIndicator) {
                         androidx.compose.material3.Text(
-                            text = "Mode: ${detectedLanguage.name}",
+                            text = "Mode: $detectedLanguage",
                             style = androidx.compose.material3.MaterialTheme.typography.labelSmall,
                             color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
