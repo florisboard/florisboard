@@ -164,7 +164,9 @@ class LanguageAwareLayoutSwitcher(private val context: Context) {
      * This can be used for testing or manual control.
      */
     fun switchToLanguage(language: DetectedLanguage) {
-        handleLanguageChange(language)
+        scope.launch {
+            handleLanguageChange(language)
+        }
     }
     
     /**
