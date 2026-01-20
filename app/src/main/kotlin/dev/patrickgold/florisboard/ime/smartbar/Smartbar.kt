@@ -211,10 +211,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun RowScope.CenterContent() {
         val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED
-        val detectedLanguage by nlpManager.detectedLanguageFlow.collectAsState()
+        val detectedLanguage: DetectedLanguage by nlpManager.detectedLanguageFlow.collectAsState()
         var showAiSuggestions by remember { mutableStateOf(false) }
-        val aiEnabled by prefs.aiIntegration.enabled.observeAsState()
-        val apiKey by prefs.aiIntegration.geminiApiKey.observeAsState()
+        val aiEnabled: Boolean by prefs.aiIntegration.enabled.observeAsState()
+        val apiKey: String by prefs.aiIntegration.geminiApiKey.observeAsState()
         val aiReady = apiKey.isNotBlank()
         
         Box(
