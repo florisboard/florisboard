@@ -105,9 +105,10 @@ class LanguageDetector {
      * 4. Otherwise → UNKNOWN
      * 
      * @param text The text to analyze
+     * @param confidenceThreshold The minimum confidence (0-100) required for Teluglish detection
      * @return The detected language
      */
-    fun detectLanguage(text: String): DetectedLanguage {
+    fun detectLanguage(text: String, confidenceThreshold: Int = 30): DetectedLanguage {
         // Handle empty or whitespace-only text
         if (text.isBlank()) {
             return DetectedLanguage.UNKNOWN
@@ -121,7 +122,7 @@ class LanguageDetector {
             containsTeluguScript(text) -> DetectedLanguage.TELUGU
             
             // Check for Teluglish patterns
-            isTeluglish(text) -> DetectedLanguage.TELUGLISH
+            isTeluglish(text, confidenceThreshold) -> DetectedLanguage.TELUGLISH
             
             // Default to English for non-empty text
             else -> DetectedLanguage.ENGLISH
@@ -143,8 +144,11 @@ class LanguageDetector {
     /**
      * Checks if the text matches Teluglish patterns.
      * Uses a confidence-based approach: if enough words/suffixes match, it's Teluglish.
+     * 
+     * @param text The text to analyze
+     * @param confidenceThreshold The minimum confidence (0-100) required
      */
-    private fun isTeluglish(text: String): Boolean {
+    private fun isTeluglish(text: String, confidenceThreshold: Int): Boolean {
         val words = text.split(Regex("\\s+"))
         if (words.isEmpty()) return false
         
@@ -156,10 +160,11 @@ class LanguageDetector {
         // Count suffix matches
         matchCount += TELUGLISH_SUFFIX_PATTERN.findAll(text).count()
         
-        // Calculate confidence
+        // Calculate confidence (convert threshold from 0-100 to 0.0-1.0)
         val confidence = matchCount.toDouble() / words.size
+        val threshold = confidenceThreshold / 100.0
         
-        return confidence >= TELUGLISH_CONFIDENCE_THRESHOLD
+        return confidence >= threshold
     }
     
     /**

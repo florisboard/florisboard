@@ -63,6 +63,7 @@ class NlpManager(context: Context) {
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider(context)
     private val emojiSuggestionProvider = EmojiSuggestionProvider(context)
     private val languageDetector = LanguageDetector()
+    private val layoutSwitcher = LanguageAwareLayoutSwitcher(context)
     private val providers = guardedByLock {
         mapOf(
             LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
@@ -97,6 +98,9 @@ class NlpManager(context: Context) {
     var debugOverlayVersion = MutableStateFlow(0)
 
     init {
+        // Initialize layout switcher to observe language changes
+        layoutSwitcher.observeLanguageChanges(detectedLanguageFlow)
+        
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
         }
@@ -204,9 +208,14 @@ class NlpManager(context: Context) {
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()
-        // Detect language from current word/text
-        val currentText = content.currentWordText
-        detectedLanguage = languageDetector.detectLanguage(currentText)
+        // Detect language from current word/text (only if enabled)
+        if (prefs.languageDetection.enabled.get()) {
+            val currentText = content.currentWordText
+            val sensitivity = prefs.languageDetection.detectionSensitivity.get()
+            detectedLanguage = languageDetector.detectLanguage(currentText, sensitivity)
+        } else {
+            detectedLanguage = DetectedLanguage.UNKNOWN
+        }
         
         scope.launch {
             val emojiSuggestions = when {

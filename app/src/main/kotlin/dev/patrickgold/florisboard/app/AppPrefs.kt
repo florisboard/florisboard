@@ -569,6 +569,30 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         }
     }
 
+    val languageDetection = LanguageDetection()
+    inner class LanguageDetection {
+        val enabled = boolean(
+            key = "language_detection__enabled",
+            default = true,
+        )
+        val autoSwitchLayout = boolean(
+            key = "language_detection__auto_switch_layout",
+            default = false,
+        )
+        val showVisualIndicator = boolean(
+            key = "language_detection__show_visual_indicator",
+            default = false,
+        )
+        val detectionSensitivity = int(
+            key = "language_detection__detection_sensitivity",
+            default = 30, // 30% confidence threshold
+        )
+        val minWordLength = int(
+            key = "language_detection__min_word_length",
+            default = 3,
+        )
+    }
+
     val localization = Localization()
     inner class Localization {
         val displayLanguageNamesIn = enum(

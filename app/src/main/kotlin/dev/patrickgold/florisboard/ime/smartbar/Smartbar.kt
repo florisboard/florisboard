@@ -231,15 +231,18 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                         CandidatesRow()
                     }
                     
-                    // Language detection label (always visible)
-                    androidx.compose.material3.Text(
-                        text = "Mode: ${detectedLanguage.name}",
-                        style = androidx.compose.material3.MaterialTheme.typography.labelSmall,
-                        color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(4.dp)
-                    )
+                    // Language detection label (conditional on preference)
+                    val showLanguageIndicator by prefs.languageDetection.showVisualIndicator.observeAsState()
+                    if (showLanguageIndicator) {
+                        androidx.compose.material3.Text(
+                            text = "Mode: ${detectedLanguage.name}",
+                            style = androidx.compose.material3.MaterialTheme.typography.labelSmall,
+                            color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(4.dp)
+                        )
+                    }
                 }
             }
             this@CenterContent.AnimatedVisibility(
