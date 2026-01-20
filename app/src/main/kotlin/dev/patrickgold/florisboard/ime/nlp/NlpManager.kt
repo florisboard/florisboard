@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.ai.AIService
 import dev.patrickgold.florisboard.ime.nlp.ai.GeminiAIService
 import dev.patrickgold.florisboard.ime.nlp.ai.TextRewriteProvider
 import dev.patrickgold.florisboard.ime.nlp.ai.ToneAdjustmentProvider
@@ -37,6 +38,11 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.properties.Delegates
 
 private const val BLANK_STR_PATTERN = "^\\s*$"
 
@@ -227,7 +233,7 @@ class NlpManager(context: Context) {
 
         val activeContent = editorInstance.activeContent
         val selection = activeContent.selection
-        if (selection.isCollapsed) return
+        if (selection.isCursorMode) return
         
         val selectedText = try {
             activeContent.text.substring(selection.start, selection.end)

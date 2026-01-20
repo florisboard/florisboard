@@ -19,18 +19,8 @@ package dev.patrickgold.florisboard.ime.smartbar
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
@@ -67,8 +57,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val nlpManager by context.nlpManager()
     val subtypeManager by context.subtypeManager()
 
-    val displayMode by prefs.suggestion.displayMode.observeAsState()
-    val candidates by nlpManager.activeCandidatesFlow.collectAsState()
+    val displayMode: CandidatesDisplayMode by prefs.suggestion.displayMode.observeAsState()
+    val candidates: List<SuggestionCandidate> by nlpManager.activeCandidatesFlow.collectAsState()
 
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
@@ -102,7 +92,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                 CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
                 else -> candidates
             }
-            for ((n, candidate) in list.withIndex()) {
+            for (n in list.indices) {
+                val candidate = list[n]
                 if (n > 0) {
                     SnyggSpacer(
                         elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,

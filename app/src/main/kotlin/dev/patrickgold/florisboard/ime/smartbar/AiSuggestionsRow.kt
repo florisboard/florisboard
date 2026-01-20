@@ -45,8 +45,8 @@ fun AiSuggestionsRow(modifier: Modifier = Modifier) {
     val nlpManager by context.nlpManager()
     val keyboardManager by context.keyboardManager()
     
-    val aiReplies by nlpManager.aiReplyCandidatesFlow.collectAsState()
-    val isLoading by nlpManager.aiLoadingFlow.collectAsState()
+    val aiReplies: List<AiSuggestionCandidate> by nlpManager.aiReplyCandidatesFlow.collectAsState()
+    val isLoading: Boolean by nlpManager.aiLoadingFlow.collectAsState()
 
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
