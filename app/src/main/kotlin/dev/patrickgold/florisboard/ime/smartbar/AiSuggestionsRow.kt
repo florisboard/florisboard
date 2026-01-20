@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
+import dev.patrickgold.florisboard.ime.nlp.AiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.nlp.ai.TextRewriteProvider
 import dev.patrickgold.florisboard.ime.nlp.ai.ToneAdjustmentProvider
