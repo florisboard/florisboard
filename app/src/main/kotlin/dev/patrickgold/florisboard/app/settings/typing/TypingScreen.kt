@@ -51,6 +51,8 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisErrorCard
 import org.florisboard.lib.compose.stringRes
 
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun TypingScreen() = FlorisScreen {
@@ -68,6 +70,44 @@ fun TypingScreen() = FlorisScreen {
                 preferences in the "Corrections" group are properly implemented though.
             """.trimIndent().replace('\n', ' '),
         )
+
+        PreferenceGroup(title = stringRes(R.string.pref__language_detection__title)) {
+            SwitchPreference(
+                prefs.languageDetection.enabled,
+                title = stringRes(R.string.pref__language_detection__enabled__label),
+                summary = stringRes(R.string.pref__language_detection__enabled__summary),
+            )
+            SwitchPreference(
+                prefs.languageDetection.autoSwitchLayout,
+                title = stringRes(R.string.pref__language_detection__auto_switch_layout__label),
+                summary = stringRes(R.string.pref__language_detection__auto_switch_layout__summary),
+                enabledIf = { prefs.languageDetection.enabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.languageDetection.showVisualIndicator,
+                title = stringRes(R.string.pref__language_detection__show_visual_indicator__label),
+                summary = stringRes(R.string.pref__language_detection__show_visual_indicator__summary),
+                enabledIf = { prefs.languageDetection.enabled isEqualTo true },
+            )
+            DialogSliderPreference(
+                prefs.languageDetection.detectionSensitivity,
+                title = stringRes(R.string.pref__language_detection__detection_sensitivity__label),
+                valueLabel = { "$it%" },
+                min = 0,
+                max = 100,
+                stepIncrement = 5,
+                enabledIf = { prefs.languageDetection.enabled isEqualTo true },
+            )
+            DialogSliderPreference(
+                prefs.languageDetection.minWordLength,
+                title = stringRes(R.string.pref__language_detection__min_word_length__label),
+                valueLabel = { it.toString() },
+                min = 1,
+                max = 10,
+                stepIncrement = 1,
+                enabledIf = { prefs.languageDetection.enabled isEqualTo true },
+            )
+        }
 
         PreferenceGroup(title = stringRes(R.string.pref__suggestion__title)) {
             SwitchPreference(

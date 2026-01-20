@@ -477,6 +477,16 @@
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>
+    <string name="pref__language_detection__title" comment="Preference group title">Language Detection</string>
+    <string name="pref__language_detection__enabled__label" comment="Preference title">Enable Language Detection</string>
+    <string name="pref__language_detection__enabled__summary" comment="Preference summary">Detects if you are typing in Telugu, English, or Teluglish</string>
+    <string name="pref__language_detection__auto_switch_layout__label" comment="Preference title">Auto-Switch Layout</string>
+    <string name="pref__language_detection__auto_switch_layout__summary" comment="Preference summary">Automatically switches keyboard layout based on detected language</string>
+    <string name="pref__language_detection__show_visual_indicator__label" comment="Preference title">Show Visual Indicator</string>
+    <string name="pref__language_detection__show_visual_indicator__summary" comment="Preference summary">Displays the detected language mode in the Smartbar</string>
+    <string name="pref__language_detection__detection_sensitivity__label" comment="Preference title">Detection Sensitivity</string>
+    <string name="pref__language_detection__min_word_length__label" comment="Preference title">Minimum Word Length</string>
+
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">Display suggestions</string>
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Provides suggestions while you type</string>
