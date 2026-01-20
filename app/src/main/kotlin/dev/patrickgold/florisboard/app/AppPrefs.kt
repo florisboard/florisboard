@@ -593,6 +593,30 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    val aiIntegration = AiIntegration()
+    inner class AiIntegration {
+        val enabled = boolean(
+            key = "ai_integration__enabled",
+            default = false,
+        )
+        val geminiApiKey = string(
+            key = "ai_integration__gemini_api_key",
+            default = "",
+        )
+        val provideReplySuggestions = boolean(
+            key = "ai_integration__provide_reply_suggestions",
+            default = true,
+        )
+        val enableTextRewrite = boolean(
+            key = "ai_integration__enable_text_rewrite",
+            default = true,
+        )
+        val enableToneAdjustment = boolean(
+            key = "ai_integration__enable_tone_adjustment",
+            default = true,
+        )
+    }
+
     val localization = Localization()
     inner class Localization {
         val displayLanguageNamesIn = enum(

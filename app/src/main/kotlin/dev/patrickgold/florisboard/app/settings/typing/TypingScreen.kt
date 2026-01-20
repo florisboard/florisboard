@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -47,6 +48,8 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import androidx.compose.material3.OutlinedTextField
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisErrorCard
 import org.florisboard.lib.compose.stringRes
@@ -60,6 +63,8 @@ fun TypingScreen() = FlorisScreen {
     previewFieldVisible = true
 
     val navController = LocalNavController.current
+    var showApiKeyDialog by remember { mutableStateOf(false) }
+    var tempApiKey by remember { mutableStateOf(prefs.aiIntegration.geminiApiKey.get()) }
 
     content {
         // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
@@ -107,6 +112,69 @@ fun TypingScreen() = FlorisScreen {
                 stepIncrement = 1,
                 enabledIf = { prefs.languageDetection.enabled isEqualTo true },
             )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.pref__ai_integration__title)) {
+            SwitchPreference(
+                prefs.aiIntegration.enabled,
+                title = stringRes(R.string.pref__ai_integration__enabled__label),
+                summary = stringRes(R.string.pref__ai_integration__enabled__summary),
+            )
+            val isAiEnabled by prefs.aiIntegration.enabled.observeAsState()
+            if (isAiEnabled) {
+                Card(modifier = Modifier.padding(8.dp)) {
+                    Text(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringRes(R.string.pref__ai_integration__privacy_disclaimer),
+                    )
+                }
+                Preference(
+                    title = stringRes(R.string.pref__ai_integration__gemini_api_key__label),
+                    summary = stringRes(R.string.pref__ai_integration__gemini_api_key__summary),
+                    enabledIf = { prefs.aiIntegration.enabled isEqualTo true },
+                    onClick = { 
+                        tempApiKey = prefs.aiIntegration.geminiApiKey.get()
+                        showApiKeyDialog = true
+                    }
+                )
+
+                if (showApiKeyDialog) {
+                    JetPrefAlertDialog(
+                        title = stringRes(R.string.pref__ai_integration__gemini_api_key__label),
+                        confirmLabel = stringRes(android.R.string.ok),
+                        onConfirm = {
+                            prefs.aiIntegration.geminiApiKey.set(tempApiKey)
+                            showApiKeyDialog = false
+                        },
+                        dismissLabel = stringRes(android.R.string.cancel),
+                        onDismiss = { showApiKeyDialog = false },
+                    ) {
+                        Column {
+                            OutlinedTextField(
+                                value = tempApiKey,
+                                onValueChange = { tempApiKey = it },
+                                label = { Text("API Key") },
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
+                        }
+                    }
+                }
+                SwitchPreference(
+                    prefs.aiIntegration.provideReplySuggestions,
+                    title = stringRes(R.string.pref__ai_integration__provide_reply_suggestions__label),
+                    enabledIf = { prefs.aiIntegration.enabled isEqualTo true },
+                )
+                SwitchPreference(
+                    prefs.aiIntegration.enableTextRewrite,
+                    title = stringRes(R.string.pref__ai_integration__enable_text_rewrite__label),
+                    enabledIf = { prefs.aiIntegration.enabled isEqualTo true },
+                )
+                SwitchPreference(
+                    prefs.aiIntegration.enableToneAdjustment,
+                    title = stringRes(R.string.pref__ai_integration__enable_tone_adjustment__label),
+                    enabledIf = { prefs.aiIntegration.enabled isEqualTo true },
+                )
+            }
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__suggestion__title)) {

@@ -487,6 +487,16 @@
     <string name="pref__language_detection__detection_sensitivity__label" comment="Preference title">Detection Sensitivity</string>
     <string name="pref__language_detection__min_word_length__label" comment="Preference title">Minimum Word Length</string>
 
+    <string name="pref__ai_integration__title" comment="Preference group title">AI Integration (Alpha)</string>
+    <string name="pref__ai_integration__enabled__label" comment="Preference title">Enable AI Features</string>
+    <string name="pref__ai_integration__enabled__summary" comment="Preference summary">Smart replies, rewrites, and tone adjustment</string>
+    <string name="pref__ai_integration__gemini_api_key__label" comment="Preference title">Gemini API Key</string>
+    <string name="pref__ai_integration__gemini_api_key__summary" comment="Preference summary">Enter your Google AI Studio API Key</string>
+    <string name="pref__ai_integration__provide_reply_suggestions__label" comment="Preference title">Reply Suggestions</string>
+    <string name="pref__ai_integration__enable_text_rewrite__label" comment="Preference title">Text Rewrite</string>
+    <string name="pref__ai_integration__enable_tone_adjustment__label" comment="Preference title">Tone Adjustment</string>
+    <string name="pref__ai_integration__privacy_disclaimer" comment="Privacy disclaimer for AI features">AI features send your typed text to Google AI for processing. By enabling this, you agree to their Terms of Service.</string>
+
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">Display suggestions</string>
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Provides suggestions while you type</string>

@@ -169,3 +169,16 @@ data class EmojiSuggestionCandidate(
     override val text = emoji.value
     override val secondaryText = if (showName) emoji.name else null
 }
+
+/**
+ * Implementation for an AI-generated suggestion (e.g., smart reply, rewrite).
+ */
+data class AiSuggestionCandidate(
+    override val text: CharSequence,
+    override val secondaryText: CharSequence? = null,
+    override val confidence: Double = 1.0,
+    override val icon: ImageVector? = null,
+    override val isEligibleForAutoCommit: Boolean = false,
+    override val isEligibleForUserRemoval: Boolean = false,
+    override val sourceProvider: SuggestionProvider? = null,
+) : SuggestionCandidate

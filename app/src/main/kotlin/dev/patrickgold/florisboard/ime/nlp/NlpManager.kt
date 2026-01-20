@@ -30,23 +30,13 @@ import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
+import dev.patrickgold.florisboard.ime.nlp.ai.GeminiAIService
+import dev.patrickgold.florisboard.ime.nlp.ai.TextRewriteProvider
+import dev.patrickgold.florisboard.ime.nlp.ai.ToneAdjustmentProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.kotlin.guardedByLock
-import org.florisboard.lib.kotlin.collectLatestIn
-import java.util.concurrent.atomic.AtomicBoolean
-import kotlin.properties.Delegates
+import kotlinx.coroutines.*
 
 private const val BLANK_STR_PATTERN = "^\\s*$"
 
@@ -64,6 +54,7 @@ class NlpManager(context: Context) {
     private val emojiSuggestionProvider = EmojiSuggestionProvider(context)
     private val languageDetector = LanguageDetector()
     private val layoutSwitcher = LanguageAwareLayoutSwitcher(context)
+    val aiService = GeminiAIService(prefs)
     private val providers = guardedByLock {
         mapOf(
             LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
@@ -93,6 +84,12 @@ class NlpManager(context: Context) {
         private set(v) {
             _detectedLanguageFlow.value = v
         }
+
+    private val _aiReplyCandidatesFlow = MutableStateFlow(listOf<AiSuggestionCandidate>())
+    val aiReplyCandidatesFlow = _aiReplyCandidatesFlow.asStateFlow()
+
+    private val _aiLoadingFlow = MutableStateFlow(false)
+    val aiLoadingFlow = _aiLoadingFlow.asStateFlow()
 
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableStateFlow(0)
@@ -205,6 +202,82 @@ class NlpManager(context: Context) {
         prefs.suggestion.enabled.get()
             || prefs.emoji.suggestionEnabled.get()
             || providerForcesSuggestionOn(subtypeManager.activeSubtype)
+
+    fun generateAiReplies() {
+        if (!prefs.aiIntegration.enabled.get() || !prefs.aiIntegration.provideReplySuggestions.get()) return
+        if (!aiService.isReady()) return
+
+        scope.launch {
+            _aiLoadingFlow.value = true
+            // In a real app, we'd gather message history. For now, use an empty list or current context.
+            val context = emptyList<String>() 
+            val result = aiService.generateReplies(context)
+            if (result is AIService.Result.Success) {
+                _aiReplyCandidatesFlow.value = result.data.map { 
+                    AiSuggestionCandidate(text = it) 
+                }
+            }
+            _aiLoadingFlow.value = false
+        }
+    }
+
+    fun rewriteSelectedText(mode: TextRewriteProvider.RewriteMode) {
+        if (!prefs.aiIntegration.enabled.get() || !prefs.aiIntegration.enableTextRewrite.get()) return
+        if (!aiService.isReady()) return
+
+        val activeContent = editorInstance.activeContent
+        val selection = activeContent.selection
+        if (selection.isCollapsed) return
+        
+        val selectedText = try {
+            activeContent.text.substring(selection.start, selection.end)
+        } catch (e: Exception) {
+            return
+        }
+        
+        if (selectedText.isBlank()) return
+
+        scope.launch {
+            _aiLoadingFlow.value = true
+            val result = aiService.rewriteText(selectedText, mode)
+            if (result is AIService.Result.Success) {
+                // Replace selected text
+                editorInstance.commitText(result.data)
+            }
+            _aiLoadingFlow.value = false
+        }
+    }
+
+    fun adjustToneOfSelectedText(tone: ToneAdjustmentProvider.Tone) {
+        if (!prefs.aiIntegration.enabled.get() || !prefs.aiIntegration.enableToneAdjustment.get()) return
+        if (!aiService.isReady()) return
+
+        val activeContent = editorInstance.activeContent
+        val selection = activeContent.selection
+        if (selection.isCollapsed) return
+
+        val selectedText = try {
+            activeContent.text.substring(selection.start, selection.end)
+        } catch (e: Exception) {
+            return
+        }
+
+        if (selectedText.isBlank()) return
+
+        scope.launch {
+            _aiLoadingFlow.value = true
+            val result = aiService.adjustTone(selectedText, tone)
+            if (result is AIService.Result.Success) {
+                // Replace selected text
+                editorInstance.commitText(result.data)
+            }
+            _aiLoadingFlow.value = false
+        }
+    }
+
+    fun clearAiReplies() {
+        _aiReplyCandidatesFlow.value = emptyList()
+    }
 
     fun suggest(subtype: Subtype, content: EditorContent) {
         val reqTime = SystemClock.uptimeMillis()

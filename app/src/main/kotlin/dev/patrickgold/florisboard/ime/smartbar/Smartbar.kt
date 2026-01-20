@@ -37,14 +37,13 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -211,6 +210,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     fun RowScope.CenterContent() {
         val expanded = sharedActionsExpanded && smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED
         val detectedLanguage by nlpManager.detectedLanguageFlow.collectAsState()
+        var showAiSuggestions by remember { mutableStateOf(false) }
+        val aiEnabled by prefs.aiIntegration.enabled.observeAsState()
+        val apiKey by prefs.aiIntegration.geminiApiKey.observeAsState()
+        val aiReady = apiKey.isNotBlank()
         
         Box(
             modifier = Modifier
@@ -227,8 +230,28 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     if (shouldShowInlineSuggestionsUi) {
                         InlineSuggestionsUi(inlineSuggestions)
+                    } else if (showAiSuggestions && aiEnabled) {
+                        AiSuggestionsRow()
                     } else {
                         CandidatesRow()
+                    }
+
+                    // AI Toggle Button (only if enabled and ready)
+                    if (aiEnabled && aiReady) {
+                        IconButton(
+                            onClick = { showAiSuggestions = !showAiSuggestions },
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(end = 40.dp) // Offset from language indicator
+                                .size(32.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.AutoAwesome,
+                                contentDescription = "Toggle AI",
+                                tint = if (showAiSuggestions) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
                     }
                     
                     // Language detection label (conditional on preference)

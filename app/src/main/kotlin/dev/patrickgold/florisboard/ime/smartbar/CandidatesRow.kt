@@ -137,7 +137,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun CandidateItem(
+internal fun CandidateItem(
     candidate: SuggestionCandidate,
     displayMode: CandidatesDisplayMode,
     modifier: Modifier = Modifier,
