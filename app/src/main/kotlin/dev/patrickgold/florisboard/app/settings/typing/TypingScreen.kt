@@ -64,7 +64,8 @@ fun TypingScreen() = FlorisScreen {
 
     val navController = LocalNavController.current
     var showApiKeyDialog by remember { mutableStateOf(false) }
-    var tempApiKey by remember { mutableStateOf(prefs.aiIntegration.geminiApiKey.get()) }
+    val hiddenApiKey = prefs.aiIntegration.geminiApiKey.get()
+    var tempApiKey by remember { mutableStateOf(hiddenApiKey) }
 
     content {
         // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
