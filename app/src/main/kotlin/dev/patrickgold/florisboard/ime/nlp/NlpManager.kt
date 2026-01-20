@@ -41,6 +41,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.kotlin.collectIn
+import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.guardedByLock
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.properties.Delegates
