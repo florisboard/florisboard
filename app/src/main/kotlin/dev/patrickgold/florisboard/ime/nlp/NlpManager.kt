@@ -41,6 +41,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.kotlin.guardedByLock
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.properties.Delegates
 
@@ -154,9 +155,9 @@ class NlpManager(context: Context) {
     fun preload(subtype: Subtype) {
         scope.launch {
             emojiSuggestionProvider.preload(subtype)
-            providers.withLock { providers ->
+            providers.withLock { providersMap ->
                 subtype.nlpProviders.forEach { _, providerId ->
-                    providers[providerId]?.let { provider ->
+                    providersMap[providerId]?.let { provider ->
                         provider.createIfNecessary()
                         provider.preload(subtype)
                     }
@@ -260,7 +261,7 @@ class NlpManager(context: Context) {
 
         val activeContent = editorInstance.activeContent
         val selection = activeContent.selection
-        if (selection.isCollapsed) return
+        if (selection.isCursorMode) return
 
         val selectedText = try {
             activeContent.text.substring(selection.start, selection.end)
