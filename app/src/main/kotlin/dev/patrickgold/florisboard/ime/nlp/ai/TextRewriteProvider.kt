@@ -17,21 +17,19 @@
 package dev.patrickgold.florisboard.ime.nlp.ai
 
 /**
- * Base interface for all AI operations in FlorisBoard.
+ * Interface for rewriting or transforming text.
  */
-interface AIService {
-    /**
-     * Whether the service is ready to handle requests (e.g., API key is set).
-     */
-    fun isReady(): Boolean
-
-    /**
-     * Generic result wrapper for AI operations.
-     */
-    sealed class Result<out T> {
-        data class Success<T>(val data: T) : Result<T>()
-        data class Error(val exception: Throwable, val message: String? = null) : Result<Nothing>()
-        object Loading : Result<Nothing>()
+interface TextRewriteProvider : AIService {
+    enum class RewriteMode {
+        FORMAL,
+        CASUAL,
+        SHORTER,
+        LONGER,
+        FIX_GRAMMAR
     }
-}
 
+    /**
+     * Rewrites the given text based on the specified mode.
+     */
+    suspend fun rewriteText(text: String, mode: RewriteMode): AIService.Result<String>
+}

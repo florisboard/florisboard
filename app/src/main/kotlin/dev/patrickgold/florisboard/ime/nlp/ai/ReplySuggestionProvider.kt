@@ -17,21 +17,13 @@
 package dev.patrickgold.florisboard.ime.nlp.ai
 
 /**
- * Base interface for all AI operations in FlorisBoard.
+ * Interface for generating reply suggestions.
  */
-interface AIService {
+interface ReplySuggestionProvider : AIService {
     /**
-     * Whether the service is ready to handle requests (e.g., API key is set).
+     * Generates reply suggestions based on the provided context.
+     * @param context The conversation context (last few messages).
+     * @param limit Maximum number of suggestions to return.
      */
-    fun isReady(): Boolean
-
-    /**
-     * Generic result wrapper for AI operations.
-     */
-    sealed class Result<out T> {
-        data class Success<T>(val data: T) : Result<T>()
-        data class Error(val exception: Throwable, val message: String? = null) : Result<Nothing>()
-        object Loading : Result<Nothing>()
-    }
+    suspend fun generateReplies(context: List<String>, limit: Int = 3): AIService.Result<List<String>>
 }
-
