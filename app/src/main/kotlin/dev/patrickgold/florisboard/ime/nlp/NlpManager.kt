@@ -44,6 +44,7 @@ import kotlinx.coroutines.sync.withLock
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
 import org.florisboard.lib.kotlin.guardedByLock
+import kotlin.text.MatchGroup
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.properties.Delegates
 
