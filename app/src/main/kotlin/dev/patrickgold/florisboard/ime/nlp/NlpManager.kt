@@ -117,7 +117,7 @@ class NlpManager(context: Context) {
         prefs.emoji.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
+        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype: Subtype ->
             preload(subtype)
         }
     }
