@@ -11,12 +11,31 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 ### Step 2: Enable Language Detection Features
 
 1. Open FlorisBoard Settings
-2. Navigate to **Advanced** → **Language Detection** (new section)
+2. Navigate to **Typing** → **Language Detection** (new section)
 3. Configure preferences:
-   - ☑ **Enable Language Detection** (enabled by default)
-   - ☐ **Auto-Switch Layout** (disabled by default - enable for testing)
-   - ☐ **Show Visual Indicator** (disabled by default - enable to see detection)
+   - ☑ **Enable Language Detection**
+   - ☐ **Auto-Switch Layout** (enable for testing)
+   - ☐ **Show Visual Indicator** (enable to see detection)
    - **Detection Sensitivity**: 30% (adjust as needed)
+
+## 0.3 Optional Manual Testing
+
+> **NOTE**  
+> Recommended but not blocking: Test the keyboard in real apps before adding AI features.
+
+### Test Checklist
+- [ ] Open keyboard in **WhatsApp**
+- [ ] Open keyboard in **Instagram**
+- [ ] Open keyboard in **Telegram**
+- [ ] Confirm typing has no lag
+- [ ] Confirm suggestion strip renders correctly
+- [ ] Confirm keyboard opens reliably
+
+### How to test
+1. Download latest APK from GitHub Actions
+2. Install on Android device
+3. Enable "Middleclass keyboard" in system settings
+4. Test in the apps listed above
 
 ## Test Scenarios
 
