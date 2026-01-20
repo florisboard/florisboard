@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.nlp.ai.TextRewriteProvider
 import dev.patrickgold.florisboard.ime.nlp.ai.ToneAdjustmentProvider
@@ -103,8 +104,6 @@ fun AiSuggestionsRow(modifier: Modifier = Modifier) {
         }
     }
 }
-
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 
 @Composable
 private fun RowScope.RewriteOptions(nlpManager: NlpManager, keyboardManager: KeyboardManager) {
