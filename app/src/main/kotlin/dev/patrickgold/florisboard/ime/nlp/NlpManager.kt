@@ -485,7 +485,7 @@ class NlpManager(context: Context) {
                     }
                     if (currentItem.type == ItemType.TEXT) {
                         val text = currentItem.stringRepresentation()
-                        val matches = buildList {
+                        val matches = buildList<MatchGroup> {
                             addAll(NetworkUtils.getEmailAddresses(text))
                             addAll(NetworkUtils.getUrls(text))
                             addAll(NetworkUtils.getPhoneNumbers(text))
