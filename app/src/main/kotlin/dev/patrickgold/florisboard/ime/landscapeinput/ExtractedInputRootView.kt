@@ -94,7 +94,7 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
                     val windowInsets by ims.windowController.activeWindowInsets.collectAsState()
                     val height by remember {
                         derivedStateOf {
-                            val rootBounds = rootInsets?.boundsDp ?: return@derivedStateOf 0.dp
+                            val rootBounds = rootInsets.boundsDp
                             val windowBounds = windowInsets?.boundsDp ?: return@derivedStateOf 0.dp
                             rootBounds.height - windowBounds.height
                         }
