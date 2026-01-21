@@ -233,7 +233,9 @@ class ClipboardManager(
      */
     private fun insertOrMoveBeginning(newItem: ClipboardItem) {
         if (prefs.clipboard.historyEnabled.get()) {
-            val historyElement = currentHistory.all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
+            val historyElement = currentHistory.all.firstOrNull { item ->
+                item.type == ItemType.TEXT && item.text == newItem.text && item.isSensitive == newItem.isSensitive
+            }
             if (historyElement != null) {
                 moveToTheBeginning(
                     oldItem = historyElement,
