@@ -110,7 +110,7 @@ class LayoutManager(context: Context) {
                 return@withLock cached
             } else {
                 flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '${ltn.name}'" }
-                val meta = keyboardManager.resources.layouts.value?.get(ltn.type)?.get(ltn.name)
+                val meta = keyboardManager.resources.layouts.value[ltn.type]?.get(ltn.name)
                     ?: error("No indexed entry found for ${ltn.type} - ${ltn.name}")
                 val ext = extensionManager.getExtensionById(ltn.name.extensionId)
                     ?: error("Extension ${ltn.name.extensionId} not found")
@@ -137,7 +137,7 @@ class LayoutManager(context: Context) {
                 return@withLock cached
             } else {
                 flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$name'" }
-                val meta = keyboardManager.resources.popupMappings.value?.get(name)
+                val meta = keyboardManager.resources.popupMappings.value[name]
                     ?: error("No indexed entry found for $name")
                 val ext = extensionManager.getExtensionById(name.extensionId)
                     ?: error("Extension ${name.extensionId} not found")
