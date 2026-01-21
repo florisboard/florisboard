@@ -47,10 +47,9 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -237,20 +236,20 @@ fun EmojiPaletteView(
         val inputFeedbackController = LocalInputFeedbackController.current
         val selectedTabIndex = categoryToPageNumber(activeCategory)
         val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiTab.elementName)
-        TabRow(
+        PrimaryTabRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight),
             selectedTabIndex = selectedTabIndex,
             containerColor = Color.Transparent,
             contentColor = style.foreground(),
-            indicator = { tabPositions ->
+            indicator = {
                 val style = rememberSnyggThemeQuery(
                     elementName = FlorisImeUi.MediaEmojiTab.elementName,
                     selector = SnyggSelector.FOCUS,
                 )
                 TabRowDefaults.PrimaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    Modifier.tabIndicatorOffset(selectedTabIndex),
                     height = 4.dp,
                     color = style.foreground(),
                 )
