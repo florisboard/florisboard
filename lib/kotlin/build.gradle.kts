@@ -43,7 +43,7 @@ tasks {
         compilerOptions.jvmTarget = JvmTarget.JVM_11
         compilerOptions.freeCompilerArgs = listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
+            "-jvm-default=enable",
         )
     }
     compileTestKotlin {

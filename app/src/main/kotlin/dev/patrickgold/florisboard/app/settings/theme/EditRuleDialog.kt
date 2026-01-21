@@ -378,7 +378,7 @@ private fun EditCodeValueDialog(
     val keyboardManager by context.keyboardManager()
 
     var inputCodeString by rememberSaveable(codeValue) {
-        val str = if (codeValue == KeyCode.UNSPECIFIED.toString()) "" else codeValue.toString()
+        val str = if (codeValue == KeyCode.UNSPECIFIED.toString()) "" else codeValue
         mutableStateOf(str)
     }
     val textKeyData = remember(inputCodeString) {

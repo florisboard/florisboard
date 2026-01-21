@@ -68,7 +68,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -103,12 +103,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     private val activeEvaluatorGuard = Mutex(locked = false)
     private var activeEvaluatorVersion = AtomicInteger(0)
-    private val _activeEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
-    val activeEvaluator get() = _activeEvaluator.asStateFlow()
-    private val _activeSmartbarEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
-    val activeSmartbarEvaluator get() = _activeSmartbarEvaluator.asStateFlow()
-    private val _lastCharactersEvaluator = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
-    val lastCharactersEvaluator get() = _lastCharactersEvaluator.asStateFlow()
+    val activeEvaluator: StateFlow<ComputingEvaluator>
+        field = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
+    val activeSmartbarEvaluator: StateFlow<ComputingEvaluator>
+        field = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
+    val lastCharactersEvaluator: StateFlow<ComputingEvaluator>
+        field = MutableStateFlow<ComputingEvaluator>(DefaultComputingEvaluator)
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -203,10 +203,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 key.compute(computingEvaluator)
                 key.computeLabelsAndDrawables(computingEvaluator)
             }
-            _activeEvaluator.value = computingEvaluator
-            _activeSmartbarEvaluator.value = computingEvaluator.asSmartbarQuickActionsEvaluator()
+            activeEvaluator.value = computingEvaluator
+            activeSmartbarEvaluator.value = computingEvaluator.asSmartbarQuickActionsEvaluator()
             if (computedKeyboard.mode == KeyboardMode.CHARACTERS) {
-                _lastCharactersEvaluator.value = computingEvaluator
+                lastCharactersEvaluator.value = computingEvaluator
             }
         }
     }

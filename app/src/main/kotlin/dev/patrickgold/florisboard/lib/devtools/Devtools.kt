@@ -28,10 +28,10 @@ import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
 import dev.patrickgold.florisboard.subtypeManager
-import org.florisboard.lib.android.systemService
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import org.florisboard.lib.android.systemService
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Devtools {
@@ -128,9 +128,9 @@ object Devtools {
         return buildString {
             if (withTitle) appendLine("======= EXTENSION CONFIG =======")
             appendLine("Theme extensions    : ")
-            context.extensionManager().value.themes.value?.forEach { append("    ").appendLine(it.meta.id) }
+            context.extensionManager().value.themes.value.forEach { append("    ").appendLine(it.meta.id) }
             appendLine("Language Packs      : ")
-            context.extensionManager().value.languagePacks.value?.forEach { append("    ").appendLine(it.meta.id) }
+            context.extensionManager().value.languagePacks.value.forEach { append("    ").appendLine(it.meta.id) }
         }
     }
 

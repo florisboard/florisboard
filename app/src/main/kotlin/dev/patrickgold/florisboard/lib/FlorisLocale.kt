@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.lib
 
 import android.content.Context
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.lib.FlorisLocale.Companion.default
+import java.util.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -25,7 +27,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.*
 
 /**
  * Project-specific locale class wrapping [java.util.Locale]. The wrapping is
@@ -140,7 +141,7 @@ class FlorisLocale private constructor(val base: Locale) {
                 }
             }.toSet()
             val extraLocales = buildList {
-                for (languagePackExtension in extensionManager.languagePacks.value ?: listOf()) {
+                for (languagePackExtension in extensionManager.languagePacks.value) {
                     for (languagePackItem in languagePackExtension.items) {
                         val locale = languagePackItem.locale
                         if (from(locale.language, locale.country).localeTag() in systemLocalesSet) {

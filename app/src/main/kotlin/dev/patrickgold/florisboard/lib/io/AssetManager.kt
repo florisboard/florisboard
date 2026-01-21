@@ -28,15 +28,15 @@ import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import org.florisboard.lib.android.reader
+import java.io.File
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.florisboard.lib.android.reader
 import org.florisboard.lib.kotlin.resultErr
 import org.florisboard.lib.kotlin.resultErrStr
 import org.florisboard.lib.kotlin.resultOk
-import java.io.File
 
 val DefaultJsonConfig = Json {
     classDiscriminator = "$"
@@ -79,7 +79,7 @@ fun FlorisRef.hasAsset(context: Context): Boolean {
         isAssets -> {
             try {
                 val file = File(relativePath)
-                val list = context.assets.list(file.parent?.toString() ?: "")
+                val list = context.assets.list(file.parent ?: "")
                 list?.contains(file.name) == true
             } catch (e: Exception) {
                 false

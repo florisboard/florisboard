@@ -48,7 +48,7 @@ kotlin {
             "-jvm-default=enable",
             "-Xwhen-guards",
             "-Xexplicit-backing-fields",
-            "-XXLanguage:+ContextParameters",
+            "-Xcontext-parameters",
             "-XXLanguage:+LocalTypeAliases",
         ))
     }

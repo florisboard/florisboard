@@ -69,15 +69,15 @@ fun ExtensionMaintainerChip(
                 if (maintainer.email != null) {
                     FlorisChip(
                         onClick = { context.launchUrl("mailto:${maintainer.email}") },
-                        text = maintainer.email.toString(),
+                        text = maintainer.email,
                         leadingIcons = listOf(Icons.Outlined.Mail),
                         shape = RoundedCornerShape(4.dp),
                     )
                 }
                 if (maintainer.url != null) {
                     FlorisChip(
-                        onClick = { context.launchUrl(maintainer.url.toString()) },
-                        text = maintainer.url.toString(),
+                        onClick = { context.launchUrl(maintainer.url) },
+                        text = maintainer.url,
                         leadingIcons = listOf(Icons.Default.Link),
                         shape = RoundedCornerShape(4.dp),
                     )

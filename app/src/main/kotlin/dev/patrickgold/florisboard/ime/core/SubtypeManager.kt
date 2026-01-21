@@ -25,7 +25,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.kotlin.collectLatestIn
@@ -45,17 +45,17 @@ class SubtypeManager(context: Context) {
     private val keyboardManager by context.keyboardManager()
     private val scope = CoroutineScope(Dispatchers.Default)
 
-    private val _subtypesFlow = MutableStateFlow(listOf<Subtype>())
-    val subtypesFlow = _subtypesFlow.asStateFlow()
+    val subtypesFlow: StateFlow<List<Subtype>>
+        field = MutableStateFlow(listOf())
     inline var subtypes
         get() = subtypesFlow.value
-        private set(v) { _subtypesFlow.value = v }
+        private set(v) { subtypesFlow.value = v }
 
-    private val _activeSubtypeFlow = MutableStateFlow(Subtype.DEFAULT)
-    val activeSubtypeFlow = _activeSubtypeFlow.asStateFlow()
+    val activeSubtypeFlow: StateFlow<Subtype>
+        field = MutableStateFlow(Subtype.DEFAULT)
     inline var activeSubtype
         get() = activeSubtypeFlow.value
-        private set(v) { _activeSubtypeFlow.value = v }
+        private set(v) { activeSubtypeFlow.value = v }
 
     init {
         prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->
@@ -116,7 +116,7 @@ class SubtypeManager(context: Context) {
      * @return The currency set or a fallback.
      */
     fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.Fallback
+        return keyboardManager.resources.currencySets.value[subtypeToSearch.currencySet] ?: CurrencySet.Fallback
     }
 
     /**
@@ -139,7 +139,7 @@ class SubtypeManager(context: Context) {
      */
     fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
         val presets = keyboardManager.resources.subtypePresets.value
-        return presets?.find { it.locale == locale } ?: presets?.find { it.locale.language == locale.language }
+        return presets.find { it.locale == locale } ?: presets.find { it.locale.language == locale.language }
     }
 
     /**
