@@ -24,8 +24,7 @@
     },
     "u": {
       "relevant": [
-        { "$": "auto_text_key", "code":  250, "label": "ú" },
-        { "$": "auto_text_key", "code":  367, "label": "ů" }
+        { "$": "auto_text_key", "code":  250, "label": "ú" }
       ]
     },
     "i": {
