@@ -214,7 +214,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Skriftstørrelse multiplikator</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Oppsett</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landskap fullskjerm input</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Tasteavstand</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetrykk</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup-synlighet</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vis popup når du trykker en tast</string>

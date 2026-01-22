@@ -91,8 +91,12 @@
     <string name="quick_action__toggle_autocorrect__tooltip">Przełącz autokorektę</string>
     <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Wprow. głos</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Otwórz dostawcę wprowadzania głosowego</string>
+    <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Pływające</string>
+    <string name="quick_action__floating_window_mode__tooltip">Załącz tryb pływającego okna klawiatury</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Jednoręczny</string>
     <string name="quick_action__one_handed_mode__tooltip">Przełącz tryb jednoręczny</string>
+    <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Zmień rozmiar</string>
+    <string name="quick_action__resize_mode__tooltip">Załącz tryb zmiany rozmiaru</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Znacznik</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Obecna pozycja znacznika przeciągania</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Brak</string>
@@ -217,6 +221,12 @@
     <string name="snygg__rule_annotation__font_name">Nazwa czcionki</string>
     <string name="snygg__rule_element__root">Katalog główny</string>
     <string name="snygg__rule_element__window">Okno</string>
+    <string name="snygg__rule_element__window_inner">Wnętrze okna</string>
+    <string name="snygg__rule_element__window_move_handle">Uchwyt przesuwania okna</string>
+    <string name="snygg__rule_element__window_resize_action">Akcja zmiany rozmiaru okna</string>
+    <string name="snygg__rule_element__window_resize_handle">Uchwyt zmiany rozmiaru okna</string>
+    <string name="snygg__rule_element__window_resize_overlay_fixed">Naprawiona nakładka zmiany rozmiaru okna</string>
+    <string name="snygg__rule_element__floating_dock_to_fixed_indicator">Pływający dok do stałego wskaźnika</string>
     <string name="snygg__rule_element__key">Klawisz</string>
     <string name="snygg__rule_element__key_hint">Klucz podpowiedzi</string>
     <string name="snygg__rule_element__key_popup_box">Wyskakujące okienko klucza</string>
@@ -407,7 +417,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Mnożnik rozmiaru czcionki</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Wprowadzanie pełnoekranowe w poziomie</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Rozstaw klawiszy</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Współczynnik odstępów między klawiszami</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Widoczność Pop-Up</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pokaż Pop-Up po naciśnięciu klawiszów</string>
@@ -695,6 +705,13 @@
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Akcja debugowania, aby ponownie wyświetlić ekran konfiguracji</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Testuj ekran raportu awarii</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Akcja debugująca celowo powodują awarię</string>
+    <string name="devtools__group_ime_window_tools__title" comment="Title of IME window tools group in Devtools">Narzędzia okna IME</string>
+    <string name="devtools__show_window_resize_handle_boundaries__label">Pokaż granice uchwytu zmiany rozmiaru okna</string>
+    <string name="devtools__show_window_resize_handle_boundaries__summary">Pokaż granice uchwytu zmiany rozmiaru okna w celu debugowania</string>
+    <string name="devtools__reset_window_config__label">Zresetuj konfigurację okna</string>
+    <string name="devtools__reset_window_config__summary">Przywraca domyślną konfigurację okna (tryb stały/pływający, wypełnienia, przesunięcia)</string>
+    <string name="devtools__reset_window_config__toast_success">Pomyślnie zresetowano konfigurację okna do wartości domyślnych</string>
+    <string name="devtools__reset_window_config__toast_failure">Nie udało się przywrócić domyślnej konfiguracji okna: {message}</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Narzędzia systemu Android</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Globalne ustawienia Androida</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Zabezpieczone ustawienia Androida</string>
@@ -807,6 +824,7 @@
     <string name="action__delete">Usuń</string>
     <string name="action__delete_confirm_title">Potwierdź usunięcie</string>
     <string name="action__delete_confirm_message">Czy na pewno chcesz usunąć \"{name}\"? Tej akcji nie można cofnąć po jej wykonaniu.</string>
+    <string name="action__reset">Resetuj</string>
     <string name="action__reset_confirm_title">Potwierdzenie resetowania</string>
     <string name="action__reset_confirm_message">Czy na pewno chcesz zresetować \"{name}”? Tej akcji nie można cofnąć po jej wykonaniu.</string>
     <string name="action__discard">Odrzuć</string>
@@ -821,6 +839,7 @@
     <string name="action__import_files">Importuj pliki</string>
     <string name="action__no">Nie</string>
     <string name="action__ok">OK</string>
+    <string name="action__done">Gotowe</string>
     <string name="action__restore">Przywracanie</string>
     <string name="action__save">Zapisz</string>
     <string name="action__select">Wybierz</string>
@@ -937,6 +956,8 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift (ręczny)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shift (automatyczny)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
+    <string name="enum__ime_window_mode__fixed" comment="Enum value label">Naprawiono</string>
+    <string name="enum__ime_window_mode__floating" comment="Enum value label">Pływający</string>
     <string name="enum__keyboard_mode__characters" comment="Enum value label">Znaki</string>
     <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbole</string>
     <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbole 2</string>

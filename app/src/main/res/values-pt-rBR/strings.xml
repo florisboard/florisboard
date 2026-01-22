@@ -310,7 +310,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho de fonte</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada do modo paisagem em tela cheia</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espaçamento de teclas</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidade do popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar popup quando você pressionar uma tecla</string>

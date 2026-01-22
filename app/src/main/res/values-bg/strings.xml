@@ -60,7 +60,7 @@
     <string name="quick_action__arrow_right__tooltip">Извършва стрелка надясно</string>
     <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Скриване на клавиатурата</string>
     <string name="quick_action__ime_hide_ui__tooltip">Извършва скриване на клавиатурата</string>
-    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Изпр. буфера</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Изпр. памет</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Изчиства последното копирано от междинната памет</string>
     <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Копиране</string>
     <string name="quick_action__clipboard_copy__tooltip">Извършва копиране в междинната памет</string>
@@ -71,7 +71,7 @@
     <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Избор всички</string>
     <string name="quick_action__clipboard_select_all__tooltip">Избира всичко</string>
     <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Премахване →</string>
-    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Буфер</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Памет</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Хронология на междинната памет</string>
     <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Емоции</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Отваря панела с емоции</string>
@@ -91,8 +91,12 @@
     <string name="quick_action__toggle_autocorrect__tooltip">Превключва автоматичните поправки</string>
     <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Въвежд. глас</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Отваря доставчика на гласово въеждане</string>
+    <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Плуващ</string>
+    <string name="quick_action__floating_window_mode__tooltip">Превключва режима на плуващ прозорец</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">С една ръка</string>
     <string name="quick_action__one_handed_mode__tooltip">Превключва режима за работа с една ръка</string>
+    <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Преоразмеряване</string>
+    <string name="quick_action__resize_mode__tooltip">Превключва режима на преоразмеряване</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Манипулатор</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Позиция на влачения елемент</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Липсва</string>
@@ -216,6 +220,12 @@
     <string name="snygg__rule_annotation__font_name">Име на шрифт</string>
     <string name="snygg__rule_element__root">Коренов възел</string>
     <string name="snygg__rule_element__window">Прозорец</string>
+    <string name="snygg__rule_element__window_inner">Вътрешност на прозореца</string>
+    <string name="snygg__rule_element__window_move_handle">Манипулатор за местене на прозорец</string>
+    <string name="snygg__rule_element__window_resize_action">Действие на преоразмеряване на прозорец</string>
+    <string name="snygg__rule_element__window_resize_handle">Манипулатор за преоразмеряване на прозорец</string>
+    <string name="snygg__rule_element__window_resize_overlay_fixed">Фиксиран слой за размер на прозорец</string>
+    <string name="snygg__rule_element__floating_dock_to_fixed_indicator">Индикатор за фиксиране в плуващия прозорец</string>
     <string name="snygg__rule_element__key">Клавиш</string>
     <string name="snygg__rule_element__key_hint">Горен индекс на клавиш</string>
     <string name="snygg__rule_element__key_popup_box">Кутия на подсказка на клавиш</string>
@@ -334,8 +344,8 @@
     <string name="snygg__property_name__var_on_primary">Преден план на първично</string>
     <string name="snygg__property_name__var_on_secondary">Преден план на вторично</string>
     <string name="snygg__property_name__var_on_background">Преден план на фон</string>
-    <string name="snygg__property_name__var_on_surface">Преден план на плоскост</string>
-    <string name="snygg__property_name__var_on_surface_variant">Преден план на плоскост (вариант)</string>
+    <string name="snygg__property_name__var_on_surface">Преден план на равнина</string>
+    <string name="snygg__property_name__var_on_surface_variant">Преден план на равнина (вариант)</string>
     <string name="snygg__property_name__var_shape">Обща форма</string>
     <string name="snygg__property_name__var_shape_variant">Обща форма (вариант)</string>
     <string name="snygg__property_value__explicit_inherit">Наследяване</string>
@@ -406,7 +416,7 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Размер на надписите на клавишите</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Клавиатура на цял екран (пейзаж)</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Разстояние между клавишите</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Коефициент на разстоянието между клавишите</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Докосване на клавишите</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видима изскачаща подсказка</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показва се изскачаща подсказка при докосване на клавиш</string>
@@ -421,7 +431,7 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Интелигентна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="pref__smartbar__layout__label" comment="Preference title">Оформление</string>
-    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Свързани с оформлението настройки</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Настройки на оформлението</string>
     <string name="pref__smartbar__flip_toggles__label" comment="Preference title">Разменяне на превключващите бутони</string>
     <string name="pref__smartbar__flip_toggles__summary" comment="Preference summary">Разменят се бутоните, превключващи редовете</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Автоматично разтваряне/сгъване</string>
@@ -483,7 +493,7 @@
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Въведете ключова дума удовлетворяваща регулярния израз {regex}</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код на езика (по избор)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Кодът на езика не отговаря на синтаксиса. Трябва да бъде или само език (bg), или език и държава (bg_BG), или език, държава и азбука (bg_BG-cyrillic).</string>
-    <string name="settings__gestures__title" comment="Title of Gestures screen">Жестове и писане чрез плъзгане</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Жестове и въвеждане чрез плъзгане</string>
     <string name="pref__glide__title" comment="Preference group title">Въвеждане чрез плъзгане</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Въвеждане чрез плъзгане</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Думите се въвеждат чрез плъзгане на пръст върху буквите ѝ</string>
@@ -648,11 +658,11 @@
     <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Предложения от съдържанието на междинната памет</string>
     <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Предлага вече копирано съдържание</string>
     <string name="pref__clipboard__num_history_grid_columns__label">Брой колони на решетката</string>
-    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ограничаване на предложенията от междинната памет до</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Ограничаване на предложенията до</string>
     <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Елементи, копирани през последните {v} секунди</string>
     <string name="pref__clipboard__group_clipboard_history__label">История на междинната памет</string>
     <string name="pref__clipboard__enable_clipboard_history__label">История</string>
-    <string name="pref__clipboard__enable_clipboard_history__summary">Запазване на копираното за по-бърз достъп до него</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Запазване на копираното за бърз достъп</string>
     <string name="pref__clipboard__clean_up_old__label">Премахване на стари елементи</string>
     <string name="pref__clipboard__clean_up_after__label">Премахване на старите елементи след</string>
     <string name="pref__clipboard__auto_clean_sensitive__label">Почистване на чувствителни елементи</string>
@@ -661,8 +671,8 @@
     <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
     <string name="pref__clipboard__history_hide_on_paste__label">Скриване при поставяне</string>
     <string name="pref__clipboard__history_hide_on_next_text_field__label">Скриване при смяна на полето</string>
-    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Изчистването на първия елемент влияе на историята</string>
-    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Изчистването на първия елемент го премахва от историята ако не е залачен</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Изчистването на първия влияе на всички</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Изчистването на първия елемент го премахва от историята ако не е закачен</string>
     <string name="send_to_clipboard__unknown_error">Възникна неизвестна грешка. Опитайте отново!</string>
     <string name="send_to_clipboard__type_not_supported_error">Този вид медия не се поддържа.</string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Долното изображение е копирано в междинната памет.</string>
@@ -691,6 +701,13 @@
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">За отстраняване на дефекти в първоначалния екран</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Изпробване на доклада на грешка</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">За нарочно създаване на срив</string>
+    <string name="devtools__group_ime_window_tools__title" comment="Title of IME window tools group in Devtools">Прозорец с инструменти на IME</string>
+    <string name="devtools__show_window_resize_handle_boundaries__label">Граници на манипулаторите за преоразмеряване</string>
+    <string name="devtools__show_window_resize_handle_boundaries__summary">Показване на границите на манипулаторите за преоразмеряване с цел отстраняване на дефекти</string>
+    <string name="devtools__reset_window_config__label">Нулиране настройките на прозореца</string>
+    <string name="devtools__reset_window_config__summary">Нулиране настройките на прозореца (плуващ/фиксиран и отстъпи) по подразбиране</string>
+    <string name="devtools__reset_window_config__toast_success">Настройките на прозореца са нулирани</string>
+    <string name="devtools__reset_window_config__toast_failure">Грешка при нулиране на настройките на прозореца: {message}</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Системни инструменти на Android</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Общи настройки на Android</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Настройки на сигурността на Android</string>
@@ -799,10 +816,11 @@
     <string name="action__back_up">Резервно копие</string>
     <string name="action__cancel">Отказ</string>
     <string name="action__create">Създаване</string>
-    <string name="action__default">Стандартни</string>
-    <string name="action__delete">Премахване</string>
+    <string name="action__default">Стандартно</string>
+    <string name="action__delete">Изтриване</string>
     <string name="action__delete_confirm_title">Потвърждаване на изтриване</string>
     <string name="action__delete_confirm_message">Наистина ли искате да изтриете „{name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="action__reset">Нулиране</string>
     <string name="action__reset_confirm_title">Потвърждаване на нулирането</string>
     <string name="action__reset_confirm_message">Желаете ли „{name}“ да бъде нулирано? Действието е необратимо.</string>
     <string name="action__discard">Отхвърляне</string>
@@ -817,6 +835,7 @@
     <string name="action__import_files">Внасяне на файлове</string>
     <string name="action__no">Не</string>
     <string name="action__ok">Добре</string>
+    <string name="action__done">Готово</string>
     <string name="action__restore">Възстановяване</string>
     <string name="action__save">Запазване</string>
     <string name="action__select">Изберете</string>
@@ -856,7 +875,7 @@
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Динамична ширина</string>
     <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Динамична ширина с плъзгач</string>
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Само главни букви при двойно докосване на клавиша Shift</string>
-    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Превключва способите за въвеждане на главни букви при всяко докосване на Shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Превключва режимите за въвеждане на главни букви с всяко докосване на Shift</string>
     <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">Никакви събития</string>
     <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">Никакви събития не се синхронизират в тази посока. Този режим не включва текстово съдържание.</string>
     <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Събития на изчистване</string>
@@ -913,7 +932,7 @@
     <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} използва интерфейса за тактилна обратна връзка, за да задейства предварително зададени последователности от вибрации за натискане на клавиши. Може да работи изключително добре на някои устройства, но да е напълно неприемливо или да работи много лошо на други</string>
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Акцентът е с приоритет</string>
     <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е основния акцент или знака от подсказката ако няма акцент</string>
-    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Посдсазката е с приоритет</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Подсазката е с приоритет</string>
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Първоначално избраният знак след задържане на клавиш винаги е знака от подсказката или основния акцент ако в подсказката няма знак</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Интелигентен приоритет</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Първоначално избраният знак при задържане на клавиш се определя между основния акцент или знака от подсказката на базата на текущия език и подредба</string>
@@ -933,6 +952,8 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shift (ръчно)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shift (автоматично)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps Lock</string>
+    <string name="enum__ime_window_mode__fixed" comment="Enum value label">Фиксирано</string>
+    <string name="enum__ime_window_mode__floating" comment="Enum value label">Плаващ</string>
     <string name="enum__keyboard_mode__characters" comment="Enum value label">Знаци</string>
     <string name="enum__keyboard_mode__symbols" comment="Enum value label">Символи</string>
     <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Символи 2</string>

@@ -116,7 +116,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Εισαγωγή πλήρους οθόνης τοπίου</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>

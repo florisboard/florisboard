@@ -406,7 +406,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador do tamanho das letras</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Introdução em ecrã completo (horizontal)</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espaço entre teclas</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressão de teclas</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilidade do popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostrar popup ao tocar nas teclas</string>

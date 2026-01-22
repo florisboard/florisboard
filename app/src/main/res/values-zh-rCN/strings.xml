@@ -91,8 +91,12 @@
     <string name="quick_action__toggle_autocorrect__tooltip">自动更正开关</string>
     <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">语音输入</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">打开语音输入提供者</string>
+    <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">浮动</string>
+    <string name="quick_action__floating_window_mode__tooltip">切换浮动键盘窗口模式</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">单手模式</string>
     <string name="quick_action__one_handed_mode__tooltip">单手模式开关</string>
+    <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">调整大小</string>
+    <string name="quick_action__resize_mode__tooltip">切换调整大小模式</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">拖动标记</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">当前拖动标记位置</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">无</string>
@@ -216,15 +220,25 @@
     <string name="snygg__rule_annotation__font_name">字体名称</string>
     <string name="snygg__rule_element__root">Root</string>
     <string name="snygg__rule_element__window">窗口</string>
+    <string name="snygg__rule_element__window_inner">内部窗口</string>
+    <string name="snygg__rule_element__window_move_handle">窗口移动控件</string>
+    <string name="snygg__rule_element__window_resize_action">窗口调整大小操作</string>
+    <string name="snygg__rule_element__window_resize_handle">窗口调整大小控件</string>
+    <string name="snygg__rule_element__window_resize_overlay_fixed">窗口调整大小覆盖修复</string>
+    <string name="snygg__rule_element__floating_dock_to_fixed_indicator">浮动转固定停靠指示器</string>
     <string name="snygg__rule_element__key">键</string>
     <string name="snygg__rule_element__key_hint">键提示</string>
     <string name="snygg__rule_element__key_popup_box"></string>
+    <string name="snygg__rule_element__key_popup_element">按键弹出元素</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">按键弹出扩展指示器</string>
     <string name="snygg__rule_element__clipboard_header">剪贴板标题</string>
     <string name="snygg__rule_element__clipboard_header_button">剪贴板标题按钮</string>
     <string name="snygg__rule_element__clipboard_header_text">剪贴板标题文本</string>
     <string name="snygg__rule_element__clipboard_subheader">剪贴板子标题</string>
     <string name="snygg__rule_element__clipboard_content">剪贴板内容</string>
     <string name="snygg__rule_element__clipboard_filter_row">剪贴板筛选行</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">剪贴板筛选标签</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">剪贴板过滤芯片图标</string>
     <string name="snygg__rule_element__clipboard_filter_chip_text"></string>
     <string name="snygg__rule_element__clipboard_grid">剪贴板网格</string>
     <string name="snygg__rule_element__clipboard_item">剪贴板条目</string>
@@ -254,10 +268,13 @@
     <string name="snygg__rule_element__media_emoji_subheader"></string>
     <string name="snygg__rule_element__media_emoji_key">媒体表情符号键</string>
     <string name="snygg__rule_element__media_emoji_key_popup_box">媒体表情符号快捷键弹出框</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">媒体表情符号按键弹出元素</string>
     <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">媒体表情符号键弹出扩展指示器</string>
     <string name="snygg__rule_element__media_emoji_tab">媒体表情符号标签</string>
     <string name="snygg__rule_element__media_bottom_row"></string>
+    <string name="snygg__rule_element__media_bottom_row_button">媒体界面底部行按钮</string>
     <string name="snygg__rule_element__one_handed_panel">单手面板</string>
+    <string name="snygg__rule_element__one_handed_panel_button">单手面板按钮</string>
     <string name="snygg__rule_element__smartbar">智能栏</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">智能栏共用操作行</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">智能栏共用操作开关按钮</string>
@@ -265,22 +282,30 @@
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">智能栏扩展操作开关按钮</string>
     <string name="snygg__rule_element__smartbar_action_key">智能栏操作键</string>
     <string name="snygg__rule_element__smartbar_action_tile">智能栏操作方块</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">智能栏操作磁贴图标</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">智能栏操作磁贴文字</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">智能栏更多操作</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">智能栏更多操作自定义按钮</string>
     <string name="snygg__rule_element__smartbar_actions_editor">智能栏操作编辑器</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">智能栏操作编辑器标题</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">智能栏操作编辑器头部按钮</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">智能栏操作编辑器副标题</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">智能栏操作编辑器磁贴网格</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">智能栏操作编辑器磁贴</string>
     <string name="snygg__rule_element__smartbar_candidates_row">智能栏候选行</string>
     <string name="snygg__rule_element__smartbar_candidate_word">智能栏候选词</string>
     <string name="snygg__rule_element__smartbar_candidate_word_text">智能栏操作候选词文本</string>
     <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">智能栏操作候选词辅助文本</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">智能栏候选剪贴板条目</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">智能栏候选剪贴板图标</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">智能栏候选剪贴板文本</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">智能栏候选条目间隔</string>
     <string name="snygg__rule_element__subtype_panel">子类型面板</string>
     <string name="snygg__rule_element__subtype_panel_header">子类型面板标题</string>
     <string name="snygg__rule_element__subtype_panel_list">子类型面板列表</string>
     <string name="snygg__rule_element__subtype_panel_list_item">子类型面板列表项</string>
     <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">子类型面板列表项文本</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">子类型面板列表项文本</string>
     <string name="snygg__rule_selector__pressed">已按下</string>
     <string name="snygg__rule_selector__focus">已聚焦</string>
     <string name="snygg__rule_selector__hover">悬停</string>
@@ -391,7 +416,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">字体大小缩放倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">布局</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向全屏输入</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">键间距</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">按键</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">弹出键可见</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">按键时显示弹出提示</string>
@@ -678,6 +702,13 @@
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">调试操作，重新显示初次设定界面</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">测试崩溃报告界面</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">调试操作，故意制造崩溃</string>
+    <string name="devtools__group_ime_window_tools__title" comment="Title of IME window tools group in Devtools">输入法窗口工具</string>
+    <string name="devtools__show_window_resize_handle_boundaries__label">显示窗口调整大小控制柄边界</string>
+    <string name="devtools__show_window_resize_handle_boundaries__summary">为调试显示窗口调整大小控制柄边界</string>
+    <string name="devtools__reset_window_config__label">重置窗口配置</string>
+    <string name="devtools__reset_window_config__summary">将窗口配置（固定/浮动模式、内边距、偏移量）重置为默认值</string>
+    <string name="devtools__reset_window_config__toast_success">成功将窗口配置重置为默认值</string>
+    <string name="devtools__reset_window_config__toast_failure">重置窗口配置到默认值失败：{message}</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">安卓系统工具</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">全局安卓设置</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">安卓安全设置</string>
@@ -790,6 +821,7 @@
     <string name="action__delete">删除</string>
     <string name="action__delete_confirm_title">确认删除</string>
     <string name="action__delete_confirm_message">您确定要删除“{name}”吗？此操作一旦执行，无法撤消。</string>
+    <string name="action__reset">重置</string>
     <string name="action__reset_confirm_title">确认重置</string>
     <string name="action__reset_confirm_message">您确定要重置“{name}”吗？此操作一旦执行将无法撤销。</string>
     <string name="action__discard">放弃</string>
@@ -804,6 +836,7 @@
     <string name="action__import_files">导入文件</string>
     <string name="action__no">否</string>
     <string name="action__ok">确定</string>
+    <string name="action__done">完成</string>
     <string name="action__restore">还原</string>
     <string name="action__save">保存</string>
     <string name="action__select">选择</string>
@@ -920,10 +953,15 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">已 Shift（手动）</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">已 Shift（自动）</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">大写锁定</string>
+    <string name="enum__ime_window_mode__fixed" comment="Enum value label">固定</string>
+    <string name="enum__ime_window_mode__floating" comment="Enum value label">浮动</string>
     <string name="enum__keyboard_mode__characters" comment="Enum value label">字符</string>
     <string name="enum__keyboard_mode__symbols" comment="Enum value label">符号</string>
     <string name="enum__keyboard_mode__symbols2" comment="Enum value label">符号2</string>
     <string name="enum__keyboard_mode__numeric" comment="Enum value label">数字</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">高级数字</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">电话</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">电话2</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">从不显示</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">始终显示</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">动态显示</string>
@@ -1000,5 +1038,11 @@
     </plurals>
     <plurals name="unit__items__written">
         <item quantity="other">{v} 项</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="other">字符</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="other">候选</item>
     </plurals>
 </resources>

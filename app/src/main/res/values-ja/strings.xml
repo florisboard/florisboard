@@ -388,7 +388,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">フォントサイズ倍率</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">レイアウト</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">横向き時のフルスクリーン入力</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">キー間隔</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">キー入力</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">キーポップアップの表示</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">キーを押すとポップアップを表示</string>

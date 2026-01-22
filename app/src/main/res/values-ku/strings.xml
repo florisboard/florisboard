@@ -148,7 +148,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pirjimara mezinahiya curenivîsê</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raxistin</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Têveka dîmendera tije ya peyzgeh</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Kilît ji bo veqetandinê</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Çapemeniya kilît</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">PopUp Dîtinî</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Dema pêl bişkojkê bikî popup nîşan bide</string>

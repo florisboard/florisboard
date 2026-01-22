@@ -320,7 +320,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicador de la mida de la font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa apaïsada</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espai entre tecles</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitat de les tecles emergents</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>

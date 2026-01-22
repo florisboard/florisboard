@@ -88,6 +88,7 @@
     <string name="quick_action__toggle_autocorrect__tooltip">Pārslēgt automātisko labošanu</string>
     <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Balss ievade</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Atvērt balss ievades nodrošinātāju</string>
+    <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Peldošs</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Vienrocīgs</string>
     <string name="quick_action__one_handed_mode__tooltip">Pārslēgt vienrocīgo ievadi</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Pašreizējā rādītāja vilkšanas atrašanās vieta</string>
@@ -368,7 +369,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Fonta izmēra reizinātājs</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Līmeniska pilnekrāna ievade</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Atstarpe starp taustiņiem</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Taustiņa piespiešana</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>

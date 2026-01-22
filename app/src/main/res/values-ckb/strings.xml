@@ -285,7 +285,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">قەبارەی فۆنت</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">شێوازەکان</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">نووسین بە تەواوی شاشە لە باری خستە سەرلا</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">بۆشایی نێوان دوگمەکان</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">بچووککراوەی پیت</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>

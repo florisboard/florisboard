@@ -327,7 +327,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Schriftgröße</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Querformat Vollbild Eingabe</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Platz zwischen Tasten</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>

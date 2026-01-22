@@ -252,7 +252,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multobligo grandon de la tiparo</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Aranĝo</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Pejzaĝa plenekrana enigo</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Interspaco inter la klavoj</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavojn tuŝo</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Ŝprucojn videblo</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Vidigi ŝprucon kiam vi tuŝas klavon</string>

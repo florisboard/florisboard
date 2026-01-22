@@ -402,7 +402,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Pengganda ukuran font</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Tata letak</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Masukan layar penuh lanskap</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spasi tombol</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tekanan tombol</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilitas munculan</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Tampilkan munculan ketika Anda menekan tombol</string>

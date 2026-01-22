@@ -343,7 +343,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Multiplicateur de la taille de la police</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrée en plein écran à l\'horizontale</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Espacement des touches</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Appui sur la touche</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilité du popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Afficher un pop-up lors de l\'appui d\'une touche</string>
