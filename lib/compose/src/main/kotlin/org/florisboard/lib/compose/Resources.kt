@@ -63,7 +63,11 @@ fun ProvideLocalizedResources(
     forceLayoutDirection: LayoutDirection? = null,
     content: @Composable () -> Unit,
 ) {
-    val actualLayoutDirection = LocalLayoutDirection.current
+    val actualLayoutDirection = when (resourcesContext.resources.configuration.layoutDirection) {
+        View.LAYOUT_DIRECTION_LTR -> LayoutDirection.Ltr
+        View.LAYOUT_DIRECTION_RTL -> LayoutDirection.Rtl
+        else -> error("Given configuration specifies invalid layout direction!")
+    }
     val layoutDirection = forceLayoutDirection ?: actualLayoutDirection
     val localeList = resourcesContext.resources.configuration.locales
     val dateTimeFormatter = remember(resourcesContext) {
@@ -75,7 +79,7 @@ fun ProvideLocalizedResources(
     CompositionLocalProvider(
         LocalResourcesContext provides resourcesContext,
         LocalLocalizedDateTimeFormatter provides dateTimeFormatter,
-        LocalActualLayoutDirection provides LocalLayoutDirection.current,
+        LocalActualLayoutDirection provides actualLayoutDirection,
         LocalLayoutDirection provides layoutDirection,
         LocalAppNameString provides stringResource(appName),
     ) {

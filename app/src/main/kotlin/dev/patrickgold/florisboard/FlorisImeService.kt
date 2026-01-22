@@ -23,6 +23,7 @@ import android.content.res.Configuration
 import android.inputmethodservice.ExtractEditText
 import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import android.util.Size
 import android.view.KeyEvent
 import android.view.View
@@ -61,6 +62,8 @@ import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
@@ -263,6 +266,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     private val activeState get() = keyboardManager.activeState
     val inputFeedbackController by lazy { InputFeedbackController.new(this) }
+    private val systemLocalesFlow = MutableStateFlow(LocaleList())
     var resourcesContext by mutableStateOf(this as Context)
         private set
 
@@ -275,28 +279,36 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
+        systemLocalesFlow.value = resources.configuration.locales
+
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         windowController.onConfigurationChanged(resources.configuration)
         windowController.activeWindowConfig.collectLatestIn(lifecycleScope) {
             keyboardManager.updateActiveEvaluators() // TODO: wacky solution, but works for now
         }
-        subtypeManager.activeSubtypeFlow.collectIn(lifecycleScope) { subtype ->
-            val config = Configuration(resources.configuration)
-            if (prefs.localization.displayKeyboardLabelsInSubtypeLanguage.get()) {
-                config.setLocale(subtype.primaryLocale.base)
+
+        combine(
+            systemLocalesFlow,
+            subtypeManager.activeSubtypeFlow,
+            prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow(),
+        ) { systemLocales, subtype, shouldUseSubtypeLanguage ->
+            systemLocales to (if (shouldUseSubtypeLanguage) subtype.primaryLocale else null)
+        }.collectIn(lifecycleScope) { (systemLocales, subtypeLocale) ->
+            val config = Configuration().apply {
+                setToDefaults()
+                if (subtypeLocale != null) {
+                    setLocale(subtypeLocale.base)
+                } else {
+                    setLocales(systemLocales)
+                }
             }
             resourcesContext = createConfigurationContext(config)
         }
-        prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow().collectIn(lifecycleScope) { shouldSync ->
-            val config = Configuration(resources.configuration)
-            if (shouldSync) {
-                config.setLocale(subtypeManager.activeSubtype.primaryLocale.base)
-            }
-            resourcesContext = createConfigurationContext(config)
-        }
+
         prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectIn(lifecycleScope) {
             updateInputViewShown()
         }
+
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
         registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
@@ -334,8 +346,9 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        themeManager.configurationChangeCounter.update { it + 1 }
+        systemLocalesFlow.value = newConfig.locales
         windowController.onConfigurationChanged(newConfig)
+        themeManager.configurationChangeCounter.update { it + 1 }
     }
 
     override fun onDestroy() {
