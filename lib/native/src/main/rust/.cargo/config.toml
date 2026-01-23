@@ -1,0 +1,13 @@
+[target.aarch64-linux-android]
+linker = "aarch64-linux-android-clang"
+rustflags = ["-C", "link-args=-Wl,-z,max-page-size=0x4000", "-C", "link-args=-Wl,-z,common-page-size=0x4000"]
+
+[target.armv7-linux-androideabi]
+linker = "armv7a-linux-androideabi-clang"
+rustflags = ["-C", "link-args=-Wl,-z,max-page-size=0x4000", "-C", "link-args=-Wl,-z,common-page-size=0x4000"]
+
+[target.i686-linux-android]
+linker = "i686-linux-android-clang"
+
+[target.x86_64-linux-android]
+linker = "x86_64-linux-android-clang"

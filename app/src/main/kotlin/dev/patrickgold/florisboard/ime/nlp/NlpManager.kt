@@ -248,6 +248,10 @@ class NlpManager(context: Context) {
     }
 
     fun getAutoCommitCandidate(): SuggestionCandidate? {
+        // Check if autocorrect is enabled in settings before returning candidate
+        if (!prefs.smartbar.autocorrect.get()) {
+            return null
+        }
         return activeCandidates.firstOrNull { it.isEligibleForAutoCommit }
     }
 

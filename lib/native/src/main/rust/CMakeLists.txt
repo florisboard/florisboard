@@ -54,6 +54,14 @@ add_custom_target(
 
 add_dependencies(fl_native fl_native_rust_build)
 
+# 16 KB page alignment for Android 15+ compatibility
+if(CMAKE_ANDROID_ARCH_ABI STREQUAL "arm64-v8a" OR CMAKE_ANDROID_ARCH_ABI STREQUAL "armeabi-v7a")
+    target_link_options(fl_native PRIVATE
+        -Wl,-z,max-page-size=0x4000
+        -Wl,-z,common-page-size=0x4000
+    )
+endif()
+
 # TODO: check if there's a better way than allowing multiple symbol definitions
 target_link_libraries(fl_native
     android log -Wl,--whole-archive -Wl,--allow-multiple-definition -Wl,--build-id=none ${FL_NATIVE_RUST_PATH}
