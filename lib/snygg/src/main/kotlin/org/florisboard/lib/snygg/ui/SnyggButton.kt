@@ -37,7 +37,7 @@ import org.florisboard.lib.snygg.SnyggSelector
 
 /**
  * Simple interactive Box with integrated clickable state management.
- * Childs will be placed in a row.
+ * Children will be placed in a row.
  *
  * This composable infers its style from the current [SnyggTheme][org.florisboard.lib.snygg.SnyggTheme], which is
  * required to be provided by [ProvideSnyggTheme].

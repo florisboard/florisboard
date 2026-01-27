@@ -1,7 +1,7 @@
 - Add number row / underlying symbol support in character layouts
   - First row of each character layout has numbers 1-9 and 0 integrated
   - Second and third row have symbols according to the symbol layout
-  - Number row / Underlying symbols can be enabled/disabled seperately
+  - Number row / Underlying symbols can be enabled/disabled separately
     in the preferences
 - Add bottom offset option to accommodate for curved screens (#20)
 - Add option to turn off auto-capitalization (#21)
