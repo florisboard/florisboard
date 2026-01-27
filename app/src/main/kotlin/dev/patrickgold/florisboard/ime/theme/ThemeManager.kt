@@ -136,7 +136,7 @@ class ThemeManager(context: Context) {
             return@withLock
         }
         // TODO: loaded dir is implemented already...
-        // TODO: this leaks the loaded dir, but at least the state is not kaputt from compose viewpoint
+        // TODO: this leaks the loaded dir, but at least the state is not kaput from compose viewpoint
         val loadedDir = appContext.cacheDir.subDir("loaded").subDir(UUID.randomUUID().toString())
         runCatching {
             loadedDir.mkdirs()
