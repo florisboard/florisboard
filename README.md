@@ -9,23 +9,23 @@ fully respecting your privacy. Currently in beta state.
 
 <table>
 <tr>
-<th align="center" width="50%">
+<th style="text-align: center; width: 50%">
 <h3>Stable <a href="https://github.com/florisboard/florisboard/releases/latest"><img alt="Latest stable release" src="https://img.shields.io/github/v/release/florisboard/florisboard?sort=semver&display_name=tag&color=28a745"></a></h3>
 </th>
-<th align="center" width="50%">
+<th style="text-align: center; width: 50%">
 <h3>Preview <a href="https://github.com/florisboard/florisboard/releases"><img alt="Latest preview release" src="https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases&sort=semver&display_name=tag&color=fd7e14"></a></h3>
 </th>
 </tr>
 <tr>
-<td valign="top">
+<td style="vertical-align: top">
 <p><i>Major versions only</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
 </td>
-<td valign="top">
+<td style="vertical-align: top">
 <p><i>Major + Alpha/Beta/Rc versions</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
 </td>
 </tr>
 <tr>
-<td valign="top">
+<td style="vertical-align: top">
 <p>
 <a href="https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge"></a>
 <a href="https://f-droid.org/packages/dev.patrickgold.florisboard"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="64" alt="F-Droid badge"></a>
@@ -46,7 +46,7 @@ fully respecting your privacy. Currently in beta state.
 
 </p>
 </td>
-<td valign="top">
+<td style="vertical-align: top">
 <p><a href="https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard.beta"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge"></a></p>
 <p>
 
