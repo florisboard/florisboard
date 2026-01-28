@@ -145,45 +145,35 @@ fun ComputingEvaluator.computeLabel(data: KeyData): String? {
                     KeyboardMode.CHARACTERS -> evaluator.subtype.primaryLocale.let { locale ->
                         computeLanguageDisplayName(locale, evaluator.displayLanguageNamesIn())
                     }
-
                     else -> null
                 }
             }
-
             KeyCode.IME_UI_MODE_TEXT,
             KeyCode.VIEW_CHARACTERS -> {
                 evaluator.context()?.getString(R.string.key__view_characters)
             }
-
             KeyCode.VIEW_NUMERIC,
             KeyCode.VIEW_NUMERIC_ADVANCED -> {
                 evaluator.context()?.getString(R.string.key__view_numeric)
             }
-
             KeyCode.VIEW_PHONE -> {
                 evaluator.context()?.getString(R.string.key__view_phone)
             }
-
             KeyCode.VIEW_PHONE2 -> {
                 evaluator.context()?.getString(R.string.key__view_phone2)
             }
-
             KeyCode.VIEW_SYMBOLS -> {
                 evaluator.context()?.getString(R.string.key__view_symbols)
             }
-
             KeyCode.VIEW_SYMBOLS2 -> {
                 evaluator.context()?.getString(R.string.key__view_symbols2)
             }
-
             KeyCode.HALF_SPACE -> {
                 evaluator.context()?.getString(R.string.key__view_half_space)
             }
-
             KeyCode.KESHIDA -> {
                 evaluator.context()?.getString(R.string.key__view_keshida)
             }
-
             else -> null
         }
     }
@@ -195,45 +185,35 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         KeyCode.ARROW_LEFT -> {
             Icons.AutoMirrored.Filled.KeyboardArrowLeft
         }
-
         KeyCode.ARROW_RIGHT -> {
             Icons.AutoMirrored.Filled.KeyboardArrowRight
         }
-
         KeyCode.ARROW_UP -> {
             Icons.Default.KeyboardArrowUp
         }
-
         KeyCode.ARROW_DOWN -> {
             Icons.Default.KeyboardArrowDown
         }
-
         KeyCode.CLIPBOARD_COPY -> {
             Icons.Default.ContentCopy
         }
-
         KeyCode.CLIPBOARD_CUT -> {
             Icons.Default.ContentCut
         }
-
         KeyCode.CLIPBOARD_PASTE -> {
             Icons.Default.ContentPasteGo
         }
-
         KeyCode.CLIPBOARD_SELECT_ALL -> {
             Icons.Default.SelectAll
         }
-
         KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
             Icons.Default.DeleteSweep
         }
-
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
         KeyCode.COMPACT_LAYOUT_TO_RIGHT,
         KeyCode.TOGGLE_COMPACT_LAYOUT -> {
             context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
         }
-
         KeyCode.TOGGLE_FLOATING_WINDOW -> {
             val enabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard)
             val disabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard_disable)
@@ -243,23 +223,18 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 ImeWindowMode.FLOATING -> disabledIcon
             }
         }
-
         KeyCode.TOGGLE_RESIZE_MODE -> {
             context()?.vectorResource(id = R.drawable.ic_resize)
         }
-
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice
         }
-
         KeyCode.IME_HIDE_UI -> {
             Icons.Default.KeyboardHide
         }
-
         KeyCode.DELETE -> {
             Icons.AutoMirrored.Outlined.Backspace
         }
-
         KeyCode.ENTER -> {
             val imeOptions = evaluator.editorInfo.imeOptions
             val inputAttributes = evaluator.editorInfo.inputAttributes
@@ -278,34 +253,27 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 }
             }
         }
-
         KeyCode.FORWARD_DELETE -> {
             Icons.AutoMirrored.Default.ForwardDelete
         }
-
         KeyCode.IME_UI_MODE_MEDIA -> {
             Icons.Default.SentimentSatisfiedAlt
         }
-
         KeyCode.IME_UI_MODE_CLIPBOARD -> {
             Icons.AutoMirrored.Outlined.Assignment
         }
-
         KeyCode.LANGUAGE_SWITCH -> {
             Icons.Default.Language
         }
-
         KeyCode.SETTINGS -> {
             Icons.Default.Settings
         }
-
         KeyCode.SHIFT -> {
             when (evaluator.state.inputShiftState != InputShiftState.UNSHIFTED) {
                 true -> Icons.Default.KeyboardCapslock
                 else -> Icons.Default.KeyboardArrowUp
             }
         }
-
         KeyCode.SPACE, KeyCode.CJK_SPACE -> {
             when (evaluator.keyboard.mode) {
                 KeyboardMode.NUMERIC,
@@ -314,23 +282,18 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 KeyboardMode.PHONE2 -> {
                     Icons.Default.SpaceBar
                 }
-
                 else -> null
             }
         }
-
         KeyCode.UNDO -> {
             Icons.AutoMirrored.Filled.Undo
         }
-
         KeyCode.REDO -> {
             Icons.AutoMirrored.Filled.Redo
         }
-
         KeyCode.TOGGLE_ACTIONS_OVERFLOW -> {
             Icons.Default.MoreHoriz
         }
-
         KeyCode.TOGGLE_INCOGNITO_MODE -> {
             if (evaluator.state.isIncognitoMode) {
                 this.context()?.vectorResource(id = R.drawable.ic_incognito)
@@ -338,11 +301,9 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 this.context()?.vectorResource(id = R.drawable.ic_incognito_off)
             }
         }
-
         KeyCode.TOGGLE_AUTOCORRECT -> {
             Icons.Default.FontDownload
         }
-
         KeyCode.KANA_SWITCHER -> {
             if (evaluator.state.isKanaKata) {
                 this.context()?.vectorResource(R.drawable.ic_keyboard_kana_switcher_kata)
@@ -350,7 +311,6 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 this.context()?.vectorResource(R.drawable.ic_keyboard_kana_switcher_hira)
             }
         }
-
         KeyCode.CHAR_WIDTH_SWITCHER -> {
             if (evaluator.state.isCharHalfWidth) {
                 this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_full)
@@ -358,23 +318,18 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
                 this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_half)
             }
         }
-
         KeyCode.CHAR_WIDTH_FULL -> {
             this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_full)
         }
-
         KeyCode.CHAR_WIDTH_HALF -> {
             this.context()?.vectorResource(R.drawable.ic_keyboard_char_width_switcher_half)
         }
-
         KeyCode.DRAG_MARKER -> {
             if (evaluator.state.debugShowDragAndDropHelpers) Icons.Default.Close else null
         }
-
         KeyCode.NOOP -> {
             Icons.Default.Close
         }
-
         else -> null
     }
 }

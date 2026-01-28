@@ -3,23 +3,23 @@
     <cloud-backup>
         <include
             domain="root"
-            path="jetpref_datastore" />
+            path="jetpref_datastore"/>
         <include
             domain="file"
-            path="ime" />
+            path="ime"/>
         <include
             domain="database"
-            path="floris_user_dictionary" />
+            path="floris_user_dictionary"/>
     </cloud-backup>
     <device-transfer>
         <include
             domain="root"
-            path="jetpref_datastore" />
+            path="jetpref_datastore"/>
         <include
             domain="file"
-            path="ime" />
+            path="ime"/>
         <include
             domain="database"
-            path="floris_user_dictionary" />
+            path="floris_user_dictionary"/>
     </device-transfer>
 </data-extraction-rules>

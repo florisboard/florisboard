@@ -135,12 +135,10 @@ private class SubtypeEditorState(init: Subtype?) {
     val id: MutableState<Long> = mutableLongStateOf(init?.id ?: -1)
     val primaryLocale: MutableState<FlorisLocale> = mutableStateOf(init?.primaryLocale ?: SelectLocale)
     val secondaryLocales: MutableState<List<FlorisLocale>> = mutableStateOf(init?.secondaryLocales ?: listOf())
-    val nlpProviders: MutableState<SubtypeNlpProviderMap> =
-        mutableStateOf(init?.nlpProviders ?: Subtype.DEFAULT.nlpProviders)
+    val nlpProviders: MutableState<SubtypeNlpProviderMap> = mutableStateOf(init?.nlpProviders ?: Subtype.DEFAULT.nlpProviders)
     val composer: MutableState<ExtensionComponentName> = mutableStateOf(init?.composer ?: SelectComponentName)
     val currencySet: MutableState<ExtensionComponentName> = mutableStateOf(init?.currencySet ?: SelectComponentName)
-    val punctuationRule: MutableState<ExtensionComponentName> =
-        mutableStateOf(init?.punctuationRule ?: Subtype.DEFAULT.punctuationRule)
+    val punctuationRule: MutableState<ExtensionComponentName> = mutableStateOf(init?.punctuationRule ?: Subtype.DEFAULT.punctuationRule)
     val popupMapping: MutableState<ExtensionComponentName> = mutableStateOf(init?.popupMapping ?: SelectComponentName)
     val layoutMap: MutableState<SubtypeLayoutMap> = mutableStateOf(init?.layoutMap ?: SelectLayoutMap)
 
@@ -181,13 +179,11 @@ private class SubtypeEditorState(init: Subtype?) {
 
 @Composable
 fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
-    title = stringRes(
-        if (id == null) {
-            R.string.settings__localization__subtype_add_title
-        } else {
-            R.string.settings__localization__subtype_edit_title
-        }
-    )
+    title = stringRes(if (id == null) {
+        R.string.settings__localization__subtype_add_title
+    } else {
+        R.string.settings__localization__subtype_edit_title
+    })
 
     val selectValue = stringRes(R.string.settings__localization__subtype_select_placeholder)
     val selectListValues = remember(selectValue) { listOf(selectValue) }
@@ -300,10 +296,9 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     content {
         Column(modifier = Modifier.padding(8.dp)) {
             if (id == null) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
+                Card(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
                 ) {
                     Column(modifier = Modifier.padding(vertical = 8.dp)) {
                         Text(
@@ -337,9 +332,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                                     },
                                     text = when (displayLanguageNamesIn) {
                                         DisplayLanguageNamesIn.SYSTEM_LOCALE -> suggestedPreset.locale.displayName()
-                                        DisplayLanguageNamesIn.NATIVE_LOCALE -> suggestedPreset.locale.displayName(
-                                            suggestedPreset.locale
-                                        )
+                                        DisplayLanguageNamesIn.NATIVE_LOCALE -> suggestedPreset.locale.displayName(suggestedPreset.locale)
                                     },
                                     secondaryText = suggestedPreset.preferred.characters.componentId,
                                     colors = ListItemDefaults.colors(containerColor = CardDefaults.cardColors().containerColor),
@@ -396,10 +389,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_characters_layout),
-                LayoutType.CHARACTERS
-            )
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_characters_layout), LayoutType.CHARACTERS)
 
             SubtypeGroupSpacer()
 
@@ -424,26 +414,18 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     expanded = expanded,
                     selectedOptionIndex = selectedIndex,
                     isError = showSelectAsError && selectedIndex == 0,
-                    onSelectOption = {
-                        nlpProviders = SubtypeNlpProviderMap(
-                            suggestion = nlpProviderMappingIds[it],
-                            spelling = nlpProviderMappingIds[it]
-                        )
-                    },
+                    onSelectOption = { nlpProviders = SubtypeNlpProviderMap(
+                        suggestion = nlpProviderMappingIds[it],
+                        spelling = nlpProviderMappingIds[it]
+                    ) },
                     appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
 
             SubtypeGroupSpacer()
 
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_symbols_layout),
-                LayoutType.SYMBOLS
-            )
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_symbols2_layout),
-                LayoutType.SYMBOLS2
-            )
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_symbols_layout), LayoutType.SYMBOLS)
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_symbols2_layout), LayoutType.SYMBOLS2)
 
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_composer)) {
                 val composerIds = remember(composers) {
@@ -482,29 +464,17 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
 
             SubtypeGroupSpacer()
 
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_numeric_layout),
-                LayoutType.NUMERIC
-            )
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_layout), LayoutType.NUMERIC)
 
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_numeric_advanced_layout),
-                LayoutType.NUMERIC_ADVANCED
-            )
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_advanced_layout), LayoutType.NUMERIC_ADVANCED)
 
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_numeric_row_layout),
-                LayoutType.NUMERIC_ROW
-            )
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_numeric_row_layout), LayoutType.NUMERIC_ROW)
 
             SubtypeGroupSpacer()
 
             SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_phone_layout), LayoutType.PHONE)
 
-            SubtypePropertyDropdown(
-                stringRes(R.string.settings__localization__subtype_phone2_layout),
-                LayoutType.PHONE2
-            )
+            SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_phone2_layout), LayoutType.PHONE2)
         }
 
         if (showSubtypePresetsDialog) {
@@ -533,9 +503,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                                 },
                                 text = when (displayLanguageNamesIn) {
                                     DisplayLanguageNamesIn.SYSTEM_LOCALE -> subtypePreset.locale.displayName()
-                                    DisplayLanguageNamesIn.NATIVE_LOCALE -> subtypePreset.locale.displayName(
-                                        subtypePreset.locale
-                                    )
+                                    DisplayLanguageNamesIn.NATIVE_LOCALE -> subtypePreset.locale.displayName(subtypePreset.locale)
                                 },
                                 secondaryText = subtypePreset.preferred.characters.componentId,
                                 colors = ListItemDefaults.colors(containerColor = AlertDialogDefaults.containerColor),
@@ -595,23 +563,14 @@ private fun SubtypeLayoutDropdown(
         expanded = expanded,
         selectedOptionIndex = selectedIndex,
         isError = showSelectAsError && selectedIndex == 0,
-        onSelectOption = {
-            onLayoutMapChanged(
-                layoutMap.copy(
-                    layoutType = layoutType,
-                    componentName = layoutIds[it]
-                )!!
-            )
-        },
+        onSelectOption = { onLayoutMapChanged(layoutMap.copy(layoutType = layoutType, componentName = layoutIds[it])!!) },
         appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
     )
 }
 
 @Composable
 private fun SubtypeGroupSpacer() {
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(32.dp)
-    )
+    Spacer(modifier = Modifier
+        .fillMaxWidth()
+        .height(32.dp))
 }

@@ -28,10 +28,8 @@ class HangulUnicode : Composer {
 
     // Initial consonants, ordered for syllable creation
     private val initials = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
-
     // Medial vowels, ordered for syllable creation
     private val medials = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"
-
     // Final consonants (including none), ordered for syllable creation
     private val finals = "_ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"
 
@@ -62,14 +60,14 @@ class HangulUnicode : Composer {
     private val finalCompRev = reverseComp(finalComp)
     private val medialCompRev = reverseComp(medialComp)
 
-    private fun syllable(ini: Int, med: Int, fin: Int): Char {
-        return (ini * 588 + med * 28 + fin + 44032).toChar()
+    private fun syllable(ini: Int, med: Int, fin:Int): Char {
+        return (ini*588 + med*28 + fin + 44032).toChar()
     }
 
     private fun syllableBlocks(syllOrd: Int): List<Int> {
-        val initial = (syllOrd - 44032) / 588
-        val medial = (syllOrd - 44032 - initial * 588) / 28
-        val fin = (syllOrd - 44032) % 28
+        val initial = (syllOrd-44032)/588
+        val medial = (syllOrd-44032-initial*588)/28
+        val fin = (syllOrd-44032)%28
         return listOf(initial, medial, fin)
     }
 
@@ -109,13 +107,7 @@ class HangulUnicode : Composer {
 
             // if there is a composed final and the new char is a medial, split the old final
             if (finals[fin] in finalCompRev && c in medials) {
-                return 1 to "${syllable(ini, med, finals.indexOf(finalCompRev.getValue(finals[fin])[0]))}${
-                    syllable(
-                        initials.indexOf(finalCompRev.getValue(finals[fin])[1]),
-                        medials.indexOf(c),
-                        0
-                    )
-                }"
+                return 1 to "${syllable(ini, med, finals.indexOf(finalCompRev.getValue(finals[fin])[0]))}${syllable(initials.indexOf(finalCompRev.getValue(finals[fin])[1]), medials.indexOf(c), 0)}"
             }
 
             // if no final yet, and current medial can be composed with new char, merge
@@ -124,9 +116,9 @@ class HangulUnicode : Composer {
                 return 1 to "${syllable(ini, medials.indexOf(tple!![1][tple[0].indexOf(c)]), 0)}"
             }
         } else if (lastChar in medialComp.keys && medialComp[lastChar]?.get(0)?.contains(c) == true) { // medial+final
-            return 1 to "" + medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)]
+            return 1 to ""+ medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)]
         } else if (lastChar in finalComp.keys && finalComp[lastChar]?.get(0)?.contains(c) == true) { // final+final
-            return 1 to "" + finalComp[lastChar]?.get(1)!![finalComp[lastChar]?.get(0)!!.indexOf(c)]
+            return 1 to ""+ finalComp[lastChar]?.get(1)!![finalComp[lastChar]?.get(0)!!.indexOf(c)]
         }
 
         return 0 to toInsert

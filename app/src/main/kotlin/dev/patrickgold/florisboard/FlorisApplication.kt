@@ -96,7 +96,7 @@ class FlorisApplication : Application() {
             )
             CrashUtility.install(this)
             FlorisEmojiCompat.init(this)
-            flogError { "dummy result: ${dummyAdd(3, 4)}" }
+            flogError { "dummy result: ${dummyAdd(3,4)}" }
 
             if (!UserManagerCompat.isUserUnlocked(this)) {
                 cacheDir?.deleteContentsRecursively()
@@ -149,7 +149,6 @@ private tailrec fun Context.florisApplication(): FlorisApplication {
             this.baseContext != null -> this.baseContext.florisApplication()
             else -> FlorisApplicationReference.get()!!
         }
-
         else -> tryOrNull { this.applicationContext as FlorisApplication } ?: FlorisApplicationReference.get()!!
     }
 }

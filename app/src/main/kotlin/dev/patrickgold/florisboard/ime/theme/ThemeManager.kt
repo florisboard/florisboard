@@ -166,11 +166,9 @@ class ThemeManager(context: Context) {
             ThemeMode.ALWAYS_DAY -> {
                 prefs.theme.dayThemeId.get()
             }
-
             ThemeMode.ALWAYS_NIGHT -> {
                 prefs.theme.nightThemeId.get()
             }
-
             ThemeMode.FOLLOW_SYSTEM -> if (appContext.resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
             ) {
@@ -178,7 +176,6 @@ class ThemeManager(context: Context) {
             } else {
                 prefs.theme.dayThemeId.get()
             }
-
             ThemeMode.FOLLOW_TIME -> {
                 val current = LocalTime.now()
                 val sunrise = prefs.theme.sunriseTime.get().javaLocalTime

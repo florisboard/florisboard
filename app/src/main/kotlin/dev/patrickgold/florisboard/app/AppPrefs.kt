@@ -76,7 +76,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val clipboard = Clipboard()
-
     inner class Clipboard {
         val useInternalClipboard = boolean(
             key = "clipboard__use_internal_clipboard",
@@ -110,7 +109,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__history_num_grid_columns_landscape",
             default = CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO,
         )
-
         @Composable
         fun historyNumGridColumns(): PreferenceData<Int> {
             val configuration = LocalConfiguration.current
@@ -120,7 +118,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 historyNumGridColumnsLandscape
             }
         }
-
         val historyAutoCleanOldEnabled = boolean(
             key = "clipboard__history_auto_clean_old_enabled",
             default = false,
@@ -160,7 +157,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val correction = Correction()
-
     inner class Correction {
         val autoCapitalization = boolean(
             key = "correction__auto_capitalization",
@@ -181,7 +177,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val devtools = Devtools()
-
     inner class Devtools {
         val enabled = boolean(
             key = "devtools__enabled",
@@ -218,7 +213,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val dictionary = Dictionary()
-
     inner class Dictionary {
         val enableSystemUserDictionary = boolean(
             key = "suggestion__enable_system_user_dictionary",
@@ -231,7 +225,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val emoji = Emoji()
-
     inner class Emoji {
         val preferredSkinTone = enum(
             key = "emoji__preferred_skin_tone",
@@ -293,7 +286,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val gestures = Gestures()
-
     inner class Gestures {
         val swipeUp = enum(
             key = "gestures__swipe_up",
@@ -346,7 +338,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val glide = Glide()
-
     inner class Glide {
         val enabled = boolean(
             key = "glide__enabled",
@@ -375,7 +366,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val inputFeedback = InputFeedback()
-
     inner class InputFeedback {
         val audioEnabled = boolean(
             key = "input_feedback__audio_enabled",
@@ -453,7 +443,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val internal = Internal()
-
     inner class Internal {
         val homeIsBetaToolboxCollapsed = boolean(
             key = "internal__home_is_beta_toolbox_collapsed_040a01",
@@ -482,7 +471,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val keyboard = Keyboard()
-
     inner class Keyboard {
         val windowConfig = custom(
             key = "keyboard__window_config",
@@ -582,7 +570,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val localization = Localization()
-
     inner class Localization {
         val displayLanguageNamesIn = enum(
             key = "localization__display_language_names_in",
@@ -603,7 +590,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val other = Other()
-
     inner class Other {
         val settingsTheme = enum(
             key = "other__settings_theme",
@@ -625,7 +611,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val physicalKeyboard = PhysicalKeyboard()
-
     inner class PhysicalKeyboard {
         val showOnScreenKeyboard = boolean(
             key = "physical_keyboard__show_on_screen_keyboard",
@@ -634,7 +619,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val smartbar = Smartbar()
-
     inner class Smartbar {
         val enabled = boolean(
             key = "smartbar__enabled",
@@ -657,7 +641,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "smartbar__shared_actions_expanded",
             default = false,
         )
-
         @Deprecated("Always enabled due to UX issues")
         val sharedActionsAutoExpandCollapse = boolean(
             key = "smartbar__shared_actions_auto_expand_collapse",
@@ -678,7 +661,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val spelling = Spelling()
-
     inner class Spelling {
         val languageMode = enum(
             key = "spelling__language_mode",
@@ -695,7 +677,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val suggestion = Suggestion()
-
     inner class Suggestion {
         val api30InlineSuggestionsEnabled = boolean(
             key = "suggestion__api30_inline_suggestions_enabled",
@@ -717,7 +698,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "suggestion__incognito_mode",
             default = IncognitoMode.DYNAMIC_ON_OFF,
         )
-
         // Internal pref
         val forceIncognitoModeFromDynamic = boolean(
             key = "suggestion__force_incognito_mode_from_dynamic",
@@ -726,7 +706,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     }
 
     val theme = Theme()
-
     inner class Theme {
         val mode = enum(
             key = "theme__mode",
@@ -782,7 +761,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 val data = EmojiHistory(emptyList(), recent)
                 entry.transform(key = "emoji__history_data", rawValue = Json.encodeToString(data))
             }
-
             "media__emoji_recently_used_max_size" -> {
                 entry.transform(key = "emoji__history_recent_max_size")
             }
@@ -792,23 +770,18 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             "advanced__settings_theme" -> {
                 entry.transform(key = "other__settings_theme")
             }
-
             "advanced__accent_color" -> {
                 entry.transform(key = "other__accent_color")
             }
-
             "advanced__settings_language" -> {
                 entry.transform(key = "other__settings_language")
             }
-
             "advanced__show_app_icon" -> {
                 entry.transform(key = "other__show_app_icon")
             }
-
             "advanced__incognito_mode" -> {
                 entry.transform(key = "suggestion__incognito_mode")
             }
-
             "advanced__force_incognito_mode_from_dynamic" -> {
                 entry.transform(key = "suggestion__force_incognito_mode_from_dynamic")
             }
@@ -817,7 +790,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             "suggestion__clipboard_content_enabled" -> {
                 entry.transform(key = "clipboard__suggestion_enabled")
             }
-
             "suggestion__clipboard_content_timeout" -> {
                 entry.transform(key = "clipboard__suggestion_timeout")
             }
@@ -830,7 +802,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                     entry.keepAsIs()
                 }
             }
-
             "smartbar__action_arrangement" -> {
                 fun migrateAction(action: QuickAction): QuickAction {
                     return if (action is QuickAction.InsertKey && action.data.code == KeyCode.COMPACT_LAYOUT_TO_RIGHT) {
@@ -842,7 +813,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
                 val arrangement = QuickActionJsonConfig.decodeFromString<QuickActionArrangement>(entry.rawValue)
                 var newArrangement = arrangement.copy(
-                    stickyAction = arrangement.stickyAction?.let { migrateAction(it) },
+                    stickyAction = arrangement.stickyAction?.let{ migrateAction(it) },
                     dynamicActions = arrangement.dynamicActions.map { migrateAction(it) },
                     hiddenActions = arrangement.hiddenActions.map { migrateAction(it) },
                 )
@@ -900,39 +871,30 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                     },
                 )
             }
-
             "clipboard__num_history_grid_columns_portrait" -> {
                 entry.transform(key = "clipboard__history_num_grid_columns_portrait")
             }
-
             "clipboard__num_history_grid_columns_landscape" -> {
                 entry.transform(key = "clipboard__history_num_grid_columns_landscape")
             }
-
             "clipboard__clean_up_old" -> {
                 entry.transform(key = "clipboard__history_auto_clean_old_enabled")
             }
-
             "clipboard__clean_up_after" -> {
                 entry.transform(key = "clipboard__history_auto_clean_old_after")
             }
-
             "clipboard__auto_clean_sensitive" -> {
                 entry.transform(key = "clipboard__history_auto_clean_sensitive_enabled")
             }
-
             "clipboard__auto_clean_sensitive_after" -> {
                 entry.transform(key = "clipboard__history_auto_clean_sensitive_after")
             }
-
             "clipboard__limit_history_size" -> {
                 entry.transform(key = "clipboard__history_size_limit_enabled")
             }
-
             "clipboard__max_history_size" -> {
                 entry.transform(key = "clipboard__history_size_limit")
             }
-
             "clipboard__clear_primary_clip_deletes_last_item" -> {
                 entry.transform(key = "clipboard__clear_primary_clip_affects_history_if_unpinned")
             }
@@ -946,7 +908,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                     entry.keepAsIs()
                 }
             }
-
             "keyboard__key_spacing_vertical" -> {
                 if (entry.type.isFloat()) {
                     entry.reset()

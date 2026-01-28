@@ -351,8 +351,7 @@ abstract class AbstractEditorInstance(context: Context) {
         }
         val ic = currentInputConnection() ?: return false
         val composer = determineComposer(subtypeManager.activeSubtype.composer)
-        val previous =
-            content.textBeforeSelection.takeLast(composer.toRead.coerceAtLeast(if (deletePreviousSpace) 1 else 0))
+        val previous = content.textBeforeSelection.takeLast(composer.toRead.coerceAtLeast(if (deletePreviousSpace) 1 else 0))
         val (tempRm, tempText) = composer.getActions(previous, char)
         val rm = if (deletePreviousSpace && previous.isNotEmpty() && previous.last() == ' ') tempRm + 1 else tempRm
         val finalText = buildString(tempText.length + 2) {
@@ -482,7 +481,6 @@ abstract class AbstractEditorInstance(context: Context) {
                     ic.setComposingRegion(newContent.composing)
                     ic.endBatchEdit()
                 }
-
                 OperationScope.AFTER_CURSOR -> {
                     val length = when (unit) {
                         OperationUnit.CHARACTERS -> breakIterators.measureUChars(scopeText, n, locale)
@@ -588,12 +586,7 @@ abstract class AbstractEditorInstance(context: Context) {
         return metaState
     }
 
-    private fun InputConnection.sendDownKeyEvent(
-        eventTime: Long,
-        keyEventCode: Int,
-        metaState: Int,
-        repeat: Int = 0
-    ): Boolean {
+    private fun InputConnection.sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int, repeat: Int = 0): Boolean {
         return this.sendKeyEvent(
             KeyEvent(
                 eventTime,
@@ -708,7 +701,7 @@ abstract class AbstractEditorInstance(context: Context) {
      */
     data class LastCommitPosition(var pos: Int = -1) {
 
-        constructor(other: LastCommitPosition) : this(other.pos)
+        constructor(other: LastCommitPosition): this(other.pos)
 
         fun reset() {
             pos = -1

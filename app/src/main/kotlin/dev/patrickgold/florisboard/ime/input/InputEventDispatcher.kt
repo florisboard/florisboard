@@ -85,12 +85,10 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
                 SwipeAction.DELETE_WORD -> TextKeyData.DELETE_WORD
                 else -> TextKeyData.DELETE
             }
-
             KeyCode.FORWARD_DELETE -> when (prefs.gestures.deleteKeyLongPress.get()) {
                 SwipeAction.DELETE_WORD -> TextKeyData.FORWARD_DELETE_WORD
                 else -> TextKeyData.FORWARD_DELETE
             }
-
             else -> data
         }
     }

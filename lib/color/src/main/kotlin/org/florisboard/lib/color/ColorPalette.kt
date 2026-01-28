@@ -35,7 +35,6 @@ enum class ColorPalette(val id: String) {
     OnTertiaryContainer("onTertiaryContainer"),
     Background("background"),
     OnBackground("onBackground"),
-
     // Surface("surface"), // removed and replaced by the specific Surface* variants
     OnSurface("onSurface"),
     SurfaceVariant("surfaceVariant"),

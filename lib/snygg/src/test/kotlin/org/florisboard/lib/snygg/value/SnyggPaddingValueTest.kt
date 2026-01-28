@@ -17,24 +17,15 @@ class SnyggPaddingValueTest {
             // valid
             "10dp" to SnyggPaddingValue(PaddingValues(all = 10.dp)),
             "10dp 12dp" to SnyggPaddingValue(PaddingValues(horizontal = 10.dp, vertical = 12.dp)),
-            "10dp 11dp 12dp 13dp" to SnyggPaddingValue(
-                PaddingValues(
-                    start = 10.dp,
-                    top = 11.dp,
-                    end = 12.dp,
-                    bottom = 13.dp
-                )
-            ),
+            "10dp 11dp 12dp 13dp" to SnyggPaddingValue(PaddingValues(start = 10.dp, top = 11.dp, end = 12.dp, bottom = 13.dp)),
             "3.5dp" to SnyggPaddingValue(PaddingValues(all = 3.5.dp)),
             // invalid
             "10" to null,
             "10%" to null,
         )
-        assertAll(pairs.map { (raw, expected) ->
-            {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
-            }
-        })
+        assertAll(pairs.map { (raw, expected) -> {
+            assertEquals(expected, encoder.deserialize(raw).getOrNull())
+        } })
     }
 
     @Test
@@ -45,11 +36,9 @@ class SnyggPaddingValueTest {
             // invalid
             SnyggDefinedVarValue("shenanigans") to null
         )
-        assertAll(pairs.map { (snyggValue, expected) ->
-            {
-                assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
-            }
-        })
+        assertAll(pairs.map { (snyggValue, expected) -> {
+            assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
+        } })
     }
 
     @Test

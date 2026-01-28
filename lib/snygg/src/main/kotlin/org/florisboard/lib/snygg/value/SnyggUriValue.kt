@@ -23,7 +23,6 @@ data class SnyggUriValue(val uri: String) : SnyggValue {
     companion object : SnyggValueEncoder {
         private const val EnclosedUriFunction = "uri"
         private const val EnclosedUriId = "enclosedUri"
-
         // TODO: evaluate the pattern for the URI
         private val EnclosedUriPattern = """`flex:/[^` ]+`""".toRegex()
 
@@ -69,7 +68,6 @@ data class SnyggContentScaleValue(val contentScale: ContentScale) : SnyggValue {
         construct = { SnyggContentScaleValue(it) },
         destruct = { (it as SnyggContentScaleValue).contentScale },
     )
-
     override fun encoder() = Companion
 }
 

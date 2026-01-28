@@ -104,7 +104,6 @@ data class SnyggTheme internal constructor(
                         check(propertySet is SnyggSinglePropertySet)
                         variablesSet = propertySet
                     }
-
                     is SnyggAnnotationRule.Font -> {
                         check(propertySet is SnyggMultiplePropertySets)
                         val fontList = fonts.getOrDefault(rule.fontName, mutableListOf())
@@ -126,7 +125,6 @@ data class SnyggTheme internal constructor(
                             fonts.put(rule.fontName, fontList)
                         }
                     }
-
                     is SnyggElementRule -> {
                         check(propertySet is SnyggSinglePropertySet)
                         val list = elements.getOrDefault(rule.elementName, mutableListOf())

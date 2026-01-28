@@ -72,10 +72,7 @@ class ImeWindowControllerEditorMoveTest : FunSpec({
                         specAfter.props.paddingRight shouldBe specBefore.props.paddingRight.plusOrMinus(tolerance)
                     }
                     withClue("move operations upward must not decrease padding bottom") {
-                        specAfter.props.paddingBottom.shouldBeGreaterThanOrEqualTo(
-                            specBefore.props.paddingBottom,
-                            tolerance
-                        )
+                        specAfter.props.paddingBottom.shouldBeGreaterThanOrEqualTo(specBefore.props.paddingBottom, tolerance)
                     }
                     withClue("move operations upward must not push window out of root bounds") {
                         specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)
@@ -117,10 +114,7 @@ class ImeWindowControllerEditorMoveTest : FunSpec({
                         specAfter.props.paddingRight shouldBe specBefore.props.paddingRight.plusOrMinus(tolerance)
                     }
                     withClue("move operations downward must not increase padding bottom") {
-                        specAfter.props.paddingBottom.shouldBeLessThanOrEqualTo(
-                            specBefore.props.paddingBottom,
-                            tolerance
-                        )
+                        specAfter.props.paddingBottom.shouldBeLessThanOrEqualTo(specBefore.props.paddingBottom, tolerance)
                     }
                     withClue("move operations downward must not push window out of root bounds") {
                         specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)
@@ -159,10 +153,7 @@ class ImeWindowControllerEditorMoveTest : FunSpec({
                         specAfter.props.paddingLeft.shouldBeLessThanOrEqualTo(specBefore.props.paddingLeft, tolerance)
                     }
                     withClue("move operations leftward must not decrease padding right") {
-                        specAfter.props.paddingRight.shouldBeGreaterThanOrEqualTo(
-                            specBefore.props.paddingRight,
-                            tolerance
-                        )
+                        specAfter.props.paddingRight.shouldBeGreaterThanOrEqualTo(specBefore.props.paddingRight, tolerance)
                     }
                     withClue("move operations leftward must not alter padding bottom") {
                         specAfter.props.paddingBottom shouldBe specBefore.props.paddingBottom.plusOrMinus(tolerance)
@@ -201,10 +192,7 @@ class ImeWindowControllerEditorMoveTest : FunSpec({
                         specAfter.props.keyboardHeight shouldBe specBefore.props.keyboardHeight.plusOrMinus(tolerance)
                     }
                     withClue("move operations rightward must not decrease padding left") {
-                        specAfter.props.paddingLeft.shouldBeGreaterThanOrEqualTo(
-                            specBefore.props.paddingLeft,
-                            tolerance
-                        )
+                        specAfter.props.paddingLeft.shouldBeGreaterThanOrEqualTo(specBefore.props.paddingLeft, tolerance)
                     }
                     withClue("move operations rightward must not increase padding right") {
                         specAfter.props.paddingRight.shouldBeLessThanOrEqualTo(specBefore.props.paddingRight, tolerance)
@@ -254,10 +242,7 @@ class ImeWindowControllerEditorMoveTest : FunSpec({
                         specAfter.props.offsetLeft shouldBe specBefore.props.offsetLeft.plusOrMinus(tolerance)
                     }
                     withClue("move operations upward must not decrease offset bottom") {
-                        specAfter.props.offsetBottom.shouldBeGreaterThanOrEqualTo(
-                            specBefore.props.offsetBottom,
-                            tolerance
-                        )
+                        specAfter.props.offsetBottom.shouldBeGreaterThanOrEqualTo(specBefore.props.offsetBottom, tolerance)
                     }
                     withClue("move operations upward must not push window out of root bounds") {
                         specAfter.props.shouldBeConstrainedTo(specAfter.constraints, tolerance)

@@ -68,7 +68,6 @@ class NlpManager(context: Context) {
             HanShapeBasedLanguageProvider.ProviderId to ProviderInstanceWrapper(HanShapeBasedLanguageProvider(context)),
         )
     }
-
     // lock unnecessary because values constant
     private val providersForceSuggestionOn = mutableMapOf<String, Boolean>()
 
@@ -207,14 +206,12 @@ class NlpManager(context: Context) {
                         isPrivateSession = keyboardManager.activeState.isIncognitoMode,
                     )
                 }
-
                 else -> emptyList()
             }
             val suggestions = when {
                 emojiSuggestions.isNotEmpty() && prefs.emoji.suggestionType.get().prefix.isNotEmpty() -> {
                     emptyList()
                 }
-
                 else -> {
                     getSuggestionProvider(subtype).suggest(
                         subtype = subtype,
@@ -295,7 +292,6 @@ class NlpManager(context: Context) {
                         }
                     }
                 }
-
                 else -> emptyList()
             }
             activeCandidates = candidates
@@ -379,13 +375,7 @@ class NlpManager(context: Context) {
             return buildList {
                 val now = System.currentTimeMillis()
                 if ((now - currentItem.creationTimestampMs) < prefs.clipboard.suggestionTimeout.get() * 1000) {
-                    add(
-                        ClipboardSuggestionCandidate(
-                            currentItem,
-                            sourceProvider = this@ClipboardSuggestionProvider,
-                            context = context
-                        )
-                    )
+                    add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
                     if (currentItem.isSensitive) {
                         return@buildList
                     }
@@ -401,21 +391,19 @@ class NlpManager(context: Context) {
                                 prevMatch.value != match.value && prevMatch.range.intersect(match.range).isEmpty()
                             }
                             if (match.value != text && isUniqueMatch) {
-                                add(
-                                    ClipboardSuggestionCandidate(
-                                        clipboardItem = currentItem.copy(
-                                            // TODO: adjust regex of phone number so we don't need to manually strip the
-                                            //  parentheses from the match results
-                                            text = if (match.value.startsWith("(") && match.value.endsWith(")")) {
-                                                match.value.substring(1, match.value.length - 1)
-                                            } else {
-                                                match.value
-                                            }
-                                        ),
-                                        sourceProvider = this@ClipboardSuggestionProvider,
-                                        context = context,
-                                    )
-                                )
+                                add(ClipboardSuggestionCandidate(
+                                    clipboardItem = currentItem.copy(
+                                        // TODO: adjust regex of phone number so we don't need to manually strip the
+                                        //  parentheses from the match results
+                                        text = if (match.value.startsWith("(") && match.value.endsWith(")")) {
+                                            match.value.substring(1, match.value.length - 1)
+                                        } else {
+                                            match.value
+                                        }
+                                    ),
+                                    sourceProvider = this@ClipboardSuggestionProvider,
+                                    context = context,
+                                ))
                             }
                         }
                     }

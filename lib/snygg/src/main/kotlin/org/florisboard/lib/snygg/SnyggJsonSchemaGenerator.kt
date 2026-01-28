@@ -50,17 +50,13 @@ object SnyggJsonSchemaGenerator {
             ),
             "patternProperties" to buildMap {
                 for ((ruleDecl, _) in spec.annotationSpecs) {
-                    put(
-                        ruleDecl.pattern.toString(), mapOf(
-                            "\$ref" to "#/\$defs/${ruleDecl.propertySetId()}",
-                        )
-                    )
+                    put(ruleDecl.pattern.toString(), mapOf(
+                        "\$ref" to "#/\$defs/${ruleDecl.propertySetId()}",
+                    ))
                 }
-                put(
-                    SnyggElementRule.pattern.toString(), mapOf(
-                        "\$ref" to "#/\$defs/${SnyggElementRule.propertySetId()}",
-                    )
-                )
+                put(SnyggElementRule.pattern.toString(), mapOf(
+                    "\$ref" to "#/\$defs/${SnyggElementRule.propertySetId()}",
+                ))
             },
             "additionalProperties" to false,
             "\$defs" to buildMap {
@@ -95,11 +91,9 @@ object SnyggJsonSchemaGenerator {
                     is List<*> if (value.isEmpty() || value[0] is String) -> {
                         Json.encodeToJsonElement(value as List<String>)
                     }
-
                     is List<*> -> {
                         Json.encodeToJsonElement(convertToJsonObjectList(value))
                     }
-
                     is String -> Json.encodeToJsonElement(String.serializer(), value)
                     is Boolean -> Json.encodeToJsonElement(Boolean.serializer(), value)
                     else -> error("unknown")
@@ -138,7 +132,6 @@ object SnyggJsonSchemaGenerator {
                     "required" to props.properties.filter { it.value.required }.keys.toList(),
                 )
             }
-
             SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
                 mapWithoutEmptyValuesOf(
                     "title" to props.meta.title,

@@ -123,18 +123,15 @@ fun RestoreScreen() = FlorisScreen {
                     workspace.metadata.versionCode != BuildConfig.VERSION_CODE -> {
                         R.string.backup_and_restore__restore__metadata_warn_different_version
                     }
-
                     !workspace.metadata.packageName.startsWith(Restore.PACKAGE_NAME) -> {
                         R.string.backup_and_restore__restore__metadata_warn_different_vendor
                     }
-
                     else -> null
                 }
                 workspace.restoreErrorId = when {
                     workspace.metadata.packageName.isBlank() || workspace.metadata.versionCode < Restore.MIN_VERSION_CODE -> {
                         R.string.backup_and_restore__restore__metadata_error_invalid_metadata
                     }
-
                     else -> null
                 }
                 restoreWorkspace = workspace

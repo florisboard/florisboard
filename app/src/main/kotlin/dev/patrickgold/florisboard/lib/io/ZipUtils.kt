@@ -33,7 +33,6 @@ object ZipUtils {
             zipRef.isAssets -> {
                 zipRef.subRef(relPath).loadTextAsset(context).getOrThrow()
             }
-
             zipRef.isCache || zipRef.isInternal -> {
                 val flexHandle = FsFile(zipRef.absolutePath(context))
                 check(flexHandle.isFile) { "Given ref $zipRef is not a file!" }
@@ -45,7 +44,6 @@ object ZipUtils {
                 }
                 fileContents ?: error("Failed to load requested file $relPath")
             }
-
             else -> error("Unsupported source!")
         }
     }
@@ -66,7 +64,6 @@ object ZipUtils {
                     }
                 }
             }
-
             else -> error("Unsupported destination!")
         }
     }
@@ -117,12 +114,10 @@ object ZipUtils {
             srcRef.isAssets -> {
                 context.assets.copyRecursively(srcRef.relativePath.removeSuffix("/"), dstDir)
             }
-
             srcRef.isCache || srcRef.isInternal -> {
                 val flexHandle = FsFile(srcRef.absolutePath(context))
                 unzip(srcFile = flexHandle, dstDir = dstDir)
             }
-
             else -> error("Unsupported source!")
         }
     }

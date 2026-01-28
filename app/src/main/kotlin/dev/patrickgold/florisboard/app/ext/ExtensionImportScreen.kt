@@ -104,7 +104,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
                 R.string.ext__import__file_skip_unsupported
             }
-
             fileInfo.ext != null -> {
                 val ext = fileInfo.ext
                 if (extensionManager.getExtensionById(ext.meta.id)?.sourceRef?.isAssets == true) {
@@ -113,7 +112,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     NATIVE_NULLPTR.toInt()
                 }
             }
-
             else -> { // ext == null
                 R.string.ext__import__file_skip_ext_corrupted
             }
@@ -177,15 +175,12 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                             ExtensionImportScreenType.EXT_ANY -> {
                                 ext?.let { extensionManager.import(it) }
                             }
-
                             ExtensionImportScreenType.EXT_KEYBOARD -> {
                                 ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
                             }
-
                             ExtensionImportScreenType.EXT_THEME -> {
                                 ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
                             }
-
                             ExtensionImportScreenType.EXT_LANGUAGEPACK -> {
                                 ext.takeIf { it is LanguagePackExtension }?.let { extensionManager.import(it) }
                             }
@@ -226,14 +221,12 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     fontStyle = FontStyle.Italic,
                 )
             }
-
             result.isSuccess -> {
                 val workspace = result.getOrThrow()
                 for (fileInfo in workspace.inputFileInfos) {
                     FileInfoView(fileInfo)
                 }
             }
-
             result.isFailure -> {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
@@ -324,13 +317,11 @@ private fun FileInfoView(
                 }
             }
             if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp)
-                        .padding(top = 10.dp, bottom = 8.dp)
-                        .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f))
-                )
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(19.dp)
+                    .padding(top = 10.dp, bottom = 8.dp)
+                    .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f)))
                 Text(
                     text = stringRes(R.string.ext__import__file_skip),
                     style = MaterialTheme.typography.bodyMedium,

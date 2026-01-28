@@ -138,12 +138,10 @@ fun OtherScreen() = FlorisScreen {
                     } else {
                         val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
                         val locale = FlorisLocale.fromTag(languageTag)
-                        entry(
-                            locale.languageTag(), when (displayLanguageNamesIn) {
-                                DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
-                                DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
-                            }
-                        )
+                        entry(locale.languageTag(), when (displayLanguageNamesIn) {
+                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                        })
                     }
                 }
             }

@@ -129,23 +129,13 @@ internal fun SnyggValueIcon(
         is SnyggStaticColorValue -> {
             SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = value.color)
         }
-
         is SnyggDynamicLightColorValue -> {
             val colorScheme = dynamicColorScheme(systemAccentOrDefault(accentColor), isDark = false)
-            SnyggValueColorBox(
-                modifier = modifier,
-                spec = spec,
-                backgroundColor = colorScheme.getColor(value.colorName)
-            )
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
         }
-
         is SnyggDynamicDarkColorValue -> {
             val colorScheme = dynamicColorScheme(systemAccentOrDefault(accentColor), isDark = true)
-            SnyggValueColorBox(
-                modifier = modifier,
-                spec = spec,
-                backgroundColor = colorScheme.getColor(value.colorName)
-            )
+            SnyggValueColorBox(modifier = modifier, spec = spec, backgroundColor = colorScheme.getColor(value.colorName))
         }
 
         is SnyggGenericFontFamilyValue, is SnyggCustomFontFamilyValue -> {
@@ -155,7 +145,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggFontStyleValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -163,7 +152,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggFontWeightValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -195,7 +183,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggSpSizeValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -216,7 +203,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggTextDecorationLineValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -227,7 +213,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggTextOverflowValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -246,11 +231,9 @@ internal fun SnyggValueIcon(
                 )
             } else {
                 val smallSpec = SnyggValueIcon.Small
-                Box(
-                    modifier = modifier
-                        .requiredSize(spec.iconSize)
-                        .offset(y = (-2).dp)
-                ) {
+                Box(modifier = modifier
+                    .requiredSize(spec.iconSize)
+                    .offset(y = (-2).dp)) {
                     SnyggValueIcon(
                         modifier = Modifier.offset(x = 8.dp, y = 8.dp),
                         value = realValue,
@@ -280,7 +263,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggContentScaleValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -296,7 +278,6 @@ internal fun SnyggValueIcon(
                 contentDescription = null,
             )
         }
-
         is SnyggNoValue -> {
             Icon(
                 modifier = modifier.requiredSize(spec.iconSize),
@@ -345,7 +326,6 @@ fun SnyggShapeValue.alwaysPercentShape(): Shape {
                 (this.bottomStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
             )
         }
-
         is SnyggCutCornerDpShapeValue -> {
             CutCornerShape(
                 (this.topStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
@@ -354,7 +334,6 @@ fun SnyggShapeValue.alwaysPercentShape(): Shape {
                 (this.bottomStart.value.toInt() * UpscaleFactor).coerceAtMost(UpscaleMaxAbsoluteValue),
             )
         }
-
         else -> this.shape
     }
 }

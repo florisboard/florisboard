@@ -79,8 +79,7 @@ fun SnyggListItem(
         role = null,
         onClick = onClick,
     )
-    SnyggRow(
-        elementName, attributes, selector,
+    SnyggRow(elementName, attributes, selector,
         modifier = decoratedModifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -142,21 +141,18 @@ private fun SimpleSnyggListItem() {
 
     ProvideSnyggTheme(theme) {
         SnyggColumn("preview") {
-            SnyggListItem(
-                "preview-list-item",
+            SnyggListItem("preview-list-item",
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},
                 text = "hello",
             )
-            SnyggListItem(
-                "preview-list-item",
+            SnyggListItem("preview-list-item",
                 mapOf("layout" to "center"),
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},
                 text = "hello",
             )
-            SnyggListItem(
-                "preview-list-item",
+            SnyggListItem("preview-list-item",
                 mapOf("layout" to "long"),
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},

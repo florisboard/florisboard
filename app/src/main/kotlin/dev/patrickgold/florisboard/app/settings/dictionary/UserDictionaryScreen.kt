@@ -82,12 +82,10 @@ enum class UserDictionaryType(val id: String) {
 
 @Composable
 fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
-    title = stringRes(
-        when (type) {
-            UserDictionaryType.FLORIS -> R.string.settings__udm__title_floris
-            UserDictionaryType.SYSTEM -> R.string.settings__udm__title_system
-        }
-    )
+    title = stringRes(when (type) {
+        UserDictionaryType.FLORIS -> R.string.settings__udm__title_floris
+        UserDictionaryType.SYSTEM -> R.string.settings__udm__title_system
+    })
     previewFieldVisible = false
     scrollable = false
 
@@ -316,20 +314,16 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
             val localeValidation = rememberValidationResult(UserDictionaryValidation.Locale, locale)
 
             JetPrefAlertDialog(
-                title = stringRes(
-                    if (isAddWord) {
-                        R.string.settings__udm__dialog__title_add
-                    } else {
-                        R.string.settings__udm__dialog__title_edit
-                    }
-                ),
-                confirmLabel = stringRes(
-                    if (isAddWord) {
-                        R.string.action__add
-                    } else {
-                        R.string.action__apply
-                    }
-                ),
+                title = stringRes(if (isAddWord) {
+                    R.string.settings__udm__dialog__title_add
+                } else {
+                    R.string.settings__udm__dialog__title_edit
+                }),
+                confirmLabel = stringRes(if (isAddWord) {
+                    R.string.action__add
+                } else {
+                    R.string.action__apply
+                }),
                 onConfirm = {
                     val isInvalid = wordValidation.isInvalid() ||
                         freqValidation.isInvalid() ||
@@ -380,12 +374,10 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                         )
                         Validation(showValidationErrors, wordValidation)
                     }
-                    DialogProperty(
-                        text = stringRes(
-                            R.string.settings__udm__dialog__freq_label,
-                            "f_min" to FREQUENCY_MIN, "f_max" to FREQUENCY_MAX,
-                        )
-                    ) {
+                    DialogProperty(text = stringRes(
+                        R.string.settings__udm__dialog__freq_label,
+                        "f_min" to FREQUENCY_MIN, "f_max" to FREQUENCY_MAX,
+                    )) {
                         JetPrefTextField(
                             value = freq,
                             onValueChange = { freq = it },

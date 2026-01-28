@@ -217,7 +217,6 @@ class ImeWindowController(
                 outInsets.contentTopInsets = windowBounds.top
                 outInsets.visibleTopInsets = windowBounds.top
             }
-
             is ImeWindowSpec.Floating -> {
                 outInsets.contentTopInsets = rootBounds.bottom
                 outInsets.visibleTopInsets = rootBounds.bottom
@@ -232,7 +231,6 @@ class ImeWindowController(
                     rootBounds.bottom,
                 )
             }
-
             else -> {
                 outInsets.touchableRegion.set(
                     windowBounds.left,
@@ -276,7 +274,6 @@ class ImeWindowController(
                     constraints = constraints,
                 )
             }
-
             ImeWindowMode.FLOATING -> {
                 val constraints = ImeWindowConstraints.of(rootInsets, windowConfig.floatingMode)
                 val props = (windowConfig.floatingProps[windowConfig.floatingMode] ?: constraints.defaultProps)
@@ -315,7 +312,6 @@ class ImeWindowController(
                         }
                         config.copy(fixedMode = newFixedMode)
                     }
-
                     ImeWindowMode.FLOATING -> {
                         config.copy(
                             mode = ImeWindowMode.FIXED,
@@ -394,7 +390,6 @@ class ImeWindowController(
                             ),
                         )
                     }
-
                     ImeWindowMode.FIXED -> {
                         config
                     }
@@ -461,11 +456,10 @@ class ImeWindowController(
             var keepEnabled = true
             updateWindowConfig { config ->
                 when (spec) {
-                    is ImeWindowSpec.Fixed -> {
-                        keepEnabled = true
-                        config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
-                    }
-
+                     is ImeWindowSpec.Fixed -> {
+                         keepEnabled = true
+                         config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
+                     }
                     is ImeWindowSpec.Floating -> {
                         if (spec.props.offsetBottom <= spec.constraints.dockToFixedHeight) {
                             keepEnabled = false
@@ -493,7 +487,6 @@ class ImeWindowController(
                         keepEnabled = true
                         config.copy(fixedProps = config.fixedProps.plus(spec.fixedMode to spec.props))
                     }
-
                     is ImeWindowSpec.Floating -> {
                         keepEnabled = true
                         config.copy(floatingProps = config.floatingProps.plus(spec.floatingMode to spec.props))

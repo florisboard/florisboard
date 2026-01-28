@@ -22,7 +22,6 @@ package dev.patrickgold.florisboard.ime.core
 enum class DisplayLanguageNamesIn {
     /** Language names are displayed in the locale which is set for the whole device. */
     SYSTEM_LOCALE,
-
     /** Language names are displayed in the locale referred by itself. */
     NATIVE_LOCALE;
 }

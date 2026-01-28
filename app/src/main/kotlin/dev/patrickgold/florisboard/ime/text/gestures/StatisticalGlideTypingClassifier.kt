@@ -192,7 +192,6 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
 
                 suggestions
             }
-
             else -> {
                 cached
             }
@@ -382,7 +381,6 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
                     keysByCharacter.indexOfKey(firstBaseChar.code) < 0 || keysByCharacter.indexOfKey(lastBaseChar.code) < 0 -> {
                         null
                     }
-
                     else -> {
                         val firstKey = keysByCharacter[firstBaseChar.code]
                         val lastKey = keysByCharacter[lastBaseChar.code]

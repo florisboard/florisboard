@@ -38,11 +38,9 @@ class SnyggAppearanceValueTest {
                 // invalid
                 "some-color" to null,
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
+            } })
         }
 
         @Test
@@ -66,11 +64,9 @@ class SnyggAppearanceValueTest {
                 "#000" to null, // we do not allow shorthand notation
                 "#fff" to null, // we do not allow shorthand notation
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
+            } })
         }
 
         @Test
@@ -95,11 +91,9 @@ class SnyggAppearanceValueTest {
                 "#000" to null, // we do not allow shorthand notation
                 "#fff" to null, // we do not allow shorthand notation
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
+            } })
         }
 
         @Test
@@ -125,11 +119,9 @@ class SnyggAppearanceValueTest {
                 "rgb(256, 256, 256)" to null, // we do not allow CSS integer wrap-around of values
                 "rgb(0, 0, 0, 1.0)" to null,
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
+            } })
         }
 
         @Test
@@ -138,7 +130,7 @@ class SnyggAppearanceValueTest {
                 // valid
                 "rgba(0, 0, 0, 0)" to helperMakeColor(r = 0, g = 0, b = 0, a = 0.0f),
                 "rgba(1, 2, 3, 1.0)" to helperMakeColor(r = 1, g = 2, b = 3, a = 1.0f),
-                "rgba(255, 255, 255, 1.0)" to helperMakeColor(r = 255, g = 255, b = 255,),
+                "rgba(255, 255, 255, 1.0)" to helperMakeColor(r = 255, g = 255, b = 255, ),
                 "rgba(86, 54, 23, 0.5)" to helperMakeColor(r = 86, g = 54, b = 23, a = 0.5f),
                 "rgba(0,0,0,0)" to helperMakeColor(r = 0, g = 0, b = 0, a = 0.0f),
                 "rgba(   0  ,0,  0, 0.000)" to helperMakeColor(r = 0, g = 0, b = 0, a = 0.0f),
@@ -155,11 +147,9 @@ class SnyggAppearanceValueTest {
                 "rgba(256, 256, 256, 1.0)" to null, // we do not allow CSS integer wrap-around of values
                 "rgba(0, 0, 0, 1.5)" to null,
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
+            } })
         }
 
         @Test
@@ -170,11 +160,9 @@ class SnyggAppearanceValueTest {
                 // invalid
                 SnyggDefinedVarValue("shenanigans") to null
             )
-            assertAll(pairs.map { (solidColorValue, expected) ->
-                {
-                    assertEquals(expected, encoder.serialize(solidColorValue).getOrNull(), "serialize $solidColorValue")
-                }
-            })
+            assertAll(pairs.map { (solidColorValue, expected) -> {
+                assertEquals(expected, encoder.serialize(solidColorValue).getOrNull(), "serialize $solidColorValue")
+            } })
         }
 
         @Test
@@ -216,11 +204,9 @@ class SnyggAppearanceValueTest {
                 SnyggDynamicLightColorValue("primary").encoder() to lightColorEncoder,
                 SnyggDynamicDarkColorValue("primary").encoder() to darkColorEncoder,
             )
-            assertAll(pairs.map { (expected, actual) ->
-                {
+            assertAll(pairs.map { (expected, actual) -> {
                     assertEquals(expected, actual)
-                }
-            })
+            } })
         }
 
         @Test
@@ -236,11 +222,9 @@ class SnyggAppearanceValueTest {
                 helperDarkColorString("invalid") to null,
                 helperDarkColorString("invalid is invalid") to null,
             )
-            assertAll(colors.map { (dynamicColorValue, expected) ->
-                {
-                    assertEquals(expected, darkColorEncoder.deserialize(dynamicColorValue).getOrNull())
-                }
-            })
+            assertAll(colors.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, darkColorEncoder.deserialize(dynamicColorValue).getOrNull())
+            } })
         }
 
         @Test
@@ -256,11 +240,9 @@ class SnyggAppearanceValueTest {
                 helperLightColorString("invalid") to null,
                 helperLightColorString("invalid is invalid") to null,
             )
-            assertAll(colors.map { (dynamicColorValue, expected) ->
-                {
-                    assertEquals(expected, lightColorEncoder.deserialize(dynamicColorValue).getOrNull())
-                }
-            })
+            assertAll(colors.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, lightColorEncoder.deserialize(dynamicColorValue).getOrNull())
+            } })
         }
 
         @Test
@@ -273,11 +255,9 @@ class SnyggAppearanceValueTest {
                 // invalid
                 SnyggDefinedVarValue("shenanigans") to null,
             )
-            assertAll(pairs.map { (dynamicColorValue, expected) ->
-                {
-                    assertEquals(expected, darkColorEncoder.serialize(dynamicColorValue).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, darkColorEncoder.serialize(dynamicColorValue).getOrNull())
+            } })
         }
 
         @Test
@@ -291,11 +271,9 @@ class SnyggAppearanceValueTest {
                 // invalid
                 SnyggDefinedVarValue("shenanigans") to null,
             )
-            assertAll(pairs.map { (dynamicColorValue, expected) ->
-                {
-                    assertEquals(expected, lightColorEncoder.serialize(dynamicColorValue).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (dynamicColorValue, expected) -> {
+                assertEquals(expected, lightColorEncoder.serialize(dynamicColorValue).getOrNull())
+            } })
         }
 
     }

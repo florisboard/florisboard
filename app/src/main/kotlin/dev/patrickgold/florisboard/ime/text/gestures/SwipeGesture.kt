@@ -85,17 +85,15 @@ abstract class SwipeGesture {
                     val relUnitCountY = newAbsUnitCountY - gesturePointer.absUnitCountY
                     gesturePointer.absUnitCountX = newAbsUnitCountX
                     gesturePointer.absUnitCountY = newAbsUnitCountY
-                    listener.onSwipe(
-                        Event(
-                            direction = direction,
-                            type = Type.TOUCH_MOVE,
-                            pointer.id,
-                            gesturePointer.absUnitCountX,
-                            gesturePointer.absUnitCountY,
-                            relUnitCountX,
-                            relUnitCountY,
-                        )
-                    )
+                    listener.onSwipe(Event(
+                        direction = direction,
+                        type = Type.TOUCH_MOVE,
+                        pointer.id,
+                        gesturePointer.absUnitCountX,
+                        gesturePointer.absUnitCountY,
+                        relUnitCountX,
+                        relUnitCountY,
+                    ))
                 } else {
                     false
                 }
@@ -118,24 +116,19 @@ abstract class SwipeGesture {
                 val thresholdSpeed = prefs.gestures.swipeVelocityThreshold.get().toDouble()
                 val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get().dp.value.toDouble()
                 val unitWidth = thresholdWidth / 4.0
-                return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(
-                        velocityY
-                    ) > thresholdSpeed)
-                ) {
+                return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
                     val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
                     gesturePointer.absUnitCountX = (absDiffX / unitWidth).toInt()
                     gesturePointer.absUnitCountY = (absDiffY / unitWidth).toInt()
-                    listener.onSwipe(
-                        Event(
-                            direction = direction,
-                            type = Type.TOUCH_UP,
-                            pointer.id,
-                            gesturePointer.absUnitCountX,
-                            gesturePointer.absUnitCountY,
-                            gesturePointer.absUnitCountX,
-                            gesturePointer.absUnitCountY,
-                        )
-                    )
+                    listener.onSwipe(Event(
+                        direction = direction,
+                        type = Type.TOUCH_UP,
+                        pointer.id,
+                        gesturePointer.absUnitCountX,
+                        gesturePointer.absUnitCountY,
+                        gesturePointer.absUnitCountX,
+                        gesturePointer.absUnitCountY,
+                    ))
                 } else {
                     false
                 }
@@ -168,14 +161,14 @@ abstract class SwipeGesture {
         private fun detectDirection(diffX: Double, diffY: Double): Direction {
             val diffAngle = angle(diffX, diffY) / 360.0
             return when {
-                diffAngle >= (1 / 16.0) && diffAngle < (3 / 16.0) -> Direction.DOWN_RIGHT
-                diffAngle >= (3 / 16.0) && diffAngle < (5 / 16.0) -> Direction.DOWN
-                diffAngle >= (5 / 16.0) && diffAngle < (7 / 16.0) -> Direction.DOWN_LEFT
-                diffAngle >= (7 / 16.0) && diffAngle < (9 / 16.0) -> Direction.LEFT
-                diffAngle >= (9 / 16.0) && diffAngle < (11 / 16.0) -> Direction.UP_LEFT
-                diffAngle >= (11 / 16.0) && diffAngle < (13 / 16.0) -> Direction.UP
-                diffAngle >= (13 / 16.0) && diffAngle < (15 / 16.0) -> Direction.UP_RIGHT
-                else -> Direction.RIGHT
+                diffAngle >= (1/16.0) && diffAngle < (3/16.0) ->        Direction.DOWN_RIGHT
+                diffAngle >= (3/16.0) && diffAngle < (5/16.0) ->        Direction.DOWN
+                diffAngle >= (5/16.0) && diffAngle < (7/16.0) ->        Direction.DOWN_LEFT
+                diffAngle >= (7/16.0) && diffAngle < (9/16.0) ->        Direction.LEFT
+                diffAngle >= (9/16.0) && diffAngle < (11/16.0) ->       Direction.UP_LEFT
+                diffAngle >= (11/16.0) && diffAngle < (13/16.0) ->      Direction.UP
+                diffAngle >= (13/16.0) && diffAngle < (15/16.0) ->      Direction.UP_RIGHT
+                else ->                                                 Direction.RIGHT
             }
         }
 

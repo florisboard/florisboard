@@ -118,7 +118,6 @@ abstract class CrashUtility private constructor() {
                                 lastActivityCreated = WeakReference(activity)
                             }
                         }
-
                         override fun onActivityStarted(activity: Activity) {}
                         override fun onActivityResumed(activity: Activity) {}
                         override fun onActivityPaused(activity: Activity) {}
@@ -126,9 +125,7 @@ abstract class CrashUtility private constructor() {
                         override fun onActivitySaveInstanceState(
                             activity: Activity,
                             outState: Bundle,
-                        ) {
-                        }
-
+                        ) {}
                         override fun onActivityDestroyed(activity: Activity) {}
                     })
                     try {
@@ -281,14 +278,7 @@ abstract class CrashUtility private constructor() {
                     style = Notification.BigTextStyle().bigText(body)
                     setContentText(body)
                     setSmallIcon(android.R.drawable.stat_notify_error)
-                    setContentIntent(
-                        PendingIntent.getActivity(
-                            context,
-                            0,
-                            crashDialogIntent,
-                            PendingIntent.FLAG_IMMUTABLE
-                        )
-                    ).setAutoCancel(
+                    setContentIntent(PendingIntent.getActivity(context, 0, crashDialogIntent, PendingIntent.FLAG_IMMUTABLE)).setAutoCancel(
                         true
                     )
                     build()

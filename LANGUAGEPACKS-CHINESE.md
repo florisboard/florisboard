@@ -4,14 +4,15 @@
 
 [繁体中文翻譯點這裡](#繁体中文翻譯)
 
+
 ## Default barebones Chinese shape-based pack
 
 Default barebones Chinese shape-based language pack which are always available.
 
-Please download the [full Chinese language pack](#full-chinese-shape-based-pack) to access input methods such as wubi,
-quick cangjie, and other versions of these input methods.
+Please download the [full Chinese language pack](#full-chinese-shape-based-pack) to access input methods such as wubi, quick cangjie, and other versions of these input methods.
 
 This pack is released under the same license as Florisboard.
+
 
 ## Full Chinese shape-based pack
 
@@ -21,9 +22,7 @@ This pack is released under a separate license. Please visit to download: [TODO:
 
 :no_entry: :no_entry: **WARNING** :no_entry: :no_entry:
 
-- **Input methods that include pinyin, jyutping, zhuyin as (auxiliary) functions are only provided for convenience.
-  Currently, FlorisBoard lacks phonetic input algorithms. These functions currently have poor user experience and are
-  not recommended for daily use.**
+- **Input methods that include pinyin, jyutping, zhuyin as (auxiliary) functions are only provided for convenience. Currently, FlorisBoard lacks phonetic input algorithms. These functions currently have poor user experience and are not recommended for daily use.**
 
 The following input methods are included in this language pack:
 
@@ -55,7 +54,6 @@ The following input methods are included in this language pack:
 Third-party license: [https://github.com/fcitx/fcitx5-table-extra/blob/master/LICENSES/GPL-3.0-or-later.txt]
 
 # 简体中文翻译
-
 ## 默认中文形码语言包
 
 请下载[完整中文语言包](#fcitx5-中文形码语言包)来获得五笔、快速仓颉等输入法，及这些输入法的其他版本。
@@ -68,8 +66,7 @@ Third-party license: [https://github.com/fcitx/fcitx5-table-extra/blob/master/LI
 
 :no_entry: :no_entry: **注意** :no_entry: :no_entry:
 
-- **含拼音、粤拼、注音等功能的输入法，仅为便利提供。目前，FlorisBoard缺乏音码输入算法，这些功能目前使用体验不佳，暂不推荐日常使用。
-  **
+- **含拼音、粤拼、注音等功能的输入法，仅为便利提供。目前，FlorisBoard缺乏音码输入算法，这些功能目前使用体验不佳，暂不推荐日常使用。**
 
 语言包内含以下输入法：
 
@@ -100,8 +97,8 @@ Third-party license: [https://github.com/fcitx/fcitx5-table-extra/blob/master/LI
 
 第三方许可证: [https://github.com/fcitx/fcitx5-table-extra/blob/master/LICENSES/GPL-3.0-or-later.txt]
 
-# 繁体中文翻譯
 
+# 繁体中文翻譯
 ## 預設中文形碼語言包
 
 請下載[完整中文語言包](#fcitx5-中文形碼語言包)來獲得五筆、快速倉頡等輸入法，及這些輸入法的其他版本。
@@ -114,8 +111,7 @@ Third-party license: [https://github.com/fcitx/fcitx5-table-extra/blob/master/LI
 
 :no_entry: :no_entry: **注意** :no_entry: :no_entry:
 
-- **含拼音、粵拼、注音等功能的輸入法，僅為便利提供。目前，FlorisBoard缺乏音碼輸入算法，這些功能目前使用體驗不佳，暫不推薦日常使用。
-  **
+- **含拼音、粵拼、注音等功能的輸入法，僅為便利提供。目前，FlorisBoard缺乏音碼輸入算法，這些功能目前使用體驗不佳，暫不推薦日常使用。**
 
 語言包內含以下輸入法：
 

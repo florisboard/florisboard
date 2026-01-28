@@ -78,7 +78,6 @@ fun SnyggBox(
                     assetResolver.resolveAbsolutePath(imageUri).getOrNull()
                 }
             }
-
             else -> null
         }
         Box(

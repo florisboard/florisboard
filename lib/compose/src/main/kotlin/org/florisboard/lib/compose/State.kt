@@ -57,11 +57,9 @@ fun <R> AndroidSettingsHelper.observeAsState(
                     Lifecycle.Event.ON_RESUME -> {
                         observe(context, key, observer)
                     }
-
                     Lifecycle.Event.ON_PAUSE -> {
                         removeObserver(context, observer)
                     }
-
                     else -> {}
                 }
             }

@@ -38,13 +38,11 @@ value class InputAttributes private constructor(val raw: Int) {
                 InputType.TYPE_DATETIME_VARIATION_TIME -> Variation.TIME
                 else -> Variation.NORMAL
             }
-
             Type.NUMBER -> when (raw and InputType.TYPE_MASK_VARIATION) {
                 InputType.TYPE_NUMBER_VARIATION_NORMAL -> Variation.NORMAL
                 InputType.TYPE_NUMBER_VARIATION_PASSWORD -> Variation.PASSWORD
                 else -> Variation.NORMAL
             }
-
             Type.TEXT -> when (raw and InputType.TYPE_MASK_VARIATION) {
                 InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS -> Variation.EMAIL_ADDRESS
                 InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT -> Variation.EMAIL_SUBJECT
@@ -63,7 +61,6 @@ value class InputAttributes private constructor(val raw: Int) {
                 InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD -> Variation.WEB_PASSWORD
                 else -> Variation.NORMAL
             }
-
             else -> Variation.NORMAL
         }
 
@@ -90,6 +87,7 @@ value class InputAttributes private constructor(val raw: Int) {
 
     val flagTextNoSuggestions: Boolean
         get() = type == Type.TEXT && (raw and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0)
+
 
 
     companion object {

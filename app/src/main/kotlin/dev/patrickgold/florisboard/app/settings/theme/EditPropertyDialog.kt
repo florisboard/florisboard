@@ -681,18 +681,13 @@ private fun PropertyValueEditor(
                                 ClickableFilesWithHeading(stringRes(R.string.ext__editor__files__type_fonts), fontFiles)
                             }
                             if (imageFiles.isNotEmpty()) {
-                                ClickableFilesWithHeading(
-                                    stringRes(R.string.ext__editor__files__type_images),
-                                    imageFiles
-                                )
+                                ClickableFilesWithHeading(stringRes(R.string.ext__editor__files__type_images), imageFiles)
                             }
                             if (fontFiles.isEmpty() && imageFiles.isEmpty()) {
                                 Text(
                                     modifier = Modifier.padding(horizontal = 16.dp),
-                                    text = stringRes(
-                                        R.string.settings__theme_editor__file_selector_no_files_text,
-                                        "action_title" to stringRes(R.string.ext__editor__files__title)
-                                    ),
+                                    text = stringRes(R.string.settings__theme_editor__file_selector_no_files_text,
+                                        "action_title" to stringRes(R.string.ext__editor__files__title)),
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }

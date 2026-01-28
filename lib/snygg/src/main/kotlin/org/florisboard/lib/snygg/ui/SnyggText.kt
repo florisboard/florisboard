@@ -120,10 +120,8 @@ private fun SimpleSnyggText() {
         SnyggColumn("preview-column", modifier = Modifier.widthIn(max = 150.dp)) {
             SnyggText("preview-text", text = "black text")
             SnyggText("preview-text", mapOf("attr" to 1), text = "red text")
-            SnyggText(
-                "preview-text", mapOf("long" to 1),
-                text = "this is a very long paragraph that will definitely not fit"
-            )
+            SnyggText("preview-text", mapOf("long" to 1),
+                text = "this is a very long paragraph that will definitely not fit")
         }
     }
 }

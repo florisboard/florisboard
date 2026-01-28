@@ -45,7 +45,6 @@ class FlorisLocale private constructor(val base: Locale) {
     companion object {
         /** Delimiter for a language tag. */
         private const val DELIMITER_LANGUAGE_TAG = '-'
-
         /** Delimiter for a locale tag. */
         private const val DELIMITER_LOCALE_TAG = '_'
 
@@ -111,7 +110,6 @@ class FlorisLocale private constructor(val base: Locale) {
                     from(lc[0], lc[1])
                 }
             }
-
             else -> from(str)
         }
 

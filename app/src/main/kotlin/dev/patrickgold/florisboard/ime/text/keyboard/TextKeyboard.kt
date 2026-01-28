@@ -56,9 +56,7 @@ class TextKeyboard(
         if (desiredTouchBounds.isEmpty() || desiredVisibleBounds.isEmpty()) return
         if (keyboardWidth.isNaN() || keyboardHeight.isNaN()) return
         val rowMarginH = abs(desiredTouchBounds.width - desiredVisibleBounds.width)
-        val rowMarginV =
-            (keyboardHeight - desiredTouchBounds.height * rowCount.toFloat()) / (rowCount - 1).coerceAtLeast(1)
-                .toFloat()
+        val rowMarginV = (keyboardHeight - desiredTouchBounds.height * rowCount.toFloat()) / (rowCount - 1).coerceAtLeast(1).toFloat()
 
         for ((r, row) in rows().withIndex()) {
             val posY = (desiredTouchBounds.height + rowMarginV) * r
@@ -81,7 +79,6 @@ class TextKeyboard(
                             0, row.size - 1 -> key.flayWidthFactor + additionalWidth / 2.0f
                             else -> key.flayWidthFactor
                         }
-
                         else -> key.flayWidthFactor + additionalWidth * (key.flayGrow / growSum)
                     }
                     key.touchBounds.apply {
@@ -96,11 +93,10 @@ class TextKeyboard(
                             else -> 0.0f
                         }
                         top = key.touchBounds.top + abs(desiredTouchBounds.top - desiredVisibleBounds.top)
-                        right =
-                            key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right) - when {
-                                growSum == 0.0f && k == row.size - 1 -> ((additionalWidth / 2.0f) * desiredTouchBounds.width)
-                                else -> 0.0f
-                            }
+                        right = key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right) - when {
+                            growSum == 0.0f && k == row.size - 1 -> ((additionalWidth / 2.0f) * desiredTouchBounds.width)
+                            else -> 0.0f
+                        }
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
                     posX += keyWidth

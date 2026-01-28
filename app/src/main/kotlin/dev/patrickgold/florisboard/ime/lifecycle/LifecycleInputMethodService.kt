@@ -33,7 +33,8 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import kotlinx.coroutines.CoroutineScope
 
 open class LifecycleInputMethodService : InputMethodService(),
-    LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner {
+    LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner
+{
     private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
     private val store by lazy { ViewModelStore() }
     private val savedStateRegistryController by lazy { SavedStateRegistryController.create(this) }

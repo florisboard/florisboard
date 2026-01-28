@@ -81,13 +81,11 @@ private fun SimpleSnyggSpacer() {
     ProvideSnyggTheme(theme) {
         SnyggRow("preview-row") {
             SnyggText("preview-text", text = "hello")
-            SnyggSpacer(
-                "preview-spacer",
+            SnyggSpacer("preview-spacer",
                 modifier = Modifier
                     .width(1.dp)
                     .height(12.dp)
-                    .align(Alignment.CenterVertically)
-            )
+                    .align(Alignment.CenterVertically))
             SnyggText("preview-text", text = "world")
         }
     }

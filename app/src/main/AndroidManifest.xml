@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!-- Permission needed to create notifications on devices running Android 13+ -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
           ship with an IME or Spell Check service. This is used to guide the user
@@ -14,10 +14,10 @@
      -->
     <queries>
         <intent>
-            <action android:name="android.view.InputMethod" />
+            <action android:name="android.view.InputMethod"/>
         </intent>
         <intent>
-            <action android:name="android.service.textservice.SpellCheckerService" />
+            <action android:name="android.service.textservice.SpellCheckerService"/>
         </intent>
     </queries>
 
@@ -35,7 +35,7 @@
         tools:targetApi="tiramisu">
 
         <!-- Allow app to be profiled for benchmarking and baseline profile generation -->
-        <profileable android:shell="true" />
+        <profileable android:shell="true"/>
 
         <!-- IME service -->
         <service
@@ -45,11 +45,9 @@
             android:directBootAware="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.view.InputMethod"/>
             </intent-filter>
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
         <!-- Spellchecker service -->
@@ -59,11 +57,9 @@
             android:permission="android.permission.BIND_TEXT_SERVICE"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.service.textservice.SpellCheckerService" />
+                <action android:name="android.service.textservice.SpellCheckerService"/>
             </intent-filter>
-            <meta-data
-                android:name="android.view.textservice.scs"
-                android:resource="@xml/spellchecker" />
+            <meta-data android:name="android.view.textservice.scs" android:resource="@xml/spellchecker"/>
         </service>
 
         <!-- Main App Activity -->
@@ -77,30 +73,23 @@
             android:theme="@style/FlorisAppTheme.Splash"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="ui"
-                    android:host="florisboard"
-                    android:pathPrefix="/" />
+                <data android:scheme="ui" android:host="florisboard" android:pathPrefix="/" />
             </intent-filter>
             <intent-filter android:label="Import Extension">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="content" />
-                <data android:mimeType="application/vnd.florisboard.extension+zip" />
-                <data android:mimeType="application/octet-stream" /><!-- Firefox looking at you :eyes: -->
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="content"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
             <intent-filter android:label="Import Extension">
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/vnd.florisboard.extension+zip" />
-                <data android:mimeType="application/octet-stream" /><!-- Firefox looking at you :eyes: -->
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="application/vnd.florisboard.extension+zip"/>
+                <data android:mimeType="application/octet-stream"/><!-- Firefox looking at you :eyes: -->
             </intent-filter>
         </activity>
 
@@ -115,8 +104,8 @@
             android:theme="@style/FlorisAppTheme.Splash"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity-alias>
 
@@ -126,7 +115,7 @@
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/crash_dialog__title"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/CrashDialogTheme" />
+            android:theme="@style/CrashDialogTheme"/>
 
         <!-- Copy to Clipboard Activity -->
         <activity
@@ -134,9 +123,9 @@
             android:theme="@style/FlorisAppTheme.Transparent"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/*" />
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*"/>
             </intent-filter>
         </activity>
 
@@ -145,7 +134,8 @@
             android:name="dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardMediaProvider"
             android:authorities="${applicationId}.provider.clipboard"
             android:grantUriPermissions="true"
-            android:exported="false"></provider>
+            android:exported="false">
+        </provider>
 
         <!-- Default file provider to share files from the "files" or "cache" dir -->
         <provider
@@ -155,7 +145,7 @@
             android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
         <!-- Disable default EmojiCompat initializer -->
@@ -166,7 +156,7 @@
             tools:node="merge">
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
-                tools:node="remove" />
+                tools:node="remove"/>
         </provider>
 
     </application>

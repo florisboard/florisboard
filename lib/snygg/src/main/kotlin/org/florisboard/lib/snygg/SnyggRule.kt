@@ -310,12 +310,10 @@ data class SnyggAttributes internal constructor(
                         range.last -> {
                             add(range.first.toString())
                         }
-
                         range.last - 1 -> {
                             add(range.first.toString())
                             add((range.first + 1).toString())
                         }
-
                         else -> {
                             add(range.toString())
                         }
@@ -420,8 +418,7 @@ data class SnyggAttributes internal constructor(
         private val INT_RANGE_PATTERN = """$INT_PATTERN[.]{2}$INT_PATTERN""".toRegex()
         private val STRING_PATTERN = """`[^`]+`""".toRegex()
         private val ATTR_VALUE_PATTERN = """(?:$STRING_PATTERN|$INT_RANGE_PATTERN|$INT_PATTERN)""".toRegex()
-        internal val ATTRIBUTE_REGEX =
-            """\[(?<attrKey>[a-zA-Z0-9-]+)=(?<attrRawValues>$ATTR_VALUE_PATTERN(?:,$ATTR_VALUE_PATTERN)*)]""".toRegex()
+        internal val ATTRIBUTE_REGEX = """\[(?<attrKey>[a-zA-Z0-9-]+)=(?<attrRawValues>$ATTR_VALUE_PATTERN(?:,$ATTR_VALUE_PATTERN)*)]""".toRegex()
 
         internal fun from(str: String): SnyggAttributes {
             val attributes = mutableMapOf<String, List<String>>()

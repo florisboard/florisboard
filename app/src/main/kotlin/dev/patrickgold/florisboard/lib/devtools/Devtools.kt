@@ -35,11 +35,7 @@ import org.florisboard.lib.android.systemService
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Devtools {
-    fun generateDebugLog(
-        context: Context,
-        prefs: FlorisPreferenceModel? = null,
-        includeLogcat: Boolean = false
-    ): String {
+    fun generateDebugLog(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             append(generateDebugLogHeader(context, prefs))
             if (includeLogcat) {
@@ -65,11 +61,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogForGithub(
-        context: Context,
-        prefs: FlorisPreferenceModel? = null,
-        includeLogcat: Boolean = false
-    ): String {
+    fun generateDebugLogForGithub(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             appendLine("<details>")
             appendLine("<summary>Detailed info (Debug log header)</summary>")

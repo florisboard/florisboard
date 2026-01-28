@@ -80,7 +80,7 @@ private fun Int.dsEditorInfoActionId(): String {
     }
 }
 
-private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
+private fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
     val summary = StringBuilder()
     when (type) {
         EditorInfo::class -> {
@@ -88,7 +88,6 @@ private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
                 EditorInfo.IME_NULL -> {
                     summary.append("IME_NULL")
                 }
-
                 else -> {
                     val tAction = (this and EditorInfo.IME_MASK_ACTION).dsEditorInfoActionId()
                     val tFlags = StringBuilder()
@@ -126,13 +125,11 @@ private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
                 }
             }
         }
-
         InputType::class -> {
             when (this) {
                 InputType.TYPE_NULL -> {
                     summary.append("TYPE_NULL")
                 }
-
                 else -> {
                     val tClass: String
                     val tVariation: String
@@ -147,7 +144,6 @@ private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
                                 else -> String.format("0x%08x", this and InputType.TYPE_MASK_VARIATION)
                             }
                         }
-
                         InputType.TYPE_CLASS_NUMBER -> {
                             tClass = "TYPE_CLASS_NUMBER"
                             tVariation = when (this and InputType.TYPE_MASK_VARIATION) {
@@ -162,12 +158,10 @@ private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
                                 tFlags.append("TYPE_NUMBER_FLAG_SIGNED|")
                             }
                         }
-
                         InputType.TYPE_CLASS_PHONE -> {
                             tClass = "TYPE_CLASS_PHONE"
                             tVariation = String.format("0x%08x", this and InputType.TYPE_MASK_VARIATION)
                         }
-
                         InputType.TYPE_CLASS_TEXT -> {
                             tClass = "TYPE_CLASS_TEXT"
                             tVariation = when (this and InputType.TYPE_MASK_VARIATION) {
@@ -213,7 +207,6 @@ private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
                                 tFlags.append("TYPE_TEXT_FLAG_NO_SUGGESTIONS|")
                             }
                         }
-
                         else -> {
                             tClass = String.format("0x%08x", this and InputType.TYPE_MASK_CLASS)
                             tVariation = String.format("0x%08x", this and InputType.TYPE_MASK_VARIATION)
@@ -229,7 +222,6 @@ private fun <T : Any> Int.debugSummarize(type: KClass<T>): String {
                 }
             }
         }
-
         TextUtils::class -> {
             val tFlags = StringBuilder()
             if (this and TextUtils.CAP_MODE_CHARACTERS > 0) {

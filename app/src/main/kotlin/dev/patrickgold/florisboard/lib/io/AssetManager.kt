@@ -70,7 +70,6 @@ fun FlorisRef.delete(context: Context) {
         isCache || isInternal -> {
             absoluteFile(context).delete()
         }
-
         else -> error("Can not delete directory/file in location '${scheme}'.")
     }
 }
@@ -86,12 +85,10 @@ fun FlorisRef.hasAsset(context: Context): Boolean {
                 false
             }
         }
-
         isCache || isInternal -> {
             val file = File(absolutePath(context))
             file.exists() && file.isFile
         }
-
         else -> false
     }
 }
@@ -112,12 +109,10 @@ private fun FlorisRef.list(appContext: Context, files: Boolean, dirs: Boolean) =
                     files && dirs || files && subList.isEmpty() || dirs && subList.isNotEmpty() -> {
                         subRef(fileName)
                     }
-
                     else -> null
                 }
             } ?: listOf()
         }
-
         isCache || isInternal -> {
             val dir = absoluteFile(appContext)
             if (dir.isDirectory) {
@@ -131,7 +126,6 @@ private fun FlorisRef.list(appContext: Context, files: Boolean, dirs: Boolean) =
                 listOf()
             }
         }
-
         else -> error("Unsupported FlorisRef source!")
     }
 }
@@ -162,7 +156,6 @@ fun FlorisRef.loadTextAsset(context: Context): Result<String> {
         isAssets -> runCatching {
             context.assets.reader(relativePath).use { it.readText() }
         }
-
         isCache || isInternal -> {
             val file = File(absolutePath(context))
             val contents = readTextFile(file).getOrElse { return resultErr(it) }
@@ -172,7 +165,6 @@ fun FlorisRef.loadTextAsset(context: Context): Result<String> {
                 resultOk(contents)
             }
         }
-
         else -> resultErrStr("Unsupported asset ref!")
     }
 }

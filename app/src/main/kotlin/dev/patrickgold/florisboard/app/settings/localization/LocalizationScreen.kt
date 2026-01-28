@@ -174,7 +174,7 @@ fun DeleteSubtypeConfirmationDialog(
     subtypeToDelete: Subtype?,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-) {
+)   {
     subtypeToDelete?.let {
         JetPrefAlertDialog(
             title = stringRes(R.string.settings__localization__subtype_delete_confirmation_title),
@@ -182,8 +182,8 @@ fun DeleteSubtypeConfirmationDialog(
             dismissLabel = stringRes(R.string.action__no),
             onDismiss = onDismiss,
             onConfirm = onConfirm,
-        ) {
-            Text(stringRes(R.string.settings__localization__subtype_delete_confirmation_warning))
-        }
+            ) {
+                Text(stringRes(R.string.settings__localization__subtype_delete_confirmation_warning))
+            }
     }
 }

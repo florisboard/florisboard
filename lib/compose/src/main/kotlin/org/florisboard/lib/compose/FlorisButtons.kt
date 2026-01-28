@@ -212,8 +212,8 @@ fun FlorisIconButton(
                     interactionSource = interactionSource,
                     indication = ripple(),
                 ),
-        //TODO: I don't know how we could emulate something like this
-        //.childSemantics(),
+                //TODO: I don't know how we could emulate something like this
+                //.childSemantics(),
         contentAlignment = Alignment.Center,
     ) {
         val contentColor = if (enabled) {

@@ -132,15 +132,13 @@ fun FlorisErrorCard(
         backgroundColor = Color.Red,
         contentColor = Color.White,
         onClick = onClick,
-        icon = if (showIcon) ({
-            Icon(
-                modifier = Modifier
-                    .padding(all = FlorisCardDefaults.IconSpacing)
-                    .requiredSize(FlorisCardDefaults.IconRequiredSize),
-                imageVector = Icons.Default.ErrorOutline,
-                contentDescription = null,
-            )
-        }) else null,
+        icon = if (showIcon) ({ Icon(
+            modifier = Modifier
+                .padding(all = FlorisCardDefaults.IconSpacing)
+                .requiredSize(FlorisCardDefaults.IconRequiredSize),
+            imageVector = Icons.Default.ErrorOutline,
+            contentDescription = null,
+        ) }) else null,
         text = text,
         contentPadding = contentPadding,
     )
@@ -159,15 +157,13 @@ fun FlorisWarningCard(
         backgroundColor = Color.Yellow,
         contentColor = Color.Black,
         onClick = onClick,
-        icon = if (showIcon) ({
-            Icon(
-                modifier = Modifier
-                    .padding(all = FlorisCardDefaults.IconSpacing)
-                    .requiredSize(FlorisCardDefaults.IconRequiredSize),
-                imageVector = Icons.Outlined.Warning,
-                contentDescription = null,
-            )
-        }) else null,
+        icon = if (showIcon) ({ Icon(
+            modifier = Modifier
+                .padding(all = FlorisCardDefaults.IconSpacing)
+                .requiredSize(FlorisCardDefaults.IconRequiredSize),
+            imageVector = Icons.Outlined.Warning,
+            contentDescription = null,
+        ) }) else null,
         text = text,
         contentPadding = contentPadding,
     )
@@ -184,15 +180,13 @@ fun FlorisInfoCard(
     FlorisSimpleCard(
         modifier = modifier,
         onClick = onClick,
-        icon = if (showIcon) ({
-            Icon(
-                modifier = Modifier
-                    .padding(all = FlorisCardDefaults.IconSpacing)
-                    .requiredSize(FlorisCardDefaults.IconRequiredSize),
-                imageVector = Icons.Default.Info,
-                contentDescription = null,
-            )
-        }) else null,
+        icon = if (showIcon) ({ Icon(
+            modifier = Modifier
+                .padding(all = FlorisCardDefaults.IconSpacing)
+                .requiredSize(FlorisCardDefaults.IconRequiredSize),
+            imageVector = Icons.Default.Info,
+            contentDescription = null,
+        ) }) else null,
         text = text,
         contentPadding = contentPadding,
     )

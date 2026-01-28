@@ -246,14 +246,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyboardMode.SYMBOLS2 -> TextKeyData.VIEW_SYMBOLS
                 else -> TextKeyData.VIEW_CHARACTERS
             }
-
             SwipeAction.CYCLE_TO_NEXT_KEYBOARD_MODE -> when (activeState.keyboardMode) {
                 KeyboardMode.CHARACTERS -> TextKeyData.VIEW_SYMBOLS
                 KeyboardMode.SYMBOLS -> TextKeyData.VIEW_SYMBOLS2
                 KeyboardMode.SYMBOLS2 -> TextKeyData.VIEW_NUMERIC_ADVANCED
                 else -> TextKeyData.VIEW_CHARACTERS
             }
-
             SwipeAction.DELETE_WORD -> TextKeyData.DELETE_WORD
             SwipeAction.HIDE_KEYBOARD -> TextKeyData.IME_HIDE_UI
             SwipeAction.INSERT_SPACE -> TextKeyData.SPACE
@@ -304,15 +302,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      *    otherwise            , abc -> abc
      */
     fun fixCase(word: String): String {
-        return when (activeState.inputShiftState) {
+        return when(activeState.inputShiftState) {
             InputShiftState.CAPS_LOCK -> {
                 word.uppercase(subtypeManager.activeSubtype.primaryLocale)
             }
-
             InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
                 word.titlecase(subtypeManager.activeSubtype.primaryLocale)
             }
-
             else -> word
         }
     }
@@ -332,7 +328,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(shift = isShiftPressed), count)
             }
-
             KeyCode.ARROW_RIGHT -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
@@ -340,7 +335,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(shift = isShiftPressed), count)
             }
-
             KeyCode.ARROW_UP -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
@@ -348,7 +342,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isShiftPressed), count)
             }
-
             KeyCode.ARROW_DOWN -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
@@ -356,7 +349,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
             }
-
             KeyCode.MOVE_START_OF_PAGE -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
@@ -364,7 +356,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(alt = true, shift = isShiftPressed), count)
             }
-
             KeyCode.MOVE_END_OF_PAGE -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
@@ -372,7 +363,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(alt = true, shift = isShiftPressed), count)
             }
-
             KeyCode.MOVE_START_OF_LINE -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = true
@@ -380,7 +370,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(alt = true, shift = isShiftPressed), count)
             }
-
             KeyCode.MOVE_END_OF_LINE -> {
                 if (!selection.isSelectionMode && activeState.isManualSelectionMode) {
                     activeState.isManualSelectionModeStart = false
@@ -471,7 +460,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 ImeOptions.Action.SEND -> {
                     editorInstance.performEnterAction(action)
                 }
-
                 else -> editorInstance.performEnter()
             }
         }
@@ -485,7 +473,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         when (prefs.keyboard.utilityKeyAction.get()) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
             UtilityKeyAction.SWITCH_LANGUAGE -> subtypeManager.switchToNextSubtype()
-
             else -> FlorisImeService.switchToNextInputMethod()
         }
     }
@@ -507,7 +494,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     }
                 }
             }
-
             CapitalizationBehavior.CAPSLOCK_BY_CYCLE -> {
                 activeState.inputShiftState = when (activeState.inputShiftState) {
                     InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
@@ -524,8 +510,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
      */
     private fun handleShiftUp(data: KeyData) {
         if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isAnyPressed() &&
-            !inputEventDispatcher.isUninterruptedEventSequence(data)
-        ) {
+            !inputEventDispatcher.isUninterruptedEventSequence(data)) {
             activeState.inputShiftState = InputShiftState.UNSHIFTED
         }
     }
@@ -554,9 +539,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         // Skip handling changing to characters keyboard and double space periods
         // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
-            candidate != null
-        ) { /* Do nothing */
-        } else {
+                candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
         }
     }
@@ -575,9 +558,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyboardMode.SYMBOLS2 -> {
                     activeState.keyboardMode = KeyboardMode.CHARACTERS
                 }
-
-                else -> { /* Do nothing */
-                }
+                else -> { /* Do nothing */ }
             }
         }
         if (prefs.correction.doubleSpacePeriod.get()) {
@@ -592,9 +573,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
         // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
-            candidate != null
-        ) { /* Do nothing */
-        } else {
+                candidate != null) { /* Do nothing */ } else {
             editorInstance.commitText(KeyCode.SPACE.toChar().toString())
         }
     }
@@ -707,7 +686,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_END_OF_LINE -> {
                 editorInstance.massSelection.begin()
             }
-
             KeyCode.SHIFT -> handleShiftDown(data)
         }
     }
@@ -726,7 +704,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 editorInstance.massSelection.end()
                 handleArrow(data.code)
             }
-
             KeyCode.CAPS_LOCK -> handleCapsLock()
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
             KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
@@ -745,7 +722,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 clipboardManager.updatePrimaryClip(null)
                 appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
             }
-
             KeyCode.TOGGLE_FLOATING_WINDOW -> windowController.actions.toggleFloatingWindow()
             KeyCode.TOGGLE_COMPACT_LAYOUT -> windowController.actions.toggleCompactLayout()
             KeyCode.COMPACT_LAYOUT_TO_LEFT -> windowController.actions.compactLayoutToLeft()
@@ -777,21 +753,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.SHOW_SUBTYPE_PICKER -> {
                 appContext.keyboardManager.value.activeState.isSubtypeSelectionVisible = true
             }
-
             KeyCode.SYSTEM_PREV_INPUT_METHOD -> FlorisImeService.switchToPrevInputMethod()
             KeyCode.SYSTEM_NEXT_INPUT_METHOD -> FlorisImeService.switchToNextInputMethod()
             KeyCode.TOGGLE_SMARTBAR_VISIBILITY -> scope.launch {
                 prefs.smartbar.enabled.let { it.set(!it.get()) }
             }
-
             KeyCode.TOGGLE_ACTIONS_OVERFLOW -> {
                 activeState.isActionsOverflowVisible = !activeState.isActionsOverflowVisible
             }
-
             KeyCode.TOGGLE_ACTIONS_EDITOR -> {
                 activeState.isActionsEditorVisible = !activeState.isActionsEditorVisible
             }
-
             KeyCode.TOGGLE_INCOGNITO_MODE -> scope.launch { handleToggleIncognitoMode() }
             KeyCode.TOGGLE_AUTOCORRECT -> handleToggleAutocorrect()
             KeyCode.UNDO -> editorInstance.performUndo()
@@ -818,7 +790,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                             val text = data.asString(isForDisplay = false)
                             editorInstance.commitText(text)
                         }
-
                         else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
@@ -827,16 +798,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                             }
                         }
                     }
-
                     else -> when (data.type) {
-                        KeyType.CHARACTER, KeyType.NUMERIC -> {
+                        KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
                             if (!UCharacter.isUAlphabetic(UCharacter.codePointAt(text, 0))) {
                                 nlpManager.getAutoCommitCandidate()?.let { commitCandidate(it) }
                             }
                             editorInstance.commitChar(text)
                         }
-
                         else -> {
                             flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }
                         }
@@ -861,7 +830,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_END_OF_LINE -> {
                 editorInstance.massSelection.end()
             }
-
             KeyCode.SHIFT -> handleShiftCancel()
         }
     }
@@ -877,7 +845,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_END_OF_PAGE,
             KeyCode.MOVE_START_OF_LINE,
             KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
-
             else -> onInputKeyUp(data)
         }
     }
@@ -895,17 +862,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 handleHardwareKeyboardSpace()
                 return true
             }
-
             KeyEvent.KEYCODE_ENTER -> {
                 handleEnter()
                 return true
             }
-
             KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
                 inputEventDispatcher.sendDown(TextKeyData.SHIFT)
                 return true
             }
-
             else -> return false
         }
     }
@@ -916,7 +880,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 inputEventDispatcher.sendUp(TextKeyData.SHIFT)
                 return true
             }
-
             else -> return false
         }
     }
@@ -924,8 +887,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     inner class KeyboardManagerResources {
         val composers = MutableStateFlow<Map<ExtensionComponentName, Composer>>(emptyMap())
         val currencySets = MutableStateFlow<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
-        val layouts =
-            MutableStateFlow<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
+        val layouts = MutableStateFlow<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
         val popupMappings = MutableStateFlow<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
         val punctuationRules = MutableStateFlow<Map<ExtensionComponentName, PunctuationRule>>(emptyMap())
         val subtypePresets = MutableStateFlow<List<SubtypePreset>>(emptyList())
@@ -941,8 +903,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         private fun parseKeyboardExtensions(keyboardExtensions: List<KeyboardExtension>) {
             val localComposers = mutableMapOf<ExtensionComponentName, Composer>()
             val localCurrencySets = mutableMapOf<ExtensionComponentName, CurrencySet>()
-            val localLayouts =
-                mutableMapOf<LayoutType, MutableMap<ExtensionComponentName, LayoutArrangementComponent>>()
+            val localLayouts = mutableMapOf<LayoutType, MutableMap<ExtensionComponentName, LayoutArrangementComponent>>()
             val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
             val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
             val localSubtypePresets = mutableListOf<SubtypePreset>()
@@ -958,19 +919,14 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 keyboardExtension.layouts.forEach { (type, layoutComponents) ->
                     for (layoutComponent in layoutComponents) {
-                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(
-                            keyboardExtension.meta.id,
-                            layoutComponent.id
-                        )] = layoutComponent
+                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
                     }
                 }
                 keyboardExtension.popupMappings.forEach { popupMapping ->
-                    localPopupMappings[ExtensionComponentName(keyboardExtension.meta.id, popupMapping.id)] =
-                        popupMapping
+                    localPopupMappings[ExtensionComponentName(keyboardExtension.meta.id, popupMapping.id)] = popupMapping
                 }
                 keyboardExtension.punctuationRules.forEach { punctuationRule ->
-                    localPunctuationRules[ExtensionComponentName(keyboardExtension.meta.id, punctuationRule.id)] =
-                        punctuationRule
+                    localPunctuationRules[ExtensionComponentName(keyboardExtension.meta.id, punctuationRule.id)] = punctuationRule
                 }
                 localSubtypePresets.addAll(keyboardExtension.subtypePresets)
             }
@@ -1013,29 +969,23 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 KeyCode.CLIPBOARD_CUT -> {
                     state.isSelectionMode && editorInfo.isRichInputEditor
                 }
-
                 KeyCode.CLIPBOARD_PASTE -> {
                     !androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
                         && clipboardManager.canBePasted(clipboardManager.primaryClip)
                 }
-
                 KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
                     clipboardManager.canBePasted(clipboardManager.primaryClip)
                 }
-
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     editorInfo.isRichInputEditor
                 }
-
                 KeyCode.TOGGLE_INCOGNITO_MODE -> when (prefs.suggestion.incognitoMode.get()) {
                     IncognitoMode.FORCE_OFF, IncognitoMode.FORCE_ON -> false
                     IncognitoMode.DYNAMIC_ON_OFF -> !editorInfo.imeOptions.flagNoPersonalizedLearning
                 }
-
                 KeyCode.LANGUAGE_SWITCH -> {
                     subtypeManager.subtypes.size > 1
                 }
-
                 else -> true
             }
         }
@@ -1052,12 +1002,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                         UtilityKeyAction.DISABLED,
                         UtilityKeyAction.SWITCH_LANGUAGE,
                         UtilityKeyAction.SWITCH_KEYBOARD_APP -> false
-
                         UtilityKeyAction.SWITCH_TO_EMOJIS -> true
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !shouldShowLanguageSwitch()
                     }
                 }
-
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
                         prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
@@ -1066,14 +1014,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     when (tempUtilityKeyAction) {
                         UtilityKeyAction.DISABLED,
                         UtilityKeyAction.SWITCH_TO_EMOJIS -> false
-
                         UtilityKeyAction.SWITCH_LANGUAGE,
                         UtilityKeyAction.SWITCH_KEYBOARD_APP -> true
-
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> shouldShowLanguageSwitch()
                     }
                 }
-
                 else -> true
             }
         }

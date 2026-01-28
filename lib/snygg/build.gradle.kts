@@ -31,12 +31,10 @@ val projectCompileSdk: String by project
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
-        freeCompilerArgs.set(
-            listOf(
-                "-Xconsistent-data-class-copy-visibility",
-                "-Xwhen-guards",
-            )
-        )
+        freeCompilerArgs.set(listOf(
+            "-Xconsistent-data-class-copy-visibility",
+            "-Xwhen-guards",
+        ))
     }
 }
 

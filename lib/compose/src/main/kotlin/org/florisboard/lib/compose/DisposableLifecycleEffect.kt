@@ -35,7 +35,7 @@ fun DisposableLifecycleEffect(
             when (event) {
                 Lifecycle.Event.ON_RESUME -> onResume()
                 Lifecycle.Event.ON_PAUSE -> onPause()
-                else -> {}
+                else -> { }
             }
         }
         lifecycle.addObserver(observer)

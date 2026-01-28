@@ -125,17 +125,17 @@ data class SubtypeLayoutMap(
     val phone2: ExtensionComponentName = PHONE2_DEFAULT,
 ) {
     companion object {
-        private const val EQUALS = "="
-        private const val DELIMITER = ","
+        private const val EQUALS =                      "="
+        private const val DELIMITER =                   ","
 
-        private val CHARACTERS_DEFAULT = extCoreLayout("qwerty")
-        private val SYMBOLS_DEFAULT = extCoreLayout("western")
-        private val SYMBOLS2_DEFAULT = extCoreLayout("western")
-        private val NUMERIC_DEFAULT = extCoreLayout("western_arabic")
-        private val NUMERIC_ADVANCED_DEFAULT = extCoreLayout("western_arabic")
-        private val NUMERIC_ROW_DEFAULT = extCoreLayout("western_arabic")
-        private val PHONE_DEFAULT = extCoreLayout("telpad")
-        private val PHONE2_DEFAULT = extCoreLayout("telpad")
+        private val CHARACTERS_DEFAULT =          extCoreLayout("qwerty")
+        private val SYMBOLS_DEFAULT =             extCoreLayout("western")
+        private val SYMBOLS2_DEFAULT =            extCoreLayout("western")
+        private val NUMERIC_DEFAULT =             extCoreLayout("western_arabic")
+        private val NUMERIC_ADVANCED_DEFAULT =    extCoreLayout("western_arabic")
+        private val NUMERIC_ROW_DEFAULT =         extCoreLayout("western_arabic")
+        private val PHONE_DEFAULT =               extCoreLayout("telpad")
+        private val PHONE2_DEFAULT =              extCoreLayout("telpad")
     }
 
     operator fun get(layoutType: LayoutType): ExtensionComponentName? {

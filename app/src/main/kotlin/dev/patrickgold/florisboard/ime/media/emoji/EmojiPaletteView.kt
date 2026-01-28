@@ -265,14 +265,12 @@ fun EmojiPaletteView(
                         onCategoryChange(category)
                     },
                     selected = activeCategory == category,
-                    icon = {
-                        SnyggIcon(
-                            elementName = FlorisImeUi.MediaEmojiTab.elementName,
-                            selector = if (activeCategory == category) SnyggSelector.FOCUS else SnyggSelector.NONE,
-                            modifier = Modifier.size(ButtonDefaults.IconSize),
-                            imageVector = category.icon(),
-                        )
-                    },
+                    icon = { SnyggIcon(
+                        elementName = FlorisImeUi.MediaEmojiTab.elementName,
+                        selector = if (activeCategory == category) SnyggSelector.FOCUS else SnyggSelector.NONE,
+                        modifier = Modifier.size(ButtonDefaults.IconSize),
+                        imageVector = category.icon(),
+                    ) },
                 )
             }
         }
@@ -343,7 +341,6 @@ fun EmojiPaletteView(
                         )
                     }
                 }
-
                 EmojiCategory.RECENTLY_USED if isEmojiHistoryEmpty -> {
                     Column(
                         modifier = Modifier
@@ -360,7 +357,6 @@ fun EmojiPaletteView(
                         )
                     }
                 }
-
                 else -> key(emojiMapping) {
                     LazyVerticalGrid(
                         modifier = Modifier
@@ -412,8 +408,7 @@ private fun EmojiKey(
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
-    SnyggBox(
-        FlorisImeUi.MediaEmojiKey.elementName,
+    SnyggBox(FlorisImeUi.MediaEmojiKey.elementName,
         modifier = Modifier
             .aspectRatio(1f)
             .pointerInput(Unit) {

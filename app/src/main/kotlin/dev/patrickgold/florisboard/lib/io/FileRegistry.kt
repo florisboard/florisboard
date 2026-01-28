@@ -48,7 +48,6 @@ object FileRegistry {
                     givenMediaType
                 }
             }
-
             else -> givenMediaType
         }
     }

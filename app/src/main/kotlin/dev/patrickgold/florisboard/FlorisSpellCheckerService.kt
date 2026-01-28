@@ -71,7 +71,6 @@ class FlorisSpellCheckerService : SpellCheckerService() {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
                     subtypeManager.activeSubtype
                 }
-
                 else -> {
                     Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())
                 }

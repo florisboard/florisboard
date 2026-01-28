@@ -13,6 +13,6 @@
         android:imeSubtypeMode="keyboard"
         android:imeSubtypeExtraValue="AsciiCapable"
         android:isAsciiCapable="true"
-        android:overridesImplicitlyEnabledSubtype="true" />
+        android:overridesImplicitlyEnabledSubtype="true"/>
 
 </input-method>

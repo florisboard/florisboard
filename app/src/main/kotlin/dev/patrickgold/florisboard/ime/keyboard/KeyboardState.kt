@@ -69,35 +69,35 @@ import kotlin.properties.Delegates
  */
 open class KeyboardState protected constructor(open var rawValue: ULong) {
     companion object {
-        const val M_KEYBOARD_MODE: ULong = 0x0Fu
-        const val O_KEYBOARD_MODE: Int = 0
-        const val M_KEY_VARIATION: ULong = 0x0Fu
-        const val O_KEY_VARIATION: Int = 4
-        const val M_INPUT_SHIFT_STATE: ULong = 0x03u
-        const val O_INPUT_SHIFT_STATE: Int = 8
-        const val M_IME_UI_MODE: ULong = 0x07u
-        const val O_IME_UI_MODE: Int = 24
+        const val M_KEYBOARD_MODE: ULong =                  0x0Fu
+        const val O_KEYBOARD_MODE: Int =                    0
+        const val M_KEY_VARIATION: ULong =                  0x0Fu
+        const val O_KEY_VARIATION: Int =                    4
+        const val M_INPUT_SHIFT_STATE: ULong =              0x03u
+        const val O_INPUT_SHIFT_STATE: Int =                8
+        const val M_IME_UI_MODE: ULong =                    0x07u
+        const val O_IME_UI_MODE: Int =                      24
 
-        const val F_IS_SELECTION_MODE: ULong = 0x00000400u
-        const val F_IS_MANUAL_SELECTION_MODE: ULong = 0x00000800u
+        const val F_IS_SELECTION_MODE: ULong =              0x00000400u
+        const val F_IS_MANUAL_SELECTION_MODE: ULong =       0x00000800u
         const val F_IS_MANUAL_SELECTION_MODE_START: ULong = 0x00001000u
-        const val F_IS_MANUAL_SELECTION_MODE_END: ULong = 0x00002000u
-        const val F_IS_INCOGNITO_MODE: ULong = 0x00008000u
-        const val F_IS_ACTIONS_OVERFLOW_VISIBLE: ULong = 0x00010000u
-        const val F_IS_ACTIONS_EDITOR_VISIBLE: ULong = 0x00020000u
-        const val F_IS_COMPOSING_ENABLED: ULong = 0x00100000u
+        const val F_IS_MANUAL_SELECTION_MODE_END: ULong =   0x00002000u
+        const val F_IS_INCOGNITO_MODE: ULong =              0x00008000u
+        const val F_IS_ACTIONS_OVERFLOW_VISIBLE: ULong =    0x00010000u
+        const val F_IS_ACTIONS_EDITOR_VISIBLE: ULong =      0x00020000u
+        const val F_IS_COMPOSING_ENABLED: ULong =           0x00100000u
 
-        const val F_IS_CHAR_HALF_WIDTH: ULong = 0x00200000u
-        const val F_IS_KANA_KATA: ULong = 0x00400000u
-        const val F_IS_KANA_SMALL: ULong = 0x00800000u
+        const val F_IS_CHAR_HALF_WIDTH: ULong =             0x00200000u
+        const val F_IS_KANA_KATA: ULong =                   0x00400000u
+        const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
-        const val F_IS_RTL_LAYOUT_DIRECTION: ULong = 0x08000000u
+        const val F_IS_RTL_LAYOUT_DIRECTION: ULong =        0x08000000u
 
-        const val F_IS_SUBTYPE_SELECTION_VISIBLE: ULong = 0x1_0000_0000u
+        const val F_IS_SUBTYPE_SELECTION_VISIBLE: ULong =   0x1_0000_0000u
 
-        const val F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS = 0x01_00_00_00_00_00_00_00uL
+        const val F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS =      0x01_00_00_00_00_00_00_00uL
 
-        const val STATE_ALL_ZERO: ULong = 0uL
+        const val STATE_ALL_ZERO: ULong =                   0uL
 
         fun new(value: ULong = STATE_ALL_ZERO) = KeyboardState(value)
     }
@@ -111,11 +111,7 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
     }
 
     private fun setFlag(f: ULong, v: Boolean) {
-        rawValue = if (v) {
-            rawValue or f
-        } else {
-            rawValue and f.inv()
-        }
+        rawValue = if (v) { rawValue or f } else { rawValue and f.inv() }
     }
 
     private fun getRegion(m: ULong, o: Int): Int {
@@ -140,33 +136,23 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
 
     var keyVariation: KeyVariation
         get() = KeyVariation.fromInt(getRegion(M_KEY_VARIATION, O_KEY_VARIATION))
-        set(v) {
-            setRegion(M_KEY_VARIATION, O_KEY_VARIATION, v.toInt())
-        }
+        set(v) { setRegion(M_KEY_VARIATION, O_KEY_VARIATION, v.toInt()) }
 
     var keyboardMode: KeyboardMode
         get() = KeyboardMode.fromInt(getRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE))
-        set(v) {
-            setRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE, v.toInt())
-        }
+        set(v) { setRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE, v.toInt()) }
 
     var inputShiftState: InputShiftState
         get() = InputShiftState.fromInt(getRegion(M_INPUT_SHIFT_STATE, O_INPUT_SHIFT_STATE))
-        set(v) {
-            setRegion(M_INPUT_SHIFT_STATE, O_INPUT_SHIFT_STATE, v.toInt())
-        }
+        set(v) { setRegion(M_INPUT_SHIFT_STATE, O_INPUT_SHIFT_STATE, v.toInt()) }
 
     var imeUiMode: ImeUiMode
         get() = ImeUiMode.fromInt(getRegion(M_IME_UI_MODE, O_IME_UI_MODE))
-        set(v) {
-            setRegion(M_IME_UI_MODE, O_IME_UI_MODE, v.toInt())
-        }
+        set(v) { setRegion(M_IME_UI_MODE, O_IME_UI_MODE, v.toInt()) }
 
     var layoutDirection: LayoutDirection
         get() = if (getFlag(F_IS_RTL_LAYOUT_DIRECTION)) LayoutDirection.Rtl else LayoutDirection.Ltr
-        set(v) {
-            setFlag(F_IS_RTL_LAYOUT_DIRECTION, v == LayoutDirection.Rtl)
-        }
+        set(v) { setFlag(F_IS_RTL_LAYOUT_DIRECTION, v == LayoutDirection.Rtl) }
 
     val isLowercase: Boolean
         get() = inputShiftState == InputShiftState.UNSHIFTED
@@ -176,87 +162,59 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
 
     var isSelectionMode: Boolean
         get() = getFlag(F_IS_SELECTION_MODE)
-        set(v) {
-            setFlag(F_IS_SELECTION_MODE, v)
-        }
+        set(v) { setFlag(F_IS_SELECTION_MODE, v) }
 
     var isManualSelectionMode: Boolean
         get() = getFlag(F_IS_MANUAL_SELECTION_MODE)
-        set(v) {
-            setFlag(F_IS_MANUAL_SELECTION_MODE, v)
-        }
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE, v) }
 
     var isManualSelectionModeStart: Boolean
         get() = getFlag(F_IS_MANUAL_SELECTION_MODE_START)
-        set(v) {
-            setFlag(F_IS_MANUAL_SELECTION_MODE_START, v)
-        }
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE_START, v) }
 
     var isManualSelectionModeEnd: Boolean
         get() = getFlag(F_IS_MANUAL_SELECTION_MODE_END)
-        set(v) {
-            setFlag(F_IS_MANUAL_SELECTION_MODE_END, v)
-        }
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE_END, v) }
 
     var isCursorMode: Boolean
         get() = !isSelectionMode
-        set(v) {
-            isSelectionMode = !v
-        }
+        set(v) { isSelectionMode = !v }
 
     var isIncognitoMode: Boolean
         get() = getFlag(F_IS_INCOGNITO_MODE)
-        set(v) {
-            setFlag(F_IS_INCOGNITO_MODE, v)
-        }
+        set(v) { setFlag(F_IS_INCOGNITO_MODE, v) }
 
     var isActionsOverflowVisible: Boolean
         get() = getFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE)
-        set(v) {
-            setFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE, v)
-        }
+        set(v) { setFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE, v) }
 
     var isActionsEditorVisible: Boolean
         get() = getFlag(F_IS_ACTIONS_EDITOR_VISIBLE)
-        set(v) {
-            setFlag(F_IS_ACTIONS_EDITOR_VISIBLE, v)
-        }
+        set(v) { setFlag(F_IS_ACTIONS_EDITOR_VISIBLE, v) }
 
     var isSubtypeSelectionVisible: Boolean
         get() = getFlag(F_IS_SUBTYPE_SELECTION_VISIBLE)
-        set(v) {
-            setFlag(F_IS_SUBTYPE_SELECTION_VISIBLE, v)
-        }
+        set(v) { setFlag(F_IS_SUBTYPE_SELECTION_VISIBLE, v) }
 
     var isComposingEnabled: Boolean
         get() = getFlag(F_IS_COMPOSING_ENABLED)
-        set(v) {
-            setFlag(F_IS_COMPOSING_ENABLED, v)
-        }
+        set(v) { setFlag(F_IS_COMPOSING_ENABLED, v) }
 
     var isKanaKata: Boolean
         get() = getFlag(F_IS_KANA_KATA)
-        set(v) {
-            setFlag(F_IS_KANA_KATA, v)
-        }
+        set(v) { setFlag(F_IS_KANA_KATA, v) }
 
     var isCharHalfWidth: Boolean
         get() = getFlag(F_IS_CHAR_HALF_WIDTH)
-        set(v) {
-            setFlag(F_IS_CHAR_HALF_WIDTH, v)
-        }
+        set(v) { setFlag(F_IS_CHAR_HALF_WIDTH, v) }
 
     var isKanaSmall: Boolean
         get() = getFlag(F_IS_KANA_SMALL)
-        set(v) {
-            setFlag(F_IS_KANA_SMALL, v)
-        }
+        set(v) { setFlag(F_IS_KANA_SMALL, v) }
 
     var debugShowDragAndDropHelpers: Boolean
         get() = getFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS)
-        set(v) {
-            setFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS, v)
-        }
+        set(v) { setFlag(F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS, v) }
 }
 
 class ObservableKeyboardState private constructor(

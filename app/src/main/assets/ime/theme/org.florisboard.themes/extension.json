@@ -5,59 +5,44 @@
     "version": "0.2.0",
     "title": "FlorisBoard default themes",
     "description": "Default themes (both day and night) for the keyboard UI",
-    "maintainers": [
-      "patrickgold <patrick@patrickgold.dev>",
-      "lm41 <lm41@lm41.xyz>"
-    ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "lm41 <lm41@lm41.xyz>" ],
     "license": "apache-2.0"
   },
   "themes": [
     {
       "id": "floris_day",
       "label": "Floris Day",
-      "authors": [
-        "patrickgold"
-      ],
+      "authors": [ "patrickgold" ],
       "isNight": false
     },
     {
       "id": "floris_day_borderless",
       "label": "Floris Day (Borderless)",
-      "authors": [
-        "patrickgold"
-      ],
+      "authors": [ "patrickgold" ],
       "isNight": false
     },
     {
       "id": "floris_night",
       "label": "Floris Night",
-      "authors": [
-        "patrickgold"
-      ],
+      "authors": [ "patrickgold" ],
       "isNight": true
     },
     {
       "id": "floris_night_borderless",
       "label": "Floris Night (Borderless)",
-      "authors": [
-        "patrickgold"
-      ],
+      "authors": [ "patrickgold" ],
       "isNight": true
     },
     {
       "id": "floris_pure_night",
       "label": "Floris Pure Night",
-      "authors": [
-        "serebit"
-      ],
+      "authors": [ "serebit" ],
       "isNight": true
     },
     {
       "id": "floris_pure_night_borderless",
       "label": "Floris Pure Night (Borderless)",
-      "authors": [
-        "serebit"
-      ],
+      "authors": [ "serebit" ],
       "isNight": true
     }
   ]

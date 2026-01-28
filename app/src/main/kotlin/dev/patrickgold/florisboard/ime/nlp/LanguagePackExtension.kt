@@ -39,8 +39,7 @@ class LanguagePackComponent(
     val locale: FlorisLocale = FlorisLocale.fromTag(id),
     val hanShapeBasedKeyCode: String = "abcdefghijklmnopqrstuvwxyz",
 ) : ExtensionComponent {
-    @Transient
-    var parent: LanguagePackExtension? = null
+    @Transient var parent: LanguagePackExtension? = null
 
     @SerialName("hanShapeBasedTable")
     private val _hanShapeBasedTable: String? = null  // Allows overriding the sqlite3 table to query in the json
@@ -50,8 +49,7 @@ class LanguagePackComponent(
 
 @SerialName(LanguagePackExtension.SERIAL_TYPE)
 @Serializable
-class LanguagePackExtension(
-    // FIXME: how to make this support multiple types of language packs, and selectively load?
+class LanguagePackExtension( // FIXME: how to make this support multiple types of language packs, and selectively load?
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
     val items: List<LanguagePackComponent> = listOf(),
@@ -70,8 +68,7 @@ class LanguagePackExtension(
 
     override fun serialType() = SERIAL_TYPE
 
-    @Transient
-    var hanShapeBasedSQLiteDatabase: SQLiteDatabase = SQLiteDatabase.create(null)
+    @Transient var hanShapeBasedSQLiteDatabase: SQLiteDatabase = SQLiteDatabase.create(null)
 
     override fun onAfterLoad(context: Context, cacheDir: FsDir) {
         // FIXME: this is loading language packs of all subtypes when they load.

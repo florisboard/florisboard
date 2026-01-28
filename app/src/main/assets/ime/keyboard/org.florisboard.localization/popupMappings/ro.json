@@ -2,187 +2,78 @@
   "all": {
     "a": {
       "relevant": [
-        {
-          "$": "auto_text_key",
-          "code": 259,
-          "label": "ă"
-        },
-        {
-          "$": "auto_text_key",
-          "code": 226,
-          "label": "â"
-        }
+        { "$": "auto_text_key", "code":  259, "label": "ă" },
+        { "$": "auto_text_key", "code":  226, "label": "â" }
       ]
     },
     "c": {
       "relevant": [
-        {
-          "code": 8217,
-          "label": "’"
-        }
+        { "code": 8217, "label": "’" }
       ]
     },
     "h": {
       "relevant": [
-        {
-          "code": 8209,
-          "label": "‑"
-        },
-        {
-          "code": 8211,
-          "label": "–"
-        },
-        {
-          "code": 8212,
-          "label": "—"
-        }
+        { "code": 8209, "label": "‑" },
+        { "code": 8211, "label": "–" },
+        { "code": 8212, "label": "—" }
       ]
     },
     "i": {
       "relevant": [
-        {
-          "$": "auto_text_key",
-          "code": 238,
-          "label": "î"
-        }
+        { "$": "auto_text_key", "code":  238, "label": "î" }
       ]
     },
     "s": {
       "relevant": [
-        {
-          "$": "auto_text_key",
-          "code": 537,
-          "label": "ș"
-        }
+        { "$": "auto_text_key", "code":  537, "label": "ș" }
       ]
     },
     "t": {
       "relevant": [
-        {
-          "$": "auto_text_key",
-          "code": 539,
-          "label": "ț"
-        }
+        { "$": "auto_text_key", "code":  539, "label": "ț" }
       ]
     },
     "x": {
       "relevant": [
-        {
-          "code": 8222,
-          "label": "„"
-        },
-        {
-          "code": 8221,
-          "label": "”"
-        }
+        { "code": 8222, "label": "„" },
+        { "code": 8221, "label": "”" }
       ]
     },
     "~right": {
-      "main": {
-        "code": 44,
-        "label": ","
-      },
+      "main": { "code":   44, "label": "," },
       "relevant": [
-        {
-          "code": 38,
-          "label": "&"
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":   34, "label": "\"" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   39, "label": "'" },
+        { "code":   64, "label": "@" },
+        { "code":   59, "label": ";" },
+        { "code":   47, "label": "/" },
+        { "$": "layout_direction_selector",
+          "ltr": { "code":   40, "label": "(" },
+          "rtl": { "code":   41, "label": "(" }
         },
-        {
-          "code": 37,
-          "label": "%"
+        { "$": "layout_direction_selector",
+          "ltr": { "code":   41, "label": ")" },
+          "rtl": { "code":   40, "label": ")" }
         },
-        {
-          "code": 43,
-          "label": "+"
-        },
-        {
-          "code": 34,
-          "label": "\""
-        },
-        {
-          "code": 45,
-          "label": "-"
-        },
-        {
-          "code": 58,
-          "label": ":"
-        },
-        {
-          "code": 39,
-          "label": "'"
-        },
-        {
-          "code": 64,
-          "label": "@"
-        },
-        {
-          "code": 59,
-          "label": ";"
-        },
-        {
-          "code": 47,
-          "label": "/"
-        },
-        {
-          "$": "layout_direction_selector",
-          "ltr": {
-            "code": 40,
-            "label": "("
-          },
-          "rtl": {
-            "code": 41,
-            "label": "("
-          }
-        },
-        {
-          "$": "layout_direction_selector",
-          "ltr": {
-            "code": 41,
-            "label": ")"
-          },
-          "rtl": {
-            "code": 40,
-            "label": ")"
-          }
-        },
-        {
-          "code": 35,
-          "label": "#"
-        },
-        {
-          "code": 33,
-          "label": "!"
-        },
-        {
-          "code": 63,
-          "label": "?"
-        }
+        { "code":   35, "label": "#" },
+        { "code":   33, "label": "!" },
+        { "code":   63, "label": "?" }
       ]
     }
   },
   "uri": {
     "~right": {
-      "main": {
-        "code": -255,
-        "label": ".com"
-      },
+      "main": { "code": -255, "label": ".com" },
       "relevant": [
-        {
-          "code": -255,
-          "label": ".eu"
-        },
-        {
-          "code": -255,
-          "label": ".net"
-        },
-        {
-          "code": -255,
-          "label": ".org"
-        },
-        {
-          "code": -255,
-          "label": ".ro"
-        }
+        { "code": -255, "label": ".eu" },
+        { "code": -255, "label": ".net" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".ro" }
       ]
     }
   }

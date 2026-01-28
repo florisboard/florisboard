@@ -24,16 +24,14 @@ class SnyggTextValueTest {
                 "justify" to SnyggTextAlignValue(TextAlign.Justify),
                 "start" to SnyggTextAlignValue(TextAlign.Start),
                 "end" to SnyggTextAlignValue(TextAlign.End),
-                // invalid
+                 // invalid
                 "invalid" to null,
                 "monospaced" to null,
                 "level 3000" to null,
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+            } })
         }
 
         @Test
@@ -50,11 +48,9 @@ class SnyggTextValueTest {
                 SnyggDefinedVarValue("shenanigans") to null,
                 SnyggUndefinedValue to null,
             )
-            assertAll(pairs.map { (snyggValue, expected) ->
-                {
-                    assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (snyggValue, expected) -> {
+                assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
+            } })
         }
 
         @Test
@@ -79,11 +75,9 @@ class SnyggTextValueTest {
                 "monospaced" to null,
                 "level 3000" to null,
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+            } })
         }
 
         @Test
@@ -97,11 +91,9 @@ class SnyggTextValueTest {
                 SnyggDefinedVarValue("shenanigans") to null,
                 SnyggUndefinedValue to null,
             )
-            assertAll(pairs.map { (snyggValue, expected) ->
-                {
-                    assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (snyggValue, expected) -> {
+                assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
+            } })
         }
 
         @Test
@@ -126,11 +118,9 @@ class SnyggTextValueTest {
                 "monospaced" to null,
                 "level 3000" to null,
             )
-            assertAll(pairs.map { (raw, expected) ->
-                {
-                    assertEquals(expected, encoder.deserialize(raw).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (raw, expected) -> {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull())
+            } })
         }
 
         @Test
@@ -144,11 +134,9 @@ class SnyggTextValueTest {
                 SnyggDefinedVarValue("shenanigans") to null,
                 SnyggUndefinedValue to null,
             )
-            assertAll(pairs.map { (snyggValue, expected) ->
-                {
-                    assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
-                }
-            })
+            assertAll(pairs.map { (snyggValue, expected) -> {
+                assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
+            } })
         }
 
         @Test

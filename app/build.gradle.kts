@@ -43,16 +43,14 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
-        freeCompilerArgs.set(
-            listOf(
-                "-opt-in=kotlin.contracts.ExperimentalContracts",
-                "-jvm-default=enable",
-                "-Xwhen-guards",
-                "-Xexplicit-backing-fields",
-                "-Xcontext-parameters",
-                "-XXLanguage:+LocalTypeAliases",
-            )
-        )
+        freeCompilerArgs.set(listOf(
+            "-opt-in=kotlin.contracts.ExperimentalContracts",
+            "-jvm-default=enable",
+            "-Xwhen-guards",
+            "-Xexplicit-backing-fields",
+            "-Xcontext-parameters",
+            "-XXLanguage:+LocalTypeAliases",
+        ))
     }
 }
 

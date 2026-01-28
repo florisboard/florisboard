@@ -306,8 +306,7 @@ private fun BoxScope.OneHandedPanel() {
         is ImeWindowSpec.Fixed if spec.fixedMode == ImeWindowMode.Fixed.COMPACT -> {
             OneHandedPanel(spec)
         }
-
-        else -> {}
+        else -> { }
     }
 }
 

@@ -177,7 +177,6 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     )
                 }
             }
-
             is LanguagePackExtension -> {
                 ExtensionComponentListView(
                     title = stringRes(R.string.ext__meta__components_language_pack),
@@ -190,7 +189,6 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
                     )
                 }
             }
-
             else -> {
                 // Render nothing
             }
