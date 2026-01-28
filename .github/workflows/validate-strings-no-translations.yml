@@ -40,7 +40,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Create comment if illegal files detected
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         if: steps.precheck.outputs.require_validation == 'true' && steps.fetch_changed_files.outputs.illegal_changes_list != ''
         with:
           issue-number: ${{ github.event.pull_request.number }}
