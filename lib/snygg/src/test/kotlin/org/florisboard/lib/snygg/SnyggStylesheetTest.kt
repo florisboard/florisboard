@@ -179,6 +179,7 @@ class SnyggStylesheetTest {
                     ),
                 ),
             )
+
             @Language("json")
             val expectedJson =
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","smartbar":{"background":"rgba(255,0,0,1)","shape":"rectangle()"},"key:pressed":{"shape":"circle()"}}"""
@@ -432,6 +433,7 @@ class SnyggStylesheetTest {
                     }
                 }
             }
+
             @Language("json")
             val expectedJson =
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"}]}"""
@@ -451,6 +453,7 @@ class SnyggStylesheetTest {
                     }
                 }
             }
+
             @Language("json")
             val expectedJson =
                 """{"${'$'}schema":"https://schemas.florisboard.org/snygg/v2/stylesheet","@font `Comic Sans`":[{"src":"uri(`flex:/path/to/font.ttf`)"},{"src":"uri(`flex:/path/to/font2.ttf`)"}]}"""

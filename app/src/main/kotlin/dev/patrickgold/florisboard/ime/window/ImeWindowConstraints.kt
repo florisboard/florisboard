@@ -77,6 +77,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             ImeFormFactor.Type.LARGE_TABLET,
             ImeFormFactor.Type.TABLET_LANDSCAPE,
             ImeFormFactor.Type.TABLET_PORTRAIT -> 80.dp
+
             ImeFormFactor.Type.PHONE_LANDSCAPE -> 50.dp
             ImeFormFactor.Type.PHONE_PORTRAIT -> 80.dp
         }
@@ -112,6 +113,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.27f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.17f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.35f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.16f
@@ -123,6 +125,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.64f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.38f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.66f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.46f
@@ -134,6 +137,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.35f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.22f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.47f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.26f
@@ -145,6 +149,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             when (formFactor.typeGuess) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET -> 6.dp
+
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 2.dp
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 5.dp
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 2.dp
@@ -155,6 +160,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             when (formFactor.typeGuess) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET -> 6.dp
+
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 5.dp
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 5.dp
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 5.dp
@@ -168,6 +174,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE,
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 64.dp
+
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 48.dp
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 32.dp
             }
@@ -240,6 +247,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.25f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.40f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.28f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.55f
@@ -251,6 +259,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.48f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.70f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.40f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.90f
@@ -262,6 +271,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.30f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.45f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.30f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.65f
@@ -273,6 +283,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
             val factor = when (formFactor.typeGuess) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET -> 0.25f
+
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.30f
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.18f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.28f
@@ -285,6 +296,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.55f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.35f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.60f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.40f
@@ -296,6 +308,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 0.35f
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 0.22f
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 0.45f
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 0.22f
@@ -308,6 +321,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 2.dp
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 2.dp
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 1.5.dp
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 2.dp
@@ -318,6 +332,7 @@ sealed class ImeWindowConstraints(rootInsets: ImeInsets.Root) {
                 ImeFormFactor.Type.DESKTOP,
                 ImeFormFactor.Type.LARGE_TABLET,
                 ImeFormFactor.Type.TABLET_LANDSCAPE -> 5.dp
+
                 ImeFormFactor.Type.TABLET_PORTRAIT -> 5.dp
                 ImeFormFactor.Type.PHONE_LANDSCAPE -> 3.dp
                 ImeFormFactor.Type.PHONE_PORTRAIT -> 5.dp

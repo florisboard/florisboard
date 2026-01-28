@@ -78,17 +78,21 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         fontSize = fontSize(12.sp)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
-        KeyCode.VIEW_CHARACTERS,
-        KeyCode.VIEW_SYMBOLS,
-        KeyCode.VIEW_SYMBOLS2,
-    )) {
+    FlorisImeUi.Key.elementName(
+        FlorisImeUi.Attr.Code to listOf(
+            KeyCode.VIEW_CHARACTERS,
+            KeyCode.VIEW_SYMBOLS,
+            KeyCode.VIEW_SYMBOLS2,
+        )
+    ) {
         fontSize = fontSize(18.sp)
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
-        KeyCode.VIEW_NUMERIC,
-        KeyCode.VIEW_NUMERIC_ADVANCED,
-    )) {
+    FlorisImeUi.Key.elementName(
+        FlorisImeUi.Attr.Code to listOf(
+            KeyCode.VIEW_NUMERIC,
+            KeyCode.VIEW_NUMERIC_ADVANCED,
+        )
+    ) {
         fontSize = fontSize(12.sp)
     }
     FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.VIEW_NUMERIC_ADVANCED)) {

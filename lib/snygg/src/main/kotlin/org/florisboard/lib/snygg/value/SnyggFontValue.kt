@@ -41,6 +41,7 @@ data class SnyggGenericFontFamilyValue(val fontFamily: FontFamily) : SnyggFontVa
         construct = { SnyggGenericFontFamilyValue(it) },
         destruct = { (it as SnyggGenericFontFamilyValue).fontFamily },
     )
+
     override fun encoder() = Companion
 }
 
@@ -83,6 +84,7 @@ data class SnyggFontStyleValue(val fontStyle: FontStyle) : SnyggFontValue {
         construct = { SnyggFontStyleValue(it) },
         destruct = { (it as SnyggFontStyleValue).fontStyle },
     )
+
     override fun encoder() = Companion
 }
 
@@ -113,5 +115,6 @@ data class SnyggFontWeightValue(val fontWeight: FontWeight) : SnyggFontValue {
         construct = { SnyggFontWeightValue(it) },
         destruct = { (it as SnyggFontWeightValue).fontWeight },
     )
+
     override fun encoder() = Companion
 }

@@ -95,6 +95,7 @@ fun ExtensionComponentView(
                         color = LocalContentColor.current,
                     )
                 }
+
                 is LanguagePackComponent -> {
                     val text = remember(
                         component.authors, component.locale, component.hanShapeBasedKeyCode,
@@ -111,7 +112,8 @@ fun ExtensionComponentView(
                         color = LocalContentColor.current,
                     )
                 }
-                else -> { }
+
+                else -> {}
             }
         }
         if (onDeleteBtnClick != null || onEditBtnClick != null) {
@@ -153,13 +155,15 @@ fun <T : ExtensionComponent> ExtensionComponentListView(
 ) {
     Column(modifier = modifier) {
         ListItem(
-            headlineContent = { Text(
-                text = title,
-                color = MaterialTheme.colorScheme.secondary,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            ) },
+            headlineContent = {
+                Text(
+                    text = title,
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            },
             trailingContent = if (onCreateBtnClick != null) {
                 @Composable {
                     FlorisIconButton(
@@ -168,7 +172,9 @@ fun <T : ExtensionComponent> ExtensionComponentListView(
                         iconColor = MaterialTheme.colorScheme.secondary,
                     )
                 }
-            } else { null },
+            } else {
+                null
+            },
         )
         if (components.isEmpty()) {
             ExtensionComponentNoneFoundView()

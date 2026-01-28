@@ -70,6 +70,7 @@ class GlideTypingGesture {
                     }
                     return false
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     if (pointerId != event.getPointerId(event.actionIndex)) {
                         // not our pointer.
@@ -80,7 +81,10 @@ class GlideTypingGesture {
                     for (i in 0..event.historySize) {
                         val pos = when (i) {
                             event.historySize -> Position(event.getX(pointerIndex), event.getY(pointerIndex))
-                            else -> Position(event.getHistoricalX(pointerIndex, i), event.getHistoricalY(pointerIndex, i))
+                            else -> Position(
+                                event.getHistoricalX(pointerIndex, i),
+                                event.getHistoricalY(pointerIndex, i)
+                            )
                         }
                         pointerData.positions.add(pos)
                         if (pointerData.isActuallyGesture == null) {
@@ -109,6 +113,7 @@ class GlideTypingGesture {
                     }
                     return pointerData.isActuallyGesture ?: false
                 }
+
                 MotionEvent.ACTION_UP,
                 MotionEvent.ACTION_POINTER_UP -> {
                     if (pointerId != event.getPointerId(event.actionIndex)) {
@@ -121,12 +126,14 @@ class GlideTypingGesture {
                     resetState()
                     return false
                 }
+
                 MotionEvent.ACTION_CANCEL -> {
                     if (pointerData.isActuallyGesture == true) {
                         listeners.forEach { it.onGlideCancelled() }
                     }
                     resetState()
                 }
+
                 else -> return false
             }
             return false

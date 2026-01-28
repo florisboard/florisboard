@@ -240,13 +240,17 @@ fun ThemeEditorScreen(
 
     floatingActionButton {
         ExtendedFloatingActionButton(
-            icon = { Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-            ) },
-            text = { Text(
-                text = stringRes(R.string.settings__theme_editor__add_rule),
-            ) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                )
+            },
+            text = {
+                Text(
+                    text = stringRes(R.string.settings__theme_editor__add_rule),
+                )
+            },
             onClick = { snyggRuleToEdit = SnyggEmptyRuleForAdding },
         )
     }
@@ -300,9 +304,11 @@ fun ThemeEditorScreen(
                     DisplayKbdAfterDialogs.ALWAYS -> {
                         previewFieldController.focusRequester.requestFocus()
                     }
+
                     DisplayKbdAfterDialogs.NEVER -> {
                         // Do nothing
                     }
+
                     DisplayKbdAfterDialogs.REMEMBER -> {
                         if (oldFocusState) {
                             previewFieldController.focusRequester.requestFocus()
@@ -352,143 +358,162 @@ fun ThemeEditorScreen(
                 }
             }
 
-            items(stylesheetEditor.rules.toList()) { (rule, propertySet) -> key(rule) {
-                val propertySetSpec = SnyggSpec.propertySetSpecOf(rule)
-                val isVariablesRule = rule == SnyggAnnotationRule.Defines
-                FlorisOutlinedBox(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        SnyggRuleRow(
-                            rule = rule,
-                            level = snyggLevel,
-                            showEditBtn = !isVariablesRule,
-                            onEditRuleBtnClick = {
-                                snyggRuleToEdit = rule
-                            },
-                            onAddPropertyBtnClick = {
-                                when(propertySet) {
-                                    is SnyggMultiplePropertySetsEditor -> {
-                                        workspace.update {
-                                            propertySet.sets.add(SnyggSinglePropertySetEditor())
+            items(stylesheetEditor.rules.toList()) { (rule, propertySet) ->
+                key(rule) {
+                    val propertySetSpec = SnyggSpec.propertySetSpecOf(rule)
+                    val isVariablesRule = rule == SnyggAnnotationRule.Defines
+                    FlorisOutlinedBox(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                            .fillMaxWidth(),
+                    ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            SnyggRuleRow(
+                                rule = rule,
+                                level = snyggLevel,
+                                showEditBtn = !isVariablesRule,
+                                onEditRuleBtnClick = {
+                                    snyggRuleToEdit = rule
+                                },
+                                onAddPropertyBtnClick = {
+                                    when (propertySet) {
+                                        is SnyggMultiplePropertySetsEditor -> {
+                                            workspace.update {
+                                                propertySet.sets.add(SnyggSinglePropertySetEditor())
+                                            }
+                                        }
+
+                                        is SnyggSinglePropertySetEditor -> {
+                                            snyggPropertySetForEditing = propertySet
+                                            snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
+                                                rule = rule,
+                                            )
                                         }
                                     }
-                                    is SnyggSinglePropertySetEditor -> {
-                                        snyggPropertySetForEditing = propertySet
-                                        snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
-                                            rule = rule,
-                                        )
-                                    }
-                                }
-                            },
-                        )
-                        if (isVariablesRule) {
-                            Text(
-                                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
-                                text = stringRes(R.string.snygg__rule_annotation__defines_description),
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontStyle = FontStyle.Italic,
+                                },
                             )
-                        }
+                            if (isVariablesRule) {
+                                Text(
+                                    modifier = Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
+                                    text = stringRes(R.string.snygg__rule_annotation__defines_description),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontStyle = FontStyle.Italic,
+                                )
+                            }
 
-                        @Composable
-                        fun SinglePropertySetEditor(
-                            propertySet: SnyggSinglePropertySetEditor,
-                        ) {
-                            for ((propertyName, propertySpec) in propertySetSpec?.properties.orEmpty()) {
-                                if (propertySpec.required && !propertySet.properties.containsKey(propertyName)) {
-                                    FlorisOutlinedBox(title = "Errors", modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
-                                        Text(
-                                            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-                                            text = "Required property '$propertyName' does not exist",
-                                            color = MaterialTheme.colorScheme.error,
+                            @Composable
+                            fun SinglePropertySetEditor(
+                                propertySet: SnyggSinglePropertySetEditor,
+                            ) {
+                                for ((propertyName, propertySpec) in propertySetSpec?.properties.orEmpty()) {
+                                    if (propertySpec.required && !propertySet.properties.containsKey(propertyName)) {
+                                        FlorisOutlinedBox(
+                                            title = "Errors",
+                                            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                                        ) {
+                                            Text(
+                                                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                                                text = "Required property '$propertyName' does not exist",
+                                                color = MaterialTheme.colorScheme.error,
+                                            )
+                                        }
+                                    }
+                                }
+                                for ((propertyName, propertyValue) in propertySet.properties) {
+                                    if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
+                                        JetPrefListItem(
+                                            modifier = Modifier.rippleClickable {
+                                                snyggPropertySetForEditing = propertySet
+                                                snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
+                                            },
+                                            text = context.translatePropertyName(propertyName, snyggLevel),
+                                            secondaryText = context.translatePropertyValue(
+                                                propertyValue,
+                                                snyggLevel,
+                                                colorRepresentation
+                                            ),
+                                            singleLineSecondaryText = true,
+                                            trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                         )
                                     }
                                 }
                             }
-                            for ((propertyName, propertyValue) in propertySet.properties) {
-                                if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
-                                    JetPrefListItem(
-                                        modifier = Modifier.rippleClickable {
-                                            snyggPropertySetForEditing = propertySet
-                                            snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
-                                        },
-                                        text = context.translatePropertyName(propertyName, snyggLevel),
-                                        secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
-                                        singleLineSecondaryText = true,
-                                        trailing = { SnyggValueIcon(propertyValue, definedVariables) },
-                                    )
-                                }
-                            }
-                        }
 
-                        when (propertySet) {
-                            is SnyggSinglePropertySetEditor -> {
-                                SinglePropertySetEditor(propertySet)
-                            }
-                            is SnyggMultiplePropertySetsEditor -> {
-                                val sets = propertySet.sets
-                                sets.forEachIndexed { propertySetIndex, propertySet ->
-                                    key(propertySet.uuid) {
-                                        FlorisOutlinedBox(Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
-                                            Row {
-                                                Text("Source set", Modifier
-                                                    .padding(start = 16.dp)
-                                                    .align(Alignment.CenterVertically))
-                                                Spacer(Modifier.weight(1f))
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        workspace.update {
-                                                            if (propertySetIndex > 0) {
-                                                                val set = sets.removeAt(propertySetIndex)
-                                                                sets.add(propertySetIndex - 1, set)
+                            when (propertySet) {
+                                is SnyggSinglePropertySetEditor -> {
+                                    SinglePropertySetEditor(propertySet)
+                                }
+
+                                is SnyggMultiplePropertySetsEditor -> {
+                                    val sets = propertySet.sets
+                                    sets.forEachIndexed { propertySetIndex, propertySet ->
+                                        key(propertySet.uuid) {
+                                            FlorisOutlinedBox(
+                                                Modifier.padding(
+                                                    start = 8.dp,
+                                                    end = 8.dp,
+                                                    bottom = 8.dp
+                                                )
+                                            ) {
+                                                Row {
+                                                    Text(
+                                                        "Source set", Modifier
+                                                            .padding(start = 16.dp)
+                                                            .align(Alignment.CenterVertically)
+                                                    )
+                                                    Spacer(Modifier.weight(1f))
+                                                    FlorisIconButton(
+                                                        onClick = {
+                                                            workspace.update {
+                                                                if (propertySetIndex > 0) {
+                                                                    val set = sets.removeAt(propertySetIndex)
+                                                                    sets.add(propertySetIndex - 1, set)
+                                                                }
                                                             }
-                                                        }
-                                                    },
-                                                    icon = Icons.Default.KeyboardArrowUp,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                    enabled = propertySetIndex > 0,
-                                                )
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        workspace.update {
-                                                            if (propertySetIndex + 1 < sets.size) {
-                                                                val set = sets.removeAt(propertySetIndex)
-                                                                sets.add(propertySetIndex + 1, set)
+                                                        },
+                                                        icon = Icons.Default.KeyboardArrowUp,
+                                                        iconColor = MaterialTheme.colorScheme.primary,
+                                                        iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                                        enabled = propertySetIndex > 0,
+                                                    )
+                                                    FlorisIconButton(
+                                                        onClick = {
+                                                            workspace.update {
+                                                                if (propertySetIndex + 1 < sets.size) {
+                                                                    val set = sets.removeAt(propertySetIndex)
+                                                                    sets.add(propertySetIndex + 1, set)
+                                                                }
                                                             }
-                                                        }
-                                                    },
-                                                    icon = Icons.Default.KeyboardArrowDown,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                    enabled = propertySetIndex + 1 < sets.size,
-                                                )
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        workspace.update {
-                                                            sets.removeAt(propertySetIndex)
-                                                        }
-                                                    },
-                                                    icon = Icons.Default.Delete,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                )
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        snyggPropertySetForEditing = propertySet
-                                                        snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
-                                                            rule = rule,
-                                                        )
-                                                    },
-                                                    icon = Icons.Default.Add,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                )
+                                                        },
+                                                        icon = Icons.Default.KeyboardArrowDown,
+                                                        iconColor = MaterialTheme.colorScheme.primary,
+                                                        iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                                        enabled = propertySetIndex + 1 < sets.size,
+                                                    )
+                                                    FlorisIconButton(
+                                                        onClick = {
+                                                            workspace.update {
+                                                                sets.removeAt(propertySetIndex)
+                                                            }
+                                                        },
+                                                        icon = Icons.Default.Delete,
+                                                        iconColor = MaterialTheme.colorScheme.primary,
+                                                        iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                                    )
+                                                    FlorisIconButton(
+                                                        onClick = {
+                                                            snyggPropertySetForEditing = propertySet
+                                                            snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
+                                                                rule = rule,
+                                                            )
+                                                        },
+                                                        icon = Icons.Default.Add,
+                                                        iconColor = MaterialTheme.colorScheme.primary,
+                                                        iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                                    )
+                                                }
+                                                SinglePropertySetEditor(propertySet)
                                             }
-                                            SinglePropertySetEditor(propertySet)
                                         }
                                     }
                                 }
@@ -496,7 +521,7 @@ fun ThemeEditorScreen(
                         }
                     }
                 }
-            } }
+            }
 
             item {
                 Spacer(modifier = Modifier.height(72.dp))
@@ -528,9 +553,11 @@ fun ThemeEditorScreen(
                             snyggRuleToEdit = null
                             true
                         }
+
                         rules.contains(newRule) -> {
                             false
                         }
+
                         else -> workspace.update {
                             val set = rules.remove(oldRule)
                             when {
@@ -542,11 +569,13 @@ fun ThemeEditorScreen(
                                     }
                                     true
                                 }
+
                                 oldRule == SnyggEmptyRuleForAdding -> {
                                     when (SnyggSpec.propertySetSpecOf(newRule)!!.type) {
                                         SnyggSpecDecl.PropertySet.Type.SINGLE_SET -> {
                                             rules[newRule] = SnyggSinglePropertySetEditor()
                                         }
+
                                         SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
                                             rules[newRule] = SnyggMultiplePropertySetsEditor()
                                         }
@@ -557,6 +586,7 @@ fun ThemeEditorScreen(
                                     }
                                     true
                                 }
+
                                 else -> {
                                     false
                                 }
@@ -625,7 +655,8 @@ private fun ComponentMetaEditorDialog(
     var isNightTheme by rememberSaveable { mutableStateOf(editor.isNightTheme) }
     var materialYouFlags by rememberSaveable(stateSaver = MaterialYouFlagsSaver) { mutableStateOf(editor.materialYouFlags) }
     var stylesheetPath by rememberSaveable { mutableStateOf(editor.stylesheetPath) }
-    val stylesheetPathValidation = rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath)
+    val stylesheetPathValidation =
+        rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath)
 
     JetPrefAlertDialog(
         title = stringRes(R.string.ext__editor__metadata__title),

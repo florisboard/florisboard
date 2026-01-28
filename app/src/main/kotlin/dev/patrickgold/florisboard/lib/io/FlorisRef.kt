@@ -165,12 +165,15 @@ value class FlorisRef private constructor(val uri: Uri) {
          * @return The newly constructed reference.
          */
         fun fromUrl(url: String): FlorisRef {
-            return FlorisRef(when {
-                url.startsWith(URL_HTTP_PREFIX) ||
-                    url.startsWith(URL_HTTPS_PREFIX) ||
-                    url.startsWith(URL_MAILTO_PREFIX) -> Uri.parse(url)
-                else -> Uri.parse("$URL_HTTPS_PREFIX$url").normalizeScheme()
-            })
+            return FlorisRef(
+                when {
+                    url.startsWith(URL_HTTP_PREFIX) ||
+                        url.startsWith(URL_HTTPS_PREFIX) ||
+                        url.startsWith(URL_MAILTO_PREFIX) -> Uri.parse(url)
+
+                    else -> Uri.parse("$URL_HTTPS_PREFIX$url").normalizeScheme()
+                }
+            )
         }
 
         /**

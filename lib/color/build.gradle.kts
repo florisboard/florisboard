@@ -13,9 +13,11 @@ val projectCompileSdk: String by project
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
-        freeCompilerArgs.set(listOf(
-            "-opt-in=kotlin.contracts.ExperimentalContracts",
-        ))
+        freeCompilerArgs.set(
+            listOf(
+                "-opt-in=kotlin.contracts.ExperimentalContracts",
+            )
+        )
     }
 }
 

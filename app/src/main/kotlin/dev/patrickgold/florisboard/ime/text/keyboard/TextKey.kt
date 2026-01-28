@@ -62,21 +62,26 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             computedPopups.clear()
             mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
-                keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
+                keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2
+            ) {
                 val computedLabel = computed.label.lowercase(evaluator.subtype.primaryLocale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
                         "~enter"
                     }
+
                     KeyData.GROUP_LEFT -> {
                         "~left"
                     }
+
                     KeyData.GROUP_RIGHT -> {
                         "~right"
                     }
+
                     KeyData.GROUP_KANA -> {
                         "~kana"
                     }
+
                     else -> {
                         computedLabel
                     }
@@ -86,29 +91,37 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 var popupSet: PopupSet<AbstractKeyData>? = null
                 val kv = evaluator.state.keyVariation
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
-                    popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
-                        extendedPopupsDefault?.get(KeyVariation.PASSWORD)?.get(extLabel)
+                    popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?: extendedPopupsDefault?.get(
+                        KeyVariation.PASSWORD
+                    )?.get(extLabel)
                 }
                 if (popupSet == null && (kv == KeyVariation.NORMAL || kv == KeyVariation.PASSWORD)) {
-                    popupSet = extendedPopups?.get(KeyVariation.NORMAL)?.get(extLabel) ?:
-                        extendedPopupsDefault?.get(KeyVariation.NORMAL)?.get(extLabel)
+                    popupSet = extendedPopups?.get(KeyVariation.NORMAL)?.get(extLabel) ?: extendedPopupsDefault?.get(
+                        KeyVariation.NORMAL
+                    )?.get(extLabel)
                 }
                 if (popupSet == null && kv == KeyVariation.EMAIL_ADDRESS) {
-                    popupSet = extendedPopups?.get(KeyVariation.EMAIL_ADDRESS)?.get(extLabel) ?:
-                        extendedPopupsDefault?.get(KeyVariation.EMAIL_ADDRESS)?.get(extLabel)
+                    popupSet =
+                        extendedPopups?.get(KeyVariation.EMAIL_ADDRESS)?.get(extLabel) ?: extendedPopupsDefault?.get(
+                            KeyVariation.EMAIL_ADDRESS
+                        )?.get(extLabel)
                 }
                 if (popupSet == null && (kv == KeyVariation.EMAIL_ADDRESS || kv == KeyVariation.URI)) {
-                    popupSet = extendedPopups?.get(KeyVariation.URI)?.get(extLabel) ?:
-                        extendedPopupsDefault?.get(KeyVariation.URI)?.get(extLabel)
+                    popupSet = extendedPopups?.get(KeyVariation.URI)?.get(extLabel) ?: extendedPopupsDefault?.get(
+                        KeyVariation.URI
+                    )?.get(extLabel)
                 }
                 if (popupSet == null) {
-                    popupSet = extendedPopups?.get(KeyVariation.ALL)?.get(extLabel) ?:
-                        extendedPopupsDefault?.get(KeyVariation.ALL)?.get(extLabel)
+                    popupSet = extendedPopups?.get(KeyVariation.ALL)?.get(extLabel) ?: extendedPopupsDefault?.get(
+                        KeyVariation.ALL
+                    )?.get(extLabel)
                 }
                 var keySpecificPopupSet: PopupSet<AbstractKeyData>? = null
                 if (extLabel != computedLabel) {
-                    keySpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(computedLabel) ?:
-                        extendedPopupsDefault?.get(KeyVariation.ALL)?.get(computedLabel)
+                    keySpecificPopupSet =
+                        extendedPopups?.get(KeyVariation.ALL)?.get(computedLabel) ?: extendedPopupsDefault?.get(
+                            KeyVariation.ALL
+                        )?.get(computedLabel)
                 }
                 computedPopups.apply {
                     keySpecificPopupSet?.let { merge(it, evaluator) }
@@ -126,13 +139,16 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 KeyboardMode.NUMERIC_ADVANCED,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> 1.0f
+
                 else -> when (computed.code) {
                     KeyCode.SHIFT,
                     KeyCode.DELETE -> 1.5f
+
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
                     KeyCode.VIEW_SYMBOLS2,
                     KeyCode.ENTER -> 0.0f
+
                     else -> 1.0f
                 }
             }
@@ -140,10 +156,12 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> 0.0f
+
                 KeyboardMode.NUMERIC_ADVANCED -> when (computed.type) {
                     KeyType.NUMERIC -> 1.0f
                     else -> 0.0f
                 }
+
                 else -> when (computed.code) {
                     KeyCode.SPACE, KeyCode.CJK_SPACE -> 1.0f
                     else -> 0.0f
@@ -153,18 +171,22 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> 2.68f
+
                 KeyboardMode.NUMERIC_ADVANCED -> when (computed.code) {
                     44, 46 -> 1.00f
                     KeyCode.VIEW_SYMBOLS, 61 -> 1.26f
                     else -> 1.56f
                 }
+
                 else -> when (computed.code) {
                     KeyCode.SHIFT,
                     KeyCode.DELETE -> 1.56f
+
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
                     KeyCode.VIEW_SYMBOLS2,
                     KeyCode.ENTER -> 1.56f
+
                     else -> 1.00f
                 }
             }

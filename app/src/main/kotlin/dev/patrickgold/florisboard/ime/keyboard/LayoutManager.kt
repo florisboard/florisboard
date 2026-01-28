@@ -190,9 +190,11 @@ class LayoutManager(context: Context) {
                 LayoutType.SYMBOLS -> {
                     LayoutType.SYMBOLS_MOD
                 }
+
                 LayoutType.SYMBOLS2 -> {
                     LayoutType.SYMBOLS2_MOD
                 }
+
                 else -> {
                     LayoutType.CHARACTERS_MOD
                 }
@@ -299,7 +301,7 @@ class LayoutManager(context: Context) {
     }
 
     private fun addRowHints(main: Array<TextKey>, hint: Array<TextKey>, hintType: KeyType) {
-        for ((k,key) in main.withIndex()) {
+        for ((k, key) in main.withIndex()) {
             val hintKey = hint.getOrNull(k)?.data?.compute(DefaultComputingEvaluator)
             if (hintKey?.type != hintType) {
                 continue
@@ -309,9 +311,11 @@ class LayoutManager(context: Context) {
                 KeyType.CHARACTER -> {
                     key.computedSymbolHint = hintKey
                 }
+
                 KeyType.NUMERIC -> {
                     key.computedNumberHint = hintKey
                 }
+
                 else -> {
                     // do nothing
                 }
@@ -341,37 +345,47 @@ class LayoutManager(context: Context) {
                 main = LTN(LayoutType.CHARACTERS, subtype.layoutMap.characters)
                 modifier = LTN(LayoutType.CHARACTERS_MOD, extCoreLayout("default"))
             }
+
             KeyboardMode.EDITING -> {
                 // Layout for this mode is defined in custom layout xml file.
                 return@async TextKeyboard(arrayOf(), keyboardMode, null, null)
             }
+
             KeyboardMode.NUMERIC -> {
                 main = LTN(LayoutType.NUMERIC, subtype.layoutMap.numeric)
             }
+
             KeyboardMode.NUMERIC_ADVANCED -> {
                 main = LTN(LayoutType.NUMERIC_ADVANCED, subtype.layoutMap.numericAdvanced)
             }
+
             KeyboardMode.PHONE -> {
                 main = LTN(LayoutType.PHONE, subtype.layoutMap.phone)
             }
+
             KeyboardMode.PHONE2 -> {
                 main = LTN(LayoutType.PHONE2, subtype.layoutMap.phone2)
             }
+
             KeyboardMode.SYMBOLS -> {
                 extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
                 main = LTN(LayoutType.SYMBOLS, subtype.layoutMap.symbols)
                 modifier = LTN(LayoutType.SYMBOLS_MOD, extCoreLayout("default"))
             }
+
             KeyboardMode.SYMBOLS2 -> {
                 main = LTN(LayoutType.SYMBOLS2, subtype.layoutMap.symbols2)
                 modifier = LTN(LayoutType.SYMBOLS2_MOD, extCoreLayout("default"))
             }
+
             KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW -> {
                 extension = LTN(LayoutType.EXTENSION, extCoreLayout("clipboard_cursor_row"))
             }
+
             KeyboardMode.SMARTBAR_NUMBER_ROW -> {
                 extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
             }
+
             else -> {
                 // Default values are already provided
             }

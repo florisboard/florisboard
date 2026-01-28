@@ -110,6 +110,7 @@ class ClipboardMediaProvider : ContentProvider() {
             IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
                 cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.getOrNull(0)
             }
+
             IMAGE_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.image_clip_table"
             VIDEO_CLIPS_TABLE -> "${ContentResolver.CURSOR_DIR_BASE_TYPE}/vnd.florisboard.video_clip_table"
             else -> null
@@ -121,6 +122,7 @@ class ClipboardMediaProvider : ContentProvider() {
             IMAGE_CLIP_ITEM, VIDEO_CLIP_ITEM -> {
                 cachedFileInfos.getOrDefault(ContentUris.parseId(uri), null)?.mimeTypes?.toTypedArray()
             }
+
             else -> null
         }
     }
@@ -170,6 +172,7 @@ class ClipboardMediaProvider : ContentProvider() {
                     uri.buildUpon().appendPath("0").build()
                 }
             }
+
             else -> error("Unable to identify type of $uri")
         }
     }
@@ -186,6 +189,7 @@ class ClipboardMediaProvider : ContentProvider() {
                 }
                 return 1
             }
+
             else -> error("Unable to identify type of $uri")
         }
     }

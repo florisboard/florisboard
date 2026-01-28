@@ -24,8 +24,10 @@ package dev.patrickgold.florisboard.app.settings.theme
 enum class SnyggLevel : Comparable<SnyggLevel> {
     /** A property is intended to be edited by all users **/
     BASIC,
+
     /** A property is intended to be edited by advanced users **/
     ADVANCED,
+
     /** A property is intended to be edited by developers **/
     DEVELOPER;
 }

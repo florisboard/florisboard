@@ -206,6 +206,7 @@ private fun ColumnScope.Step(
         modifier = when {
             ownStepId <= autoStepId -> Modifier
                 .clickable(enabled = !contentVisible) { stepState.setCurrentManual(ownStepId) }
+
             else -> Modifier.alpha(0.38f)
         },
         backgroundColor = backgroundColor,
@@ -242,10 +243,11 @@ private fun ColumnScope.Step(
                     )
                 },
         ) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .florisVerticalScroll()
-                .padding(end = 8.dp),
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .florisVerticalScroll()
+                    .padding(end = 8.dp),
             ) {
                 content()
             }

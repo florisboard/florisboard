@@ -59,7 +59,8 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
     private val allLanguagePacks: List<LanguagePackExtension>
         // Assume other types of extensions do not extend LanguagePackExtension
         get() = extensionManager.languagePacks.value
-    private var __connectedActiveLanguagePacks: Set<LanguagePackExtension> = setOf() // FIXME: hack for not able to observe extensionManager.languagePacks and subtypeManager.subtypes
+    private var __connectedActiveLanguagePacks: Set<LanguagePackExtension> =
+        setOf() // FIXME: hack for not able to observe extensionManager.languagePacks and subtypeManager.subtypes
     private var languagePackItems: Map<String, LanguagePackComponent> = mapOf() // init in refreshLanguagePacks()
     private var keyCode: Map<String, Set<Char>> = mapOf() // init in refreshLanguagePacks()
     private val activeLanguagePacks  // language packs referenced in subtypes
@@ -176,7 +177,16 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         val layout: String = languagePackItem.hanShapeBasedTable
         try {
             val database = languagePackExtension.hanShapeBasedSQLiteDatabase
-            val cur = database.query(layout, arrayOf ( "code", "text" ), "code LIKE ? || '%'", arrayOf(content.composingText), "", "", "code ASC, weight DESC", "$maxCandidateCount");
+            val cur = database.query(
+                layout,
+                arrayOf("code", "text"),
+                "code LIKE ? || '%'",
+                arrayOf(content.composingText),
+                "",
+                "",
+                "code ASC, weight DESC",
+                "$maxCandidateCount"
+            );
             cur.moveToFirst();
             val rowCount = cur.getCount();
             flogDebug { "Query was '${content.composingText}'" }
@@ -185,14 +195,16 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
                     val code = cur.getString(0);
                     val word = cur.getString(1);
                     cur.moveToNext();
-                    add(WordSuggestionCandidate(
-                        text = "$word",
-                        secondaryText = code,
-                        confidence = 0.5,
-                        isEligibleForAutoCommit = n == 0,
-                        // We set ourselves as the source provider so we can get notify events for our candidate
-                        sourceProvider = this@HanShapeBasedLanguageProvider,
-                    ))
+                    add(
+                        WordSuggestionCandidate(
+                            text = "$word",
+                            secondaryText = code,
+                            confidence = 0.5,
+                            isEligibleForAutoCommit = n == 0,
+                            // We set ourselves as the source provider so we can get notify events for our candidate
+                            sourceProvider = this@HanShapeBasedLanguageProvider,
+                        )
+                    )
                 }
             }
             return suggestions
@@ -283,10 +295,10 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
             val end = it.last()
             var start = end
             var next = it.previous()
-            val keyCodeLocale = keyCode[subtype.primaryLocale.localeTag()]?: keyCode["default"]?: emptySet()
+            val keyCodeLocale = keyCode[subtype.primaryLocale.localeTag()] ?: keyCode["default"] ?: emptySet()
             while (next != BreakIterator.DONE && start > localLastCommitPosition) {
                 val sub = textBeforeSelection.substring(next, start)
-                if (! sub.all { char -> char in keyCodeLocale })
+                if (!sub.all { char -> char in keyCodeLocale })
                     break
                 start = next
                 next = it.previous()

@@ -130,7 +130,11 @@ class CaseSelector(
     val upper: AbstractKeyData,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return (if (evaluator.state.isUppercase) { upper } else { lower }).compute(evaluator)
+        return (if (evaluator.state.isUppercase) {
+            upper
+        } else {
+            lower
+        }).compute(evaluator)
     }
 
     override fun asString(isForDisplay: Boolean): String {
@@ -263,7 +267,11 @@ class LayoutDirectionSelector(
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         val isRtl = evaluator.state.layoutDirection == LayoutDirection.Rtl
-        return (if (isRtl) { rtl } else { ltr }).compute(evaluator)
+        return (if (isRtl) {
+            rtl
+        } else {
+            ltr
+        }).compute(evaluator)
     }
 
     override fun asString(isForDisplay: Boolean): String {
@@ -294,7 +302,11 @@ class CharWidthSelector(
     val half: AbstractKeyData?,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val data = if (evaluator.state.isCharHalfWidth) { half } else { full }
+        val data = if (evaluator.state.isCharHalfWidth) {
+            half
+        } else {
+            full
+        }
         return data?.compute(evaluator)
     }
 
@@ -326,7 +338,11 @@ class KanaSelector(
     val kata: AbstractKeyData,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val data = if (evaluator.state.isKanaKata) { kata } else { hira }
+        val data = if (evaluator.state.isKanaKata) {
+            kata
+        } else {
+            hira
+        }
         return data.compute(evaluator)
     }
 

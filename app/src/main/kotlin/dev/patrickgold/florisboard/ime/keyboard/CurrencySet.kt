@@ -49,6 +49,7 @@ class CurrencySet(
                 KeyCode.CURRENCY_SLOT_4,
                 KeyCode.CURRENCY_SLOT_5,
                 KeyCode.CURRENCY_SLOT_6 -> true
+
                 else -> false
             }
         }

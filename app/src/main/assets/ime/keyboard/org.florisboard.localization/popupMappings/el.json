@@ -2,112 +2,273 @@
   "all": {
     "α": {
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  940, "label": "ά" },
-          "upper": { "code":  902, "label": "Ά" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 940,
+            "label": "ά"
+          },
+          "upper": {
+            "code": 902,
+            "label": "Ά"
+          }
         }
       ]
     },
     "ε": {
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  941, "label": "έ" },
-          "upper": { "code":  904, "label": "Έ" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 941,
+            "label": "έ"
+          },
+          "upper": {
+            "code": 904,
+            "label": "Έ"
+          }
         }
       ]
     },
     "η": {
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  942, "label": "ή" },
-          "upper": { "code":  905, "label": "Ή" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 942,
+            "label": "ή"
+          },
+          "upper": {
+            "code": 905,
+            "label": "Ή"
+          }
         }
       ]
     },
     "ι": {
-      "main": { "$": "case_selector",
-        "lower": { "code":  943, "label": "ί" },
-        "upper": { "code":  906, "label": "Ί" }
+      "main": {
+        "$": "case_selector",
+        "lower": {
+          "code": 943,
+          "label": "ί"
+        },
+        "upper": {
+          "code": 906,
+          "label": "Ί"
+        }
       },
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  912, "label": "ΐ" },
-          "upper": { "$": "multi_text_key", "codePoints":  [921, 776, 769], "label": "Ϊ́" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 912,
+            "label": "ΐ"
+          },
+          "upper": {
+            "$": "multi_text_key",
+            "codePoints": [
+              921,
+              776,
+              769
+            ],
+            "label": "Ϊ́"
+          }
         },
-        { "$": "case_selector",
-          "lower": { "code":  970, "label": "ϊ" },
-          "upper": { "code":  938, "label": "Ϊ" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 970,
+            "label": "ϊ"
+          },
+          "upper": {
+            "code": 938,
+            "label": "Ϊ"
+          }
         }
       ]
     },
     "ο": {
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  972, "label": "ό" },
-          "upper": { "code":  908, "label": "Ό" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 972,
+            "label": "ό"
+          },
+          "upper": {
+            "code": 908,
+            "label": "Ό"
+          }
         }
       ]
     },
     "υ": {
-      "main": { "$": "case_selector",
-        "lower": { "code":  973, "label": "ύ" },
-        "upper": { "code":  910, "label": "Ύ" }
+      "main": {
+        "$": "case_selector",
+        "lower": {
+          "code": 973,
+          "label": "ύ"
+        },
+        "upper": {
+          "code": 910,
+          "label": "Ύ"
+        }
       },
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  944, "label": "ΰ" },
-          "upper": { "$": "multi_text_key", "codePoints":  [933, 776, 769], "label": "Ϋ́" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 944,
+            "label": "ΰ"
+          },
+          "upper": {
+            "$": "multi_text_key",
+            "codePoints": [
+              933,
+              776,
+              769
+            ],
+            "label": "Ϋ́"
+          }
         },
-        { "$": "case_selector",
-          "lower": { "code":  971, "label": "ϋ" },
-          "upper": { "code":  939, "label": "Ϋ" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 971,
+            "label": "ϋ"
+          },
+          "upper": {
+            "code": 939,
+            "label": "Ϋ"
+          }
         }
       ]
     },
     "ω": {
       "relevant": [
-        { "$": "case_selector",
-          "lower": { "code":  974, "label": "ώ" },
-          "upper": { "code":  911, "label": "Ώ" }
+        {
+          "$": "case_selector",
+          "lower": {
+            "code": 974,
+            "label": "ώ"
+          },
+          "upper": {
+            "code": 911,
+            "label": "Ώ"
+          }
         }
       ]
     },
     "~right": {
-      "main": { "code":   44, "label": "," },
+      "main": {
+        "code": 44,
+        "label": ","
+      },
       "relevant": [
-        { "code":   38, "label": "&" },
-        { "code":   37, "label": "%" },
-        { "code":   43, "label": "+" },
-        { "code":   34, "label": "\"" },
-        { "code":   45, "label": "-" },
-        { "code":   58, "label": ":" },
-        { "code":   39, "label": "'" },
-        { "code":   64, "label": "@" },
-        { "code":   59, "label": ";" },
-        { "code":   47, "label": "/" },
-        { "$": "layout_direction_selector",
-          "ltr": { "code":   40, "label": "(" },
-          "rtl": { "code":   41, "label": "(" }
+        {
+          "code": 38,
+          "label": "&"
         },
-        { "$": "layout_direction_selector",
-          "ltr": { "code":   41, "label": ")" },
-          "rtl": { "code":   40, "label": ")" }
+        {
+          "code": 37,
+          "label": "%"
         },
-        { "code":   35, "label": "#" },
-        { "code":   33, "label": "!" },
-        { "code":   63, "label": "?" }
+        {
+          "code": 43,
+          "label": "+"
+        },
+        {
+          "code": 34,
+          "label": "\""
+        },
+        {
+          "code": 45,
+          "label": "-"
+        },
+        {
+          "code": 58,
+          "label": ":"
+        },
+        {
+          "code": 39,
+          "label": "'"
+        },
+        {
+          "code": 64,
+          "label": "@"
+        },
+        {
+          "code": 59,
+          "label": ";"
+        },
+        {
+          "code": 47,
+          "label": "/"
+        },
+        {
+          "$": "layout_direction_selector",
+          "ltr": {
+            "code": 40,
+            "label": "("
+          },
+          "rtl": {
+            "code": 41,
+            "label": "("
+          }
+        },
+        {
+          "$": "layout_direction_selector",
+          "ltr": {
+            "code": 41,
+            "label": ")"
+          },
+          "rtl": {
+            "code": 40,
+            "label": ")"
+          }
+        },
+        {
+          "code": 35,
+          "label": "#"
+        },
+        {
+          "code": 33,
+          "label": "!"
+        },
+        {
+          "code": 63,
+          "label": "?"
+        }
       ]
     }
   },
   "uri": {
     "~right": {
-      "main": { "code": -255, "label": ".com" },
+      "main": {
+        "code": -255,
+        "label": ".com"
+      },
       "relevant": [
-        { "code": -255, "label": ".gov" },
-        { "code": -255, "label": ".edu" },
-        { "code": -255, "label": ".gr" },
-        { "code": -255, "label": ".org" },
-        { "code": -255, "label": ".net" }
+        {
+          "code": -255,
+          "label": ".gov"
+        },
+        {
+          "code": -255,
+          "label": ".edu"
+        },
+        {
+          "code": -255,
+          "label": ".gr"
+        },
+        {
+          "code": -255,
+          "label": ".org"
+        },
+        {
+          "code": -255,
+          "label": ".net"
+        }
       ]
     }
   }

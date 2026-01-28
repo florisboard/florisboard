@@ -28,7 +28,11 @@ class ExtensionAuthorTest : FunSpec({
         "jane.doe" to ExtensionMaintainer(name = "jane.doe"),
         "Jane Doe <jane.doe@gmail.com>" to ExtensionMaintainer(name = "Jane Doe", email = "jane.doe@gmail.com"),
         "Jane Doe (jane-doe.com)" to ExtensionMaintainer(name = "Jane Doe", url = "jane-doe.com"),
-        "Jane Doe <jane.doe@gmail.com> (jane-doe.com)" to ExtensionMaintainer(name = "Jane Doe", email = "jane.doe@gmail.com", url = "jane-doe.com"),
+        "Jane Doe <jane.doe@gmail.com> (jane-doe.com)" to ExtensionMaintainer(
+            name = "Jane Doe",
+            email = "jane.doe@gmail.com",
+            url = "jane-doe.com"
+        ),
     )
 
     context("ExtensionAuthor.from()") {
@@ -42,7 +46,10 @@ class ExtensionAuthorTest : FunSpec({
             withData(
                 "  Jane Doe " to ExtensionMaintainer(name = "Jane Doe"),
                 " jane123" to ExtensionMaintainer(name = "jane123"),
-                "  Jane Doe    <jane.doe@gmail.com>     " to ExtensionMaintainer(name = "Jane Doe", email = "jane.doe@gmail.com"),
+                "  Jane Doe    <jane.doe@gmail.com>     " to ExtensionMaintainer(
+                    name = "Jane Doe",
+                    email = "jane.doe@gmail.com"
+                ),
             ) { (authorStr, authorObj) ->
                 ExtensionMaintainer.from(authorStr) shouldBe authorObj
             }

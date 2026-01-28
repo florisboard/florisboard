@@ -123,11 +123,12 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
                     check(filter.matches(mimeType)) {
                         "Given file mime type was '$mimeType', expected one of ${filter.types}"
                     }
-                    val fileName = context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME)).use { cursor ->
-                        if (cursor == null || !cursor.moveToFirst()) return@use null
-                        val name = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                        cursor.getString(name)
-                    }
+                    val fileName =
+                        context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME)).use { cursor ->
+                            if (cursor == null || !cursor.moveToFirst()) return@use null
+                            val name = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                            cursor.getString(name)
+                        }
                     tempFile to fileName.orEmpty()
                 }
             },

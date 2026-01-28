@@ -77,15 +77,19 @@ object NlpInlineAutofill {
             }
 
             if (!latch.await(2_000, TimeUnit.MILLISECONDS)) {
-                flogWarning { "showInlineSuggestions: [${sequenceId}] timed out while waiting for all " +
-                    "suggestions to inflate" }
+                flogWarning {
+                    "showInlineSuggestions: [${sequenceId}] timed out while waiting for all " +
+                        "suggestions to inflate"
+                }
                 return@launch
             }
 
             val inflatedSuggestions = suggestionsArray.filterNotNull().sortedByDescending { it.info.isPinned }
             setterGuard.lock()
-            flogInfo { "showInlineSuggestions: [${sequenceId}] successfully inflated " +
-                "${inflatedSuggestions.count { it.view != null }} out of ${inflatedSuggestions.size} suggestions" }
+            flogInfo {
+                "showInlineSuggestions: [${sequenceId}] successfully inflated " +
+                    "${inflatedSuggestions.count { it.view != null }} out of ${inflatedSuggestions.size} suggestions"
+            }
             if (currentSequenceId.get() == sequenceId) {
                 flogInfo { "showInlineSuggestions: [${sequenceId}] setting suggestions" }
                 suggestions.value = inflatedSuggestions

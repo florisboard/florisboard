@@ -265,7 +265,16 @@ internal fun SnyggTheme.rememberQuery(
     val dynamicLightColorScheme = LocalSnyggDynamicLightColorScheme.current
     val dynamicDarkColorScheme = LocalSnyggDynamicDarkColorScheme.current
     val fontSizeMultiplier = LocalSnyggFontSizeMultiplier.current
-    return remember(this, elementName, attributes, mergedSelector, parentStyle, dynamicLightColorScheme, dynamicDarkColorScheme, fontSizeMultiplier) {
+    return remember(
+        this,
+        elementName,
+        attributes,
+        mergedSelector,
+        parentStyle,
+        dynamicLightColorScheme,
+        dynamicDarkColorScheme,
+        fontSizeMultiplier
+    ) {
         query(
             elementName = elementName ?: "",
             attributes,
@@ -291,12 +300,14 @@ internal fun Modifier.snyggBackground(
             color = bg.color,
             shape = shape,
         )
+
         else if (default.isSpecified) -> {
             this.background(
                 color = default,
                 shape = shape,
             )
         }
+
         else -> this
     }
     if (allowClip && style.clip !is SnyggNoValue) {

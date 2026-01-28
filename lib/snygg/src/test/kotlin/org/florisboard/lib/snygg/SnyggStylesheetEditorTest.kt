@@ -57,10 +57,12 @@ class SnyggStylesheetEditorTest {
         val stylesheet = SnyggStylesheet(
             schema = "/schema/path",
             rules = mapOf(
-                SnyggElementRule("smartbar") to SnyggSinglePropertySet(mapOf(
-                    "background" to SnyggStaticColorValue(Color(255, 0, 0)),
-                    "shape" to SnyggRectangleShapeValue(),
-                )),
+                SnyggElementRule("smartbar") to SnyggSinglePropertySet(
+                    mapOf(
+                        "background" to SnyggStaticColorValue(Color(255, 0, 0)),
+                        "shape" to SnyggRectangleShapeValue(),
+                    )
+                ),
             ),
         )
         val stylesheetAfterEdit = stylesheet.edit().build()

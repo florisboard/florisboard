@@ -55,11 +55,13 @@ enum class ThemeManagerScreenAction(val id: String) {
 
 @Composable
 fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
-    title = stringRes(when (action) {
-        ThemeManagerScreenAction.SELECT_DAY -> R.string.settings__theme_manager__title_day
-        ThemeManagerScreenAction.SELECT_NIGHT -> R.string.settings__theme_manager__title_night
-        else -> error("Theme manager screen action must not be null")
-    })
+    title = stringRes(
+        when (action) {
+            ThemeManagerScreenAction.SELECT_DAY -> R.string.settings__theme_manager__title_day
+            ThemeManagerScreenAction.SELECT_NIGHT -> R.string.settings__theme_manager__title_night
+            else -> error("Theme manager screen action must not be null")
+        }
+    )
     previewFieldVisible = true
 
     val prefs by FlorisPreferenceStore

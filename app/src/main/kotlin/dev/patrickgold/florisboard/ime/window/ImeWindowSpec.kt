@@ -105,10 +105,11 @@ sealed class ImeWindowSpec {
         return effKeyboardHeight + effSmartbarHeight
     }
 
-    protected fun Dp.toBaseline(rowCount: Int, smartbarRowCount: Int): Dp  = let { effKeyboardHeight ->
+    protected fun Dp.toBaseline(rowCount: Int, smartbarRowCount: Int): Dp = let { effKeyboardHeight ->
         require(rowCount in 4..6)
         require(smartbarRowCount in 0..2)
-        val staticSmartbarHeight = calcRowHeight(constraints.defKeyboardHeight * constraints.smartbarStaticScalingFactor * smartbarRowCount)
+        val staticSmartbarHeight =
+            calcRowHeight(constraints.defKeyboardHeight * constraints.smartbarStaticScalingFactor * smartbarRowCount)
         val keyboardHeight = ((effKeyboardHeight - staticSmartbarHeight) * constraints.baselineRowCount) /
             (rowCount + constraints.smartbarDynamicScalingFactor * smartbarRowCount)
         return keyboardHeight
@@ -156,7 +157,12 @@ sealed class ImeWindowSpec {
             }
 
             paddingBottom = (paddingBottom - offset.y)
-                .coerceAtMost(constraints.maxKeyboardHeight - props.keyboardHeight.toEffective(rowCount, smartbarRowCount))
+                .coerceAtMost(
+                    constraints.maxKeyboardHeight - props.keyboardHeight.toEffective(
+                        rowCount,
+                        smartbarRowCount
+                    )
+                )
                 .coerceAtLeast(0.dp)
 
             val newProps = props.copy(

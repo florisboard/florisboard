@@ -92,7 +92,11 @@ object ExtensionValidation {
         validator { str ->
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_component_id)
-                !ComponentIdRegex.matches(str) -> resultInvalid(error = R.string.ext__validation__error_component_id, "component_id_regex" to ComponentIdRegex)
+                !ComponentIdRegex.matches(str) -> resultInvalid(
+                    error = R.string.ext__validation__error_component_id,
+                    "component_id_regex" to ComponentIdRegex
+                )
+
                 else -> resultValid()
             }
         }
@@ -130,8 +134,12 @@ object ExtensionValidation {
                 str.isEmpty() -> resultValid()
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__error_stylesheet_path_blank)
                 !ThemeComponentStylesheetPathRegex.matches(str) -> {
-                    resultInvalid(error = R.string.ext__validation__error_stylesheet_path, "stylesheet_path_regex" to ThemeComponentStylesheetPathRegex)
+                    resultInvalid(
+                        error = R.string.ext__validation__error_stylesheet_path,
+                        "stylesheet_path_regex" to ThemeComponentStylesheetPathRegex
+                    )
                 }
+
                 else -> resultValid()
             }
         }
@@ -145,8 +153,12 @@ object ExtensionValidation {
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_property)
                 !SnyggVarValue.VariableNameRegex.matches(str) -> {
-                    resultInvalid(error = R.string.ext__validation__error_property, "variable_name_regex" to SnyggVarValue.VariableNameRegex)
+                    resultInvalid(
+                        error = R.string.ext__validation__error_property,
+                        "variable_name_regex" to SnyggVarValue.VariableNameRegex
+                    )
                 }
+
                 else -> resultValid()
             }
         }
@@ -162,6 +174,7 @@ object ExtensionValidation {
                 org.florisboard.lib.snygg.value.SnyggStaticColorValue.deserialize(str).isFailure -> {
                     resultInvalid(error = R.string.ext__validation__error_color)
                 }
+
                 else -> resultValid()
             }
         }

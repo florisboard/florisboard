@@ -325,7 +325,13 @@ class KanaUnicode : Composer {
         }
     }
 
-    private fun <K>handleTransform(l: Char, c: Char, base: Map<Char, K>, rev: Map<Char, Char>, addOnFalse: Boolean): Pair<Int, String> {
+    private fun <K> handleTransform(
+        l: Char,
+        c: Char,
+        base: Map<Char, K>,
+        rev: Map<Char, Char>,
+        addOnFalse: Boolean
+    ): Pair<Int, String> {
         val char = getBaseCharacter(l)
         val trans = if (sticky) {
             base[char]
@@ -335,9 +341,17 @@ class KanaUnicode : Composer {
         return if (trans != null) {
             1 to trans.toString()
         } else if (isComposingCharacter(l) && isComposingCharacter(c)) {
-            1 to if (l == c && !sticky) { "" } else { ""+c  }
+            1 to if (l == c && !sticky) {
+                ""
+            } else {
+                "" + c
+            }
         } else {
-            0 to if (addOnFalse) { ""+c } else { "" }
+            0 to if (addOnFalse) {
+                "" + c
+            } else {
+                ""
+            }
         }
     }
 

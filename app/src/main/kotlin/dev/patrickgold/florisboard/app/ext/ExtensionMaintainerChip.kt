@@ -51,6 +51,7 @@ fun ExtensionMaintainerChip(
                 Icons.Outlined.Mail,
                 Icons.Default.Link,
             )
+
             maintainer.email != null -> listOf(Icons.Outlined.Mail)
             maintainer.url != null -> listOf(Icons.Default.Link)
             else -> listOf()

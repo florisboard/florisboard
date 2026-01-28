@@ -162,6 +162,7 @@ fun ExtensionEditScreen(id: String, createSerialType: String?) {
                     is ThemeExtension -> {
                         getOrCreateWorkspace(uuid, cacheManager.themeExtEditor, ext)
                     }
+
                     else -> null
                 }
             }
@@ -196,23 +197,29 @@ private fun ExtensionEditScreenSheetSwitcher(
                 is EditorAction.ManageMetaData -> {
                     ManageMetaDataScreen(workspace, isCreateExt)
                 }
+
                 is EditorAction.ManageDependencies -> {
                     ManageDependenciesScreen(workspace)
                 }
+
                 is EditorAction.ManageFiles -> {
                     ExtensionEditFilesScreen(workspace)
                 }
+
                 is EditorAction.CreateComponent<*> -> {
                     CreateComponentScreen(workspace, action.type)
                 }
+
                 is EditorAction.ManageComponent -> when (action.editor) {
                     is ThemeExtensionComponentEditor -> {
                         ThemeEditorScreen(workspace, action.editor)
                     }
+
                     else -> {
                         // Render nothing
                     }
                 }
+
                 else -> {
                     // Render nothing
                     Box(modifier = Modifier.fillMaxSize())
@@ -227,19 +234,21 @@ private fun EditScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
     isCreateExt: Boolean,
 ) = FlorisScreen {
-    title = stringRes(if (isCreateExt) {
-        when (workspace.ext) {
-            is KeyboardExtension -> R.string.ext__editor__title_create_keyboard
-            is ThemeExtension -> R.string.ext__editor__title_create_theme
-            else -> R.string.ext__editor__title_create_any
+    title = stringRes(
+        if (isCreateExt) {
+            when (workspace.ext) {
+                is KeyboardExtension -> R.string.ext__editor__title_create_keyboard
+                is ThemeExtension -> R.string.ext__editor__title_create_theme
+                else -> R.string.ext__editor__title_create_any
+            }
+        } else {
+            when (workspace.ext) {
+                is KeyboardExtension -> R.string.ext__editor__title_edit_keyboard
+                is ThemeExtension -> R.string.ext__editor__title_edit_theme
+                else -> R.string.ext__editor__title_edit_any
+            }
         }
-    } else {
-        when (workspace.ext) {
-            is KeyboardExtension -> R.string.ext__editor__title_edit_keyboard
-            is ThemeExtension -> R.string.ext__editor__title_edit_theme
-            else -> R.string.ext__editor__title_edit_any
-        }
-    })
+    )
 
     val context = LocalContext.current
     val navController = LocalNavController.current
@@ -299,7 +308,8 @@ private fun EditScreen(
                     }
                 }
             }
-            else -> { }
+
+            else -> {}
         }
         val flexArchiveName = ExtensionDefaults.createFlexName(extEditor.meta.id)
         val flexArchiveFile = workspace.dir.subFile(flexArchiveName)
@@ -376,6 +386,7 @@ private fun EditScreen(
                     )
                 }
             }
+
             else -> {
                 // Render nothing
             }
@@ -611,10 +622,12 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
     workspace: CacheManager.ExtEditorWorkspace<*>,
     type: KClass<T>,
 ) = FlorisScreen {
-    title = stringRes(when (type) {
-        ThemeExtensionComponent::class -> R.string.ext__editor__create_component__title_theme
-        else -> R.string.ext__editor__create_component__title
-    })
+    title = stringRes(
+        when (type) {
+            ThemeExtensionComponent::class -> R.string.ext__editor__create_component__title_theme
+            else -> R.string.ext__editor__create_component__title
+        }
+    )
 
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
@@ -634,6 +647,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                     }
                 }
             }
+
             else -> {
                 emptyMap()
             }
@@ -677,6 +691,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 workspace.currentAction = null
                             }
                         }
+
                         CreateFrom.EXISTING -> {
                             val componentName = selectedComponentName ?: return
                             val componentId = if (editor.themes.any { it.id == componentName.componentId }) {
@@ -699,7 +714,9 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 if (componentEditor.stylesheetEditor != null) {
                                     val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                     stylesheetFile.parentFile?.mkdirs()
-                                    val stylesheet = componentEditor.stylesheetEditor!!.build().toJson(PrettyPrintConfig).getOrThrow()
+                                    val stylesheet =
+                                        componentEditor.stylesheetEditor!!.build().toJson(PrettyPrintConfig)
+                                            .getOrThrow()
                                     stylesheetFile.writeText(stylesheet)
                                     componentEditor.stylesheetEditor = null
                                 } else {
@@ -710,7 +727,8 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 }
                                 editor.themes.add(componentEditor)
                             } else {
-                                val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
+                                val component =
+                                    themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
                                 val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
                                 componentEditor.id = componentId
                                 componentEditor.stylesheetPath = ""

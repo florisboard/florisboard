@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 private val DefaultScrollbarSize = 4.dp
+
 // IgnoreInVeryFastOut (basically)
 private val ScrollbarAnimationEasing = CubicBezierEasing(1f, 0f, 0.82f, -0.13f)
 
@@ -232,12 +233,14 @@ fun Modifier.florisScrollbar(
                 val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
                 scrollbarWidth = size.toPx()
                 scrollbarOffsetX = this.size.width - scrollbarWidth
-                scrollbarOffsetY = (firstVisibleElementIndex - stacks*percentOffset(first, orientation)) * elementHeight
+                scrollbarOffsetY =
+                    (firstVisibleElementIndex - stacks * percentOffset(first, orientation)) * elementHeight
                 scrollbarHeight = (visibleItems * elementHeight).coerceAtMost(this.size.height - scrollbarOffsetY)
             } else {
                 val elementWidth = this.size.width / state.layoutInfo.totalItemsCount
                 scrollbarHeight = size.toPx()
-                scrollbarOffsetX = (firstVisibleElementIndex - stacks*percentOffset(first, orientation)) * elementWidth
+                scrollbarOffsetX =
+                    (firstVisibleElementIndex - stacks * percentOffset(first, orientation)) * elementWidth
                 scrollbarOffsetY = this.size.height - scrollbarHeight
                 scrollbarWidth = (visibleItems * elementWidth).coerceAtMost(this.size.height - scrollbarOffsetX)
             }
@@ -255,13 +258,13 @@ fun Modifier.florisScrollbar(
 /**
  * Item's offset on main axis as a percentage of size
  */
-internal fun percentOffset (
+internal fun percentOffset(
     item: LazyListItemInfo,
 ): Float {
     return item.offset.toFloat() / item.size
 }
 
-internal fun percentOffset (
+internal fun percentOffset(
     item: LazyGridItemInfo,
     orientation: Orientation
 ): Float {

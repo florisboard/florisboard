@@ -163,10 +163,12 @@ interface UserDictionaryDatabase {
                                 }
                                 freq = number
                             }
+
                             "l", "locale" -> locale = when (value) {
                                 "all", "null", "" -> null
                                 else -> value.ifBlank { null }
                             }
+
                             "s", "shortcut" -> shortcut = value.ifBlank { null }
                         }
                     }
@@ -176,7 +178,15 @@ interface UserDictionaryDatabase {
                         word, locale?.let { FlorisLocale.fromTag(it) },
                     )
                     if (alreadyExistingEntries.isNotEmpty()) {
-                        userDictionaryDao().update(UserDictionaryEntry(alreadyExistingEntries[0].id, word, freq, locale, shortcut))
+                        userDictionaryDao().update(
+                            UserDictionaryEntry(
+                                alreadyExistingEntries[0].id,
+                                word,
+                                freq,
+                                locale,
+                                shortcut
+                            )
+                        )
                     } else {
                         userDictionaryDao().insert(UserDictionaryEntry(0, word, freq, locale, shortcut))
                     }
@@ -392,7 +402,11 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             return retList.toList()
         }
 
-        private fun queryResolver(selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): List<UserDictionaryEntry> {
+        private fun queryResolver(
+            selection: String?,
+            selectionArgs: Array<out String>?,
+            sortOrder: String?
+        ): List<UserDictionaryEntry> {
             val resolver = applicationContext.get()?.contentResolver ?: return listOf()
             val cursor = resolver.query(
                 UserDictionary.Words.CONTENT_URI,
@@ -448,7 +462,12 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 put(UserDictionary.Words.LOCALE, entry.locale)
                 put(UserDictionary.Words.SHORTCUT, entry.shortcut)
             }
-            resolver.update(UserDictionary.Words.CONTENT_URI, contentValues, "${UserDictionary.Words._ID} = ${entry.id}", null)
+            resolver.update(
+                UserDictionary.Words.CONTENT_URI,
+                contentValues,
+                "${UserDictionary.Words._ID} = ${entry.id}",
+                null
+            )
         }
 
         override fun delete(entry: UserDictionaryEntry) {
@@ -480,7 +499,11 @@ object UserDictionaryValidation {
             val str = input.trim()
             when {
                 input.isBlank() -> resultInvalid(error = R.string.settings__udm__dialog__word_error_empty)
-                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__word_error_invalid, "regex" to WordRegex)
+                !str.matches(WordRegex) -> resultInvalid(
+                    error = R.string.settings__udm__dialog__word_error_invalid,
+                    "regex" to WordRegex
+                )
+
                 else -> resultValid()
             }
         }
@@ -507,7 +530,11 @@ object UserDictionaryValidation {
             val str = input.trim()
             when {
                 input.isBlank() -> resultValid() // Is optional
-                !str.matches(WordRegex) -> resultInvalid(error = R.string.settings__udm__dialog__shortcut_error_invalid, "regex" to WordRegex)
+                !str.matches(WordRegex) -> resultInvalid(
+                    error = R.string.settings__udm__dialog__shortcut_error_invalid,
+                    "regex" to WordRegex
+                )
+
                 else -> resultValid()
             }
         }

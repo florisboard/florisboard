@@ -2,11 +2,11 @@
 <full-backup-content>
     <include
         domain="root"
-        path="jetpref_datastore"/>
+        path="jetpref_datastore" />
     <include
         domain="file"
-        path="ime"/>
+        path="ime" />
     <include
         domain="database"
-        path="floris_user_dictionary"/>
+        path="floris_user_dictionary" />
 </full-backup-content>

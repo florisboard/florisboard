@@ -98,11 +98,15 @@ class FlorisRect private constructor(
 
     var width: Float
         get() = right - left
-        set(v) { right = left + v }
+        set(v) {
+            right = left + v
+        }
 
     var height: Float
         get() = bottom - top
-        set(v) { bottom = top + v }
+        set(v) {
+            bottom = top + v
+        }
 
     val size: Size
         get() = Size(width, height)

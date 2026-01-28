@@ -72,7 +72,7 @@ fun SpellCheckerServiceSelector(florisSpellCheckerEnabled: MutableState<Boolean>
     }
     florisSpellCheckerEnabled.value =
         systemSpellCheckerEnabled == "1" &&
-        systemSpellCheckerPkgName == context.packageName
+            systemSpellCheckerPkgName == context.packageName
 
     Column(modifier = Modifier.padding(horizontal = 8.dp)) {
         if (systemSpellCheckerEnabled == "1") {

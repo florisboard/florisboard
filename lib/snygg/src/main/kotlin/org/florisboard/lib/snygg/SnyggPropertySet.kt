@@ -68,6 +68,7 @@ sealed class SnyggPropertySet {
                 }
                 this.toJsonElementSpecialized(rule, config)
             }
+
             SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
                 check(this is SnyggMultiplePropertySets) {
                     "Encoder called toJsonElement() for rule '$rule' on a SINGLE_SET instance, even though the " +
@@ -93,6 +94,7 @@ sealed class SnyggPropertySet {
                 SnyggSpecDecl.PropertySet.Type.SINGLE_SET -> {
                     SnyggSinglePropertySet.fromJsonElementSpecialized(rule, config, jsonElement)
                 }
+
                 SnyggSpecDecl.PropertySet.Type.MULTIPLE_SETS -> {
                     SnyggMultiplePropertySets.fromJsonElementSpecialized(rule, config, jsonElement)
                 }

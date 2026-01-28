@@ -101,7 +101,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
     var fabHeight by remember {
         mutableStateOf(0)
     }
-    val fabHeightDp = with(LocalDensity.current) { fabHeight.toDp()+16.dp }
+    val fabHeightDp = with(LocalDensity.current) { fabHeight.toDp() + 16.dp }
     val listState = rememberLazyListState()
 
     content {

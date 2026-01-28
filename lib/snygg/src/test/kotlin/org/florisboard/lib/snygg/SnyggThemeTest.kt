@@ -350,7 +350,8 @@ class SnyggThemeTest {
             val theme = SnyggTheme.compileFrom(stylesheet)
             val parentStyle = theme.helperQuery("parent")
             val middleOneInheritsImplicitly = theme.helperQuery("middle-inherits-implicitly", parentStyle = parentStyle)
-            val childImplicit = theme.helperQuery("child-inherits-implicitly", parentStyle = middleOneInheritsImplicitly)
+            val childImplicit =
+                theme.helperQuery("child-inherits-implicitly", parentStyle = middleOneInheritsImplicitly)
             assertIs<SnyggUndefinedValue>(childImplicit.background)
             assertIs<SnyggStaticColorValue>(childImplicit.foreground)
             assertIs<SnyggUndefinedValue>(childImplicit.borderColor)
@@ -367,7 +368,8 @@ class SnyggThemeTest {
             assertIs<SnyggUndefinedValue>(childImplicit.shape)
 
             val middleOneInheritsExplicitly = theme.helperQuery("middle-inherits-explicitly", parentStyle = parentStyle)
-            val childExplicit = theme.helperQuery("child-inherits-explicitly", parentStyle = middleOneInheritsExplicitly)
+            val childExplicit =
+                theme.helperQuery("child-inherits-explicitly", parentStyle = middleOneInheritsExplicitly)
             assertIs<SnyggStaticColorValue>(childExplicit.background)
             assertIs<SnyggStaticColorValue>(childExplicit.foreground)
             assertIs<SnyggStaticColorValue>(childExplicit.borderColor)
@@ -384,7 +386,8 @@ class SnyggThemeTest {
             assertIs<SnyggCircleShapeValue>(childExplicit.shape)
 
             val middleOneWithoutDefault = theme.helperQuery("middle-without-middle", parentStyle = parentStyle)
-            val childImplicitWithoutDefault = theme.helperQuery("child-inherits-without-middle", parentStyle = middleOneWithoutDefault)
+            val childImplicitWithoutDefault =
+                theme.helperQuery("child-inherits-without-middle", parentStyle = middleOneWithoutDefault)
             assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.background)
             assertIs<SnyggStaticColorValue>(childImplicitWithoutDefault.foreground)
             assertIs<SnyggUndefinedValue>(childImplicitWithoutDefault.borderColor)
@@ -405,11 +408,11 @@ class SnyggThemeTest {
         fun `child only selector declared inherit behavior`() {
             val stylesheet = SnyggStylesheet.v2 {
                 "parent" {
-                    background = rgbaColor(30,0,0,0f)
+                    background = rgbaColor(30, 0, 0, 0f)
                     fontSize = fontSize(7.sp)
                 }
                 "child"(selector = SnyggSelector.FOCUS) {
-                    background = rgbaColor(42,0,0,0f)
+                    background = rgbaColor(42, 0, 0, 0f)
                 }
             }
             val theme = SnyggTheme.compileFrom(stylesheet)
@@ -449,11 +452,19 @@ class SnyggThemeTest {
 
             val parentStyle = theme.helperQuery("parent", fontSizeMultiplier = fontSizeMultiplier)
 
-            val childImplicit = theme.helperQuery("child-inherits-implicitly", parentStyle = parentStyle, fontSizeMultiplier = fontSizeMultiplier)
+            val childImplicit = theme.helperQuery(
+                "child-inherits-implicitly",
+                parentStyle = parentStyle,
+                fontSizeMultiplier = fontSizeMultiplier
+            )
             val implicitFontSize = assertIs<SnyggSpSizeValue>(childImplicit.fontSize)
             assertEquals(9.sp, implicitFontSize.sp)
 
-            val childExplicit = theme.helperQuery("child-inherits-explicitly", parentStyle = parentStyle, fontSizeMultiplier = fontSizeMultiplier)
+            val childExplicit = theme.helperQuery(
+                "child-inherits-explicitly",
+                parentStyle = parentStyle,
+                fontSizeMultiplier = fontSizeMultiplier
+            )
             val explicitFontSize = assertIs<SnyggSpSizeValue>(childExplicit.fontSize)
             assertEquals(9.sp, explicitFontSize.sp)
         }
@@ -484,33 +495,39 @@ class SnyggThemeTest {
             val fontSizeMultiplier = 0.75f
 
             val parentStyle = theme.helperQuery("parent", fontSizeMultiplier = fontSizeMultiplier)
-            val middleOneInheritsImplicitly = theme.helperQuery("middle-inherits-implicitly",
+            val middleOneInheritsImplicitly = theme.helperQuery(
+                "middle-inherits-implicitly",
                 parentStyle = parentStyle,
                 fontSizeMultiplier = fontSizeMultiplier,
             )
-            val childImplicit = theme.helperQuery("child-inherits-implicitly",
+            val childImplicit = theme.helperQuery(
+                "child-inherits-implicitly",
                 parentStyle = middleOneInheritsImplicitly,
                 fontSizeMultiplier = fontSizeMultiplier,
             )
             val implicitFontSize = assertIs<SnyggSpSizeValue>(childImplicit.fontSize)
             assertEquals(9.sp, implicitFontSize.sp)
 
-            val middleOneInheritsExplicitly = theme.helperQuery("middle-inherits-explicitly",
+            val middleOneInheritsExplicitly = theme.helperQuery(
+                "middle-inherits-explicitly",
                 parentStyle = parentStyle,
                 fontSizeMultiplier = fontSizeMultiplier,
             )
-            val childExplicit = theme.helperQuery("child-inherits-explicitly",
+            val childExplicit = theme.helperQuery(
+                "child-inherits-explicitly",
                 parentStyle = middleOneInheritsExplicitly,
                 fontSizeMultiplier = fontSizeMultiplier,
             )
             val explicitFontSize = assertIs<SnyggSpSizeValue>(childExplicit.fontSize)
             assertEquals(9.sp, explicitFontSize.sp)
 
-            val middleOneWithoutDefault = theme.helperQuery("middle-without-middle",
+            val middleOneWithoutDefault = theme.helperQuery(
+                "middle-without-middle",
                 parentStyle = parentStyle,
                 fontSizeMultiplier = fontSizeMultiplier,
             )
-            val childImplicitWithoutDefault = theme.helperQuery("child-inherits-without-middle",
+            val childImplicitWithoutDefault = theme.helperQuery(
+                "child-inherits-without-middle",
                 parentStyle = middleOneWithoutDefault,
                 fontSizeMultiplier = fontSizeMultiplier,
             )

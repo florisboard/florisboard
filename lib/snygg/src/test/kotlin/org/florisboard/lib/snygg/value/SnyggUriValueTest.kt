@@ -18,9 +18,11 @@ class SnyggUriValueTest {
             // invalid
             "some-color" to null,
         )
-        assertAll(pairs.map { (raw, expected) -> {
-            assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
-        } })
+        assertAll(pairs.map { (raw, expected) ->
+            {
+                assertEquals(expected, encoder.deserialize(raw).getOrNull(), "deserialize $raw")
+            }
+        })
     }
 
     @Test
@@ -32,9 +34,11 @@ class SnyggUriValueTest {
             // invalid
             SnyggDefinedVarValue("shenanigans") to null
         )
-        assertAll(pairs.map { (snyggValue, expected) -> {
-            assertEquals(expected, encoder.serialize(snyggValue).getOrNull(), "serialize $snyggValue")
-        } })
+        assertAll(pairs.map { (snyggValue, expected) ->
+            {
+                assertEquals(expected, encoder.serialize(snyggValue).getOrNull(), "serialize $snyggValue")
+            }
+        })
     }
 
     @Test

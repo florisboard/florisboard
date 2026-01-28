@@ -145,7 +145,7 @@ internal fun EditRuleDialog(
     }
     var elementsSelectedIndex by rememberSaveable {
         val index = possibleRuleTemplates
-            .indexOfFirst {  rule ->
+            .indexOfFirst { rule ->
                 val elementName = when (rule) {
                     is SnyggElementRule -> rule.elementName
                     else -> rule.decl().name
@@ -555,9 +555,11 @@ private fun EditCodeValueDialog(
                             isRecordingKey -> {
                                 stringRes(R.string.settings__theme_editor__code_recording_placeholder)
                             }
+
                             inputCodeString.isEmpty() -> {
                                 stringRes(R.string.settings__theme_editor__code_placeholder)
                             }
+
                             else -> {
                                 null
                             }

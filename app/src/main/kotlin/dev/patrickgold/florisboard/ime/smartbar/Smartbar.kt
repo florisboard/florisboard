@@ -118,7 +118,8 @@ fun Smartbar() {
             }
 
             ExtendedActionsPlacement.OVERLAY_APP_UI -> {
-                SnyggBox(FlorisImeUi.Smartbar.elementName,
+                SnyggBox(
+                    FlorisImeUi.Smartbar.elementName,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(FlorisImeSizing.smartbarHeight),

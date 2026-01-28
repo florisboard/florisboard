@@ -49,13 +49,17 @@ class SubtypeManager(context: Context) {
         field = MutableStateFlow(listOf())
     inline var subtypes
         get() = subtypesFlow.value
-        private set(v) { subtypesFlow.value = v }
+        private set(v) {
+            subtypesFlow.value = v
+        }
 
     val activeSubtypeFlow: StateFlow<Subtype>
         field = MutableStateFlow(Subtype.DEFAULT)
     inline var activeSubtype
         get() = activeSubtypeFlow.value
-        private set(v) { activeSubtypeFlow.value = v }
+        private set(v) {
+            activeSubtypeFlow.value = v
+        }
 
     init {
         prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->

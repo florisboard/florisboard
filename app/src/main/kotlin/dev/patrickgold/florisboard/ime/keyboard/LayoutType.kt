@@ -24,18 +24,18 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 object LayoutTypeId {
-    const val CHARACTERS =                  "characters"
-    const val CHARACTERS_MOD =              "charactersMod"
-    const val EXTENSION =                   "extension"
-    const val NUMERIC =                     "numeric"
-    const val NUMERIC_ADVANCED =            "numericAdvanced"
-    const val NUMERIC_ROW =                 "numericRow"
-    const val PHONE =                       "phone"
-    const val PHONE2 =                      "phone2"
-    const val SYMBOLS =                     "symbols"
-    const val SYMBOLS_MOD =                 "symbolsMod"
-    const val SYMBOLS2 =                    "symbols2"
-    const val SYMBOLS2_MOD =                "symbols2Mod"
+    const val CHARACTERS = "characters"
+    const val CHARACTERS_MOD = "charactersMod"
+    const val EXTENSION = "extension"
+    const val NUMERIC = "numeric"
+    const val NUMERIC_ADVANCED = "numericAdvanced"
+    const val NUMERIC_ROW = "numericRow"
+    const val PHONE = "phone"
+    const val PHONE2 = "phone2"
+    const val SYMBOLS = "symbols"
+    const val SYMBOLS_MOD = "symbolsMod"
+    const val SYMBOLS2 = "symbols2"
+    const val SYMBOLS2_MOD = "symbols2Mod"
 }
 
 @Serializable(with = LayoutTypeSerializer::class)

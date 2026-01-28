@@ -19,14 +19,16 @@ class SnyggFontValueTest {
                 // valid
                 "normal" to SnyggFontStyleValue(FontStyle.Normal),
                 "italic" to SnyggFontStyleValue(FontStyle.Italic),
-                 // invalid
+                // invalid
                 "invalid" to null,
                 "monospaced" to null,
                 "level 3000" to null,
             )
-            assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
-            } })
+            assertAll(pairs.map { (raw, expected) ->
+                {
+                    assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                }
+            })
         }
 
         @Test
@@ -39,9 +41,11 @@ class SnyggFontValueTest {
                 SnyggDefinedVarValue("shenanigans") to null,
                 SnyggUndefinedValue to null,
             )
-            assertAll(pairs.map { (snyggValue, expected) -> {
-                assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
-            } })
+            assertAll(pairs.map { (snyggValue, expected) ->
+                {
+                    assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
+                }
+            })
         }
 
         @Test
@@ -81,9 +85,11 @@ class SnyggFontValueTest {
                 "monospaced" to null,
                 "level 3000" to null,
             )
-            assertAll(pairs.map { (raw, expected) -> {
-                assertEquals(expected, encoder.deserialize(raw).getOrNull())
-            } })
+            assertAll(pairs.map { (raw, expected) ->
+                {
+                    assertEquals(expected, encoder.deserialize(raw).getOrNull())
+                }
+            })
         }
 
         @Test
@@ -102,9 +108,11 @@ class SnyggFontValueTest {
                 SnyggDefinedVarValue("shenanigans") to null,
                 SnyggUndefinedValue to null,
             )
-            assertAll(pairs.map { (snyggValue, expected) -> {
-                assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
-            } })
+            assertAll(pairs.map { (snyggValue, expected) ->
+                {
+                    assertEquals(expected, encoder.serialize(snyggValue).getOrNull())
+                }
+            })
         }
 
         @Test

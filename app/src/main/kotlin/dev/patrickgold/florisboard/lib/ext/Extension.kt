@@ -41,8 +41,11 @@ import org.florisboard.lib.kotlin.resultOk
 @Polymorphic
 @Serializable
 abstract class Extension {
-    @Transient var workingDir: FsDir? = null
-    @Transient var sourceRef: FlorisRef? = null
+    @Transient
+    var workingDir: FsDir? = null
+
+    @Transient
+    var sourceRef: FlorisRef? = null
 
     abstract val meta: ExtensionMeta
     abstract val dependencies: List<String>?

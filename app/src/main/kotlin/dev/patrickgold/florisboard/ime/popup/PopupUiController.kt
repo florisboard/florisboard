@@ -87,6 +87,7 @@ class PopupUiController(
     /** Is true if the preview popup is visible to the user, else false */
     val isShowingPopup: Boolean
         get() = baseRenderInfo != null
+
     /** Is true if the extended popup is visible to the user, else false */
     val isShowingExtendedPopup: Boolean
         get() = extRenderInfo != null
@@ -160,10 +161,12 @@ class PopupUiController(
                 row1count = 0
                 row0count = n
             }
+
             n > 5 && n % 2 == 1 -> {
                 row1count = (n - 1) / 2
                 row0count = (n + 1) / 2
             }
+
             else -> {
                 row1count = n / 2
                 row0count = n / 2
@@ -184,6 +187,7 @@ class PopupUiController(
                     anchorLeft -> key.visibleBounds.left + keyPopupDiffX
                     anchorRight -> size.width -
                         (key.visibleBounds.left + keyPopupDiffX + baseBounds.width)
+
                     else -> 0.0f
                 }
                 while (offset > 0) {
@@ -229,10 +233,12 @@ class PopupUiController(
                             popupIndices[initUiIndex + 1] = PopupKeys.SECOND_PRIORITIZED
                             popupIndices[initUiIndex - 1] = PopupKeys.THIRD_PRIORITIZED
                         }
+
                         initUiIndex + 2 < n -> {
                             popupIndices[initUiIndex + 1] = PopupKeys.SECOND_PRIORITIZED
                             popupIndices[initUiIndex + 2] = PopupKeys.THIRD_PRIORITIZED
                         }
+
                         initUiIndex - 2 >= 0 -> {
                             popupIndices[initUiIndex - 1] = PopupKeys.SECOND_PRIORITIZED
                             popupIndices[initUiIndex - 2] = PopupKeys.THIRD_PRIORITIZED
@@ -258,20 +264,26 @@ class PopupUiController(
             listOf(mutableListOf())
         }
         for (uiIndex in uiIndices) {
-            val rowIndex = if (uiIndex < row1count && row1count > 0) { 1 } else { 0 }
+            val rowIndex = if (uiIndex < row1count && row1count > 0) {
+                1
+            } else {
+                0
+            }
             val adjustedIndex = popupIndices[uiIndex]
             val keyData = when (key) {
                 is TextKey -> key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
                 //is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
                 else -> TextKeyData.UNSPECIFIED
             }
-            elements[rowIndex].add(Element(
-                data = keyData,
-                label = evaluator.computeLabel(keyData),
-                icon = evaluator.computeImageVector(keyData),
-                orderedIndex = uiIndex,
-                adjustedIndex = adjustedIndex,
-            ))
+            elements[rowIndex].add(
+                Element(
+                    data = keyData,
+                    label = evaluator.computeLabel(keyData),
+                    icon = evaluator.computeImageVector(keyData),
+                    orderedIndex = uiIndex,
+                    adjustedIndex = adjustedIndex,
+                )
+            )
         }
 
         // Calculate layout params
@@ -357,6 +369,7 @@ class PopupUiController(
                         else -> row1count + kX.toInt() + anchorOffset
                     }
                 }
+
                 anchorRight -> when {
                     // check if out of boundary on x-axis
                     x > key.visibleBounds.width - keyPopupDiffX + (anchorOffset + 1) * baseBounds.width ||
@@ -378,6 +391,7 @@ class PopupUiController(
                         else -> row1count + row0count - 1 + kX.toInt() - anchorOffset
                     }
                 }
+
                 else -> -1
             }
         }

@@ -116,9 +116,11 @@ internal fun Context.translatePropertyName(propertyName: String, level: SnyggLev
             resId != null -> {
                 getString(resId)
             }
+
             propertyName.isBlank() -> {
                 getString(R.string.general__select_dropdown_value_placeholder)
             }
+
             else -> {
                 propertyName
             }
@@ -135,6 +137,7 @@ internal fun Context.translatePropertyValue(
         is SnyggStaticColorValue -> {
             colorRepresentation.formatColor(propertyValue.color, withAlpha = true)
         }
+
         else -> when (level) {
             SnyggLevel.DEVELOPER -> null
             else -> when (propertyValue) {

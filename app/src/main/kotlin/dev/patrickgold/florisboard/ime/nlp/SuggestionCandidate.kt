@@ -143,6 +143,7 @@ data class ClipboardSuggestionCandidate(
             NetworkUtils.isPhoneNumber(text) -> Icons.Default.Phone
             else -> Icons.AutoMirrored.Outlined.Assignment
         }
+
         ItemType.IMAGE -> Icons.Default.Image
         ItemType.VIDEO -> Icons.Default.Videocam
     }

@@ -113,11 +113,13 @@ class StringsTest : FunSpec({
                 Triple("Howdy {1}!", arrayOf("" to "Alex", "" to "Emily"), "Howdy Emily!"),
                 Triple("Howdy {-1}!", arrayOf("" to "Alex", "" to "Emily"), "Howdy {-1}!"),
                 Triple("Howdy {11}!", arrayOf("" to "Alex", "" to "Emily"), "Howdy {11}!"),
-                Triple("Howdy {11}!", arrayOf(
-                    "" to "Alex", "" to "Emily", "" to "Tom", "" to "Angela", "" to "Bob",
-                    "" to "Elon", "" to "Mark", "" to "Samantha", "" to "Alice", "" to "Michael",
-                    "" to "Andy", "" to "Tamara",
-                ), "Howdy Tamara!"),
+                Triple(
+                    "Howdy {11}!", arrayOf(
+                        "" to "Alex", "" to "Emily", "" to "Tom", "" to "Angela", "" to "Bob",
+                        "" to "Elon", "" to "Mark", "" to "Samantha", "" to "Alice", "" to "Michael",
+                        "" to "Andy", "" to "Tamara",
+                    ), "Howdy Tamara!"
+                ),
                 Triple("Howdy {1,1}!", arrayOf("" to "Alex", "" to "Emily"), "Howdy {1,1}!"),
                 Triple("Howdy {1.1}!", arrayOf("" to "Alex", "" to "Emily"), "Howdy {1.1}!"),
                 Triple("Howdy {00}!", arrayOf("" to "Alex", "" to "Emily"), "Howdy {00}!"),

@@ -66,7 +66,7 @@ enum class ItemType(val value: Int) {
     VIDEO(3);
 
     companion object {
-        fun fromInt(value : Int) : ItemType {
+        fun fromInt(value: Int): ItemType {
             return entries.first { it.value == value }
         }
     }
@@ -95,7 +95,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     @ColumnInfo(name = "is_sensitive", defaultValue = "0")
     val isSensitive: Boolean = false,
     @EncodeDefault
-    @ColumnInfo(name= "is_remote_device", defaultValue = "0")
+    @ColumnInfo(name = "is_remote_device", defaultValue = "0")
     val isRemoteDevice: Boolean = false,
 ) {
     companion object {
@@ -124,7 +124,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
          * @param data The ClipData to clone.
          * @param cloneUri Whether to store the image using [ClipboardMediaProvider].
          */
-        fun fromClipData(context: Context, data: ClipData, cloneUri: Boolean) : ClipboardItem {
+        fun fromClipData(context: Context, data: ClipData, cloneUri: Boolean): ClipboardItem {
             val dataItem = data.getItemAt(0)
             val type = when {
                 dataItem?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
@@ -163,14 +163,21 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
                     val values = ContentValues(3).apply {
                         put(OpenableColumns.DISPLAY_NAME, displayName)
                         put(ClipboardMediaProvider.Columns.MediaUri, dataItem.uri.toString())
-                        put(ClipboardMediaProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
+                        put(
+                            ClipboardMediaProvider.Columns.MimeTypes,
+                            data.description.filterMimeTypes("*/*").joinToString(",")
+                        )
                     }
-                    context.contentResolver.insert(when (type) {
-                        ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
-                        ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
-                    }, values)
+                    context.contentResolver.insert(
+                        when (type) {
+                            ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
+                            ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
+                        }, values
+                    )
                 }
-            } else { null }
+            } else {
+                null
+            }
 
             val text = dataItem.text?.toString()
             val mimeTypes = when (type) {
@@ -180,7 +187,17 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
                 }
             }
 
-            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes, isSensitive, isRemoteDevice)
+            return ClipboardItem(
+                0,
+                type,
+                text,
+                uri,
+                System.currentTimeMillis(),
+                false,
+                mimeTypes,
+                isSensitive,
+                isRemoteDevice
+            )
         }
     }
 
@@ -214,6 +231,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
             ItemType.TEXT -> {
                 ClipData.newPlainText(FLORIS_CLIP_LABEL, text)
             }
+
             ItemType.IMAGE, ItemType.VIDEO -> {
                 ClipData.newUri(context.contentResolver, FLORIS_CLIP_LABEL, uri)
             }
@@ -349,23 +367,23 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
 @Serializable
 @Entity(tableName = CLIPBOARD_FILES_TABLE)
 data class ClipboardFileInfo(
-    @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val id: Long,
-    @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
-    @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
-    @ColumnInfo(name=Media.ORIENTATION) val orientation: Int,
+    @PrimaryKey @ColumnInfo(name = BaseColumns._ID, index = true) val id: Long,
+    @ColumnInfo(name = OpenableColumns.DISPLAY_NAME) val displayName: String,
+    @ColumnInfo(name = OpenableColumns.SIZE) val size: Long,
+    @ColumnInfo(name = Media.ORIENTATION) val orientation: Int,
     val mimeTypes: List<String>,
 )
 
 @Dao
 interface ClipboardFilesDao {
     @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
-    fun getById(uid: Long) : ClipboardFileInfo
+    fun getById(uid: Long): ClipboardFileInfo
 
     @Query("SELECT * FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
-    fun getCursorById(uid: Long) : Cursor
+    fun getCursorById(uid: Long): Cursor
 
     @Query("SELECT (:projection) FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
-    fun getCursorByIdWithColumns(uid: Long, projection: String) : Cursor
+    fun getCursorByIdWithColumns(uid: Long, projection: String): Cursor
 
     @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
@@ -380,7 +398,7 @@ interface ClipboardFilesDao {
 @Database(entities = [ClipboardFileInfo::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class ClipboardFilesDatabase : RoomDatabase() {
-    abstract fun clipboardFilesDao() : ClipboardFilesDao
+    abstract fun clipboardFilesDao(): ClipboardFilesDao
 
     companion object {
         fun new(context: Context): ClipboardFilesDatabase {

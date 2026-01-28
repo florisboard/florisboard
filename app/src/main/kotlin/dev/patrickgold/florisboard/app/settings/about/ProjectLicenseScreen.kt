@@ -56,7 +56,10 @@ fun ProjectLicenseScreen() = FlorisScreen {
                 val licenseText = FlorisRef.assets("license/project_license.txt").loadTextAsset(
                     context
                 ).getOrElse {
-                    stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
+                    stringRes(
+                        R.string.about__project_license__error_license_text_failed,
+                        "error_message" to (it.message ?: "")
+                    )
                 }
                 Text(
                     text = licenseText,

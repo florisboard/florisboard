@@ -37,6 +37,7 @@ data class SnyggTextAlignValue(val textAlign: TextAlign) : SnyggTextValue {
         construct = { SnyggTextAlignValue(it) },
         destruct = { (it as SnyggTextAlignValue).textAlign },
     )
+
     override fun encoder() = Companion
 }
 
@@ -52,6 +53,7 @@ data class SnyggTextDecorationLineValue(val textDecoration: TextDecoration) : Sn
         construct = { SnyggTextDecorationLineValue(it) },
         destruct = { (it as SnyggTextDecorationLineValue).textDecoration },
     )
+
     override fun encoder() = Companion
 }
 
@@ -70,9 +72,11 @@ data class SnyggTextMaxLinesValue(val maxLines: Int) : SnyggTextValue {
         override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggTextMaxLinesValue)
             require(v.maxLines >= 1)
-            val map = snyggIdToValueMapOf(TextMaxLinesId to (
-                if (v.maxLines == NoneValue) NoneKey else v.maxLines.toString()
-                ))
+            val map = snyggIdToValueMapOf(
+                TextMaxLinesId to (
+                    if (v.maxLines == NoneValue) NoneKey else v.maxLines.toString()
+                    )
+            )
             return@runCatching spec.pack(map)
         }
 
@@ -100,5 +104,6 @@ data class SnyggTextOverflowValue(val textOverflow: TextOverflow) : SnyggTextVal
         construct = { SnyggTextOverflowValue(it) },
         destruct = { (it as SnyggTextOverflowValue).textOverflow },
     )
+
     override fun encoder() = Companion
 }

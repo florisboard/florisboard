@@ -2,59 +2,147 @@
   "all": {
     "г": {
       "relevant": [
-        { "$": "auto_text_key", "code":  1169, "label": "ґ" }
+        {
+          "$": "auto_text_key",
+          "code": 1169,
+          "label": "ґ"
+        }
       ]
     },
     "і": {
       "relevant": [
-        { "$": "auto_text_key", "code":  1111, "label": "ї" }
+        {
+          "$": "auto_text_key",
+          "code": 1111,
+          "label": "ї"
+        }
       ]
     },
     "є": {
       "relevant": [
-        { "$": "auto_text_key", "code":  8212, "label": "—" }
+        {
+          "$": "auto_text_key",
+          "code": 8212,
+          "label": "—"
+        }
       ]
     },
     "ь": {
       "relevant": [
-        { "$": "auto_text_key", "code":  700, "label": "ʼ" },
-        { "$": "auto_text_key", "code":  39, "label": "'" }
+        {
+          "$": "auto_text_key",
+          "code": 700,
+          "label": "ʼ"
+        },
+        {
+          "$": "auto_text_key",
+          "code": 39,
+          "label": "'"
+        }
       ]
     },
     "~right": {
-      "main": { "code":   44, "label": "," },
+      "main": {
+        "code": 44,
+        "label": ","
+      },
       "relevant": [
-        { "code":   38, "label": "&" },
-        { "code":   37, "label": "%" },
-        { "code":   43, "label": "+" },
-        { "code":   34, "label": "\"" },
-        { "code":   45, "label": "-" },
-        { "code":   58, "label": ":" },
-        { "code":   39, "label": "'" },
-        { "code":   64, "label": "@" },
-        { "code":   59, "label": ";" },
-        { "code":   47, "label": "/" },
-        { "$": "layout_direction_selector",
-          "ltr": { "code":   40, "label": "(" },
-          "rtl": { "code":   41, "label": "(" }
+        {
+          "code": 38,
+          "label": "&"
         },
-        { "$": "layout_direction_selector",
-          "ltr": { "code":   41, "label": ")" },
-          "rtl": { "code":   40, "label": ")" }
+        {
+          "code": 37,
+          "label": "%"
         },
-        { "code":   35, "label": "#" },
-        { "code":   33, "label": "!" },
-        { "code":   63, "label": "?" }
+        {
+          "code": 43,
+          "label": "+"
+        },
+        {
+          "code": 34,
+          "label": "\""
+        },
+        {
+          "code": 45,
+          "label": "-"
+        },
+        {
+          "code": 58,
+          "label": ":"
+        },
+        {
+          "code": 39,
+          "label": "'"
+        },
+        {
+          "code": 64,
+          "label": "@"
+        },
+        {
+          "code": 59,
+          "label": ";"
+        },
+        {
+          "code": 47,
+          "label": "/"
+        },
+        {
+          "$": "layout_direction_selector",
+          "ltr": {
+            "code": 40,
+            "label": "("
+          },
+          "rtl": {
+            "code": 41,
+            "label": "("
+          }
+        },
+        {
+          "$": "layout_direction_selector",
+          "ltr": {
+            "code": 41,
+            "label": ")"
+          },
+          "rtl": {
+            "code": 40,
+            "label": ")"
+          }
+        },
+        {
+          "code": 35,
+          "label": "#"
+        },
+        {
+          "code": 33,
+          "label": "!"
+        },
+        {
+          "code": 63,
+          "label": "?"
+        }
       ]
     }
   },
   "uri": {
     "~right": {
-      "main": { "code": -255, "label": ".com" },
+      "main": {
+        "code": -255,
+        "label": ".com"
+      },
       "relevant": [
-        { "code": -255, "label": ".ua" },
-        { "code": -255, "label": ".org" },
-        { "code": -255, "label": ".net" }
+        {
+          "code": -255,
+          "label": ".ua"
+        },
+        {
+          "code": -255,
+          "label": ".org"
+        },
+        {
+          "code": -255,
+          "label": ".net"
+        }
       ]
     }
   }

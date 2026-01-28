@@ -76,32 +76,38 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 activeState.keyVariation = KeyVariation.NORMAL
                 KeyboardMode.NUMERIC
             }
+
             InputAttributes.Type.PHONE -> {
                 activeState.keyVariation = KeyVariation.NORMAL
                 KeyboardMode.PHONE
             }
+
             InputAttributes.Type.TEXT -> {
                 activeState.keyVariation = when (editorInfo.inputAttributes.variation) {
                     InputAttributes.Variation.EMAIL_ADDRESS,
                     InputAttributes.Variation.WEB_EMAIL_ADDRESS,
-                    -> {
+                        -> {
                         KeyVariation.EMAIL_ADDRESS
                     }
+
                     InputAttributes.Variation.PASSWORD,
                     InputAttributes.Variation.VISIBLE_PASSWORD,
                     InputAttributes.Variation.WEB_PASSWORD,
-                    -> {
+                        -> {
                         KeyVariation.PASSWORD
                     }
+
                     InputAttributes.Variation.URI -> {
                         KeyVariation.URI
                     }
+
                     else -> {
                         KeyVariation.NORMAL
                     }
                 }
                 KeyboardMode.CHARACTERS
             }
+
             else -> {
                 activeState.keyVariation = KeyVariation.NORMAL
                 KeyboardMode.CHARACTERS
@@ -112,7 +118,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2,
-            -> false
+                -> false
+
             else -> activeState.keyVariation != KeyVariation.PASSWORD &&
                 prefs.suggestion.enabled.get()// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
@@ -311,6 +318,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                     updateLastCommitPosition()
                 }
             }
+
             ItemType.IMAGE, ItemType.VIDEO -> {
                 item.uri ?: return false
                 val id = ContentUris.parseId(item.uri)
@@ -395,6 +403,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 }
                 return setSelection((selection.end - length).coerceAtLeast(safeEditorBounds.start), selection.end)
             }
+
             OperationScope.AFTER_CURSOR -> {
                 if (n <= 0) {
                     return setSelection(selection.start, selection.start)
@@ -549,16 +558,16 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     private fun PhantomSpaceState.determine(text: String, forceActive: Boolean = false): Boolean {
-         val content = activeContent
-         val selection = content.selection
-         if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
-         val textBefore = content.getTextBeforeCursor(1)
-         val punctuationRule = nlpManager.getActivePunctuationRule()
-         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace) return false;
-         return textBefore.isNotEmpty() &&
-             (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
-                 textBefore[textBefore.length - 1].isLetterOrDigit()) &&
-             (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
+        val content = activeContent
+        val selection = content.selection
+        if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
+        val textBefore = content.getTextBeforeCursor(1)
+        val punctuationRule = nlpManager.getActivePunctuationRule()
+        if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace) return false;
+        return textBefore.isNotEmpty() &&
+            (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
+                textBefore[textBefore.length - 1].isLetterOrDigit()) &&
+            (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())
     }
 
     class AutoSpaceState {

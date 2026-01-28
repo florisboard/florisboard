@@ -87,6 +87,7 @@ class ImeWindowControllerActionsTest : FunSpec({
                             ImeWindowMode.Fixed.COMPACT -> specAfter.shouldBeFixedNormal()
                             else -> specAfter.shouldBeFixedCompact()
                         }
+
                         is ImeWindowSpec.Floating -> specAfter.shouldBeFixedCompact()
                     }
                 }
@@ -174,12 +175,14 @@ class ImeWindowControllerActionsTest : FunSpec({
             val config = ImeWindowConfig(
                 mode = ImeWindowMode.FIXED,
                 fixedMode = fixedMode,
-                fixedProps = mapOf(fixedMode to ImeWindowProps.Fixed(
-                    keyboardHeight = 100.dp,
-                    paddingLeft = 0.dp,
-                    paddingRight = 0.dp,
-                    paddingBottom = 0.dp,
-                )),
+                fixedProps = mapOf(
+                    fixedMode to ImeWindowProps.Fixed(
+                        keyboardHeight = 100.dp,
+                        paddingLeft = 0.dp,
+                        paddingRight = 0.dp,
+                        paddingBottom = 0.dp,
+                    )
+                ),
             )
 
             val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)
@@ -204,12 +207,14 @@ class ImeWindowControllerActionsTest : FunSpec({
             val config = ImeWindowConfig(
                 mode = ImeWindowMode.FLOATING,
                 floatingMode = floatingMode,
-                floatingProps = mapOf(floatingMode to ImeWindowProps.Floating(
-                    keyboardHeight = 100.dp,
-                    keyboardWidth = 100.dp,
-                    offsetLeft = 40.dp,
-                    offsetBottom = 40.dp,
-                )),
+                floatingProps = mapOf(
+                    floatingMode to ImeWindowProps.Floating(
+                        keyboardHeight = 100.dp,
+                        keyboardWidth = 100.dp,
+                        offsetLeft = 40.dp,
+                        offsetBottom = 40.dp,
+                    )
+                ),
             )
 
             val prefs by jetprefDataStoreOf(FlorisPreferenceModel::class)

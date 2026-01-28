@@ -166,7 +166,10 @@ fun BackupScreen() = FlorisScreen {
                 navController.popBackStack()
             }.onFailure { error ->
                 flogError { error.stackTraceToString() }
-                context.showLongToastSync(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
+                context.showLongToastSync(
+                    R.string.backup_and_restore__back_up__failure,
+                    "error_message" to error.message
+                )
                 backupWorkspace = null
             }
         },

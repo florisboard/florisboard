@@ -67,7 +67,8 @@ class WithRules(
 ) : Composer {
     override val toRead = (rules.keys.maxOf { it.length } - 1).coerceAtLeast(0)
 
-    @Transient val ruleOrder = rules.keys.toList().sortedBy { it.length }.reversed()
+    @Transient
+    val ruleOrder = rules.keys.toList().sortedBy { it.length }.reversed()
 
     override fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
         val str = precedingText + toInsert
