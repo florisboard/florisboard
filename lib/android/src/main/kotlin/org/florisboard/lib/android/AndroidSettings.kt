@@ -31,7 +31,7 @@ abstract class AndroidSettingsHelper(
 
     abstract fun getUriFor(key: String): Uri?
 
-    private fun reflectionGetAllStaticFields(kClass: KClass<*>) = sequence<Pair<String, String>> {
+    private fun reflectionGetAllStaticFields(kClass: KClass<*>) = sequence {
         for (field in kClass.java.declaredFields) {
             if (Modifier.isStatic(field.modifiers)) {
                 try {

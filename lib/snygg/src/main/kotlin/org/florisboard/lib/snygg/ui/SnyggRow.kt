@@ -50,11 +50,11 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  */
 @Composable
 fun SnyggRow(
+    modifier: Modifier = Modifier,
+    clickAndSemanticsModifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
-    modifier: Modifier = Modifier,
-    clickAndSemanticsModifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable RowScope.() -> Unit,
@@ -95,9 +95,9 @@ private fun SimpleSnyggRow() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggRow("preview-row") {
-            SnyggText("preview-text", text = "hello")
-            SnyggText("preview-text", mapOf("second" to 1), text = "world")
+        SnyggRow(elementName = "preview-row") {
+            SnyggText(elementName = "preview-text", text = "hello")
+            SnyggText(elementName = "preview-text", attributes = mapOf("second" to 1), text = "world")
         }
     }
 }

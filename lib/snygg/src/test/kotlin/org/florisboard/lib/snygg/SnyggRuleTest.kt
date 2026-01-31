@@ -214,7 +214,10 @@ class SnyggRuleTest {
                         SnyggAttributes.of("code" to listOf(32), "shiftStates" to listOf(1))
                     ),
                 SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
-                    SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),),
+                    SnyggElementRule(
+                        elementName = "test",
+                        SnyggAttributes.of("code" to listOf(10), "group" to listOf(10)),
+                    ),
                 SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10))) to
                     SnyggElementRule(elementName = "test", SnyggAttributes.of("code" to listOf(10)), SnyggSelector.PRESSED),
             )

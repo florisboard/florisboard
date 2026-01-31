@@ -109,8 +109,7 @@ data class SnyggTheme internal constructor(
                         val fontList = fonts.getOrDefault(rule.fontName, mutableListOf())
                         propertySet.sets.forEach { fontSet ->
                             val src = fontSet.src as? SnyggUriValue ?: return@forEach
-                            val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
-                            if (fontPath == null) return@forEach
+                            val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull() ?: return@forEach
                             val fontStyle = (fontSet.fontStyle as? SnyggFontStyleValue)?.fontStyle
                             val fontWeight = (fontSet.fontWeight as? SnyggFontWeightValue)?.fontWeight
                             fontList.add(
@@ -122,7 +121,7 @@ data class SnyggTheme internal constructor(
                             )
                         }
                         if (fontList.isNotEmpty()) {
-                            fonts.put(rule.fontName, fontList)
+                            fonts[rule.fontName] = fontList
                         }
                     }
                     is SnyggElementRule -> {

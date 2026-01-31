@@ -49,16 +49,16 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
  * @param onClick called when this icon button is clicked
  * @param enabled controls the enabled state of this icon button. When `false`, this component will not respond to user
  *    input, and it will appear visually disabled and disabled to accessibility services.
- * @param interactionSource an optional hoisted [MutableInteractionSource] for observing and emitting [Interaction]s for
+ * @param interactionSource an optional hoisted [MutableInteractionSource] for observing and emitting [androidx.compose.foundation.interaction.Interaction]s for
  *    this button. You can use this to change the button's appearance or preview the button in different states. Note
  *    that if `null` is provided, interactions will still happen internally.
  * @param content The content displayed on the icon button, expected to be icon.
  */
 @Composable
 fun SnyggIconButton(
+    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onLongClick: (() -> Unit)? = null,
     enabled: Boolean = true,
@@ -115,13 +115,13 @@ private fun SimpleSnyggIconButton() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn("preview-column") {
-            SnyggText("preview-text", text = "blue text")
+        SnyggColumn(elementName = "preview-column") {
+            SnyggText(elementName = "preview-text", text = "blue text")
             SnyggIconButton(
-                "preview-icon",
+                elementName = "preview-icon",
                 onClick = {},
             ) {
-                SnyggIcon("preview-icon", imageVector = Icons.Default.Search)
+                SnyggIcon(elementName = "preview-icon", imageVector = Icons.Default.Search)
             }
         }
     }

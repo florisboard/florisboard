@@ -57,11 +57,11 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  */
 @Composable
 fun SnyggBox(
+    modifier: Modifier = Modifier,
+    clickAndSemanticsModifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
-    modifier: Modifier = Modifier,
-    clickAndSemanticsModifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = false,
     supportsBackgroundImage: Boolean = false,
@@ -128,10 +128,10 @@ private fun SimpleSnyggBox() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggBox("preview-surface") {
-            SnyggColumn("column") {
-                SnyggText("preview-text", text = "hello world")
-                SnyggText("preview-text", text = "second text")
+        SnyggBox(elementName = "preview-surface") {
+            SnyggColumn(elementName = "column") {
+                SnyggText(elementName = "preview-text", text = "hello world")
+                SnyggText(elementName = "preview-text", text = "second text")
             }
         }
     }

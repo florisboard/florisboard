@@ -111,7 +111,6 @@ class FlorisStepLayoutScope(
     }
 }
 
-@Suppress("unused")
 class FlorisStepState private constructor(
     private val currentAuto: MutableState<Int>,
     private val currentManual: MutableState<Int> = mutableIntStateOf(-1),

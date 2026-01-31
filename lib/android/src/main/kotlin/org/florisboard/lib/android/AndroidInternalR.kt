@@ -22,7 +22,7 @@ import android.content.res.Resources
 /**
  * Helper class for retrieving `com.android.internal.R.*` resources.
  *
- * Usage of this ids should always be done within a try..catch block, as there may be devices which have completely
+ * Usage of this ids should always be done within a try...catch block, as there may be devices which have completely
  * modified system resources or something has changed in a newer Android version.
  */
 object AndroidInternalR {

@@ -51,20 +51,20 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  */
 @Composable
 fun SnyggChip(
+    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     enabled: Boolean = true,
     imageVector: ImageVector? = null,
     text: String,
 ) {
     SnyggChip(
+        modifier,
         elementName,
         attributes,
         selector,
-        modifier,
         onClick,
         enabled,
         icon = if (imageVector == null) null else ({
@@ -88,10 +88,10 @@ fun SnyggChip(
 
 @Composable
 internal fun SnyggChip(
+    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     enabled: Boolean = true,
     icon: (@Composable () -> Unit)? = null,
@@ -134,7 +134,7 @@ private fun SimpleSnyggChip() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggRow("preview-row") {
+        SnyggRow(elementName = "preview-row") {
             SnyggChip(
                 elementName = "chip",
                 onClick = {},

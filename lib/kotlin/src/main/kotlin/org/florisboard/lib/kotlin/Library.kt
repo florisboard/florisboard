@@ -21,7 +21,7 @@ import kotlin.contracts.contract
 
 inline fun <R> tryOrNull(block: () -> R): R? {
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     return try {
         block()

@@ -130,7 +130,7 @@ class SnyggAppearanceValueTest {
                 // valid
                 "rgba(0, 0, 0, 0)" to helperMakeColor(r = 0, g = 0, b = 0, a = 0.0f),
                 "rgba(1, 2, 3, 1.0)" to helperMakeColor(r = 1, g = 2, b = 3, a = 1.0f),
-                "rgba(255, 255, 255, 1.0)" to helperMakeColor(r = 255, g = 255, b = 255, ),
+                "rgba(255, 255, 255, 1.0)" to helperMakeColor(r = 255, g = 255, b = 255),
                 "rgba(86, 54, 23, 0.5)" to helperMakeColor(r = 86, g = 54, b = 23, a = 0.5f),
                 "rgba(0,0,0,0)" to helperMakeColor(r = 0, g = 0, b = 0, a = 0.0f),
                 "rgba(   0  ,0,  0, 0.000)" to helperMakeColor(r = 0, g = 0, b = 0, a = 0.0f),

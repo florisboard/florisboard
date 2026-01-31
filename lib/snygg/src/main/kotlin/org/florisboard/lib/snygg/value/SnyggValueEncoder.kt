@@ -28,13 +28,13 @@ import org.florisboard.lib.kotlin.getKeyByValue
  */
 interface SnyggValueEncoder {
     /**
-     * Describes the format of the [SnyggValue] in the serialized state of the value in the Json file. This spec is
+     * Describes the format of the [SnyggValue] in the serialized state of the value in the JSON file. This spec is
      * used in the serialization process of this encoder for both serializing and deserializing.
      */
     val spec: SnyggValueSpec
 
     /**
-     * Describes alternative formats of the [SnyggValue] in the serialized state of the value in the Json file. These
+     * Describes alternative formats of the [SnyggValue] in the serialized state of the value in the JSON file. These
      * specs are exclusively used in the deserialization process and ignored when serializing a value.
      */
     val alternativeSpecs: List<SnyggValueSpec>

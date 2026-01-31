@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("ConstPropertyName")
+
 package org.florisboard.lib.snygg
 
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue

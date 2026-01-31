@@ -59,9 +59,9 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  */
 @Composable
 fun SnyggListItem(
+    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     text: String,
     leadingImageVector: ImageVector? = null,
@@ -79,7 +79,7 @@ fun SnyggListItem(
         role = null,
         onClick = onClick,
     )
-    SnyggRow(elementName, attributes, selector,
+    SnyggRow(elementName = elementName, attributes = attributes,selector = selector,
         modifier = decoratedModifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -140,20 +140,20 @@ private fun SimpleSnyggListItem() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn("preview") {
-            SnyggListItem("preview-list-item",
+        SnyggColumn(elementName = "preview") {
+            SnyggListItem(elementName = "preview-list-item",
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},
                 text = "hello",
             )
-            SnyggListItem("preview-list-item",
-                mapOf("layout" to "center"),
+            SnyggListItem(elementName = "preview-list-item",
+                attributes = mapOf("layout" to "center"),
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},
                 text = "hello",
             )
-            SnyggListItem("preview-list-item",
-                mapOf("layout" to "long"),
+            SnyggListItem(elementName = "preview-list-item",
+                attributes = mapOf("layout" to "long"),
                 leadingImageVector = Icons.Default.Search,
                 onClick = {},
                 text = "hello world this is a very long list item text label",

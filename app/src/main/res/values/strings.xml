@@ -686,7 +686,7 @@
     <!-- Clipboard strings -->
     <string name="clipboard__header_title">Clipboard</string>
     <string name="clipboard__disabled__title">Clipboard history is currently disabled</string>
-    <string name="clipboard__disabled__message">{app_name}\'s clipboard history allows you to quickly store and access text and images you copy, with the ability to pin items, configure automatic clean-up and set a maximum item limit.</string>
+    <string name="clipboard__disabled__message">{app_name}\'s clipboard history allows you to quickly store and access text and images you copy, with the ability to pin items, configure automatic cleanup and set a maximum item limit.</string>
     <string name="clipboard__disabled__enable_button">Enable clipboard history</string>
     <string name="clipboard__empty__title">Your clipboard is empty</string>
     <string name="clipboard__empty__message">Once you copy text clips or images they will show up here.</string>
@@ -812,9 +812,9 @@
     <string name="ext__editor__title_edit_any">Edit extension</string>
     <string name="ext__editor__title_edit_keyboard">Edit keyboard extension</string>
     <string name="ext__editor__title_edit_theme">Edit theme extension</string>
-    <string name="ext__editor__metadata__title">Manage meta data</string>
-    <string name="ext__editor__metadata__title_invalid">Invalid meta data</string>
-    <string name="ext__editor__metadata__message_invalid">The meta data for this extension is not valid, please check the meta data editor for details!</string>
+    <string name="ext__editor__metadata__title">Manage metadata</string>
+    <string name="ext__editor__metadata__title_invalid">Invalid metadata</string>
+    <string name="ext__editor__metadata__message_invalid">The metadata for this extension is not valid, please check the meta data editor for details!</string>
     <string name="ext__editor__dependencies__title">Manage dependencies</string>
     <string name="ext__editor__files__title">Manage archive files</string>
     <string name="ext__editor__files__type_fonts">Fonts</string>

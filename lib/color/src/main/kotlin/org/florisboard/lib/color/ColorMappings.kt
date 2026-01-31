@@ -53,7 +53,7 @@ object ColorMappings {
         Color(0xFFFFC107), // AMBER 500
         Color(0xFFFF9800), // ORANGE 500
         Color(0xFF795548), // BROWN 500
-        Color(0xFF607D8B), // BLUE GREY 500
+        Color(0xFF607D8B), // BLUE GRAY 500
         Color(0xFF9E9E9E), // GRAY 500
     ).toTypedArray()
 }

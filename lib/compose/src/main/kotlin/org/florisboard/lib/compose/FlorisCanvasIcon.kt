@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
+import androidx.compose.ui.platform.LocalResources
 
 @Composable
 fun FlorisCanvasIcon(
@@ -34,7 +35,7 @@ fun FlorisCanvasIcon(
     contentDescription: String? = null,
 ) {
     ResourcesCompat.getDrawable(
-        LocalContext.current.resources,
+        LocalResources.current,
         iconId,
         null,
     )?.let { drawable ->

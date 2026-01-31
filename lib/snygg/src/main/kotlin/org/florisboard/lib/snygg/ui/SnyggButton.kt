@@ -50,7 +50,7 @@ import org.florisboard.lib.snygg.SnyggSelector
  * respond to user input, and it will appear visually disabled and disabled to accessibility
  * services.
  * @param interactionSource an optional hoisted [MutableInteractionSource] for observing and
- *   emitting [Interaction]s for this button. You can use this to change the button's appearance or
+ *   emitting [androidx.compose.foundation.interaction.Interaction]s for this button. You can use this to change the button's appearance or
  *   preview the button in different states. Note that if `null` is provided, interactions will
  *   still happen internally.
  * @param content The content displayed on the button, expected to be text, icon or image.
@@ -59,10 +59,10 @@ import org.florisboard.lib.snygg.SnyggSelector
  */
 @Composable
 fun SnyggButton(
+    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
