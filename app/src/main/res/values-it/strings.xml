@@ -818,18 +818,18 @@
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">
         <item quantity="one">{v} ora</item>
-        <item quantity="other">{v} ore</item>
+        <item quantity="many">{v} ore</item>
     </plurals>
     <plurals name="unit__minutes__written">
         <item quantity="one">{v} minuto</item>
-        <item quantity="other">{v} minuti</item>
+        <item quantity="many">{v} minuti</item>
     </plurals>
     <plurals name="unit__seconds__written">
         <item quantity="one">{v} secondo</item>
-        <item quantity="other">{v} secondi</item>
+        <item quantity="many">{v} secondi</item>
     </plurals>
     <plurals name="unit__items__written">
         <item quantity="one">{v} elemento</item>
-        <item quantity="other">{v} elementi</item>
+        <item quantity="many">{v} elementi</item>
     </plurals>
 </resources>

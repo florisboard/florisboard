@@ -651,7 +651,7 @@
     <string name="ext__validation__enter_valid_number">Insira um número válido</string>
     <string name="ext__validation__enter_positive_number">Insira um número positivo (&gt;=0)</string>
     <string name="ext__validation__enter_number_between_0_100">Insira um número positivo entre 0 e 100</string>
-    <string name="ext__validation__hint_value_above_50_percent">Qualquer valor acima de 50% se comportará como se você definisse 50%, considere diminuir o tamanho da porcentagem</string>
+    <string name="ext__validation__hint_value_above_50_percent">Qualquer valor acima de 50\% se comportará como se você definisse 50\%, considere diminuir o tamanho da porcentagem</string>
     <string name="ext__update_box__internet_permission_hint">Como este aplicativo não tem permissão de Internet, as atualizações das extensões instaladas devem ser verificadas manualmente.</string>
     <string name="ext__update_box__search_for_updates">Procurar por atualizações</string>
     <string name="ext__addon_management_box__managing_placeholder">Gerenciando {extensions}</string>
@@ -835,26 +835,26 @@
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">
         <item quantity="one">{v} hora</item>
-        <item quantity="other">{v} horas</item>
+        <item quantity="many">{v} horas</item>
     </plurals>
     <plurals name="unit__minutes__written">
         <item quantity="one">{v} minuto</item>
-        <item quantity="other">{v} minutos</item>
+        <item quantity="many">{v} minutos</item>
     </plurals>
     <plurals name="unit__seconds__written">
         <item quantity="one">{v} segundo</item>
-        <item quantity="other">{v} segundos</item>
+        <item quantity="many">{v} segundos</item>
     </plurals>
     <plurals name="unit__items__written">
         <item quantity="one">{v} item</item>
-        <item quantity="other">{v} itens</item>
+        <item quantity="many">{v} itens</item>
     </plurals>
     <plurals name="unit__characters__written">
         <item quantity="one">{v} caractere</item>
-        <item quantity="other">{v} caracteres</item>
+        <item quantity="many">{v} caracteres</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="one">{v} candidato</item>
-        <item quantity="other">{v} candidatos</item>
+        <item quantity="many">{v} candidatos</item>
     </plurals>
 </resources>
