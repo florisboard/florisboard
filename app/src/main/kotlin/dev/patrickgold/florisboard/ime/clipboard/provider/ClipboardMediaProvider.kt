@@ -40,7 +40,7 @@ import androidx.core.net.toUri
 /**
  * Allows apps to access images and videos on the clipboard.
  *
- * This is sometimes called by the UI thread, so all functions are non blocking.
+ * This is sometimes called by the UI thread, so all functions are non-blocking.
  * Database accesses are performed async.
  */
 class ClipboardMediaProvider : ContentProvider() {
@@ -138,7 +138,7 @@ class ClipboardMediaProvider : ContentProvider() {
             IMAGE_CLIPS_TABLE, VIDEO_CLIPS_TABLE -> {
                 return try {
                     values as ContentValues
-                    val mediaUri = Uri.parse(values.getAsString(Columns.MediaUri))
+                    val mediaUri = values.getAsString(Columns.MediaUri).toUri()
                     // Get the orientation of the image
                     val exifInterface = ExifInterface(context!!.contentResolver.openInputStream(mediaUri)!!)
                     var rotation = 0

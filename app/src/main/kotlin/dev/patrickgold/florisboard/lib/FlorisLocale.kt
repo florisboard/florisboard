@@ -333,9 +333,7 @@ class FlorisLocale private constructor(val base: Locale) {
 
         other as FlorisLocale
 
-        if (base != other.base) return false
-
-        return true
+        return base == other.base
     }
 
     /**

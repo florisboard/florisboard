@@ -38,6 +38,7 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
+import androidx.core.net.toUri
 
 private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, FlorisPreferenceModel?> {
     val cachedPreferenceModel = try {
@@ -114,7 +115,7 @@ class CrashDialogActivity : ComponentActivity() {
             )
 
         copyToClipboard.setOnClickListener {
-            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
+            val clipboardManager = getSystemService(CLIPBOARD_SERVICE)
             val toastMessage: String = if (clipboardManager != null && clipboardManager is ClipboardManager) {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText(errorReport, errorReport))
                 resources.getString(R.string.crash_dialog__copy_to_clipboard_success)
@@ -127,7 +128,7 @@ class CrashDialogActivity : ComponentActivity() {
         openBugReportForm.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(resources.getString(R.string.florisboard__issue_tracker_url))
+                resources.getString(R.string.florisboard__issue_tracker_url).toUri()
             )
             startActivity(browserIntent)
         }
@@ -138,7 +139,7 @@ class CrashDialogActivity : ComponentActivity() {
     }
 
     /**
-     * Rules for collapsible markdown on GitHub:
+     * Rules for collapsible Markdown on GitHub:
      *  https://gist.github.com/pierrejoubert73/902cc94d79424356a8d20be2b382e1ab
      */
     private fun StringBuilder.appendCollapsibleSection(summary: String, details: String) {

@@ -127,10 +127,7 @@ class ThemeManager(context: Context) {
             return@withLock
         }
         val themeExt = extensionManager.getExtensionById(activeName.extensionId) as? ThemeExtension
-        val themeExtRef = themeExt?.sourceRef
-        if (themeExtRef == null) {
-            return@withLock
-        }
+        val themeExtRef = themeExt?.sourceRef ?: return@withLock
         val themeConfig = themeExt.themes.find { it.id == activeName.componentId }
         if (themeConfig == null) {
             return@withLock

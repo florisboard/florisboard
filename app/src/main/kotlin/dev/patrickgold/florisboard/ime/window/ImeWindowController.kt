@@ -243,7 +243,7 @@ class ImeWindowController(
         outInsets.touchableInsets = InputMethodService.Insets.TOUCHABLE_INSETS_REGION
     }
 
-    fun onConfigurationChanged(@Suppress("UNUSED_PARAMETER") newConfig: Configuration) {
+    fun onConfigurationChanged(newConfig: Configuration) {
         // As of writing newConfig is unused, but kept for forward-compatibility.
         editor.disable()
     }

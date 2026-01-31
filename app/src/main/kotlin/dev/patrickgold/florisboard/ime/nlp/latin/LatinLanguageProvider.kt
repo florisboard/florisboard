@@ -70,7 +70,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         wordData.withLock { wordData ->
             if (wordData.isEmpty()) {
-                // Here we use readText() because the test dictionary is a json dictionary
+                // Here we use readText() because the test dictionary is a JSON dictionary
                 val rawData = appContext.assets.readText("ime/dict/data.json")
                 val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
                 wordData.putAll(jsonData)
@@ -145,7 +145,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     override suspend fun destroy() {
-        // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
+        // Here we have the chance to de-allocate memory and finish our work. However, this might never be called if
         // the app process is killed (which will most likely always be the case).
     }
 }

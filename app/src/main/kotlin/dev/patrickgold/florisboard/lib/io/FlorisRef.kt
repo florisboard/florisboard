@@ -29,6 +29,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.io.File
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import androidx.core.net.toUri
 
 /**
  * A universal resource reference, capable to point to destinations within
@@ -64,6 +65,7 @@ value class FlorisRef private constructor(val uri: Uri) {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_INTERNAL = "internal"
 
+        @Suppress("HttpUrlsUsage")
         private const val URL_HTTP_PREFIX = "http://"
         private const val URL_HTTPS_PREFIX = "https://"
         private const val URL_MAILTO_PREFIX = "mailto:"
@@ -153,14 +155,14 @@ value class FlorisRef private constructor(val uri: Uri) {
             return when {
                 str.startsWith("assets:") -> assets(str.substring(7))
                 str.startsWith("internal:") -> internal(str.substring(9))
-                else -> FlorisRef(Uri.parse(str))
+                else -> FlorisRef(str.toUri())
             }
         }
 
         /**
          * Constructs a new reference from given [url], which is a URL.
          *
-         * @param url An URL pointing to a web page. If the scheme is missing, `https` is assumed.
+         * @param url A URL pointing to a web page. If the scheme is missing, `https` is assumed.
          *
          * @return The newly constructed reference.
          */
@@ -168,8 +170,8 @@ value class FlorisRef private constructor(val uri: Uri) {
             return FlorisRef(when {
                 url.startsWith(URL_HTTP_PREFIX) ||
                     url.startsWith(URL_HTTPS_PREFIX) ||
-                    url.startsWith(URL_MAILTO_PREFIX) -> Uri.parse(url)
-                else -> Uri.parse("$URL_HTTPS_PREFIX$url").normalizeScheme()
+                    url.startsWith(URL_MAILTO_PREFIX) -> url.toUri()
+                else -> "$URL_HTTPS_PREFIX$url".toUri().normalizeScheme()
             })
         }
 
@@ -287,7 +289,7 @@ value class FlorisRef private constructor(val uri: Uri) {
     }
 
     /**
-     * Returns a new reference pointing to a sub directory(file with given [name].
+     * Returns a new reference pointing to a subdirectory(file with given [name].
      *
      * @param name The name of the sub file/directory.
      *

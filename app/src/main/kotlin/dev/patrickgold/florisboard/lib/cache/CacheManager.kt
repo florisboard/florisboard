@@ -109,7 +109,7 @@ class CacheManager(context: Context) {
     }
 
     open inner class WorkspacesContainer<T : Workspace> internal constructor(
-        val dirName: String,
+        dirName: String,
         val factory: (uuid: String) -> T,
     ) {
         private val workspacesGuard = Mutex(locked = false)
@@ -142,7 +142,7 @@ class CacheManager(context: Context) {
         }
     }
 
-    abstract inner class Workspace(val uuid: String) : Closeable {
+    abstract class Workspace(val uuid: String) : Closeable {
         abstract val dir: FsDir
 
         open fun mkdirs() {

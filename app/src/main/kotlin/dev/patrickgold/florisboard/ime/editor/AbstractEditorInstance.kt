@@ -50,7 +50,6 @@ enum class OperationScope {
     AFTER_CURSOR;
 }
 
-@Suppress("BlockingMethodInNonBlockingContext")
 abstract class AbstractEditorInstance(context: Context) {
     companion object {
         private const val NumCharsBeforeCursor: Int = 256

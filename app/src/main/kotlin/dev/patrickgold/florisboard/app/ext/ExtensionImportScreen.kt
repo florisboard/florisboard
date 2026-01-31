@@ -65,7 +65,7 @@ import org.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
     val id: String,
-    @StringRes val titleResId: Int,
+    @param:StringRes val titleResId: Int,
     val supportedFiles: List<FileRegistry.Entry>,
 ) {
     EXT_ANY(
@@ -138,7 +138,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         contract = ActivityResultContracts.GetMultipleContents(),
         onResult = { uriList ->
             // If uri is null it indicates that the selection activity
-            //  was cancelled (mostly by pressing the back button), so
+            //  was canceled (mostly by pressing the back button), so
             //  we don't display an error message here.
             if (uriList.isEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
@@ -197,7 +197,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         }
     }
 
-    content {
+    Content {
         if (initUuid == null) {
             FlorisOutlinedButton(
                 onClick = {

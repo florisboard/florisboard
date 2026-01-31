@@ -90,7 +90,7 @@ fun SelectLocaleScreen() = FlorisScreen {
         }
     }
 
-    content {
+    Content {
         val state = rememberLazyListState()
         Column(modifier = Modifier.fillMaxSize()) {
             TextField(

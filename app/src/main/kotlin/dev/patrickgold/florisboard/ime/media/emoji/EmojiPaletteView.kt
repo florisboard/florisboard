@@ -408,7 +408,7 @@ private fun EmojiKey(
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
 
-    SnyggBox(FlorisImeUi.MediaEmojiKey.elementName,
+    SnyggBox(elementName = FlorisImeUi.MediaEmojiKey.elementName,
         modifier = Modifier
             .aspectRatio(1f)
             .pointerInput(Unit) {

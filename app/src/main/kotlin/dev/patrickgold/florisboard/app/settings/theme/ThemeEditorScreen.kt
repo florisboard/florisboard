@@ -255,7 +255,7 @@ fun ThemeEditorScreen(
         PreviewKeyboardField(previewFieldController)
     }
 
-    content {
+    Content {
         stylesheetEditorFailure?.let { failure ->
             JetPrefAlertDialog(
                 title = stringRes(R.string.settings__theme_editor__stylesheet_error_title),
@@ -409,18 +409,16 @@ fun ThemeEditorScreen(
                                 }
                             }
                             for ((propertyName, propertyValue) in propertySet.properties) {
-                                if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
-                                    JetPrefListItem(
-                                        modifier = Modifier.rippleClickable {
-                                            snyggPropertySetForEditing = propertySet
-                                            snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
-                                        },
-                                        text = context.translatePropertyName(propertyName, snyggLevel),
-                                        secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
-                                        singleLineSecondaryText = true,
-                                        trailing = { SnyggValueIcon(propertyValue, definedVariables) },
+                                JetPrefListItem(
+                                    modifier = Modifier.rippleClickable {
+                                        snyggPropertySetForEditing = propertySet
+                                        snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue) },
+                                    text = context.translatePropertyName(propertyName, snyggLevel),
+                                    secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
+                                    singleLineSecondaryText = true,
+                                    trailing = { SnyggValueIcon(propertyValue, definedVariables) },
                                     )
-                                }
+
                             }
                         }
 

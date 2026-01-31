@@ -136,7 +136,6 @@ abstract class SwipeGesture {
             return false
         }
 
-        @Suppress("UNUSED_PARAMETER")
         fun onTouchCancel(event: MotionEvent, pointer: Pointer) {
             if (!isEnabled) return
             pointerMap.removeById(pointer.id)

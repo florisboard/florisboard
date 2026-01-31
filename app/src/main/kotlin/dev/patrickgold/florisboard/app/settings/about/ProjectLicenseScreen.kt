@@ -42,9 +42,9 @@ fun ProjectLicenseScreen() = FlorisScreen {
 
     val context = LocalContext.current
 
-    content {
+    Content {
         // Forcing LTR because the Apache 2.0 License shipped and displayed
-        // is hard to read if rendered in RTL. Also it is in English so forcing
+        // is hard to read if rendered in RTL. Also, it is in English so forcing
         // LTR here makes most sense.
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             SelectionContainer(

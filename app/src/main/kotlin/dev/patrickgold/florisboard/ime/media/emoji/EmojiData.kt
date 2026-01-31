@@ -115,7 +115,7 @@ data class EmojiData(
             for (category in byCategory.keys) {
                 for (emojiSet in byCategory[category]!!) {
                     if (emojiSet.emojis.size == 1) {
-                        // No variations provided, we fallback to using the base for all skin tones
+                        // No variations provided, we fall back to using the base for all skin tones
                         val base = emojiSet.emojis.first()
                         for (skinTone in EmojiSkinTone.entries) {
                             bySkinTone[skinTone]!!.add(base)

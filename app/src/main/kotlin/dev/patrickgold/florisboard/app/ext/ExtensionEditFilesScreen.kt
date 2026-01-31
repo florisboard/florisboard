@@ -98,7 +98,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         )
     }
 
-    content {
+    Content {
         val context = LocalContext.current
         var version by rememberSaveable { mutableIntStateOf(0) }
         val fontFiles = remember(version) {

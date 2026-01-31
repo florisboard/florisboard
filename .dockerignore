@@ -2,7 +2,6 @@
 !.git/
 **/build/
 **/dist/
-**/out/
 **/target/
 utils/
 !utils/repr_build/scripts/

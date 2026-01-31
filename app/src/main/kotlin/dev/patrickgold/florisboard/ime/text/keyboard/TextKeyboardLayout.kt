@@ -335,7 +335,7 @@ private fun TextKeyButton(
         key.visibleBounds.size.toDpSize()
     }
     SnyggBox(
-        FlorisImeUi.Key.elementName,
+        elementName = FlorisImeUi.Key.elementName,
         attributes = attributes,
         selector = selector,
         modifier = Modifier

@@ -23,7 +23,7 @@ package dev.patrickgold.florisboard.lib.devtools
  * add a new topic here, just make sure it is a 2^n value and does not
  * exceed the maximum value of [FlogTopic].
  */
-@Suppress("MemberVisibilityCanBePrivate", "Unused")
+@Suppress("Unused")
 object LogTopic {
     const val NONE: FlogTopic =                 Flog.TOPIC_NONE
     const val OTHER: FlogTopic =                Flog.TOPIC_OTHER

@@ -39,7 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -63,7 +63,7 @@ import org.florisboard.lib.compose.stringRes
 
 enum class ExtensionListScreenType(
     val id: String,
-    @StringRes val titleResId: Int,
+    @param:StringRes val titleResId: Int,
     val getExtensionIndex: (ExtensionManager) -> ExtensionManager.ExtensionIndex<*>,
     val launchExtensionCreate: ((NavController) -> Unit)?,
 ) {
@@ -99,12 +99,12 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
     val extensionIndex by type.getExtensionIndex(extensionManager).collectAsState()
 
     var fabHeight by remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
     val fabHeightDp = with(LocalDensity.current) { fabHeight.toDp()+16.dp }
     val listState = rememberLazyListState()
 
-    content {
+    Content {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

@@ -6,6 +6,6 @@
 
 - Improve Clipboard and glide typing performance (#1011, thanks @X-yl)
 - Fix cut off hints in borderless themes (#1049)
-- Replaced none Kurmanci character "ı" by the correct one latin letter "i" (#1063, thanks @GoRaN909)
+- Replaced non-Kurmanji character "ı" with the correct Latin letter "i" (#1063, thanks @GoRaN909)
 
 Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta05

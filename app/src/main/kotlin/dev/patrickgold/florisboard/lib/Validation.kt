@@ -57,7 +57,7 @@ sealed class ValidationResult {
     }
 
     data class Valid(
-        @StringRes private val hintMessageId: Int? = null,
+        @param:StringRes private val hintMessageId: Int? = null,
         private val hintMessageStr: String? = null,
         private val args: List<CurlyArg> = emptyList(),
     ) : ValidationResult() {
@@ -77,7 +77,7 @@ sealed class ValidationResult {
     }
 
     data class Invalid(
-        @StringRes private val errorMessageId: Int? = null,
+        @param:StringRes private val errorMessageId: Int? = null,
         private val errorMessageStr: String? = null,
         private val args: List<CurlyArg> = emptyList(),
     ) : ValidationResult() {
@@ -136,7 +136,6 @@ class ValidationRuleBuilder<T : Any> {
     fun build() = ValidationRule(forKlass!!, forProperty!!, validator!!)
 }
 
-@Suppress("FunctionName")
 fun <T : Any> ValidationRule(scope: ValidationRuleBuilder<T>.() -> Unit): ValidationRule<T> {
     val builder = ValidationRuleBuilder<T>()
     scope(builder)

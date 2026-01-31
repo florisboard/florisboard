@@ -33,7 +33,7 @@ fun CheckUpdatesScreen() = FlorisScreen {
     val extensionManager by context.extensionManager()
     val extensionIndex by extensionManager.extensions.collectAsState()
 
-    content {
+    Content {
         UpdateBox(extensionIndex)
     }
 }

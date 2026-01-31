@@ -26,7 +26,7 @@ import dev.patrickgold.florisboard.lib.FlorisRect
  * Abstract class describing the smallest computed unit in a computed keyboard. Each key represents exactly one key
  * displayed in the UI. It allows to save the absolute location within the parent keyboard, save touch and visual
  * bounds, managing the state (enabled, pressed, visibility) as well as layout sizing factors. Each key in this IME
- * inherits from this base key class. This allows for a inter-operable usage of a key without knowing the exact
+ * inherits from this base key class. This allows for an interoperable usage of a key without knowing the exact
  * subclass upfront.
  *
  * @property data The base key data this key represents.This can be anything - from a basic text key to an emoji key

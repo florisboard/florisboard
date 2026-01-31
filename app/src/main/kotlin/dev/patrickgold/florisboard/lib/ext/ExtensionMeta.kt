@@ -24,7 +24,7 @@ import kotlinx.serialization.json.JsonNames
  * Class for an `extension.json` file, which serves as a configuration of an extension
  * package for FlorisBoard (`.flex` archive files).
  *
- * Files which are always read (case sensitive):
+ * Files which are always read (case-sensitive):
  *  - extension.json (this file)
  *
  * Files which are always read (case-insensitive, can have any extension)

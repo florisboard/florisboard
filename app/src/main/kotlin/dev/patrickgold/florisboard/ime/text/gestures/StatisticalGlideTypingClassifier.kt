@@ -43,7 +43,7 @@ private fun TextKey.baseCode(): Int {
 /**
  * Classifies gestures by comparing them with an "ideal gesture".
  *
- * Check out Étienne Desticourt's excellent write up at https://github.com/AnySoftKeyboard/AnySoftKeyboard/pull/1870
+ * Check out Étienne Desticourt's excellent write-up at https://github.com/AnySoftKeyboard/AnySoftKeyboard/pull/1870
  */
 class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier {
     private val nlpManager by context.nlpManager()
@@ -73,7 +73,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
 
         /**
-         * describes the number of points to sample a gesture at, i.e the resolution.
+         * describes the number of points to sample a gesture at, i.e. the resolution.
          */
         private const val SAMPLING_POINTS: Int = 200
 
@@ -92,7 +92,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         private const val LOCATION_STD = 0.5109f
 
         /**
-         * This is a very small cache that caches suggestions, so that they aren't recalculated e.g when releasing
+         * This is a very small cache that caches suggestions, so that they aren't recalculated e.g. when releasing
          * a pointer when the suggestions were already calculated. Avoids a lot of micro pauses.
          */
         private const val SUGGESTION_CACHE_SIZE = 5
@@ -145,7 +145,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
     }
 
     override fun setWordData(subtype: Subtype) {
-        // stop duplicate calls..
+        // stop duplicate calls
         if (wordDataSubtype == subtype) {
             return
         }
@@ -166,7 +166,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         val currentSubtype = this.layoutSubtype!!
         val cached = when {
             invalidateCache -> null
-            else -> prunerCache.get(currentSubtype)
+            else -> prunerCache[currentSubtype]
         }
         if (cached == null) {
             this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
@@ -185,7 +185,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
 
     private val lruSuggestionCache = LruCache<Pair<Gesture, Int>, List<String>>(SUGGESTION_CACHE_SIZE)
     override fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String> {
-        return when (val cached = lruSuggestionCache.get(Pair(this.gesture, maxSuggestionCount))) {
+        return when (val cached = lruSuggestionCache[Pair(this.gesture, maxSuggestionCount)]) {
             null -> {
                 val suggestions = unCachedGetSuggestions(maxSuggestionCount)
                 lruSuggestionCache.put(Pair(this.gesture.clone(), maxSuggestionCount), suggestions)

@@ -58,7 +58,6 @@ import java.lang.ref.WeakReference
  */
 private var FlorisApplicationReference = WeakReference<FlorisApplication?>(null)
 
-@Suppress("unused")
 class FlorisApplication : Application() {
     companion object {
         init {

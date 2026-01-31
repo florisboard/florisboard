@@ -59,7 +59,7 @@ fun OtherScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    content {
+    Content {
         ListPreference(
             prefs.other.settingsTheme,
             icon = Icons.Default.Palette,
@@ -129,7 +129,7 @@ fun OtherScreen() = FlorisScreen {
                     "uk",
                     "zgh",
                     "zh-CN",
-                ).map { languageTag ->
+                ).forEach { languageTag ->
                     if (languageTag == "auto") {
                         entry(
                             key = "auto",

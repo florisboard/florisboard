@@ -183,14 +183,10 @@ fun BackupScreen() = FlorisScreen {
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
         if (backupFilesSelector.imeKeyboard) {
-            context.filesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH).let { dir ->
-                dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH))
-            }
+            context.filesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH).copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_KEYBOARD_PATH))
         }
         if (backupFilesSelector.imeTheme) {
-            context.filesDir.subDir(ExtensionManager.IME_THEME_PATH).let { dir ->
-                dir.copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH))
-            }
+            context.filesDir.subDir(ExtensionManager.IME_THEME_PATH).copyRecursively(workspaceFilesDir.subDir(ExtensionManager.IME_THEME_PATH))
         }
 
         if (backupFilesSelector.provideClipboardItems()) {
@@ -283,7 +279,7 @@ fun BackupScreen() = FlorisScreen {
         }
     }
 
-    content {
+    Content {
         FlorisOutlinedBox(
             modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__back_up__destination),

@@ -266,7 +266,7 @@ fun RestoreScreen() = FlorisScreen {
         }
     }
 
-    content {
+    Content {
         FlorisOutlinedBox(
             modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__restore__mode),

@@ -32,7 +32,7 @@ fun DictionaryScreen() = FlorisScreen {
 
     val navController = LocalNavController.current
 
-    content {
+    Content {
         SwitchPreference(
             prefs.dictionary.enableSystemUserDictionary,
             title = stringRes(R.string.pref__dictionary__enable_system_user_dictionary__label),

@@ -3,7 +3,7 @@
 - Add Hebrew layout (#264) (thanks @antonygggg)
 - Add Kurdish layout (#271) (thanks @kurdikeyboard)
 - Add Serbian layouts (#275) (thanks @GrbavaCigla)
-- Add Trukish extended popups for QWERTY (#247) (thanks @kisekinopureya)
+- Add Turkish extended popups for QWERTY (#247) (thanks @kisekinopureya)
 - Add Floris Black and Floris Black Borderless themes (#297) (thanks @serebit)
 - Improve moving gestures detection and UX
 - Improve key hint label style (#213)

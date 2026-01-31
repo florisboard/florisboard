@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.extensionManager
-import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
@@ -55,7 +54,7 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
         contract = ActivityResultContracts.CreateDocument(),
         onResult = { uri ->
             // If uri is null it indicates that the selection activity
-            //  was cancelled (mostly by pressing the back button), so
+            //  was canceled (mostly by pressing the back button), so
             //  we don't display an error message here.
             if (uri == null) {
                 navController.popBackStack()
@@ -70,7 +69,7 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
         },
     )
 
-    content {
+    Content {
         exportLauncher.launch(ExtensionDefaults.createFlexName(ext.meta.id))
     }
 }

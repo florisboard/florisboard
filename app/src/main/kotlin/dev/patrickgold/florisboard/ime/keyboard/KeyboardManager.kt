@@ -297,7 +297,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
     /**
      * Changes a word to the current case.
-     * eg if [KeyboardState.isUppercase] is true, abc -> ABC
+     * e.g. if [KeyboardState.isUppercase] is true, abc -> ABC
      *    if [caps]     is true, abc -> Abc
      *    otherwise            , abc -> abc
      */
@@ -545,7 +545,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
-     * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
+     * Handles a [KeyCode.SPACE] event. Also handles the autocorrection of two space taps if
      * enabled by the user.
      */
     private fun handleSpace(data: KeyData) {

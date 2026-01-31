@@ -93,7 +93,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
         }
     }
 
-    content {
+    Content {
         // Forcing LTR because text displayed is a debug log
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             val lazyListState = rememberLazyListState()

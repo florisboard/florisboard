@@ -99,7 +99,7 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
                             rootBounds.height - windowBounds.height
                         }
                     }
-                    SnyggBox(FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
+                    SnyggBox(elementName = FlorisImeUi.ExtractedLandscapeInputLayout.elementName) {
                         SnyggRow(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -131,7 +131,7 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
                                 )
                             }
                             SnyggButton(
-                                FlorisImeUi.ExtractedLandscapeInputAction.elementName,
+                                elementName = FlorisImeUi.ExtractedLandscapeInputAction.elementName,
                                 onClick = {
                                     if (activeEditorInfo.extractedActionId != 0) {
                                         ims.currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)

@@ -89,11 +89,11 @@ class FlorisRect private constructor(
     }
 
     fun contains(offset: Offset): Boolean {
-        return offset.x >= left && offset.x < right && offset.y >= top && offset.y < bottom
+        return offset.x in left..<right && offset.y >= top && offset.y < bottom
     }
 
     fun contains(offsetX: Float, offsetY: Float): Boolean {
-        return offsetX >= left && offsetX < right && offsetY >= top && offsetY < bottom
+        return offsetX in left..<right && offsetY >= top && offsetY < bottom
     }
 
     var width: Float

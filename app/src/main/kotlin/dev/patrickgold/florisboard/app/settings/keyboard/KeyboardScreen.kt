@@ -44,7 +44,7 @@ fun KeyboardScreen() = FlorisScreen {
 
     val navController = LocalNavController.current
 
-    content {
+    Content {
         SwitchPreference(
             prefs.keyboard.numberRow,
             title = stringRes(R.string.pref__keyboard__number_row__label),

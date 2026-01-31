@@ -53,7 +53,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
 
     val currentlySelected = subtypeManager.activeSubtype.id
 
-    SnyggColumn(FlorisImeUi.SubtypePanel.elementName, modifier = modifier.safeDrawingPadding()) {
+    SnyggColumn(elementName = FlorisImeUi.SubtypePanel.elementName, modifier = modifier.safeDrawingPadding()) {
         SnyggRow(
             elementName = FlorisImeUi.SubtypePanelHeader.elementName,
             modifier = Modifier.fillMaxWidth(),
@@ -67,7 +67,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
             )
         }
 
-        SnyggBox(FlorisImeUi.SubtypePanelList.elementName) {
+        SnyggBox(elementName = FlorisImeUi.SubtypePanelList.elementName) {
             LazyColumn(
                 state = listState,
             ) {

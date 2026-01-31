@@ -76,7 +76,7 @@ interface FlorisScreenScope {
 
     fun bottomBar(bottomBar: FlorisScreenBottomBar)
 
-    fun content(content: FlorisScreenContent)
+    fun Content(content: FlorisScreenContent)
 
     fun floatingActionButton(fab: FlorisScreenFab)
 
@@ -111,7 +111,7 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
         this.bottomBar = bottomBar
     }
 
-    override fun content(content: FlorisScreenContent) {
+    override fun Content(content: FlorisScreenContent) {
         this.content = content
     }
 

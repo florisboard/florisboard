@@ -57,7 +57,7 @@ fun DevtoolsScreen() = FlorisScreen {
 
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
 
-    content {
+    Content {
         SwitchPreference(
             prefs.devtools.enabled,
             title = stringRes(R.string.devtools__enabled__label),

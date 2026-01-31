@@ -25,7 +25,7 @@ import kotlinx.serialization.Serializable
 /**
  * A popup set for a single key. This set describes, if the key has a [main] character and other [relevant] popups.
  *
- * Note that a hint character cannot and should not be set in a json extended popup file, rather it
+ * Note that a hint character cannot and should not be set in a JSON extended popup file, rather it
  * should only be dynamically set by the LayoutManager.
  *
  * The order in which these defined popups will be shown depends on the current [KeyHintConfiguration].

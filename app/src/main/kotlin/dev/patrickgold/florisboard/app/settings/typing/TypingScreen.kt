@@ -59,7 +59,7 @@ fun TypingScreen() = FlorisScreen {
 
     val navController = LocalNavController.current
 
-    content {
+    Content {
         // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
         FlorisErrorCard(
             modifier = Modifier.padding(8.dp),

@@ -54,7 +54,7 @@ enum class LayoutType(val id: String) {
     SYMBOLS2_MOD(LayoutTypeId.SYMBOLS2_MOD);
 }
 
-private class LayoutTypeSerializer : KSerializer<LayoutType> {
+class LayoutTypeSerializer : KSerializer<LayoutType> {
     override val descriptor = PrimitiveSerialDescriptor("LayoutType", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: LayoutType) {

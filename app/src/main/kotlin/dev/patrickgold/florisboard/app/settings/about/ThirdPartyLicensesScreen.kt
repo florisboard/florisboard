@@ -41,7 +41,7 @@ fun ThirdPartyLicensesScreen() = FlorisScreen {
     val lazyListState = rememberLazyListState()
     val libs by produceLibraries()
 
-    content {
+    Content {
         LibrariesContainer(
             libraries = libs,
             modifier = Modifier

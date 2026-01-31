@@ -64,7 +64,6 @@ import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisIconButton
@@ -136,7 +135,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     val importDictionary = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
-            // If uri is null it indicates that the selection activity was cancelled (mostly
+            // If uri is null it indicates that the selection activity was canceled (mostly
             // by pressing the back button), so we don't display an error message here.
             if (uri == null) return@rememberLauncherForActivityResult
             val db = when (type) {
@@ -161,7 +160,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     val exportDictionary = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument(),
         onResult = { uri ->
-            // If uri is null it indicates that the selection activity was cancelled (mostly
+            // If uri is null it indicates that the selection activity was canceled (mostly
             // by pressing the back button), so we don't display an error message here.
             if (uri == null) return@rememberLauncherForActivityResult
             val db = when (type) {
@@ -244,7 +243,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
         )
     }
 
-    content {
+    Content {
         BackHandler(currentLocale != null) {
             currentLocale = null
             buildUi()

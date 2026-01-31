@@ -1,4 +1,4 @@
-This version is a major release containing a brand new spell checker service,
+This version is a major release containing a brand-new spell checker service,
 autofill inline support for Android 11+, new keyboard layouts and a lot of
 improvements and bug fixing.
 

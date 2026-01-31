@@ -579,7 +579,7 @@ private fun PropertyValueEditor(
                         val size = sizeStr.toFloatOrNull()?.let { SnyggPercentageSizeValue(it) }
                         onValueChange(size ?: SnyggPercentageSizeValue(0f))
                     },
-                    isError = value.percentage < 0f || value.percentage > 1f,
+                    isError = value.percentage !in 0f..1f,
                 )
                 Text(
                     modifier = Modifier.padding(start = 8.dp),

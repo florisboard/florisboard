@@ -189,7 +189,7 @@ object ExtensionValidation {
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_percent_size)
                 intValue == null -> resultInvalid(error = R.string.ext__validation__enter_valid_number)
-                intValue < 0 || intValue > 100 -> resultInvalid(error = R.string.ext__validation__enter_number_between_0_100)
+                intValue !in 0..100 -> resultInvalid(error = R.string.ext__validation__enter_number_between_0_100)
                 intValue > 50 -> resultValid(hint = R.string.ext__validation__hint_value_above_50_percent)
                 else -> resultValid()
             }

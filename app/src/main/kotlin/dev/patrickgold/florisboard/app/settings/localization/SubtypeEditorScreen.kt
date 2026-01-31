@@ -293,7 +293,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
         }
     }
 
-    content {
+    Content {
         Column(modifier = Modifier.padding(8.dp)) {
             if (id == null) {
                 Card(modifier = Modifier

@@ -42,7 +42,7 @@ class LanguagePackComponent(
     @Transient var parent: LanguagePackExtension? = null
 
     @SerialName("hanShapeBasedTable")
-    private val _hanShapeBasedTable: String? = null  // Allows overriding the sqlite3 table to query in the json
+    private val _hanShapeBasedTable: String? = null  // Allows overriding the sqlite3 table to query in the JSON
     val hanShapeBasedTable
         get() = _hanShapeBasedTable ?: locale.variant
 }
@@ -81,7 +81,7 @@ class LanguagePackExtension( // FIXME: how to make this support multiple types o
             // TODO: use lock on database?
             hanShapeBasedSQLiteDatabase.takeIf { it.isOpen }?.close()
             hanShapeBasedSQLiteDatabase =
-                SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READONLY);
+                SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READONLY)
         } catch (e: SQLiteException) {
             flogError { "SQLiteException in openDatabase: path=$databasePath, error='${e}'" }
         }

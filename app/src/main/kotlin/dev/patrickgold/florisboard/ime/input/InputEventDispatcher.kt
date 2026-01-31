@@ -266,7 +266,7 @@ interface InputKeyEventReceiver {
     fun onInputKeyRepeat(data: KeyData)
 
     /**
-     * Event method which gets called when a key press is cancelled.
+     * Event method which gets called when a key press is canceled.
      *
      * @param data The associated input key data.
      */

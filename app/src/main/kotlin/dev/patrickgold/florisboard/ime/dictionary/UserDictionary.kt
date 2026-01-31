@@ -494,7 +494,7 @@ object UserDictionaryValidation {
             when {
                 input.isBlank() -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_empty)
                 freq == null -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_empty)
-                freq < FREQUENCY_MIN || freq > FREQUENCY_MAX -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_invalid)
+                freq !in FREQUENCY_MIN..FREQUENCY_MAX -> resultInvalid(error = R.string.settings__udm__dialog__freq_error_invalid)
                 else -> resultValid()
             }
         }

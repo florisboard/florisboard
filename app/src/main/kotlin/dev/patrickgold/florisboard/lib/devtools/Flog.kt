@@ -95,7 +95,7 @@ inline fun flogWarning(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String 
 }
 
 /**
- * Logs a info message returned by [block] together with the automatically retrieved
+ * Logs an info message returned by [block] together with the automatically retrieved
  * calling class and method name either to the console or to a log file. The class name
  * is used for the tag, the method name prepended to the message.
  *

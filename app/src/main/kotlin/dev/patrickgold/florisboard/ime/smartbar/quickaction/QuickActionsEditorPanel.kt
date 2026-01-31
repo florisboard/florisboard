@@ -243,7 +243,7 @@ fun QuickActionsEditorPanel() {
         }
     }
 
-    SnyggColumn(FlorisImeUi.SmartbarActionsEditor.elementName, modifier = Modifier.safeDrawingPadding()) {
+    SnyggColumn(elementName = FlorisImeUi.SmartbarActionsEditor.elementName, modifier = Modifier.safeDrawingPadding()) {
         SnyggRow(
             elementName = FlorisImeUi.SmartbarActionsEditorHeader.elementName,
             modifier = Modifier.fillMaxWidth(),
@@ -270,7 +270,7 @@ fun QuickActionsEditorPanel() {
             Spacer(Modifier.size(48.dp))
         }
 
-        SnyggBox(FlorisImeUi.SmartbarActionsEditorTileGrid.elementName) {
+        SnyggBox(elementName = FlorisImeUi.SmartbarActionsEditorTileGrid.elementName) {
             LazyVerticalGrid(
                 modifier = Modifier
                     .pointerInput(Unit) {

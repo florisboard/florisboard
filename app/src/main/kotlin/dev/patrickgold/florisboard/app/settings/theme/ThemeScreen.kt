@@ -64,7 +64,7 @@ fun ThemeScreen() = FlorisScreen {
         return id.toString()
     }
 
-    content {
+    Content {
         val dayThemeId by prefs.theme.dayThemeId.observeAsState()
         val nightThemeId by prefs.theme.nightThemeId.observeAsState()
 

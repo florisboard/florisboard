@@ -69,7 +69,7 @@ data class ExtensionMaintainer(
     }
 }
 
-private class ExtensionMaintainerSerializer : KSerializer<ExtensionMaintainer> {
+class ExtensionMaintainerSerializer : KSerializer<ExtensionMaintainer> {
     override val descriptor = PrimitiveSerialDescriptor("ExtensionMaintainer", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: ExtensionMaintainer) {

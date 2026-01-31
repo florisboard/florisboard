@@ -386,7 +386,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 if (n <= 0) {
                     return setSelection(selection.end, selection.end)
                 }
-                val textToAnalyze = content.text.substring(0, content.localSelection.end)
+                val textToAnalyze = content.text.take(content.localSelection.end)
                 val length = runBlocking {
                     when (unit) {
                         OperationUnit.CHARACTERS -> breakIterators.measureLastUChars(textToAnalyze, n)
@@ -554,8 +554,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
          if (!(isActive || forceActive) || selection.isNotValid || selection.start <= 0 || text.isEmpty()) return false
          val textBefore = content.getTextBeforeCursor(1)
          val punctuationRule = nlpManager.getActivePunctuationRule()
-         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace) return false;
-         return textBefore.isNotEmpty() &&
+         if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace) return false
+        return textBefore.isNotEmpty() &&
              (punctuationRule.symbolsPrecedingPhantomSpace.contains(textBefore[textBefore.length - 1]) ||
                  textBefore[textBefore.length - 1].isLetterOrDigit()) &&
              (punctuationRule.symbolsFollowingPhantomSpace.contains(text[0]) || text[0].isLetterOrDigit())

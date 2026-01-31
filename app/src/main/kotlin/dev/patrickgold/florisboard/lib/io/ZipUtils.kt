@@ -28,7 +28,7 @@ import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
 object ZipUtils {
-    fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String) = runCatching<String> {
+    fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String) = runCatching {
         when {
             zipRef.isAssets -> {
                 zipRef.subRef(relPath).loadTextAsset(context).getOrThrow()

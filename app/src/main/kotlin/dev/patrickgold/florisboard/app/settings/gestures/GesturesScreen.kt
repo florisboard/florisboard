@@ -37,7 +37,7 @@ fun GesturesScreen() = FlorisScreen {
     title = stringRes(R.string.settings__gestures__title)
     previewFieldVisible = true
 
-    content {
+    Content {
         FlorisInfoCard(
             modifier = Modifier.padding(8.dp),
             text = """

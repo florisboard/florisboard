@@ -122,7 +122,7 @@ private fun FlorisScreenScope.content(
         FlorisStepState.new(init = initStep)
     }
 
-    content {
+    Content {
         LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
             stepState.setCurrentAuto(
                 when {
@@ -168,14 +168,14 @@ private fun FlorisScreenScope.content(
                 context, navController, requestNotification, scope
             ),
             footer = {
-                footer(context)
+                Footer(context)
             },
         )
     }
 }
 
 @Composable
-private fun footer(context: Context) {
+private fun Footer(context: Context) {
     Spacer(modifier = Modifier.height(16.dp))
     Row(
         modifier = Modifier

@@ -333,7 +333,7 @@ private fun EditScreen(
         }
     }
 
-    content {
+    Content {
         BackHandler {
             handleBackPress()
         }
@@ -489,7 +489,7 @@ private fun ManageMetaDataScreen(
         }
     }
 
-    content {
+    Content {
         BackHandler {
             handleBackPress()
         }
@@ -579,7 +579,7 @@ private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<
         )
     }
 
-    content {
+    Content {
         BackHandler {
             handleBackPress()
         }
@@ -710,7 +710,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 }
                                 editor.themes.add(componentEditor)
                             } else {
-                                val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
+                                val component = themeManager.indexedThemeConfigs.value.first[componentName] ?: return
                                 val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
                                 componentEditor.id = componentId
                                 componentEditor.stylesheetPath = ""
@@ -760,7 +760,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
         }
     }
 
-    content {
+    Content {
         BackHandler {
             handleBackPress()
         }

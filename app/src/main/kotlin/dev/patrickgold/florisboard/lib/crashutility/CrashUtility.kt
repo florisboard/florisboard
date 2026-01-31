@@ -41,6 +41,7 @@ import org.florisboard.lib.kotlin.io.FsFile
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import kotlin.system.exitProcess
+import androidx.core.content.edit
 
 /**
  * Abstract class which holds several static methods used for handling unexpected errors.
@@ -162,14 +163,10 @@ abstract class CrashUtility private constructor() {
             }
         }
 
-        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         fun handleStagedButUnhandledExceptions() {
             val e = stagedException ?: return
-            val handler = Thread.getDefaultUncaughtExceptionHandler()
-            if (handler is UncaughtExceptionHandler) {
-                stagedException = null
-                handler.uncaughtException(null, e)
-            }
+            val handler = Thread.currentThread().uncaughtExceptionHandler
+            handler?.uncaughtException(Thread.currentThread(), e)
         }
 
         /**
@@ -234,9 +231,9 @@ abstract class CrashUtility private constructor() {
             // Note: must use commit() instead of apply(), as the value must be immediately written
             //       to be possibly instantly read again.
             context.getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_PRIVATE)
-                .edit()
-                .putLong(SHARED_PREFS_LAST_CRASH_TIMESTAMP, value)
-                .commit()
+                .edit(commit = true) {
+                    putLong(SHARED_PREFS_LAST_CRASH_TIMESTAMP, value)
+                }
         }
 
         /**

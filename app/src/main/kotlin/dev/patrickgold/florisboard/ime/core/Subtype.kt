@@ -31,8 +31,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Data class which represents an user-specified set of language and layout. String representations
- * of this object are stored as an Json array in the preference datastore.
+ * Data class which represents a user-specified set of language and layout. String representations
+ * of this object are stored as a JSON array in the preference datastore.
  *
  * @property id The ID of this subtype.
  * @property primaryLocale The primary locale of this subtype.
@@ -229,7 +229,7 @@ data class SubtypeNlpProviderMap(
 /**
  * Data class which represents a predefined set of language and preferred layout.
  *
- * @property locale The locale of this subtype. Beware its different name in json: 'languageTag'.
+ * @property locale The locale of this subtype. Beware its different name in JSON: 'languageTag'.
  * @property currencySet The currency set name of this subtype.
  * @property preferred The preferred layout map for this subtype's locale.
  */

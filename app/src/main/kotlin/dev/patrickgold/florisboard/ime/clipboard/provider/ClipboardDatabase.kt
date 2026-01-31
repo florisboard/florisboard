@@ -184,6 +184,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
         }
     }
 
+    @Suppress("NOTHING_TO_INLINE")
     @Composable
     inline fun displayText(): String {
         val context = LocalContext.current

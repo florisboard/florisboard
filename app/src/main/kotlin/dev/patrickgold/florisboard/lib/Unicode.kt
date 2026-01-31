@@ -23,7 +23,6 @@ import android.icu.lang.UCharacterCategory
  * Character codes and comments source:
  *  https://www.w3.org/International/questions/qa-bidi-unicode-controls#basedirection
  */
-@Suppress("unused")
 object UnicodeCtrlChar {
     /** Sets base direction to LTR and isolates the embedded content from the surrounding text */
     const val LeftToRightIsolate = "\u2066"

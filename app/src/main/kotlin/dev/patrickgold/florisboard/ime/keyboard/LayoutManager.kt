@@ -157,7 +157,7 @@ class LayoutManager(context: Context) {
 
     /**
      * Merges the specified layouts (LTNs) and returns the computed layout.
-     * The computed layout may looks like this:
+     * The computed layout may look like this:
      *   e e e e e e e e e e      e = extension
      *   c c c c c c c c c c      c = main
      *    c c c c c c c c c       m = mod
@@ -342,7 +342,7 @@ class LayoutManager(context: Context) {
                 modifier = LTN(LayoutType.CHARACTERS_MOD, extCoreLayout("default"))
             }
             KeyboardMode.EDITING -> {
-                // Layout for this mode is defined in custom layout xml file.
+                // Layout for this mode is defined in custom layout XML file.
                 return@async TextKeyboard(arrayOf(), keyboardMode, null, null)
             }
             KeyboardMode.NUMERIC -> {

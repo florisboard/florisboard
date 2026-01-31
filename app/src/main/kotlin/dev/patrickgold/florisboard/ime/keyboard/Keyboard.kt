@@ -51,7 +51,7 @@ abstract class Keyboard {
     abstract fun keys(): Iterator<Key>
 
     /**
-     * Layouts the keys according the the dimensions and parameters provided by given arguments. This method's
+     * Layouts the keys according to the dimensions and parameters provided by given arguments. This method's
      * exact behavior is highly dependent aon the actual subclass.
      */
     abstract fun layout(
