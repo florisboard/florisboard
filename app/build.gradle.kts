@@ -93,6 +93,11 @@ android {
                     srcDirs("src/main/kotlin")
                 }
             }
+            maybeCreate("androidTest").apply {
+                res {
+                    srcDirs("src/main/res", "src/debug/res")
+                }
+            }
         }
     }
 
@@ -152,6 +157,7 @@ android {
         }
 
         create("benchmark") {
+            resValue("string", "floris_app_name", "FlorisBoard Benchmark")
             initWith(getByName("release"))
 
             applicationIdSuffix = ".bench"
@@ -159,8 +165,6 @@ android {
 
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
-
-            resValue("string", "floris_app_name", "FlorisBoard Bench")
         }
     }
 
@@ -241,6 +245,7 @@ dependencies {
     testImplementation(libs.kotlin.test.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
+    androidTestImplementation(libs.androidx.core.splashscreen)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
