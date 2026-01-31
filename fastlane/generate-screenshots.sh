@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 cd staging/images || exit
 # Do some image magick to make the screenshots look pretty
