@@ -16,12 +16,14 @@
 
 package org.florisboard.lib.compose
 
+import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 
+@SuppressLint("UnnecessaryComposedModifier")
 fun Modifier.autoMirrorForRtl() = composed {
     if (LocalLayoutDirection.current == LayoutDirection.Rtl) {
         this.scale(-1f, 1f)

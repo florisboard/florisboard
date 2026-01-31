@@ -42,7 +42,7 @@ fun InputFeedbackScreen() = FlorisScreen {
     val context = LocalContext.current
     val vibrator = context.systemVibratorOrNull()
 
-    Content {
+    content {
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_audio__label)) {
             ListPreference(
                 listPref = prefs.inputFeedback.audioActivationMode,

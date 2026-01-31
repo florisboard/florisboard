@@ -42,7 +42,7 @@ fun ProjectLicenseScreen() = FlorisScreen {
 
     val context = LocalContext.current
 
-    Content {
+    content {
         // Forcing LTR because the Apache 2.0 License shipped and displayed
         // is hard to read if rendered in RTL. Also, it is in English so forcing
         // LTR here makes most sense.

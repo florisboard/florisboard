@@ -56,9 +56,9 @@ import org.florisboard.lib.snygg.value.SnyggStaticColorValue
  */
 @Composable
 fun SnyggIconButton(
-    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onLongClick: (() -> Unit)? = null,
     enabled: Boolean = true,
@@ -115,13 +115,13 @@ private fun SimpleSnyggIconButton() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn(elementName = "preview-column") {
-            SnyggText(elementName = "preview-text", text = "blue text")
+        SnyggColumn("preview-column") {
+            SnyggText("preview-text", text = "blue text")
             SnyggIconButton(
-                elementName = "preview-icon",
+                "preview-icon",
                 onClick = {},
             ) {
-                SnyggIcon(elementName = "preview-icon", imageVector = Icons.Default.Search)
+                SnyggIcon("preview-icon", imageVector = Icons.Default.Search)
             }
         }
     }

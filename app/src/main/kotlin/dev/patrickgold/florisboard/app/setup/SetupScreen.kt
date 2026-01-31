@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.app.setup
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -101,6 +102,7 @@ fun SetupScreen() = FlorisScreen {
     )
 }
 
+@SuppressLint("ComposableNaming")
 @Composable
 private fun FlorisScreenScope.content(
     isFlorisBoardEnabled: Boolean,
@@ -122,7 +124,7 @@ private fun FlorisScreenScope.content(
         FlorisStepState.new(init = initStep)
     }
 
-    Content {
+    content {
         LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
             stepState.setCurrentAuto(
                 when {

@@ -411,6 +411,7 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         }
     }
 
+    @Suppress("ConstPropertyName")
     object Attr {
         const val Code = "code"
         const val Mode = "mode"

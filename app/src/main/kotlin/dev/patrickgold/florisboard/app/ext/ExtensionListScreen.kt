@@ -104,7 +104,7 @@ fun ExtensionListScreen(type: ExtensionListScreenType, showUpdate: Boolean) = Fl
     val fabHeightDp = with(LocalDensity.current) { fabHeight.toDp()+16.dp }
     val listState = rememberLazyListState()
 
-    Content {
+    content {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

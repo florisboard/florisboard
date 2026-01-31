@@ -69,7 +69,7 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
         },
     )
 
-    Content {
+    content {
         exportLauncher.launch(ExtensionDefaults.createFlexName(ext.meta.id))
     }
 }

@@ -78,7 +78,7 @@ fun AndroidLocalesScreen() = FlorisScreen {
         )
     }
 
-    Content {
+    content {
         val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
 
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {

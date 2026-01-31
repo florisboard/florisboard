@@ -57,7 +57,7 @@ fun MediaScreen() = FlorisScreen {
     var shouldDelete by remember { mutableStateOf<ShouldDelete?>(null) }
     val scope = rememberCoroutineScope()
 
-    Content {
+    content {
         ListPreference(
             prefs.emoji.preferredSkinTone,
             title = stringRes(R.string.prefs__media__emoji_preferred_skin_tone),

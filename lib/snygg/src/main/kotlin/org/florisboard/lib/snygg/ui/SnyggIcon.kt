@@ -52,10 +52,10 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  */
 @Composable
 fun SnyggIcon(
-    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
+    modifier: Modifier = Modifier,
     imageVector: ImageVector,
     contentDescription: String? = null,
 ) {
@@ -90,10 +90,10 @@ fun SnyggIcon(
  */
 @Composable
 fun SnyggIcon(
-    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
+    modifier: Modifier = Modifier,
     bitmap: ImageBitmap,
     contentDescription: String? = null,
 ) {
@@ -128,10 +128,10 @@ fun SnyggIcon(
  */
 @Composable
 fun SnyggIcon(
-    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
+    modifier: Modifier = Modifier,
     painter: Painter,
     contentDescription: String? = null,
 ) {
@@ -160,9 +160,9 @@ private fun SimpleSnyggIcon() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggColumn(elementName = "preview-column") {
-            SnyggText(elementName = "preview-text", text = "blue text")
-            SnyggIcon(elementName = "preview-icon", imageVector = Icons.Default.Search)
+        SnyggColumn("preview-column") {
+            SnyggText("preview-text", text = "blue text")
+            SnyggIcon("preview-icon", imageVector = Icons.Default.Search)
         }
     }
 }

@@ -405,13 +405,13 @@ class PopupUiController(
 
     /**
      * Gets the [EmojiSet] of the currently active key. May be either the key of the popup
-     * preview or one of the keys in extended popup, if shown. Returns null if [key] is noz a subclass of [//EmojiKey].
+     * preview or one of the keys in extended popup, if shown. Returns null if [key] is noz a subclass of [EmojiKey].
      *
-     * @param //key Reference to the key currently controlling the popup.
+     * @param key Reference to the key currently controlling the popup.
      * @return The [EmojiSet] object of the currently active key or null.
      */
-    //fun getActiveEmojiKeyData(key: Key): KeyData? {
-       // return null
+    fun getActiveEmojiKeyData(key: Key): KeyData? {
+        return null
         //return if (key is EmojiKey) {
         //    val extRenderInfo = extRenderInfo ?: return null
         //    val element = getElementOrNull(extRenderInfo.elements, activeElementIndex)
@@ -423,7 +423,7 @@ class PopupUiController(
         //} else {
         //    null
         //}
-    //}
+    }
 
     fun hide() {
         baseRenderInfo = null

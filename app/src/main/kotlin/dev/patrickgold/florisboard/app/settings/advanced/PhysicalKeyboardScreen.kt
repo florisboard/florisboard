@@ -45,7 +45,7 @@ fun PhysicalKeyboardScreen() = FlorisScreen {
         ActivityResultContracts.StartActivityForResult()
     ) { }
 
-    Content {
+    content {
         if (physicalKeyboardAttached) {
             Preference(
                 title = stringRes(R.string.physical_keyboard__system_settings__title),

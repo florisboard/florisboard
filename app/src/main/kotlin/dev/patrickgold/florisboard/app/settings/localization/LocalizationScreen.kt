@@ -96,7 +96,7 @@ fun LocalizationScreen() = FlorisScreen {
         )
     }
 
-    Content {
+    content {
         ListPreference(
             prefs.localization.displayLanguageNamesIn,
             title = stringRes(R.string.settings__localization__display_language_names_in__label),

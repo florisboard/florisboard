@@ -54,7 +54,7 @@ fun HomeScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    Content {
+    content {
         val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
 
         val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)

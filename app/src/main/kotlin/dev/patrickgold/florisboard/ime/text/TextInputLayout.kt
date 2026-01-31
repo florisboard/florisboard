@@ -68,7 +68,7 @@ fun TextInputLayout(
                     incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
                 if (showIncognitoIcon) {
                     SnyggIcon(
-                        elementName = FlorisImeUi.IncognitoModeIndicator.elementName,
+                        FlorisImeUi.IncognitoModeIndicator.elementName,
                         modifier = Modifier
                             .matchParentSize()
                             .align(Alignment.Center),

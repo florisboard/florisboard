@@ -34,7 +34,7 @@ fun SmartbarScreen() = FlorisScreen {
     title = stringRes(R.string.settings__smartbar__title)
     previewFieldVisible = true
 
-    Content {
+    content {
         SwitchPreference(
             prefs.smartbar.enabled,
             title = stringRes(R.string.pref__smartbar__enabled__label),

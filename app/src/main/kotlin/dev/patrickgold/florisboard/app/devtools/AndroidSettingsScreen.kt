@@ -54,7 +54,7 @@ fun AndroidSettingsScreen(name: String?) = FlorisScreen {
     val nameValueTable = remember(name) { settingsGroup.getAllKeys().toList() }
     var dialogKey by remember { mutableStateOf<String?>(null) }
 
-    Content {
+    content {
         LazyColumn {
             items(nameValueTable) { (fieldName, key) ->
                 Preference(

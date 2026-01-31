@@ -243,7 +243,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
         )
     }
 
-    Content {
+    content {
         BackHandler(currentLocale != null) {
             currentLocale = null
             buildUi()

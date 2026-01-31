@@ -66,6 +66,7 @@ class ClipboardMediaProvider : ContentProvider() {
         }
     }
 
+    @Suppress("ConstPropertyName")
     object Columns {
         const val MediaUri = "media_uri"
         const val MimeTypes = "mime_types"

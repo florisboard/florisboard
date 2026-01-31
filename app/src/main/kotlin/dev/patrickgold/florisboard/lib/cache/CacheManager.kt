@@ -51,7 +51,6 @@ import org.florisboard.lib.kotlin.io.readJson
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import java.io.Closeable
-import java.io.File
 import java.util.UUID
 
 class CacheManager(context: Context) {

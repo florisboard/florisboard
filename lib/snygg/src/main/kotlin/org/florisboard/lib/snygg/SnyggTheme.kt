@@ -23,14 +23,14 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import org.florisboard.lib.color.getColor
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
+import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDefinedVarValue
 import org.florisboard.lib.snygg.value.SnyggDynamicDarkColorValue
 import org.florisboard.lib.snygg.value.SnyggDynamicLightColorValue
-import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
-import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
+import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggUriValue
 import java.io.File
 
@@ -109,7 +109,9 @@ data class SnyggTheme internal constructor(
                         val fontList = fonts.getOrDefault(rule.fontName, mutableListOf())
                         propertySet.sets.forEach { fontSet ->
                             val src = fontSet.src as? SnyggUriValue ?: return@forEach
-                            val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull() ?: return@forEach
+                            val fontPath = assetResolver.resolveAbsolutePath(src.uri).getOrNull()
+                            @Suppress("FoldInitializerAndIfToElvis", "RedundantSuppression")
+                            if (fontPath == null) return@forEach
                             val fontStyle = (fontSet.fontStyle as? SnyggFontStyleValue)?.fontStyle
                             val fontWeight = (fontSet.fontWeight as? SnyggFontWeightValue)?.fontWeight
                             fontList.add(

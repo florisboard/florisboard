@@ -246,7 +246,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             }
 
             SnyggIconButton(
-                elementName = FlorisImeUi.WindowMoveHandle.elementName,
+                FlorisImeUi.WindowMoveHandle.elementName,
                 attributes = attributes,
                 onClick = {}
             ) {

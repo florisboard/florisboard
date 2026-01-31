@@ -86,7 +86,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen {
 
     var extToDelete by remember { mutableStateOf<Extension?>(null) }
 
-    Content {
+    content {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
         ) {

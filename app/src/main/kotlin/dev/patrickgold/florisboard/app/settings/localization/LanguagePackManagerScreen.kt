@@ -105,7 +105,7 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
     }
     var languagePackExtToDelete by remember { mutableStateOf<Extension?>(null) }
 
-    Content {
+    content {
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
         if (action == LanguagePackManagerScreenAction.MANAGE) {
             FlorisOutlinedBox(

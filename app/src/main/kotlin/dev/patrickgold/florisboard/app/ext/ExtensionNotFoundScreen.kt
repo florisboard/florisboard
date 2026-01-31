@@ -30,7 +30,7 @@ import org.florisboard.lib.compose.stringRes
 internal fun ExtensionNotFoundScreen(id: String) = FlorisScreen {
     title = stringRes(R.string.ext__error__not_found_title)
 
-    Content {
+    content {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
         ) {

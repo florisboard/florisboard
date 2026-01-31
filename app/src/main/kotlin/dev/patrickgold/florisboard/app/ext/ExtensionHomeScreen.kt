@@ -42,7 +42,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
     val extensionManager by context.extensionManager()
     val extensionIndex by extensionManager.extensions.collectAsState()
 
-    Content {
+    content {
         ImportExtensionBox(navController)
 
         UpdateBox(extensionIndex = extensionIndex)

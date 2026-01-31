@@ -50,6 +50,7 @@ enum class OperationScope {
     AFTER_CURSOR;
 }
 
+@Suppress("ConstPropertyName")
 abstract class AbstractEditorInstance(context: Context) {
     companion object {
         private const val NumCharsBeforeCursor: Int = 256

@@ -46,10 +46,10 @@ import org.florisboard.lib.snygg.SnyggStylesheet
  */
 @Composable
 fun SnyggSpacer(
-    modifier: Modifier = Modifier,
     elementName: String? = null,
     attributes: SnyggQueryAttributes = emptyMap(),
     selector: SnyggSelector? = null,
+    modifier: Modifier = Modifier,
 ) {
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
         Spacer(
@@ -79,14 +79,14 @@ private fun SimpleSnyggSpacer() {
     val theme = rememberSnyggTheme(stylesheet)
 
     ProvideSnyggTheme(theme) {
-        SnyggRow(elementName = "preview-row") {
-            SnyggText(elementName = "preview-text", text = "hello")
-            SnyggSpacer(elementName = "preview-spacer",
+        SnyggRow("preview-row") {
+            SnyggText("preview-text", text = "hello")
+            SnyggSpacer("preview-spacer",
                 modifier = Modifier
                     .width(1.dp)
                     .height(12.dp)
                     .align(Alignment.CenterVertically))
-            SnyggText(elementName = "preview-text", text = "world")
+            SnyggText("preview-text", text = "world")
         }
     }
 }

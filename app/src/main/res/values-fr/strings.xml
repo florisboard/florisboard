@@ -904,26 +904,26 @@
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">
         <item quantity="one">{v} heure</item>
-        <item quantity="many">{v} heures</item>
+        <item quantity="other">{v} heures</item>
     </plurals>
     <plurals name="unit__minutes__written">
         <item quantity="one">{v} minute</item>
-        <item quantity="many">{v} minutes</item>
+        <item quantity="other">{v} minutes</item>
     </plurals>
     <plurals name="unit__seconds__written">
         <item quantity="one">{v} seconde</item>
-        <item quantity="many">{v} secondes</item>
+        <item quantity="other">{v} secondes</item>
     </plurals>
     <plurals name="unit__items__written">
         <item quantity="one">{v} élément</item>
-        <item quantity="many">{v} éléments</item>
+        <item quantity="other">{v} éléments</item>
     </plurals>
     <plurals name="unit__characters__written">
         <item quantity="one">{v} caractère</item>
-        <item quantity="many">{v} caractères</item>
+        <item quantity="other">{v} caractères</item>
     </plurals>
     <plurals name="unit__candidates__written">
         <item quantity="one">{v} candidat</item>
-        <item quantity="many">{v} candidats</item>
+        <item quantity="other">{v} candidats</item>
     </plurals>
 </resources>

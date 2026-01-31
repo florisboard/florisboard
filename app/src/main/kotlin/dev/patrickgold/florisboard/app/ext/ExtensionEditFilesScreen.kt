@@ -52,13 +52,10 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
-import java.io.File
-import java.util.*
 import org.florisboard.lib.android.query
 import org.florisboard.lib.android.readToFile
 import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.stringRes
@@ -66,6 +63,8 @@ import org.florisboard.lib.kotlin.io.parentDir
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.mimeTypeFilterOf
+import java.io.File
+import java.util.UUID
 
 const val FONTS = "fonts"
 const val IMAGES = "images"
@@ -98,7 +97,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         )
     }
 
-    Content {
+    content {
         val context = LocalContext.current
         var version by rememberSaveable { mutableIntStateOf(0) }
         val fontFiles = remember(version) {

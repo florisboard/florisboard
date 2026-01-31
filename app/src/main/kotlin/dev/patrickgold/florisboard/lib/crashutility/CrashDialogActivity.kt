@@ -19,15 +19,14 @@ package dev.patrickgold.florisboard.lib.crashutility
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.activity.ComponentActivity
+import androidx.core.net.toUri
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
@@ -38,7 +37,6 @@ import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import androidx.core.net.toUri
 
 private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, FlorisPreferenceModel?> {
     val cachedPreferenceModel = try {

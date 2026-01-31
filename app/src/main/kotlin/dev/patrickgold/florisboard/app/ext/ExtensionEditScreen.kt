@@ -333,7 +333,7 @@ private fun EditScreen(
         }
     }
 
-    Content {
+    content {
         BackHandler {
             handleBackPress()
         }
@@ -489,7 +489,7 @@ private fun ManageMetaDataScreen(
         }
     }
 
-    Content {
+    content {
         BackHandler {
             handleBackPress()
         }
@@ -579,7 +579,7 @@ private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<
         )
     }
 
-    Content {
+    content {
         BackHandler {
             handleBackPress()
         }
@@ -760,7 +760,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
         }
     }
 
-    Content {
+    content {
         BackHandler {
             handleBackPress()
         }

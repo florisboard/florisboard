@@ -197,7 +197,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         }
     }
 
-    Content {
+    content {
         if (initUuid == null) {
             FlorisOutlinedButton(
                 onClick = {

@@ -28,7 +28,6 @@ import androidx.compose.material.icons.filled.EmojiSymbols
 import androidx.compose.material.icons.filled.EmojiTransportation
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.patrickgold.florisboard.R
 
 enum class EmojiCategory(val id: String) {
     RECENTLY_USED("recently_used"),

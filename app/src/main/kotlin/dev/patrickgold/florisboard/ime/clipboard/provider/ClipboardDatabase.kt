@@ -151,6 +151,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
                     var displayName = when (type) {
                         ItemType.IMAGE -> "Image"
                         ItemType.VIDEO -> "Video"
+                        else -> ItemType.TEXT
                     }
                     tryOrNull {
                         context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION)?.use { cursor ->
@@ -161,14 +162,16 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
                         }
                     }
                     val values = ContentValues(3).apply {
-                        put(OpenableColumns.DISPLAY_NAME, displayName)
+                        put(OpenableColumns.DISPLAY_NAME, displayName.toString())
                         put(ClipboardMediaProvider.Columns.MediaUri, dataItem.uri.toString())
                         put(ClipboardMediaProvider.Columns.MimeTypes, data.description.filterMimeTypes("*/*").joinToString(","))
                     }
-                    context.contentResolver.insert(when (type) {
-                        ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
-                        ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
-                    }, values)
+                    context.contentResolver.insert(
+                        when (type) {
+                            ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
+                            ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
+                            else -> ItemType.TEXT
+                        } as Uri, values)
                 }
             } else { null }
 
@@ -316,7 +319,7 @@ interface ClipboardHistoryDao {
     version = 4,
     autoMigrations = [
         AutoMigration(from = 2, to = 4),
-        AutoMigration(from = 3, to = 4, spec = ClipboardHistoryDatabase.MIGRATE_3_TO_4::class),
+        AutoMigration(from = 3, to = 4, spec = ClipboardHistoryDatabase.MigrateV3ToV4::class),
     ],
 )
 @TypeConverters(Converters::class)
@@ -333,7 +336,7 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
         fromColumnName = "isRemoteDevice",
         toColumnName = "is_remote_device",
     )
-    class MIGRATE_3_TO_4 : AutoMigrationSpec
+    class MigrateV3ToV4 : AutoMigrationSpec
 
     companion object {
         fun new(context: Context): ClipboardHistoryDatabase {
@@ -341,7 +344,7 @@ abstract class ClipboardHistoryDatabase : RoomDatabase() {
                 .databaseBuilder(
                     context, ClipboardHistoryDatabase::class.java, CLIPBOARD_HISTORY_TABLE,
                 )
-                .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigration(false)
                 .build()
         }
     }
@@ -389,7 +392,7 @@ abstract class ClipboardFilesDatabase : RoomDatabase() {
                 .databaseBuilder(
                     context, ClipboardFilesDatabase::class.java, CLIPBOARD_FILES_TABLE,
                 )
-                .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigration(false)
                 .build()
         }
     }

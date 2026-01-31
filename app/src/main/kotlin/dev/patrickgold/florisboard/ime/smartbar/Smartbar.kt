@@ -104,21 +104,21 @@ fun Smartbar() {
     ) {
         when (extendedActionsPlacement) {
             ExtendedActionsPlacement.ABOVE_CANDIDATES -> {
-                SnyggColumn(elementName = FlorisImeUi.Smartbar.elementName) {
+                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
                     SmartbarSecondaryRow()
                     SmartbarMainRow()
                 }
             }
 
             ExtendedActionsPlacement.BELOW_CANDIDATES -> {
-                SnyggColumn(elementName = FlorisImeUi.Smartbar.elementName) {
+                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
                     SmartbarMainRow()
                     SmartbarSecondaryRow()
                 }
             }
 
             ExtendedActionsPlacement.OVERLAY_APP_UI -> {
-                SnyggBox(elementName = FlorisImeUi.Smartbar.elementName,
+                SnyggBox(FlorisImeUi.Smartbar.elementName,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(FlorisImeSizing.smartbarHeight),
@@ -244,7 +244,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun ExtendedActionsToggle() {
         SnyggIconButton(
-            elementName = FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
+            FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
             onClick = {
                 if (/* was */ extendedActionsExpanded) {
                     keyboardManager.activeState.isActionsOverflowVisible = false
@@ -260,7 +260,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             val rotation by transition.animateFloat(label = "rotation") { if (it) 180f else 0f }
             // Expanded icon
             SnyggIcon(
-                elementName = FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
+                FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
                 modifier = Modifier
                     .alpha(alpha)
                     .rotate(rotation),
@@ -268,7 +268,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             )
             // Not expanded icon
             SnyggIcon(
-                elementName = FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
+                FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
                 modifier = Modifier
                     .alpha(1f - alpha)
                     .rotate(rotation - 180f),

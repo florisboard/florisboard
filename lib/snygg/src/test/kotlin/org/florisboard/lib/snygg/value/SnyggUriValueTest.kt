@@ -1,7 +1,6 @@
 package org.florisboard.lib.snygg.value
 
 import org.junit.jupiter.api.assertAll
-import java.net.URI
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs

@@ -255,7 +255,7 @@ fun ThemeEditorScreen(
         PreviewKeyboardField(previewFieldController)
     }
 
-    Content {
+    content {
         stylesheetEditorFailure?.let { failure ->
             JetPrefAlertDialog(
                 title = stringRes(R.string.settings__theme_editor__stylesheet_error_title),

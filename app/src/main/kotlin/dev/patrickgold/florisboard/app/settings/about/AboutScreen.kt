@@ -58,7 +58,7 @@ fun AboutScreen() = FlorisScreen {
 
     val appVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
-    Content {
+    content {
         Column(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,

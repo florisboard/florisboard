@@ -59,7 +59,7 @@ fun OtherScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    Content {
+    content {
         ListPreference(
             prefs.other.settingsTheme,
             icon = Icons.Default.Palette,

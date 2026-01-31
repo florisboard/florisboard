@@ -97,8 +97,8 @@ class HangulUnicode : Composer {
 
             // if there is already a final but, it is mergeable with the new char into a composed final, merge
             if ((finals[fin] in finalComp) && c in finalComp[finals[fin]]!![0]) {
-                val tple = finalComp[finals[fin]]
-                return 1 to "${syllable(ini, med, finals.indexOf(tple!![1][tple[0].indexOf(c)]))}"
+                val tuple = finalComp[finals[fin]]
+                return 1 to "${syllable(ini, med, finals.indexOf(tuple!![1][tuple[0].indexOf(c)]))}"
             }
 
             // if there is a simple final and the new char is a medial, split the old syllable
@@ -112,8 +112,8 @@ class HangulUnicode : Composer {
 
             // if no final yet, and current medial can be composed with new char, merge
             if (medials[med] in medialComp && c in medialComp.getValue(medials[med])[0] && fin == 0) {
-                val tple = medialComp[medials[med]]
-                return 1 to "${syllable(ini, medials.indexOf(tple!![1][tple[0].indexOf(c)]), 0)}"
+                val tuple = medialComp[medials[med]]
+                return 1 to "${syllable(ini, medials.indexOf(tuple!![1][tuple[0].indexOf(c)]), 0)}"
             }
         } else if (lastChar in medialComp.keys && medialComp[lastChar]?.get(0)?.contains(c) == true) { // medial+final
             return 1 to ""+ medialComp[lastChar]?.get(1)!![medialComp[lastChar]?.get(0)!!.indexOf(c)]

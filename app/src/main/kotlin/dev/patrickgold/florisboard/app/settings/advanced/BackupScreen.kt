@@ -279,7 +279,7 @@ fun BackupScreen() = FlorisScreen {
         }
     }
 
-    Content {
+    content {
         FlorisOutlinedBox(
             modifier = Modifier.defaultFlorisOutlinedBox(),
             title = stringRes(R.string.backup_and_restore__back_up__destination),

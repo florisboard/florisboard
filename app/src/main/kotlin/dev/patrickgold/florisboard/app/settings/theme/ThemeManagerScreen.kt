@@ -97,7 +97,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
         ThemeManagerScreenAction.SELECT_NIGHT -> getThemeIdPref().observeAsState()
     }
 
-    Content {
+    content {
         DisposableEffect(activeThemeId) {
             themeManager.previewThemeId.value = activeThemeId
             onDispose {
