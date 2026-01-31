@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 cd staging/images || exit
 # Do some image magick to make the screenshots look pretty
@@ -142,7 +142,7 @@ for t in "${SHOWCASE_TEXT[@]}"; do
       -resize 65% `# Scale down`\
     \) \
     -gravity South -geometry +0-20 -composite `# Place the screenshot with shadow over the background`\
-    \( -gravity Center -size $((1080*8/10))x$((1920*2/10)) -fill black -font ${SHOWCASE_TEXT_FONT} -pointsize 48 label:"${t#*:}" \) `# Create text`\
+    \( -gravity Center -size $((1080*0.8))x$((1920*0.2)) -fill black -font ${SHOWCASE_TEXT_FONT} -pointsize 48 label:"${t#*:}" \) `# Create text`\
     -gravity North -composite `# Place the screenshot with shadow over the background`\
     "${t%:*}"
   echo "Done ..."
@@ -181,7 +181,7 @@ for t in "${ICON_SHOWCASE_TEXT[@]}"; do
       -resize 90% `# Scale down`\
      \) \
     -gravity South -composite `# Place the screenshot with shadow over the background`\
-    \( -gravity Center -size $((1080*8/10))x$((1920*2/10)) -fill black -font ${SHOWCASE_TEXT_FONT} -pointsize 48 label:"${t#*:}" \) `# Create text`\
+    \( -gravity Center -size $((1080*0.8))x$((1920*0.2)) -fill black -font ${SHOWCASE_TEXT_FONT} -pointsize 48 label:"${t#*:}" \) `# Create text`\
     -gravity North -composite `# Place the screenshot with shadow over the background`\
     "${t%:*}"
   echo "Done ..."
