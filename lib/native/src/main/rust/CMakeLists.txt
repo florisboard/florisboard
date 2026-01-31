@@ -54,7 +54,13 @@ add_custom_target(
 
 add_dependencies(fl_native fl_native_rust_build)
 
+add_subdirectory(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../libnative/latinime
+    ${CMAKE_CURRENT_BINARY_DIR}/latinime
+)
+
 # TODO: check if there's a better way than allowing multiple symbol definitions
 target_link_libraries(fl_native
     android log -Wl,--whole-archive -Wl,--allow-multiple-definition -Wl,--build-id=none ${FL_NATIVE_RUST_PATH}
+    latinime
 )

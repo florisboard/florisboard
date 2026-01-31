@@ -49,10 +49,6 @@ crowdin.properties
 # C++
 .cxx/
 
-# Nix stuff
-.direnv/
-result
-
 # VSCode
 .vscode/
 
