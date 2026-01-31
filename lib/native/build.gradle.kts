@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 /*
@@ -18,7 +19,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
 }
 
 val projectMinSdk: String by project
@@ -30,7 +30,9 @@ kotlin {
     }
 }
 
-android {
+
+
+configure<LibraryExtension> {
     namespace = "org.florisboard.libnative"
     compileSdk = projectCompileSdk.toInt()
     ndkVersion = tools.versions.ndk.get()
@@ -74,7 +76,7 @@ android {
     sourceSets {
         maybeCreate("main").apply {
             java {
-                srcDirs("src/main/kotlin")
+                directories += "src/main/kotlin"
             }
         }
     }

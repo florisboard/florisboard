@@ -19,7 +19,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlinx.kover)
@@ -110,10 +109,11 @@ dependencies {
 tasks.register<JavaExec>("generateJsonSchema") {
     dependsOn("build")
     mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
-    val debugVariant = android.libraryVariants.first { it.name == "debug" }
-    classpath = files(
-        debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },
-    )
+    androidComponents {
+        onVariants(selector().withBuildType("debug")) { variant ->
+            classpath = variant.compileClasspath
+        }
+    }
     args = listOf("schemas/stylesheet.schema.json")
     workingDir = projectDir
     standardOutput = System.out

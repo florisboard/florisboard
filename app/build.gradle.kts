@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
+import com.android.build.api.dsl.ApplicationExtension
+import com.google.devtools.ksp.gradle.KspExtension
+import com.mikepenz.aboutlibraries.plugin.AboutLibrariesExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -54,7 +56,7 @@ kotlin {
     }
 }
 
-android {
+configure<ApplicationExtension> {
     namespace = "dev.patrickgold.florisboard"
     compileSdk = projectCompileSdk.toInt()
     buildToolsVersion = tools.versions.buildTools.get()
@@ -63,12 +65,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
-        arg("room.expandProjection", "true")
     }
 
     defaultConfig {
@@ -87,11 +83,14 @@ android {
         sourceSets {
             maybeCreate("main").apply {
                 assets {
-                    srcDirs("src/main/assets")
+                    directories += "src/main/assets"
                 }
                 java {
-                    srcDirs("src/main/kotlin")
+                    directories += "src/main/kotlin"
                 }
+            }
+            maybeCreate("androidTest").apply {
+                res.directories += "src/androidTest/res"
             }
         }
     }
@@ -108,6 +107,7 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
+        resValues = true
     }
 
     buildTypes {
@@ -152,6 +152,7 @@ android {
         }
 
         create("benchmark") {
+            resValue("string", "floris_app_name", "FlorisBoard Benchmark")
             initWith(getByName("release"))
 
             applicationIdSuffix = ".bench"
@@ -159,14 +160,6 @@ android {
 
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
-
-            resValue("string", "floris_app_name", "FlorisBoard Bench")
-        }
-    }
-
-    aboutLibraries {
-        collect {
-            configPath = file("src/main/config")
         }
     }
 
@@ -181,6 +174,17 @@ android {
         unitTests.all {
             it.useJUnitPlatform()
         }
+    }
+}
+configure<KspExtension> {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+}
+
+configure<AboutLibrariesExtension> {
+    collect {
+        configPath = file("src/main/config")
     }
 }
 

@@ -1,15 +1,15 @@
 [versions]
 # Main
-android-gradle-plugin = "8.12.3"
-androidx-activity = "1.12.2"
+android-gradle-plugin = "9.0.0"
+androidx-activity = "1.12.3"
 androidx-autofill = "1.3.0"
 androidx-collection = "1.5.0"
-androidx-compose-bom = "2025.12.01"
+androidx-compose-bom = "2026.01.01"
 androidx-core = "1.17.0"
 androidx-core-splashscreen = "1.2.0"
 androidx-emoji2 = "1.6.0"
 androidx-exifinterface = "1.4.2"
-androidx-navigation = "2.9.6"
+androidx-navigation = "2.9.7"
 androidx-profileinstaller = "1.4.1"
 androidx-room = "2.8.4"
 androidx-window = "1.5.1"
@@ -20,7 +20,7 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.10.0"
 ksp = "2.3.4"
 material-kolor = "4.1.0"
-mikepenz-aboutlibraries = "13.2.1"
+mikepenz-aboutlibraries = "14.0.0-b02"
 patrickgold-compose-tooltip = "0.2.0-rc02"
 patrickgold-jetpref = "0.3.0-rc01"
 
@@ -90,7 +90,6 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 agp-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 agp-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 agp-test = { id = "com.android.test", version.ref = "android-gradle-plugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
