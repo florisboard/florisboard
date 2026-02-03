@@ -85,6 +85,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                 val extendedPopups = keyboard.extendedPopupMapping
                 var popupSet: PopupSet<AbstractKeyData>? = null
                 val kv = evaluator.state.keyVariation
+                @Suppress("KotlinConstantConditions")
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
                     popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
                         extendedPopupsDefault?.get(KeyVariation.PASSWORD)?.get(extLabel)

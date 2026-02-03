@@ -16,4 +16,5 @@
 
 package org.florisboard.libnative
 
+@Suppress("KotlinJniMissingFunction", "RedundantSuppression")
 external fun dummyAdd(a: Int, b: Int): Int

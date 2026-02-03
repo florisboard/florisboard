@@ -64,6 +64,7 @@ sealed interface SnyggPropertySetEditor {
     fun build(): SnyggPropertySet
 }
 
+@Suppress("SameParameterValue", "unused")
 class SnyggSinglePropertySetEditor(initProperties: Map<String, SnyggValue>? = null) : SnyggPropertySetEditor {
     val uuid = UUID.randomUUID().toString()
     val properties = mutableMapOf<String, SnyggValue>()

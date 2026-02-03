@@ -26,7 +26,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.nlpManager
 import java.text.Normalizer
-import java.util.*
+import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.PI
 import kotlin.math.abs
@@ -267,6 +267,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         return totalDistance / SAMPLING_POINTS / 2
     }
 
+    @Suppress("SameParameterValue")
     private fun calcGaussianProbability(value: Float, mean: Float, standardDeviation: Float): Float {
         val factor = 1.0 / (standardDeviation * sqrt(2 * PI))
         val exponent = ((value - mean) / standardDeviation).toDouble().pow(2.0)
@@ -402,6 +403,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
              * @param keys The keys of the keyboard.
              * @return A list of the n closest keys.
              */
+            @Suppress("SameParameterValue")
             private fun findNClosestKeys(
                 x: Float, y: Float, n: Int, keys: Iterable<TextKey>
             ): Iterable<Int> {

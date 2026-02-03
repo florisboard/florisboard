@@ -34,12 +34,12 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
+import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggFontStyleValue
 import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
-import org.florisboard.lib.snygg.value.SnyggContentScaleValue
-import org.florisboard.lib.snygg.value.SnyggDpSizeValue
 import org.florisboard.lib.snygg.value.SnyggShapeValue
 import org.florisboard.lib.snygg.value.SnyggSpSizeValue
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
@@ -49,7 +49,6 @@ import org.florisboard.lib.snygg.value.SnyggTextMaxLinesValue
 import org.florisboard.lib.snygg.value.SnyggTextOverflowValue
 import org.florisboard.lib.snygg.value.SnyggUndefinedValue
 import org.florisboard.lib.snygg.value.SnyggValue
-import kotlin.collections.contains
 
 sealed class SnyggPropertySet {
     abstract fun edit(): SnyggPropertySetEditor
@@ -111,6 +110,7 @@ data class SnyggSinglePropertySet internal constructor(
     val contentScale = properties[Snygg.ContentScale] ?: SnyggUndefinedValue
 
     val borderColor = properties[Snygg.BorderColor] ?: SnyggUndefinedValue
+    @Suppress("unused")
     val borderStyle = properties[Snygg.BorderStyle] ?: SnyggUndefinedValue
     val borderWidth = properties[Snygg.BorderWidth] ?: SnyggUndefinedValue
 

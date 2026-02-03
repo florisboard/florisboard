@@ -28,12 +28,12 @@ import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
 import dev.patrickgold.florisboard.subtypeManager
+import org.florisboard.lib.android.systemService
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import org.florisboard.lib.android.systemService
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "DefaultLocale")
 object Devtools {
     fun generateDebugLog(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
@@ -248,6 +248,7 @@ object Devtools {
             }
         }
     }
+
 
     fun getAppNativeHeapMemoryUsage(): String {
         return buildString {

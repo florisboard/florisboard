@@ -17,6 +17,7 @@
 package org.florisboard.lib.snygg
 
 import org.florisboard.lib.snygg.value.SnyggCircleShapeValue
+import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerPercentShapeValue
@@ -29,7 +30,6 @@ import org.florisboard.lib.snygg.value.SnyggFontWeightValue
 import org.florisboard.lib.snygg.value.SnyggGenericFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggInheritValue
 import org.florisboard.lib.snygg.value.SnyggNoValue
-import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggPaddingValue
 import org.florisboard.lib.snygg.value.SnyggRectangleShapeValue
 import org.florisboard.lib.snygg.value.SnyggRoundedCornerDpShapeValue

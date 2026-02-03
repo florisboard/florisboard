@@ -225,6 +225,7 @@ class LayoutManager(context: Context) {
             }
         }
 
+        @Suppress("KotlinConstantConditions")
         if (mainLayout != null && modifierLayout != null) {
             for (mainRowI in mainLayout.arrangement.indices) {
                 val mainRow = mainLayout.arrangement[mainRowI]
