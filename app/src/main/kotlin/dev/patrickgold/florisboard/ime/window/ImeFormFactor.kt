@@ -31,6 +31,9 @@ import androidx.window.core.layout.computeWindowSizeClass
  *  for more information.
  * @property typeGuess The type guess of device and orientation on a best-effort basis. May be incorrect.
  */
+
+typealias BP = WindowSizeClass.Companion
+
 data class ImeFormFactor(
     val sizeClass: WindowSizeClass,
     val typeGuess: Type,
@@ -59,7 +62,6 @@ data class ImeFormFactor(
          * @param boundsDp The root window bounds in dp.
          */
         fun of(boundsDp: DpRect): ImeFormFactor {
-            typealias BP = WindowSizeClass.Companion
             val sizeClass = WindowSizeClass.BREAKPOINTS_V2.computeWindowSizeClass(
                 widthDp = boundsDp.width.value,
                 heightDp = boundsDp.height.value,
