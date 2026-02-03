@@ -57,17 +57,35 @@ abstract class AbstractStartupBenchmark(private val startupMode: StartupMode) {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
+/**
+ * No ahead-of-time (AOT) compilation at all. Represents performance of a
+ * fresh install on a user's device if you don't enable Baseline Profiles—
+ * generally the worst case performance.
+ **/
     @Test
     fun startupNoCompilation() = startup(CompilationMode.None())
 
+/**
+* Partial pre-compilation with some just-in-time (JIT) compilation.
+* Represents performance after some app usage.
+**/
     @Test
     fun startupBaselineProfileDisabled() = startup(
-        CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Disable, warmupIterations = 1)
+        CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Disable, warmupIterations = 3)
     )
 
+/**
+* Partial pre-compilation with Baseline Profiles. Represents performance of
+* a fresh install on a user's device.
+**/
     @Test
     fun startupBaselineProfile() = startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
 
+/**
+* Full pre-compilation. Generally not representative of real user
+* experience, but can yield more stable performance metrics by removing
+* noise from JIT compilation within benchmark runs.
+**/
     @Test
     fun startupFullCompilation() = startup(CompilationMode.Full())
 

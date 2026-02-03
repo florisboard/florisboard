@@ -16,16 +16,19 @@
 
 package dev.patrickgold.florisboard.lib.util
 
+import android.annotation.SuppressLint
+@SuppressLint("DefaultLocale")
 object UnitUtils {
-    private const val KiB = (1024).toFloat()
-    private const val MiB = (1024 * 1024).toFloat()
-    private const val GiB = (1024 * 1024 * 1024).toFloat()
+    private const val KIBIBYTE = (1024).toFloat()
+    private const val MEBIBYTE = (1024 * 1024).toFloat()
+    private const val GIBIBYTE = (1024 * 1024 * 1024).toFloat()
+
 
     fun formatMemorySize(sizeBytes: Long): String {
         return when {
-            sizeBytes >= GiB -> String.format("%.2f GiB", sizeBytes / GiB)
-            sizeBytes >= MiB -> String.format("%.2f MiB", sizeBytes / MiB)
-            sizeBytes >= KiB -> String.format("%.2f KiB", sizeBytes / KiB)
+            sizeBytes >= GIBIBYTE -> String.format("%.2f GiB", sizeBytes / GIBIBYTE)
+            sizeBytes >= MEBIBYTE -> String.format("%.2f MiB", sizeBytes / MEBIBYTE)
+            sizeBytes >= KIBIBYTE -> String.format("%.2f KiB", sizeBytes / KIBIBYTE)
             else -> String.format("%d bytes")
         }
     }
