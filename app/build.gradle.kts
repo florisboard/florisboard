@@ -92,6 +92,11 @@ android {
                 java {
                     srcDirs("src/main/kotlin")
                 }
+                maybeCreate("androidTest").apply {
+                    res {
+                        srcDirs("src/main/res")
+                    }
+                }
             }
         }
     }
@@ -152,15 +157,12 @@ android {
         }
 
         create("benchmark") {
-            initWith(getByName("release"))
-
             applicationIdSuffix = ".bench"
             versionNameSuffix = "-bench+${getGitCommitHash(short = true).get()}"
-
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
 
-            resValue("string", "floris_app_name", "FlorisBoard Bench")
+            resValue("string", "floris_app_name", "FlorisBoard Benchmark")
         }
     }
 
@@ -243,6 +245,7 @@ dependencies {
     testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.core.splashscreen)
 }
 
 fun getGitCommitHash(short: Boolean = false): Provider<String> {
