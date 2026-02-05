@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -69,7 +70,7 @@ fun QuickActionsOverflowPanel() {
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth(),
-            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight * 2.2f),
+            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight.coerceAtLeast(1.dp) * 2.2f),
         ) {
             items(visibleActions) { action ->
                 QuickActionButton(
