@@ -83,7 +83,7 @@ import java.lang.ref.WeakReference
 private var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
 
 /**
- * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
+ * Core class responsible for linking together all managers and UI composables to provide an IME service. Sets
  * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
  */
 class FlorisImeService : LifecycleInputMethodService() {

@@ -84,7 +84,7 @@ fun systemAccentOrDefault(default: Color): Color {
 
 
 /**
- * This is a helper method that uses [com.materialkolor.PaletteStyle.Neutral] as a default PalleteStyle.
+ * This is a helper method that uses [com.materialkolor.PaletteStyle.Neutral] as a default PaletteStyle.
  */
 fun neutralDynamicColorScheme(
     primary: Color,

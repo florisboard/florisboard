@@ -1,6 +1,6 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
-cd staging/images
+cd staging/images || exit
 # Do some image magick to make the screenshots look pretty
 mkdir out
 
@@ -104,7 +104,7 @@ echo "Done ..."
 echo "Copying icons to out folder"
 cp ../../metadata/androidbeta/en-US/images/icon.png out/icon-preview.png
 cp ../../metadata/android/en-US/images/icon.png out/icon-stable.png
-cd out
+cd out || exit
 
 PREVIEW_PATH=../../../metadata/androidbeta/en-US/images
 STABLE_PATH=../../../metadata/android/en-US/images
@@ -116,7 +116,6 @@ SCREENSHOT_PATH_STABLE=$STABLE_PATH/phoneScreenshots
 SHADOW_OPACITY=50
 SHADOW_RADIUS=50
 BORDER_RADIUS=50
-SCREENSHOT_SCALE=70 # in percent
 SHOWCASE_TEXT_FONT="../../fonts/Roboto-Light.ttf"
 SHOWCASE_TEXT=(
   "settings-ui-out.png:Highly configurable\nkeyboard"
@@ -127,13 +126,13 @@ SHOWCASE_TEXT=(
   "keyboard-smartbar-out.png:Customizable smartbar"
 )
 
-for t in $SHOWCASE_TEXT; do
+for t in "${SHOWCASE_TEXT[@]}"; do
   echo "Generating $t"
   magick -size 1080x1920 xc:white `# Create background`\
     \( \
       \( \
         \( \
-          ${t%:*} `# Src image`\
+          "${t%:*}" `# Src image`\
           \( +clone +level-colors black -fill white -draw "roundrectangle 0,0,%[fx:w],%[fx:h],${BORDER_RADIUS},${BORDER_RADIUS}" \) `# Create an alpha mask for rounded corners`\
           -alpha off -compose copy-opacity -composite `# Apply alpha mask`\
         \) `# Create src image with rounded corners`\
@@ -145,7 +144,7 @@ for t in $SHOWCASE_TEXT; do
     -gravity South -geometry +0-20 -composite `# Place the screenshot with shadow over the background`\
     \( -gravity Center -size $((1080*0.8))x$((1920*0.2)) -fill black -font ${SHOWCASE_TEXT_FONT} -pointsize 48 label:"${t#*:}" \) `# Create text`\
     -gravity North -composite `# Place the screenshot with shadow over the background`\
-    ${t%:*}
+    "${t%:*}"
   echo "Done ..."
 done
 
@@ -153,13 +152,13 @@ ICON_SHOWCASE_TEXT=(
   "icon-preview.png:FlorisBoard Preview\nGet all (stable, beta and rc) updates"
   "icon-stable.png:FlorisBoard Stable\nGet all stable updates"
 )
-for t in $ICON_SHOWCASE_TEXT; do
+for t in "${ICON_SHOWCASE_TEXT[@]}"; do
   echo "Generating $t"
   magick -size 1080x1920 xc:white `# Create background`\
     \( \
       \( \
         \( \
-          ${t%:*} `# Src image`\
+          "${t%:*}" `# Src image`\
           \( +clone +level-colors black -fill white -draw "roundrectangle 0,0,%[fx:w],%[fx:h],${BORDER_RADIUS},${BORDER_RADIUS}" \) `# Create an alpha mask for rounded corners`\
           -alpha off -compose copy-opacity -composite `# Apply alpha mask`\
         \) `# Create src image with rounded corners`\
@@ -184,7 +183,7 @@ for t in $ICON_SHOWCASE_TEXT; do
     -gravity South -composite `# Place the screenshot with shadow over the background`\
     \( -gravity Center -size $((1080*0.8))x$((1920*0.2)) -fill black -font ${SHOWCASE_TEXT_FONT} -pointsize 48 label:"${t#*:}" \) `# Create text`\
     -gravity North -composite `# Place the screenshot with shadow over the background`\
-    ${t%:*}
+    "${t%:*}"
   echo "Done ..."
 done
 
@@ -226,12 +225,12 @@ screenshots=(
 
 
 INDEX=2
-for i in $screenshots; do
+for i in "${screenshots[@]}"; do
   echo "Copy $i.png to fastlane folder"
-  cp $i $SCREENSHOT_PATH_PREVIEW/$INDEX.png
-  cp $i $SCREENSHOT_PATH_STABLE/$INDEX.png
+  cp "$i" $SCREENSHOT_PATH_PREVIEW/$INDEX.png
+  cp "$i" $SCREENSHOT_PATH_STABLE/$INDEX.png
   echo "Done ..."
-  let INDEX=${INDEX}+1
+  (( INDEX=INDEX+1 ))
 done
 
 echo "Cleanup..."

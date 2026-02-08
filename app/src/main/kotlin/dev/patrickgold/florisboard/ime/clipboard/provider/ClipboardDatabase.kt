@@ -365,7 +365,7 @@ interface ClipboardFilesDao {
     fun getCursorById(uid: Long) : Cursor
 
     @Query("SELECT (:projection) FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
-    fun getCurserByIdWithColums(uid: Long, projection: String) : Cursor
+    fun getCursorByIdWithColumns(uid: Long, projection: String) : Cursor
 
     @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)
