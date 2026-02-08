@@ -17,65 +17,99 @@
 package dev.patrickgold.florisboard.ime.nlp.latin
 
 import android.content.Context
+import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
+import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.readText
-import org.florisboard.lib.kotlin.guardedByLock
+import org.florisboard.libnative.NlpBridge
+import java.io.File
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
-        // Default user ID used for all subtypes, unless otherwise specified.
-        // See `ime/core/Subtype.kt` Line 210 and 211 for the default usage
         const val ProviderId = "org.florisboard.nlp.providers.latin"
+        private const val MAX_PRECEDING_WORDS = 3
+        private const val MAX_CONTEXT_BUFFER = 5
     }
-
-    private val appContext by context.appContext()
-
-    private val wordData = guardedByLock { mutableMapOf<String, Int>() }
-    private val wordDataSerializer = MapSerializer(String.serializer(), Int.serializer())
 
     override val providerId = ProviderId
 
+    private val appContext by context.appContext()
+    private val breakIterators = BreakIteratorGroup()
+    private val personalDictFile = File(appContext.filesDir, "personal_dict.json")
+    private val contextMapFile = File(appContext.filesDir, "context_map.json")
+
+    private var latestEditorContent: EditorContent? = null
+    private var isPrivateSession: Boolean = false
+    private val loadedLanguages = mutableSetOf<String>()
+    private var activeLanguages = listOf<String>()
+    
+    // Context buffer to maintain word history reliably
+    private val contextBuffer = mutableListOf<String>()
+    private var lastSelectionEnd: Int = 0
+
     override suspend fun create() {
-        // Here we initialize our provider, set up all things which are not language dependent.
+        loadPersistedData()
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
-        // Here we have the chance to preload dictionaries and prepare a neural network for a specific language.
-        // Is kept in sync with the active keyboard subtype of the user, however a new preload does not necessary mean
-        // the previous language is not needed anymore (e.g. if the user constantly switches between two subtypes)
+        val langCode = getLanguageCode(subtype)
+        
+        if (langCode !in loadedLanguages) {
+            val binaryLoaded = try {
+                appContext.assets.open("ime/dict/$langCode.dict").use { inputStream ->
+                    val data = inputStream.readBytes()
+                    NlpBridge.loadDictionaryBinaryForLanguage(langCode, data)
+                }
+            } catch (e: Exception) {
+                false
+            }
 
-        // To read a file from the APK assets the following methods can be used:
-        // appContext.assets.open()
-        // appContext.assets.reader()
-        // appContext.assets.bufferedReader()
-        // appContext.assets.readText()
-        // To copy an APK file/dir to the file system cache (appContext.cacheDir), the following methods are available:
-        // appContext.assets.copy()
-        // appContext.assets.copyRecursively()
-
-        // The subtype we get here contains a lot of data, however we are only interested in subtype.primaryLocale and
-        // subtype.secondaryLocales.
-
-        wordData.withLock { wordData ->
-            if (wordData.isEmpty()) {
-                // Here we use readText() because the test dictionary is a json dictionary
-                val rawData = appContext.assets.readText("ime/dict/data.json")
-                val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
-                wordData.putAll(jsonData)
+            if (binaryLoaded) {
+                try {
+                    appContext.assets.open("ime/dict/$langCode.ngrams.json").use { inputStream ->
+                        val jsonData = inputStream.bufferedReader().readText()
+                        NlpBridge.loadNgramsForLanguage(langCode, jsonData)
+                    }
+                } catch (_: Exception) { }
+                
+                loadedLanguages.add(langCode)
+                updateActiveLanguages()
             }
         }
+    }
+
+    fun preloadSubtypes(subtypes: List<Subtype>) {
+        val langCodes = subtypes.mapNotNull { subtype ->
+            val code = getLanguageCode(subtype)
+            if (code in loadedLanguages) code else null
+        }
+        if (langCodes.isNotEmpty() && langCodes != activeLanguages) {
+            activeLanguages = langCodes
+            NlpBridge.setLanguages(langCodes.toTypedArray())
+        }
+    }
+
+    private fun updateActiveLanguages() {
+        if (loadedLanguages.isNotEmpty() && loadedLanguages.toList() != activeLanguages) {
+            activeLanguages = loadedLanguages.toList()
+            NlpBridge.setLanguages(activeLanguages.toTypedArray())
+        }
+    }
+
+    private fun getLanguageCode(subtype: Subtype): String {
+        val locale = subtype.primaryLocale
+        val lang = locale.language
+        val country = locale.country
+        return if (country.isNotBlank()) "${lang}_$country" else lang
     }
 
     override suspend fun spell(
@@ -85,16 +119,21 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         followingWords: List<String>,
         maxSuggestionCount: Int,
         allowPossiblyOffensive: Boolean,
-        isPrivateSession: Boolean,
+        isPrivateSession: Boolean
     ): SpellingResult {
-        return when (word.lowercase()) {
-            // Use typo for typing errors
-            "typo" -> SpellingResult.typo(arrayOf("typo1", "typo2", "typo3"))
-            // Use grammar error if the algorithm can detect this. On Android 11 and lower grammar errors are visually
-            // marked as typos due to a lack of support
-            "gerror" -> SpellingResult.grammarError(arrayOf("grammar1", "grammar2", "grammar3"))
-            // Use valid word for valid input
-            else -> SpellingResult.validWord()
+        val normalized = word.lowercase().trim()
+        if (normalized.isBlank()) return SpellingResult.unspecified()
+
+        val result = NlpBridge.spellCheck(normalized, precedingWords, maxSuggestionCount)
+            ?: return SpellingResult.unspecified()
+
+        return when {
+            result.is_valid -> SpellingResult.validWord()
+            result.is_typo -> SpellingResult.typo(
+                result.suggestions.toTypedArray(),
+                isHighConfidenceResult = result.suggestions.size >= 2
+            )
+            else -> SpellingResult.unspecified()
         }
     }
 
@@ -103,49 +142,181 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         content: EditorContent,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
-        isPrivateSession: Boolean,
+        isPrivateSession: Boolean
     ): List<SuggestionCandidate> {
-        return emptyList()
-        /*val word = content.composingText.ifBlank { "next" }
-        val suggestions = buildList {
-            for (n in 0 until maxCandidateCount) {
-                add(WordSuggestionCandidate(
-                    text = "$word$n",
-                    secondaryText = if (n % 2 == 1) "secondary" else null,
-                    confidence = 0.5,
-                    isEligibleForAutoCommit = false,//n == 0 && word.startsWith("auto"),
-                    // We set ourselves as the source provider so we can get notify events for our candidate
-                    sourceProvider = this@LatinLanguageProvider,
-                ))
+        latestEditorContent = content
+        this.isPrivateSession = isPrivateSession
+        val prefix = content.composingText.trim()
+        
+        // Extract current context from text before cursor
+        val extractedContext = extractContextWords(content, subtype)
+        
+        // Detect new input session: cursor at start with no/little text, or text field changed
+        val currentSelectionEnd = content.selection.end
+        val textLength = content.textBeforeSelection.length + content.composingText.length
+        
+        if (textLength <= 1 && currentSelectionEnd <= 1) {
+            if (contextBuffer.isNotEmpty()) {
+                contextBuffer.clear()
+            }
+        } else if (currentSelectionEnd < lastSelectionEnd - 1) {
+            // Cursor jumped backwards significantly - reset context buffer
+            contextBuffer.clear()
+            contextBuffer.addAll(extractedContext)
+        }
+        lastSelectionEnd = currentSelectionEnd
+        
+        val context = if (extractedContext.size >= 2) {
+            extractedContext
+        } else if (extractedContext.isNotEmpty() && contextBuffer.isNotEmpty()) {
+            val lastExtracted = extractedContext.last()
+            if (contextBuffer.contains(lastExtracted)) {
+                val idx = contextBuffer.lastIndexOf(lastExtracted)
+                contextBuffer.subList(0, idx).toList() + extractedContext
+            } else {
+                extractedContext
+            }
+        } else {
+            extractedContext
+        }.takeLast(MAX_CONTEXT_BUFFER)
+
+        if (prefix.length < 2 && extractedContext.isNotEmpty() && !isPrivateSession) {
+            val lastWord = extractedContext.last()
+            val precedingContext = if (extractedContext.size >= 2) {
+                extractedContext.dropLast(1)
+            } else if (contextBuffer.isNotEmpty() && contextBuffer.last() != lastWord) {
+                contextBuffer.takeLast(2)
+            } else {
+                emptyList()
+            }
+            
+            // Learn word association (what word follows previous words)
+            if (precedingContext.isNotEmpty()) {
+                NlpBridge.learnWord(lastWord, precedingContext)
+            }
+            // Also boost the word itself in personal dictionary
+            NlpBridge.learnWord(lastWord, emptyList())
+            
+            // Update context buffer with the new word
+            if (contextBuffer.lastOrNull() != lastWord) {
+                contextBuffer.add(lastWord)
+                if (contextBuffer.size > MAX_CONTEXT_BUFFER) {
+                    contextBuffer.removeAt(0)
+                }
             }
         }
-        return suggestions*/
+
+        if (prefix.length < 2) {
+            return predictNextWord(context, maxCandidateCount)
+        }
+
+        val suggestions = NlpBridge.suggest(prefix, context, maxCandidateCount - 1)
+
+        val candidates = suggestions.map { suggestion ->
+            WordSuggestionCandidate(
+                text = suggestion.text,
+                confidence = suggestion.confidence,
+                isEligibleForAutoCommit = suggestion.is_eligible_for_auto_commit,
+                sourceProvider = this
+            )
+        }
+
+        val typedWordCandidate = WordSuggestionCandidate(
+            text = prefix,
+            confidence = 0.5,
+            isEligibleForAutoCommit = false,
+            sourceProvider = this
+        )
+
+        return if (candidates.none { it.text.toString().equals(prefix, ignoreCase = true) }) {
+            listOf(typedWordCandidate) + candidates
+        } else {
+            candidates
+        }
+    }
+
+    private fun predictNextWord(context: List<String>, maxCount: Int): List<SuggestionCandidate> {
+        if (context.isEmpty()) return emptyList()
+        
+        return NlpBridge.predictNextWord(context, maxCount).map { suggestion ->
+            WordSuggestionCandidate(
+                text = suggestion.text,
+                confidence = suggestion.confidence,
+                isEligibleForAutoCommit = false,
+                sourceProvider = this
+            )
+        }
+    }
+
+    private suspend fun extractContextWords(content: EditorContent, subtype: Subtype): List<String> {
+        val text = content.textBeforeSelection
+        return breakIterators.word(subtype.primaryLocale) { iterator ->
+            iterator.setText(text)
+            buildList {
+                var end = iterator.last()
+                repeat(MAX_PRECEDING_WORDS) {
+                    val start = iterator.previous()
+                    if (start == BreakIterator.DONE) return@repeat
+                    val word = text.substring(start, end).trim().lowercase()
+                    if (word.length >= 2 && word.all { it.isLetter() }) add(word)
+                    end = start
+                }
+            }.reversed()
+        }
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
-        // We can use flogDebug, flogInfo, flogWarning and flogError for debug logging, which is a wrapper for Logcat
-        flogDebug { candidate.toString() }
+        if (isPrivateSession) return
+        
+        val word = candidate.text.toString().lowercase().trim()
+        if (word.length < 2) return
+
+        val context = latestEditorContent?.let { extractContextWords(it, subtype) } ?: emptyList()
+        NlpBridge.learnWord(word, context)
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
-        flogDebug { candidate.toString() }
+        if (isPrivateSession) return
+        
+        val word = candidate.text.toString().lowercase().trim()
+        NlpBridge.penalizeWord(word)
     }
 
     override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
-        flogDebug { candidate.toString() }
-        return false
+        val word = candidate.text.toString().lowercase().trim()
+        return NlpBridge.removeWord(word)
     }
 
-    override suspend fun getListOfWords(subtype: Subtype): List<String> {
-        return wordData.withLock { it.keys.toList() }
-    }
+    override suspend fun getListOfWords(subtype: Subtype): List<String> = emptyList()
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return wordData.withLock { it.getOrDefault(word, 0) / 255.0 }
+        return NlpBridge.getFrequency(word.lowercase())
+    }
+
+    private fun loadPersistedData() {
+        if (personalDictFile.exists()) {
+            personalDictFile.readText().takeIf { it.isNotBlank() }?.let {
+                NlpBridge.importPersonalDict(it)
+            }
+        }
+        if (contextMapFile.exists()) {
+            contextMapFile.readText().takeIf { it.isNotBlank() }?.let {
+                NlpBridge.importContextMap(it)
+            }
+        }
+    }
+
+    private suspend fun savePersistedData() = withContext(Dispatchers.IO) {
+        NlpBridge.exportPersonalDict()?.let { personalDictFile.writeText(it) }
+        NlpBridge.exportContextMap()?.let { contextMapFile.writeText(it) }
     }
 
     override suspend fun destroy() {
-        // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
-        // the app process is killed (which will most likely always be the case).
+        savePersistedData()
+        NlpBridge.clear()
+        loadedLanguages.clear()
+        activeLanguages = emptyList()
+        contextBuffer.clear()
+        lastSelectionEnd = 0
     }
 }

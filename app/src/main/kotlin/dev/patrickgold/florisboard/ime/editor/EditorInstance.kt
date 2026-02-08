@@ -108,6 +108,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             }
         }
         activeState.keyboardMode = keyboardMode
+        // Keep composing enabled in incognito mode to allow suggestions from main dictionary
+        // Learning is blocked at the NLP provider level based on isPrivateSession flag
         activeState.isComposingEnabled = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
@@ -125,6 +127,8 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
                 editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.suggestion.forceIncognitoModeFromDynamic.get()
             }
         }
+        activeState.inputShiftState = InputShiftState.SHIFTED_AUTOMATIC
+        keyboardManager.reevaluateInputShiftState()
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
@@ -146,8 +150,11 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun shouldDetermineComposingRegion(editorInfo: FlorisEditorInfo): Boolean {
-        return super.shouldDetermineComposingRegion(editorInfo) &&
+        // Allow composing region even when app sets TYPE_TEXT_FLAG_NO_SUGGESTIONS
+        // if user has suggestions enabled in settings (e.g., Chrome incognito)
+        val baseCheck = editorInfo.isRichInputEditor && 
             (phantomSpace.isInactive || phantomSpace.showComposingRegion)
+        return baseCheck
     }
 
     /**
@@ -196,17 +203,32 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             punctuationRule.symbolsPrecedingAutoSpace.contains(text.first())
     }
 
-    override fun commitChar(char: String): Boolean {
+    private fun shouldEnableShiftAfterSpace(): Boolean {
+        val textBefore = activeContent.getTextBeforeCursor(2)
+        return textBefore.length >= 2 &&
+            ".!?".contains(textBefore[textBefore.length - 2]) &&
+            textBefore.last().isWhitespace()
+    }
+
+   override fun commitChar(char: String): Boolean {
         val isInsertAutoSpaceBeforeChar = shouldInsertAutoSpaceBefore(char)
         val isInsertAutoSpaceAfterChar = shouldInsertAutoSpaceAfter(char)
         val isDeletePreviousSpace = isInsertAutoSpaceAfterChar && autoSpace.isActive
+
         if (isInsertAutoSpaceAfterChar) {
             autoSpace.setActive()
         } else {
             autoSpace.setInactive()
         }
+
         val isPhantomSpaceActive = phantomSpace.determine(char)
         phantomSpace.setInactive()
+
+        if (char == " " && shouldEnableShiftAfterSpace()) {
+            activeState.inputShiftState = InputShiftState.SHIFTED_AUTOMATIC
+            keyboardManager.reevaluateInputShiftState()
+        }
+
         return super.commitChar(
             char = char,
             deletePreviousSpace = isDeletePreviousSpace,
@@ -214,6 +236,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             insertSpaceAfterChar = isInsertAutoSpaceAfterChar,
         )
     }
+
 
     /**
      * Commits the given [text] to this editor instance and adjusts both the cursor position and
@@ -660,6 +683,15 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
 
         fun reset() {
             state.set(0)
+        }
+    }
+
+    // Call this at the start of any user edit (typing, paste, etc.)
+    private fun clearRevertCandidateIfNeeded() {
+        if (phantomSpace.candidateForRevert != null) {
+            phantomSpace.setInactive()
+            // Optionally, refresh suggestions here if needed
+            keyboardManager.resetSuggestions(activeContent)
         }
     }
 }
