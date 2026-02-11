@@ -1,4 +1,6 @@
 <resources>
+    <item name="floris_app_name" translatable="false" type="string">@string/app_name</item>
+
     <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/florisboard/florisboard/issues</string>
     <string name="florisboard__privacy_policy_url" translatable="false">https://florisboard.org/legal/privacy/</string>

@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 /*
@@ -18,7 +19,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -35,7 +35,7 @@ kotlin {
     }
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "org.florisboard.lib.android"
     compileSdk = projectCompileSdk.toInt()
 
@@ -65,6 +65,19 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    // FIXME: This is a workaround! Otherwise :lib:snygg:generateJsonSchema breakes.
+    //  Remove the lint block when we've migrated to the newDsl.
+    lint {
+        disable.addAll(
+            listOf(
+                "UElementAsPsi",
+                "ApplySharedPref",
+                "CommitTransaction",
+                "Recycle",
+                "CommitPrefEdits",
+            )
+        )
     }
 }
 

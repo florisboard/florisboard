@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -19,7 +20,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlinx.kover)
@@ -38,7 +38,7 @@ kotlin {
     }
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "org.florisboard.lib.snygg"
     compileSdk = projectCompileSdk.toInt()
 
@@ -110,6 +110,7 @@ dependencies {
 tasks.register<JavaExec>("generateJsonSchema") {
     dependsOn("build")
     mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
+    //FIXME: find a way that doesn't use android.libraryVariants
     val debugVariant = android.libraryVariants.first { it.name == "debug" }
     classpath = files(
         debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },

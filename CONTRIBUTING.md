@@ -58,6 +58,10 @@ If you are overwhelmed by the code don't hesitate to ask for help in the [dev ch
   - Python 3.10+
   - Bash, realpath, grep, ...
 
+> [!IMPORTANT]
+> If using IntelliJ IDEA you have to enable `Future AGP Versions` otherwise AGP 9.0.0 will not work with your IDE.
+> How to do this is described in this [comment on YouTrack](https://youtrack.jetbrains.com/issue/IDEA-348937/2024.1-Beta-missing-option-to-enable-sync-with-future-AGP-versions#focus=Comments-27-11721710.0-0)
+
 ### Manual build without Android Studio
 
 If you want to manually build the project without Android Studio you must ensure that the Android SDK and NDK are properly installed on your system. Then issue

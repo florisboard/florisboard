@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="floris_app_name" translatable="false" type="string">FlorisBoard Debug</item>
+</resources>

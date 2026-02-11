@@ -32,12 +32,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-sourceSets {
-    maybeCreate("main").apply {
-        java.srcDir("src/main/kotlin")
-    }
-}
-
 tasks {
     compileKotlin {
         compilerOptions.jvmTarget = JvmTarget.JVM_11
