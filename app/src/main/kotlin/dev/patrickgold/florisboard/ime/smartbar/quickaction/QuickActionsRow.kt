@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.ui.SnyggRow
 
 internal val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
@@ -48,11 +48,11 @@ fun QuickActionsRow(
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val flipToggles by prefs.smartbar.flipToggles.observeAsState()
+    val flipToggles by prefs.smartbar.flipToggles.collectAsState()
     val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
-    val smartbarLayout by prefs.smartbar.layout.observeAsState()
-    val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
-    val sharedActionsExpanded by prefs.smartbar.sharedActionsExpanded.observeAsState()
+    val smartbarLayout by prefs.smartbar.layout.collectAsState()
+    val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
+    val sharedActionsExpanded by prefs.smartbar.sharedActionsExpanded.collectAsState()
 
     val dynamicActions = remember(smartbarLayout, actionArrangement) {
         if (smartbarLayout == SmartbarLayout.ACTIONS_ONLY && actionArrangement.stickyAction != null) {

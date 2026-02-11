@@ -79,7 +79,7 @@ import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
@@ -196,7 +196,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
-    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
     val composers by keyboardManager.resources.composers.collectAsState()
     val currencySets by keyboardManager.resources.currencySets.collectAsState()
     val layoutExtensions by keyboardManager.resources.layouts.collectAsState()

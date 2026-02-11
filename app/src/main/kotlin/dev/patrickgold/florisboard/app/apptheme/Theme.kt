@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.color.neutralDynamicColorScheme
 import org.florisboard.lib.color.systemAccentOrDefault
 
@@ -38,7 +38,7 @@ fun getColorScheme(
     theme: AppTheme,
 ): ColorScheme {
     val prefs by FlorisPreferenceStore
-    val accentColor by prefs.other.accentColor.observeAsState()
+    val accentColor by prefs.other.accentColor.collectAsState()
 
     val seedColor = systemAccentOrDefault(accentColor)
 

@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.ui.ProvideSnyggTheme
 import org.florisboard.lib.snygg.ui.rememberSnyggTheme
 
@@ -43,7 +43,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val themeManager by context.themeManager()
 
     val prefs by FlorisPreferenceStore
-    val accentColor by prefs.theme.accentColor.observeAsState()
+    val accentColor by prefs.theme.accentColor.collectAsState()
 
     val activeThemeInfo by themeManager.activeThemeInfo.collectAsState()
 

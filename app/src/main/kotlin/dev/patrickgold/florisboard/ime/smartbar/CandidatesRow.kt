@@ -46,7 +46,7 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.snygg.SnyggSelector
@@ -67,7 +67,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val nlpManager by context.nlpManager()
     val subtypeManager by context.subtypeManager()
 
-    val displayMode by prefs.suggestion.displayMode.observeAsState()
+    val displayMode by prefs.suggestion.displayMode.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
 
     SnyggRow(

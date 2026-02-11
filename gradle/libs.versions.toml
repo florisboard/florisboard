@@ -22,7 +22,7 @@ ksp = "2.3.4"
 material-kolor = "4.0.5"
 mikepenz-aboutlibraries = "13.2.1"
 patrickgold-compose-tooltip = "0.2.0-rc02"
-patrickgold-jetpref = "0.3.0-rc01"
+patrickgold-jetpref = "0.3.0"
 
 # Testing
 androidx-benchmark = "1.4.1"

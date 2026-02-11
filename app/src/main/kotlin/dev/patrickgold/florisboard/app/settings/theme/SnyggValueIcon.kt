@@ -58,7 +58,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.materialkolor.dynamicColorScheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.checkeredBackground
 import org.florisboard.lib.color.getColor
 import org.florisboard.lib.color.systemAccentOrDefault
@@ -123,7 +123,7 @@ internal fun SnyggValueIcon(
 ) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
-    val accentColor by prefs.theme.accentColor.observeAsState()
+    val accentColor by prefs.theme.accentColor.collectAsState()
 
     when (value) {
         is SnyggStaticColorValue -> {

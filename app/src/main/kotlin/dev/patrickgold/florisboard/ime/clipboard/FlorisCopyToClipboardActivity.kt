@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.stringRes
@@ -141,7 +141,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             appName = R.string.app_name,
             forceLayoutDirection = LayoutDirection.Ltr,
         ) {
-            val theme by prefs.other.settingsTheme.observeAsState()
+            val theme by prefs.other.settingsTheme.collectAsState()
             FlorisAppTheme(theme) {
                 BottomSheet {
                     Row {

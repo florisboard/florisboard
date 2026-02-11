@@ -89,7 +89,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.showShortToast
@@ -160,8 +160,8 @@ fun EmojiPaletteView(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
 
-    val preferredSkinTone by prefs.emoji.preferredSkinTone.observeAsState()
-    val emojiHistoryEnabled by prefs.emoji.historyEnabled.observeAsState()
+    val preferredSkinTone by prefs.emoji.preferredSkinTone.collectAsState()
+    val emojiHistoryEnabled by prefs.emoji.historyEnabled.collectAsState()
 
     var activeCategory by remember(emojiHistoryEnabled) {
         if (emojiHistoryEnabled) {
@@ -538,8 +538,8 @@ private fun EmojiHistoryPopup(
     val scope = rememberCoroutineScope()
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
     val context = LocalContext.current
-    val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.observeAsState()
-    val recentUS by prefs.emoji.historyRecentUpdateStrategy.observeAsState()
+    val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.collectAsState()
+    val recentUS by prefs.emoji.historyRecentUpdateStrategy.collectAsState()
     val showMoveLeft = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
     val showMoveRight = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
 

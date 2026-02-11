@@ -39,7 +39,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
@@ -65,8 +65,8 @@ fun ThemeScreen() = FlorisScreen {
     }
 
     content {
-        val dayThemeId by prefs.theme.dayThemeId.observeAsState()
-        val nightThemeId by prefs.theme.nightThemeId.observeAsState()
+        val dayThemeId by prefs.theme.dayThemeId.collectAsState()
+        val nightThemeId by prefs.theme.nightThemeId.collectAsState()
 
         ListPreference(
             prefs.theme.mode,
