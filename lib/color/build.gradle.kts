@@ -1,8 +1,8 @@
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -19,7 +19,7 @@ kotlin {
     }
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "org.florisboard.lib.color"
     compileSdk = projectCompileSdk.toInt()
 
@@ -49,12 +49,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    sourceSets {
-        maybeCreate("main").apply {
-            java.srcDir("src/main/kotlin")
-        }
     }
 }
 

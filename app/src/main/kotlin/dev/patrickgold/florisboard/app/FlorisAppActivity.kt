@@ -53,8 +53,9 @@ import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
+import java.util.concurrent.atomic.AtomicBoolean
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
@@ -62,7 +63,6 @@ import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.collectIn
-import java.util.concurrent.atomic.AtomicBoolean
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -174,7 +174,7 @@ class FlorisAppActivity : ComponentActivity() {
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
 
-        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
+        val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
             LocalNavController provides navController,

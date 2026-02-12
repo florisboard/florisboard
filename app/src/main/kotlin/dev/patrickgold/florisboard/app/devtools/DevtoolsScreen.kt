@@ -31,7 +31,7 @@ import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
@@ -211,17 +211,17 @@ fun DevtoolsScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = "prefs.internal.version*") {
-            val versionOnInstall by prefs.internal.versionOnInstall.observeAsState()
+            val versionOnInstall by prefs.internal.versionOnInstall.collectAsState()
             Preference(
                 title = "prefs.internal.versionOnInstall",
                 summary = versionOnInstall,
             )
-            val versionLastUse by prefs.internal.versionLastUse.observeAsState()
+            val versionLastUse by prefs.internal.versionLastUse.collectAsState()
             Preference(
                 title = "prefs.internal.versionLastUse",
                 summary = versionLastUse,
             )
-            val versionLastChangelog by prefs.internal.versionLastChangelog.observeAsState()
+            val versionLastChangelog by prefs.internal.versionLastChangelog.collectAsState()
             Preference(
                 title = "prefs.internal.versionLastChangelog",
                 summary = versionLastChangelog,

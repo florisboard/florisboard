@@ -51,7 +51,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.florisboard.lib.util.launchUrl
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -77,7 +77,7 @@ fun SetupScreen() = FlorisScreen {
 
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
     val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
-    val hasNotificationPermission by prefs.internal.notificationPermissionState.observeAsState()
+    val hasNotificationPermission by prefs.internal.notificationPermissionState.collectAsState()
 
     val requestNotification =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->

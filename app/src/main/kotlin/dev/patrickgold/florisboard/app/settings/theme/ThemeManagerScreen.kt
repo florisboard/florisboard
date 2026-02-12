@@ -40,13 +40,13 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.rippleClickable
 import org.florisboard.lib.compose.stringRes
-import kotlinx.coroutines.launch
 
 enum class ThemeManagerScreenAction(val id: String) {
     SELECT_DAY("select-day"),
@@ -94,7 +94,8 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
 
     val activeThemeId by when (action) {
         ThemeManagerScreenAction.SELECT_DAY,
-        ThemeManagerScreenAction.SELECT_NIGHT -> getThemeIdPref().observeAsState()
+        ThemeManagerScreenAction.SELECT_NIGHT
+            -> getThemeIdPref().collectAsState()
     }
 
     content {

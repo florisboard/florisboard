@@ -50,11 +50,11 @@ import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.SnyggMissingSchemaException
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import java.text.SimpleDateFormat
 import java.util.*
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.SnyggMissingSchemaException
 
 private val CardBackground = Color.Black.copy(0.6f)
 private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
@@ -67,11 +67,11 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val keyboardManager by context.keyboardManager()
     val themeManager by context.themeManager()
 
-    val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
-    val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
-    val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
-    val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
-    val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
+    val devtoolsEnabled by prefs.devtools.enabled.collectAsState()
+    val showPrimaryClip by prefs.devtools.showPrimaryClip.collectAsState()
+    val showInputStateOverlay by prefs.devtools.showInputStateOverlay.collectAsState()
+    val showSpellingOverlay by prefs.devtools.showSpellingOverlay.collectAsState()
+    val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.collectAsState()
     val prefsLoaded by appContext.preferenceStoreLoaded.collectAsState()
 
     val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()

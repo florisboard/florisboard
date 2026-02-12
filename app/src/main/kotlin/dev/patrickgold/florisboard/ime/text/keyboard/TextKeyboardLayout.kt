@@ -56,7 +56,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -86,9 +85,8 @@ import dev.patrickgold.florisboard.lib.Pointer
 import dev.patrickgold.florisboard.lib.PointerMap
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.toIntOffset
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.isActive
@@ -115,10 +113,10 @@ fun TextKeyboardLayout(
     val glideTypingManager by context.glideTypingManager()
 
     val keyboard = evaluator.keyboard as TextKeyboard
-    val glideEnabledInternal by prefs.glide.enabled.observeAsState()
+    val glideEnabledInternal by prefs.glide.enabled.collectAsState()
     val glideEnabled = glideEnabledInternal && evaluator.editorInfo.isRichInputEditor &&
         evaluator.state.keyVariation != KeyVariation.PASSWORD
-    val glideShowTrail by prefs.glide.showTrail.observeAsState()
+    val glideShowTrail by prefs.glide.showTrail.collectAsState()
     val glideTrailStyle = rememberSnyggThemeQuery(FlorisImeUi.GlideTrail.elementName)
     val glideTrailColor = glideTrailStyle.foreground(default = Color.Green)
 
@@ -294,7 +292,7 @@ fun TextKeyboardLayout(
         popupUiController.evaluator = evaluator
         popupUiController.keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
         controller.popupUiController = popupUiController
-        val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.observeAsState()
+        val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.collectAsState()
         for (textKey in keyboard.keys()) {
             TextKeyButton(
                 textKey, evaluator, desiredKey,
@@ -347,7 +345,7 @@ private fun TextKeyButton(
             var customLabel = label
             if (key.computedData.code == KeyCode.SPACE) {
                 val prefs by FlorisPreferenceStore
-                val spaceBarMode by prefs.keyboard.spaceBarMode.observeAsState()
+                val spaceBarMode by prefs.keyboard.spaceBarMode.collectAsState()
                 when (spaceBarMode) {
                     SpaceBarMode.NOTHING -> return@let
                     SpaceBarMode.CURRENT_LANGUAGE -> {}

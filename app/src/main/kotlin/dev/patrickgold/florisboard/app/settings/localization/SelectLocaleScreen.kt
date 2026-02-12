@@ -49,7 +49,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.stringRes
@@ -64,7 +64,7 @@ fun SelectLocaleScreen() = FlorisScreen {
     val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
 
-    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
     var searchTermValue by remember { mutableStateOf(TextFieldValue()) }
     val context = LocalContext.current
     val systemLocales =

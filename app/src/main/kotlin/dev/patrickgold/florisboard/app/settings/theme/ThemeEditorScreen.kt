@@ -91,7 +91,7 @@ import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.themeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
@@ -210,9 +210,9 @@ fun ThemeEditorScreen(
         }
     }
 
-    val snyggLevel by prefs.theme.editorLevel.observeAsState()
-    val colorRepresentation by prefs.theme.editorColorRepresentation.observeAsState()
-    val displayKbdAfterDialogs by prefs.theme.editorDisplayKbdAfterDialogs.observeAsState()
+    val snyggLevel by prefs.theme.editorLevel.collectAsState()
+    val colorRepresentation by prefs.theme.editorColorRepresentation.collectAsState()
+    val displayKbdAfterDialogs by prefs.theme.editorDisplayKbdAfterDialogs.collectAsState()
     var oldFocusState by remember { mutableStateOf(false) }
     var snyggRuleToEdit by rememberSaveable(stateSaver = SnyggRule.Saver) { mutableStateOf(null) }
     var snyggPropertyToEdit by remember { mutableStateOf<PropertyInfo?>(null) }

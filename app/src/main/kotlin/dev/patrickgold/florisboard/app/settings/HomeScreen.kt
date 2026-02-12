@@ -39,7 +39,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import org.florisboard.lib.compose.FlorisErrorCard
 import org.florisboard.lib.compose.FlorisWarningCard
@@ -55,7 +55,7 @@ fun HomeScreen() = FlorisScreen {
     val context = LocalContext.current
 
     content {
-        val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
+        val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.collectAsState()
 
         val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
         val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)

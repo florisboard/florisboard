@@ -36,7 +36,7 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsOverflow
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.ui.SnyggIcon
 
 @Composable
@@ -63,7 +63,7 @@ fun TextInputLayout(
             QuickActionsOverflowPanel()
         } else {
             Box {
-                val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.observeAsState()
+                val incognitoDisplayMode by prefs.keyboard.incognitoDisplayMode.collectAsState()
                 val showIncognitoIcon = evaluator.state.isIncognitoMode &&
                     incognitoDisplayMode == IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD
                 if (showIncognitoIcon) {

@@ -35,7 +35,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
@@ -47,7 +47,7 @@ fun QuickActionsOverflowPanel() {
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
-    val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
+    val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
     val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
 
     val dynamicActions = actionArrangement.dynamicActions

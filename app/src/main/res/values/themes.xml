@@ -5,7 +5,7 @@
         <item name="postSplashScreenTheme">@style/FlorisAppTheme</item>
         <item name="windowSplashScreenBackground">@color/florisApp_windowBackground</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/ic_app_icon_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/floris_app_icon_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_icon_foreground</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>

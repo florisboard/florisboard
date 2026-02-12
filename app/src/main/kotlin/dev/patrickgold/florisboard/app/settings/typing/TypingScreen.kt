@@ -41,7 +41,7 @@ import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -101,7 +101,7 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__correction__auto_capitalization__label),
                 summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
             )
-            val isAutoSpacePunctuationEnabled by prefs.correction.autoSpacePunctuation.observeAsState()
+            val isAutoSpacePunctuationEnabled by prefs.correction.autoSpacePunctuation.collectAsState()
             SwitchPreference(
                 prefs.correction.autoSpacePunctuation,
                 icon = Icons.Default.SpaceBar,

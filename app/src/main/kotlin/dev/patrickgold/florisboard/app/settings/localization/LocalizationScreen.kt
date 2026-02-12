@@ -46,7 +46,7 @@ import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -123,7 +123,7 @@ fun LocalizationScreen() = FlorisScreen {
             } else {
                 val currencySets by keyboardManager.resources.currencySets.collectAsState()
                 val layouts by keyboardManager.resources.layouts.collectAsState()
-                val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+                val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
                 for (subtype in subtypes) {
                     val cMeta = layouts[LayoutType.CHARACTERS]?.get(subtype.layoutMap.characters)
                     val sMeta = layouts[LayoutType.SYMBOLS]?.get(subtype.layoutMap.symbols)
