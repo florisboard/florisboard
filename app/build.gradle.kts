@@ -15,6 +15,8 @@
  */
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.google.devtools.ksp.gradle.KspExtension
+import com.mikepenz.aboutlibraries.plugin.AboutLibrariesExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -42,7 +44,7 @@ val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { 
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
+        jvmTarget.set(JvmTarget.JVM_17)
         freeCompilerArgs.set(listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
             "-jvm-default=enable",
@@ -61,8 +63,8 @@ configure<ApplicationExtension> {
     ndkVersion = tools.versions.ndk.get()
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     defaultConfig {
@@ -136,12 +138,6 @@ configure<ApplicationExtension> {
         }
     }
 
-    aboutLibraries {
-        collect {
-            configPath = file("src/main/config")
-        }
-    }
-
     lint {
         baseline = file("lint.xml")
     }
@@ -155,8 +151,13 @@ configure<ApplicationExtension> {
         }
     }
 }
+configure<AboutLibrariesExtension> {
+    collect {
+        configPath = file("src/main/config")
+    }
+}
 
-ksp {
+configure<KspExtension> {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")
     arg("room.expandProjection", "true")

@@ -30,7 +30,7 @@ val projectCompileSdk: String by project
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
+        jvmTarget.set(JvmTarget.JVM_17)
         freeCompilerArgs.set(listOf(
             "-Xconsistent-data-class-copy-visibility",
             "-Xwhen-guards",
@@ -68,8 +68,8 @@ configure<LibraryExtension> {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -110,11 +110,11 @@ dependencies {
 tasks.register<JavaExec>("generateJsonSchema") {
     dependsOn("build")
     mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
-    //FIXME: find a way that doesn't use android.libraryVariants
-    val debugVariant = android.libraryVariants.first { it.name == "debug" }
-    classpath = files(
-        debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },
-    )
+    androidComponents {
+        onVariants(selector().withName("debug")) { variant ->
+            classpath = variant.compileClasspath
+        }
+    }
     args = listOf("schemas/stylesheet.schema.json")
     workingDir = projectDir
     standardOutput = System.out
