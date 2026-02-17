@@ -42,8 +42,9 @@ captures/
 
 # Intellij
 *.iml
-.idea/
+.idea/**/*
 !/.idea/copyright/
+!/.idea/externalDependencies.xml
 
 # Keystore files
 *.jks
