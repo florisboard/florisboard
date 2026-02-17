@@ -25,6 +25,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.mikepenz.aboutlibraries)
     alias(libs.plugins.kotest)
+    alias(libs.plugins.kotlinx.kover)
 }
 
 val projectMinSdk: String by project
@@ -167,6 +168,10 @@ tasks.withType<Test> {
         events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
     }
     useJUnitPlatform()
+}
+
+kover {
+    useJacoco()
 }
 
 dependencies {
