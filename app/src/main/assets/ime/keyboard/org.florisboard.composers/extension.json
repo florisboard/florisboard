@@ -188,6 +188,7 @@
         "ángs": "angs", "àngf": "angf", "ảngr": "angr", "ãngx": "angx", "ạngj": "angj",
         "ánhs": "anhs", "ànhf": "anhf", "ảnhr": "anhr", "ãnhx": "anhx", "ạnhj": "anhj",
         
+
         "ecs": "éc", "ecj": "ẹc",
         "ems": "ém", "emf": "èm", "emr": "ẻm", "emx": "ẽm", "emj": "ẹm", 
         "ens": "én", "enf": "èn", "enr": "ẻn", "enx": "ẽn", "enj": "ẹn",
@@ -272,6 +273,8 @@
         "úys": "uys", "ùyf": "uyf", "ủyr": "uyr", "ũyx": "uyx", "ụyj": "uyj",
         "úngs": "ungs", "ùngf": "ungf", "ủngr": "ungr", "ũngx": "ungx", "ụngj": "ungj",
 
+        "áư": "ắ", "àư": "ằ", "ảư": "ẳ", "ãư": "ẵ", "ạư": "ặ",
+        
         "ăcs": "ắc", "ăcj": "ặc",
         "ácw": "ắc", "ạcw": "ặc",
         "ăms": "ắm", "ămf": "ằm", "ămr": "ẳm", "ămx": "ẵm", "ămj": "ặm",
@@ -782,7 +785,10 @@
         "yễngx": "yêngx", "yễnge": "yẽnge", "yêngxe": "yengxe", "yẽngex": "yengex",
         "yệngj": "yêngj", "yệnge": "yẹnge", "yêngje": "yengje", "yẹngej": "yengej",
 
-        "qúa": "quá", "qùa": "quà", "qủa": "quả", "qụa": "quạ"
+        "ááy": "ấy", "áyý": "ấy",
+        "oacẹ": "oặc",
+        "ưicư": "ươc", "uicư": "ươc",
+        "qúa": "quá", "qùa": "quà", "qủa": "quả", "qụa": "quạ"         
       }
     }
   ]
