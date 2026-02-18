@@ -191,14 +191,18 @@
         "ecs": "éc", "ecj": "ẹc",
         "ems": "ém", "emf": "èm", "emr": "ẻm", "emx": "ẽm", "emj": "ẹm", 
         "ens": "én", "enf": "èn", "enr": "ẻn", "enx": "ẽn", "enj": "ẹn",
+        "eó": "éo", "eò": "èo", "eỏ": "ẻo", "eõ": "ẽo", "eọ": "ẹo",
         "eps": "ép", "epj": "ẹp",
         "ets": "ét", "etj": "ẹt",
         "engs": "éng", "engf": "èng", "engr": "ẻng", "engx": "ẽng", "engj": "ẹng",
         "enhs": "énh", "enhf": "ènh", "enhr": "ẻnh", "enhx": "ẽnh", "enhj": "ẹnh",
 
+        "écj": "ẹc", "ẹcs": "éc",
+
         "écs": "ecs", "ẹcj": "ecj",
         "éms": "ems", "èmf": "emf", "ẻmr": "emr", "ẽmx": "emx", "ẹmj": "emj", 
         "éns": "ens", "ènf": "enf","ẻnr": "enr", "ẽnx": "enx", "ẹnj": "enj",
+        "éos": "eos", "èof": "eof", "ẻo": "eor", "ẽo": "eox", "ẹo": "eoj",
         "éps": "eps", "ẹpj": "epj",
         "éts": "ets", "ẹtj": "etj",
         "éngs": "engs", "èngf": "engf", "ẻngr": "engr", "ẽngx":"engx", "ẹngj": "engj",
@@ -253,6 +257,8 @@
         "uus": "úu", "uuf": "ùu", "uur": "ủu", "uux": "ũu", "uuj": "ụu",
         "uys": "úy", "uyf": "ùy", "uyr": "ủy", "uyx": "ũy", "uyj": "ụy",
         "ungs": "úng", "ungf": "ùng", "ungr": "ủng", "ungx": "ũng", "ungj": "ụng",
+
+        "úâ": "uấ", "ùâ": "uầ", "ủâ": "uẩ", "ũâ": "uẫ", "ụâ": "uậ", 
 
         "úas": "uas", "ùaf": "uaf", "ủar": "uar", "ũax": "uax", "ụaj": "uaj",
         "úcs": "ucs", "ụcj": "ucj",
@@ -365,6 +371,8 @@
         "éche": "ếch", "ẹche": "ệch",
         "ênhs": "ếnh", "ênhf": "ềnh", "ênhr": "ểnh", "ênhx": "ễnh", "ênhj": "ệnh",
         "énhe": "ếnh", "ènhe": "ềnh", "ẻnhe": "ểnh", "ẽnhe": "ễnh", "ẹnhe": "ệnh",
+        "êus": "ếu", "êuf": "ều", "êuj": "ệu",
+        "éue": "ếu", "èue": "ều", "ẹue": "ệu",
 
         "ếms": "êms", "ếme": "éme", "êmse": "emse", "émes": "emes",
         "ềmf": "êmf", "ềme": "ème", "êmfe": "emfe", "èmef": "emef",
@@ -461,6 +469,12 @@
         "ớts": "ơts", "ớtw": "ótw", "ơtsw": "otsw", "ótws": "otws",       
         "ợtj": "ơtj", "ợtw": "ọtw", "ơtjw": "otjw", "ọtwj": "otwj",
 
+        "ớì": "ời", "ớỉ": "ởi", "ớĩ": "ỡi", "ớị": "ợi",
+        "ờí": "ới", "ờỉ": "ởi", "ờĩ": "ỡi", "ờị": "ợi",
+        "ởí": "ới", "ởì": "ời", "ởĩ": "ỡi", "ởị": "ợi",
+        "ỡí": "ới", "ỡì": "ời", "ỡỉ": "ởi", "ỡị": "ợi",
+        "ợí": "ới", "ợì": "ời", "ợỉ": "ởi", "ợĩ": "ỡi",
+
         "ưas": "ứa", "ưaf": "ừa", "ưar": "ửa", "ưax": "ữa", "ưaj": "ựa",
         "úaw": "ứa", "ùaw": "ừa", "ủaw": "ửa", "ũaw": "ữa", "ụaw": "ựa",
         "ưcs": "ức", "ưcj": "ực",
@@ -531,6 +545,12 @@
         "iengs": "iéng", "iengf": "ièng", "iengr": "iẻng", "iengx": "iẽng", "iengj": "iẹng",
         "iénge": "iếng", "iènge": "iềng", "iẻnge": "iểng", "iẽnge": "iễng", "iẹnge": "iệng",
         "iêngs": "iếng", "iêngf": "iềng", "iêngr": "iểng", "iêngx": "iễng", "iêngj": "iệng",
+
+        "iếù": "iều", "iếủ": "iểu", "iếũ": "iễu", "iếụ": "iệu", 
+        "iềú": "iếu", "iềủ": "iểu", "iềũ": "iễu", "iềụ": "iệu",
+        "iểú": "iếu", "iểù": "iều", "iểũ": "iễu", "iểụ": "iệu",
+        "iễú": "iếu", "iễù": "iều", "iễủ": "iểu", "iễụ": "iệu",
+        "iệú": "iếu", "iệù": "iều", "iệủ": "iểu", "iệũ": "iễu",
 
         "iếs": "iês", "iếe": "iée", "iêse": "iese", "iées": "iees",
         "iềf": "iêf", "iềe": "ièe", "iêfe": "iefe", "ièef": "ieef",
@@ -615,6 +635,7 @@
         "uots": "uót", "uotj": "uọt",
         "uótw": "ướt", "uọtw": "ượt",
         "ươts": "ướt", "ươtj": "ượt",
+        "uouư": "ươu",
         "úou": "uóu", "ùou" : "uòu", "ủou": "uỏu", "ũou": "uõu", "ụou": "uọu",
         "uous": "uóu", "uouf": "uòu", "uour": "uỏu", "uoux": "uõu", "uouj": "uọu",
         "uóuw": "ướu", "uòuw": "ườu", "uỏuw": "ưởu", "uõuw": "ưỡu", "uọuw": "ượu",
@@ -677,6 +698,7 @@
         "uôps": "uốp", "uôpj": "uộp",
         "uóto": "uốt", "uọto": "uột",
         "uôts": "uốt", "uôtj": "uột",
+        "ươư": "uouw",
         "uóuo": "uốu", "uòuo": "uồu", "uỏuo": "uổu", "uõuo": "uỗu", "uọuo": "uộu",
         "uôus": "uốu", "uôuf": "uồu", "uôur": "uổu", "uôux": "uỗu", "uôuj": "uộu",
         "uóngo": "uống", "uòngo": "uồng", "uỏngo": "uổng", "uõngo": "uỗng", "uọngo": "uộng",
@@ -758,7 +780,9 @@
         "yềngf": "yêngf", "yềnge": "yènge", "yêngfe": "yengfe", "yèngef": "yengef",
         "yểngr": "yêngr", "yểnge": "yẻnge", "yêngre": "yengre", "yẻnger": "yenger",
         "yễngx": "yêngx", "yễnge": "yẽnge", "yêngxe": "yengxe", "yẽngex": "yengex",
-        "yệngj": "yêngj", "yệnge": "yẹnge", "yêngje": "yengje", "yẹngej": "yengej"
+        "yệngj": "yêngj", "yệnge": "yẹnge", "yêngje": "yengje", "yẹngej": "yengej",
+
+        "qúa": "quá", "qùa": "quà", "qủa": "quả", "qụa": "quạ"
       }
     }
   ]
