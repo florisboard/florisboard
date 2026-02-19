@@ -225,6 +225,12 @@
         "ichs": "ích", "ichj": "ịch",
         "inhs": "ính", "inhf": "ình", "inhr": "ỉnh", "inhx": "ĩnh", "inhj": "ịnh",
 
+        "íá": "ía", "íà": "ìa", "íả": "ỉa", "íã": "ĩa", "íạ": "ịa",
+        "ìá": "ía", "ìà": "ìa", "ìả": "ỉa", "ìã": "ĩa", "ìạ": "ịa",
+        "ỉá": "ía", "ỉà": "ìa", "ỉả": "ỉa", "ỉã": "ĩa", "ỉạ": "ịa",
+        "ĩá": "ía", "ĩà": "ìa", "ĩả": "ỉa", "ĩã": "ĩa", "ĩạ": "ịa",
+        "ịá": "ía", "ịà": "ìa", "ịả": "ỉa", "ịã": "ĩa", "ịạ": "ịa",
+
         "ías": "ias", "ìaf": "iaf", "ỉar": "iar", "ĩax": "iax", "ịaj": "iaj",
         "iás": "ias", "iàf": "iaf", "iảr": "iar", "iãx": "iax", "iạj": "iaj",
         "ícs": "ics", "ịcj": "icj",
@@ -280,6 +286,12 @@
         "úu ": "uus", "ùu ": "uuf", "ủu ": "uur", "ũu ": "uux", "ụu ": "uuj",
         "úys": "uys", "ùyf": "uyf", "ủyr": "uyr", "ũyx": "uyx", "ụyj": "uyj",
         "úngs": "ungs", "ùngf": "ungf", "ủngr": "ungr", "ũngx": "ungx", "ụngj": "ungj",
+
+        "úngf": "ùng", "úngr": "ủng", "úngx": "ũng", "úngj": "ụng",
+        "ùngs": "úng", "ùngr": "ủng", "ùngx": "ũng", "ùngj": "ụng",
+        "ủngs": "úng", "ủngf": "ùng", "ủngx": "ũng", "ủngj": "ụng",
+        "ũngs": "úng", "ũngf": "ùng", "ũngr": "ủng", "ũngj": "ụng",
+        "ụngs": "úng", "ụngf": "ùng", "ụngr": "ủng", "ụngx": "ũng",
 
         "ăcs": "ắc", "ăcj": "ặc",
         "ácw": "ắc", "ạcw": "ặc",
