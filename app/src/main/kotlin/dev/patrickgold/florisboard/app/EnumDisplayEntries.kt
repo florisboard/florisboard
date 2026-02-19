@@ -647,6 +647,10 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
                 key = SwipeAction.TOGGLE_SMARTBAR_VISIBILITY,
                 label = stringRes(R.string.enum__swipe_action__toggle_smartbar_visibility),
             )
+            entry(
+                key = SwipeAction.TOGGLE_COMPACT_LAYOUT,
+                label = stringRes(R.string.enum__swipe_action__toggle_compact_layout),
+            )
         }
     },
     SwipeAction::class to "deleteSwipe" to {
