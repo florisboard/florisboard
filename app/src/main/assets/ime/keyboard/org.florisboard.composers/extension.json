@@ -5,7 +5,7 @@
     "version": "0.1.1",
     "title": "Default composers",
     "description": "Default composers which are always available.",
-    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "thanhhocse96 <vi_telex - thanh.hoquang@pm.me>" ],
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>", "thanhhocse96 - vi_telex <thanh.hoquang@pm.me>" ],
     "license": "apache-2.0"
   },
   "composers": [
@@ -631,6 +631,12 @@
         "uyểtr": "uyêtr", "uyểte": "uyẻte", "uyêtre": "uyetre", "uyẻter": "uyeter",
         "uyễtx": "uyêtx", "uyễte": "uyẽte", "uyêtxe": "uyetxe", "uyẽtex": "uyetex",
         "uyệtj": "uyêtj", "uyệte": "uyẹte", "uyêtje": "uyetje", "uyẹtej": "uyetej",
+
+        "uyếnf": "uyền", "uyếnr": "uyển", "uyếnx": "uyễn", "uyếnj": "uyện",
+        "uyềns": "uyến", "uyềnr": "uyển", "uyềnx": "uyễn", "uyềnj": "uyện",
+        "uyểns": "uyến", "uyểnf": "uyền", "uyểnx": "uyễn", "uyểnj": "uyện",
+        "uyễns": "uyến", "uyễnf": "uyền", "uyễnr": "uyển", "uyễnj": "uyện",
+        "uyệns": "uyến", "uyệnf": "uyền", "uyệnr": "uyển", "uyệnx": "uyễn",
 
         "uyts": "uýt", "uytj": "uỵt",
         "uynhs": "uýnh", "uynhf": "uỳnh", "uynhr": "uỷnh", "uynhx": "uỹnh", "uynhj": "uỵnh",
