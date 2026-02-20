@@ -37,8 +37,19 @@ configure<LibraryExtension> {
 
 dependencies {
     implementation(projects.core)
+    implementation(projects.security)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
