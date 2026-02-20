@@ -25,7 +25,10 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -54,6 +57,7 @@ import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -72,11 +76,13 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
@@ -87,6 +93,7 @@ import dev.patrickgold.florisboard.keyboardManager
 import com.speekez.data.presetDao
 import com.speekez.voice.voiceManager
 import dev.patrickgold.florisboard.nlpManager
+import kotlinx.coroutines.withTimeoutOrNull
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
@@ -177,6 +184,7 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
     val keyboardManager by context.keyboardManager()
     val activeState by keyboardManager.activeState.collectAsState()
     val voiceManager by context.voiceManager()
+    val inputFeedbackController = LocalInputFeedbackController.current
     val scope = rememberCoroutineScope()
 
     val presetDao = remember { context.presetDao() }
@@ -214,9 +222,19 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
                             prefs.speekez.activePresetId.set(preset.id)
                         }
                     },
-                    onLongClick = {
+                    onHoldStart = {
                         voiceManager.startRecording(preset.id.toInt())
                         keyboardManager.activeState.isRecording = true
+                        inputFeedbackController.keyLongPress()
+                    },
+                    onHoldEnd = {
+                        voiceManager.stopRecording()
+                        keyboardManager.activeState.isRecording = false
+                        inputFeedbackController.keyPress()
+                    },
+                    onHoldCancel = {
+                        voiceManager.cancelRecording()
+                        keyboardManager.activeState.isRecording = false
                     }
                 )
             }
@@ -226,12 +244,18 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
 
         MicButton(
             isRecording = activeState.isRecording,
-            onStart = {
+            onHoldStart = {
                 voiceManager.startRecording(activePresetId.toInt())
                 keyboardManager.activeState.isRecording = true
+                inputFeedbackController.keyLongPress()
             },
-            onStop = {
+            onHoldEnd = {
                 voiceManager.stopRecording()
+                keyboardManager.activeState.isRecording = false
+                inputFeedbackController.keyPress()
+            },
+            onHoldCancel = {
+                voiceManager.cancelRecording()
                 keyboardManager.activeState.isRecording = false
             }
         )
@@ -266,22 +290,43 @@ private fun AddPresetButton(onClick: () -> Unit) {
 @Composable
 private fun MicButton(
     isRecording: Boolean,
-    onStart: () -> Unit,
-    onStop: () -> Unit,
+    onHoldStart: () -> Unit,
+    onHoldEnd: () -> Unit,
+    onHoldCancel: () -> Unit,
 ) {
+    val currentOnHoldStart by rememberUpdatedState(onHoldStart)
+    val currentOnHoldEnd by rememberUpdatedState(onHoldEnd)
+    val currentOnHoldCancel by rememberUpdatedState(onHoldCancel)
+
     Box(
         modifier = Modifier
             .size(34.dp)
             .clip(CircleShape)
-            .background(SpeekEZTeal)
+            .background(if (isRecording) Color.Red else SpeekEZTeal)
             .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        onStart()
-                        tryAwaitRelease()
-                        onStop()
+                awaitEachGesture {
+                    awaitFirstDown()
+                    var up: PointerInputChange? = null
+                    val isTimeout = withTimeoutOrNull(200) {
+                        up = waitForUpOrCancellation()
+                        false
+                    } ?: true
+
+                    if (isTimeout) {
+                        currentOnHoldStart()
+                        val finalUp = waitForUpOrCancellation()
+                        if (finalUp != null) {
+                            currentOnHoldEnd()
+                            finalUp.consume()
+                        } else {
+                            currentOnHoldCancel()
+                        }
+                    } else if (up != null) {
+                        if (up!!.pressed != up!!.previousPressed) {
+                            up!!.consume()
+                        }
                     }
-                )
+                }
             },
         contentAlignment = Alignment.Center
     ) {
