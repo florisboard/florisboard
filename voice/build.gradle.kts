@@ -32,4 +32,14 @@ configure<LibraryExtension> {
 dependencies {
     implementation(projects.core)
     implementation(projects.api)
+    implementation(libs.kotlinx.coroutines)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
