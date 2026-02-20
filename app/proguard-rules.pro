@@ -27,3 +27,18 @@
 
 # @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+
+# Retrofit
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+-keep interface retrofit2.** { *; }
+-keep class com.speekez.api.** { *; }
+
+# OkHttp
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+# Room
+-keep class * extends androidx.room.RoomDatabase
+-keep class com.speekez.data.entity.** { *; }

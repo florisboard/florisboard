@@ -198,6 +198,7 @@ dependencies {
     implementation(libs.androidx.profileinstaller)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
     implementation(libs.kotlin.reflect)
@@ -217,6 +218,19 @@ dependencies {
     implementation(projects.lib.kotlin)
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
+
+    implementation(projects.voice)
+    implementation(projects.api)
+    implementation(projects.security)
+    implementation(projects.data)
+    implementation(projects.widget)
+    implementation(projects.core)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.androidx.security.crypto)
 
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.property)
