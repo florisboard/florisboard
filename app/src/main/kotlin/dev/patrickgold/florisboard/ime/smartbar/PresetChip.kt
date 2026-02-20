@@ -16,6 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -31,6 +36,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerInputChange
@@ -46,6 +52,7 @@ private val SpeekEZTeal = Color(0xFF00D4AA)
 fun PresetChip(
     preset: Preset,
     isActive: Boolean,
+    isRecording: Boolean = false,
     onClick: () -> Unit,
     onHoldStart: () -> Unit,
     onHoldEnd: () -> Unit,
@@ -57,6 +64,17 @@ fun PresetChip(
     val currentOnHoldEnd by rememberUpdatedState(onHoldEnd)
     val currentOnHoldCancel by rememberUpdatedState(onHoldCancel)
 
+    val infiniteTransition = rememberInfiniteTransition()
+    val pulseScale by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.15f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(800),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "pulseScale"
+    )
+
     val borderModifier = if (isActive) {
         Modifier.border(2.dp, SpeekEZTeal, CircleShape)
     } else {
@@ -65,7 +83,7 @@ fun PresetChip(
 
     val glowModifier = if (isActive) {
         Modifier.shadow(
-            elevation = 6.dp,
+            elevation = if (isRecording) 10.dp else 6.dp,
             shape = CircleShape,
             ambientColor = SpeekEZTeal,
             spotColor = SpeekEZTeal,
@@ -77,6 +95,7 @@ fun PresetChip(
     Box(
         modifier = modifier
             .size(34.dp)
+            .then(if (isActive && isRecording) Modifier.scale(pulseScale) else Modifier)
             .then(glowModifier)
             .then(borderModifier)
             .clip(CircleShape)

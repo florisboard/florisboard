@@ -19,9 +19,16 @@ package dev.patrickgold.florisboard.ime.smartbar
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -32,6 +39,7 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -47,11 +55,15 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
@@ -61,7 +73,9 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,17 +83,27 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.speekez.api.ApiRouterManager
+import com.speekez.core.ApiMode
+import com.speekez.security.EncryptedPreferencesManager
+import com.speekez.voice.VoiceState
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
@@ -176,6 +200,10 @@ fun Smartbar() {
 }
 
 private val SpeekEZTeal = Color(0xFF00D4AA)
+private val SpeekEZRed = Color(0xFFFF4444)
+private val SpeekEZPurple = Color(0xFF8A2BE2)
+private val SpeekEZGreen = Color(0xFF4CAF50)
+private val SpeekEZOrange = Color(0xFFFF8844)
 
 @Composable
 private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
@@ -187,78 +215,177 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
     val inputFeedbackController = LocalInputFeedbackController.current
     val scope = rememberCoroutineScope()
 
+    val voiceState by voiceManager.state.collectAsState()
+    val errorMessage by voiceManager.errorMessage.collectAsState()
+
+    val apiRouterManager = remember { ApiRouterManager(context, EncryptedPreferencesManager(context)) }
+    val isNoApiKey = apiRouterManager.getApiMode() == ApiMode.NO_KEYS
+
     val presetDao = remember { context.presetDao() }
     val presets by presetDao.getAllPresets().collectAsState(initial = emptyList())
     val activePresetId by prefs.speekez.activePresetId.collectAsState()
 
     val displayPresets = remember(presets) { presets.reversed() }
 
-    SnyggRow(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(FlorisImeSizing.smartbarHeight)
-            .padding(horizontal = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        AddPresetButton(onClick = {
-            // Intent to open settings could go here
-        })
+    var timerSeconds by remember { mutableStateOf(0) }
+    LaunchedEffect(voiceState) {
+        if (voiceState == VoiceState.RECORDING) {
+            timerSeconds = 0
+            while (true) {
+                kotlinx.coroutines.delay(1000)
+                timerSeconds++
+            }
+        }
+    }
 
-        Spacer(modifier = Modifier.width(12.dp))
+    var showNoApiKeyBanner by remember { mutableStateOf(false) }
+    LaunchedEffect(showNoApiKeyBanner) {
+        if (showNoApiKeyBanner) {
+            kotlinx.coroutines.delay(5000)
+            showNoApiKeyBanner = false
+        }
+    }
 
-        Row(
+    Box(modifier = modifier.fillMaxWidth()) {
+        SnyggRow(
             modifier = Modifier
-                .weight(1f)
-                .horizontalScroll(rememberScrollState()),
+                .fillMaxWidth()
+                .height(FlorisImeSizing.smartbarHeight)
+                .padding(horizontal = 8.dp)
+                .alpha(if (isNoApiKey) 0.4f else 1.0f),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            displayPresets.forEach { preset ->
-                PresetChip(
-                    preset = preset,
-                    isActive = preset.id == activePresetId,
-                    onClick = {
-                        scope.launch {
-                            prefs.speekez.activePresetId.set(preset.id)
+            Box(modifier = Modifier.size(34.dp), contentAlignment = Alignment.Center) {
+                if (voiceState == VoiceState.RECORDING) {
+                    val minutes = timerSeconds / 60
+                    val seconds = timerSeconds % 60
+                    Text(
+                        text = "%02d:%02d".format(minutes, seconds),
+                        color = SpeekEZRed,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                } else {
+                    AddPresetButton(onClick = {
+                        if (isNoApiKey) {
+                            showNoApiKeyBanner = true
                         }
-                    },
-                    onHoldStart = {
-                        voiceManager.startRecording(preset.id.toInt())
+                    })
+                }
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .horizontalScroll(rememberScrollState()),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                if (voiceState == VoiceState.PROCESSING) {
+                    Text(
+                        text = "Transcribing...",
+                        color = SpeekEZPurple,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                } else if (voiceState == VoiceState.ERROR) {
+                    Text(
+                        text = errorMessage ?: "Unknown Error",
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                } else {
+                    displayPresets.forEach { preset ->
+                        PresetChip(
+                            preset = preset,
+                            isActive = preset.id == activePresetId,
+                            isRecording = voiceState == VoiceState.RECORDING,
+                            onClick = {
+                                if (isNoApiKey) {
+                                    showNoApiKeyBanner = true
+                                } else {
+                                    scope.launch {
+                                        prefs.speekez.activePresetId.set(preset.id)
+                                    }
+                                }
+                            },
+                            onHoldStart = {
+                                if (isNoApiKey) {
+                                    showNoApiKeyBanner = true
+                                } else {
+                                    voiceManager.startRecording(preset.id.toInt())
+                                    keyboardManager.activeState.isRecording = true
+                                    inputFeedbackController.keyLongPress()
+                                }
+                            },
+                            onHoldEnd = {
+                                voiceManager.stopRecording()
+                                keyboardManager.activeState.isRecording = false
+                                inputFeedbackController.keyPress()
+                            },
+                            onHoldCancel = {
+                                voiceManager.cancelRecording()
+                                keyboardManager.activeState.isRecording = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            MicButton(
+                state = voiceState,
+                onHoldStart = {
+                    if (isNoApiKey) {
+                        showNoApiKeyBanner = true
+                    } else {
+                        voiceManager.startRecording(activePresetId.toInt())
                         keyboardManager.activeState.isRecording = true
                         inputFeedbackController.keyLongPress()
-                    },
-                    onHoldEnd = {
-                        voiceManager.stopRecording()
-                        keyboardManager.activeState.isRecording = false
-                        inputFeedbackController.keyPress()
-                    },
-                    onHoldCancel = {
-                        voiceManager.cancelRecording()
-                        keyboardManager.activeState.isRecording = false
                     }
+                },
+                onHoldEnd = {
+                    voiceManager.stopRecording()
+                    keyboardManager.activeState.isRecording = false
+                    inputFeedbackController.keyPress()
+                },
+                onHoldCancel = {
+                    voiceManager.cancelRecording()
+                    keyboardManager.activeState.isRecording = false
+                }
+            )
+        }
+
+        AnimatedVisibility(
+            visible = showNoApiKeyBanner,
+            enter = fadeIn() + VerticalEnterTransition,
+            exit = fadeOut() + VerticalExitTransition,
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(FlorisImeSizing.smartbarHeight)
+                    .background(SpeekEZOrange.copy(alpha = 0.12f))
+                    .clickable {
+                        showNoApiKeyBanner = false
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Need API Key",
+                    color = SpeekEZOrange,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
                 )
             }
         }
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        MicButton(
-            isRecording = activeState.isRecording,
-            onHoldStart = {
-                voiceManager.startRecording(activePresetId.toInt())
-                keyboardManager.activeState.isRecording = true
-                inputFeedbackController.keyLongPress()
-            },
-            onHoldEnd = {
-                voiceManager.stopRecording()
-                keyboardManager.activeState.isRecording = false
-                inputFeedbackController.keyPress()
-            },
-            onHoldCancel = {
-                voiceManager.cancelRecording()
-                keyboardManager.activeState.isRecording = false
-            }
-        )
     }
 }
 
@@ -289,7 +416,7 @@ private fun AddPresetButton(onClick: () -> Unit) {
 
 @Composable
 private fun MicButton(
-    isRecording: Boolean,
+    state: VoiceState,
     onHoldStart: () -> Unit,
     onHoldEnd: () -> Unit,
     onHoldCancel: () -> Unit,
@@ -298,11 +425,49 @@ private fun MicButton(
     val currentOnHoldEnd by rememberUpdatedState(onHoldEnd)
     val currentOnHoldCancel by rememberUpdatedState(onHoldCancel)
 
+    val infiniteTransition = rememberInfiniteTransition()
+    val pulseScale by infiniteTransition.animateFloat(
+        initialValue = 1f, targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(animation = tween(1000), repeatMode = RepeatMode.Reverse),
+        label = "pulseScale"
+    )
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f, targetValue = 360f,
+        animationSpec = infiniteRepeatable(animation = tween(2000, easing = LinearEasing), repeatMode = RepeatMode.Restart),
+        label = "rotation"
+    )
+    val backgroundColor by animateColorAsState(
+        targetValue = when (state) {
+            VoiceState.IDLE -> SpeekEZTeal
+            VoiceState.RECORDING -> SpeekEZRed
+            VoiceState.PROCESSING -> SpeekEZPurple
+            VoiceState.DONE -> SpeekEZGreen
+            VoiceState.ERROR -> SpeekEZRed
+        },
+        animationSpec = tween(AnimationDuration), label = "backgroundColor"
+    )
+
     Box(
         modifier = Modifier
             .size(34.dp)
+            .let {
+                when (state) {
+                    VoiceState.RECORDING -> it.drawBehind {
+                        drawCircle(SpeekEZRed.copy(alpha = 0.3f), radius = (size.minDimension / 2) * pulseScale, center = center)
+                    }
+                    VoiceState.PROCESSING -> it.drawBehind {
+                        rotate(rotation) {
+                            drawCircle(
+                                brush = Brush.sweepGradient(listOf(SpeekEZPurple.copy(alpha = 0.1f), SpeekEZPurple, SpeekEZPurple.copy(alpha = 0.1f)), center = center),
+                                radius = (size.minDimension / 2) + 4.dp.toPx(), style = Stroke(width = 3.dp.toPx())
+                            )
+                        }
+                    }
+                    else -> it
+                }
+            }
             .clip(CircleShape)
-            .background(if (isRecording) Color.Red else SpeekEZTeal)
+            .background(backgroundColor)
             .pointerInput(Unit) {
                 awaitEachGesture {
                     awaitFirstDown()
@@ -313,13 +478,15 @@ private fun MicButton(
                     } ?: true
 
                     if (isTimeout) {
-                        currentOnHoldStart()
-                        val finalUp = waitForUpOrCancellation()
-                        if (finalUp != null) {
-                            currentOnHoldEnd()
-                            finalUp.consume()
-                        } else {
-                            currentOnHoldCancel()
+                        if (state == VoiceState.IDLE || state == VoiceState.ERROR || state == VoiceState.DONE) {
+                            currentOnHoldStart()
+                            val finalUp = waitForUpOrCancellation()
+                            if (finalUp != null) {
+                                currentOnHoldEnd()
+                                finalUp.consume()
+                            } else {
+                                currentOnHoldCancel()
+                            }
                         }
                     } else if (up != null) {
                         if (up!!.pressed != up!!.previousPressed) {
@@ -330,8 +497,13 @@ private fun MicButton(
             },
         contentAlignment = Alignment.Center
     ) {
+        val icon = when (state) {
+            VoiceState.IDLE, VoiceState.RECORDING, VoiceState.PROCESSING -> Icons.Default.Mic
+            VoiceState.DONE -> Icons.Default.Check
+            VoiceState.ERROR -> Icons.Default.Error
+        }
         Icon(
-            imageVector = Icons.Default.Mic,
+            imageVector = icon,
             contentDescription = "Mic",
             modifier = Modifier.size(20.dp),
             tint = Color.White
