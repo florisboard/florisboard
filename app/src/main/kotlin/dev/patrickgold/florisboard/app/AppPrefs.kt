@@ -636,6 +636,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "speekez__setup_complete",
             default = false,
         )
+        val floatingWidgetEnabled = boolean(
+            key = "speekez__floating_widget_enabled",
+            default = false,
+        )
     }
 
     val smartbar = Smartbar()

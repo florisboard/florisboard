@@ -1,22 +1,29 @@
 package com.speekez.app.screens.settings
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.PictureInPicture
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.app.AppTheme
@@ -58,6 +65,26 @@ fun GeneralSettingsScreen() {
             pref = prefs.speekez.hapticEnabled
         )
 
+        val context = LocalContext.current
+        SettingToggleItem(
+            title = "Floating Widget",
+            icon = Icons.Default.PictureInPicture,
+            iconColor = Color(0xFF00D4AA), // Teal
+            pref = prefs.speekez.floatingWidgetEnabled,
+            onCheckedChange = { checked ->
+                if (checked && !Settings.canDrawOverlays(context)) {
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:${context.packageName}")
+                    )
+                    context.startActivity(intent)
+                    false // Don't enable the toggle yet
+                } else {
+                    true // Allow state change
+                }
+            }
+        )
+
         SettingNavItem(
             title = "Theme",
             icon = Icons.Default.Palette,
@@ -79,13 +106,23 @@ fun SettingToggleItem(
     title: String,
     icon: ImageVector,
     iconColor: Color,
-    pref: PreferenceData<Boolean>
+    pref: PreferenceData<Boolean>,
+    onCheckedChange: (Boolean) -> Boolean = { true }
 ) {
     val state by pref.collectAsState()
     val scope = rememberCoroutineScope()
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .toggleable(
+                value = state,
+                onValueChange = {
+                    if (onCheckedChange(it)) {
+                        scope.launch { pref.set(it) }
+                    }
+                },
+                role = Role.Switch
+            )
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -103,9 +140,7 @@ fun SettingToggleItem(
         )
         Switch(
             checked = state,
-            onCheckedChange = { newValue ->
-                scope.launch { pref.set(newValue) }
-            },
+            onCheckedChange = null,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.White,
                 checkedTrackColor = MaterialTheme.colorScheme.primary,
@@ -143,7 +178,7 @@ fun SettingNavItem(
             modifier = Modifier.weight(1f)
         )
         Icon(
-            imageVector = Icons.Default.ChevronRight,
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
             tint = Color.Gray
         )

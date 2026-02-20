@@ -95,6 +95,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
@@ -213,7 +215,6 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
     val keyboardManager by context.keyboardManager()
     val activeState by keyboardManager.activeState.collectAsState()
     val voiceManager by context.voiceManager()
-    val inputFeedbackController = LocalInputFeedbackController.current
     val scope = rememberCoroutineScope()
 
     val voiceState by voiceManager.state.collectAsState()
@@ -256,6 +257,8 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
                 .alpha(if (isNoApiKey) 0.4f else 1.0f),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            val activePreset = remember(presets, activePresetId) { presets.find { it.id == activePresetId } }
+
             Box(modifier = Modifier.size(34.dp), contentAlignment = Alignment.Center) {
                 AddPresetButton(onClick = {
                     if (isNoApiKey) {
@@ -293,13 +296,22 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
                         modifier = Modifier.padding(start = 8.dp)
                     )
                 } else if (voiceState == VoiceState.ERROR) {
-                    Text(
-                        text = errorMessage ?: "Unknown Error",
-                        color = Color.Red,
-                        fontSize = 12.sp,
-                        maxLines = 1,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(vertical = 4.dp)
+                            .background(SpeekEZRed, RoundedCornerShape(4.dp))
+                            .padding(horizontal = 8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = errorMessage ?: "Unknown Error",
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            maxLines = 1,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                 } else {
                     displayPresets.forEach { preset ->
                         PresetChip(
@@ -321,13 +333,11 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
                                 } else {
                                     voiceManager.startRecording(preset.id.toInt())
                                     keyboardManager.activeState.isRecording = true
-                                    inputFeedbackController.keyLongPress()
                                 }
                             },
                             onHoldEnd = {
                                 voiceManager.stopRecording()
                                 keyboardManager.activeState.isRecording = false
-                                inputFeedbackController.keyPress()
                             },
                             onHoldCancel = {
                                 voiceManager.cancelRecording()
@@ -342,6 +352,7 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
 
             MicButton(
                 state = voiceState,
+                activePresetName = activePreset?.name ?: "Default",
                 onHoldStart = {
                     if (isNoApiKey) {
                         showNoApiKeyBanner = true
@@ -408,7 +419,7 @@ private fun AddPresetButton(onClick: () -> Unit) {
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = "Add Preset",
+            contentDescription = "Add new preset",
             modifier = Modifier.size(20.dp),
             tint = Color.Gray
         )
@@ -418,6 +429,7 @@ private fun AddPresetButton(onClick: () -> Unit) {
 @Composable
 private fun MicButton(
     state: VoiceState,
+    activePresetName: String,
     onHoldStart: () -> Unit,
     onHoldEnd: () -> Unit,
     onHoldCancel: () -> Unit,
@@ -451,6 +463,9 @@ private fun MicButton(
     Box(
         modifier = Modifier
             .size(34.dp)
+            .semantics {
+                contentDescription = "Microphone, hold to record using $activePresetName"
+            }
             .let {
                 when (state) {
                     VoiceState.RECORDING -> it.drawBehind {
@@ -505,7 +520,7 @@ private fun MicButton(
         }
         Icon(
             imageVector = icon,
-            contentDescription = "Mic",
+            contentDescription = null,
             modifier = Modifier.size(20.dp),
             tint = Color.White
         )

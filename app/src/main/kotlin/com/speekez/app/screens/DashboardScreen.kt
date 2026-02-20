@@ -3,6 +3,8 @@ package com.speekez.app.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,22 +14,29 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.speekez.app.components.EmptyState
 import com.speekez.app.components.WeeklyTrendChart
 import com.speekez.data.dailyStatsDao
+import com.speekez.data.transcriptionDao
 import com.speekez.data.entity.DailyStats
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 import java.util.*
+import kotlin.math.roundToInt
 
 @Composable
 fun DashboardScreen() {
     val context = LocalContext.current
     val dailyStatsDao = remember { context.dailyStatsDao() }
+    val transcriptionDao = remember { context.transcriptionDao() }
 
     val allStatsFlow = remember { dailyStatsDao.getAllStats() }
     val allStats by allStatsFlow.collectAsState(initial = null)
+
+    val overallAvgWpmFlow = remember { transcriptionDao.getOverallAvgWpm() }
+    val overallAvgWpm by overallAvgWpmFlow.collectAsState(initial = 0f)
 
     val totalWordsFlow = remember { dailyStatsDao.getTotalWordCount() }
     val totalWordsAllTime by totalWordsFlow.collectAsState(initial = 0)
@@ -50,9 +59,11 @@ fun DashboardScreen() {
         // Still loading from database
         Box(modifier = Modifier.fillMaxSize())
     } else if (allStats!!.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "No data yet", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
-        }
+        EmptyState(
+            icon = Icons.Default.BarChart,
+            message = "Start dictating to see your stats",
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     } else {
         LazyColumn(
             modifier = Modifier
@@ -62,7 +73,7 @@ fun DashboardScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                HeroWordCounter(totalWordsAllTime ?: 0)
+                HeroTimeSaved(totalWordsAllTime ?: 0)
             }
 
             item {
@@ -71,17 +82,15 @@ fun DashboardScreen() {
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     val statsList = allStats!!
-                    val avgWpm = if (statsList.isNotEmpty()) statsList.map { it.avgWpm }.average().toFloat() else 0f
                     StatCard(
                         label = "Avg WPM",
-                        value = "%.1f".format(Locale.getDefault(), avgWpm),
+                        value = "%.1f".format(Locale.getDefault(), overallAvgWpm ?: 0f),
                         modifier = Modifier.weight(1f)
                     )
 
-                    val totalSeconds = statsList.sumOf { it.timeSavedSeconds }
                     StatCard(
-                        label = "Time Saved",
-                        value = formatTimeSaved(totalSeconds),
+                        label = "Total Words",
+                        value = (totalWordsAllTime ?: 0).toString(),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -99,16 +108,16 @@ fun DashboardScreen() {
 }
 
 @Composable
-fun HeroWordCounter(count: Int) {
+fun HeroTimeSaved(wordCount: Int) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = count.toString(),
+            text = calculateTimeSaved(wordCount),
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
         Text(
-            text = "Words Transcribed",
+            text = "Total Time Saved",
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
@@ -153,7 +162,7 @@ fun TodayStatsCard(stats: DailyStats?) {
             ) {
                 StatColumn(label = "Recordings", value = (stats?.recordingCount ?: 0).toString())
                 StatColumn(label = "Words", value = (stats?.wordCount ?: 0).toString())
-                StatColumn(label = "Time Saved", value = formatTimeSaved(stats?.timeSavedSeconds ?: 0))
+                StatColumn(label = "Time Saved", value = calculateTimeSaved(stats?.wordCount ?: 0))
             }
         }
     }
@@ -192,8 +201,11 @@ fun WeeklyChartCard(weeklyStats: List<DailyStats>, monday: LocalDate) {
     }
 }
 
-fun formatTimeSaved(seconds: Long): String {
-    val h = seconds / 3600
-    val m = (seconds % 3600) / 60
-    return if (h > 0) "${h}h ${m}m" else "${m}m"
+fun calculateTimeSaved(wordCount: Int): String {
+    val totalMinutes = wordCount / 75.0
+    val totalMinutesRounded = totalMinutes.roundToInt()
+    val hours = totalMinutesRounded / 60
+    val minutes = totalMinutesRounded % 60
+
+    return if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
 }

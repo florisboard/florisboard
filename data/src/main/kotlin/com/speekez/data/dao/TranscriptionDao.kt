@@ -30,4 +30,7 @@ interface TranscriptionDao {
 
     @Query("SELECT * FROM transcriptions WHERE raw_text LIKE '%' || :query || '%' OR refined_text LIKE '%' || :query || '%' ORDER BY created_at DESC")
     fun searchByText(query: String): Flow<List<Transcription>>
+
+    @Query("SELECT AVG(wpm) FROM transcriptions WHERE wpm > 0")
+    fun getOverallAvgWpm(): Flow<Float?>
 }

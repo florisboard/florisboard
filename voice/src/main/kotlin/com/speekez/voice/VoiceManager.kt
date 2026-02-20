@@ -16,9 +16,12 @@
 
 package com.speekez.voice
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.util.Log
 import com.speekez.api.ApiRouterManager
+import com.speekez.core.AccessibilityUtils
 import com.speekez.core.NetworkUtils
 import com.speekez.data.dailyStatsDao
 import com.speekez.data.entity.DailyStats
@@ -47,15 +50,20 @@ class VoiceManager(private val context: Context) {
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val stateMachine = VoiceStateMachine(scope)
+    private val hapticManager = VoiceHapticManager(context)
 
-    private val prefs = EncryptedPreferencesManager(context)
-    private val apiRouterManager = ApiRouterManager(context, prefs)
-    private val presetDao = context.presetDao()
-    private val transcriptionDao = context.transcriptionDao()
-    private val dailyStatsDao = context.dailyStatsDao()
+    private val prefs by lazy { EncryptedPreferencesManager(context) }
+    private val apiRouterManager by lazy { ApiRouterManager(context, prefs) }
+    private val presetDao by lazy { context.presetDao() }
+    private val transcriptionDao by lazy { context.transcriptionDao() }
+    private val dailyStatsDao by lazy { context.dailyStatsDao() }
 
     var inputConnectionProvider: (() -> InputConnection?)? = null
     var onTranscriptionComplete: ((String) -> Unit)? = null
+
+    var hapticEnabledProvider: () -> Boolean
+        get() = hapticManager.hapticEnabledProvider
+        set(value) { hapticManager.hapticEnabledProvider = value }
 
     private var activePreset: Preset? = null
     private var recordingStartTime: Long = 0
@@ -83,11 +91,24 @@ class VoiceManager(private val context: Context) {
     init {
         scope.launch {
             stateMachine.state.collect { currentState ->
-                if (currentState == VoiceState.PROCESSING) {
-                    handleProcessing()
+                when (currentState) {
+                    VoiceState.PROCESSING -> {
+                        AccessibilityUtils.announce(context, "Recording stopped, transcribing")
+                        handleProcessing()
+                    }
+                    VoiceState.ERROR -> {
+                        val msg = stateMachine.errorMessage.value ?: "Unknown error"
+                        AccessibilityUtils.announce(context, "Error: $msg")
+                    }
+                    else -> {}
                 }
             }
         }
+    }
+
+    private fun isCopyToClipboardEnabled(): Boolean {
+        return context.getSharedPreferences("florisboard-app-prefs", Context.MODE_PRIVATE)
+            .getBoolean("speekez__copy_to_clipboard", true)
     }
 
     private fun handleProcessing() {
@@ -116,32 +137,39 @@ class VoiceManager(private val context: Context) {
                 val preset = presetDao.getPresetById(presetId.toLong())
                 if (preset == null) {
                     stateMachine.setError("Preset not found")
+                    hapticManager.vibrateError()
                     return@launch
                 }
                 activePreset = preset
 
                 if (!PermissionUtils.hasMicPermission(context)) {
                     stateMachine.setError("Microphone permission denied")
+                    hapticManager.vibrateError()
                     return@launch
                 }
 
                 if (!NetworkUtils.isOnline(context)) {
                     stateMachine.setError("No internet connection")
+                    hapticManager.vibrateError()
                     return@launch
                 }
 
                 val sttClient = apiRouterManager.getSttClient()
                 if (sttClient == null) {
                     stateMachine.setError("API key not configured")
+                    hapticManager.vibrateError()
                     return@launch
                 }
 
                 stateMachine.startRecording()
+                hapticManager.vibrateStart()
                 audioHandler.start()
                 recordingStartTime = System.currentTimeMillis()
+                AccessibilityUtils.announce(context, "Recording started")
             } catch (e: Exception) {
                 Log.e(TAG, "Error starting recording", e)
                 stateMachine.setError(e.message ?: "Failed to start recording")
+                hapticManager.vibrateError()
             }
         }
     }
@@ -151,6 +179,9 @@ class VoiceManager(private val context: Context) {
      */
     fun stopRecording() {
         Log.i(TAG, "stopRecording()")
+        if (stateMachine.state.value == VoiceState.RECORDING) {
+            hapticManager.vibrateStop()
+        }
         stateMachine.stopRecording()
     }
 
@@ -165,7 +196,9 @@ class VoiceManager(private val context: Context) {
                 
                 val sttModel = apiRouterManager.getSttModel(preset.modelTier)
                 
-                val rawText = sttClient.transcribe(file, sttModel, preset.inputLanguages)
+                val prioritizedLanguages = listOf(preset.defaultInputLanguage) +
+                    (preset.inputLanguages - preset.defaultInputLanguage)
+                val rawText = sttClient.transcribe(file, sttModel, prioritizedLanguages)
                 
                 var finalResult = rawText
                 if (preset.refinementLevel != RefinementLevel.NONE) {
@@ -179,13 +212,16 @@ class VoiceManager(private val context: Context) {
                     val ic = inputConnectionProvider?.invoke()
                     ic?.commitText(finalResult, 1)
                     
-                    if (prefs.isCopyToClipboardEnabled()) {
+                    if (isCopyToClipboardEnabled()) {
+                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip = ClipData.newPlainText("SpeekEZ", finalResult)
+                        clipboard.setPrimaryClip(clip)
                         onTranscriptionComplete?.invoke(finalResult)
                     }
                 }
 
                 val wordCount = finalResult.split(Regex("\\s+")).filter { it.isNotBlank() }.size
-                val wpm = if (durationMs > 0) (wordCount.toFloat() / (durationMs / 60000f)) else 0f
+                val wpm = if (durationMs >= 1000) (wordCount.toFloat() / (durationMs / 60000.0f)) else 0f
 
                 val transcription = Transcription(
                     presetId = preset.id,
@@ -198,13 +234,16 @@ class VoiceManager(private val context: Context) {
                 )
                 transcriptionDao.insert(transcription)
 
-                updateDailyStats(wordCount, durationMs)
+                updateDailyStats(wordCount, durationMs, wpm)
                 presetDao.incrementUsageCount(preset.id)
 
                 stateMachine.setDone()
+                hapticManager.vibrateSuccess()
+                AccessibilityUtils.announce(context, "Transcription complete, $wordCount words")
             } catch (e: Exception) {
                 Log.e(TAG, "Error during audio processing", e)
                 stateMachine.setError(e.message ?: "Unknown error during processing")
+                hapticManager.vibrateError()
             } finally {
                 if (file.exists()) {
                     file.delete()
@@ -213,26 +252,19 @@ class VoiceManager(private val context: Context) {
         }
     }
 
-    private suspend fun updateDailyStats(wordCount: Int, durationMs: Long) {
+    private suspend fun updateDailyStats(wordCount: Int, durationMs: Long, currentWpm: Float) {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
         val existingStats = dailyStatsDao.getByDate(date)
 
-        // Typing speed assumed 40 WPM for time saved calculation
-        val typingWpm = 40f
-        val expectedTypingTimeSeconds = (wordCount / typingWpm) * 60f
-        val actualRecordingTimeSeconds = durationMs / 1000f
-        val timeSavedSeconds = (expectedTypingTimeSeconds - actualRecordingTimeSeconds).toLong().coerceAtLeast(0L)
+        // Formula: wordCount / 75.0 minutes
+        val timeSavedSeconds = (wordCount * 60f / 75.0f).toLong()
 
         if (existingStats != null) {
             val newWordCount = existingStats.wordCount + wordCount
             val newRecordingCount = existingStats.recordingCount + 1
-            
-            // Recalculate average WPM
-            // To do this accurately, we'd need total duration.
-            // Total Duration = Total Word Count / Avg WPM
-            val oldTotalDurationMin = if (existingStats.avgWpm > 0) existingStats.wordCount / existingStats.avgWpm else 0f
-            val newTotalDurationMin = oldTotalDurationMin + (durationMs / 60000f)
-            val newAvgWpm = if (newTotalDurationMin > 0) newWordCount / newTotalDurationMin else 0f
+
+            // Rolling average calculation
+            val newAvgWpm = (existingStats.avgWpm * existingStats.recordingCount + currentWpm) / newRecordingCount
 
             val updatedStats = existingStats.copy(
                 recordingCount = newRecordingCount,
@@ -242,12 +274,11 @@ class VoiceManager(private val context: Context) {
             )
             dailyStatsDao.insertOrUpdate(updatedStats)
         } else {
-            val avgWpm = if (durationMs > 0) (wordCount.toFloat() / (durationMs / 60000f)) else 0f
             val newStats = DailyStats(
                 date = date,
                 recordingCount = 1,
                 wordCount = wordCount,
-                avgWpm = avgWpm,
+                avgWpm = currentWpm,
                 timeSavedSeconds = timeSavedSeconds
             )
             dailyStatsDao.insertOrUpdate(newStats)

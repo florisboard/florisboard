@@ -5,6 +5,7 @@ import com.speekez.api.model.OpenRouterRefinementRequest
 import com.speekez.api.model.OpenRouterRefinementResponse
 import com.speekez.core.NetworkUtils
 import okhttp3.OkHttpClient
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -54,6 +55,21 @@ class OpenRouterClaudeClient(
             val response = api.refine("Bearer $apiKey", request)
             response.choices.firstOrNull()?.message?.content
                 ?: throw IllegalStateException("Empty response from OpenRouter")
+        }.onFailure { e ->
+            if (e is HttpException) {
+                handleError(e)
+            }
         }.getOrThrow()
+    }
+
+    private fun handleError(e: HttpException): String {
+        val code = e.code()
+        when (code) {
+            401 -> throw IllegalStateException("Invalid OpenRouter API Key")
+            402 -> throw IllegalStateException("OpenRouter Payment Required / Credits Depleted")
+            429 -> throw IllegalStateException("OpenRouter Rate Limit Exceeded")
+            in 500..599 -> throw IllegalStateException("OpenRouter Server Error ($code)")
+            else -> throw e
+        }
     }
 }

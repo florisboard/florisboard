@@ -14,8 +14,12 @@ data class Preset(
     val iconEmoji: String,
     @ColumnInfo(name = "input_languages")
     val inputLanguages: List<String>,
-    @ColumnInfo(name = "output_language")
-    val outputLanguage: String,
+    @ColumnInfo(name = "default_input_language")
+    val defaultInputLanguage: String,
+    @ColumnInfo(name = "output_languages")
+    val outputLanguages: List<String>,
+    @ColumnInfo(name = "default_output_language")
+    val defaultOutputLanguage: String,
     @ColumnInfo(name = "refinement_level")
     val refinementLevel: RefinementLevel,
     @ColumnInfo(name = "model_tier")

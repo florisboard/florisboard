@@ -25,6 +25,7 @@ import com.speekez.core.ModelTier
 import com.speekez.data.entity.Preset
 import com.speekez.data.entity.RefinementLevel
 import com.speekez.data.presetDao
+import com.speekez.widget.SpeekEZWidget1x1
 import kotlinx.coroutines.launch
 
 @Composable
@@ -93,6 +94,7 @@ fun PresetSettingsScreen() {
                                 presetDao.insertPreset(updatedPreset)
                             } else {
                                 presetDao.updatePreset(updatedPreset)
+                                SpeekEZWidget1x1.updateAllWidgets(context)
                             }
                             isFormVisible = false
                         }
@@ -162,7 +164,9 @@ fun PresetEditForm(
     var name by remember { mutableStateOf(preset.name) }
     var iconEmoji by remember { mutableStateOf(preset.iconEmoji) }
     var inputLanguages by remember { mutableStateOf(preset.inputLanguages) }
-    var outputLanguage by remember { mutableStateOf(preset.outputLanguage) }
+    var defaultInputLanguage by remember { mutableStateOf(preset.defaultInputLanguage) }
+    var outputLanguages by remember { mutableStateOf(preset.outputLanguages) }
+    var defaultOutputLanguage by remember { mutableStateOf(preset.defaultOutputLanguage) }
     var refinementLevel by remember { mutableStateOf(preset.refinementLevel) }
     var modelTier by remember { mutableStateOf(preset.modelTier) }
     var systemPrompt by remember { mutableStateOf(preset.systemPrompt) }
@@ -202,7 +206,9 @@ fun PresetEditForm(
                                 name = name,
                                 iconEmoji = iconEmoji,
                                 inputLanguages = inputLanguages,
-                                outputLanguage = outputLanguage,
+                                defaultInputLanguage = defaultInputLanguage,
+                                outputLanguages = outputLanguages,
+                                defaultOutputLanguage = defaultOutputLanguage,
                                 refinementLevel = refinementLevel,
                                 modelTier = if (modelTier == ModelTier.CUSTOM) ModelTier.CHEAP else modelTier,
                                 systemPrompt = systemPrompt,
@@ -276,73 +282,26 @@ fun PresetEditForm(
             Spacer(modifier = Modifier.height(24.dp))
 
             // Input Languages (Multi-select)
-            Text("Input Languages", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 14.sp)
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                availableLanguages.forEach { lang ->
-                    val selected = lang in inputLanguages
-                    FilterChip(
-                        selected = selected,
-                        onClick = {
-                            inputLanguages = if (selected) {
-                                if (inputLanguages.size > 1) inputLanguages - lang else inputLanguages
-                            } else {
-                                inputLanguages + lang
-                            }
-                        },
-                        label = { Text(lang.uppercase()) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.primary,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                            labelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
-                        )
-                    )
-                }
-            }
+            LanguageMultiSelect(
+                title = "Input Languages",
+                availableLanguages = availableLanguages,
+                selectedLanguages = inputLanguages,
+                defaultLanguage = defaultInputLanguage,
+                onSelectionChanged = { inputLanguages = it },
+                onDefaultChanged = { defaultInputLanguage = it }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Output Language (Dropdown)
-            var expanded by remember { mutableStateOf(false) }
-            Box {
-                OutlinedTextField(
-                    value = outputLanguage.uppercase(),
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Output Language") },
-                    modifier = Modifier.fillMaxWidth(),
-                    trailingIcon = {
-                        IconButton(onClick = { expanded = true }) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
-                        }
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                        focusedBorderColor = MaterialTheme.colorScheme.primary
-                    )
-                )
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-                ) {
-                    availableLanguages.forEach { lang ->
-                        DropdownMenuItem(
-                            text = { Text(lang.uppercase(), color = MaterialTheme.colorScheme.onSurface) },
-                            onClick = {
-                                outputLanguage = lang
-                                expanded = false
-                            }
-                        )
-                    }
-                }
-            }
+            // Output Languages (Multi-select)
+            LanguageMultiSelect(
+                title = "Output Languages",
+                availableLanguages = availableLanguages,
+                selectedLanguages = outputLanguages,
+                defaultLanguage = defaultOutputLanguage,
+                onSelectionChanged = { outputLanguages = it },
+                onDefaultChanged = { defaultOutputLanguage = it }
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -470,11 +429,82 @@ fun createEmptyPreset(): Preset {
         name = "",
         iconEmoji = "\uD83E\uDD16", // Robot face
         inputLanguages = listOf("en"),
-        outputLanguage = "en",
+        defaultInputLanguage = "en",
+        outputLanguages = listOf("en"),
+        defaultOutputLanguage = "en",
         refinementLevel = RefinementLevel.LIGHT,
         modelTier = ModelTier.CHEAP,
         systemPrompt = "",
         createdAt = now,
         updatedAt = now
     )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun LanguageMultiSelect(
+    title: String,
+    availableLanguages: List<String>,
+    selectedLanguages: List<String>,
+    defaultLanguage: String,
+    onSelectionChanged: (List<String>) -> Unit,
+    onDefaultChanged: (String) -> Unit
+) {
+    Column {
+        Text(title, color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 14.sp)
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            availableLanguages.forEach { lang ->
+                val selected = lang in selectedLanguages
+                val isDefault = lang == defaultLanguage
+                FilterChip(
+                    selected = selected,
+                    onClick = {
+                        if (selected) {
+                            if (selectedLanguages.size > 1) {
+                                val updated = selectedLanguages - lang
+                                onSelectionChanged(updated)
+                                if (isDefault) {
+                                    onDefaultChanged(updated.first())
+                                }
+                            }
+                        } else {
+                            onSelectionChanged(selectedLanguages + lang)
+                        }
+                    },
+                    label = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(lang.uppercase())
+                            if (isDefault && selectedLanguages.size > 1) {
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Icon(
+                                    Icons.Default.Star,
+                                    contentDescription = "Default",
+                                    modifier = Modifier.size(14.dp),
+                                    tint = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = MaterialTheme.colorScheme.primary,
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                        labelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                    )
+                )
+            }
+        }
+        if (selectedLanguages.size > 1) {
+            Text(
+                text = "Long press a selected language to set as default",
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f),
+                fontSize = 12.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
+    }
 }

@@ -18,6 +18,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
 import com.speekez.app.screens.SetupFlow
+import com.speekez.voice.VoiceState
+import com.speekez.voice.voiceManager
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -44,15 +47,19 @@ class SpeekEZActivity : ComponentActivity() {
         setContent {
             SpeekEZTheme {
                 val setupComplete by prefs.speekez.setupComplete.collectAsState()
-                if (setupComplete) {
-                    MainScreen()
-                } else {
-                    val scope = rememberCoroutineScope()
-                    SetupFlow(onSetupComplete = {
-                        scope.launch {
-                            prefs.speekez.setupComplete.set(true)
-                        }
-                    })
+                val snackbarHostState = remember { SnackbarHostState() }
+
+                CompositionLocalProvider(LocalSnackbarHostState provides snackbarHostState) {
+                    if (setupComplete) {
+                        MainScreen()
+                    } else {
+                        val scope = rememberCoroutineScope()
+                        SetupFlow(onSetupComplete = {
+                            scope.launch {
+                                prefs.speekez.setupComplete.set(true)
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -121,7 +128,18 @@ fun SpeekEZTheme(content: @Composable () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
+    val context = LocalContext.current
     val navController = rememberNavController()
+    val snackbarHostState = LocalSnackbarHostState.current
+    val voiceManager by context.voiceManager()
+    val voiceState by voiceManager.state.collectAsState()
+    val errorMessage by voiceManager.errorMessage.collectAsState()
+
+    LaunchedEffect(voiceState) {
+        if (voiceState == VoiceState.ERROR && errorMessage != null) {
+            snackbarHostState.showSnackbar(errorMessage!!)
+        }
+    }
     val items = listOf(
         Screen.Dashboard to Icons.Default.Dashboard,
         Screen.History to Icons.Default.History,
@@ -129,6 +147,7 @@ fun MainScreen() {
     )
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
                 title = {

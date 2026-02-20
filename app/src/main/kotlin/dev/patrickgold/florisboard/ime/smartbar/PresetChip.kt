@@ -41,6 +41,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.speekez.data.entity.Preset
@@ -95,6 +97,9 @@ fun PresetChip(
     Box(
         modifier = modifier
             .size(34.dp)
+            .semantics {
+                contentDescription = "Preset: ${preset.name}, hold to record"
+            }
             .then(if (isActive && isRecording) Modifier.scale(pulseScale) else Modifier)
             .then(glowModifier)
             .then(borderModifier)

@@ -36,7 +36,10 @@ import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import android.os.Build
+import android.provider.Settings
 import com.speekez.voice.VoiceManager
+import com.speekez.widget.FloatingWidgetService
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
@@ -83,7 +86,14 @@ class FlorisApplication : Application(), VoiceManager.Provider {
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
     val themeManager = lazy { ThemeManager(this) }
-    override val voiceManager = lazy { VoiceManager(this) }
+    override val voiceManager = lazy {
+        VoiceManager(this).apply {
+            hapticEnabledProvider = {
+                val prefs by FlorisPreferenceStore
+                prefs.speekez.hapticEnabled.get()
+            }
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -127,6 +137,21 @@ class FlorisApplication : Application(), VoiceManager.Provider {
         extensionManager.value.init()
         clipboardManager.value.initializeForContext(this)
         DictionaryManager.init(this)
+
+        scope.launch {
+            FlorisPreferenceStore.get().speekez.floatingWidgetEnabled.collect { enabled ->
+                val intent = Intent(this@FlorisApplication, FloatingWidgetService::class.java)
+                if (enabled && Settings.canDrawOverlays(this@FlorisApplication)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        startForegroundService(intent)
+                    } else {
+                        startService(intent)
+                    }
+                } else {
+                    stopService(intent)
+                }
+            }
+        }
     }
 
     private inner class BootComplete : BroadcastReceiver() {

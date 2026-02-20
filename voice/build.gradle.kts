@@ -34,10 +34,13 @@ dependencies {
     implementation(projects.api)
     implementation(projects.data)
     implementation(projects.security)
+    implementation(projects.lib.android)
+    implementation(libs.androidx.security.crypto)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.core.ktx)
 
+    testImplementation(libs.androidx.security.crypto)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)

@@ -1,5 +1,6 @@
 package com.speekez.api
 
+import com.speekez.core.NetworkUtils
 import java.util.Base64
 import retrofit2.HttpException
 import retrofit2.http.Body
@@ -80,7 +81,7 @@ class OpenRouterAudioClient(
             )
         )
 
-        return try {
+        return NetworkUtils.safeApiCall {
             val response = api.transcribe(
                 auth = "Bearer $apiKey",
                 referer = "https://github.com/speekez/speekez",
@@ -88,14 +89,14 @@ class OpenRouterAudioClient(
                 request = request
             )
             response.choices.firstOrNull()?.message?.content?.trim() ?: ""
-        } catch (e: HttpException) {
-            handleError(e)
-        } catch (e: Exception) {
-            throw e
-        }
+        }.onFailure { e ->
+            if (e is HttpException) {
+                handleError(e)
+            }
+        }.getOrThrow()
     }
 
-    private fun handleError(e: HttpException): Nothing {
+    private fun handleError(e: HttpException): String {
         val code = e.code()
         when (code) {
             401 -> throw IllegalStateException("Invalid OpenRouter API Key")

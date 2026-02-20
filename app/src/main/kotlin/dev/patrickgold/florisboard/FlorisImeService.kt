@@ -283,9 +283,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         FlorisImeServiceReference = WeakReference(this)
 
         voiceManager.inputConnectionProvider = { currentInputConnection }
-        voiceManager.onTranscriptionComplete = { text: String ->
-            clipboardManager().value.addNewPlaintext(text)
-        }
         systemLocalesFlow.value = resources.configuration.locales
 
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)

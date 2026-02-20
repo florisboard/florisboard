@@ -8,6 +8,13 @@
     <!-- Permission needed to create notifications on devices running Android 13+ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
+    <!-- Permission needed for floating widget overlay -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Permission needed for foreground service -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
     <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
           ship with an IME or Spell Check service. This is used to guide the user
           in the Settings Ui why FlorisBoard may not be working.
@@ -135,6 +142,12 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- Floating Widget Service -->
+        <service
+            android:name="com.speekez.widget.FloatingWidgetService"
+            android:enabled="true"
+            android:exported="false" />
+
         <!-- Crash Dialog Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.lib.crashutility.CrashDialogActivity"
@@ -142,6 +155,65 @@
             android:label="@string/crash_dialog__title"
             android:configChanges="orientation|screenSize"
             android:theme="@style/CrashDialogTheme"/>
+
+        <!-- SpeekEZ Widget -->
+        <receiver
+            android:name="com.speekez.widget.SpeekEZWidget1x1"
+            android:label="SpeekEZ Voice"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_1x1" />
+        </receiver>
+
+        <activity
+            android:name="com.speekez.widget.SpeekEZWidgetConfigActivity"
+            android:label="Configure SpeekEZ Widget"
+            android:exported="true"
+            android:theme="@style/FlorisAppTheme">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.speekez.widget.SpeekEZWidgetRecordingActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:exported="false" />
+
+        <!-- SpeekEZ Widget 2x1 -->
+        <receiver
+            android:name="com.speekez.widget.SpeekEZWidget2x1"
+            android:label="SpeekEZ Preset (2x1)"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/speekez_widget_2x1_info" />
+        </receiver>
+
+        <!-- SpeekEZ Widget 2x1 Configuration Activity -->
+        <activity
+            android:name="com.speekez.widget.SpeekEZWidget2x1ConfigActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <!-- SpeekEZ Voice Shortcut Activity -->
+        <activity
+            android:name="com.speekez.app.VoiceShortcutActivity"
+            android:theme="@style/FlorisAppTheme.Transparent"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true" />
 
         <!-- Copy to Clipboard Activity -->
         <activity

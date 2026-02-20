@@ -5,6 +5,7 @@ import com.speekez.api.model.AnthropicRequest
 import com.speekez.api.model.AnthropicResponse
 import com.speekez.core.NetworkUtils
 import okhttp3.OkHttpClient
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -55,6 +56,21 @@ class AnthropicClaudeClient(
             val response = api.refine(apiKey = apiKey, request = request)
             response.content.firstOrNull()?.text
                 ?: throw IllegalStateException("Empty response from Anthropic")
+        }.onFailure { e ->
+            if (e is HttpException) {
+                handleError(e)
+            }
         }.getOrThrow()
+    }
+
+    private fun handleError(e: HttpException): String {
+        val code = e.code()
+        when (code) {
+            401 -> throw IllegalStateException("Invalid Anthropic API Key")
+            403 -> throw IllegalStateException("Anthropic Access Forbidden")
+            429 -> throw IllegalStateException("Anthropic Rate Limit Exceeded")
+            in 500..599 -> throw IllegalStateException("Anthropic Server Error ($code)")
+            else -> throw e
+        }
     }
 }

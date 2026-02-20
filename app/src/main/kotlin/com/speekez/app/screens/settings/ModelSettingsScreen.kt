@@ -3,6 +3,7 @@ package com.speekez.app.screens.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
@@ -24,8 +26,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.speekez.api.ApiRouterManager
+import com.speekez.app.LocalSnackbarHostState
 import com.speekez.core.ApiMode
 import com.speekez.core.ModelTier
+import com.speekez.core.NetworkUtils
 import com.speekez.security.EncryptedPreferencesManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -53,9 +57,9 @@ fun ModelSettingsScreen() {
     var showAnthropicKey by remember { mutableStateOf(false) }
 
     var isTestingApi by remember { mutableStateOf(false) }
-    var testResult by remember { mutableStateOf<Boolean?>(null) }
     var showSwitchModeDialog by remember { mutableStateOf<ApiMode?>(null) }
 
+    val snackbarHostState = LocalSnackbarHostState.current
     val scrollState = rememberScrollState()
 
     Column(
@@ -195,26 +199,34 @@ fun ModelSettingsScreen() {
             onClick = {
                 scope.launch {
                     isTestingApi = true
-                    testResult = null
 
-                    // Save first
-                    prefs.saveApiMode(apiMode)
-                    prefs.saveModelTier(modelTier)
-                    if (apiMode == ApiMode.OPENROUTER) {
-                        prefs.saveOpenRouterKey(openRouterKey)
-                    } else {
-                        prefs.saveOpenAiKey(openAiKey)
-                        prefs.saveAnthropicKey(anthropicKey)
-                    }
-                    if (modelTier == ModelTier.CUSTOM) {
-                        prefs.saveCustomSttModel(customSttModel)
-                        prefs.saveCustomRefinementModel(customRefinementModel)
-                    }
+                    try {
+                        // Save first
+                        prefs.saveApiMode(apiMode)
+                        prefs.saveModelTier(modelTier)
+                        if (apiMode == ApiMode.OPENROUTER) {
+                            prefs.saveOpenRouterKey(openRouterKey)
+                        } else {
+                            prefs.saveOpenAiKey(openAiKey)
+                            prefs.saveAnthropicKey(anthropicKey)
+                        }
+                        if (modelTier == ModelTier.CUSTOM) {
+                            prefs.saveCustomSttModel(customSttModel)
+                            prefs.saveCustomRefinementModel(customRefinementModel)
+                        }
 
-                    // Simulate/Perform test
-                    val success = performApiTest(apiRouter, apiMode, modelTier)
-                    testResult = success
-                    isTestingApi = false
+                        // Simulate/Perform test
+                        val success = performApiTest(context, apiRouter, apiMode, modelTier)
+                        if (success) {
+                            snackbarHostState.showSnackbar("API Test Successful!")
+                        } else {
+                            snackbarHostState.showSnackbar("API Test Failed. Please check your keys.")
+                        }
+                    } catch (e: Exception) {
+                        snackbarHostState.showSnackbar("Error: ${e.message ?: "Unknown error"}")
+                    } finally {
+                        isTestingApi = false
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth().height(56.dp),
@@ -228,13 +240,6 @@ fun ModelSettingsScreen() {
             }
         }
 
-        if (testResult != null) {
-            Text(
-                text = if (testResult == true) "API Test Successful!" else "API Test Failed. Please check your keys.",
-                color = if (testResult == true) Color.Green else MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally)
-            )
-        }
     }
 
     if (showSwitchModeDialog != null) {
@@ -326,7 +331,11 @@ fun TierButton(text: String, selected: Boolean, onClick: () -> Unit, modifier: M
             .height(48.dp)
             .background(if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
             .border(1.dp, if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-            .clickable { onClick() },
+            .selectable(
+                selected = selected,
+                onClick = onClick,
+                role = Role.RadioButton
+            ),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -453,7 +462,10 @@ class MaskedKeyTransformation : VisualTransformation {
     }
 }
 
-private suspend fun performApiTest(apiRouter: ApiRouterManager, mode: ApiMode, tier: ModelTier): Boolean {
+private suspend fun performApiTest(context: android.content.Context, apiRouter: ApiRouterManager, mode: ApiMode, tier: ModelTier): Boolean {
+    if (!NetworkUtils.isOnline(context)) {
+        throw IllegalStateException("No internet connection")
+    }
     return try {
         val client = apiRouter.getRefinementClient() ?: return false
         val model = apiRouter.getRefinementModel(tier)
@@ -462,6 +474,6 @@ private suspend fun performApiTest(apiRouter: ApiRouterManager, mode: ApiMode, t
 
         true
     } catch (e: Exception) {
-        false
+        throw e
     }
 }

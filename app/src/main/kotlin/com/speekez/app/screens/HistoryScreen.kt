@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
@@ -27,10 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.speekez.app.components.EmptyState
 import com.speekez.data.entity.Preset
 import com.speekez.data.entity.Transcription
 import com.speekez.data.transcriptionDao
@@ -125,7 +131,29 @@ fun HistoryScreen() {
                     FilterChip(
                         selected = selected,
                         onClick = { selectedFilter = filter },
-                        label = { Text(filter.name.lowercase().replaceFirstChar { it.uppercase() }.replace("_", " ")) },
+                        label = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(filter.name.lowercase().replaceFirstChar { it.uppercase() }.replace("_", " "))
+                                if (filter == HistoryFilter.FAVORITES) {
+                                    val count = transcriptions.count { it.isFavorite }
+                                    if (count > 0) {
+                                        Spacer(modifier = Modifier.width(6.dp))
+                                        Surface(
+                                            shape = CircleShape,
+                                            color = if (selected) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f) else MaterialTheme.colorScheme.primary,
+                                            contentColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimary
+                                        ) {
+                                            Text(
+                                                text = count.toString(),
+                                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                                fontSize = 10.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primary,
                             selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
@@ -147,11 +175,20 @@ fun HistoryScreen() {
             )
 
             if (filteredTranscriptions.isEmpty()) {
-                Box(modifier = Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = if (searchQuery.isEmpty()) "No transcriptions yet" else "No results found",
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                if (searchQuery.isEmpty() && selectedFilter == HistoryFilter.ALL) {
+                    EmptyState(
+                        icon = Icons.Default.Mic,
+                        message = "No transcriptions yet. Hold the mic button to start.",
+                        modifier = Modifier.weight(1f),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                } else {
+                    Box(modifier = Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "No results found",
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        )
+                    }
                 }
             } else {
                 LazyColumn(
@@ -294,9 +331,14 @@ fun TranscriptionItem(
         formatTimestamp(transcription.createdAt)
     }
 
+    val preview = transcription.refinedText.ifBlank { transcription.rawText }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .semantics {
+                contentDescription = "Transcription from $formattedDate, ${transcription.wordCount} words, $preview"
+            }
             .combinedClickable(
                 onClick = onTap,
                 onLongClick = {
@@ -330,11 +372,22 @@ fun TranscriptionItem(
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                         style = MaterialTheme.typography.labelSmall
                     )
-                    Text(
-                        text = "${transcription.wordCount} words",
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                        style = MaterialTheme.typography.labelSmall
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (transcription.isFavorite) {
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFFFD700),
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                        }
+                        Text(
+                            text = "${transcription.wordCount} words",
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))

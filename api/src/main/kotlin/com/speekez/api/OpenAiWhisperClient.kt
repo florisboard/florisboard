@@ -1,5 +1,6 @@
 package com.speekez.api
 
+import com.speekez.core.NetworkUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -37,17 +38,17 @@ class OpenAiWhisperClient(
             languages.first().toRequestBody("text/plain".toMediaTypeOrNull())
         } else null
 
-        return try {
+        return NetworkUtils.safeApiCall {
             val response = api.transcribe("Bearer $apiKey", body, modelBody, languageBody)
             response.text
-        } catch (e: HttpException) {
-            handleError(e)
-        } catch (e: Exception) {
-            throw e
-        }
+        }.onFailure { e ->
+            if (e is HttpException) {
+                handleError(e)
+            }
+        }.getOrThrow()
     }
 
-    private fun handleError(e: HttpException): Nothing {
+    private fun handleError(e: HttpException): String {
         val code = e.code()
         when (code) {
             401 -> throw IllegalStateException("Invalid OpenAI API Key")
