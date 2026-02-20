@@ -618,6 +618,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    val speekez = Speekez()
+    inner class Speekez {
+        val activePresetId = long(
+            key = "speekez__active_preset_id",
+            default = 1L,
+        )
+    }
+
     val smartbar = Smartbar()
     inner class Smartbar {
         val enabled = boolean(
@@ -626,7 +634,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val layout = enum(
             key = "smartbar__layout",
-            default = SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED,
+            default = SmartbarLayout.SPEEKEZ,
         )
         val actionArrangement = custom(
             key = "smartbar__action_arrangement",

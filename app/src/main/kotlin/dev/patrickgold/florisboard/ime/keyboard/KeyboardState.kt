@@ -92,6 +92,7 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
         const val F_IS_RTL_LAYOUT_DIRECTION: ULong =        0x08000000u
+        const val F_IS_RECORDING: ULong =                   0x10000000u
 
         const val F_IS_SUBTYPE_SELECTION_VISIBLE: ULong =   0x1_0000_0000u
 
@@ -183,6 +184,10 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
     var isIncognitoMode: Boolean
         get() = getFlag(F_IS_INCOGNITO_MODE)
         set(v) { setFlag(F_IS_INCOGNITO_MODE, v) }
+
+    var isRecording: Boolean
+        get() = getFlag(F_IS_RECORDING)
+        set(v) { setFlag(F_IS_RECORDING, v) }
 
     var isActionsOverflowVisible: Boolean
         get() = getFlag(F_IS_ACTIONS_OVERFLOW_VISIBLE)

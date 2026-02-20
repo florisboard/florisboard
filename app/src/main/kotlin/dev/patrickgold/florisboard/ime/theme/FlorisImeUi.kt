@@ -304,6 +304,16 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         resId = R.string.snygg__rule_element__smartbar_actions_overflow_customize_button,
     ),
 
+    SmartbarVoiceButton(
+        elementName = "smartbar-voice-button",
+        resId = null,
+    ),
+
+    VoiceWaveform(
+        elementName = "voice-waveform",
+        resId = null,
+    ),
+
     SmartbarActionsEditor(
         elementName = "smartbar-actions-editor",
         resId = R.string.snygg__rule_element__smartbar_actions_editor,

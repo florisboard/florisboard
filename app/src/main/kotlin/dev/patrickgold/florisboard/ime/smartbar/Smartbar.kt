@@ -23,7 +23,13 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
@@ -33,10 +39,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
 import androidx.compose.runtime.Composable
@@ -44,12 +57,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -64,6 +84,8 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
+import com.speekez.data.presetDao
+import com.speekez.voice.voiceManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
@@ -95,6 +117,7 @@ private val NoAnimationTween = tween<Float>(0)
 fun Smartbar() {
     val prefs by FlorisPreferenceStore
     val smartbarEnabled by prefs.smartbar.enabled.collectAsState()
+    val smartbarLayout by prefs.smartbar.layout.collectAsState()
     val extendedActionsPlacement by prefs.smartbar.extendedActionsPlacement.collectAsState()
 
     AnimatedVisibility(
@@ -102,41 +125,172 @@ fun Smartbar() {
         enter = VerticalEnterTransition,
         exit = VerticalExitTransition,
     ) {
-        when (extendedActionsPlacement) {
-            ExtendedActionsPlacement.ABOVE_CANDIDATES -> {
-                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
-                    SmartbarSecondaryRow()
-                    SmartbarMainRow()
+        if (smartbarLayout == SmartbarLayout.SPEEKEZ) {
+            SpeekEZSmartbarMainRow()
+        } else {
+            when (extendedActionsPlacement) {
+                ExtendedActionsPlacement.ABOVE_CANDIDATES -> {
+                    SnyggColumn(FlorisImeUi.Smartbar.elementName) {
+                        SmartbarSecondaryRow()
+                        SmartbarMainRow()
+                    }
                 }
-            }
 
-            ExtendedActionsPlacement.BELOW_CANDIDATES -> {
-                SnyggColumn(FlorisImeUi.Smartbar.elementName) {
-                    SmartbarMainRow()
-                    SmartbarSecondaryRow()
-                }
-            }
-
-            ExtendedActionsPlacement.OVERLAY_APP_UI -> {
-                SnyggBox(FlorisImeUi.Smartbar.elementName,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(FlorisImeSizing.smartbarHeight),
-                    allowClip = false,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(FlorisImeSizing.smartbarHeight * 2)
-                            .absoluteOffset(y = -FlorisImeSizing.smartbarHeight),
-                        contentAlignment = Alignment.BottomStart,
-                    ) {
+                ExtendedActionsPlacement.BELOW_CANDIDATES -> {
+                    SnyggColumn(FlorisImeUi.Smartbar.elementName) {
+                        SmartbarMainRow()
                         SmartbarSecondaryRow()
                     }
-                    SmartbarMainRow()
+                }
+
+                ExtendedActionsPlacement.OVERLAY_APP_UI -> {
+                    SnyggBox(
+                        FlorisImeUi.Smartbar.elementName,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(FlorisImeSizing.smartbarHeight),
+                        allowClip = false,
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(FlorisImeSizing.smartbarHeight * 2)
+                                .absoluteOffset(y = -FlorisImeSizing.smartbarHeight),
+                            contentAlignment = Alignment.BottomStart,
+                        ) {
+                            SmartbarSecondaryRow()
+                        }
+                        SmartbarMainRow()
+                    }
                 }
             }
         }
+    }
+}
+
+private val SpeekEZTeal = Color(0xFF00D4AA)
+
+@Composable
+private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val prefs by FlorisPreferenceStore
+    val keyboardManager by context.keyboardManager()
+    val activeState by keyboardManager.activeState.collectAsState()
+    val voiceManager = context.voiceManager()
+    val scope = rememberCoroutineScope()
+
+    val presetDao = remember { context.presetDao() }
+    val presets by presetDao.getAllPresets().collectAsState(initial = emptyList())
+    val activePresetId by prefs.speekez.activePresetId.collectAsState()
+
+    val displayPresets = remember(presets) { presets.reversed() }
+
+    SnyggRow(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(FlorisImeSizing.smartbarHeight)
+            .padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AddPresetButton(onClick = {
+            // Intent to open settings could go here
+        })
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .horizontalScroll(rememberScrollState()),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            displayPresets.forEach { preset ->
+                PresetChip(
+                    preset = preset,
+                    isActive = preset.id == activePresetId,
+                    onClick = {
+                        scope.launch {
+                            prefs.speekez.activePresetId.set(preset.id)
+                        }
+                    },
+                    onLongClick = {
+                        voiceManager.startRecording(preset.id.toInt())
+                        keyboardManager.activeState.isRecording = true
+                    }
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        MicButton(
+            isRecording = activeState.isRecording,
+            onStart = {
+                voiceManager.startRecording(activePresetId.toInt())
+                keyboardManager.activeState.isRecording = true
+            },
+            onStop = {
+                voiceManager.stopRecording()
+                keyboardManager.activeState.isRecording = false
+            }
+        )
+    }
+}
+
+@Composable
+private fun AddPresetButton(onClick: () -> Unit) {
+    val stroke = Stroke(width = 3f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f))
+    Box(
+        modifier = Modifier
+            .size(34.dp)
+            .drawBehind {
+                drawRoundRect(
+                    color = Color.Gray.copy(alpha = 0.5f),
+                    style = stroke,
+                    cornerRadius = CornerRadius(17.dp.toPx())
+                )
+            }
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = "Add Preset",
+            modifier = Modifier.size(20.dp),
+            tint = Color.Gray
+        )
+    }
+}
+
+@Composable
+private fun MicButton(
+    isRecording: Boolean,
+    onStart: () -> Unit,
+    onStop: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .size(34.dp)
+            .clip(CircleShape)
+            .background(SpeekEZTeal)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = {
+                        onStart()
+                        tryAwaitRelease()
+                        onStop()
+                    }
+                )
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Mic,
+            contentDescription = "Mic",
+            modifier = Modifier.size(20.dp),
+            tint = Color.White
+        )
     }
 }
 
@@ -361,6 +515,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
                     CenterContent()
                     ExtendedActionsToggle()
                 }
+            }
+
+            SmartbarLayout.SPEEKEZ -> {
+                SpeekEZSmartbarMainRow(modifier)
             }
         }
     }
