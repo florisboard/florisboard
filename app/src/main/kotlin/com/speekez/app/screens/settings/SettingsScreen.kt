@@ -2,6 +2,7 @@ package com.speekez.app.screens.settings
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,12 +17,12 @@ fun SettingsScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = Color(0xFF12121F),
-            contentColor = Color(0xFF00D4AA),
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary,
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                    color = Color(0xFF00D4AA)
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         ) {
@@ -32,7 +33,7 @@ fun SettingsScreen() {
                     text = {
                         Text(
                             text = title,
-                            color = if (selectedTabIndex == index) Color(0xFF00D4AA) else Color.Gray
+                            color = if (selectedTabIndex == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                         )
                     }
                 )
@@ -53,6 +54,6 @@ fun PlaceholderSettingsScreen(title: String) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = title, color = Color.White)
+        Text(text = title, color = MaterialTheme.colorScheme.onBackground)
     }
 }

@@ -1,6 +1,5 @@
 package com.speekez.app.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,12 +7,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.speekez.app.components.WeeklyTrendChart
 import com.speekez.data.dailyStatsDao
 import com.speekez.data.entity.DailyStats
 import java.time.DayOfWeek
@@ -52,7 +51,7 @@ fun DashboardScreen() {
         Box(modifier = Modifier.fillMaxSize())
     } else if (allStats!!.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "No data yet", color = Color.Gray)
+            Text(text = "No data yet", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
         }
     } else {
         LazyColumn(
@@ -106,12 +105,12 @@ fun HeroWordCounter(count: Int) {
             text = count.toString(),
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF00D4AA)
+            color = MaterialTheme.colorScheme.primary
         )
         Text(
             text = "Words Transcribed",
             fontSize = 16.sp,
-            color = Color.Gray
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
     }
 }
@@ -120,15 +119,15 @@ fun HeroWordCounter(count: Int) {
 fun StatCard(label: String, value: String, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF12121F)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = value, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-            Text(text = label, fontSize = 14.sp, color = Color.Gray)
+            Text(text = value, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+            Text(text = label, fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
         }
     }
 }
@@ -137,7 +136,7 @@ fun StatCard(label: String, value: String, modifier: Modifier = Modifier) {
 fun TodayStatsCard(stats: DailyStats?) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF12121F)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -145,7 +144,7 @@ fun TodayStatsCard(stats: DailyStats?) {
                 text = "Today's Stats",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
             Row(
@@ -163,8 +162,8 @@ fun TodayStatsCard(stats: DailyStats?) {
 @Composable
 fun StatColumn(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = value, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        Text(text = label, fontSize = 12.sp, color = Color.Gray)
+        Text(text = value, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+        Text(text = label, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
     }
 }
 
@@ -172,7 +171,7 @@ fun StatColumn(label: String, value: String) {
 fun WeeklyChartCard(weeklyStats: List<DailyStats>, monday: LocalDate) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF12121F)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -180,49 +179,15 @@ fun WeeklyChartCard(weeklyStats: List<DailyStats>, monday: LocalDate) {
                 text = "Weekly Activity",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            val maxWords = (weeklyStats.maxOfOrNull { it.wordCount } ?: 0).coerceAtLeast(1)
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                for (i in 0..6) {
-                    val date = monday.plusDays(i.toLong()).format(DateTimeFormatter.ISO_LOCAL_DATE)
-                    val stats = weeklyStats.find { it.date == date }
-                    val wordCount = stats?.wordCount ?: 0
-                    val barHeightFraction = wordCount.toFloat() / maxWords
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxHeight(barHeightFraction.coerceAtLeast(0.05f))
-                                .width(20.dp)
-                                .background(
-                                    brush = Brush.verticalGradient(
-                                        colors = listOf(Color(0xFF00D4AA), Color(0xFF00D4AA).copy(alpha = 0.3f))
-                                    ),
-                                    shape = RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
-                                )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = monday.plusDays(i.toLong()).dayOfWeek.name.take(1),
-                            fontSize = 12.sp,
-                            color = Color.Gray
-                        )
-                    }
-                }
-            }
+            WeeklyTrendChart(
+                weeklyStats = weeklyStats,
+                monday = monday,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

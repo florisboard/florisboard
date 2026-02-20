@@ -92,7 +92,7 @@ fun HistoryScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF0A0A14))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             // Search Bar
@@ -100,15 +100,15 @@ fun HistoryScreen() {
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Search transcriptions...", color = Color.Gray) },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray) },
+                placeholder = { Text("Search transcriptions...", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)) },
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF00D4AA),
-                    unfocusedBorderColor = Color.DarkGray,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    cursorColor = Color(0xFF00D4AA)
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    cursorColor = MaterialTheme.colorScheme.primary
                 ),
                 singleLine = true
             )
@@ -127,10 +127,10 @@ fun HistoryScreen() {
                         onClick = { selectedFilter = filter },
                         label = { Text(filter.name.lowercase().replaceFirstChar { it.uppercase() }.replace("_", " ")) },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = Color(0xFF00D4AA),
-                            selectedLabelColor = Color.Black,
-                            containerColor = Color(0xFF1A1A2E),
-                            labelColor = Color.White
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant
                         ),
                         border = null
                     )
@@ -141,7 +141,7 @@ fun HistoryScreen() {
 
             Text(
                 text = "Tap to open - Hold to copy",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
             )
@@ -150,7 +150,7 @@ fun HistoryScreen() {
                 Box(modifier = Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                     Text(
                         text = if (searchQuery.isEmpty()) "No transcriptions yet" else "No results found",
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
                 }
             } else {
@@ -212,7 +212,7 @@ fun HistoryDetailPanel(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0A0A14))
+            .background(MaterialTheme.colorScheme.background)
     ) {
         // Header
         Row(
@@ -225,14 +225,14 @@ fun HistoryDetailPanel(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
 
             Column(modifier = Modifier.weight(1f).padding(horizontal = 8.dp)) {
                 Text(
                     text = formattedDate,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.titleMedium
                 )
                 val duration = remember(transcription.audioDurationMs) {
@@ -240,7 +240,7 @@ fun HistoryDetailPanel(
                 }
                 Text(
                     text = "$duration \u2022 ${transcription.wordCount} words \u2022 ${preset?.name ?: "Unknown"}",
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                     style = MaterialTheme.typography.labelSmall
                 )
             }
@@ -249,7 +249,7 @@ fun HistoryDetailPanel(
                 Icon(
                     imageVector = Icons.Default.ContentCopy,
                     contentDescription = "Copy",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
 
@@ -257,12 +257,12 @@ fun HistoryDetailPanel(
                 Icon(
                     imageVector = if (transcription.isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
                     contentDescription = "Favorite",
-                    tint = if (transcription.isFavorite) Color(0xFFFFD700) else Color.Gray
+                    tint = if (transcription.isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                 )
             }
         }
 
-        HorizontalDivider(color = Color.DarkGray, thickness = 1.dp)
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 1.dp)
 
         // Body
         Column(
@@ -273,7 +273,7 @@ fun HistoryDetailPanel(
         ) {
             Text(
                 text = transcription.refinedText.ifBlank { transcription.rawText },
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyLarge,
                 lineHeight = 24.sp
             )
@@ -306,7 +306,7 @@ fun TranscriptionItem(
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF12121F)
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Row(
@@ -327,12 +327,12 @@ fun TranscriptionItem(
                 ) {
                     Text(
                         text = formattedDate,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                         style = MaterialTheme.typography.labelSmall
                     )
                     Text(
                         text = "${transcription.wordCount} words",
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
@@ -341,7 +341,7 @@ fun TranscriptionItem(
 
                 Text(
                     text = transcription.refinedText.ifBlank { transcription.rawText },
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyMedium
@@ -353,7 +353,7 @@ fun TranscriptionItem(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = Color.Gray
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
         }
     }

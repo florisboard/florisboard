@@ -2,6 +2,7 @@ package com.speekez.app.screens.settings
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,19 +48,19 @@ fun PresetSettingsScreen() {
                                 isFormVisible = true
                             }
                         },
-                        containerColor = Color(0xFF00D4AA),
-                        contentColor = Color.Black
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ) {
                         Icon(Icons.Default.Add, contentDescription = "New Preset")
                     }
                 }
             },
-            containerColor = Color(0xFF0A0A14)
+            containerColor = MaterialTheme.colorScheme.background
         ) { padding ->
             Column(modifier = Modifier.padding(padding).fillMaxSize()) {
                 if (presets.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = Color(0xFF00D4AA))
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
                 } else {
                     LazyColumn(
@@ -118,9 +119,9 @@ fun PresetCard(preset: Preset, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF12121F)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(12.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF1A1A2E))
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -129,19 +130,19 @@ fun PresetCard(preset: Preset, onClick: () -> Unit) {
             Text(text = preset.iconEmoji, fontSize = 32.sp)
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = preset.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(text = preset.name, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 val langSummary = preset.inputLanguages.joinToString("+") { it.uppercase() }
-                Text(text = langSummary, color = Color(0xFF00D4AA), fontSize = 14.sp)
+                Text(text = langSummary, color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
             }
             Column(horizontalAlignment = Alignment.End) {
                 Text(
                     text = preset.refinementLevel.name.lowercase().replaceFirstChar { it.uppercase() },
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     fontSize = 12.sp
                 )
                 Text(
                     text = preset.modelTier.name.lowercase().replaceFirstChar { it.uppercase() },
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     fontSize = 12.sp
                 )
             }
@@ -172,7 +173,7 @@ fun PresetEditForm(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color(0xFF0A0A14)
+        color = MaterialTheme.colorScheme.background
     ) {
         Column(
             modifier = Modifier
@@ -186,11 +187,11 @@ fun PresetEditForm(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onCancel) {
-                    Icon(Icons.Default.Close, contentDescription = "Cancel", tint = Color.White)
+                    Icon(Icons.Default.Close, contentDescription = "Cancel", tint = MaterialTheme.colorScheme.onBackground)
                 }
                 Text(
                     text = if (preset.id == 0L) "New Preset" else "Edit Preset",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
@@ -210,7 +211,7 @@ fun PresetEditForm(
                         )
                     }
                 }) {
-                    Text("Save", color = Color(0xFF00D4AA))
+                    Text("Save", color = MaterialTheme.colorScheme.primary)
                 }
             }
 
@@ -223,33 +224,59 @@ fun PresetEditForm(
                 label = { Text("Name") },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedTextColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedBorderColor = Color(0xFF1A1A2E),
-                    focusedBorderColor = Color(0xFF00D4AA)
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary
                 )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Icon
-            OutlinedTextField(
-                value = iconEmoji,
-                onValueChange = { iconEmoji = it },
-                label = { Text("Icon (Emoji)") },
-                modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedTextColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedBorderColor = Color(0xFF1A1A2E),
-                    focusedBorderColor = Color(0xFF00D4AA)
+            // Icon with Preview (P4-12)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // Preview Box
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+                        .border(1.dp, MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = iconEmoji.ifBlank { "\uD83E\uDD16" }, fontSize = 24.sp)
+                }
+
+                // Input Field
+                OutlinedTextField(
+                    value = iconEmoji,
+                    onValueChange = {
+                        if (it.length <= 2) {
+                            iconEmoji = it
+                        }
+                    },
+                    label = { Text("Icon (Emoji)") },
+                    placeholder = { Text("Type or paste any emoji") },
+                    modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedPlaceholderColor = Color.Gray,
+                        focusedPlaceholderColor = Color.Gray
+                    )
                 )
-            )
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             // Input Languages (Multi-select)
-            Text("Input Languages", color = Color.Gray, fontSize = 14.sp)
+            Text("Input Languages", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 14.sp)
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -269,9 +296,9 @@ fun PresetEditForm(
                         },
                         label = { Text(lang.uppercase()) },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = Color(0xFF00D4AA),
-                            selectedLabelColor = Color.Black,
-                            labelColor = Color.Gray
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                            labelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                         )
                     )
                 }
@@ -290,24 +317,24 @@ fun PresetEditForm(
                     modifier = Modifier.fillMaxWidth(),
                     trailingIcon = {
                         IconButton(onClick = { expanded = true }) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = Color.White)
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                         }
                     },
                     colors = OutlinedTextFieldDefaults.colors(
-                        unfocusedTextColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedBorderColor = Color(0xFF1A1A2E),
-                        focusedBorderColor = Color(0xFF00D4AA)
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary
                     )
                 )
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
-                    modifier = Modifier.background(Color(0xFF12121F))
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                 ) {
                     availableLanguages.forEach { lang ->
                         DropdownMenuItem(
-                            text = { Text(lang.uppercase(), color = Color.White) },
+                            text = { Text(lang.uppercase(), color = MaterialTheme.colorScheme.onSurface) },
                             onClick = {
                                 outputLanguage = lang
                                 expanded = false
@@ -320,7 +347,7 @@ fun PresetEditForm(
             Spacer(modifier = Modifier.height(24.dp))
 
             // Refinement Level (3-way)
-            Text("Refinement Level", color = Color.Gray, fontSize = 14.sp)
+            Text("Refinement Level", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 14.sp)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -329,8 +356,8 @@ fun PresetEditForm(
             ) {
                 RefinementLevel.entries.forEach { level ->
                     val selected = refinementLevel == level
-                    val color = if (selected) Color(0xFF00D4AA) else Color(0xFF12121F)
-                    val textColor = if (selected) Color.Black else Color.White
+                    val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+                    val textColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -351,7 +378,7 @@ fun PresetEditForm(
             Spacer(modifier = Modifier.height(24.dp))
 
             // Model Tier (2-way: Cheap/Best)
-            Text("Model Tier", color = Color.Gray, fontSize = 14.sp)
+            Text("Model Tier", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 14.sp)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -360,8 +387,8 @@ fun PresetEditForm(
             ) {
                 listOf(ModelTier.CHEAP, ModelTier.BEST).forEach { tier ->
                     val selected = modelTier == tier
-                    val color = if (selected) Color(0xFF00D4AA) else Color(0xFF12121F)
-                    val textColor = if (selected) Color.Black else Color.White
+                    val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+                    val textColor = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -390,10 +417,10 @@ fun PresetEditForm(
                     .fillMaxWidth()
                     .height(120.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedTextColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedBorderColor = Color(0xFF1A1A2E),
-                    focusedBorderColor = Color(0xFF00D4AA)
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary
                 )
             )
 
@@ -402,9 +429,9 @@ fun PresetEditForm(
                 Button(
                     onClick = { showDeleteDialog = true },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.8f))
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.8f))
                 ) {
-                    Text("Delete Preset", color = Color.White)
+                    Text("Delete Preset", color = MaterialTheme.colorScheme.onError)
                 }
             }
 
@@ -421,17 +448,17 @@ fun PresetEditForm(
                         showDeleteDialog = false
                         onDelete()
                     }) {
-                        Text("Delete", color = Color.Red)
+                        Text("Delete", color = MaterialTheme.colorScheme.error)
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDeleteDialog = false }) {
-                        Text("Cancel", color = Color.White)
+                        Text("Cancel", color = MaterialTheme.colorScheme.onSurface)
                     }
                 },
-                containerColor = Color(0xFF12121F),
-                titleContentColor = Color.White,
-                textContentColor = Color.Gray
+                containerColor = MaterialTheme.colorScheme.surface,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                textContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
         }
     }
@@ -441,7 +468,7 @@ fun createEmptyPreset(): Preset {
     val now = System.currentTimeMillis()
     return Preset(
         name = "",
-        iconEmoji = "\uD83C\uDF10", // Global emoji
+        iconEmoji = "\uD83E\uDD16", // Robot face
         inputLanguages = listOf("en"),
         outputLanguage = "en",
         refinementLevel = RefinementLevel.LIGHT,

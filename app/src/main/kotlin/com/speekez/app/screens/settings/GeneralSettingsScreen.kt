@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ChevronRight
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -81,6 +82,7 @@ fun SettingToggleItem(
     pref: PreferenceData<Boolean>
 ) {
     val state by pref.collectAsState()
+    val scope = rememberCoroutineScope()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,12 +103,14 @@ fun SettingToggleItem(
         )
         Switch(
             checked = state,
-            onCheckedChange = { pref.set(it) },
+            onCheckedChange = { newValue ->
+                scope.launch { pref.set(newValue) }
+            },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.White,
-                checkedTrackColor = Color(0xFF00D4AA), // Teal accent
+                checkedTrackColor = MaterialTheme.colorScheme.primary,
                 uncheckedThumbColor = Color.Gray,
-                uncheckedTrackColor = Color(0xFF1A1A2E)
+                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
             )
         )
     }
@@ -139,7 +143,7 @@ fun SettingNavItem(
             modifier = Modifier.weight(1f)
         )
         Icon(
-            imageVector = Icons.AutoMirrored.Filled.ChevronRight,
+            imageVector = Icons.Default.ChevronRight,
             contentDescription = null,
             tint = Color.Gray
         )
@@ -158,11 +162,12 @@ fun ThemePickerDialog(
         title = { Text("Select Theme") },
         text = {
             Column {
+                val scope = rememberCoroutineScope()
                 ThemeOption(
                     label = "Light",
                     selected = currentTheme == AppTheme.LIGHT,
                     onClick = {
-                        prefs.other.settingsTheme.set(AppTheme.LIGHT)
+                        scope.launch { prefs.other.settingsTheme.set(AppTheme.LIGHT) }
                         onDismiss()
                     }
                 )
@@ -170,7 +175,7 @@ fun ThemePickerDialog(
                     label = "Dark",
                     selected = currentTheme == AppTheme.DARK,
                     onClick = {
-                        prefs.other.settingsTheme.set(AppTheme.DARK)
+                        scope.launch { prefs.other.settingsTheme.set(AppTheme.DARK) }
                         onDismiss()
                     }
                 )
@@ -178,7 +183,7 @@ fun ThemePickerDialog(
                     label = "System Default",
                     selected = currentTheme == AppTheme.AUTO,
                     onClick = {
-                        prefs.other.settingsTheme.set(AppTheme.AUTO)
+                        scope.launch { prefs.other.settingsTheme.set(AppTheme.AUTO) }
                         onDismiss()
                     }
                 )
@@ -186,12 +191,12 @@ fun ThemePickerDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel", color = Color(0xFF00D4AA))
+                Text("Cancel", color = MaterialTheme.colorScheme.primary)
             }
         },
-        containerColor = Color(0xFF12121F),
-        titleContentColor = Color.White,
-        textContentColor = Color.White
+        containerColor = MaterialTheme.colorScheme.surface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurface
     )
 }
 
@@ -212,11 +217,15 @@ fun ThemeOption(
             selected = selected,
             onClick = onClick,
             colors = RadioButtonDefaults.colors(
-                selectedColor = Color(0xFF00D4AA),
-                unselectedColor = Color.Gray
+                selectedColor = MaterialTheme.colorScheme.primary,
+                unselectedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Text(text = label, style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
 }

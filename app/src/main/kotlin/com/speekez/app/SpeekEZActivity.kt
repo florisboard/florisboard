@@ -1,19 +1,21 @@
 package com.speekez.app
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.History
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
 import com.speekez.app.screens.SetupFlow
 import dev.patrickgold.florisboard.app.AppTheme
@@ -22,9 +24,12 @@ import dev.patrickgold.jetpref.datastore.model.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -68,22 +73,43 @@ fun SpeekEZTheme(content: @Composable () -> Unit) {
     val colorScheme = if (isDark) {
         darkColorScheme(
             primary = Color(0xFF00D4AA),
-            surface = Color(0xFF12121F),
-            background = Color(0xFF0A0A14),
-            surfaceVariant = Color(0xFF1A1A2E),
             onPrimary = Color.Black,
+            background = Color(0xFF0A0A14),
+            onBackground = Color.White,
+            surface = Color(0xFF12121F),
             onSurface = Color.White,
-            onBackground = Color.White
+            surfaceVariant = Color(0xFF1A1A2E),
+            onSurfaceVariant = Color.White,
+            secondary = Color(0xFF6366F1),
+            onSecondary = Color.White,
+            outline = Color.Gray
         )
     } else {
         lightColorScheme(
             primary = Color(0xFF00D4AA),
-            surface = Color.White,
-            background = Color.White,
             onPrimary = Color.White,
-            onSurface = Color.Black,
-            onBackground = Color.Black
+            background = Color(0xFFF8F9FA),
+            onBackground = Color(0xFF1C1B1F),
+            surface = Color.White,
+            onSurface = Color(0xFF1C1B1F),
+            surfaceVariant = Color(0xFFE9ECEF),
+            onSurfaceVariant = Color(0xFF49454F),
+            secondary = Color(0xFF6366F1),
+            onSecondary = Color.White,
+            outline = Color.LightGray
         )
+    }
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = Color.Transparent.toArgb()
+            window.navigationBarColor = Color.Transparent.toArgb()
+            val controller = WindowCompat.getInsetsController(window, view)
+            controller.isAppearanceLightStatusBars = !isDark
+            controller.isAppearanceLightNavigationBars = !isDark
+        }
     }
 
     MaterialTheme(
@@ -107,7 +133,10 @@ fun MainScreen() {
             CenterAlignedTopAppBar(
                 title = {
                     val gradient = Brush.linearGradient(
-                        colors = listOf(Color(0xFF00D4AA), Color(0xFF6366F1)) // Teal to Blue-Purple
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.secondary
+                        )
                     )
                     Text(
                         text = "SpeekEZ",
@@ -119,13 +148,13 @@ fun MainScreen() {
                     )
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFF0A0A14)
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             )
         },
         bottomBar = {
             NavigationBar(
-                containerColor = Color(0xFF12121F)
+                containerColor = MaterialTheme.colorScheme.surface
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
@@ -145,17 +174,17 @@ fun MainScreen() {
                             }
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color(0xFF00D4AA),
-                            selectedTextColor = Color(0xFF00D4AA),
-                            unselectedIconColor = Color.Gray,
-                            unselectedTextColor = Color.Gray,
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                             indicatorColor = Color.Transparent
                         )
                     )
                 }
             }
         },
-        containerColor = Color(0xFF0A0A14)
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         SpeekEZNavHost(
             navController = navController,

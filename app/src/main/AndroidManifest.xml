@@ -78,6 +78,16 @@
             </intent-filter>
         </activity>
 
+        <!-- SpeekEZ Widget Configuration Activity -->
+        <activity
+            android:name="com.speekez.app.widgets.WidgetConfigActivity"
+            android:exported="true"
+            android:theme="@style/FlorisAppTheme">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
         <!-- Main App Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.app.FlorisAppActivity"

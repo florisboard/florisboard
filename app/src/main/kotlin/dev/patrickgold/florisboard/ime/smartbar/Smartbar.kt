@@ -97,6 +97,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -256,22 +257,11 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(modifier = Modifier.size(34.dp), contentAlignment = Alignment.Center) {
-                if (voiceState == VoiceState.RECORDING) {
-                    val minutes = timerSeconds / 60
-                    val seconds = timerSeconds % 60
-                    Text(
-                        text = "%02d:%02d".format(minutes, seconds),
-                        color = SpeekEZRed,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                } else {
-                    AddPresetButton(onClick = {
-                        if (isNoApiKey) {
-                            showNoApiKeyBanner = true
-                        }
-                    })
-                }
+                AddPresetButton(onClick = {
+                    if (isNoApiKey) {
+                        showNoApiKeyBanner = true
+                    }
+                })
             }
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -283,7 +273,18 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                if (voiceState == VoiceState.PROCESSING) {
+                if (voiceState == VoiceState.RECORDING) {
+                    val minutes = timerSeconds / 60
+                    val seconds = timerSeconds % 60
+                    Text(
+                        text = "%02d:%02d".format(minutes, seconds),
+                        color = SpeekEZRed,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Monospace,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                } else if (voiceState == VoiceState.PROCESSING) {
                     Text(
                         text = "Transcribing...",
                         color = SpeekEZPurple,

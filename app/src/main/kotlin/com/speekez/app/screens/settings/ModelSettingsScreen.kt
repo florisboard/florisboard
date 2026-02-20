@@ -66,7 +66,7 @@ fun ModelSettingsScreen() {
     ) {
         Text(
             text = "Provider Mode",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -86,10 +86,10 @@ fun ModelSettingsScreen() {
                 },
                 shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
                 colors = SegmentedButtonDefaults.colors(
-                    activeContainerColor = Color(0xFF00D4AA),
-                    activeContentColor = Color.Black,
-                    inactiveContainerColor = Color(0xFF1A1A2E),
-                    inactiveContentColor = Color.White
+                    activeContainerColor = MaterialTheme.colorScheme.primary,
+                    activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                    inactiveContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    inactiveContentColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             ) {
                 Text("OpenRouter")
@@ -105,10 +105,10 @@ fun ModelSettingsScreen() {
                 },
                 shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                 colors = SegmentedButtonDefaults.colors(
-                    activeContainerColor = Color(0xFF00D4AA),
-                    activeContentColor = Color.Black,
-                    inactiveContainerColor = Color(0xFF1A1A2E),
-                    inactiveContentColor = Color.White
+                    activeContainerColor = MaterialTheme.colorScheme.primary,
+                    activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                    inactiveContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    inactiveContentColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             ) {
                 Text("Separate Keys")
@@ -151,7 +151,7 @@ fun ModelSettingsScreen() {
 
         Text(
             text = "Model Tier",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -218,20 +218,20 @@ fun ModelSettingsScreen() {
                 }
             },
             modifier = Modifier.fillMaxWidth().height(56.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00D4AA)),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             enabled = !isTestingApi && isKeySetupValid(apiMode, openRouterKey, openAiKey, anthropicKey)
         ) {
             if (isTestingApi) {
-                CircularProgressIndicator(color = Color.Black, modifier = Modifier.size(24.dp))
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(24.dp))
             } else {
-                Text("Save & Test API", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text("Save & Test API", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
             }
         }
 
         if (testResult != null) {
             Text(
                 text = if (testResult == true) "API Test Successful!" else "API Test Failed. Please check your keys.",
-                color = if (testResult == true) Color.Green else Color.Red,
+                color = if (testResult == true) Color.Green else MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally)
             )
         }
@@ -257,14 +257,17 @@ fun ModelSettingsScreen() {
                     apiMode = targetMode
                     showSwitchModeDialog = null
                 }) {
-                    Text("Clear & Switch", color = Color.Red)
+                    Text("Clear & Switch", color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showSwitchModeDialog = null }) {
-                    Text("Cancel")
+                    Text("Cancel", color = MaterialTheme.colorScheme.onSurface)
                 }
-            }
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            textContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
         )
     }
 }
@@ -281,12 +284,12 @@ fun ApiKeyField(
 ) {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = label, color = Color.Gray, fontSize = 14.sp)
+            Text(text = label, color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 14.sp)
             Spacer(modifier = Modifier.width(8.dp))
             Box(
                 modifier = Modifier
                     .size(8.dp)
-                    .background(if (isValid && value.isNotEmpty()) Color.Green else Color.Red, RoundedCornerShape(4.dp))
+                    .background(if (isValid && value.isNotEmpty()) Color.Green else MaterialTheme.colorScheme.error, RoundedCornerShape(4.dp))
             )
         }
         OutlinedTextField(
@@ -299,18 +302,18 @@ fun ApiKeyField(
                     Icon(
                         imageVector = if (isVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                         contentDescription = null,
-                        tint = Color.Gray
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                     )
                 }
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedBorderColor = Color(0xFF00D4AA),
-                unfocusedBorderColor = Color.Gray,
-                cursorColor = Color(0xFF00D4AA)
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                cursorColor = MaterialTheme.colorScheme.primary
             ),
-            placeholder = { Text(prefix + "...", color = Color.DarkGray) },
+            placeholder = { Text(prefix + "...", color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)) },
             singleLine = true
         )
     }
@@ -321,14 +324,14 @@ fun TierButton(text: String, selected: Boolean, onClick: () -> Unit, modifier: M
     Box(
         modifier = modifier
             .height(48.dp)
-            .background(if (selected) Color(0xFF00D4AA) else Color(0xFF1A1A2E), RoundedCornerShape(8.dp))
-            .border(1.dp, if (selected) Color(0xFF00D4AA) else Color.Gray, RoundedCornerShape(8.dp))
+            .background(if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
+            .border(1.dp, if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            color = if (selected) Color.Black else Color.White,
+            color = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
         )
     }
@@ -357,40 +360,40 @@ fun ModelLabels(
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text("Transcription Model", color = Color.Gray, fontSize = 12.sp)
+        Text("Transcription Model", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 12.sp)
         if (modelTier == ModelTier.CUSTOM) {
             OutlinedTextField(
                 value = customStt,
                 onValueChange = onSttChange,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color(0xFF00D4AA),
-                    unfocusedBorderColor = Color.Gray
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline
                 )
             )
         } else {
-            Text(sttModelLabel, color = Color.White, fontSize = 16.sp, modifier = Modifier.padding(vertical = 8.dp))
+            Text(sttModelLabel, color = MaterialTheme.colorScheme.onBackground, fontSize = 16.sp, modifier = Modifier.padding(vertical = 8.dp))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Refinement Model", color = Color.Gray, fontSize = 12.sp)
+        Text("Refinement Model", color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), fontSize = 12.sp)
         if (modelTier == ModelTier.CUSTOM) {
             OutlinedTextField(
                 value = customRefinement,
                 onValueChange = onRefinementChange,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    focusedBorderColor = Color(0xFF00D4AA),
-                    unfocusedBorderColor = Color.Gray
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline
                 )
             )
         } else {
-            Text(refinementModelLabel, color = Color.White, fontSize = 16.sp, modifier = Modifier.padding(vertical = 8.dp))
+            Text(refinementModelLabel, color = MaterialTheme.colorScheme.onBackground, fontSize = 16.sp, modifier = Modifier.padding(vertical = 8.dp))
         }
     }
 }
@@ -404,17 +407,17 @@ fun CostEstimate(tier: ModelTier) {
     }
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = "Est. ~$cost/mo (50 rec/day, 30s avg)",
-                color = Color(0xFF00D4AA),
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "Based on current provider rates. Actual usage may vary.",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                 fontSize = 12.sp
             )
         }
