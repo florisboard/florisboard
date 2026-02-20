@@ -39,4 +39,13 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.retrofit.converter.gson)
     ksp(libs.androidx.room.compiler)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
