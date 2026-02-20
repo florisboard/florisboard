@@ -33,6 +33,8 @@ dependencies {
     implementation(projects.core)
     implementation(projects.api)
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockk)

@@ -30,7 +30,9 @@ import java.io.File
 class AudioHandler(private val context: Context) {
     private var mediaRecorder: MediaRecorder? = null
     private var currentFile: File? = null
-    private var isRecording = false
+    var isRecording = false
+        private set
+
     private var timerJob: Job? = null
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
