@@ -62,6 +62,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
+import com.speekez.voice.voiceManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
@@ -261,6 +262,7 @@ class FlorisImeService : LifecycleInputMethodService() {
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
+    private val voiceManager by voiceManager()
 
     val windowController = ImeWindowController(prefs, lifecycleScope)
 
@@ -279,6 +281,11 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreate() {
         super.onCreate()
         FlorisImeServiceReference = WeakReference(this)
+
+        voiceManager.inputConnectionProvider = { currentInputConnection }
+        voiceManager.onTranscriptionComplete = { text: String ->
+            clipboardManager().value.addNewPlaintext(text)
+        }
         systemLocalesFlow.value = resources.configuration.locales
 
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
@@ -421,6 +428,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onWindowShown() {
         super.onWindowShown()
+        voiceManager.onWindowShown()
         if (windowController.onWindowShown()) {
             flogInfo(LogTopic.IMS_EVENTS)
             inputFeedbackController.updateSystemPrefsState()
@@ -431,6 +439,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onWindowHidden() {
         super.onWindowHidden()
+        voiceManager.onWindowHidden()
         if (windowController.onWindowHidden()) {
             flogInfo(LogTopic.IMS_EVENTS)
             activeState.batchEdit {

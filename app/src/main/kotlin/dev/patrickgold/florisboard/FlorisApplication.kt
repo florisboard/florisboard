@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import com.speekez.voice.VoiceManager
 import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
@@ -59,7 +60,7 @@ import java.lang.ref.WeakReference
 private var FlorisApplicationReference = WeakReference<FlorisApplication?>(null)
 
 @Suppress("unused")
-class FlorisApplication : Application() {
+class FlorisApplication : Application(), VoiceManager.Provider {
     companion object {
         init {
             try {
@@ -82,6 +83,7 @@ class FlorisApplication : Application() {
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
     val themeManager = lazy { ThemeManager(this) }
+    override val voiceManager = lazy { VoiceManager(this) }
 
     override fun onCreate() {
         super.onCreate()

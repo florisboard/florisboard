@@ -624,6 +624,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "speekez__active_preset_id",
             default = 1L,
         )
+        val copyToClipboard = boolean(
+            key = "speekez__copy_to_clipboard",
+            default = false,
+        )
     }
 
     val smartbar = Smartbar()

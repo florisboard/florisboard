@@ -32,6 +32,8 @@ configure<LibraryExtension> {
 dependencies {
     implementation(projects.core)
     implementation(projects.api)
+    implementation(projects.data)
+    implementation(projects.security)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.core.ktx)

@@ -176,7 +176,7 @@ private fun SpeekEZSmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by FlorisPreferenceStore
     val keyboardManager by context.keyboardManager()
     val activeState by keyboardManager.activeState.collectAsState()
-    val voiceManager = context.voiceManager()
+    val voiceManager by context.voiceManager()
     val scope = rememberCoroutineScope()
 
     val presetDao = remember { context.presetDao() }

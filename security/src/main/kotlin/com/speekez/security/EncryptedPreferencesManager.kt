@@ -31,6 +31,7 @@ class EncryptedPreferencesManager(private val sharedPreferences: SharedPreferenc
         private const val KEY_MODEL_TIER = "model_tier"
         private const val KEY_CUSTOM_STT_MODEL = "custom_stt_model"
         private const val KEY_CUSTOM_REFINEMENT_MODEL = "custom_refinement_model"
+        private const val KEY_VOICE_COPY_TO_CLIPBOARD = "voice_copy_to_clipboard"
 
         private const val PREFIX_OPENROUTER = "sk-or-"
         private const val PREFIX_OPENAI = "sk-"
@@ -124,4 +125,11 @@ class EncryptedPreferencesManager(private val sharedPreferences: SharedPreferenc
     }
 
     fun getCustomRefinementModel(): String? = sharedPreferences.getString(KEY_CUSTOM_REFINEMENT_MODEL, null)
+
+    // Voice Settings
+    fun setCopyToClipboard(enabled: Boolean) {
+        sharedPreferences.edit().putBoolean(KEY_VOICE_COPY_TO_CLIPBOARD, enabled).apply()
+    }
+
+    fun isCopyToClipboardEnabled(): Boolean = sharedPreferences.getBoolean(KEY_VOICE_COPY_TO_CLIPBOARD, false)
 }

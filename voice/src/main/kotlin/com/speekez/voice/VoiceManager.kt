@@ -18,9 +18,23 @@ package com.speekez.voice
 
 import android.content.Context
 import android.util.Log
+import com.speekez.api.ApiRouterManager
+import com.speekez.core.NetworkUtils
+import com.speekez.data.dailyStatsDao
+import com.speekez.data.entity.DailyStats
+import com.speekez.data.entity.Preset
+import com.speekez.data.entity.RefinementLevel
+import com.speekez.data.entity.Transcription
+import com.speekez.data.presetDao
+import com.speekez.data.transcriptionDao
+import com.speekez.security.EncryptedPreferencesManager
+import android.view.inputmethod.InputConnection
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * VoiceManager orchestrates the voice recording and processing pipeline.
@@ -28,11 +42,24 @@ import java.io.File
  */
 class VoiceManager(private val context: Context) {
     interface Provider {
-        val voiceManager: VoiceManager
+        val voiceManager: Lazy<VoiceManager>
     }
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private val stateMachine = VoiceStateMachine(scope)
+
+    private val prefs = EncryptedPreferencesManager(context)
+    private val apiRouterManager = ApiRouterManager(context, prefs)
+    private val presetDao = context.presetDao()
+    private val transcriptionDao = context.transcriptionDao()
+    private val dailyStatsDao = context.dailyStatsDao()
+
+    var inputConnectionProvider: (() -> InputConnection?)? = null
+    var onTranscriptionComplete: ((String) -> Unit)? = null
+
+    private var activePreset: Preset? = null
+    private var recordingStartTime: Long = 0
+
     private val audioHandler = AudioHandler(context).apply {
         onAutoStop = {
             Log.i("VoiceManager", "AudioHandler auto-stop triggered")
@@ -84,8 +111,39 @@ class VoiceManager(private val context: Context) {
      */
     fun startRecording(presetId: Int) {
         Log.i(TAG, "startRecording(presetId=$presetId)")
-        stateMachine.startRecording()
-        audioHandler.start()
+        scope.launch {
+            try {
+                val preset = presetDao.getPresetById(presetId.toLong())
+                if (preset == null) {
+                    stateMachine.setError("Preset not found")
+                    return@launch
+                }
+                activePreset = preset
+
+                if (!PermissionUtils.hasMicPermission(context)) {
+                    stateMachine.setError("Microphone permission denied")
+                    return@launch
+                }
+
+                if (!NetworkUtils.isOnline(context)) {
+                    stateMachine.setError("No internet connection")
+                    return@launch
+                }
+
+                val sttClient = apiRouterManager.getSttClient()
+                if (sttClient == null) {
+                    stateMachine.setError("API key not configured")
+                    return@launch
+                }
+
+                stateMachine.startRecording()
+                audioHandler.start()
+                recordingStartTime = System.currentTimeMillis()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error starting recording", e)
+                stateMachine.setError(e.message ?: "Failed to start recording")
+            }
+        }
     }
 
     /**
@@ -97,10 +155,52 @@ class VoiceManager(private val context: Context) {
     }
 
     private fun processAudio(file: File) {
-        scope.launch {
+        val preset = activePreset ?: return
+        val durationMs = System.currentTimeMillis() - recordingStartTime
+
+        scope.launch(Dispatchers.IO) {
             try {
-                // Mock processing/transcription delay
-                delay(500)
+                val sttClient = apiRouterManager.getSttClient()
+                    ?: throw IllegalStateException("STT client not available")
+                
+                val sttModel = apiRouterManager.getSttModel(preset.modelTier)
+                
+                val rawText = sttClient.transcribe(file, sttModel, preset.inputLanguages)
+                
+                var finalResult = rawText
+                if (preset.refinementLevel != RefinementLevel.NONE) {
+                    val refinementClient = apiRouterManager.getRefinementClient()
+                        ?: throw IllegalStateException("Refinement client not available")
+                    val refinementModel = apiRouterManager.getRefinementModel(preset.modelTier)
+                    finalResult = refinementClient.refine(rawText, refinementModel, preset.systemPrompt)
+                }
+
+                withContext(Dispatchers.Main) {
+                    val ic = inputConnectionProvider?.invoke()
+                    ic?.commitText(finalResult, 1)
+                    
+                    if (prefs.isCopyToClipboardEnabled()) {
+                        onTranscriptionComplete?.invoke(finalResult)
+                    }
+                }
+
+                val wordCount = finalResult.split(Regex("\\s+")).filter { it.isNotBlank() }.size
+                val wpm = if (durationMs > 0) (wordCount.toFloat() / (durationMs / 60000f)) else 0f
+
+                val transcription = Transcription(
+                    presetId = preset.id,
+                    rawText = rawText,
+                    refinedText = finalResult,
+                    audioDurationMs = durationMs,
+                    wordCount = wordCount,
+                    wpm = wpm,
+                    createdAt = System.currentTimeMillis()
+                )
+                transcriptionDao.insert(transcription)
+
+                updateDailyStats(wordCount, durationMs)
+                presetDao.incrementUsageCount(preset.id)
+
                 stateMachine.setDone()
             } catch (e: Exception) {
                 Log.e(TAG, "Error during audio processing", e)
@@ -110,6 +210,47 @@ class VoiceManager(private val context: Context) {
                     file.delete()
                 }
             }
+        }
+    }
+
+    private suspend fun updateDailyStats(wordCount: Int, durationMs: Long) {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+        val existingStats = dailyStatsDao.getByDate(date)
+
+        // Typing speed assumed 40 WPM for time saved calculation
+        val typingWpm = 40f
+        val expectedTypingTimeSeconds = (wordCount / typingWpm) * 60f
+        val actualRecordingTimeSeconds = durationMs / 1000f
+        val timeSavedSeconds = (expectedTypingTimeSeconds - actualRecordingTimeSeconds).toLong().coerceAtLeast(0L)
+
+        if (existingStats != null) {
+            val newWordCount = existingStats.wordCount + wordCount
+            val newRecordingCount = existingStats.recordingCount + 1
+            
+            // Recalculate average WPM
+            // To do this accurately, we'd need total duration.
+            // Total Duration = Total Word Count / Avg WPM
+            val oldTotalDurationMin = if (existingStats.avgWpm > 0) existingStats.wordCount / existingStats.avgWpm else 0f
+            val newTotalDurationMin = oldTotalDurationMin + (durationMs / 60000f)
+            val newAvgWpm = if (newTotalDurationMin > 0) newWordCount / newTotalDurationMin else 0f
+
+            val updatedStats = existingStats.copy(
+                recordingCount = newRecordingCount,
+                wordCount = newWordCount,
+                avgWpm = newAvgWpm,
+                timeSavedSeconds = existingStats.timeSavedSeconds + timeSavedSeconds
+            )
+            dailyStatsDao.insertOrUpdate(updatedStats)
+        } else {
+            val avgWpm = if (durationMs > 0) (wordCount.toFloat() / (durationMs / 60000f)) else 0f
+            val newStats = DailyStats(
+                date = date,
+                recordingCount = 1,
+                wordCount = wordCount,
+                avgWpm = avgWpm,
+                timeSavedSeconds = timeSavedSeconds
+            )
+            dailyStatsDao.insertOrUpdate(newStats)
         }
     }
 

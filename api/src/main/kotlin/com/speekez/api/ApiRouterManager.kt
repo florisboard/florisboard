@@ -46,9 +46,18 @@ class ApiRouterManager(
     }
 
     fun getRefinementClient(): RefinementClient? {
-        // Implementation for refinement clients will be added later
-        // Returning null for now as per current requirements focus
-        return null
+        val mode = prefs.getApiMode()
+        return when (mode) {
+            ApiMode.OPENROUTER -> {
+                val key = prefs.getOpenRouterKey() ?: return null
+                OpenRouterClaudeClient(key)
+            }
+            ApiMode.SEPARATE -> {
+                val key = prefs.getAnthropicKey() ?: return null
+                AnthropicClaudeClient(key)
+            }
+            ApiMode.NO_KEYS -> null
+        }
     }
 
     fun getApiMode(): ApiMode = prefs.getApiMode()
