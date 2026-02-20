@@ -42,7 +42,7 @@ fun SettingsScreen() {
         when (selectedTabIndex) {
             0 -> GeneralSettingsScreen()
             1 -> ModelSettingsScreen()
-            2 -> PlaceholderSettingsScreen("Preset Management")
+            2 -> PresetSettingsScreen()
         }
     }
 }

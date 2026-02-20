@@ -13,6 +13,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import com.speekez.app.screens.SetupFlow
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -28,12 +31,24 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 class SpeekEZActivity : ComponentActivity() {
+    private val prefs by FlorisPreferenceStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             SpeekEZTheme {
-                MainScreen()
+                val setupComplete by prefs.speekez.setupComplete.collectAsState()
+                if (setupComplete) {
+                    MainScreen()
+                } else {
+                    val scope = rememberCoroutineScope()
+                    SetupFlow(onSetupComplete = {
+                        scope.launch {
+                            prefs.speekez.setupComplete.set(true)
+                        }
+                    })
+                }
             }
         }
     }

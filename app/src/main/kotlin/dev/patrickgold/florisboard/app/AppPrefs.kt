@@ -632,6 +632,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "speekez__haptic_enabled",
             default = true,
         )
+        val setupComplete = boolean(
+            key = "speekez__setup_complete",
+            default = false,
+        )
     }
 
     val smartbar = Smartbar()
