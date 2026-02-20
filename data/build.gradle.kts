@@ -22,6 +22,9 @@ configure<LibraryExtension> {
     defaultConfig {
         minSdk = projectMinSdk.toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 
     compileOptions {
@@ -34,5 +37,6 @@ dependencies {
     implementation(projects.core)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.retrofit.converter.gson)
     ksp(libs.androidx.room.compiler)
 }
