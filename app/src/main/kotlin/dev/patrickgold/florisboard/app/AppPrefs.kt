@@ -626,7 +626,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val copyToClipboard = boolean(
             key = "speekez__copy_to_clipboard",
-            default = false,
+            default = true,
+        )
+        val hapticEnabled = boolean(
+            key = "speekez__haptic_enabled",
+            default = true,
         )
     }
 

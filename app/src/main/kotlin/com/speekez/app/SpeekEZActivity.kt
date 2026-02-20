@@ -8,10 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.History
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -37,17 +41,38 @@ class SpeekEZActivity : ComponentActivity() {
 
 @Composable
 fun SpeekEZTheme(content: @Composable () -> Unit) {
-    val darkColorScheme = darkColorScheme(
-        primary = Color(0xFF00D4AA),
-        surface = Color(0xFF12121F),
-        background = Color(0xFF0A0A14),
-        surfaceVariant = Color(0xFF1A1A2E),
-        onPrimary = Color.Black,
-        onSurface = Color.White,
-        onBackground = Color.White
-    )
+    val prefs by FlorisPreferenceStore
+    val themeMode by prefs.other.settingsTheme.collectAsState()
+
+    val isDark = when (themeMode) {
+        AppTheme.DARK, AppTheme.AMOLED_DARK -> true
+        AppTheme.LIGHT -> false
+        AppTheme.AUTO, AppTheme.AUTO_AMOLED -> isSystemInDarkTheme()
+    }
+
+    val colorScheme = if (isDark) {
+        darkColorScheme(
+            primary = Color(0xFF00D4AA),
+            surface = Color(0xFF12121F),
+            background = Color(0xFF0A0A14),
+            surfaceVariant = Color(0xFF1A1A2E),
+            onPrimary = Color.Black,
+            onSurface = Color.White,
+            onBackground = Color.White
+        )
+    } else {
+        lightColorScheme(
+            primary = Color(0xFF00D4AA),
+            surface = Color.White,
+            background = Color.White,
+            onPrimary = Color.White,
+            onSurface = Color.Black,
+            onBackground = Color.Black
+        )
+    }
+
     MaterialTheme(
-        colorScheme = darkColorScheme,
+        colorScheme = colorScheme,
         content = content
     )
 }

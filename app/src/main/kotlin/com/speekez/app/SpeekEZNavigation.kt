@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.compose.material3.Text
+import com.speekez.app.screens.settings.GeneralSettingsScreen
 
 sealed class Screen(val route: String) {
     data object Dashboard : Screen("dashboard")
@@ -30,7 +31,7 @@ fun SpeekEZNavHost(
             HistoryScreen()
         }
         composable(Screen.Settings.route) {
-            SettingsScreen()
+            GeneralSettingsScreen()
         }
     }
 }
@@ -43,9 +44,4 @@ fun DashboardScreen() {
 @Composable
 fun HistoryScreen() {
     Text(text = "History Screen")
-}
-
-@Composable
-fun SettingsScreen() {
-    Text(text = "Settings Screen")
 }
