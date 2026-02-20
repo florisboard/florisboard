@@ -1,0 +1,125 @@
+package com.speekez.app
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+
+class SpeekEZActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            SpeekEZTheme {
+                MainScreen()
+            }
+        }
+    }
+}
+
+@Composable
+fun SpeekEZTheme(content: @Composable () -> Unit) {
+    val darkColorScheme = darkColorScheme(
+        primary = Color(0xFF00D4AA),
+        surface = Color(0xFF12121F),
+        background = Color(0xFF0A0A14),
+        surfaceVariant = Color(0xFF1A1A2E),
+        onPrimary = Color.Black,
+        onSurface = Color.White,
+        onBackground = Color.White
+    )
+    MaterialTheme(
+        colorScheme = darkColorScheme,
+        content = content
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    val items = listOf(
+        Screen.Dashboard to Icons.Default.Dashboard,
+        Screen.History to Icons.Default.History,
+        Screen.Settings to Icons.Default.Settings
+    )
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    val gradient = Brush.linearGradient(
+                        colors = listOf(Color(0xFF00D4AA), Color(0xFF6366F1)) // Teal to Blue-Purple
+                    )
+                    Text(
+                        text = "SpeekEZ",
+                        style = TextStyle(
+                            brush = gradient,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
+                    )
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF0A0A14)
+                )
+            )
+        },
+        bottomBar = {
+            NavigationBar(
+                containerColor = Color(0xFF12121F)
+            ) {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+                items.forEach { (screen, icon) ->
+                    val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
+                    NavigationBarItem(
+                        icon = { Icon(icon, contentDescription = null) },
+                        label = { Text(screen.route.replaceFirstChar { it.uppercase() }) },
+                        selected = selected,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = Color(0xFF00D4AA),
+                            selectedTextColor = Color(0xFF00D4AA),
+                            unselectedIconColor = Color.Gray,
+                            unselectedTextColor = Color.Gray,
+                            indicatorColor = Color.Transparent
+                        )
+                    )
+                }
+            }
+        },
+        containerColor = Color(0xFF0A0A14)
+    ) { innerPadding ->
+        SpeekEZNavHost(
+            navController = navController,
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}

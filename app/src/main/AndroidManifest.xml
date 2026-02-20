@@ -62,6 +62,22 @@
             <meta-data android:name="android.view.textservice.scs" android:resource="@xml/spellchecker"/>
         </service>
 
+        <!-- SpeekEZ Main Activity -->
+        <activity
+            android:name="com.speekez.app.SpeekEZActivity"
+            android:icon="@mipmap/floris_app_icon"
+            android:label="SpeekEZ"
+            android:launchMode="singleTask"
+            android:roundIcon="@mipmap/floris_app_icon_round"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/FlorisAppTheme.Splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
         <!-- Main App Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.app.FlorisAppActivity"
@@ -104,9 +120,8 @@
             android:theme="@style/FlorisAppTheme.Splash"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity-alias>
 
