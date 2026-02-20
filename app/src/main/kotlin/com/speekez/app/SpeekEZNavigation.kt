@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.compose.material3.Text
+import com.speekez.app.screens.HistoryScreen
 import com.speekez.app.screens.settings.GeneralSettingsScreen
 
 sealed class Screen(val route: String) {
@@ -39,9 +40,4 @@ fun SpeekEZNavHost(
 @Composable
 fun DashboardScreen() {
     Text(text = "Dashboard Screen")
-}
-
-@Composable
-fun HistoryScreen() {
-    Text(text = "History Screen")
 }
