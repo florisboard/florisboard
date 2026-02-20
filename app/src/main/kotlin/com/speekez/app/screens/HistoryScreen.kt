@@ -2,15 +2,24 @@ package com.speekez.app.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +35,7 @@ import com.speekez.data.entity.Preset
 import com.speekez.data.entity.Transcription
 import com.speekez.data.transcriptionDao
 import com.speekez.data.presetDao
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -41,12 +51,19 @@ fun HistoryScreen() {
     val context = LocalContext.current
     val transcriptionDao = remember { context.transcriptionDao() }
     val presetDao = remember { context.presetDao() }
+    val coroutineScope = rememberCoroutineScope()
+    val clipboardManager = LocalClipboardManager.current
 
     val transcriptions by transcriptionDao.getAllTranscriptions().collectAsState(initial = emptyList())
     val presets by presetDao.getAllPresets().collectAsState(initial = emptyList())
 
     var searchQuery by remember { mutableStateOf("") }
     var selectedFilter by remember { mutableStateOf(HistoryFilter.ALL) }
+    var selectedTranscriptionId by remember { mutableStateOf<Long?>(null) }
+
+    val selectedTranscription = remember(transcriptions, selectedTranscriptionId) {
+        transcriptions.find { it.id == selectedTranscriptionId }
+    }
 
     val filteredTranscriptions = remember(transcriptions, searchQuery, selectedFilter) {
         transcriptions.filter { transcription ->
@@ -66,87 +83,200 @@ fun HistoryScreen() {
 
     val presetMap = remember(presets) { presets.associateBy { it.id } }
 
+    var lastSelectedTranscription by remember { mutableStateOf<Transcription?>(null) }
+    if (selectedTranscription != null) {
+        lastSelectedTranscription = selectedTranscription
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF0A0A14))
+                .padding(16.dp)
+        ) {
+            // Search Bar
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text("Search transcriptions...", color = Color.Gray) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray) },
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFF00D4AA),
+                    unfocusedBorderColor = Color.DarkGray,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color(0xFF00D4AA)
+                ),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Filter Chips
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                HistoryFilter.entries.forEach { filter ->
+                    val selected = selectedFilter == filter
+                    FilterChip(
+                        selected = selected,
+                        onClick = { selectedFilter = filter },
+                        label = { Text(filter.name.lowercase().replaceFirstChar { it.uppercase() }.replace("_", " ")) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = Color(0xFF00D4AA),
+                            selectedLabelColor = Color.Black,
+                            containerColor = Color(0xFF1A1A2E),
+                            labelColor = Color.White
+                        ),
+                        border = null
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Tap to open - Hold to copy",
+                color = Color.Gray,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
+            )
+
+            if (filteredTranscriptions.isEmpty()) {
+                Box(modifier = Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = if (searchQuery.isEmpty()) "No transcriptions yet" else "No results found",
+                        color = Color.Gray
+                    )
+                }
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                ) {
+                    items(filteredTranscriptions, key = { it.id }) { transcription ->
+                        val preset = presetMap[transcription.presetId]
+                        TranscriptionItem(
+                            transcription = transcription,
+                            presetEmoji = preset?.iconEmoji ?: "\uD83C\uDFA4",
+                            onTap = {
+                                selectedTranscriptionId = transcription.id
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        AnimatedVisibility(
+            visible = selectedTranscription != null,
+            enter = slideInHorizontally(initialOffsetX = { it }),
+            exit = slideOutHorizontally(targetOffsetX = { it })
+        ) {
+            lastSelectedTranscription?.let { transcription ->
+                HistoryDetailPanel(
+                    transcription = transcription,
+                    preset = presetMap[transcription.presetId],
+                    onClose = { selectedTranscriptionId = null },
+                    onToggleFavorite = { isFavorite ->
+                        coroutineScope.launch {
+                            transcriptionDao.setFavorite(transcription.id, isFavorite)
+                        }
+                    },
+                    onCopy = {
+                        clipboardManager.setText(AnnotatedString(transcription.refinedText.ifBlank { transcription.rawText }))
+                        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun HistoryDetailPanel(
+    transcription: Transcription,
+    preset: Preset?,
+    onClose: () -> Unit,
+    onToggleFavorite: (Boolean) -> Unit,
+    onCopy: () -> Unit
+) {
+    val formattedDate = remember(transcription.createdAt) {
+        formatTimestamp(transcription.createdAt)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF0A0A14))
-            .padding(16.dp)
     ) {
-        // Search Bar
-        OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Search transcriptions...", color = Color.Gray) },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray) },
-            shape = RoundedCornerShape(12.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFF00D4AA),
-                unfocusedBorderColor = Color.DarkGray,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                cursorColor = Color(0xFF00D4AA)
-            ),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Filter Chips
+        // Header
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            HistoryFilter.entries.forEach { filter ->
-                val selected = selectedFilter == filter
-                FilterChip(
-                    selected = selected,
-                    onClick = { selectedFilter = filter },
-                    label = { Text(filter.name.lowercase().replaceFirstChar { it.uppercase() }.replace("_", " ")) },
-                    colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = Color(0xFF00D4AA),
-                        selectedLabelColor = Color.Black,
-                        containerColor = Color(0xFF1A1A2E),
-                        labelColor = Color.White
-                    ),
-                    border = null
+            IconButton(onClick = onClose) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.White
+                )
+            }
+
+            Column(modifier = Modifier.weight(1f).padding(horizontal = 8.dp)) {
+                Text(
+                    text = formattedDate,
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                val duration = remember(transcription.audioDurationMs) {
+                    formatDuration(transcription.audioDurationMs)
+                }
+                Text(
+                    text = "$duration \u2022 ${transcription.wordCount} words \u2022 ${preset?.name ?: "Unknown"}",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
+
+            IconButton(onClick = onCopy) {
+                Icon(
+                    imageVector = Icons.Default.ContentCopy,
+                    contentDescription = "Copy",
+                    tint = Color.White
+                )
+            }
+
+            IconButton(onClick = { onToggleFavorite(!transcription.isFavorite) }) {
+                Icon(
+                    imageVector = if (transcription.isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
+                    contentDescription = "Favorite",
+                    tint = if (transcription.isFavorite) Color(0xFFFFD700) else Color.Gray
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        HorizontalDivider(color = Color.DarkGray, thickness = 1.dp)
 
-        Text(
-            text = "Tap to open - Hold to copy",
-            color = Color.Gray,
-            fontSize = 12.sp,
-            modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
-        )
-
-        if (filteredTranscriptions.isEmpty()) {
-            Box(modifier = Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(
-                    text = if (searchQuery.isEmpty()) "No transcriptions yet" else "No results found",
-                    color = Color.Gray
-                )
-            }
-        } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.weight(1f).fillMaxWidth()
-            ) {
-                items(filteredTranscriptions, key = { it.id }) { transcription ->
-                    val preset = presetMap[transcription.presetId]
-                    TranscriptionItem(
-                        transcription = transcription,
-                        presetEmoji = preset?.iconEmoji ?: "🎤",
-                        onTap = {
-                            // TODO: Navigate to detail (P2-04)
-                            Toast.makeText(context, "Detail view coming soon", Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                }
-            }
+        // Body
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp)
+        ) {
+            Text(
+                text = transcription.refinedText.ifBlank { transcription.rawText },
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                lineHeight = 24.sp
+            )
         }
     }
 }
@@ -170,7 +300,7 @@ fun TranscriptionItem(
             .combinedClickable(
                 onClick = onTap,
                 onLongClick = {
-                    clipboardManager.setText(AnnotatedString(transcription.refinedText))
+                    clipboardManager.setText(AnnotatedString(transcription.refinedText.ifBlank { transcription.rawText }))
                     Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
                 }
             ),
@@ -227,6 +357,13 @@ fun TranscriptionItem(
             )
         }
     }
+}
+
+private fun formatDuration(durationMs: Long): String {
+    val totalSeconds = durationMs / 1000
+    val minutes = totalSeconds / 60
+    val seconds = totalSeconds % 60
+    return "${minutes}:${seconds.toString().padStart(2, '0')}"
 }
 
 private fun isToday(timestamp: Long): Boolean {
