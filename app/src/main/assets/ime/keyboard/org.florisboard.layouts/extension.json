@@ -275,6 +275,12 @@
         "modifier": "org.florisboard.layouts:jis"
       },
       {
+        "id": "kaitag_jcuken",
+        "label": "Kaitag (ЙЦУКЕН)",
+        "authors": [ "alkaitagi" ],
+        "direction": "ltr"
+      },
+      {
         "id": "korean",
         "label": "South Korean standard",
         "authors": [ "patrickgold", "Hayleia" ],
