@@ -275,6 +275,12 @@
         "modifier": "org.florisboard.layouts:jis"
       },
       {
+        "id": "kazakh",
+        "label": "Қазақша",
+        "authors": [ "snchart" ],
+        "direction": "ltr"
+      },
+      {
         "id": "korean",
         "label": "South Korean standard",
         "authors": [ "patrickgold", "Hayleia" ],
