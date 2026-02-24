@@ -397,8 +397,8 @@
         "éche": "ếch", "ẹche": "ệch",
         "ênhs": "ếnh", "ênhf": "ềnh", "ênhr": "ểnh", "ênhx": "ễnh", "ênhj": "ệnh",
         "énhe": "ếnh", "ènhe": "ềnh", "ẻnhe": "ểnh", "ẽnhe": "ễnh", "ẹnhe": "ệnh",
-        "êus": "ếu", "êuf": "ều", "êuj": "ệu",
-        "éue": "ếu", "èue": "ều", "ẹue": "ệu",
+        "êus": "ếu", "êuf": "ều", "êur": "ểu", "êux": "ễu", "êuj": "ệu",
+        "éue": "ếu", "èue": "ều", "ẻue": "ểu", "ẽue": "ễu", "ẹue": "ệu",
 
         "ếms": "êms", "ếme": "éme", "êmse": "emse", "émes": "emes",
         "ềmf": "êmf", "ềme": "ème", "êmfe": "emfe", "èmef": "emef",
@@ -421,6 +421,11 @@
         "ểnhr": "ênhr", "ểnhe": "ẻnhe", "ênhre": "enhre", "ẻnher": "enher",
         "ễnhx": "ênhx", "ễnhe": "ẽnhe", "ênhxe": "enhxe", "ẽnhex": "enhex",
         "ệnhj": "ênhj", "ệnhe": "ẹnhe", "ênhje": "enhje", "ẹnhej": "enhej",
+        "ếus": "êus", "êuse": "euse", "ếue": "éue", "éues": "eues",
+        "ềuf": "êuf", "êufe": "eufe", "ềue": "èue", "èuef": "euef",
+        "ểur": "êur", "êure": "eure", "ểue": "ẻue", "ẻuer": "euer", 
+        "ễux": "ẽux", "ẽuxe": "euxe", "ễue": "ẽue", "ẽuex": "euex", 
+        "ệuj": "ẹuj", "ẹuje": "euje", "ệue": "ẹue", "ẹuej": "euej",
 
         "ôcs": "ốc", "ôcj": "ộc",
         "óco": "ốc", "ọco": "ộc",
