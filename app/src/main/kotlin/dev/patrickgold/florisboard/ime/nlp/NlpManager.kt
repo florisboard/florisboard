@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -87,6 +88,8 @@ class NlpManager(context: Context) {
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableStateFlow(0)
 
+    private val bigramBatchCache = LruCache<Pair<String, String>, Map<String, Double>>(2000)
+
     init {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
@@ -101,6 +104,7 @@ class NlpManager(context: Context) {
             assembleCandidates()
         }
         subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
+            bigramBatchCache.evictAll()
             preload(subtype)
         }
     }
@@ -272,6 +276,19 @@ class NlpManager(context: Context) {
 
     fun getFrequencyForWord(subtype: Subtype, word: String): Double {
         return runBlocking { getSuggestionProvider(subtype).getFrequencyForWord(subtype, word) }
+    }
+
+    fun getBigramProbabilities(subtype: Subtype, word1: String): Map<String, Double> {
+        val cacheKey = subtype.nlpProviders.suggestion to word1.lowercase()
+        bigramBatchCache.get(cacheKey)?.let { return it }
+        return try {
+            val result = runBlocking { getSuggestionProvider(subtype).getBigramProbabilities(subtype, word1) }
+            bigramBatchCache.put(cacheKey, result)
+            result
+        } catch (e: Exception) {
+            flogWarning { "Failed to get bigram probabilities: ${e.message}" }
+            emptyMap()
+        }
     }
 
     private fun assembleCandidates() {

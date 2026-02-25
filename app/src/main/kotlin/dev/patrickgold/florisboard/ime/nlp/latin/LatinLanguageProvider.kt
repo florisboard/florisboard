@@ -25,13 +25,18 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.readText
 import org.florisboard.lib.kotlin.guardedByLock
+import android.util.Log
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
@@ -45,13 +50,15 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private val wordData = guardedByLock { mutableMapOf<String, Int>() }
     private val wordDataSerializer = MapSerializer(String.serializer(), Int.serializer())
 
+    private val bigramFile by lazy { BigramBinaryFile.getInstance(appContext) }
+
     override val providerId = ProviderId
 
     override suspend fun create() {
         // Here we initialize our provider, set up all things which are not language dependent.
     }
 
-    override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
+    override suspend fun preload(subtype: Subtype): Unit = withContext(Dispatchers.IO) {
         // Here we have the chance to preload dictionaries and prepare a neural network for a specific language.
         // Is kept in sync with the active keyboard subtype of the user, however a new preload does not necessary mean
         // the previous language is not needed anymore (e.g. if the user constantly switches between two subtypes)
@@ -70,11 +77,19 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         wordData.withLock { wordData ->
             if (wordData.isEmpty()) {
-                // Here we use readText() because the test dictionary is a json dictionary
-                val rawData = appContext.assets.readText("ime/dict/data.json")
-                val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
-                wordData.putAll(jsonData)
+                try {
+                    val rawData = appContext.assets.readText("ime/dict/data.json")
+                    val jsonData = Json.decodeFromString(wordDataSerializer, rawData)
+                    wordData.putAll(jsonData)
+                } catch (e: Exception) {
+                    flogError { "Failed to load word data: ${e.message}" }
+                }
             }
+        }
+        try {
+            BigramBinaryFile.getInstance(appContext)
+        } catch (e: Exception) {
+            flogError { "Failed to load bigram binary file: ${e.message}" }
         }
     }
 
@@ -142,6 +157,15 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
         return wordData.withLock { it.getOrDefault(word, 0) / 255.0 }
+    }
+
+    override suspend fun getBigramProbabilities(subtype: Subtype, word1: String): Map<String, Double> {
+        return try {
+            val results = BigramBinaryFile.getInstance(appContext).getBigrams(word1.lowercase())
+            results
+        } catch (e: Exception) {
+            emptyMap()
+        }
     }
 
     override suspend fun destroy() {
