@@ -4,7 +4,7 @@
 
 This fork implements bigram-based context awareness for swipe typing. It extracts the preceding word from the editor context, retrieves bigram probabilities through from the binary-based bigram dataset, and contributes a 0-50% boost for the frequency variable. Data is taken from Google's public ngram datasets released in 2020.
 
-<img align="left" width="500" height="100%" src="../.github/terminal.png" alt="Code example 2">
+<img align="center" width="500" height="100%" src="../.github/terminal.png" alt="Code example 2">
 
 **Example:** During the start of the app, the program loads the the binary index into memory. When a precedingWord is extracted, it walks the index until it finds the position of that word.
 
