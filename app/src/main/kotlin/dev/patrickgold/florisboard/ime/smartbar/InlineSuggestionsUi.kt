@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.smartbar
 
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.key
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -84,29 +86,35 @@ fun InlineSuggestionsUi(
             if (inlineSuggestion.view == null) {
                 continue
             }
-            var chipPos by remember { mutableStateOf(IntOffset.Zero) }
-            val corderRadius = dimensionResource(R.dimen.suggestions_chip_corner_radius)
-            val shape = remember(corderRadius) { RoundedCornerShape(corderRadius) }
-            AndroidView(
-                modifier = Modifier
-                    .onGloballyPositioned { chipPos = it.positionInParent().toIntOffset() }
-                    .padding(InlineSuggestionsChipMargin)
-                    .clip(shape),
-                factory = { inlineSuggestion.view },
-                update = { view ->
-                    view.isZOrderedOnTop = isZOrderedOnTop
-                    // TODO scroll clip can probably also be done in Jetpack Compose
-                    val xMin = scrollState.value
-                    val xMax = scrollState.value + scrollState.viewportSize
-                    view.clipBounds = android.graphics.Rect(
-                        (xMin - chipPos.x).coerceAtLeast(0),
-                        0,
-                        (xMax - chipPos.x).coerceAtMost(view.width),
-                        view.height,
-                    )
-                    view.visibility = if (view.clipBounds.isEmpty) View.INVISIBLE else View.VISIBLE
-                }
-            )
+            key(System.identityHashCode(inlineSuggestion.view)) {
+                var chipPos by remember { mutableStateOf(IntOffset.Zero) }
+                val corderRadius = dimensionResource(R.dimen.suggestions_chip_corner_radius)
+                val shape = remember(corderRadius) { RoundedCornerShape(corderRadius) }
+                AndroidView(
+                    modifier = Modifier
+                        .onGloballyPositioned { chipPos = it.positionInParent().toIntOffset() }
+                        .padding(InlineSuggestionsChipMargin)
+                        .clip(shape),
+                    factory = {
+                        val view = inlineSuggestion.view
+                        (view.parent as? ViewGroup)?.removeView(view)
+                        view
+                    },
+                    update = { view ->
+                        view.isZOrderedOnTop = isZOrderedOnTop
+                        // TODO scroll clip can probably also be done in Jetpack Compose
+                        val xMin = scrollState.value
+                        val xMax = scrollState.value + scrollState.viewportSize
+                        view.clipBounds = android.graphics.Rect(
+                            (xMin - chipPos.x).coerceAtLeast(0),
+                            0,
+                            (xMax - chipPos.x).coerceAtMost(view.width),
+                            view.height,
+                        )
+                        view.visibility = if (view.clipBounds.isEmpty) View.INVISIBLE else View.VISIBLE
+                    }
+                )
+            }
         }
     }
 }
