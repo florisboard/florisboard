@@ -13,7 +13,6 @@
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Εικονίδια Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Εικονίδια emoticon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
-    <string name="prefs__media__emoji_recently_used_max_size">Μέγιστο μέγεθος ιστορικού εικονιδίων emoji</string>
     <string name="prefs__media__emoji_preferred_skin_tone">Προτιμώμενος τόνος επιδερμίδας εικονιδίων emoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Φατσούλες &amp; Συναισθήματα</string>
@@ -72,15 +71,12 @@
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ώρα δύσης</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Θέμα ημέρας</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Θέμα νύχτας</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Επιλεγμένο θέμα</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Προσαρμογή χρωμάτων στην εφαρμογή</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Τα χρώματα του θέματος προσαρμόζονται σε αυτά της τρέχουσας εφαρμογής, εάν αυτή η εφαρμογή το υποστηρίζει.</string>
+    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Διαχείριση εγκατεστημένων θεμάτων</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Πηγές της Εφαρμογής FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Εσωτερικός αποθηκευτικός χώρος</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Εξωτερικός Προμηθευτής</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager screen for day theme selection">Επιλογή θέματος μέρας</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager screen for night theme selection">Επιλογή θέματος νύχτας</string>
-    <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Διαχείριση εγκατεστημένων θεμάτων</string>
     <string name="snygg__rule_element__glide_trail">Διαδρομή ολίσθησης</string>
     <string name="snygg__rule_selector__disabled">Απενεργοποιημένο</string>
     <string name="snygg__property_name__var_primary">Πρωτεύον χρώμα</string>
@@ -99,7 +95,6 @@
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Διάρκεια δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Ένταση δόνησης</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους στο υλισμικό, η οποία απουσιάζει από τη συσκευή σας</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Αυτό το χαρακτηριστικό απαιτεί υποστήριξη ελέγχου εύρους, η οποία είναι διαθέσιμη μόνο στο Android 8.0 ή νεότερο</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Δόνηση πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Δόνηση παρατεταμένου πατήματος πλήκτρου</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Δόνηση επαναλαμβανόμενης ενέργειας πλήκτρου</string>
@@ -120,12 +115,7 @@
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ενέργεια πλήκτρου χρηστικότητας</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Λειτουργία ενός χεριού</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Πλάτος πληκτρολογίου στη λειτουργία ενός χεριού</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Εισαγωγή πλήρους οθόνης τοπίου</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Ύψος πληκτρολογίου</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Μετατόπιση βάσης</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
@@ -142,7 +132,6 @@
     <!-- Typing strings -->
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Λειτουργία προβολής προτάσεων</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Προτάσεις περιεχομένου προχείρου</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
@@ -196,14 +185,6 @@
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Σάρωση αριστερά στο πλήκτρο διαγραφής</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Όριο ταχύτητας σάρωσης</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Όριο απόστασης σάρωσης</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Προηγμένες επιλογές</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Θέμα ρυθμίσεων</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Φωτεινό</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Σκούρο</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Σκούρο</string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Γλώσσα ρυθμίσεων</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Εμφάνιση του εικονιδίου της εφαρμογής στον εκκινητή</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Πάντα ενεργοποιημένο σε Android 10+ λόγω περιορισμών του συστήματος</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Σχετικά με</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Εικονίδιο εφαρμογής του FlorisBoard</string>
@@ -240,6 +221,7 @@
     <string name="setup__finish_up__description_p1">{app_name} είναι τώρα ενεργοποιημένο στο σύστημα και έτοιμο να προσαρμοστεί από εσάς.</string>
     <string name="setup__finish_up__description_p2">Εάν αντιμετωπίσετε τυχόν θέματα, προβλήματα, σφάλματα ή απλώς θέλετε να κάνετε μία πρόταση, ρίξτε μία ματιά στο αποθετήριο από το πεδίο σχετικά με!</string>
     <string name="setup__finish_up__finish_btn">Ξεκινήστε την προσαρμογή</string>
+    <!-- Physical keyboard -->
     <!-- Back up & Restore -->
     <string name="backup_and_restore__restore__title">Επαναφορά δεδομένων</string>
     <string name="backup_and_restore__restore__mode">Λειτουργία επαναφοράς</string>
@@ -285,9 +267,7 @@
     <string name="pref__clipboard__use_internal_clipboard__label">Χρήση εσωτερικού προχείρου</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Συγχρονισμός από συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου ενημερώνουν και το πρόχειρο Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Συγχρονισμός στο συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
     <string name="pref__clipboard__group_clipboard_history__label">Ιστορικό προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση των στοιχείων του προχείρου για γρήγορη πρόσβαση</string>
@@ -295,14 +275,10 @@
     <string name="pref__clipboard__clean_up_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
     <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
     <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Η διαγραφή του κυρίου αποκόμματος επηρεάζει το ιστορικό</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Διαγράφοντας το κύριο απόκομμα διαγράφεται επίσης η νεότερη καταχώριση στο ιστορικό</string>
     <!-- Devtools strings -->
     <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Εργαλεία προγραμματιστή</string>
     <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ενεργοποίηση εργαλείων προγραμματιστή</string>
     <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Εργαλεία σχεδιασμένα συγκεκριμένα για αποσφαλμάτωση κι επίλυση προβλημάτων</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Προβολή στατιστικών μνήμης σωρού</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Προβάλλει ένα επικάλυμμα με τη χρήση της μνήμης σωρού και του μέγιστου μεγέθους στην πάνω-δεξιά γωνία</string>
     <string name="devtools__show_primary_clip__label" comment="Label of Show primary clip in Devtools">Προβολή κυρίου αποκόμματος</string>
     <string name="devtools__show_primary_clip__summary" comment="Summary of Show primary clip in Devtools">Προβάλλει ένα επικάλυμμα με το τρέχον κύριο απόκομμα του προχείρου</string>
     <string name="devtools__show_spelling_overlay__label" comment="Label of Show spelling overlay in Devtools">Εμφάνιση επικαλύμματος ορθογραφικού ελέγχου</string>
@@ -399,9 +375,6 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Να μην εμφανίζεται ποτέ</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Να εμφανίζεται πάντα</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Να εμφανίζεται δυναμικά</string>
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Ανενεργό</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Λειτουργία για αριστερόχειρες</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Λειτουργία για δεξιόχειρες</string>
     <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Χρήση γλωσσών συστήματος</string>
     <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Καμία ενέργεια</string>

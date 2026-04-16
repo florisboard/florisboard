@@ -70,8 +70,9 @@
       ]
     },
     "~right": {
-      "main": { "code": 1611, "label": "ً" },
+      "main": { "code": 1567, "label": "؟" },
       "relevant": [
+        { "code": 1611, "label": "ً" },
         { "code": 1622, "label": "ٖ" },
         { "code": 1648, "label": "ٰ" },
         { "code": 1619, "label": "ٓ" },

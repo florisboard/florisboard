@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,26 +22,18 @@ import android.provider.OpenableColumns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.neverEqualPolicy
 import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.app.ext.EditorAction
 import dev.patrickgold.florisboard.app.settings.advanced.Backup
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.android.query
-import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
 import dev.patrickgold.florisboard.lib.ext.ExtensionJsonConfig
 import dev.patrickgold.florisboard.lib.io.FileRegistry
-import dev.patrickgold.florisboard.lib.io.FsDir
-import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.readJson
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -51,8 +43,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.florisboard.lib.android.query
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.kotlin.io.FsDir
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.readJson
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 import java.io.Closeable
-import java.util.*
+import java.io.File
+import java.util.UUID
 
 class CacheManager(context: Context) {
     companion object {
@@ -63,6 +63,8 @@ class CacheManager(context: Context) {
         private const val ExporterDirName = "exporter"
         private const val EditorDirName = "editor"
         private const val BackupAndRestoreDirName = "backup-and-restore"
+
+        const val LoadedDirName = "loaded"
     }
 
     private val appContext by context.appContext()
@@ -188,7 +190,7 @@ class CacheManager(context: Context) {
 
         var currentAction by mutableStateOf<EditorAction?>(null)
         var ext: Extension? = null
-        var editor by mutableStateOf<T?>(null, neverEqualPolicy())
+        var editor by mutableStateOf<T?>(null)
         var version by mutableIntStateOf(0)
 
         val isModified get() = version > 0
@@ -202,7 +204,6 @@ class CacheManager(context: Context) {
         inline fun <R> update(block: T.() -> R): R {
             // Method is designed to only be called when editor has been previously initialized
             val ret = block(editor!!)
-            editor = editor
             version++
             return ret
         }

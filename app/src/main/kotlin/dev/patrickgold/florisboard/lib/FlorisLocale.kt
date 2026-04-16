@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.lib
 
 import android.content.Context
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.lib.FlorisLocale.Companion.default
+import java.util.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -25,7 +27,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.*
 
 /**
  * Project-specific locale class wrapping [java.util.Locale]. The wrapping is
@@ -140,7 +141,7 @@ class FlorisLocale private constructor(val base: Locale) {
                 }
             }.toSet()
             val extraLocales = buildList {
-                for (languagePackExtension in extensionManager.languagePacks.value ?: listOf()) {
+                for (languagePackExtension in extensionManager.languagePacks.value) {
                     for (languagePackItem in languagePackExtension.items) {
                         val locale = languagePackItem.locale
                         if (from(locale.language, locale.country).localeTag() in systemLocalesSet) {
@@ -217,7 +218,7 @@ class FlorisLocale private constructor(val base: Locale) {
      */
     val supportsCapitalization: Boolean
         get() = when (language) {
-            "zh", "ko", "th" -> false
+            "zh", "ko", "th", "bn", "hi" -> false
             else -> true
         }
 
@@ -361,10 +362,13 @@ class FlorisLocale private constructor(val base: Locale) {
     }
 }
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(locale.base)
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
 
+@Suppress("NOTHING_TO_INLINE")
 inline fun String.titlecase(locale: FlorisLocale = FlorisLocale.ROOT): String {
     return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale.base) else it.toString() }
 }

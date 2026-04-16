@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,13 +40,13 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.FlorisTextButton
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.FlorisTextButton
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun ExtensionComponentNoneFoundView() {
@@ -81,14 +81,11 @@ fun ExtensionComponentView(
             when (component) {
                 is ThemeExtensionComponent -> {
                     val text = remember(
-                        component.authors, component.isNightTheme, component.isBorderless,
-                        component.isMaterialYouAware, component.stylesheetPath(),
+                        component.authors, component.isNightTheme, component.stylesheetPath(),
                     ) {
                         buildString {
                             appendLine("authors = ${component.authors}")
                             appendLine("isNightTheme = ${component.isNightTheme}")
-                            appendLine("isBorderless = ${component.isBorderless}")
-                            appendLine("isMaterialYouAware = ${component.isMaterialYouAware}")
                             append("stylesheetPath = ${component.stylesheetPath()}")
                         }
                     }

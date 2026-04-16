@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.smartbar
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 /**
  * Enum class defining the display mode for the candidates.
  */
@@ -28,22 +23,4 @@ enum class CandidatesDisplayMode {
     CLASSIC,
     DYNAMIC,
     DYNAMIC_SCROLLABLE;
-
-    companion object {
-        @Composable
-        fun listEntries() = listPrefEntries {
-            entry(
-                key = CLASSIC,
-                label = stringRes(R.string.enum__candidates_display_mode__classic),
-            )
-            entry(
-                key = DYNAMIC,
-                label = stringRes(R.string.enum__candidates_display_mode__dynamic),
-            )
-            entry(
-                key = DYNAMIC_SCROLLABLE,
-                label = stringRes(R.string.enum__candidates_display_mode__dynamic_scrollable),
-            )
-        }
-    }
 }

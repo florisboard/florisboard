@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ import androidx.room.Update
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.ValidationRule
-import dev.patrickgold.florisboard.lib.android.readText
-import dev.patrickgold.florisboard.lib.android.writeText
+import org.florisboard.lib.android.readText
+import org.florisboard.lib.android.writeText
 import org.florisboard.lib.kotlin.tryOrNull
 import java.lang.ref.WeakReference
 

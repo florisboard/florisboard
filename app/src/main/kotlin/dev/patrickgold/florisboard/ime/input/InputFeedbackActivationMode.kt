@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,38 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.input
 
-import androidx.compose.runtime.Composable
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
-
 enum class InputFeedbackActivationMode  {
     RESPECT_SYSTEM_SETTINGS,
     IGNORE_SYSTEM_SETTINGS;
-
-    companion object {
-        @Composable
-        fun audioListEntries() = listPrefEntries {
-            entry(
-                key = RESPECT_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__audio_respect_system_settings),
-            )
-            entry(
-                key = IGNORE_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__audio_ignore_system_settings),
-            )
-        }
-
-        @Composable
-        fun hapticListEntries() = listPrefEntries {
-            entry(
-                key = RESPECT_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__haptic_respect_system_settings),
-            )
-            entry(
-                key = IGNORE_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__haptic_ignore_system_settings),
-            )
-        }
-    }
 }

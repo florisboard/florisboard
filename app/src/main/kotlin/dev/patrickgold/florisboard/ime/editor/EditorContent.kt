@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,6 +90,9 @@ data class EditorContent(
      */
     val currentWordText: String
         get() = if (localCurrentWord.isValid) text.safeSubstring(localCurrentWord.start, localCurrentWord.end) else ""
+
+    val safeEditorBounds: EditorRange
+        get() = if (offset >= 0) EditorRange(0, offset + text.length) else EditorRange(0, 0)
 
     companion object {
         /**

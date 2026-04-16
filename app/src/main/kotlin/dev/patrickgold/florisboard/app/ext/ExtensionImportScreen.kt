@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,17 +50,17 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisBulletSpacer
-import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.io.FileRegistry
+import org.florisboard.lib.compose.FlorisBulletSpacer
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.FlorisOutlinedButton
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
@@ -100,12 +99,6 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     val cacheManager by context.cacheManager()
     val extensionManager by context.extensionManager()
 
-    val initWsUuid by rememberSaveable { mutableStateOf(initUuid) }
-    var importResult by remember {
-        val workspace = initWsUuid?.let { cacheManager.importer.getWorkspaceByUuid(it) }?.let { resultOk(it) }
-        mutableStateOf(workspace)
-    }
-
     fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
         return when {
             !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
@@ -119,13 +112,26 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     NATIVE_NULLPTR.toInt()
                 }
             }
-            fileInfo.mediaType == FileRegistry.FlexExtension.mediaType -> {
+            else -> { // ext == null
                 R.string.ext__import__file_skip_ext_corrupted
             }
-            else -> {
-                NATIVE_NULLPTR.toInt()
-            }
         }
+    }
+
+    fun Result<CacheManager.ImporterWorkspace>.mapSkipReasons(): Result<CacheManager.ImporterWorkspace> {
+        return this.map { workspace ->
+            workspace.inputFileInfos.forEach { fileInfo ->
+                fileInfo.skipReason = getSkipReason(fileInfo)
+            }
+            workspace
+        }
+    }
+
+    var importResult by remember(initUuid) {
+        val workspace = initUuid?.let { cacheManager.importer.getWorkspaceByUuid(it) }
+            ?.let { resultOk(it) }
+            ?.mapSkipReasons()
+        mutableStateOf(workspace)
     }
 
     val importLauncher = rememberLauncherForActivityResult(
@@ -134,14 +140,9 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             // If uri is null it indicates that the selection activity
             //  was cancelled (mostly by pressing the back button), so
             //  we don't display an error message here.
-            if (uriList.isNullOrEmpty()) return@rememberLauncherForActivityResult
+            if (uriList.isEmpty()) return@rememberLauncherForActivityResult
             importResult?.getOrNull()?.close()
-            importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.map { workspace ->
-                workspace.inputFileInfos.forEach { fileInfo ->
-                    fileInfo.skipReason = getSkipReason(fileInfo)
-                }
-                workspace
-            }
+            importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.mapSkipReasons()
         },
     )
 
@@ -187,25 +188,27 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     }
                 }.onSuccess {
                     workspace.close()
-                    context.showLongToast(R.string.ext__import__success)
+                    context.showLongToastSync(R.string.ext__import__success)
                     navController.popBackStack()
                 }.onFailure { error ->
-                    context.showLongToast(R.string.ext__import__failure, "error_message" to error.localizedMessage)
+                    context.showLongToastSync(R.string.ext__import__failure, "error_message" to error.localizedMessage)
                 }
             }
         }
     }
 
     content {
-        FlorisOutlinedButton(
-            onClick = {
-                importLauncher.launch("*/*")
-            },
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-                .align(Alignment.CenterHorizontally),
-            text = stringRes(R.string.action__select_files),
-        )
+        if (initUuid == null) {
+            FlorisOutlinedButton(
+                onClick = {
+                    importLauncher.launch("*/*")
+                },
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .align(Alignment.CenterHorizontally),
+                text = stringRes(R.string.action__select_files),
+            )
+        }
 
         val result = importResult
         when {

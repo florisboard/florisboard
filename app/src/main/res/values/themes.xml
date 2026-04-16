@@ -5,7 +5,7 @@
         <item name="postSplashScreenTheme">@style/FlorisAppTheme</item>
         <item name="windowSplashScreenBackground">@color/florisApp_windowBackground</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/ic_app_icon_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/floris_app_icon_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_icon_foreground</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
@@ -24,11 +24,13 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="CrashDialogTheme" parent="android:Theme.Material"/>
+    <style name="CrashDialogTheme" parent="android:style/Theme.Material.NoActionBar"/>
 
     <style name="FlorisImeTheme" parent="android:Theme.Material.InputMethod">
         <!-- Need this to prevent Xiaomi devices from messing with our beautiful UI -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <!-- FFS -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="FlorisAppTheme.Transparent" parent="android:style/Theme.Material.NoActionBar">

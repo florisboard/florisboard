@@ -1,0 +1,119 @@
+[
+  [
+    { "$": "shift_state_selector",
+      "default": {
+        "code": 43, "label": "+", "type": "numeric", "popup": {
+          "main": { "code": 49, "label": "1" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 282, "label": "Ě", "type": "numeric", "popup": {
+          "main": { "code": 50, "label": "2" }
+        }
+      },
+      "default": {
+        "code": 283, "label": "ě", "type": "numeric", "popup": {
+          "main": { "code": 50, "label": "2" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 352, "label": "Š", "type": "numeric", "popup": {
+          "main": { "code": 51, "label": "3" }
+        }
+      },
+      "default": {
+        "code": 353, "label": "š", "type": "numeric", "popup": {
+          "main": { "code": 51, "label": "3" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 268, "label": "Č", "type": "numeric", "popup": {
+          "main": { "code": 52, "label": "4" }
+        }
+      },
+      "default": {
+        "code": 269, "label": "č", "type": "numeric", "popup": {
+          "main": { "code": 52, "label": "4" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 344, "label": "Ř", "type": "numeric", "popup": {
+          "main": { "code": 53, "label": "5" }
+        }
+      },
+      "default": {
+        "code": 345, "label": "ř", "type": "numeric", "popup": {
+          "main": { "code": 53, "label": "5" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 381, "label": "Ž", "type": "numeric", "popup": {
+          "main": { "code": 54, "label": "6" }
+        }
+      },
+      "default": {
+        "code": 382, "label": "ž", "type": "numeric", "popup": {
+          "main": { "code": 54, "label": "6" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 221, "label": "Ý", "type": "numeric", "popup": {
+          "main": { "code": 55, "label": "7" }
+        }
+      },
+      "default": {
+        "code": 253, "label": "ý", "type": "numeric", "popup": {
+          "main": { "code": 55, "label": "7" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 193, "label": "Á", "type": "numeric", "popup": {
+          "main": { "code": 56, "label": "8" }
+        }
+      },
+      "default": {
+        "code": 225, "label": "á", "type": "numeric", "popup": {
+          "main": { "code": 56, "label": "8" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 205, "label": "Í", "type": "numeric", "popup": {
+          "main": { "code": 57, "label": "9" }
+        }
+      },
+      "default": {
+        "code": 237, "label": "í", "type": "numeric", "popup": {
+          "main": { "code": 57, "label": "9" }
+        }
+      }
+    },
+    { "$": "shift_state_selector",
+      "shiftedManual": {
+        "code": 201, "label": "É", "type": "numeric", "popup": {
+          "main": { "code": 48, "label": "0" }
+        }
+      },
+      "default": {
+        "code": 233, "label": "é", "type": "numeric", "popup": {
+          "main": { "code": 48, "label": "0" }
+        }
+      }
+    }
+  ]
+]

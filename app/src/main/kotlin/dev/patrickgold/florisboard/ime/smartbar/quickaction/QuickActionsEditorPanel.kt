@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -32,9 +31,8 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -48,39 +46,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.safeTimes
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.snygg.SnyggPropertySet
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggBackground
-import dev.patrickgold.florisboard.lib.snygg.ui.snyggClip
-import dev.patrickgold.florisboard.lib.snygg.ui.solidColor
-import dev.patrickgold.florisboard.lib.snygg.ui.spSize
 import dev.patrickgold.florisboard.lib.toIntOffset
+import org.florisboard.lib.compose.stringRes
+import kotlinx.coroutines.runBlocking
+import org.florisboard.lib.snygg.ui.SnyggBox
+import org.florisboard.lib.snygg.ui.SnyggColumn
+import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggIconButton
+import org.florisboard.lib.snygg.ui.SnyggRow
+import org.florisboard.lib.snygg.ui.SnyggText
 
 private const val ItemNotFound = -1
 private val NoopAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.NOOP))
 private val DragMarkerAction = QuickAction.InsertKey(TextKeyData(code = KeyCode.DRAG_MARKER))
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
-    val prefs by florisPreferenceModel()
+fun QuickActionsEditorPanel() {
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val keyboardManager by context.keyboardManager()
 
@@ -102,21 +95,20 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     var activeDragPosition by remember { mutableStateOf(IntOffset.Zero) }
     var activeDragSize by remember { mutableStateOf(IntSize.Zero) }
 
-    val panelStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditor)
-    val headerStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorHeader)
-    val subheaderStyle = FlorisImeTheme.style.get(FlorisImeUi.SmartbarActionsEditorSubheader)
-
-    fun findItemForOffset(offset: IntOffset): LazyGridItemInfo? {
+    fun findItemForOffsetOrClosestInRow(offset: IntOffset): LazyGridItemInfo? {
+        var closestItemInRow: LazyGridItemInfo? = null
         // Using manual for loop with indices instead of firstOrNull() because this method gets
         // called a lot and firstOrNull allocates an iterator for each call
         for (index in gridState.layoutInfo.visibleItemsInfo.indices) {
             val item = gridState.layoutInfo.visibleItemsInfo[index]
-            if (offset.x in item.offset.x..(item.offset.x + item.size.width) &&
-                offset.y in item.offset.y..(item.offset.y + item.size.height)) {
-                return item
+            if (offset.y in item.offset.y..(item.offset.y + item.size.height)) {
+                if (offset.x in item.offset.x..(item.offset.x + item.size.width)) {
+                    return item
+                }
+                closestItemInRow = item
             }
         }
-        return null
+        return closestItemInRow
     }
 
     fun indexOfStickyAction(item: LazyGridItemInfo): Int {
@@ -159,7 +151,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
     }
 
     fun beginDragGesture(pos: IntOffset) {
-        val item = findItemForOffset(pos) ?: return
+        val item = findItemForOffsetOrClosestInRow(pos) ?: return
         val stickyActionIndex = indexOfStickyAction(item)
         val dynamicActionIndex = indexOfDynamicAction(item)
         val hiddenActionIndex = indexOfHiddenAction(item)
@@ -183,7 +175,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
         if (activeDragAction == null) return
         val pos = activeDragPosition + posChange
         activeDragPosition = pos
-        val item = findItemForOffset(pos) ?: return
+        val item = findItemForOffsetOrClosestInRow(pos) ?: return
         val stickyActionIndex = indexOfStickyAction(item)
         val dynamicActionIndex = indexOfDynamicAction(item)
         val hiddenActionIndex = indexOfHiddenAction(item)
@@ -242,42 +234,43 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                 dynamicActions.filter { it != NoopAction && it != DragMarkerAction },
                 hiddenActions.filter { it != NoopAction && it != DragMarkerAction },
             )
-            prefs.smartbar.actionArrangement.set(newActionArrangement)
+            runBlocking {
+                prefs.smartbar.actionArrangement.set(newActionArrangement)
+            }
             if (keyboardManager.activeState.isActionsEditorVisible) {
                 keyboardManager.activeState.isActionsEditorVisible = false
             }
         }
     }
 
-    Column(
-        modifier = modifier
-            .snyggBackground(context, panelStyle, fallbackColor = FlorisImeTheme.fallbackSurfaceColor())
-            .snyggClip(panelStyle),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .snyggBackground(context, headerStyle),
+    SnyggColumn(FlorisImeUi.SmartbarActionsEditor.elementName, modifier = Modifier.safeDrawingPadding()) {
+        SnyggRow(
+            elementName = FlorisImeUi.SmartbarActionsEditorHeader.elementName,
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FlorisIconButton(
-                onClick = {
-                    keyboardManager.activeState.isActionsEditorVisible = false
-                },
-                icon = Icons.Default.KeyboardArrowLeft,
-                iconColor = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
-            )
-            Text(
+            // Extra box wrapper is needed to enforce size constraint but still allow for Snygg margin to be used
+            Box(modifier = Modifier.size(48.dp)) {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.SmartbarActionsEditorHeaderButton.elementName,
+                    modifier = Modifier.fillMaxHeight().aspectRatio(1f),
+                    onClick = {
+                        keyboardManager.activeState.isActionsEditorVisible = false
+                    },
+                ) {
+                    SnyggIcon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    )
+                }
+            }
+            SnyggText(
                 modifier = Modifier.weight(1f),
                 text = stringRes(R.string.quick_actions_editor__header),
-                color = headerStyle.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
-                fontSize = headerStyle.fontSize.spSize(),
-                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.size(48.dp))
         }
 
-        Box {
+        SnyggBox(FlorisImeUi.SmartbarActionsEditorTileGrid.elementName) {
             LazyVerticalGrid(
                 modifier = Modifier
                     .pointerInput(Unit) {
@@ -295,45 +288,42 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                     val n = if (stickyAction != NoopAction) 1 else 0
                     Subheader(
                         text = stringRes(R.string.quick_actions_editor__subheader_sticky_action, "n" to n),
-                        style = subheaderStyle,
                     )
                 }
                 item(key = keyOf(stickyAction)) {
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = stickyAction,
                         evaluator = evaluator,
-                        type = QuickActionBarType.STATIC_TILE,
+                        type = QuickActionBarType.EDITOR_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     val n = dynamicActions.count { it != NoopAction }
                     Subheader(
                         text = stringRes(R.string.quick_actions_editor__subheader_dynamic_actions, "n" to n),
-                        style = subheaderStyle,
                     )
                 }
                 itemsIndexed(dynamicActions, key = { i, a -> keyOf(a) ?: i }) { _, action ->
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
-                        type = QuickActionBarType.STATIC_TILE,
+                        type = QuickActionBarType.EDITOR_TILE,
                     )
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     val n = hiddenActions.count { it != NoopAction }
                     Subheader(
                         text = stringRes(R.string.quick_actions_editor__subheader_hidden_actions, "n" to n),
-                        style = subheaderStyle,
                     )
                 }
                 itemsIndexed(hiddenActions, key = { i, a -> keyOf(a) ?: i }) { _, action ->
                     QuickActionButton(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier.animateItem(),
                         action = action,
                         evaluator = evaluator,
-                        type = QuickActionBarType.STATIC_TILE,
+                        type = QuickActionBarType.EDITOR_TILE,
                     )
                 }
             }
@@ -348,7 +338,7 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
                         .offset(-size.width / 2, -size.height / 2),
                     action = activeDragAction!!,
                     evaluator = evaluator,
-                    type = QuickActionBarType.STATIC_TILE,
+                    type = QuickActionBarType.EDITOR_TILE,
                 )
             }
         }
@@ -358,17 +348,11 @@ fun QuickActionsEditorPanel(modifier: Modifier = Modifier) {
 @Composable
 private fun Subheader(
     text: String,
-    style: SnyggPropertySet,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    Text(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
+    SnyggText(
+        elementName = FlorisImeUi.SmartbarActionsEditorSubheader.elementName,
+        modifier = modifier.fillMaxWidth(),
         text = text,
-        color = style.foreground.solidColor(context, default = FlorisImeTheme.fallbackContentColor()),
-        fontWeight = FontWeight.Bold,
-        fontSize = style.fontSize.spSize() safeTimes 0.8f,
     )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,36 +18,36 @@ package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowRightAlt
-import androidx.compose.material.icons.filled.Backspace
+import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
+import androidx.compose.material.icons.automirrored.filled.Redo
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.automirrored.filled.Undo
+import androidx.compose.material.icons.automirrored.outlined.Assignment
+import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
-import androidx.compose.material.icons.filled.ContentPaste
+import androidx.compose.material.icons.filled.ContentPasteGo
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardCapslock
-import androidx.compose.material.icons.filled.KeyboardReturn
+import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.KeyboardVoice
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.Redo
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.SpaceBar
-import androidx.compose.material.icons.filled.Undo
-import androidx.compose.material.icons.outlined.Assignment
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -56,8 +56,10 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
+import dev.patrickgold.florisboard.lib.compose.vectorResource
+import org.florisboard.lib.compose.icons.ForwardDelete
 
 interface ComputingEvaluator {
     val version: Int
@@ -181,10 +183,10 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
     val evaluator = this
     return when (data.code) {
         KeyCode.ARROW_LEFT -> {
-            Icons.Default.KeyboardArrowLeft
+            Icons.AutoMirrored.Filled.KeyboardArrowLeft
         }
         KeyCode.ARROW_RIGHT -> {
-            Icons.Default.KeyboardArrowRight
+            Icons.AutoMirrored.Filled.KeyboardArrowRight
         }
         KeyCode.ARROW_UP -> {
             Icons.Default.KeyboardArrowUp
@@ -199,7 +201,7 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             Icons.Default.ContentCut
         }
         KeyCode.CLIPBOARD_PASTE -> {
-            Icons.Default.ContentPaste
+            Icons.Default.ContentPasteGo
         }
         KeyCode.CLIPBOARD_SELECT_ALL -> {
             Icons.Default.SelectAll
@@ -208,39 +210,57 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             Icons.Default.DeleteSweep
         }
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
-        KeyCode.COMPACT_LAYOUT_TO_RIGHT -> {
-            // TODO: find a better icon for compact mode
-            Icons.Default.Smartphone
+        KeyCode.COMPACT_LAYOUT_TO_RIGHT,
+        KeyCode.TOGGLE_COMPACT_LAYOUT -> {
+            context()?.vectorResource(id = R.drawable.ic_accessibility_one_handed)
+        }
+        KeyCode.TOGGLE_FLOATING_WINDOW -> {
+            val enabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard)
+            val disabledIcon = context()?.vectorResource(id = R.drawable.ic_floating_keyboard_disable)
+            val windowController = FlorisImeService.windowControllerOrNull() ?: return enabledIcon
+            when (windowController.activeWindowConfig.value.mode) {
+                ImeWindowMode.FIXED -> enabledIcon
+                ImeWindowMode.FLOATING -> disabledIcon
+            }
+        }
+        KeyCode.TOGGLE_RESIZE_MODE -> {
+            context()?.vectorResource(id = R.drawable.ic_resize)
         }
         KeyCode.VOICE_INPUT -> {
             Icons.Default.KeyboardVoice
         }
+        KeyCode.IME_HIDE_UI -> {
+            Icons.Default.KeyboardHide
+        }
         KeyCode.DELETE -> {
-            Icons.Default.Backspace
+            Icons.AutoMirrored.Outlined.Backspace
         }
         KeyCode.ENTER -> {
             val imeOptions = evaluator.editorInfo.imeOptions
             val inputAttributes = evaluator.editorInfo.inputAttributes
             if (imeOptions.flagNoEnterAction || inputAttributes.flagTextMultiLine) {
-                Icons.Default.KeyboardReturn
+                Icons.AutoMirrored.Filled.KeyboardReturn
             } else {
                 when (imeOptions.action) {
                     ImeOptions.Action.DONE -> Icons.Default.Done
-                    ImeOptions.Action.GO -> Icons.Default.ArrowRightAlt
-                    ImeOptions.Action.NEXT -> Icons.Default.ArrowRightAlt
-                    ImeOptions.Action.NONE -> Icons.Default.KeyboardReturn
-                    ImeOptions.Action.PREVIOUS -> Icons.Default.ArrowRightAlt
+                    ImeOptions.Action.GO -> Icons.AutoMirrored.Filled.ArrowRightAlt
+                    ImeOptions.Action.NEXT -> Icons.AutoMirrored.Filled.ArrowRightAlt
+                    ImeOptions.Action.NONE -> Icons.AutoMirrored.Filled.KeyboardReturn
+                    ImeOptions.Action.PREVIOUS -> Icons.AutoMirrored.Filled.ArrowRightAlt
                     ImeOptions.Action.SEARCH -> Icons.Default.Search
-                    ImeOptions.Action.SEND -> Icons.Default.Send
-                    ImeOptions.Action.UNSPECIFIED -> Icons.Default.KeyboardReturn
+                    ImeOptions.Action.SEND -> Icons.AutoMirrored.Filled.Send
+                    ImeOptions.Action.UNSPECIFIED -> Icons.AutoMirrored.Filled.KeyboardReturn
                 }
             }
+        }
+        KeyCode.FORWARD_DELETE -> {
+            Icons.AutoMirrored.Default.ForwardDelete
         }
         KeyCode.IME_UI_MODE_MEDIA -> {
             Icons.Default.SentimentSatisfiedAlt
         }
         KeyCode.IME_UI_MODE_CLIPBOARD -> {
-            Icons.Outlined.Assignment
+            Icons.AutoMirrored.Outlined.Assignment
         }
         KeyCode.LANGUAGE_SWITCH -> {
             Icons.Default.Language
@@ -266,19 +286,19 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
             }
         }
         KeyCode.UNDO -> {
-            Icons.Default.Undo
+            Icons.AutoMirrored.Filled.Undo
         }
         KeyCode.REDO -> {
-            Icons.Default.Redo
+            Icons.AutoMirrored.Filled.Redo
         }
         KeyCode.TOGGLE_ACTIONS_OVERFLOW -> {
             Icons.Default.MoreHoriz
         }
         KeyCode.TOGGLE_INCOGNITO_MODE -> {
             if (evaluator.state.isIncognitoMode) {
-                ImageVector.vectorResource(theme = null, resId = R.drawable.ic_incognito, res = this.context()?.resources!!)
+                this.context()?.vectorResource(id = R.drawable.ic_incognito)
             } else {
-                ImageVector.vectorResource(theme = null, resId = R.drawable.ic_incognito_off, res = this.context()?.resources!!)
+                this.context()?.vectorResource(id = R.drawable.ic_incognito_off)
             }
         }
         KeyCode.TOGGLE_AUTOCORRECT -> {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,6 @@ open class LifecycleInputMethodService : InputMethodService(),
     private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
     private val store by lazy { ViewModelStore() }
     private val savedStateRegistryController by lazy { SavedStateRegistryController.create(this) }
-
-    val uiScope: CoroutineScope
-        get() = lifecycle.coroutineScope
 
     final override val savedStateRegistry: SavedStateRegistry
         get() = savedStateRegistryController.savedStateRegistry

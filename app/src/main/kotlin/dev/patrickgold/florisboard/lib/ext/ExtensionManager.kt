@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,7 @@ package dev.patrickgold.florisboard.lib.ext
 import android.content.Context
 import android.net.Uri
 import android.os.FileObserver
-import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
@@ -30,16 +28,23 @@ import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
 import dev.patrickgold.florisboard.ime.text.composing.KanaUnicode
 import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.android.FileObserver
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.io.FsFile
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.writeJson
+import dev.patrickgold.florisboard.lib.io.delete
+import dev.patrickgold.florisboard.lib.io.listDirs
+import dev.patrickgold.florisboard.lib.io.listFiles
+import dev.patrickgold.florisboard.lib.io.loadJsonAsset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalForInheritanceCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -48,17 +53,19 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.florisboard.lib.android.FileObserver
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.writeJson
 import org.florisboard.lib.kotlin.throwOnFailure
 
 @OptIn(ExperimentalSerializationApi::class)
 val ExtensionJsonConfig = Json {
     classDiscriminator = "$"
-    encodeDefaults = true
+    encodeDefaults = false
     ignoreUnknownKeys = true
     isLenient = true
     prettyPrint = true
     prettyPrintIndent = "  "
-    encodeDefaults = false
     serializersModule = SerializersModule {
         polymorphic(Extension::class) {
             subclass(KeyboardExtension::class, KeyboardExtension.serializer())
@@ -78,6 +85,7 @@ val ExtensionJsonConfig = Json {
 class ExtensionManager(context: Context) {
     companion object {
         const val IME_KEYBOARD_PATH = "ime/keyboard"
+        const val IME_KEYBOARD3_PATH = "ime/keyboard3"
         const val IME_THEME_PATH = "ime/theme"
         const val IME_LANGUAGEPACK_PATH = "ime/languagepack"
 
@@ -86,17 +94,25 @@ class ExtensionManager(context: Context) {
     }
 
     private val appContext by context.appContext()
-    private val assetManager by context.assetManager()
+    private val defaultScope = CoroutineScope(Dispatchers.Default)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
     val languagePacks = ExtensionIndex(LanguagePackExtension.serializer(), IME_LANGUAGEPACK_PATH)
 
+    val extensions = combine(
+        keyboardExtensions,
+        themes,
+        languagePacks,
+    ) { lists -> lists.flatMap { it } }.stateIn(defaultScope, SharingStarted.Eagerly, emptyList())
+
     fun init() {
-        keyboardExtensions.init()
-        themes.init()
-        languagePacks.init()
+        ioScope.launch {
+            keyboardExtensions.init()
+            themes.init()
+            languagePacks.init()
+        }
     }
 
     fun import(ext: Extension) {
@@ -129,10 +145,7 @@ class ExtensionManager(context: Context) {
     }
 
     fun getExtensionById(id: String): Extension? {
-        keyboardExtensions.value?.find { it.meta.id == id }?.let { return it }
-        themes.value?.find { it.meta.id == id }?.let { return it }
-        languagePacks.value?.find { it.meta.id == id }?.let { return it }
-        return null
+        return extensions.value.find { it.meta.id == id }
     }
 
     fun canDelete(ext: Extension): Boolean {
@@ -142,14 +155,15 @@ class ExtensionManager(context: Context) {
     fun delete(ext: Extension) {
         check(canDelete(ext)) { "Cannot delete extension!" }
         ext.unload(appContext)
-        assetManager.delete(ext.sourceRef!!)
+        ext.sourceRef!!.delete(appContext)
     }
 
+    @OptIn(ExperimentalForInheritanceCoroutinesApi::class)
     inner class ExtensionIndex<T : Extension>(
         private val serializer: KSerializer<T>,
         modulePath: String,
-    ) : LiveData<List<T>>() {
-
+        private val flow: MutableStateFlow<List<T>> = MutableStateFlow(emptyList()),
+    ) : StateFlow<List<T>> by flow {
         private val assetsModuleRef = FlorisRef.assets(modulePath)
         private val internalModuleRef = FlorisRef.internal(modulePath)
         var internalModuleDir = internalModuleRef.absoluteFile(appContext)
@@ -159,52 +173,44 @@ class ExtensionManager(context: Context) {
         private val initGuard = Mutex()
         private val refreshGuard = Mutex()
 
-        init {
-            value = emptyList()
-            ioScope.launch {
+        suspend fun init() {
+            initGuard.withLock {
+                // Update internal module dir to actual path and make directory if not exists
+                internalModuleDir = internalModuleRef.absoluteFile(appContext)
+                internalModuleDir.mkdirs()
+
+                // Refresh index to new state
                 refreshGuard.withLock {
                     staticExtensions = indexAssetsModule()
-                }
-            }
-        }
-
-        fun init() {
-            ioScope.launch {
-                initGuard.withLock {
-                    // Update internal module dir to actual path and make directory if not exists
-                    internalModuleDir = internalModuleRef.absoluteFile(appContext)
-                    internalModuleDir.mkdirs()
-
-                    // Refresh index to new state
                     refresh()
+                }
 
-                    // Stop watching on old file observer if one exists and start new observer on new path
-                    fileObserver?.stopWatching()
-                    fileObserver = FileObserver(internalModuleDir, FILE_OBSERVER_MASK) { event, path ->
-                        flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
-                        if (path == null) return@FileObserver
-                        ioScope.launch {
+                // Stop watching on old file observer if one exists and start new observer on new path
+                fileObserver?.stopWatching()
+                fileObserver = FileObserver(internalModuleDir, FILE_OBSERVER_MASK) { event, path ->
+                    flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
+                    if (path == null) return@FileObserver
+                    ioScope.launch {
+                        refreshGuard.withLock {
                             refresh()
                         }
-                    }.also { it.startWatching() }
-                }
+                    }
+                }.also { it.startWatching() }
             }
         }
 
-        private suspend fun refresh() {
-            refreshGuard.withLock {
-                val dynamicExtensions = staticExtensions + indexInternalModule()
-                postValue(dynamicExtensions)
-            }
+        private fun refresh() {
+            val dynamicExtensions = staticExtensions + indexInternalModule()
+            flow.value = dynamicExtensions
         }
 
         private fun indexAssetsModule(): List<T> {
             val list = mutableListOf<T>()
-            assetManager.listDirs(assetsModuleRef).fold(
+            assetsModuleRef.listDirs(appContext).fold(
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
-                        assetManager.loadJsonAsset(fileRef, serializer, ExtensionJsonConfig).fold(
+                        fileRef.loadJsonAsset(appContext, serializer, ExtensionJsonConfig).fold(
                             onSuccess = { ext ->
                                 ext.sourceRef = extRef
                                 list.add(ext)
@@ -224,7 +230,7 @@ class ExtensionManager(context: Context) {
 
         private fun indexInternalModule(): List<T> {
             val list = mutableListOf<T>()
-            assetManager.listFiles(internalModuleRef).fold(
+            internalModuleRef.listFiles(appContext).fold(
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.absoluteFile(appContext)
@@ -233,7 +239,7 @@ class ExtensionManager(context: Context) {
                         }
                         ZipUtils.readFileFromArchive(appContext, extRef, ExtensionDefaults.MANIFEST_FILE_NAME).fold(
                             onSuccess = { metaStr ->
-                                assetManager.loadJsonAsset(metaStr, serializer, ExtensionJsonConfig).fold(
+                                loadJsonAsset(metaStr, serializer, ExtensionJsonConfig).fold(
                                     onSuccess = { ext ->
                                         ext.sourceRef = extRef
                                         list.add(ext)

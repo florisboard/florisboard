@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ package dev.patrickgold.florisboard.app.settings.typing
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.LibraryBooks
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -30,20 +30,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisErrorCard
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -51,12 +57,14 @@ fun TypingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__typing__title)
     previewFieldVisible = true
 
+    val navController = LocalNavController.current
+
     content {
-        // This card is temporary and is therefore not using a string resource
+        // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
         FlorisErrorCard(
             modifier = Modifier.padding(8.dp),
             text = """
-                Suggestions (except system autofill) and spell checking are not available in this alpha release. All
+                Suggestions (except system autofill) and spell checking are not available in this release. All
                 preferences in the "Corrections" group are properly implemented though.
             """.trimIndent().replace('\n', ' '),
         )
@@ -74,26 +82,16 @@ fun TypingScreen() = FlorisScreen {
                 enabledIf = { prefs.suggestion.enabled isEqualTo true },
             )
             SwitchPreference(
-                prefs.suggestion.clipboardContentEnabled,
-                title = stringRes(R.string.pref__suggestion__clipboard_content_enabled__label),
-                summary = stringRes(R.string.pref__suggestion__clipboard_content_enabled__summary),
-                enabledIf = { prefs.suggestion.enabled isEqualTo true },
-            )
-            DialogSliderPreference(
-                prefs.suggestion.clipboardContentTimeout,
-                title = stringRes(R.string.pref__suggestion__clipboard_content_timeout__label),
-                valueLabel = { stringRes(R.string.pref__suggestion__clipboard_content_timeout__summary, "v" to it) },
-                min = 30,
-                max = 300,
-                stepIncrement = 5,
-                enabledIf = { prefs.suggestion.enabled isEqualTo true },
-                visibleIf = { prefs.suggestion.clipboardContentEnabled isEqualTo true },
-            )
-            SwitchPreference(
                 prefs.suggestion.api30InlineSuggestionsEnabled,
                 title = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__label),
                 summary = stringRes(R.string.pref__suggestion__api30_inline_suggestions_enabled__summary),
                 visibleIf = { AndroidVersion.ATLEAST_API30_R },
+            )
+            ListPreference(
+                prefs.suggestion.incognitoMode,
+                icon = ImageVector.vectorResource(id = R.drawable.ic_incognito),
+                title = stringRes(R.string.pref__suggestion__incognito_mode__label),
+                entries = enumDisplayEntriesOf(IncognitoMode::class),
             )
         }
 
@@ -103,7 +101,7 @@ fun TypingScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__correction__auto_capitalization__label),
                 summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
             )
-            val isAutoSpacePunctuationEnabled by prefs.correction.autoSpacePunctuation.observeAsState()
+            val isAutoSpacePunctuationEnabled by prefs.correction.autoSpacePunctuation.collectAsState()
             SwitchPreference(
                 prefs.correction.autoSpacePunctuation,
                 icon = Icons.Default.SpaceBar,
@@ -146,7 +144,7 @@ fun TypingScreen() = FlorisScreen {
                 prefs.spelling.languageMode,
                 icon = Icons.Default.Language,
                 title = stringRes(R.string.pref__spelling__language_mode__label),
-                entries = SpellingLanguageMode.listEntries(),
+                entries = enumDisplayEntriesOf(SpellingLanguageMode::class),
                 enabledIf = { florisSpellCheckerEnabled.value },
             )
             SwitchPreference(
@@ -159,11 +157,19 @@ fun TypingScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.spelling.useUdmEntries,
-                icon = Icons.Default.LibraryBooks,
+                icon = Icons.AutoMirrored.Filled.LibraryBooks,
                 title = stringRes(R.string.pref__spelling__use_udm_entries__label),
                 summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
                 enabledIf = { florisSpellCheckerEnabled.value },
                 visibleIf = { false }, // For now
+            )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.settings__dictionary__title)) {
+            Preference(
+                icon = Icons.AutoMirrored.Filled.LibraryBooks,
+                title = stringRes(R.string.settings__dictionary__title),
+                onClick = { navController.navigate(Routes.Settings.Dictionary) },
             )
         }
     }

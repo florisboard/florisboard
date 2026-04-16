@@ -54,7 +54,9 @@
           ]
         } }
     },
-    { "code": 8730, "label": "√" },
+    { "code": 8730, "label": "√", "popup": {
+      "main": { "code": 10003, "label": "✓" }
+    } },
     { "code":  960, "label": "π", "popup": {
       "main": { "code":  928, "label": "Π" },
       "relevant": [
@@ -104,7 +106,7 @@
         { "code":   61, "label": "=", "popup": {
           "main": { "code": 8800, "label": "≠" },
           "relevant": [
-            { "code":   61, "label": "=" },
+            { "code": 65309, "label": "＝" },
             { "code": 8734, "label": "∞" },
             { "code": 8776, "label": "≈" }
           ]

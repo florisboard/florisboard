@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,8 @@ package dev.patrickgold.florisboard.app.ext
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Link
-import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,13 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.android.launchUrl
-import dev.patrickgold.florisboard.lib.compose.FlorisChip
 import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import org.florisboard.lib.compose.FlorisChip
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ExtensionMaintainerChip(
     maintainer: ExtensionMaintainer,
@@ -73,15 +69,15 @@ fun ExtensionMaintainerChip(
                 if (maintainer.email != null) {
                     FlorisChip(
                         onClick = { context.launchUrl("mailto:${maintainer.email}") },
-                        text = maintainer.email.toString(),
+                        text = maintainer.email,
                         leadingIcons = listOf(Icons.Outlined.Mail),
                         shape = RoundedCornerShape(4.dp),
                     )
                 }
                 if (maintainer.url != null) {
                     FlorisChip(
-                        onClick = { context.launchUrl(maintainer.url.toString()) },
-                        text = maintainer.url.toString(),
+                        onClick = { context.launchUrl(maintainer.url) },
+                        text = maintainer.url,
                         leadingIcons = listOf(Icons.Default.Link),
                         shape = RoundedCornerShape(4.dp),
                     )

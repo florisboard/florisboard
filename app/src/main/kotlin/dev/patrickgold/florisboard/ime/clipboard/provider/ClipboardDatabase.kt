@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.ClipData
+import android.content.ClipDescription.EXTRA_IS_REMOTE_DEVICE
+import android.content.ClipDescription.EXTRA_IS_SENSITIVE
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -24,8 +26,11 @@ import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.MediaStore.Images.Media
 import android.provider.OpenableColumns
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.database.getStringOrNull
-import androidx.lifecycle.LiveData
+import androidx.core.net.toUri
+import androidx.room.AutoMigration
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -34,14 +39,22 @@ import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import dev.patrickgold.florisboard.lib.android.UriSerializer
-import dev.patrickgold.florisboard.lib.android.query
+import androidx.room.migration.AutoMigrationSpec
+import dev.patrickgold.florisboard.R
+import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.UriSerializer
+import org.florisboard.lib.android.query
+import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.tryOrNull
 
 private const val CLIPBOARD_HISTORY_TABLE = "clipboard_history"
@@ -67,7 +80,7 @@ enum class ItemType(val value: Int) {
  */
 @Serializable
 @Entity(tableName = CLIPBOARD_HISTORY_TABLE)
-data class ClipboardItem(
+data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = BaseColumns._ID, index = true)
     var id: Long = 0,
@@ -77,13 +90,19 @@ data class ClipboardItem(
     val uri: Uri?,
     val creationTimestampMs: Long,
     val isPinned: Boolean,
-    val mimeTypes: Array<String>,
+    val mimeTypes: List<String>,
+    @EncodeDefault
+    @ColumnInfo(name = "is_sensitive", defaultValue = "0")
+    val isSensitive: Boolean = false,
+    @EncodeDefault
+    @ColumnInfo(name= "is_remote_device", defaultValue = "0")
+    val isRemoteDevice: Boolean = false,
 ) {
     companion object {
         /**
          * So that every item doesn't have to allocate its own array.
          */
-        private val TEXT_PLAIN = arrayOf("text/plain")
+        private val TEXT_PLAIN = listOf("text/plain")
         private val MEDIA_PROJECTION = arrayOf(OpenableColumns.DISPLAY_NAME)
 
         const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
@@ -113,6 +132,18 @@ data class ClipboardItem(
                 else -> ItemType.TEXT
             }
 
+            val isSensitive = if (AndroidVersion.ATLEAST_API33_T) {
+                data.description?.extras?.getBoolean(EXTRA_IS_SENSITIVE) ?: false
+            } else {
+                false
+            }
+
+            val isRemoteDevice = if (AndroidVersion.ATLEAST_API34_U) {
+                data.description?.extras?.getBoolean(EXTRA_IS_REMOTE_DEVICE) ?: false
+            } else {
+                false
+            }
+
             val uri = if (type == ItemType.IMAGE || type == ItemType.VIDEO) {
                 if (dataItem.uri.authority == ClipboardMediaProvider.AUTHORITY || !cloneUri) {
                     dataItem.uri
@@ -120,7 +151,6 @@ data class ClipboardItem(
                     var displayName = when (type) {
                         ItemType.IMAGE -> "Image"
                         ItemType.VIDEO -> "Video"
-                        else -> "Unknown"
                     }
                     tryOrNull {
                         context.contentResolver.query(dataItem.uri, MEDIA_PROJECTION)?.use { cursor ->
@@ -138,7 +168,6 @@ data class ClipboardItem(
                     context.contentResolver.insert(when (type) {
                         ItemType.IMAGE -> ClipboardMediaProvider.IMAGE_CLIPS_URI
                         ItemType.VIDEO -> ClipboardMediaProvider.VIDEO_CLIPS_URI
-                        else -> error("Impossible.")
                     }, values)
                 }
             } else { null }
@@ -147,11 +176,25 @@ data class ClipboardItem(
             val mimeTypes = when (type) {
                 ItemType.TEXT -> TEXT_PLAIN
                 ItemType.IMAGE, ItemType.VIDEO -> {
-                    Array(data.description.mimeTypeCount) { data.description.getMimeType(it) }
+                    List(data.description.mimeTypeCount) { data.description.getMimeType(it) }
                 }
             }
 
-            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes)
+            return ClipboardItem(0, type, text, uri, System.currentTimeMillis(), false, mimeTypes, isSensitive, isRemoteDevice)
+        }
+    }
+
+    @Composable
+    inline fun displayText(): String {
+        val context = LocalContext.current
+        return displayText(context)
+    }
+
+    fun displayText(context: Context): String {
+        return if (isSensitive) {
+            context.stringRes(R.string.clipboard__sensitive_clip_content)
+        } else {
+            stringRepresentation()
         }
     }
 
@@ -186,35 +229,9 @@ data class ClipboardItem(
         }
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ClipboardItem
-
-        if (id != other.id) return false
-        if (type != other.type) return false
-        if (text != other.text) return false
-        if (uri != other.uri) return false
-        if (creationTimestampMs != other.creationTimestampMs) return false
-        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + type.hashCode()
-        result = 31 * result + (text?.hashCode() ?: 0)
-        result = 31 * result + (uri?.hashCode() ?: 0)
-        result = 31 * result + creationTimestampMs.hashCode()
-        result = 31 * result + mimeTypes.contentHashCode()
-        return result
-    }
-
     fun stringRepresentation(): String {
         return when {
-            text != null -> text.take(500)
+            text != null -> text
             uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }
@@ -224,7 +241,7 @@ data class ClipboardItem(
 class Converters {
     @TypeConverter
     fun uriFromString(value: String?): Uri? {
-        return Uri.parse(value)
+        return value?.toUri()
     }
 
     @TypeConverter
@@ -247,13 +264,13 @@ class Converters {
      * DOES NOT USE A GENERALIZED FORMAT.
      */
     @TypeConverter
-    fun mimeTypesToString(mimeTypes: Array<String>): String {
+    fun mimeTypesToString(mimeTypes: List<String>): String {
         return mimeTypes.joinToString(",")
     }
 
     @TypeConverter
-    fun stringToMimeTypes(value: String): Array<String> {
-        return value.split(",").toTypedArray()
+    fun stringToMimeTypes(value: String): List<String> {
+        return value.split(",")
     }
 }
 
@@ -263,7 +280,7 @@ interface ClipboardHistoryDao {
     fun getAll(): List<ClipboardItem>
 
     @Query("SELECT * FROM $CLIPBOARD_HISTORY_TABLE")
-    fun getAllLive(): LiveData<List<ClipboardItem>>
+    fun getAllAsFlow(): Flow<List<ClipboardItem>>
 
     @Insert
     fun insert(item: ClipboardItem): Long
@@ -274,11 +291,11 @@ interface ClipboardHistoryDao {
     @Update
     fun update(items: List<ClipboardItem>)
 
-    @Delete
-    fun delete(item: ClipboardItem)
-
     @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id")
     fun delete(id: Long)
+
+    @Query("DELETE FROM $CLIPBOARD_HISTORY_TABLE WHERE ${BaseColumns._ID} = :id AND not isPinned ")
+    fun deleteIfUnpinned(id: Long)
 
     @Delete
     fun delete(items: List<ClipboardItem>)
@@ -293,10 +310,29 @@ interface ClipboardHistoryDao {
     fun deleteAllUnpinned()
 }
 
-@Database(entities = [ClipboardItem::class], version = 2)
+@Database(
+    entities = [ClipboardItem::class],
+    version = 4,
+    autoMigrations = [
+        AutoMigration(from = 2, to = 4),
+        AutoMigration(from = 3, to = 4, spec = ClipboardHistoryDatabase.MIGRATE_3_TO_4::class),
+    ],
+)
 @TypeConverters(Converters::class)
 abstract class ClipboardHistoryDatabase : RoomDatabase() {
     abstract fun clipboardItemDao(): ClipboardHistoryDao
+
+    @RenameColumn(
+        tableName = CLIPBOARD_HISTORY_TABLE,
+        fromColumnName = "isSensitive",
+        toColumnName = "is_sensitive",
+    )
+    @RenameColumn(
+        tableName = CLIPBOARD_HISTORY_TABLE,
+        fromColumnName = "isRemoteDevice",
+        toColumnName = "is_remote_device",
+    )
+    class MIGRATE_3_TO_4 : AutoMigrationSpec
 
     companion object {
         fun new(context: Context): ClipboardHistoryDatabase {
@@ -317,30 +353,8 @@ data class ClipboardFileInfo(
     @ColumnInfo(name=OpenableColumns.DISPLAY_NAME) val displayName: String,
     @ColumnInfo(name=OpenableColumns.SIZE) val size: Long,
     @ColumnInfo(name=Media.ORIENTATION) val orientation: Int,
-    val mimeTypes: Array<String>,
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ClipboardFileInfo
-
-        if (id != other.id) return false
-        if (displayName != other.displayName) return false
-        if (size != other.size) return false
-        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + displayName.hashCode()
-        result = 31 * result + size.hashCode()
-        result = 31 * result + mimeTypes.contentHashCode()
-        return result
-    }
-}
+    val mimeTypes: List<String>,
+)
 
 @Dao
 interface ClipboardFilesDao {
@@ -351,7 +365,7 @@ interface ClipboardFilesDao {
     fun getCursorById(uid: Long) : Cursor
 
     @Query("SELECT (:projection) FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:uid)")
-    fun getCurserByIdWithColums(uid: Long, projection: String) : Cursor
+    fun getCursorByIdWithColumns(uid: Long, projection: String) : Cursor
 
     @Query("DELETE FROM $CLIPBOARD_FILES_TABLE WHERE ${BaseColumns._ID} == (:id)")
     fun delete(id: Long)

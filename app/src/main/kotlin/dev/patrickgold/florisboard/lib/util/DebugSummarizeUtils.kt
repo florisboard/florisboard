@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ private fun Bundle.debugSummarize(): String {
             }
             append(key)
             append("=")
-            append(bundle.get(key))
+            // TODO: classcastexception append(bundle.getString(key))
         }
         append("]")
     }

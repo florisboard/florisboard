@@ -1,0 +1,46 @@
+{
+    "all": {
+      "ե": {
+        "main": { "$": "auto_text_key", "code": 1415, "label": "և" }
+      },
+      "յ": {
+        "main": { "$": "auto_text_key", "code": 1416, "label": "ֈ" }
+      },
+      "ա": {
+        "main": { "$": "auto_text_key", "code": 1376, "label": "ՠ" }
+      },
+      "~right": {
+        "main": { "code":   44, "label": "," },
+        "relevant": [
+          { "code": 1417, "label": "։" },
+          { "code": 1418, "label": "֊" },
+          { "code": 1369, "label": "ՙ" },
+          { "code": 1370, "label": "՚" },
+          { "code": 1373, "label": "՝" },
+          { "code": 1371, "label": "՛" },
+          { "code": 1375, "label": "՟" },
+          { "code":   47, "label": "/" },
+          { "code":   40, "label": "(" },
+          { "code":   41, "label": ")" },
+          { "code":   46, "label": "." },
+          { "code": 1372, "label": "՜" },
+          { "code":   33, "label": "!" },
+          { "code":   63, "label": "?" },
+          { "code": 1374, "label": "՞" }
+        ]
+      }
+    },
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".com" },
+        "relevant": [
+          { "code": -255, "label": ".gov" },
+          { "code": -255, "label": ".edu" },
+          { "code": -255, "label": ".gr" },
+          { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
+  

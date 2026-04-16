@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
+import org.florisboard.lib.android.showLongToastSync
 
 @Composable
 fun ExtensionExportScreen(id: String) {
@@ -61,9 +62,9 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
                 return@rememberLauncherForActivityResult
             }
             runCatching { extensionManager.export(ext, uri) }.onSuccess {
-                context.showLongToast(R.string.ext__export__success)
+                context.showLongToastSync(R.string.ext__export__success)
             }.onFailure { error ->
-                context.showLongToast(R.string.ext__export__failure, "error_message" to error.localizedMessage)
+                context.showLongToastSync(R.string.ext__export__failure, "error_message" to error.localizedMessage)
             }
             navController.popBackStack()
         },

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,21 +20,21 @@ import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -55,14 +55,15 @@ fun KeyboardScreen() = FlorisScreen {
             switchPref = prefs.keyboard.hintedNumberRowEnabled,
             title = stringRes(R.string.pref__keyboard__hinted_number_row_mode__label),
             summarySwitchDisabled = stringRes(R.string.state__disabled),
-            entries = KeyHintMode.listEntries(),
+            entries = enumDisplayEntriesOf(KeyHintMode::class),
+            enabledIf = { prefs.keyboard.numberRow.isFalse() }
         )
         ListPreference(
             listPref = prefs.keyboard.hintedSymbolsMode,
             switchPref = prefs.keyboard.hintedSymbolsEnabled,
             title = stringRes(R.string.pref__keyboard__hinted_symbols_mode__label),
             summarySwitchDisabled = stringRes(R.string.state__disabled),
-            entries = KeyHintMode.listEntries(),
+            entries = enumDisplayEntriesOf(KeyHintMode::class),
         )
         SwitchPreference(
             prefs.keyboard.utilityKeyEnabled,
@@ -72,18 +73,18 @@ fun KeyboardScreen() = FlorisScreen {
         ListPreference(
             prefs.keyboard.utilityKeyAction,
             title = stringRes(R.string.pref__keyboard__utility_key_action__label),
-            entries = UtilityKeyAction.listEntries(),
+            entries = enumDisplayEntriesOf(UtilityKeyAction::class),
             visibleIf = { prefs.keyboard.utilityKeyEnabled isEqualTo true },
         )
         ListPreference(
             prefs.keyboard.spaceBarMode,
             title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
-            entries = SpaceBarMode.listEntries(),
+            entries = enumDisplayEntriesOf(SpaceBarMode::class),
         )
         ListPreference(
             prefs.keyboard.capitalizationBehavior,
             title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
-            entries = CapitalizationBehavior.listEntries(),
+            entries = enumDisplayEntriesOf(CapitalizationBehavior::class),
         )
         DialogSliderPreference(
             primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
@@ -99,39 +100,14 @@ fun KeyboardScreen() = FlorisScreen {
         ListPreference(
             listPref = prefs.keyboard.incognitoDisplayMode,
             title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
-            entries = IncognitoDisplayMode.listEntries(),
+            entries = enumDisplayEntriesOf(IncognitoDisplayMode::class),
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_layout__label)) {
             ListPreference(
-                prefs.keyboard.oneHandedMode,
-                title = stringRes(R.string.pref__keyboard__one_handed_mode__label),
-                entries = OneHandedMode.listEntries(),
-            )
-            DialogSliderPreference(
-                prefs.keyboard.oneHandedModeScaleFactor,
-                title = stringRes(R.string.pref__keyboard__one_handed_mode_scale_factor__label),
-                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-                min = 70,
-                max = 90,
-                stepIncrement = 1,
-                enabledIf = { prefs.keyboard.oneHandedMode isNotEqualTo OneHandedMode.OFF },
-            )
-            ListPreference(
                 prefs.keyboard.landscapeInputUiMode,
                 title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
-                entries = LandscapeInputUiMode.listEntries(),
-            )
-            DialogSliderPreference(
-                primaryPref = prefs.keyboard.heightFactorPortrait,
-                secondaryPref = prefs.keyboard.heightFactorLandscape,
-                title = stringRes(R.string.pref__keyboard__height_factor__label),
-                primaryLabel = stringRes(R.string.screen_orientation__portrait),
-                secondaryLabel = stringRes(R.string.screen_orientation__landscape),
-                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-                min = 50,
-                max = 150,
-                stepIncrement = 5,
+                entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
             )
             DialogSliderPreference(
                 primaryPref = prefs.keyboard.keySpacingVertical,
@@ -139,21 +115,10 @@ fun KeyboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__keyboard__key_spacing__label),
                 primaryLabel = stringRes(R.string.screen_orientation__vertical),
                 secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
-                valueLabel = { stringRes(R.string.unit__display_pixel__symbol, "v" to it) },
-                min = 0.0f,
-                max = 10.0f,
-                stepIncrement = 0.5f,
-            )
-            DialogSliderPreference(
-                primaryPref = prefs.keyboard.bottomOffsetPortrait,
-                secondaryPref = prefs.keyboard.bottomOffsetLandscape,
-                title = stringRes(R.string.pref__keyboard__bottom_offset__label),
-                primaryLabel = stringRes(R.string.screen_orientation__portrait),
-                secondaryLabel = stringRes(R.string.screen_orientation__landscape),
-                valueLabel = { stringRes(R.string.unit__display_pixel__symbol, "v" to it) },
-                min = 0,
-                max = 60,
-                stepIncrement = 1,
+                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+                min = 50,
+                max = 150,
+                stepIncrement = 5,
             )
         }
 

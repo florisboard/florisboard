@@ -1,0 +1,7 @@
+{
+  "id": "dev.patrickgold.florisboard.beta",
+  "url": "https://github.com/florisboard/florisboard",
+  "author": "florisboard",
+  "name": "FlorisBoard Preview",
+  "additionalSettings": "{\"includePrereleases\":true,\"fallbackToOlderReleases\":true,\"apkFilterRegEx\":\"preview\"}"
+}

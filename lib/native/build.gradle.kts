@@ -1,16 +1,39 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+/*
+ * Copyright (C) 2025 The FlorisBoard Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
 }
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
-val projectNdkVersion: String by project
 
-android {
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+configure<LibraryExtension> {
     namespace = "org.florisboard.libnative"
     compileSdk = projectCompileSdk.toInt()
-    ndkVersion = projectNdkVersion
+    ndkVersion = tools.versions.ndk.get()
 
     defaultConfig {
         minSdk = projectMinSdk.toInt()
@@ -19,7 +42,7 @@ android {
             cmake {
                 targets("fl_native")
                 arguments(
-                    "-DCMAKE_ANDROID_API=" + minSdk.toString(),
+                    "-DCMAKE_ANDROID_API=$minSdk",
                 )
             }
         }
@@ -42,26 +65,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
             )
         }
-
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    sourceSets {
-        maybeCreate("main").apply {
-            java {
-                srcDirs("src/main/kotlin")
-            }
-        }
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     externalNativeBuild {
         cmake {
+            version = tools.versions.cmake.get()
             path("src/main/rust/CMakeLists.txt")
         }
     }
@@ -69,7 +81,7 @@ android {
 
 tasks.named("clean") {
     doLast {
-        delete("src/main/rust/target", "src/main/rust/Cargo.lock")
+        delete("src/main/rust/target")
     }
 }
 

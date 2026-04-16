@@ -1,4 +1,4 @@
-- Add subtype speciifc symbol/numeric layouts
+- Add subtype specific symbol/numeric layouts
   - NOTE: this change causes your selected subtypes to be reset during the
     upgrade. Sorry for the inconvenience, but this was unavoidable!
 - Add currency sets on a per-subtype base

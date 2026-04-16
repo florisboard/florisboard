@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,18 +42,20 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.FlorisRect
 import dev.patrickgold.florisboard.lib.toIntOffset
 
 @Composable
 fun rememberPopupUiController(
     key1: Any?,
+    key2: Any?,
     boundsProvider: (key: Key) -> FlorisRect,
     isSuitableForBasicPopup: (key: Key) -> Boolean,
     isSuitableForExtendedPopup: (key: Key) -> Boolean,
 ): PopupUiController {
     val context = LocalContext.current
-    return remember(key1) {
+    return remember(key1, key2) {
         PopupUiController(context, boundsProvider, isSuitableForBasicPopup, isSuitableForExtendedPopup)
     }
 }
@@ -80,7 +82,6 @@ class PopupUiController(
 
     private var activeElementIndex by mutableIntStateOf(-1)
     var evaluator: ComputingEvaluator = DefaultComputingEvaluator
-    var fontSizeMultiplier: Float = 1.0f
     var keyHintConfiguration: KeyHintConfiguration = KeyHintConfiguration.HINTS_DISABLED
 
     /** Is true if the preview popup is visible to the user, else false */
@@ -447,13 +448,17 @@ class PopupUiController(
 
     @Composable
     fun RenderPopups(): Unit = with(LocalDensity.current) {
+        val attributes = mapOf(
+            FlorisImeUi.Attr.Mode to evaluator.keyboard.mode.toString(),
+            FlorisImeUi.Attr.ShiftState to evaluator.state.inputShiftState.toString(),
+        )
         baseRenderInfo?.let { renderInfo ->
             PopupBaseBox(
                 modifier = Modifier
                     .requiredSize(renderInfo.bounds.size.toDpSize())
                     .absoluteOffset { renderInfo.bounds.topLeft.toIntOffset() },
+                attributes = attributes,
                 key = renderInfo.key,
-                fontSizeMultiplier = fontSizeMultiplier,
                 shouldIndicateExtendedPopups = renderInfo.shouldIndicateExtendedPopups && extRenderInfo == null,
             )
         }
@@ -465,8 +470,8 @@ class PopupUiController(
                 modifier = Modifier
                     .requiredSize(renderInfo.bounds.size.toDpSize())
                     .absoluteOffset { renderInfo.bounds.topLeft.toIntOffset() },
+                attributes = attributes,
                 elements = renderInfo.elements,
-                fontSizeMultiplier = fontSizeMultiplier,
                 elemArrangement = if (renderInfo.anchorLeft) {
                     Arrangement.Start
                 } else {

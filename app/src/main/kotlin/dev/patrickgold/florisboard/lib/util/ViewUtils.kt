@@ -1,12 +1,11 @@
 /*
- * Copyright (C) 2011 The Android Open Source Project
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,7 +17,6 @@
 package dev.patrickgold.florisboard.lib.util
 
 import android.content.res.Resources
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
@@ -84,7 +82,7 @@ object ViewUtils {
      * @return A float value to represent px equivalent to dp depending on device density
      */
     fun dp2px(dp: Float): Float {
-        return dp * (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+        return dp * Resources.getSystem().displayMetrics.density
     }
 
     /**
@@ -96,6 +94,6 @@ object ViewUtils {
      * @return A float value to represent dp equivalent to px value
      */
     fun px2dp(px: Float): Float {
-        return px / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+        return (px / Resources.getSystem().displayMetrics.density)
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,14 @@ import android.media.AudioManager
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.staticCompositionLocalOf
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.lib.android.AndroidVersion
-import dev.patrickgold.florisboard.lib.android.systemServiceOrNull
-import dev.patrickgold.florisboard.lib.android.systemVibratorOrNull
-import dev.patrickgold.florisboard.lib.android.vibrate
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.android.systemServiceOrNull
+import org.florisboard.lib.android.systemVibratorOrNull
+import org.florisboard.lib.android.vibrate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +46,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
         fun new(ims: InputMethodService) = InputFeedbackController(ims)
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
 
     private val audioManager = ims.systemServiceOrNull(AudioManager::class)
     private val vibrator = ims.systemVibratorOrNull()

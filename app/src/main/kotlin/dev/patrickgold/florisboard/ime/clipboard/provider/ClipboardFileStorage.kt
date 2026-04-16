@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ package dev.patrickgold.florisboard.ime.clipboard.provider
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.lib.android.readToFile
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.io.FsFile
-import dev.patrickgold.florisboard.lib.io.subFile
+import org.florisboard.lib.android.readToFile
+import org.florisboard.lib.kotlin.io.FsFile
+import org.florisboard.lib.kotlin.io.subFile
 
 /**
  * Backend helper object which is used by [ClipboardMediaProvider] to serve content.
@@ -61,7 +61,28 @@ object ClipboardFileStorage {
         return context.clipboardFilesDir.subFile(id.toString())
     }
 
-    fun instertFileFromBackup(context: Context, file: FsFile) {
-        file.copyTo(context.clipboardFilesDir.subFile(file.name), overwrite = false)
+
+    /**
+     * Insert file from backup if not existing
+     *
+     * @param context the application context
+     * @param file the file to be inserted
+     */
+    fun insertFileFromBackupIfNotExisting(context: Context, file: FsFile) {
+        if (!context.clipboardFilesDir.subFile(file.name).isFile) {
+            file.copyTo(context.clipboardFilesDir.subFile(file.name), overwrite = false)
+        }
     }
+
+    /**
+     * Deletes all files from the clipboard subdirectory
+     *
+     * @param context the application context
+     */
+    fun resetClipboardFileStorage(context: Context) {
+        context.clipboardFilesDir.listFiles()?.forEach {
+            it.delete()
+        }
+    }
+
 }

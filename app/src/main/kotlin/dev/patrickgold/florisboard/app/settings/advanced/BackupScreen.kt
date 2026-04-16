@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,43 +25,53 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.lib.android.showLongToast
-import dev.patrickgold.florisboard.lib.android.writeFromFile
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.rippleClickable
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.ext.ExtensionManager
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import dev.patrickgold.florisboard.lib.io.ZipUtils
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
-import dev.patrickgold.florisboard.lib.io.writeJson
-import dev.patrickgold.jetpref.datastore.jetprefDatastoreDir
+import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
+import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
+import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.florisboard.lib.android.showLongToast
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.android.writeFromFile
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.rippleClickable
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
+import org.florisboard.lib.kotlin.io.writeJson
 
 object Backup {
     const val FILE_PROVIDER_AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.file"
@@ -86,10 +96,23 @@ object Backup {
         var clipboardTextItems by mutableStateOf(false)
         var clipboardImageItems by mutableStateOf(false)
         var clipboardVideoItems by mutableStateOf(false)
-        var clipboardData by mutableStateOf(false)
 
-        fun validateClipboardCheckbox(): Boolean {
-            return clipboardTextItems && clipboardImageItems && clipboardVideoItems
+        private var _clipboardData: MutableState<ToggleableState> = mutableStateOf(ToggleableState.Off)
+        val clipboardData: State<ToggleableState> = _clipboardData
+
+        fun updateCheckboxState() {
+            val newValue = if (
+                !clipboardVideoItems && !clipboardImageItems && !clipboardTextItems
+            ) {
+                ToggleableState.Off
+            } else if (
+                clipboardVideoItems && clipboardImageItems && clipboardTextItems
+            ) {
+                ToggleableState.On
+            } else {
+                ToggleableState.Indeterminate
+            }
+            _clipboardData.value = newValue
         }
 
         fun provideClipboardItems(): Boolean {
@@ -119,6 +142,7 @@ fun BackupScreen() = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
+    val scope = rememberCoroutineScope()
 
     var backupDestination by remember { mutableStateOf(Backup.Destination.FILE_SYS) }
     val backupFilesSelector = remember { Backup.FilesSelector() }
@@ -138,22 +162,24 @@ fun BackupScreen() = FlorisScreen {
                 context.contentResolver.writeFromFile(uri, backupWorkspace!!.zipFile)
                 backupWorkspace!!.close()
             }.onSuccess {
-                context.showLongToast(R.string.backup_and_restore__back_up__success)
+                context.showLongToastSync(R.string.backup_and_restore__back_up__success)
                 navController.popBackStack()
             }.onFailure { error ->
                 flogError { error.stackTraceToString() }
-                context.showLongToast(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
+                context.showLongToastSync(R.string.backup_and_restore__back_up__failure, "error_message" to error.message)
                 backupWorkspace = null
             }
         },
     )
 
-    fun prepareBackupWorkspace() {
+    suspend fun prepareBackupWorkspace() {
         val workspace = cacheManager.backupAndRestore.new()
         if (backupFilesSelector.jetprefDatastore) {
-            context.jetprefDatastoreDir.let { dir ->
-                dir.copyRecursively(workspace.inputDir.subDir(dir.name))
-            }
+            val fileBasedStorage = workspace.inputDir
+                .subDir(AndroidAppDataStorage.JETPREF_DIR_NAME)
+                .subFile("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
+                .let { FileBasedStorage(it.path) }
+            FlorisPreferenceStore.export(fileBasedStorage).getOrThrow()
         }
         val workspaceFilesDir = workspace.inputDir.subDir("files")
         if (backupFilesSelector.imeKeyboard) {
@@ -168,7 +194,8 @@ fun BackupScreen() = FlorisScreen {
         }
 
         if (backupFilesSelector.provideClipboardItems()) {
-            val clipboardHistory = context.clipboardManager().value.history().all
+            val clipboardManager by context.clipboardManager()
+            val clipboardHistory = clipboardManager.currentHistory.all
             val clipboardFilesDir = workspace.inputDir.subDir("clipboard")
             clipboardFilesDir.mkdir()
             if (backupFilesSelector.clipboardTextItems) {
@@ -208,7 +235,7 @@ fun BackupScreen() = FlorisScreen {
         backupWorkspace = workspace
     }
 
-    fun prepareAndPerformBackup() {
+    suspend fun prepareAndPerformBackup() {
         runCatching {
             if (backupWorkspace == null || backupWorkspace!!.isClosed()) {
                 prepareBackupWorkspace()
@@ -248,7 +275,7 @@ fun BackupScreen() = FlorisScreen {
             )
             ButtonBarButton(
                 onClick = {
-                    prepareAndPerformBackup()
+                    scope.launch { prepareAndPerformBackup() }
                 },
                 text = stringRes(R.string.action__back_up),
                 enabled = backupFilesSelector.atLeastOneSelected(),
@@ -309,28 +336,31 @@ internal fun BackupFilesSelector(
             text = stringRes(R.string.backup_and_restore__back_up__files_ime_theme),
         )
 
-        CheckboxListItem(
+        TriStateCheckboxListItem(
             onClick = {
-                if (!filesSelector.clipboardData) {
-                    filesSelector.clipboardTextItems = true
+                if (
+                    filesSelector.clipboardData.value == ToggleableState.Off ||
+                    filesSelector.clipboardData.value == ToggleableState.Indeterminate
+                ) {
                     filesSelector.clipboardImageItems = true
                     filesSelector.clipboardVideoItems = true
+                    filesSelector.clipboardTextItems = true
                 } else {
-                    filesSelector.clipboardTextItems = false
                     filesSelector.clipboardImageItems = false
                     filesSelector.clipboardVideoItems = false
+                    filesSelector.clipboardTextItems = false
                 }
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
-            checked = filesSelector.clipboardTextItems && filesSelector.clipboardImageItems && filesSelector.clipboardVideoItems,
-            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history)
+            state = filesSelector.clipboardData.value,
+            text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history),
         )
 
 
         CheckboxListItem(
             onClick = {
                 filesSelector.clipboardTextItems = !filesSelector.clipboardTextItems
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
             checked = filesSelector.clipboardTextItems,
             text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_text_items),
@@ -339,7 +369,7 @@ internal fun BackupFilesSelector(
         CheckboxListItem(
             onClick = {
                 filesSelector.clipboardImageItems = !filesSelector.clipboardImageItems
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
             checked = filesSelector.clipboardImageItems,
             text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_image_items),
@@ -348,7 +378,7 @@ internal fun BackupFilesSelector(
         CheckboxListItem(
             onClick = {
                 filesSelector.clipboardVideoItems = !filesSelector.clipboardVideoItems
-                filesSelector.clipboardData = filesSelector.validateClipboardCheckbox()
+                filesSelector.updateCheckboxState()
             },
             checked = filesSelector.clipboardVideoItems,
             text = stringRes(R.string.backup_and_restore__back_up__files_clipboard_history__clipboard_video_items),
@@ -375,6 +405,30 @@ internal fun CheckboxListItem(
                 Checkbox(
                     checked = checked,
                     onCheckedChange = null,
+                )
+            }
+        },
+        text = text,
+    )
+}
+
+@Composable
+internal fun TriStateCheckboxListItem(
+    onClick: () -> Unit,
+    state: ToggleableState,
+    text: String,
+    isSecondaryListItem: Boolean = false,
+) {
+    JetPrefListItem(
+        modifier = Modifier.rippleClickable(onClick = onClick),
+        icon = {
+            Row {
+                if (isSecondaryListItem) {
+                    Spacer(modifier = Modifier.width(40.dp))
+                }
+                TriStateCheckbox(
+                    state = state,
+                    onClick = null,
                 )
             }
         },

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Assignment
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Videocam
-import androidx.compose.material.icons.outlined.Assignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
@@ -123,8 +124,9 @@ data class WordSuggestionCandidate(
 data class ClipboardSuggestionCandidate(
     val clipboardItem: ClipboardItem,
     override val sourceProvider: SuggestionProvider?,
+    val context: Context,
 ) : SuggestionCandidate {
-    override val text: CharSequence = clipboardItem.stringRepresentation()
+    override val text: CharSequence = clipboardItem.displayText(context)
 
     override val secondaryText: CharSequence? = null
 
@@ -139,7 +141,7 @@ data class ClipboardSuggestionCandidate(
             NetworkUtils.isEmailAddress(text) -> Icons.Default.Email
             NetworkUtils.isUrl(text) -> Icons.Default.Link
             NetworkUtils.isPhoneNumber(text) -> Icons.Default.Phone
-            else -> Icons.Outlined.Assignment
+            else -> Icons.AutoMirrored.Outlined.Assignment
         }
         ItemType.IMAGE -> Icons.Default.Image
         ItemType.VIDEO -> Icons.Default.Videocam
@@ -157,6 +159,7 @@ data class ClipboardSuggestionCandidate(
  */
 data class EmojiSuggestionCandidate(
     val emoji: Emoji,
+    val showName: Boolean,
     override val confidence: Double = 1.0,
     override val isEligibleForAutoCommit: Boolean = false,
     override val isEligibleForUserRemoval: Boolean = false,
@@ -164,5 +167,5 @@ data class EmojiSuggestionCandidate(
     override val sourceProvider: SuggestionProvider? = null,
 ) : SuggestionCandidate {
     override val text = emoji.value
-    override val secondaryText = emoji.name
+    override val secondaryText = if (showName) emoji.name else null
 }

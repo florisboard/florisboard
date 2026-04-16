@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,18 +22,30 @@ import android.os.Build
 import android.os.Debug
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppPrefs
-import dev.patrickgold.florisboard.lib.android.systemService
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
+import dev.patrickgold.florisboard.subtypeManager
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import org.florisboard.lib.android.systemService
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Devtools {
-    fun generateDebugLog(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLog(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
+        return buildString {
+            append(generateDebugLogHeader(context, prefs))
+            if (includeLogcat) {
+                appendLine()
+                append(generateLogcatDump())
+            }
+        }
+    }
+
+    fun generateDebugLogHeader(context: Context, prefs: FlorisPreferenceModel? = null): String {
         return buildString {
             append(generateSystemInfoLog(context))
             appendLine()
@@ -42,9 +54,33 @@ object Devtools {
                 appendLine()
                 append(generateFeatureConfigLog(prefs))
             }
+            appendLine()
+            append(generateExtensionConfigLog(context))
+            appendLine()
+            append(generateActiveSubtypeConfigLog(context))
+        }
+    }
+
+    fun generateDebugLogForGithub(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
+        return buildString {
+            appendLine("<details>")
+            appendLine("<summary>Detailed info (Debug log header)</summary>")
+            appendLine()
+            appendLine("```")
+            append(generateDebugLogHeader(context, prefs))
+            appendLine()
+            appendLine("```")
+            appendLine("</details>")
             if (includeLogcat) {
                 appendLine()
+                appendLine("<details>")
+                appendLine("<summary>Debug log content</summary>")
+                appendLine()
+                appendLine("```")
                 append(generateLogcatDump())
+                appendLine()
+                appendLine("```")
+                appendLine("</details>")
             }
         }
     }
@@ -77,7 +113,7 @@ object Devtools {
         }
     }
 
-    fun generateFeatureConfigLog(prefs: AppPrefs, withTitle: Boolean = true): String {
+    fun generateFeatureConfigLog(prefs: FlorisPreferenceModel, withTitle: Boolean = true): String {
         return buildString {
             if (withTitle) appendLine("======= FEATURE CONFIG =======")
             append("Smartbar enabled            : ").appendLine(prefs.smartbar.enabled.get())
@@ -85,6 +121,32 @@ object Devtools {
             append("Inline autofill enabled     : ").appendLine(prefs.suggestion.api30InlineSuggestionsEnabled.get())
             append("Glide enabled               : ").appendLine(prefs.glide.enabled.get())
             append("Internal clipboard enabled  : ").appendLine(prefs.clipboard.useInternalClipboard.get())
+        }
+    }
+
+    fun generateExtensionConfigLog(context: Context, withTitle: Boolean = true): String {
+        return buildString {
+            if (withTitle) appendLine("======= EXTENSION CONFIG =======")
+            appendLine("Theme extensions    : ")
+            context.extensionManager().value.themes.value.forEach { append("    ").appendLine(it.meta.id) }
+            appendLine("Language Packs      : ")
+            context.extensionManager().value.languagePacks.value.forEach { append("    ").appendLine(it.meta.id) }
+        }
+    }
+
+    fun generateActiveSubtypeConfigLog(context: Context, withTitle: Boolean = true): String {
+        return buildString {
+            if (withTitle) appendLine("======= ACTIVE SUBTYPE CONFIG =======")
+            context.subtypeManager().value.let { subtypeManager ->
+                appendLine("Active Subtype      : ")
+                append("    ")
+                appendLine(subtypeManager.activeSubtype.toShortString())
+                appendLine("Installed Subtypes    : ")
+                subtypeManager.subtypes.forEach { subtype ->
+                    append("    ").appendLine(subtype.toShortString())
+                }
+            }
+
         }
     }
 

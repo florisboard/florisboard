@@ -11,7 +11,7 @@ files:
     languages_mapping:
       android_code:
         ar: "ar"
-        ast-ES: "ast"
+        ast: "ast-rES"
         bg: "bg"
         bs: "bs"
         ca: "ca"
@@ -34,7 +34,7 @@ files:
         kmr: "ku"
         mk: "mk"
         nl: "nl"
-        no: "no"
+        "no": "no"
         pl: "pl"
         pt-PT: "pt"
         ru: "ru"

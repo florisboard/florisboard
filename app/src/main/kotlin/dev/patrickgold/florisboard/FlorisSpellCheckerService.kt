@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import android.service.textservice.SpellCheckerService
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
@@ -33,7 +33,7 @@ import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.kotlin.map
 
 class FlorisSpellCheckerService : SpellCheckerService() {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val dictionaryManager get() = DictionaryManager.default()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()

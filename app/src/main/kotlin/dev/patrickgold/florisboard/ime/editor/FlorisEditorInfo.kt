@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val imeOptions = ImeOptions.wrap(base.imeOptions)
 
     val isRichInputEditor: Boolean
-        get() = inputAttributes.type != InputAttributes.Type.NULL || initialSelection.isValid
+        get() = inputAttributes.type != InputAttributes.Type.NULL
 
     val isRawInputEditor: Boolean
         get() = !isRichInputEditor

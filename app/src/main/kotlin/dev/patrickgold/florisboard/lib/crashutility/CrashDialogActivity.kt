@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,26 +26,27 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppPrefs
-import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.android.stringRes
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import org.florisboard.lib.android.stringRes
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, AppPrefs?> {
+private class SafePreferenceInstanceWrapper : ReadOnlyProperty<Any?, FlorisPreferenceModel?> {
     val cachedPreferenceModel = try {
-        florisPreferenceModel()
+        FlorisPreferenceStore
     } catch (_: Throwable) {
         null
     }
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): AppPrefs? {
+    override fun getValue(thisRef: Any?, property: KProperty<*>): FlorisPreferenceModel? {
         return cachedPreferenceModel?.getValue(thisRef, property)
     }
 }
@@ -66,6 +67,9 @@ class CrashDialogActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val layout = layoutInflater.inflate(R.layout.crash_dialog, null)
         setContentView(layout)
+
+        val toolbar = layout.findViewById<Toolbar>(R.id.crash_dialog_toolbar)
+        setActionBar(toolbar)
 
         stacktraces = CrashUtility.getUnhandledStacktraces(this)
         val versionName = buildString {

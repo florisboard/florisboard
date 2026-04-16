@@ -1,0 +1,41 @@
+[
+  [
+    { "$": "text_key", "code":  4326, "label": "ღ" },
+    { "$": "text_key", "code":  4335, "label": "ჯ" },
+    { "$": "text_key", "code":  4323, "label": "უ" },
+    { "$": "text_key", "code":  4313, "label": "კ" },
+    { "$": "text_key", "code":  4308, "label": "ე" },
+    { "$": "text_key", "code":  4316, "label": "ნ" },
+    { "$": "text_key", "code":  4306, "label": "გ" },
+    { "$": "text_key", "code":  4328, "label": "შ" },
+    { "$": "text_key", "code":  4332, "label": "წ" },
+    { "$": "text_key", "code":  4310, "label": "ზ" },
+    { "$": "text_key", "code":  4334, "label": "ხ" },
+    { "$": "text_key", "code": 4330, "label": "ც" }
+  ],
+  [
+    { "$": "text_key", "code": 4324, "label": "ფ" },
+    { "$": "text_key", "code": 4331, "label": "ძ" },
+    { "$": "text_key", "code": 4309, "label": "ვ" },
+    { "$": "text_key", "code": 4311, "label": "თ" },
+    { "$": "text_key", "code": 4304, "label": "ა" },
+    { "$": "text_key", "code": 4318, "label": "პ" },
+    { "$": "text_key", "code": 4320, "label": "რ" },
+    { "$": "text_key", "code": 4317, "label": "ო" },
+    { "$": "text_key", "code": 4314, "label": "ლ" },
+    { "$": "text_key", "code": 4307, "label": "დ" },
+    { "$": "text_key", "code": 4319, "label": "ჟ" }
+  ],
+  [
+    { "$": "text_key", "code": 4333, "label": "ჭ" },
+    { "$": "text_key", "code": 4329, "label": "ჩ" },
+    { "$": "text_key", "code": 4327, "label": "ყ" },
+    { "$": "text_key", "code": 4321, "label": "ს" },
+    { "$": "text_key", "code": 4315, "label": "მ" },
+    { "$": "text_key", "code": 4312, "label": "ი" },
+    { "$": "text_key", "code": 4322, "label": "ტ" },
+    { "$": "text_key", "code": 4325, "label": "ქ" },
+    { "$": "text_key", "code": 4305, "label": "ბ" },
+    { "$": "text_key", "code": 4336, "label": "ჰ" }
+  ]
+]

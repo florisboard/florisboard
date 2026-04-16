@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
+import org.florisboard.lib.compose.conditional
 
 private val SheetOutOfBoundsBgColorInactive = Color(0x00000000)
 private val SheetOutOfBoundsBgColorActive = Color(0x52000000)
@@ -47,22 +47,18 @@ fun BottomSheetHostUi(
     val bgColorOutOfBounds by animateColorAsState(
         if (isShowing) SheetOutOfBoundsBgColorActive else SheetOutOfBoundsBgColorInactive
     )
-
     Column(Modifier.background(bgColorOutOfBounds)) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .then(
-                    if (isShowing) {
-                        Modifier.pointerInput(Unit) {
-                            detectTapGestures {
-                                onHide()
-                            }
+                .conditional(isShowing) {
+                    pointerInput(Unit) {
+                        detectTapGestures {
+                            onHide()
                         }
-                    } else {
-                        Modifier
-                    }),
+                    }
+                },
         )
         AnimatedVisibility(
             visible = isShowing,
@@ -71,8 +67,4 @@ fun BottomSheetHostUi(
             content = { content() },
         )
     }
-}
-
-fun KeyboardState.isBottomSheetShowing(): Boolean {
-    return isActionsEditorVisible
 }

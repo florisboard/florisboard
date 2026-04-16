@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,15 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.compose.FlorisInfoCard
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -93,25 +93,25 @@ fun GesturesScreen() = FlorisScreen {
             ListPreference(
                 prefs.gestures.swipeUp,
                 title = stringRes(R.string.pref__gestures__swipe_up__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
                 enabledIf = { prefs.glide.enabled isEqualTo false },
             )
             ListPreference(
                 prefs.gestures.swipeDown,
                 title = stringRes(R.string.pref__gestures__swipe_down__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
                 enabledIf = { prefs.glide.enabled isEqualTo false },
             )
             ListPreference(
                 prefs.gestures.swipeLeft,
                 title = stringRes(R.string.pref__gestures__swipe_left__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
                 enabledIf = { prefs.glide.enabled isEqualTo false },
             )
             ListPreference(
                 prefs.gestures.swipeRight,
                 title = stringRes(R.string.pref__gestures__swipe_right__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
                 enabledIf = { prefs.glide.enabled isEqualTo false },
             )
         }
@@ -120,22 +120,22 @@ fun GesturesScreen() = FlorisScreen {
             ListPreference(
                 prefs.gestures.spaceBarSwipeUp,
                 title = stringRes(R.string.pref__gestures__space_bar_swipe_up__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
             )
             ListPreference(
                 prefs.gestures.spaceBarSwipeLeft,
                 title = stringRes(R.string.pref__gestures__space_bar_swipe_left__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
             )
             ListPreference(
                 prefs.gestures.spaceBarSwipeRight,
                 title = stringRes(R.string.pref__gestures__space_bar_swipe_right__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
             )
             ListPreference(
                 prefs.gestures.spaceBarLongPress,
                 title = stringRes(R.string.pref__gestures__space_bar_long_press__label),
-                entries = SwipeAction.generalListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "general"),
             )
         }
 
@@ -143,12 +143,12 @@ fun GesturesScreen() = FlorisScreen {
             ListPreference(
                 prefs.gestures.deleteKeySwipeLeft,
                 title = stringRes(R.string.pref__gestures__delete_key_swipe_left__label),
-                entries = SwipeAction.deleteSwipeListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "deleteSwipe"),
             )
             ListPreference(
                 prefs.gestures.deleteKeyLongPress,
                 title = stringRes(R.string.pref__gestures__delete_key_long_press__label),
-                entries = SwipeAction.deleteLongPressListEntries(),
+                entries = enumDisplayEntriesOf(SwipeAction::class, "deleteLongPress"),
             )
             DialogSliderPreference(
                 prefs.gestures.swipeVelocityThreshold,

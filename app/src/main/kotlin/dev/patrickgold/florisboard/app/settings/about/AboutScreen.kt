@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,12 +41,12 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.lib.android.launchUrl
-import dev.patrickgold.florisboard.lib.android.stringRes
-import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import org.florisboard.lib.android.stringRes
+import org.florisboard.lib.compose.FlorisCanvasIcon
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun AboutScreen() = FlorisScreen {

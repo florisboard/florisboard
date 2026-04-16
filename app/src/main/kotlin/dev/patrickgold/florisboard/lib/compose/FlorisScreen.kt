@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -36,11 +37,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import dev.patrickgold.florisboard.app.AppPrefs
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.compose.FlorisAppBar
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.autoMirrorForRtl
+import org.florisboard.lib.compose.florisVerticalScroll
 
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
@@ -51,7 +57,7 @@ fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
 
 typealias FlorisScreenActions = @Composable RowScope.() -> Unit
 typealias FlorisScreenBottomBar = @Composable () -> Unit
-typealias FlorisScreenContent = PreferenceUiContent<AppPrefs>
+typealias FlorisScreenContent = PreferenceUiContent<FlorisPreferenceModel>
 typealias FlorisScreenFab = @Composable () -> Unit
 typealias FlorisScreenNavigationIcon = @Composable () -> Unit
 
@@ -93,7 +99,7 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
         FlorisIconButton(
             onClick = { navController.popBackStack() },
             modifier = Modifier.autoMirrorForRtl(),
-            icon = Icons.Default.ArrowBack,
+            icon = Icons.AutoMirrored.Filled.ArrowBack,
         )
     }
 
@@ -122,12 +128,18 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
     fun Render() {
         val context = LocalContext.current
         val previewFieldController = LocalPreviewFieldController.current
+        val colorScheme = MaterialTheme.colorScheme
 
         SideEffect {
             val window = (context as Activity).window
             previewFieldController?.isVisible = previewFieldVisible
             window.statusBarColor = Color.Transparent.toArgb()
-            window.navigationBarColor = Color.Transparent.toArgb()
+            if (AndroidVersion.ATLEAST_API29_Q) {
+                window.navigationBarColor = Color.Transparent.toArgb()
+                window.isNavigationBarContrastEnforced = true
+            } else {
+                window.navigationBarColor = colorScheme.scrim.toArgb()
+            }
         }
 
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -144,7 +156,7 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
                 Modifier
             }
             PreferenceLayout(
-                florisPreferenceModel(),
+                FlorisPreferenceStore,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxWidth()

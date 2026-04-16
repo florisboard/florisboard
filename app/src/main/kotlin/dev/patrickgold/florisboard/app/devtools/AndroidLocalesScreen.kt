@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,14 +32,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.lib.android.showLongToast
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.io.subDir
-import dev.patrickgold.florisboard.lib.io.subFile
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import java.util.*
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.io.subDir
+import org.florisboard.lib.kotlin.io.subFile
 
 @Composable
 fun AndroidLocalesScreen() = FlorisScreen {
@@ -66,9 +66,9 @@ fun AndroidLocalesScreen() = FlorisScreen {
                             out.appendLine()
                         }
                     }
-                    context.showLongToast("Exported available system locales to \"${txtFile.path}\"")
+                    context.showLongToastSync("Exported available system locales to \"${txtFile.path}\"")
                 } catch (e: Exception) {
-                    context.showLongToast(
+                    context.showLongToastSync(
                         R.string.error__snackbar_message_template,
                         "error_message" to e.message.toString(),
                     )
@@ -79,7 +79,7 @@ fun AndroidLocalesScreen() = FlorisScreen {
     }
 
     content {
-        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
 
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
             LazyColumn {

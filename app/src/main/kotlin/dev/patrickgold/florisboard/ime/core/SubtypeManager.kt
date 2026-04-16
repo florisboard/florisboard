@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,18 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.kotlin.collectLatestIn
 
 val SubtypeJsonConfig = Json {
     encodeDefaults = true
@@ -39,23 +41,24 @@ val SubtypeJsonConfig = Json {
  * helper methods for the in-keyboard language switch process.
  */
 class SubtypeManager(context: Context) {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val keyboardManager by context.keyboardManager()
+    private val scope = CoroutineScope(Dispatchers.Default)
 
-    private val _subtypesFlow = MutableStateFlow(listOf<Subtype>())
-    val subtypesFlow = _subtypesFlow.asStateFlow()
+    val subtypesFlow: StateFlow<List<Subtype>>
+        field = MutableStateFlow(listOf())
     inline var subtypes
         get() = subtypesFlow.value
-        private set(v) { _subtypesFlow.value = v }
+        private set(v) { subtypesFlow.value = v }
 
-    private val _activeSubtypeFlow = MutableStateFlow(Subtype.DEFAULT)
-    val activeSubtypeFlow = _activeSubtypeFlow.asStateFlow()
+    val activeSubtypeFlow: StateFlow<Subtype>
+        field = MutableStateFlow(Subtype.DEFAULT)
     inline var activeSubtype
         get() = activeSubtypeFlow.value
-        private set(v) { _activeSubtypeFlow.value = v }
+        private set(v) { activeSubtypeFlow.value = v }
 
     init {
-        prefs.localization.subtypes.observeForever { listRaw ->
+        prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->
             flogDebug { listRaw }
             val list = if (listRaw.isNotBlank()) {
                 SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
@@ -67,7 +70,7 @@ class SubtypeManager(context: Context) {
         }
     }
 
-    private fun persistNewSubtypeList(list: List<Subtype>) {
+    private fun persistNewSubtypeList(list: List<Subtype>) = scope.launch {
         val listRaw = SubtypeJsonConfig.encodeToString(list)
         prefs.localization.subtypes.set(listRaw)
     }
@@ -79,7 +82,7 @@ class SubtypeManager(context: Context) {
      * @return The active subtype or null, if the subtype list is empty or no new active subtype
      *  could be determined.
      */
-    private fun evaluateActiveSubtype(list: List<Subtype>) {
+    private fun evaluateActiveSubtype(list: List<Subtype>) = scope.launch {
         val activeSubtypeId = prefs.localization.activeSubtypeId.get()
         val subtype = list.find { it.id == activeSubtypeId } ?: list.firstOrNull() ?: Subtype.DEFAULT
         if (subtype.id != activeSubtypeId) {
@@ -113,7 +116,7 @@ class SubtypeManager(context: Context) {
      * @return The currency set or a fallback.
      */
     fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.Fallback
+        return keyboardManager.resources.currencySets.value[subtypeToSearch.currencySet] ?: CurrencySet.Fallback
     }
 
     /**
@@ -136,7 +139,7 @@ class SubtypeManager(context: Context) {
      */
     fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
         val presets = keyboardManager.resources.subtypePresets.value
-        return presets?.find { it.locale == locale } ?: presets?.find { it.locale.language == locale.language }
+        return presets.find { it.locale == locale } ?: presets.find { it.locale.language == locale.language }
     }
 
     /**
@@ -185,7 +188,7 @@ class SubtypeManager(context: Context) {
     /**
      * Switch to the previous subtype in the subtype list if possible.
      */
-    fun switchToPrevSubtype() {
+    fun switchToPrevSubtype() = scope.launch {
         val subtypeList = subtypes
         val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
@@ -208,7 +211,7 @@ class SubtypeManager(context: Context) {
     /**
      * Switch to the next subtype in the subtype list if possible.
      */
-    fun switchToNextSubtype() {
+    fun switchToNextSubtype() = scope.launch {
         val subtypeList = subtypes
         val cachedActiveSubtype = activeSubtype
         var triggerNextSubtype = false
@@ -226,5 +229,12 @@ class SubtypeManager(context: Context) {
         }
         prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
         activeSubtype = newActiveSubtype
+    }
+
+    fun switchToSubtypeById(id: Long) = scope.launch {
+        if (subtypes.any { it.id == id }) {
+            activeSubtype = getSubtypeById(id)!!
+            prefs.localization.activeSubtypeId.set(id)
+        }
     }
 }

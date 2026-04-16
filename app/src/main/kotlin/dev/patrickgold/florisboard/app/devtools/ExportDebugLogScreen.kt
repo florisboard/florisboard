@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Patrick Goldinger
+ * Copyright (C) 2022-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,44 +34,63 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.lib.android.showShortToast
-import dev.patrickgold.florisboard.lib.compose.FlorisButton
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.florisHorizontalScroll
-import dev.patrickgold.florisboard.lib.compose.florisScrollbar
 import dev.patrickgold.florisboard.lib.devtools.Devtools
+import org.florisboard.lib.android.showShortToastSync
+import org.florisboard.lib.compose.FlorisButton
+import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
 
-// TODO: This screen is just a quick thrown-together thing and needs further enhancing in the UI and in localization
+// TODO: This screen is just a quick thrown-together thing and needs further enhancing in the UI
 @Composable
 fun ExportDebugLogScreen() = FlorisScreen {
-    title = "Debug log"
+    title = stringRes(R.string.devtools__debuglog__title)
     scrollable = false
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
+    val resources = LocalResources.current
     val clipboardManager by context.clipboardManager()
 
     var debugLog by remember { mutableStateOf<List<String>?>(null) }
+    var formattedDebugLog by remember { mutableStateOf<List<String>?>(null) }
 
     LaunchedEffect(Unit) {
         debugLog = Devtools.generateDebugLog(context, prefs, includeLogcat = true).lines()
+        formattedDebugLog = Devtools.generateDebugLogForGithub(context, prefs, includeLogcat = true).lines()
     }
 
     bottomBar {
-        FlorisButton(
-            onClick = {
-                clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
-                context.showShortToast("Copied debug log to clipboard")
-            },
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
-            text = "Export (copy to clipboard)",
-            enabled = debugLog != null,
-        )
+        ) {
+            FlorisButton(
+                onClick = {
+                    clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
+                    context.showShortToastSync(resources.getString(R.string.devtools__debuglog__copied_to_clipboard))
+                },
+                modifier = Modifier,
+                text = stringRes(R.string.devtools__debuglog__copy_log),
+                enabled = debugLog != null,
+            )
+            FlorisButton(
+                onClick = {
+                    clipboardManager.addNewPlaintext(formattedDebugLog!!.joinToString("\n"))
+                    context.showShortToastSync(resources.getString(R.string.devtools__debuglog__copied_to_clipboard))
+                },
+                text = stringRes(R.string.devtools__debuglog__copy_for_github),
+                enabled = debugLog != null,
+            )
+        }
     }
 
     content {
@@ -86,7 +107,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
                 val log = debugLog
                 if (log == null) {
                     item {
-                        Text("Loading...")
+                        Text(stringRes(R.string.devtools__debuglog__loading))
                     }
                 } else {
                     items(log) { logLine ->

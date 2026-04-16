@@ -34,9 +34,7 @@
         ]
       },
       "h": {
-        "relevant": [
-          { "$": "auto_text_key", "code":  7717, "label": "ḥ" }
-        ]
+        "main": { "$": "auto_text_key", "code":  7717, "label": "ḥ" }
       },
       "i": {
         "main": { "$": "auto_text_key", "code":  237, "label": "í" },
@@ -49,13 +47,11 @@
         ]
       },
       "l": {
-        "relevant": [
-          { "$": "auto_text_key", "code":  7735, "label": "ḷ" }
-        ]
+        "main": { "$": "auto_text_key", "code":  7735, "label": "ḷ" }
       },
       "n": {
+        "main": { "$": "auto_text_key", "code":  241, "label": "ñ" },
         "relevant": [
-          { "$": "auto_text_key", "code":  241, "label": "ñ" },
           { "$": "auto_text_key", "code":  324, "label": "ń" }
         ]
       },
@@ -73,9 +69,7 @@
         ]
       },
       "r": {
-        "relevant": [
-          { "$": "auto_text_key", "code":  691, "label": "ʳ" }
-        ]
+        "main": { "$": "auto_text_key", "code":  691, "label": "ʳ" }
       },
       "s": {
         "relevant": [
