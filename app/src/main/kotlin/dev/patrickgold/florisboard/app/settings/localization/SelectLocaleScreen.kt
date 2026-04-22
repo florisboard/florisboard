@@ -68,7 +68,9 @@ fun SelectLocaleScreen() = FlorisScreen {
     var searchTermValue by remember { mutableStateOf(TextFieldValue()) }
     val context = LocalContext.current
     val systemLocales =
-        FlorisLocale.extendedAvailableLocales(context).sortedBy { locale ->
+        FlorisLocale.extendedAvailableLocales(context).filter { locale ->
+            locale.language.lowercase() == "es"
+        }.sortedBy { locale ->
             when (displayLanguageNamesIn) {
                 DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
                 DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)

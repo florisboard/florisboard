@@ -105,11 +105,11 @@ fun HomeScreen() = FlorisScreen {
                 }
             }
         }*/
-        Preference(
+        /*Preference(
             icon = Icons.Default.Language,
             title = stringRes(R.string.settings__localization__title),
             onClick = { navController.navigate(Routes.Settings.Localization) },
-        )
+        )*/
         Preference(
             icon = Icons.Outlined.Palette,
             title = stringRes(R.string.settings__theme__title),

@@ -66,7 +66,7 @@ data class QuickActionArrangement(
 
     companion object {
         val Default = QuickActionArrangement(
-            stickyAction = QuickAction.InsertKey(TextKeyData.VOICE_INPUT),
+            stickyAction = null,
             dynamicActions = listOf(
                 QuickAction.InsertKey(TextKeyData.UNDO),
                 QuickAction.InsertKey(TextKeyData.REDO),

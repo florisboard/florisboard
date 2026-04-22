@@ -97,7 +97,7 @@ fun LocalizationScreen() = FlorisScreen {
     }
 
     content {
-        ListPreference(
+        /*ListPreference(
             prefs.localization.displayLanguageNamesIn,
             title = stringRes(R.string.settings__localization__display_language_names_in__label),
             entries = enumDisplayEntriesOf(DisplayLanguageNamesIn::class),
@@ -112,7 +112,7 @@ fun LocalizationScreen() = FlorisScreen {
             onClick = {
                 navController.navigate(Routes.Settings.LanguagePackManager(LanguagePackManagerScreenAction.MANAGE))
             },
-        )
+        )*/
         PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
             val subtypes by subtypeManager.subtypesFlow.collectAsState()
             if (subtypes.isEmpty()) {

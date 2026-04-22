@@ -62,6 +62,8 @@ import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
+import dev.patrickgold.florisboard.ime.smartbar.quickaction.keyData
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
@@ -282,9 +284,10 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
         val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
         val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
 
+        val sticky = actionArrangement.stickyAction
         val action = when {
-            actionArrangement.stickyAction != null -> {
-                actionArrangement.stickyAction
+            sticky != null -> {
+                sticky
             }
 
             smartbarLayout == SmartbarLayout.SUGGESTIONS_ACTIONS_SHARED && sharedActionsExpanded -> {
