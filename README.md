@@ -87,7 +87,7 @@ different ways to help out, please see the [contribution guidelines](CONTRIBUTIN
 
 ## Addons Store
 The official [Addons Store](https://beta.addons.florisboard.org) offers the possibility for the community to share and download FlorisBoard extensions.
-Instructions on how to publish addons can be found [here](https://github.com/florisboard/florisboard/wiki/How-to-publish-on-FlorisBoard-Addons).
+Instructions on how to publish addons can be found [here](https://docs.florisboard.org/publishing).
 
 Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store!
 
@@ -96,7 +96,7 @@ Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store
 > Later on we plan to add support for language packs and keyboard extensions.
 
 ## List of permissions FlorisBoard requests
-Please refer to this [page](https://github.com/florisboard/florisboard/wiki/List-of-permissions-FlorisBoard-requests)
+Please refer to this [page](https://docs.florisboard.org/permissions)
 to get more information on this topic.
 
 ## APK signing certificate hashes
