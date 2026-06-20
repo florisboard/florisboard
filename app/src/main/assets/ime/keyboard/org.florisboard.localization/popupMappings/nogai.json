@@ -143,8 +143,8 @@
         { "$": "auto_text_key", "label": "аь" },
         { "code": 1241, "label": "ә" },
         { "code": 97, "label": "a" },
-        { "code": 1749, "label": "ە" },
         { "code": 1575, "label": "ا" },
+        { "code": 1749, "label": "ە" },
         { "code": 68610, "label": "𐰂" },
         { "code": 68608, "label": "𐰀" }
       ]
