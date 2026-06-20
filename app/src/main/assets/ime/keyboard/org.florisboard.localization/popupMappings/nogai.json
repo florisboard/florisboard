@@ -126,6 +126,7 @@
         { "code": 305, "label": "ı" },
         { "code": 105, "label": "i" },
         { "code": 1609, "label": "ى" },
+        { "code": 1574, "label": "ئ" },
         { "code": 1575, "label": "ا" },
         { "code": 68611, "label": "𐰃" }
       ]
@@ -242,6 +243,7 @@
         { "code": 105, "label": "i" },
         { "code": 1610, "label": "ي" },
         { "code": 1609, "label": "ى" },
+        { "code": 1574, "label": "ئ" },
         { "code": 1575, "label": "ا" },
         { "code": 68611, "label": "𐰃" }
       ]
