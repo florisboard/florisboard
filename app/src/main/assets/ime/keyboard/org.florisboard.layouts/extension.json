@@ -320,6 +320,25 @@
         "modifier": "org.florisboard.layouts:neo2"
       },
       {
+        "id": "nogai_cyrillic",
+        "label": "Ногайша",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "nogai_arabic",
+        "label": "نوغاي",
+        "authors": [ "murza-enikeev" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:arabic"
+      },
+      {
+        "id": "nogai_runic",
+        "label": "Nogai (Runic)",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
         "id": "norwegian",
         "label": "Norwegian (QWERTY)",
         "authors": [ "patrickgold" ],
