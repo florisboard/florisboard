@@ -66,6 +66,9 @@
     { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
     { "id": "nb", "authors": [ "patrickgold" ] },
     { "id": "nogai", "authors": [ "murza-enikeev" ] },
+    { "id": "nogai-ar", "authors": [ "murza-enikeev" ] },
+    { "id": "nogai-lat", "authors": [ "murza-enikeev" ] },
+    { "id": "nogai-runr", "authors": [ "murza-enikeev" ] },
     { "id": "nn", "authors": [ "patrickgold" ] },
     { "id": "pl", "authors": [ "Mikołaj Biel" ] },
     { "id": "pt", "authors": [ "patrickgold" ] },
@@ -267,10 +270,19 @@
       }
     },
     {
+      "languageTag": "nog-Latin",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:russian_ruble",
+      "popupMapping": "org.florisboard.localization:nogai-lat",
+      "preferred": {
+        "characters": "org.florisboard.layouts:nogai_latin"
+      }
+    },
+    {
       "languageTag": "nog-Arab",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nogai",
+      "popupMapping": "org.florisboard.localization:nogai-ar",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_arabic"
       }
@@ -279,7 +291,7 @@
       "languageTag": "nog-Runr",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nogai",
+      "popupMapping": "org.florisboard.localization:nogai-runr",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_runic"
       }

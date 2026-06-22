@@ -326,6 +326,12 @@
         "direction": "ltr"
       },
       {
+        "id": "nogai_latin",
+        "label": "Noğayşa",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
         "id": "nogai_arabic",
         "label": "نوغاي",
         "authors": [ "murza-enikeev" ],
