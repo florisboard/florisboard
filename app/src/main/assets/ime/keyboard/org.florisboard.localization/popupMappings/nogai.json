@@ -123,8 +123,14 @@
     },
     "ы": {
       "relevant": [
-        { "code": 305, "label": "ı" },
-        { "code": 105, "label": "i" },
+        { "$": "case_selector",
+          "lower": { "code":  305, "label": "ı" },
+          "upper": { "code":   73, "label": "I" }
+        },
+        { "$": "case_selector",
+          "lower": { "code":  105, "label": "i" },
+          "upper": { "code":  304, "label": "İ" }
+        },
         { "code": 1609, "label": "ى" },
         { "code": 1574, "label": "ئ" },
         { "code": 1575, "label": "ا" },
@@ -239,8 +245,14 @@
     },
     "и": {
       "relevant": [
-        { "code": 1110, "label": "і" },
-        { "code": 105, "label": "i" },
+        { "$": "case_selector",
+          "lower": { "code":  1110, "label": "і" },
+          "upper": { "code":  1030, "label": "І" }
+        },
+        { "$": "case_selector",
+          "lower": { "code":  105, "label": "i" },
+          "upper": { "code":  304, "label": "İ" }
+        },
         { "code": 1609, "label": "ى" },
         { "code": 1610, "label": "ي" },
         { "code": 1574, "label": "ئ" },
