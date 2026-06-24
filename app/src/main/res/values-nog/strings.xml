@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">FlorisBoard</string>
+
+    <string name="key__phone_pause" comment="Телефон клавиатурасында Токтатув туьймесининъ белгиси">Токтатув</string>
+    <string name="key__phone_wait" comment="Телефон клавиатурасында Куьтуьв туьймесининъ белгиси">Куьтуьв</string>
+    <string name="key_popup__threedots_alt" comment="Туьйме ашылаятаган терезесиндеги уьш нокат белгисининъ маьнеси">Уьш нокат белгиси. Коьринсе, узагырак басканда баска аьриплерди кулланып болганын коьрсетеди.</string>
+
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Бир коллы режимди ябув туьймесининъ маьнеси">Бир коллы режимди ябув.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Клавиатурады солга йылдырув туьймесининъ маьнеси">Клавиатурады солга йылдырув.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Клавиатурады онъга йылдырув туьймесининъ маьнеси">Клавиатурады онъга йылдырув.</string>
+
+    <!-- Media strings -->
+    <string name="settings__media__title">Эмодзилер</string>
+    <string name="media__tab__emojis" comment="Медиа интерфейсиндеги эмодзи коьринисининъ маьнеси">Эмодзилер</string>
+    <string name="media__tab__emoticons" comment="Медиа интерфейсиндеги эмотиконлар коьринисининъ маьнеси">Эмотиконлар</string>
+    <string name="media__tab__kaomoji" comment="Медиа интерфейсиндеги каомодзи коьринисининъ маьнеси">Каомодзи</string>
+    <string name="prefs__media__emoji_preferred_skin_tone">Сайланаятаган эмодзи терисининъ туьси</string>
+    <string name="prefs__media__emoji_preferred_hair_style">Сайланаятаган эмодзи шаш стили</string>
+    <string name="prefs__media__emoji_history__title" comment="Сазлавлар куьбининъ аты">Эмодзи тарихи</string>
+    <string name="prefs__media__emoji_history_enabled" comment="Сазлав аты">Эмодзи тарихин косув</string>
+    <string name="prefs__media__emoji_history_enabled__summary" comment="Сазлав маьнеси">Тез табар уьшин сонъгы кулланылган эмодзилерди саклав</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Сазлав аты">Янъыртув стратегиясы (Беркитилген)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Сазлав аты">Янъыртув стратегиясы (Сонъгы кулланылган)</string>
+    <string name="prefs__media__emoji_history_max_size">Сакланаятаган элементлердинъ энъ коьп саны</string>
+    <string name="prefs__media__emoji_history_pinned_reset">Беркитилген эмодзилерди тазалав</string>
+    <string name="prefs__media__emoji_history_reset">Сонъгы кулланылган эмодзилерди тазалав</string>
+    <string name="prefs__media__emoji_suggestion__title" comment="Сазлавлар куьбининъ аты">Эмодзи усыныслары</string>
+    <string name="prefs__media__emoji_suggestion_enabled" comment="Сазлав аты">Эмодзи усынысларын косув</string>
+    <string name="prefs__media__emoji_suggestion_enabled__summary" comment="Сазлав маьнеси">Язып турганда эмодзилер усынув</string>
+    <string name="prefs__media__emoji_suggestion_type" comment="Сазлав аты">Коскыш кеби</string>
+    <string name="prefs__media__emoji_suggestion_update_history" comment="Сазлав аты">Эмодзи тарихин янъыртув</string>
+    <string name="prefs__media__emoji_suggestion_update_history__summary" comment="Сазлав маьнеси">Усынылган эмодзиди сайлав оны эмодзи тарихине косады</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name" comment="Сазлав аты">Эмодзи атын коьрсетуьв</string>
+    <string name="prefs__media__emoji_suggestion_candidate_show_name__summary" comment="Сазлав маьнеси">Эмодзи усыныслары эмодзи мен бирге атын да коьрсетеди</string>
+    <string name="prefs__media__emoji_suggestion_query_min_length" comment="Сазлав аты">Энъ кыска сорав узынлыгы</string>
+    <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Сазлав аты">Кандидатлардынъ энъ коьп саны</string>
+
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Эмодзи категориясынынъ аты">Юзлер эм сезимлер</string>
+    <string name="emoji__category__people_body" comment="Эмодзи категориясынынъ аты">Адамлар эм дене</string>
+    <string name="emoji__category__animals_nature" comment="Эмодзи категориясынынъ аты">Хайванлар эм табиат</string>
+    <string name="emoji__category__food_drink" comment="Эмодзи категориясынынъ аты">Ас эм ишимлик</string>
+    <string name="emoji__category__travel_places" comment="Эмодзи категориясынынъ аты">Ёлавшылык эм ерлер</string>
+    <string name="emoji__category__activities" comment="Эмодзи категориясынынъ аты">Аьрекетлер</string>
+    <string name="emoji__category__objects" comment="Эмодзи категориясынынъ аты">Затлар</string>
+    <string name="emoji__category__symbols" comment="Эмодзи категориясынынъ аты">Белгилер</string>
+    <string name="emoji__category__flags" comment="Эмодзи категориясынынъ аты">Байраклар</string>
+    <string name="emoji__history__empty_message" comment="Эмодзи тарихи бос болганда билдируьв">Сонъгы кулланылган эмодзи табылматы. Эмодзи язып баслаганда олар мунда оьзи коьринеек.</string>
+    <string name="emoji__history__phone_locked_message" comment="Телефон кулпыланган болганда коьрсетилетаган билдируьв">Эмодзи тарихине кируьв уьшин алды ман телефон кулпын ашынъыз.</string>
+    <string name="emoji__history__usage_tip" comment="Эмодзи тарихи аьрекетлери уьшин маслагат">Маслагат: Эмодзи тарихиндеги эмодзилерге узагырак басып оларды беркитип яде оьширип боласьыз!</string>
+    <string name="emoji__history__removal_success_message" comment="Кулланувшы эмодзиди оьширген заманда билдируьв">{emoji} эмодзи тарихиннен оьширилди</string>
+    <string name="emoji__history__pinned">Беркитилген</string>
+    <string name="emoji__history__recent">Сонъгы кулланылган</string>
+
+    <!-- Quick action strings -->
+    <string name="quick_action__arrow_up" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Оьрге ок</string>
+    <string name="quick_action__arrow_up__tooltip">Оьрге ок аьрекетин этуьв</string>
+    <string name="quick_action__arrow_down" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Тоьменге ок</string>
+    <string name="quick_action__arrow_down__tooltip">Тоьменге ок аьрекетин этуьв</string>
+    <string name="quick_action__arrow_left" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Солга ок</string>
+    <string name="quick_action__arrow_left__tooltip">Солга ок аьрекетин этуьв</string>
+    <string name="quick_action__arrow_right" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Онъга ок</string>
+    <string name="quick_action__arrow_right__tooltip">Онъга ок аьрекетин этуьв</string>
+    <string name="quick_action__ime_hide_ui" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Клавиатурады ясырув</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Буферди тазалав</string>
+    <string name="quick_action__clipboard_clear_primary_clip__tooltip">Буферди тазалав аьрекетин этуьв</string>
+    <string name="quick_action__clipboard_copy" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Коьшируьв</string>
+    <string name="quick_action__clipboard_copy__tooltip">Буферге коьшируьв аьрекетин этуьв</string>
+    <string name="quick_action__clipboard_cut" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Кесуьв</string>
+    <string name="quick_action__clipboard_cut__tooltip">Буферге кесуьв аьрекетин этуьв</string>
+    <string name="quick_action__clipboard_paste" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Ябыстырув</string>
+    <string name="quick_action__clipboard_paste__tooltip">Буферден ябыстырув</string>
+    <string name="quick_action__clipboard_select_all" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Баьрин сайлав</string>
+    <string name="quick_action__clipboard_select_all__tooltip">Баьрин сайлав аьрекетин этуьв</string>
+    <string name="quick_action__forward_delete" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Билдируьвди оьшируьв</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Буфер</string>
+    <string name="quick_action__ime_ui_mode_clipboard__tooltip">Буфер тарихин ашув</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Эмодзи</string>
+    <string name="quick_action__ime_ui_mode_media__tooltip">Эмодзи панелин ашув</string>
+    <string name="quick_action__language_switch" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Тилди авыстырув</string>
+    <string name="quick_action__language_switch__tooltip">Тилди авыстырув аьрекетин этуьв</string>
+    <string name="quick_action__settings" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Сазлавлар</string>
+    <string name="quick_action__settings__tooltip">Сазлавларды ашув</string>
+    <string name="quick_action__undo" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Кери алув</string>
+    <string name="quick_action__undo__tooltip">Сонъгы аьрекетти кери алув</string>
+    <string name="quick_action__redo" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Кайталав</string>
+    <string name="quick_action__redo__tooltip">Сонъгы аьрекетти кайталав</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Тагы</string>
+    <string name="quick_action__toggle_actions_overflow__tooltip">Косымша аьрекетлерди коьрсетуьв яде ясырув</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Ясырын Режим</string>
+    <string name="quick_action__toggle_incognito_mode__tooltip">Ясырын режимди косув/ябув</string>
+    <string name="quick_action__toggle_autocorrect" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Автотуьзетуьв</string>
+    <string name="quick_action__toggle_autocorrect__tooltip">Автотуьзетуьвди косув/ябув</string>
+    <string name="quick_action__voice_input" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Авазлы киргизуьв</string>
+    <string name="quick_action__voice_input__tooltip" comment="IME - Киргизуьв усылынынъ редакторы, 'клавиатура' деген маьнени билдиреди.">Авазлы киргизуьв косымшасын ашув</string>
+    <string name="quick_action__floating_window_mode" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Уьзеен</string>
+    <string name="quick_action__one_handed_mode" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Бир коллы режим</string>
+    <string name="quick_action__one_handed_mode__tooltip">Бир коллы режимди косув/ябув</string>
+    <string name="quick_action__resize_mode" comment="Тез аьрекет тизгилери уьшин орын аз экенин эспенъиз">Оьлшемин туьрлендируьв</string>
+    <string name="quick_action__drag_marker" comment="Бу аьрекет редакторда орын толтырувшы этип кулланылады эм тек debug режиминде коьринеди">Коьрсетеекти йылдырув</string>
+    <string name="quick_action__drag_marker__tooltip" comment="Бу аьрекет редакторда орын толтырувшы этип кулланылады эм тек debug режиминде коьринеди">Аьлиги суьйретуьв белгисининъ орны</string>
+    <string name="quick_action__noop" comment="Noop=аьрекет йок; бу аьрекет редакторда орын толтырувшы этип кулланылады">Йок</string>
+    <string name="quick_action__noop__tooltip" comment="Noop=аьрекет йок; бу аьрекет редакторда орын толтырувшы этип кулланылады">Аьрекет йок</string>
+    <string name="quick_actions_overflow__customize_actions_button">Аьрекетлер сырасын туьрлендируьв</string>
+    <string name="quick_actions_editor__header">Аьрекетлер сырасын сазлав</string>
+    <string name="quick_actions_editor__subheader_sticky_action">Беркитилген аьрекет ({n})</string>
+    <string name="quick_actions_editor__subheader_dynamic_actions">Динамикалык аьрекетлер ({n})</string>
+    <string name="quick_actions_editor__subheader_hidden_actions">Ясырын аьрекетлер ({n})</string>
+    <string name="select_subtype_panel__header">Астын тюрюн сайланъыз</string>
+
+    <!-- Incognito mode strings -->
+    <string name="incognito_mode__toast_after_enabled">Ясырын режим энди косылган\n\nБу режим ашык болганда {app_name} сиз язган соьзлерди эсинде сакламаяк</string>
+    <string name="incognito_mode__toast_after_disabled">Ясырын режим энди туьпбастан ябык</string>
+
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Сазлавлар аты">Сазлавлар</string>
+    <string name="settings__preview_keyboard" comment="Сазлавынъызды сынап карав уьшин маслагат">Сазлавынъызды сынап карав</string>
+    <string name="settings__help" comment="Сазлавлардагы ярдам туьймелерининъ белгиси">Ярдам</string>
+    <string name="settings__default" comment="Сазлавда туьпбас маьне салынганда кулланылаятаган тизги">Туьпбас (Стандарт)</string>
+    <string name="settings__system_default" comment="Сазлавда системадынъ туьпбас маьнеси салынганда кулланылаятаган тизги">Системадынъ туьпбасы</string>
+    <string name="settings__home__title" comment="Бас экран аты">{app_name} Косымшасына Хош Келдинъиз</string>
+    <string name="settings__home__ime_not_enabled" comment="FlorisBoard системада косылмаганда коьрсетилетаган билдируьв">FlorisBoard системада косылмаган, сонъын уьшин оны киргизуьв усылы этип кулланып болмасак. Бу маьселени шешуьв уьшин мунда басынъыз.</string>
+    <string name="settings__home__ime_not_selected" comment="FlorisBoard туьпбас клавиатура этип сайланмаганда коьрсетилетаган билдируьв">FlorisBoard туьпбас киргизуьв усылы этип сайланмаган. Бу маьселени шешуьв уьшин мунда басынъыз.</string>
+    <string name="settings__localization__title" comment="Тиллер эм орынласувлар экранынынъ аты">Тиллер эм Орынласувлар</string>
+    <string name="settings__localization__display_language_names_in__label" comment="Тил атларын коьрсетуьв сазлавынынъ белгиси">Тил атларын бу тилде коьрсетуьв</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Клавиатура белгилерин астын тилинде коьрсетуьв сазлавынынъ белгиси">Клавиатура белгилерин астын тилинде коьрсетуьв</string>
+    <string name="settings__localization__group_subtypes__label" comment="Астын тюрю куьбининъ белгиси">Астын тюрю (Подтип)</string>
+    <string name="settings__localization__subtype_add_title" comment="Янъы астын тюрю косканда диалог аты">Астын тюрю косув</string>
+    <string name="settings__localization__language_pack_title" comment="Салынган тил пакетлерин баскарув экранынынъ аты">Салынган тил пакетлерин баскарув</string>
+    <string name="settings__localization__language_pack_summary" comment="Янъы тил пакетин косув сазлавынынъ маьнеси">Экспериментал: Белгили тиллерге ярдам косатаган косымшаларды баскарув</string>
+    <string name="settings__localization__subtype_edit_title" comment="Астын тюрюн туьзеткенде диалог аты">Астын тюрюн туьзетуьв</string>
+    <string name="settings__localization__subtype_locale" comment="Диалогта бас тил тизимининъ белгиси">Бас тил</string>
+    <string name="settings__localization__subtype_popup_mapping" comment="Ашылаятаган терезе сазлавынынъ белгиси">Ашылаятаган терезе сазлавы</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Аьриплер орынласувы тизимининъ белгиси">Аьриплер орынласувы</string>
+    <string name="settings__localization__subtype_suggestion_provider" comment="Усыныс двигатели тизимининъ белгиси">Усыныс двигатели</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Бас белгилер орынласувы тизимининъ белгиси">Бас белгилер орынласувы</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Экинши белгилер орынласувы тизимининъ белгиси">Экинши белгилер орынласувы</string>
+    <string name="settings__localization__subtype_composer" comment="Яратувшы тизимининъ белгиси">Яратувшы</string>
+    <string name="settings__localization__subtype_currency_set" comment="Акша белгилери тизимининъ белгиси">Акша белгилери жыйыны</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Санлар орынласувы тизимининъ белгиси">Санлар орынласувы</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Кенъ санлар орынласувы тизимининъ белгиси">Санлар (кенъ) орынласувы</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Санлар сырасынынъ орынласувы тизимининъ белгиси">Санлар сырасынынъ орынласувы</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Телефон бас орынласувы тизимининъ белгиси">Телефон бас орынласувы</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Телефон экинши орынласувы тизимининъ белгиси">Телефон экинши орынласувы</string>
+    <string name="settings__localization__subtype_select_locale" comment="Астын тюрю уьшин тил сайлав аты">Тил сайланъыз</string>
+    <string name="settings__localization__subtype_search_locale_placeholder" comment="Тилди излев орынынынъ тексти">Тилди излев</string>
+    <string name="settings__localization__subtype_search_locale_not_found" comment="Тил табылмаганда коьрсетилетаган билдируьв">\"{search_term}\" уьшин келисетеген тил табылматы.</string>
+    <string name="settings__localization__subtype_select_placeholder" comment="Диалогта маьне сайлав орынынынъ тексти">&#8210; сайлав &#8210;</string>
+    <string name="settings__localization__subtype_summary" comment="Астын тюрю маьнеси">{characters_name} / {symbols_name} / {currency_set_name}</string>
+    <string name="settings__localization__suggested_subtype_presets" comment="Усынылган сазлавлар аты">Усынылган астын тюрю сазлавлары</string>
+    <string name="settings__localization__suggested_subtype_presets_none_found" comment="Усынылган сазлавлар табылмаганда билдируьв">Усынылган сазлавлар табылматы. Баьри сазлавларды коьруьв уьшин тоьмендеги туьймени кулланынъыз.</string>
+    <string name="settings__localization__subtype_presets" comment="Астын тюрю сазлавлары диалогынынъ аты">Астын тюрю сазлавлары</string>
+    <string name="settings__localization__subtype_presets_view_all" comment="Баьрин коьрсетуьв туьймеси">Баьрин коьрсетуьв</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Астын тюрю сазланмаганы акында билдируьв">Сиз бир астын тюрю де сазламаганга ушайсыз. Резерв этип Инглис/QWERTY кулланылаяк!</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Бу астын тюрю бурыннан барында билдируьв">Бу астын тюрю бурыннан бар!</string>
+    <string name="settings__localization__subtype_error_fields_no_value" comment="Бир орын сайланмаганда билдируьв">Кем дегенде бир орын уьшин маьне сайланмаган. Орын(лар) уьшин маьне сайланъыз.</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Орынласув салынмаганда билдируьв">{layout_id} (салынмаган)</string>
+    <string name="settings__localization__group_layouts__label" comment="Орынласувлар куьбининъ белгиси">Орынласувлар</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Оьшируьвди тастыклав диалогынынъ аты">Оьшируьвди Тастыклав</string>
+    <string name="settings__localization__subtype_delete_confirmation_warning" comment="Оьшируьвди тастыклав билдируьви">Бу астын тюрюн оьширмеге суьетаганынъызга сенимлимисиз?</string>
+    <string name="settings__theme__title" comment="Тема экранынынъ аты">Тема</string>
+    <string name="pref__theme__mode__label" comment="Тема режими сазлавынынъ белгиси">Тема режими</string>
+    <string name="pref__theme__sunrise_time__label" comment="Куьн шыгув уакыты сазлавынынъ белгиси">Куьн шыгув уакыты</string>
+    <string name="pref__theme__sunset_time__label" comment="Куьн батув уакыты сазлавынынъ белгиси">Куьн батув уакыты</string>
+    <string name="pref__theme__day" comment="Куьн темасы куьбининъ белгиси">Куьн темасы (Ярык)</string>
+    <string name="pref__theme__night" comment="Кеше темасы куьбининъ белгиси">Кеше темасы (Каранъы)</string>
+    <string name="pref__theme__theme_accent_color__label" comment="Бас туьси сазлавынынъ белгиси">Бас туьси (Material You темалары)</string>
+    <string name="settings__theme_manager__title_manage" comment="Салынган темаларды баскарув экранынынъ аты">Салынган темаларды баскарув</string>
+    <string name="pref__theme__source_assets" comment="Тема тамыры орынынынъ белгиси">FlorisBoard Косымшасынынъ Файллары</string>
+    <string name="pref__theme__source_internal" comment="Тема тамыры орынынынъ белгиси">Ишки Ес</string>
+    <string name="pref__theme__source_external" comment="Тема тамыры орынынынъ белгиси">Сырткы Тамыр</string>
+    <string name="settings__theme_manager__title_day" comment="Куьн темасын сайлав экранынынъ аты">Куьн темасын сайлав</string>
+    <string name="settings__theme_manager__title_night" comment="Кеше темасын сайлав экранынынъ аты">Кеше темасын сайлав</string>
+    <string name="settings__theme_editor__fine_tune__title">Кенъейтилген туьзетуьвши</string>
+    <string name="settings__theme_editor__fine_tune__level">Туьзетуьв дережеси</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Туьс коьриниси</string>
+    <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Диалоглардан сонъ клавиатурады коьрсетуьв</string>
+    <string name="settings__theme_editor__add_rule">Ереже косув</string>
+    <string name="settings__theme_editor__edit_rule">Ережеди туьзетуьв</string>
+    <string name="settings__theme_editor__no_rules_defined">Бу стиль битигинде ережелер йок. Оьзгертуьв уьшин ереже косынъыз.</string>
+    <string name="settings__theme_editor__rule_already_exists">Бу ереже бурыннан бар.</string>
+    <string name="settings__theme_editor__rule_name">Элемент / Белги</string>
+    <string name="settings__theme_editor__rule_codes">Нысан кодлары</string>
+    <string name="settings__theme_editor__rule_groups">Куьплер</string>
+    <string name="settings__theme_editor__rule_selectors">Селекторлар</string>
+    <string name="settings__theme_editor__add_code">Туьйме кодын косув</string>
+    <string name="settings__theme_editor__edit_code">Туьйме кодын туьзетуьв</string>
+    <string name="settings__theme_editor__no_codes_defined">Ережеди баьри нысан элементлерге кулланув.</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">Баьри муьмкин маьнелер косылды.</string>
+    <string name="settings__theme_editor__code_already_exists">Бу туьйме коды бурыннан бар.</string>
+    <string name="settings__theme_editor__code_invalid">Туьйме коды ярамсыз. Код аьриплер уьшин {c_min} эм {c_max} яде баска туьймелер уьшин {i_min} эм {i_max} арасында болаяк керек.</string>
+    <string name="settings__theme_editor__code_help_text">Келисетаган кодларды табув уьшин тоьмендеги силтемелерди кулланынъыз:</string>
+    <string name="settings__theme_editor__code_placeholder">Код</string>
+    <string name="settings__theme_editor__code_recording_help_text">Туьйме кодын билуьв уьшин орын касындагы туьймени кулланынъыз. Ол экинши туьйменинъ басылувын язып алады эм кодын сала этеди.</string>
+    <string name="settings__theme_editor__code_recording_started">Туьйме кодын язув басланды</string>
+    <string name="settings__theme_editor__code_recording_stopped">Туьйме кодын язув токтатылды</string>
+    <string name="settings__theme_editor__code_recording_requires_default_ime_floris">Туьймени язув уьшин {app_name} туьпбас клавиатура болаяк керек</string>
+    <string name="settings__theme_editor__code_recording_placeholder">Язылувда...</string>
+    <string name="settings__theme_editor__add_property">Аьдет косув</string>
+    <string name="settings__theme_editor__edit_property">Аьдетти туьзетуьв</string>
+    <string name="settings__theme_editor__property_already_exists">Бу аьдет аьлиги ережеде бурыннан бар.</string>
+    <string name="settings__theme_editor__property_name">Аьдет аты</string>
+    <string name="settings__theme_editor__property_value">Аьдет маьнеси</string>
+    <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Баьри муьйслерге кулланув</string>
+    <string name="settings__theme_editor__property_value_color_dialog_title">Туьс кодын туьзетуьв</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Файл сайлав</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Кенъейтуьвге алды ман файллар косылмаган. Файлларды импорт уьшин алдынгы беттеги {action_title} кулланынъыз.</string>
+    <string name="settings__theme_editor__component_meta_is_night_theme">Кеше темасы ма</string>
+    <string name="settings__theme_editor__component_meta_is_borderless">Шетсиз бе</string>
+    <string name="settings__theme_editor__component_meta_stylesheet_path">Стильлер файлынынъ йолы</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Стильлер файлынынъ хатасы</string>
+
+    <!-- Snygg strings -->
+    <string name="snygg__rule_annotation__defines">Туьрлендируьвшилер (Variables)</string>
+    <string name="snygg__rule_annotation__font">Аьрип (Шрифт)</string>
+    <string name="snygg__rule_annotation__font_name">Аьрип аты</string>
+
+    <string name="snygg__rule_element__root">Тамыр</string>
+    <string name="snygg__rule_element__window">Терезе</string>
+
+    <string name="snygg__rule_element__key">Туьйме</string>
+    <string name="snygg__rule_element__key_hint">Туьйме маслагаты</string>
+
+    <string name="snygg__rule_element__clipboard_header">Буфер басы</string>
+    <string name="snygg__rule_element__clipboard_header_button">Буфер басы туьймеси</string>
+    <string name="snygg__rule_element__clipboard_header_text">Буфер басы тексти</string>
+    <string name="snygg__rule_element__clipboard_subheader">Буфер астын басы</string>
+    <string name="snygg__rule_element__clipboard_content">Буфер иши</string>
+    <string name="snygg__rule_element__clipboard_item">Буфер элементи</string>
+    <string name="snygg__rule_element__clipboard_item_popup">Буфер элементининъ коьриниси</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Буфер тарихи ябылув билдируьви</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Буфер тарихин ябув туьймеси</string>
+
+    <string name="snygg__rule_element__extracted_landscape_input_layout">Кенъ орынласув киргизуьви</string>
+    <string name="snygg__rule_element__extracted_landscape_input_field">Кенъ орынласув киргизуьв орыны</string>
+    <string name="snygg__rule_element__extracted_landscape_input_action">Кенъ орынласув киргизуьв аьрекети</string>
+
+    <string name="snygg__rule_element__glide_trail">Тайдырув ызы</string>
+
+    <string name="snygg__rule_element__incognito_mode_indicator">Ясырын Режим белгиси</string>
+
+    <string name="snygg__rule_element__media">Медиа</string>
+
+    <string name="snygg__rule_element__one_handed_panel">Бир коллы панель</string>
+
+    <string name="snygg__rule_element__smartbar">Акыллы Зила</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_row">Акыллы Зила ортак аьрекетлер сырасы</string>
+    <string name="snygg__rule_element__smartbar_shared_actions_toggle">Акыллы Зила ортак аьрекетлерин косув/ябув</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_row">Акыллы Зила кенъейтилген аьрекетлер сырасы</string>
+    <string name="snygg__rule_element__smartbar_extended_actions_toggle">Акыллы Зила кенъейтилген аьрекетлерин косув/ябув</string>
+    <string name="snygg__rule_element__smartbar_action_key">Акыллы Зила аьрекет туьймеси</string>
+    <string name="snygg__rule_element__smartbar_action_tile">Акыллы Зила аьрекет тактасы</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow">Акыллы Зила аьрекетлерининъ сырасы</string>
+    <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Акыллы Зила аьрекетлерин сазлав туьймеси</string>
+    <string name="snygg__rule_element__smartbar_actions_editor">Акыллы Зила аьрекетлерининъ туьзетуьвшиси</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header">Акыллы Зила аьрекетлерининъ туьзетуьвшисининъ басы</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_subheader">Акыллы Зила аьрекетлерининъ туьзетуьвшисининъ астын басы</string>
+    <string name="snygg__rule_element__smartbar_candidates_row">Акыллы Зила кандидатлар сырасы</string>
+    <string name="snygg__rule_element__smartbar_candidate_word">Акыллы Зила соьз кандидаты</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip">Акыллы Зила буфер кандидаты</string>
+    <string name="snygg__rule_element__smartbar_candidate_spacer">Акыллы Зила кандидатларынынъ орыны</string>
+
+    <string name="snygg__rule_selector__pressed">Басылган</string>
+    <string name="snygg__rule_selector__focus">Фокуста</string>
+    <string name="snygg__rule_selector__hover">Уьстинде</string>
+    <string name="snygg__rule_selector__disabled">Ябык</string>
+
+    <string name="snygg__property_name__background">Арткы</string>
+    <string name="snygg__property_name__foreground">Алдынгы</string>
+    <string name="snygg__property_name__background_image">Арткы суьврет</string>
+    <string name="snygg__property_name__border_color">Шет туьси</string>
+    <string name="snygg__property_name__border_style">Шет стили</string>
+    <string name="snygg__property_name__border_width">Шет кенълиги</string>
+    <string name="snygg__property_name__font_family">Аьрип</string>
+    <string name="snygg__property_name__font_size">Аьрип оьлшеми</string>
+    <string name="snygg__property_name__font_style">Аьрип стили</string>
+    <string name="snygg__property_name__font_weight">Аьрип авырлыгы</string>
+    <string name="snygg__property_name__letter_spacing">Аьриплер арасы</string>
+    <string name="snygg__property_name__line_height">Сыра бийиклиги</string>
+    <string name="snygg__property_name__shadow_elevation">Коьлентке бийиклиги</string>
+    <string name="snygg__property_name__shape">Кеби</string>
+    <string name="snygg__property_name__var_primary">Бас туьси</string>
+    <string name="snygg__property_name__var_primary_variant">Бас туьси (Нусха)</string>
+    <string name="snygg__property_name__var_secondary">Экинши туьс</string>
+    <string name="snygg__property_name__var_secondary_variant">Экинши туьс (Нусха)</string>
+    <string name="snygg__property_name__var_background">Ортак арткы</string>
+    <string name="snygg__property_name__var_surface">Ортак бети</string>
+    <string name="snygg__property_name__var_surface_variant">Ортак бети (Нусха)</string>
+    <string name="snygg__property_name__var_on_primary">Бас уьстиндеги туьс</string>
+    <string name="snygg__property_name__var_on_secondary">Экинши уьстиндеги туьс</string>
+    <string name="snygg__property_name__var_on_background">Арткы уьстиндеги туьс</string>
+    <string name="snygg__property_name__var_on_surface">Бет уьстиндеги туьс</string>
+    <string name="snygg__property_name__var_on_surface_variant">Бет уьстиндеги туьс (Нусха)</string>
+    <string name="snygg__property_name__var_shape">Ортак кеби</string>
+    <string name="snygg__property_name__var_shape_variant">Ортак кеби (Нусха)</string>
+
+    <string name="snygg__property_value__explicit_inherit">Мирас</string>
+    <string name="snygg__property_value__defined_var">Туьрлендируьвшини кулланув</string>
+    <string name="snygg__property_value__yes">Ава</string>
+    <string name="snygg__property_value__no">Ёк</string>
+    <string name="snygg__property_value__solid_color">Туьтас туьс</string>
+    <string name="snygg__property_value__material_you_light_color">Material You туьси (Ярык)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You туьси (Каранъы)</string>
+    <string name="snygg__property_value__font_style">Аьрип стили</string>
+    <string name="snygg__property_value__rectangle_shape">Тоьртмуьйис</string>
+    <string name="snygg__property_value__circle_shape">Тёгерек</string>
+    <string name="snygg__property_value__cut_corner_shape_dp">Кесилген муьйис кеби (dp)</string>
+    <string name="snygg__property_value__cut_corner_shape_percent">Кесилген муьйис кеби (%)</string>
+    <string name="snygg__property_value__rounded_corner_shape_dp">Доьнгелек муьйис кеби (dp)</string>
+    <string name="snygg__property_value__rounded_corner_shape_percent">Доьнгелек муьйис кеби (%)</string>
+    <string name="snygg__property_value__dp_size">Оьлшем (dp)</string>
+    <string name="snygg__property_value__sp_size">Оьлшем (sp)</string>
+    <string name="snygg__property_value__percentage_size">Оьлшем (%)</string>
+
+    <string name="settings__input_feedback__title" comment="Киргизуьвдинъ аваз сазлавлары экраны">Аваз эм дирил</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Сазлавлар куьбининъ аты">Авазлы билдируьв / Авазлар</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Сазлав аты">Авазлы билдируьвди косув</string>
+    <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Сазлав маьнеси">Система сазлавларына каратпай киргизуьв уьшин аваз шертпев</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Сазлав аты">Киргизуьв авазынынъ дережеси</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Сазлав аты">Туьйме авазлары</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Сазлав аты">Туьймени узагырак баскандагы аваз</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Сазлав аты">Туьймени кайталап баскандагы аваз</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Сазлав аты">Тайдырув авазы</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Сазлав аты">Тайдырув аьрекетининъ авазы</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Сазлавлар куьбининъ аты">Дирилли билдируьв / Дирил</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Сазлав аты">Дирилли билдируьвди косув</string>
+    <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Сазлав маьнеси">Система сазлавларына каратпай киргизуьв уьшин дирилдетпев</string>
+    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Сазлав аты">Дирил режими</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Сазлав аты">Дирил узынлыгы</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Сазлав аты">Дирил куьши</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Сазлав маьнеси">Бу функция уьшин дирил моторы керек, ама ол бу телефонда йокка ушайды</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Сазлав маьнеси">Бу функция дирил куьшин туьзетуьв уьшин аппаратлы ярдамды талап этеди, ол бу телефонда йок</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Сазлав аты">Туьйме басканда дирилдетуьв</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Сазлав аты">Туьймени узагырак басканда дирилдетуьв</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Сазлав аты">Туьймени эки кере шерткилегенде дирилдетуьв</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Сазлав аты">Тайдырув аьрекетининъ дирили</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Сазлав аты">Тайдырып коьшкенде дирилдетуьв</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Сазлав маьнеси">Мысалга, туьймелер, эмодзи коьринислери</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Сазлав маьнеси">Мысалга, ашылаятаган терезе</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Сазлав маьнеси">Мысалга, Оьшируьв туьймеси</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Сазлав маьнеси">этилмеген</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Сазлав маьнеси">Мысалга, коьрсетеекти йылдырув аьрекети</string>
+
+    <string name="settings__keyboard__title" comment="Клавиатура сазлавлары экраны">Клавиатура</string>
+    <string name="pref__keyboard__number_row__label" comment="Сазлав аты">Санлар сырасы</string>
+    <string name="pref__keyboard__number_row__summary" comment="Сазлав маьнеси">Клавиатурадынъ уьстинде санлар сырасын коьрсетуьв</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Сазлав аты">Маслагатланган санлар сырасы</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Сазлав аты">Маслагатланган белгилер</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Сазлав аты">Косымша туьймени коьрсетуьв</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Сазлав маьнеси">Бос орын туьймесининъ касында туьзетуьвли косымша туьймени коьрсетеди</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Сазлав аты">Косымша туьйме аьрекети</string>
+    <string name="pref__keyboard__space_bar_mode__label" comment="Сазлав аты">Бос орын туьймесининъ язувы</string>
+    <string name="pref__keyboard__capitalization_behavior__label" comment="Сазлав аты">Уьйкен аьрип пен язув аьдети</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Сазлав аты">Аьрип оьлшеми</string>
+    <string name="pref__keyboard__group_layout__label" comment="Сазлавлар куьбининъ аты">Орынласув</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Сазлав маьнеси">Кенъ толык экранлы киргизуьв</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Сазлавлар куьбининъ аты">Туьйме басув</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Сазлав аты">Ашылаятаган терезе коьриниси</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Сазлав маьнеси">Туьйме басканда ашылаятаган терезеди коьрсетуьв</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Сазлав аты">Ашылаятаган терезедеги белгилер</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Сазлав маьнеси">Туьпбас орынласувдынъ белгилер терезесине косымша белгилер косады</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Сазлав аты">Узагырак басувдынъ кешигуьви</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Сазлав аты">Бос орын туьймеси аьриплерге кайтарады</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Сазлав маьнеси">Бос орын туьймеси белгилер яде санлар коьринисиннен аьриплер коьринисине кайтарады</string>
+    <string name="pref__keyboard__incognito_indicator__label" comment="Сазлав аты">Ясырын Режим белгиси</string>
+
+    <!-- Smartbar strings -->
+    <string name="settings__smartbar__title" comment="Акыллы Зила экранынынъ аты">Акыллы Зила</string>
+    <string name="pref__smartbar__enabled__label" comment="Сазлав аты">Акыллы Зиланы Косув</string>
+    <string name="pref__smartbar__enabled__summary" comment="Сазлав маьнеси">Клавиатурадынъ уьстинде коьринеек</string>
+    <string name="pref__smartbar__layout__label" comment="Сазлав аты">Орынласув</string>
+    <string name="pref__smartbar__group_layout_specific__label" comment="Сазлавлар куьбининъ аты">Курылымга хас сазлавлар</string>
+    <string name="pref__smartbar__flip_toggles__label" comment="Сазлав аты">Тез кируьв тактасынынъ коскышларын авыстырув</string>
+    <string name="pref__smartbar__flip_toggles__summary" comment="Сазлав маьнеси">Тез кируьв такталарынынъ орынын алмастырады</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Сазлав аты">Автомат кепте ашув/ябув</string>
+    <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Сазлав маьнеси">Аьлиги аьлине коьре ортак аьрекетлер сырасын автомат кепте ашады/ябады</string>
+    <string name="pref__smartbar__extended_actions_placement__label" comment="Сазлав аты">Аьрекетлер сырасынынъ орынласувы</string>
+
+    <!-- Typing strings -->
+    <string name="settings__typing__title" comment="Язув экранынынъ аты">Язув</string>
+    <string name="pref__suggestion__title" comment="Сазлавлар куьбининъ аты">Усыныслар</string>
+    <string name="pref__suggestion__enabled__label" comment="Сазлав аты">Усынысларды коьрсетуьв</string>
+    <string name="pref__suggestion__enabled__summary" comment="Сазлав маьнеси">Язып турганда усыныслар беремен</string>
+    <string name="pref__suggestion__display_mode__label" comment="Сазлав аты">Усынысларды коьрсетуьв режими</string>
+    <string name="pref__suggestion__block_possibly_offensive__label" comment="Сазлав аты">Яман соьзлерди тыюв</string>
+    <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Сазлав маьнеси">Автотолтырув хызметлериннен ишки усынысларды коьрсетуьв</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Язувдагы Ясырын Режим сазлавынынъ белгиси">Ясырын Режим</string>
+    <string name="pref__correction__title" comment="Сазлавлар куьбининъ аты">Туьзетуьвлер</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Сазлав аты">Автомат уьйкен аьрип</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Сазлав маьнеси">Грамматикага коре соьзлерди уьйкен аьрип пен язув</string>
+    <string name="pref__correction__auto_space_punctuation__label" comment="Сазлав аты">Нокаттан сонъ автомат бос орын</string>
+    <string name="pref__correction__auto_space_punctuation__summary" comment="Сазлав маьнеси">Нокаттан сонъ автомат кепте бос орын коюв</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Сазлав аты">Caps Lock аьлин эсте саклав</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Сазлав маьнеси">Caps Lock аьли баска матн орынына коьшкенде де сакланады</string>
+    <string name="pref__correction__double_space_period__label" comment="Сазлав аты">Кос бос орынды нокатка авыстырув</string>
+    <string name="pref__correction__double_space_period__summary" comment="Сазлав маьнеси">Бос орын туьймесин эки кере басув нокат эм бос орын косады</string>
+    <string name="pref__spelling__title" comment="Сазлавлар куьбининъ аты">Имля (Емле)</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Системада ябык. Матн орынларында хата соьзлер уьшин кызыл сызыклар коьрсетилмейди. Туьрлендируьв уьшин басынъыз.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Ишки имля тексеруьв хызмети салынмаган. Туьрлендируьв уьшин басынъыз.</string>
+    <string name="pref__spelling__language_mode__label" comment="Тил режими сазлавынынъ белгиси">Тиллер</string>
+    <string name="pref__spelling__use_contacts__label" comment="Контактларды кулланув сазлавынынъ белгиси">Контактлардагы атларды кулланув</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Контактларды кулланув сазлавынынъ маьнеси">Контактлар тизиминнен атларды излев</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Кулланувшы соьзлигин кулланув сазлавынынъ белгиси">Кулланувшы соьзликлерин кулланув</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Кулланувшы соьзлигин кулланув сазлавынынъ маьнеси">Кулланувшы соьзликлериннен язывларды излев</string>
+
+    <string name="settings__dictionary__title" comment="Кулланувшы соьзликлери экранынынъ аты">Кулланувшы соьзликлери</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Сазлав аты">Система соьзлигин косув</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Сазлав маьнеси">Системадынъ кулланувшы соьзлигинде сакланган соьзлерди усынув</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Сазлав аты">Система кулланувшы соьзлигин баскарув</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Сазлав маьнеси">Системадынъ кулланувшы соьзлигине соьзлер косув, коьруьв эм туьзетуьв</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Сазлав аты">Ишки соьзликти косув</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Сазлав маьнеси">Ишки кулланувшы соьзлигинде сакланган соьзлерди усынув</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Сазлав аты">Ишки кулланувшы соьзлигин баскарув</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Сазлав маьнеси">Ишки кулланувшы соьзлигине соьзлер косув, коьруьв эм туьзетуьв</string>
+    <string name="settings__udm__title_floris" comment="Ишки соьзлик менеджерининъ аты">Ишки кулланувшы соьзлиги</string>
+    <string name="settings__udm__title_system" comment="Система соьзлик менеджерининъ аты">Система кулланувшы соьзлиги</string>
+    <string name="settings__udm__no_words_in_dictionary" comment="Соьзликте соьз болмаганда коьрсетилетаган тизги">Бу соьзликте соьзлер йок.</string>
+    <string name="settings__udm__word_summary_freq" comment="Соьз язывынынъ маьнеси.">Йийилик: {freq}</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Соьз язывынынъ маьнеси.">Йийилик: {freq} | Кыскартув: {shortcut}</string>
+    <string name="settings__udm__all_languages" comment="Тиллер тизиминдеги 'Баьри тиллер уьшин' язывынынъ белгиси">Баьри тиллер уьшин</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Система менеджерин ашув опциясынынъ белгиси">Система менеджери интерфейсин ашув</string>
+    <string name="settings__udm__dictionary_import_success" comment="Соьзлик онълы импортланганын билдируьв">Кулланувшы соьзлиги онълы импортланды!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Соьзлик онълы экспортланганын билдируьв">Кулланувшы соьзлиги онълы экспортланды!</string>
+    <string name="settings__udm__dialog__title_add" comment="Кулланувшы соьзлигине соьз косканда диалог аты">Соьз косув</string>
+    <string name="settings__udm__dialog__title_edit" comment="Кулланувшы соьзлигинде соьзди туьзеткенде диалог аты">Соьзди туьзетуьв</string>
+    <string name="settings__udm__dialog__word_label" comment="Кулланувшы соьзлигиндеги соьздинъ белгиси">Соьз</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Кулланувшы соьзлигиндеги соьз хатасынынъ белгиси">Соьзди киргизинъиз</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Кулланувшы соьзлигиндеги соьз хатасынынъ белгиси">{regex} келисетаган соьзди киргизинъиз</string>
+    <string name="settings__udm__dialog__freq_label" comment="Кулланувшы соьзлигиндеги йийилик белгиси.">Йийилик ({f_min} эм {f_max} арасында)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Кулланувшы соьзлигиндеги йийилик хатасынынъ белгиси">Йийилик маьнесин киргизинъиз</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Кулланувшы соьзлигиндеги йийилик хатасынынъ белгиси">Коьрсетилген шеклевлерден ярамлы санды киргизинъиз</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Кулланувшы соьзлигиндеги кыскартув белгиси">Кыскартув (миндетли тувыл)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Кулланувшы соьзлигиндеги кыскартув хатасынынъ белгиси">{regex} келисетаган кыскартув киргизинъиз</string>
+    <string name="settings__udm__dialog__locale_label" comment="Кулланувшы соьзлигиндеги тил коды белгиси">Тил коды (миндетли тувыл)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Кулланувшы соьзлигиндеги тил коды хатасынынъ белгиси">Бу тил коды синтаксиске келисмейди. Код уьлке (мысалга, en), уьлке эм аймак (мысалга, en_US) яде уьлке, аймак эм язув (мысалга, en_US-script) болаяк керек.</string>
+
+    <string name="settings__gestures__title" comment="Аьрекетлер экранынынъ аты">Аьрекетлер эм Тайдырып Язув</string>
+    <string name="pref__glide__title" comment="Сазлавлар куьбининъ аты">Тайдырып язув (Glide Typing)</string>
+    <string name="pref__glide__enabled__label" comment="Сазлав аты">Тайдырып язувды косув</string>
+    <string name="pref__glide__enabled__summary" comment="Сазлав маьнеси">Аьриплер уьстимен тайдырув аркалы соьз киргизуьв</string>
+    <string name="pref__glide__show_trail__label" comment="Сазлав аты">Тайдырув ызын коьрсетуьв</string>
+    <string name="pref__glide__show_trail__summary" comment="Сазлав маьнеси">Аьр соьзден сонъ йогалып турады</string>
+    <string name="pref__glide_trail_fade_duration">Ыздынъ йогалув уакыты</string>
+    <string name="pref__glide_preview_refresh_delay">Алды ман каравдынъ кешигуьви</string>
+    <string name="pref__glide__show_preview">Тайдырув вакытында алды ман каравды коьрсетуьв</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__label">Соьзди аьрдайым оьшируьв</string>
+    <string name="pref__glide__immediate_backspace_deletes_word__summary">Оьшируьв туьймеси тайдырып язганнан сонъ савлай соьзди оьширеди</string>
+    <string name="pref__gestures__general_title" comment="Сазлавлар куьбининъ аты">Умумий аьрекетлер</string>
+    <string name="pref__gestures__space_bar_title" comment="Сазлавлар куьбининъ аты">Бос орын туьймесининъ аьрекетлери</string>
+    <string name="pref__gestures__other_title" comment="Сазлавлар куьбининъ аты">Баска аьрекетлер / Аьрекетлер шеги</string>
+    <string name="pref__gestures__swipe_up__label" comment="Сазлав аты">Оьрге тайдырув</string>
+    <string name="pref__gestures__swipe_down__label" comment="Сазлав аты">Тоьменге тайдырув</string>
+    <string name="pref__gestures__swipe_left__label" comment="Сазлав аты">Солга тайдырув</string>
+    <string name="pref__gestures__swipe_right__label" comment="Сазлав аты">Онъга тайдырув</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Сазлав аты">Бос орын туьймесинде оьрге тайдырув</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Сазлав аты">Бос орын туьймесинде солга тайдырув</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Сазлав аты">Бос орын туьймесинде онъга тайдырув</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Сазлав аты">Бос орын туьймесин узагырак басув</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Сазлав аты">Оьшируьв туьймесинде солга тайдырув</string>
+    <string name="pref__gestures__delete_key_long_press__label" comment="Сазлав аты">Оьшируьв туьймесин узагырак баскандагы аьрекет</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Сазлав аты">Тайдырув тезлигининъ шеги</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Сазлав аты">Тайдырув узатылыгынынъ шеги</string>
+
+    <string name="settings__other__title" comment="Баска сазлавлар аты">Баска</string>
+    <string name="pref__other__settings_theme__label" comment="Баскалардагы сазлавлар темасынынъ белгиси">Косымша темасы</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Муьмкин маьнеси">Система туьпбасы (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Муьмкин маьнеси">Ярык</string>
+    <string name="pref__other__settings_theme__dark" comment="Муьмкин маьнеси">Каранъы</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Муьмкин маьнеси">AMOLED Каранъы</string>
+    <string name="pref__other__settings_accent_color__label" comment="Бас туьси сазлавынынъ белгиси">Сазлавлардынъ бас туьслери</string>
+    <string name="pref__other__settings_language__label" comment="Косымша тили сазлавынынъ белгиси">Косымша тили</string>
+    <string name="pref__other__show_app_icon__label" comment="Сазлав белгиси">Косымша белгисин коьрсетуьв</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Android 10+ уьшин сазлав маьнеси">Система шеклевлери себепли Android 10+ системасында аьрдайым косувлы</string>
+
+    <!-- About UI strings -->
+    <string name="about__title" comment="Косымша акында экранынынъ аты">Косымша акында</string>
+    <string name="about__app_icon_content_description" comment="Косымша белгисининъ маьнеси">FlorisBoard косымшасынынъ белгиси</string>
+    <string name="about__view_licenses" comment="Лицензияларды коьруьв туьймесининъ белгиси">Ашык тамырлы код лицензиялары</string>
+    <string name="about__view_privacy_policy" comment="Ясырынлык политикасын коьруьв туьймесининъ белгиси">Ясырынлык политикасы</string>
+    <string name="about__view_source_code" comment="Тамырлы кодты коьруьв туьймесининъ белгиси">Тамырлы код</string>
+    <string name="about__license__title" comment="Лицензиялар диалогынынъ аты">Ашык тамырлы код лицензиялары</string>
+    <string name="about__version__title" comment="Сазлав аты">Версия</string>
+    <string name="about__version_copied__title" comment="Версия коьширилгенде билдируьв">Версия алмасув буферине коьширилди</string>
+    <string name="about__version_copied__error" comment="Версия коьширилгенде хата билдируьви">Хата шыкты: {error_message}</string>
+    <string name="about__changelog__title" comment="Сазлав аты">Туьрленуьвлер тарихи</string>
+    <string name="about__changelog__summary" comment="Сазлав маьнеси">Не янъылык бар</string>
+    <string name="about__repository__title" comment="Сазлав аты">Репозиторий (GitHub)</string>
+    <string name="about__repository__summary" comment="Сазлав маьнеси">Тамырлы код, маслахатласувлар, маьселелер эм билги</string>
+    <string name="about__privacy_policy__title" comment="Сазлав аты">Ясырынлык политикасы</string>
+    <string name="about__privacy_policy__summary" comment="Сазлав маьнеси">Бу проект уьшин ясырынлык политикасы</string>
+    <string name="about__project_license__title" comment="Сазлав аты">Проект лицензиясы</string>
+    <string name="about__project_license__summary" comment="Сазлав маьнеси">FlorisBoard {license_name} бойынша лицензияланган</string>
+    <string name="about__project_license__error_license_text_failed" comment="Лицензия тексти юкленгенде хата">Хата: Лицензия тексти юкленмеди.\n-&gt; Себеби: {error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Менеджер бос болганда хата тексти">Assetmanager силтемеси бос</string>
+    <string name="about__third_party_licenses__title" comment="Сазлав аты">Уьшинши як лицензиялары</string>
+    <string name="about__third_party_licenses__summary" comment="Сазлав маьнеси">FlorisBoard кулланатаган китапханалардынъ лицензиялары</string>
+
+    <!-- Setup UI strings -->
+    <string name="setup__title" comment="Орнатув экранынынъ аты">Хош келдинъиз!</string>
+    <string name="setup__intro_message" comment="Янъы кулланувшыларды карсы алув билдируьви">{app_name} косымшасын сайлаганынъыз уьшин савболынъыз! Бу тез сазлав сизге телефонынъызда {app_name} кулланып басламага ярдам этеек.</string>
+    <string name="setup__footer__privacy_policy" comment="Силтеме уьшин ясырынлык политикасы белгиси">Ясырынлык политикасы</string>
+    <string name="setup__footer__repository" comment="Силтеме уьшин тамырлы код белгиси">Тамырлы код</string>
+    <string name="setup__enable_ime__title">{app_name} косув</string>
+    <string name="setup__enable_ime__description">Android системасы салынган баьри клавиатураларды кулланмас алдыннан косувды талап этеди. Система сазлавларындагы <i>Тил эм киргизуьв</i> боьлигин ашып {app_name} косымшасын косынъыз.</string>
+    <string name="setup__enable_ime__open_settings_btn">Система сазлавларын ашув</string>
+    <string name="setup__select_ime__title">{app_name} сайлав</string>
+    <string name="setup__select_ime__description">{app_name} энди системанъызда косылды. Оны кулланув уьшин туьпбас киргизуьв усылы этип {app_name} сайланъыз!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Клавиатурады авыстырув</string>
+    <string name="setup__grant_notification_permission__title">Хата акында эсап билдируьвлерге рухсат беруьв</string>
+    <string name="setup__grant_notification_permission__description">Android 13+ версиясыннан баслап косымшалар билдируьв йиберуьв уьшин рухсат сорамак керек. FlorisBoard муны тек косымша бузылган заманда хата акында эсап йиберуьв уьшин кулланады. Бу рухсатты кашанда система сазлавларыннан кайтарып алаяссыз.</string>
+    <string name="setup__grant_notification_permission__btn">Рухсат беруьв</string>
+    <string name="setup__finish_up__title">Кутарылув</string>
+    <string name="setup__finish_up__description_p1">{app_name} энди системада косылды эм сиз оны оьз калавынъызша туьрлендирип боласьыз.</string>
+    <string name="setup__finish_up__description_p2">Эгер бир маьселелерге, хаталарга яде бузылувларга рази болсанъыз, яде бир усыныс этпеге суьйсенъиз, проекттинъ GitHub бетине киринъиз (\"Косымша акында\" экраныннан табып боласьыз)!</string>
+    <string name="setup__finish_up__finish_btn">Сазлап баслав</string>
+
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Физикалык клавиатура</string>
+    <string name="physical_keyboard__system_settings__title">Системалык физикалык клавиатура сазлавлары</string>
+    <string name="physical_keyboard__system_settings__summary">Раскладкалар, йылдам туьймелер эм модификатор туьймелери</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Тек клавиатура косылган заманда кулланып болады</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Экран клавиатурасын коьрсетуьв</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Физикалык клавиатура кулланып турганда экран клавиатурасын коьрсетуьв</string>
+
+    <!-- Back up & Restore -->
+    <string name="backup_and_restore__title">Саклав эм Кайтарув</string>
+    <string name="backup_and_restore__back_up__title">Билгилерди саклав</string>
+    <string name="backup_and_restore__back_up__summary">Сазлавлардынъ резерв копиясын ясав</string>
+    <string name="backup_and_restore__back_up__destination">Резерв копиясынынъ орынын сайланъыз</string>
+    <string name="backup_and_restore__back_up__destination_file_sys">Ишки файл системасы</string>
+    <string name="backup_and_restore__back_up__destination_share_intent">Боьлисуьв менюси аркалы уьшинши як косымшалары</string>
+    <string name="backup_and_restore__back_up__files">Резерв копиясы ясалаятаган затты сайланъыз</string>
+    <string name="backup_and_restore__back_up__files_jetpref_datastore">Сазлавлар</string>
+    <string name="backup_and_restore__back_up__files_ime_keyboard">Клавиатура кенъейтуьвлери</string>
+    <string name="backup_and_restore__back_up__files_ime_spelling">Имля кенъейтуьвлери / Соьзликлер</string>
+    <string name="backup_and_restore__back_up__files_ime_theme">Тема кенъейтуьвлери</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history">Буфер тарихи</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_text_items">Матн иши</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_image_items">Суьвретлер</string>
+    <string name="backup_and_restore__back_up__files_clipboard_history__clipboard_video_items">Видеолар</string>
+    <string name="backup_and_restore__back_up__success">Резерв копиясы онълы экспортланды!</string>
+    <string name="backup_and_restore__back_up__failure">Резерв копиясынынъ архивин экспортлав бузылды: {error_message}</string>
+    <string name="backup_and_restore__restore__title">Билгилерди кайтарув</string>
+    <string name="backup_and_restore__restore__summary">Сазлавларды резерв копиясыннан кайтарув</string>
+    <string name="backup_and_restore__restore__files">Кайтарылаятаган затты сайланъыз</string>
+    <string name="backup_and_restore__restore__metadata">Сайланган резерв копиясынынъ архивлери</string>
+    <string name="backup_and_restore__restore__metadata_warn_different_version">Бу резерв копиясынынъ архиви аьлиги версиядан баска версияда ясалган, бу туьпбастан колданады. Ама бираз маьселелер шыгувы муьмкин яде функциялардагы айырмашылыклар себепли бир сазлавлар дурыс коьширилмей калувы муьмкин экенин эспенъиз.</string>
+
+    <!-- Clipboard strings -->
+    <string name="clipboard__header_title">Алмасув буфери</string>
+    <string name="clipboard__empty__title">Буферинъиз бос</string>
+    <string name="clipboard__empty__message">Матн яде суьвретлер коьширгенде мунда коьринееклер.</string>
+    <string name="clip__clear_history">Тарихти тазалав</string>
+    <string name="clip__unpin_item">Беркитуьвди алув</string>
+    <string name="clip__pin_item">Элементти беркитуьв</string>
+    <string name="clip__delete_item">Оьшируьв</string>
+    <string name="clip__paste_item">Ябыстырув</string>
+    <string name="clip__back_to_text_input">Матн киргизуьвге кайтув</string>
+
+    <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} саат</item>
+        <item quantity="other">{v} саат</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} минут</item>
+        <item quantity="other">{v} минут</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} секунд</item>
+        <item quantity="other">{v} секунд</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} элемент</item>
+        <item quantity="other">{v} элемент</item>
+    </plurals>
+    <plurals name="unit__characters__written">
+        <item quantity="one">{v} белги</item>
+        <item quantity="other">{v} белги</item>
+    </plurals>
+    <plurals name="unit__candidates__written">
+        <item quantity="one">{v} кандидат</item>
+        <item quantity="other">{v} кандидат</item>
+    </plurals>
+
+</resources>

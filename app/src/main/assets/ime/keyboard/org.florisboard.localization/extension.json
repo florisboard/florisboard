@@ -59,16 +59,18 @@
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
     { "id": "ka-std", "authors": [ "nE" ] },
     { "id": "kab", "authors": [ "yanis867" ] },
+    { "id": "kk-cyrl", "authors": [ "murza-enikeev" ] },
+    { "id": "kk-latn", "authors": [ "murza-enikeev" ] },
     { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
     { "id": "ko-KR", "authors": [ "Shunnuo" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
     { "id": "lt", "authors": [ "patrickgold" ] },
     { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
     { "id": "nb", "authors": [ "patrickgold" ] },
-    { "id": "nogai", "authors": [ "murza-enikeev" ] },
-    { "id": "nogai-ar", "authors": [ "murza-enikeev" ] },
-    { "id": "nogai-lat", "authors": [ "murza-enikeev" ] },
-    { "id": "nogai-runr", "authors": [ "murza-enikeev" ] },
+    { "id": "nog-cyrl", "authors": [ "murza-enikeev" ] },
+    { "id": "nog-ar", "authors": [ "murza-enikeev" ] },
+    { "id": "nog-latn", "authors": [ "murza-enikeev" ] },
+    { "id": "nog-runr", "authors": [ "murza-enikeev" ] },
     { "id": "nn", "authors": [ "patrickgold" ] },
     { "id": "pl", "authors": [ "Mikołaj Biel" ] },
     { "id": "pt", "authors": [ "patrickgold" ] },
@@ -261,10 +263,10 @@
       }
     },
     {
-      "languageTag": "nog",
+      "languageTag": "nog-Cyrl",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nogai",
+      "popupMapping": "org.florisboard.localization:nog-cyrl",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_cyrillic"
       }
@@ -273,7 +275,7 @@
       "languageTag": "nog-Latin",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nogai-lat",
+      "popupMapping": "org.florisboard.localization:nog-latn",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_latin"
       }
@@ -282,7 +284,7 @@
       "languageTag": "nog-Arab",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nogai-ar",
+      "popupMapping": "org.florisboard.localization:nog-arab",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_arabic"
       }
@@ -291,7 +293,7 @@
       "languageTag": "nog-Runr",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nogai-runr",
+      "popupMapping": "org.florisboard.localization:nog-runr",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_runic"
       }
@@ -480,6 +482,24 @@
       "popupMapping": "org.florisboard.localization:ka-std",
       "preferred": {
         "characters": "org.florisboard.layouts:georgian_standard"
+      }
+    },
+    {
+      "languageTag": "kk-Cyrl",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:kazakhstani_tenge",
+      "popupMapping": "org.florisboard.localization:kk-cyrl",
+      "preferred": {
+        "characters": "org.florisboard.layouts:kazakh_cyrillic"
+      }
+    },
+    {
+      "languageTag": "kk-Latn",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:kazakhstani_tenge",
+      "popupMapping": "org.florisboard.localization:kk-latn",
+      "preferred": {
+        "characters": "org.florisboard.layouts:kazakh_latin"
       }
     },
     {

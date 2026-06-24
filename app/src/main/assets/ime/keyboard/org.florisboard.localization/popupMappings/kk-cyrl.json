@@ -1,0 +1,73 @@
+{
+  "all": {
+    "а": {
+      "main": { "$": "auto_text_key", "code": 1241, "label": "ә" }
+    },
+    "г": {
+      "main": { "$": "auto_text_key", "code": 1171, "label": "ғ" }
+    },
+    "е": {
+      "main": { "$": "auto_text_key", "code": 1105, "label": "ё" }
+    },
+    "и": {
+      "main": { "$": "auto_text_key", "code": 1110, "label": "і" }
+    },
+    "к": {
+      "main": { "$": "auto_text_key", "code": 1179, "label": "қ" }
+    },
+    "н": {
+      "main": { "$": "auto_text_key", "code": 1187, "label": "ң" }
+    },
+    "о": {
+      "main": { "$": "auto_text_key", "code": 1257, "label": "ө" }
+    },
+    "у": {
+      "main": { "$": "auto_text_key", "code": 1201, "label": "ұ" },
+      "relevant": [
+        { "$": "auto_text_key", "code": 1199, "label": "ү" }
+      ]
+    },
+    "х": {
+      "main": { "$": "auto_text_key", "code": 1211, "label": "һ" }
+    },
+    "ь": {
+      "main": { "$": "auto_text_key", "code": 1098, "label": "ъ" }
+    },
+    "~right": {
+      "main": { "code": 44, "label": "," },
+      "relevant": [
+        { "code": 38, "label": "&" },
+        { "code": 37, "label": "%" },
+        { "code": 43, "label": "+" },
+        { "code": 34, "label": "\"" },
+        { "code": 45, "label": "-" },
+        { "code": 58, "label": ":" },
+        { "code": 39, "label": "'" },
+        { "code": 64, "label": "@" },
+        { "code": 59, "label": ";" },
+        { "code": 47, "label": "/" },
+        { "$": "layout_direction_selector",
+          "ltr": { "code": 40, "label": "(" },
+          "rtl": { "code": 41, "label": "(" }
+        },
+        { "$": "layout_direction_selector",
+          "ltr": { "code": 41, "label": ")" },
+          "rtl": { "code": 40, "label": ")" }
+        },
+        { "code": 35, "label": "#" },
+        { "code": 33, "label": "!" },
+        { "code": 63, "label": "?" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".kz"},
+      "relevant": [
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".ru" }
+      ]
+    }
+  }
+}

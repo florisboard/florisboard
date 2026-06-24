@@ -275,6 +275,18 @@
         "modifier": "org.florisboard.layouts:jis"
       },
       {
+        "id": "kazakh_cyrillic",
+        "label": "Қазақша",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kazakh_latin",
+        "label": "Qazaqşa",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
         "id": "korean",
         "label": "South Korean standard",
         "authors": [ "patrickgold", "Hayleia" ],
