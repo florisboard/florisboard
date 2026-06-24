@@ -68,7 +68,7 @@
     { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
     { "id": "nb", "authors": [ "patrickgold" ] },
     { "id": "nog-cyrl", "authors": [ "murza-enikeev" ] },
-    { "id": "nog-ar", "authors": [ "murza-enikeev" ] },
+    { "id": "nog-arab", "authors": [ "murza-enikeev" ] },
     { "id": "nog-latn", "authors": [ "murza-enikeev" ] },
     { "id": "nog-runr", "authors": [ "murza-enikeev" ] },
     { "id": "nn", "authors": [ "patrickgold" ] },
