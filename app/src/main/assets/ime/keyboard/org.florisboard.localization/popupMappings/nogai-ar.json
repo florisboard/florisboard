@@ -79,7 +79,9 @@
       "relevant": [
         { "code": -255, "label": ".com" },
         { "code": -255, "label": ".org" },
-        { "code": -255, "label": ".net" }
+        { "code": -255, "label": ".net" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".gov" }
       ]
     }
   }

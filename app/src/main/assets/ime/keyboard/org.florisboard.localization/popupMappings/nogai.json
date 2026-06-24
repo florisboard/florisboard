@@ -289,6 +289,29 @@
         { "$": "auto_text_key", "label": "يۋ" },
         { "$": "auto_text_key", "label": "𐰖𐰆" }
       ]
+    },
+    "~right": {
+      "main": { "code": 1548, "label": "،" },
+      "relevant": [
+        { "code": 1567, "label": "؟" },
+        { "code": 1563, "label": "؛" },
+        { "code": 8285, "label": "⁝" },
+        { "code": 8282, "label": "⁚" },
+        { "code": 11824, "label": "⸰" },
+        { "code": 124, "label": "|" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".ru"},
+      "relevant": [
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".gov" }
+      ]
     }
   }
 }
