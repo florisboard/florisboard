@@ -149,6 +149,7 @@
         { "code": 1241, "label": "ә" },
         { "code": 97, "label": "a" },
         { "code": 1575, "label": "ا" },
+        { "code": 1569, "label": "ء" },
         { "code": 1749, "label": "ە" },
         { "code": 68610, "label": "𐰂" },
         { "code": 68608, "label": "𐰀" }
@@ -209,7 +210,7 @@
       "relevant": [
         { "code": 101, "label": "e" },
         { "code": 1749, "label": "ە" },
-        { "$": "auto_text_key", "label": "ئه" },
+        { "$": "auto_text_key", "label": "ئە" },
         { "code": 1575, "label": "ا" },
         { "code": 68608, "label": "𐰀" }
       ]

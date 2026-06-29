@@ -45,6 +45,17 @@
         { "code": 1726, "label": "ھ" }
       ]
     },
+    "ە": {
+      "relevant": [
+        { "$": "auto_text_key", "label": "ئە" }
+      ]
+    },
+
+    "ئ": {
+      "relevant": [
+        { "code": 1652, "label": "ٴ" }
+      ]
+    },
     "ل": {
       "relevant": [
         { "code": 65275, "label": "لا" },
