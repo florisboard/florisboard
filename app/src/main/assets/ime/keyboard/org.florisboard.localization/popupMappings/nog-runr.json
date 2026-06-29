@@ -7,7 +7,18 @@
     },
     "𐱁": {
       "relevant": [
-        { "$": "auto_text_key", "label": "𐱁𐰲" }
+        { "$": "auto_text_key", "label": "𐱁𐰲" },
+        { "code": 68672, "label": "𐱀" }
+      ]
+    },
+    "𐰔": {
+      "relevant": [
+        { "code": 68629, "label": "𐰕" }
+      ]
+    },
+    "𐰴": {
+      "relevant": [
+        { "code": 68664, "label": "𐰸" }
       ]
     },
     "𐰣": {
@@ -19,7 +30,8 @@
       "relevant": [
         { "code": 68648, "label": "𐰨" },
         { "code": 68650, "label": "𐰪" },
-        { "code": 68649, "label": "𐰩" }
+        { "code": 68649, "label": "𐰩" },
+        { "code": 68646, "label": "𐰦" }
       ]
     },
     "𐰞": {
