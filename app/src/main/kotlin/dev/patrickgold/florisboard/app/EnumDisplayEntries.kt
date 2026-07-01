@@ -18,20 +18,22 @@ package dev.patrickgold.florisboard.app
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.settings.theme.DisplayColorsAs
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
+import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
 import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
+import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
@@ -40,10 +42,11 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import org.florisboard.lib.snygg.SnyggLevel
+import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
+import dev.patrickgold.jetpref.material.ui.ColorRepresentation
+import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
 import kotlin.reflect.KClass
 
@@ -58,19 +61,19 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
             entry(
                 key = AppTheme.AUTO_AMOLED,
-                label = stringRes(R.string.pref__advanced__settings_theme__auto_amoled),
+                label = stringRes(R.string.pref__other__settings_theme__auto_amoled),
             )
             entry(
                 key = AppTheme.LIGHT,
-                label = stringRes(R.string.pref__advanced__settings_theme__light),
+                label = stringRes(R.string.pref__other__settings_theme__light),
             )
             entry(
                 key = AppTheme.DARK,
-                label = stringRes(R.string.pref__advanced__settings_theme__dark),
+                label = stringRes(R.string.pref__other__settings_theme__dark),
             )
             entry(
                 key = AppTheme.AMOLED_DARK,
-                label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
+                label = stringRes(R.string.pref__other__settings_theme__amoled_dark),
             )
         }
     },
@@ -102,18 +105,48 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    DisplayColorsAs::class to DEFAULT to {
+    ClipboardSyncBehavior::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = DisplayColorsAs.HEX8,
-                label = stringRes(R.string.enum__display_colors_as__hex8),
+                key = ClipboardSyncBehavior.NO_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__no_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__no_events__description),
+            )
+            entry(
+                key = ClipboardSyncBehavior.ONLY_CLEAR_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__only_clear_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__only_clear_events__description),
+            )
+            entry(
+                key = ClipboardSyncBehavior.ONLY_SET_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__only_set_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__only_set_events__description),
+            )
+            entry(
+                key = ClipboardSyncBehavior.ALL_EVENTS,
+                label = stringRes(R.string.enum__clipboard_sync_behavior__all_events),
+                description = stringRes(R.string.enum__clipboard_sync_behavior__all_events__description),
+            )
+        }
+    },
+    ColorRepresentation::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = ColorRepresentation.HEX,
+                label = stringRes(R.string.enum__color_representation__hex),
                 description = stringRes(R.string.general__example_given).curlyFormat("example" to "#4caf50ff"),
                 showDescriptionOnlyIfSelected = true,
             )
             entry(
-                key = DisplayColorsAs.RGBA,
-                label = stringRes(R.string.enum__display_colors_as__rgba),
-                description = stringRes(R.string.general__example_given).curlyFormat("example" to "rgba(76,175,80,1.0)"),
+                key = ColorRepresentation.RGB,
+                label = stringRes(R.string.enum__color_representation__rgb),
+                description = stringRes(R.string.general__example_given).curlyFormat("example" to "rgba(76, 175, 80, 1.0)"),
+                showDescriptionOnlyIfSelected = true,
+            )
+            entry(
+                key = ColorRepresentation.HSV,
+                label = stringRes(R.string.enum__color_representation__hsv),
+                description = stringRes(R.string.general__example_given).curlyFormat("example" to "hsva(122, 56, 68, 1.0)"),
                 showDescriptionOnlyIfSelected = true,
             )
         }
@@ -358,6 +391,70 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
+    InputShiftState::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = InputShiftState.UNSHIFTED,
+                label = stringRes(R.string.enum__input_shift_state__unshifted),
+            )
+            entry(
+                key = InputShiftState.SHIFTED_MANUAL,
+                label = stringRes(R.string.enum__input_shift_state__shifted_manual),
+            )
+            entry(
+                key = InputShiftState.SHIFTED_AUTOMATIC,
+                label = stringRes(R.string.enum__input_shift_state__shifted_automatic),
+            )
+            entry(
+                key = InputShiftState.CAPS_LOCK,
+                label = stringRes(R.string.enum__input_shift_state__caps_lock),
+            )
+        }
+    },
+    ImeWindowMode::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = ImeWindowMode.FIXED,
+                label = stringRes(R.string.enum__ime_window_mode__fixed),
+            )
+            entry(
+                key = ImeWindowMode.FLOATING,
+                label = stringRes(R.string.enum__ime_window_mode__floating),
+            )
+        }
+    },
+    KeyboardMode::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = KeyboardMode.CHARACTERS,
+                label = stringRes(R.string.enum__keyboard_mode__characters),
+            )
+            entry(
+                key = KeyboardMode.SYMBOLS,
+                label = stringRes(R.string.enum__keyboard_mode__symbols),
+            )
+            entry(
+                key = KeyboardMode.SYMBOLS2,
+                label = stringRes(R.string.enum__keyboard_mode__symbols2),
+            )
+            entry(
+                key = KeyboardMode.NUMERIC,
+                label = stringRes(R.string.enum__keyboard_mode__numeric),
+            )
+            entry(
+                key = KeyboardMode.NUMERIC_ADVANCED,
+                label = stringRes(R.string.enum__keyboard_mode__numeric_advanced),
+            )
+            entry(
+                key = KeyboardMode.PHONE,
+                label = stringRes(R.string.enum__keyboard_mode__phone),
+            )
+            entry(
+                key = KeyboardMode.PHONE2,
+                label = stringRes(R.string.enum__keyboard_mode__phone2),
+            )
+        }
+    },
     LandscapeInputUiMode::class to DEFAULT to {
         listPrefEntries {
             entry(
@@ -371,22 +468,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = LandscapeInputUiMode.DYNAMICALLY_SHOW,
                 label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
-            )
-        }
-    },
-    OneHandedMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = OneHandedMode.OFF,
-                label = stringRes(R.string.enum__one_handed_mode__off),
-            )
-            entry(
-                key = OneHandedMode.START,
-                label = stringRes(R.string.enum__one_handed_mode__start),
-            )
-            entry(
-                key = OneHandedMode.END,
-                label = stringRes(R.string.enum__one_handed_mode__end),
             )
         }
     },
@@ -539,8 +620,16 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
                 label = stringRes(R.string.enum__swipe_action__switch_to_clipboard_context),
             )
             entry(
+                key = SwipeAction.SWITCH_TO_MEDIA_CONTEXT,
+                label = stringRes(R.string.enum__swipe_action__switch_to_media_context)
+            )
+            entry(
                 key = SwipeAction.SHOW_INPUT_METHOD_PICKER,
                 label = stringRes(R.string.enum__swipe_action__show_input_method_picker),
+            )
+            entry(
+                key = SwipeAction.SHOW_SUBTYPE_PICKER,
+                label = "Show subtype picker"
             )
             entry(
                 key = SwipeAction.SWITCH_TO_PREV_SUBTYPE,
@@ -557,6 +646,10 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = SwipeAction.TOGGLE_SMARTBAR_VISIBILITY,
                 label = stringRes(R.string.enum__swipe_action__toggle_smartbar_visibility),
+            )
+            entry(
+                key = SwipeAction.TOGGLE_COMPACT_LAYOUT,
+                label = stringRes(R.string.enum__swipe_action__toggle_compact_layout),
             )
         }
     },

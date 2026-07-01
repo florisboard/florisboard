@@ -26,7 +26,7 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val imeOptions = ImeOptions.wrap(base.imeOptions)
 
     val isRichInputEditor: Boolean
-        get() = inputAttributes.type != InputAttributes.Type.NULL || initialSelection.isValid
+        get() = inputAttributes.type != InputAttributes.Type.NULL
 
     val isRawInputEditor: Boolean
         get() = !isRichInputEditor

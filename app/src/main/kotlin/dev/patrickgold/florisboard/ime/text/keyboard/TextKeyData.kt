@@ -44,7 +44,7 @@ import kotlinx.serialization.Transient
  */
 @Serializable
 @SerialName("text_key")
-class TextKeyData(
+data class TextKeyData(
     override val type: KeyType = KeyType.CHARACTER,
     override val code: Int = KeyCode.UNSPECIFIED,
     override val label: String = "",
@@ -121,6 +121,7 @@ class TextKeyData(
                 CLIPBOARD_CLEAR_HISTORY,
                 CLIPBOARD_CLEAR_FULL_HISTORY,
                 CLIPBOARD_CLEAR_PRIMARY_CLIP,
+                TOGGLE_COMPACT_LAYOUT,
                 COMPACT_LAYOUT_TO_LEFT,
                 COMPACT_LAYOUT_TO_RIGHT,
                 UNDO,
@@ -336,6 +337,18 @@ class TextKeyData(
             label = "clipboard_clear_primary_clip",
         )
 
+        /** Predefined key data for [KeyCode.TOGGLE_FLOATING_WINDOW] */
+        val TOGGLE_FLOATING_WINDOW = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_FLOATING_WINDOW,
+            label = "toggle_floating_window",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_COMPACT_LAYOUT] */
+        val TOGGLE_COMPACT_LAYOUT = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_COMPACT_LAYOUT,
+            label = "toggle_compact_layout",
+        )
         /** Predefined key data for [KeyCode.COMPACT_LAYOUT_TO_LEFT] */
         val COMPACT_LAYOUT_TO_LEFT = TextKeyData(
             type = KeyType.SYSTEM_GUI,
@@ -347,6 +360,12 @@ class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.COMPACT_LAYOUT_TO_RIGHT,
             label = "compact_layout_to_right",
+        )
+        /** Predefined key data for [KeyCode.TOGGLE_RESIZE_MODE] */
+        val TOGGLE_RESIZE_MODE = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.TOGGLE_RESIZE_MODE,
+            label = "toggle_resize_mode",
         )
 
         /** Predefined key data for [KeyCode.UNDO] */
@@ -411,6 +430,12 @@ class TextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.SYSTEM_INPUT_METHOD_PICKER,
             label = "system_input_method_picker",
+        )
+        /** Predefined key data for [KeyCode.SHOW_SUBTYPE_PICKER] */
+        val SHOW_SUBTYPE_PICKER = TextKeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.SHOW_SUBTYPE_PICKER,
+            label = "subtype_picker",
         )
         /** Predefined key data for [KeyCode.SYSTEM_PREV_INPUT_METHOD] */
         val SYSTEM_PREV_INPUT_METHOD = TextKeyData(

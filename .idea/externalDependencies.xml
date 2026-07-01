@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="androidx.compose.plugins.idea" />
+    <plugin id="com.android.tools.design" />
+    <plugin id="com.intellij.nativeDebug" />
+    <plugin id="kotest-plugin-intellij" />
+    <plugin id="org.jetbrains.android" />
+  </component>
+</project>

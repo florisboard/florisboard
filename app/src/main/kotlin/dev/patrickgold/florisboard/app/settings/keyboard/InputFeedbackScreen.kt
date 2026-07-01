@@ -20,18 +20,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
-import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.systemVibratorOrNull
-import org.florisboard.lib.android.vibrate
+import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.android.systemVibratorOrNull
+import org.florisboard.lib.android.vibrate
+import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -138,8 +137,6 @@ fun InputFeedbackScreen() = FlorisScreen {
                 summary = { strength ->
                     if (vibrator == null || !vibrator.hasVibrator()) {
                         stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_vibrator)
-                    } else if (AndroidVersion.ATMOST_API25_N_MR1) {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
                     } else if (!vibrator.hasAmplitudeControl()) {
                         stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
                     } else {
@@ -157,7 +154,7 @@ fun InputFeedbackScreen() = FlorisScreen {
                     prefs.inputFeedback.hapticEnabled isEqualTo true &&
                         prefs.inputFeedback.hapticVibrationMode isEqualTo HapticVibrationMode.USE_VIBRATOR_DIRECTLY &&
                         vibrator != null && vibrator.hasVibrator() &&
-                        AndroidVersion.ATLEAST_API26_O && vibrator.hasAmplitudeControl()
+                        vibrator.hasAmplitudeControl()
                 },
             )
             SwitchPreference(

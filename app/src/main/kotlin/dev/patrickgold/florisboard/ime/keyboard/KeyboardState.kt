@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.sheet.isAnyBottomSheetVisible
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,6 +58,7 @@ import kotlin.properties.Delegates
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
+ *          |          |          |        1 | Subtype selection dialog visible
  *        1 |          |          |          | Devtools: Show drag&drop helpers
  *
  * The resulting structure is only relevant during a runtime lifespan and
@@ -90,6 +92,8 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
         const val F_IS_RTL_LAYOUT_DIRECTION: ULong =        0x08000000u
+
+        const val F_IS_SUBTYPE_SELECTION_VISIBLE: ULong =   0x1_0000_0000u
 
         const val F_DEBUG_SHOW_DRAG_AND_DROP_HELPERS =      0x01_00_00_00_00_00_00_00uL
 
@@ -188,6 +192,10 @@ open class KeyboardState protected constructor(open var rawValue: ULong) {
         get() = getFlag(F_IS_ACTIONS_EDITOR_VISIBLE)
         set(v) { setFlag(F_IS_ACTIONS_EDITOR_VISIBLE, v) }
 
+    var isSubtypeSelectionVisible: Boolean
+        get() = getFlag(F_IS_SUBTYPE_SELECTION_VISIBLE)
+        set(v) { setFlag(F_IS_SUBTYPE_SELECTION_VISIBLE, v) }
+
     var isComposingEnabled: Boolean
         get() = getFlag(F_IS_COMPOSING_ENABLED)
         set(v) { setFlag(F_IS_COMPOSING_ENABLED, v) }
@@ -271,4 +279,8 @@ class ObservableKeyboardState private constructor(
             endBatchEdit()
         }
     }
+}
+
+fun KeyboardState.isFullscreenInputRequired(): Boolean {
+    return isAnyBottomSheetVisible()
 }

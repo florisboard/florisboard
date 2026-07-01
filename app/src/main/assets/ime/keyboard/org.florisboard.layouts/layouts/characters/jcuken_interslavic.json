@@ -22,6 +22,7 @@
     { "$": "auto_text_key", "code": 1086 , "label": "о" },
     { "$": "auto_text_key", "code": 1083 , "label": "л" },
     { "$": "auto_text_key", "code": 1113 , "label": "љ" },
+    { "$": "auto_text_key", "code": 1076 , "label": "д" },
     { "$": "auto_text_key", "code": 1078 , "label": "ж" }
   ],
   [

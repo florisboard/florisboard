@@ -58,7 +58,7 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
     private val subtypeManager by context.subtypeManager()
     private val allLanguagePacks: List<LanguagePackExtension>
         // Assume other types of extensions do not extend LanguagePackExtension
-        get() = extensionManager.languagePacks.value ?: listOf()
+        get() = extensionManager.languagePacks.value
     private var __connectedActiveLanguagePacks: Set<LanguagePackExtension> = setOf() // FIXME: hack for not able to observe extensionManager.languagePacks and subtypeManager.subtypes
     private var languagePackItems: Map<String, LanguagePackComponent> = mapOf() // init in refreshLanguagePacks()
     private var keyCode: Map<String, Set<Char>> = mapOf() // init in refreshLanguagePacks()

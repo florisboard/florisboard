@@ -45,17 +45,16 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
+import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.stringRes
 
 internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
     save = {
@@ -103,6 +102,10 @@ fun LocalizationScreen() = FlorisScreen {
             title = stringRes(R.string.settings__localization__display_language_names_in__label),
             entries = enumDisplayEntriesOf(DisplayLanguageNamesIn::class),
         )
+        SwitchPreference(
+            prefs.localization.displayKeyboardLabelsInSubtypeLanguage,
+            title = stringRes(R.string.settings__localization__display_keyboard_labels_in_subtype_language),
+        )
         Preference(
             title = stringRes(R.string.settings__localization__language_pack_title),
             summary = stringRes(R.string.settings__localization__language_pack_summary),
@@ -118,9 +121,9 @@ fun LocalizationScreen() = FlorisScreen {
                     text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),
                 )
             } else {
-                val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
-                val layouts by keyboardManager.resources.layouts.observeAsNonNullState()
-                val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+                val currencySets by keyboardManager.resources.currencySets.collectAsState()
+                val layouts by keyboardManager.resources.layouts.collectAsState()
+                val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
                 for (subtype in subtypes) {
                     val cMeta = layouts[LayoutType.CHARACTERS]?.get(subtype.layoutMap.characters)
                     val sMeta = layouts[LayoutType.SYMBOLS]?.get(subtype.layoutMap.symbols)

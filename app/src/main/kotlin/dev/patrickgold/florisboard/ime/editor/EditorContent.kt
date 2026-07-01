@@ -91,6 +91,9 @@ data class EditorContent(
     val currentWordText: String
         get() = if (localCurrentWord.isValid) text.safeSubstring(localCurrentWord.start, localCurrentWord.end) else ""
 
+    val safeEditorBounds: EditorRange
+        get() = if (offset >= 0) EditorRange(0, offset + text.length) else EditorRange(0, 0)
+
     companion object {
         /**
          * Default editor content which indicates an unspecified content. This is used for raw editors or if there is

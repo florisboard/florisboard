@@ -1,5 +1,10 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +21,24 @@
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlinx.kover)
 }
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
 
-android {
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        freeCompilerArgs.set(listOf(
+            "-Xconsistent-data-class-copy-visibility",
+        ))
+    }
+}
+
+configure<LibraryExtension> {
     namespace = "org.florisboard.lib.snygg"
     compileSdk = projectCompileSdk.toInt()
 
@@ -45,31 +59,72 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            create("beta") {
-                isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-            }
+        }
+        create("beta") {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
+tasks.withType<Test> {
+    testLogging {
+        events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+    }
+    useJUnitPlatform()
+}
+
+kover {
+    useJacoco()
+}
+
 dependencies {
-    implementation(project(":lib:android"))
-    implementation(project(":lib:color"))
-    implementation(project(":lib:kotlin"))
+    implementation(projects.lib.android)
+    implementation(projects.lib.color)
+    implementation(projects.lib.kotlin)
+
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    // testImplementation(composeBom)
+    // androidTestImplementation(composeBom)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material.icons)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
     implementation(libs.kotlinx.serialization.json)
+
+    testImplementation(libs.kotlin.test.junit5)
+}
+
+tasks.register<JavaExec>("generateJsonSchema") {
+    description = "Generate the JSON schema for Snygg themes"
+    dependsOn("compileDebugKotlin")
+    mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
+    val debugRuntime = configurations.named("debugRuntimeClasspath")
+    val compileTask = tasks.named<KotlinCompile>("compileDebugKotlin")
+    val debugRuntimeArtifactView = debugRuntime.get().incoming.artifactView {
+        attributes { attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, "android-classes") }
+    }
+    classpath = files(
+        compileTask.map { it.destinationDirectory },
+        debugRuntimeArtifactView.files
+    )
+    args = listOf("schemas/stylesheet.schema.json")
+    workingDir = projectDir
+    standardOutput = System.out
+}
+
+tasks.matching { it.name == "compileDebugKotlin" }.configureEach {
+    finalizedBy("generateJsonSchema")
 }

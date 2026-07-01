@@ -16,31 +16,34 @@
 
 package org.florisboard.lib.snygg.value
 
-@Suppress("UNCHECKED_CAST")
-@JvmInline
-value class SnyggIdToValueMap private constructor(private val list: MutableList<Pair<String, Any>>) {
-    companion object {
-        fun new() = SnyggIdToValueMap(mutableListOf())
+import org.florisboard.lib.kotlin.toStringWithoutDotZero
 
-        fun new(vararg pairs: Pair<String, Any>) = SnyggIdToValueMap(pairs.toMutableList())
+typealias SnyggIdToValueMap = MutableMap<String, String>
 
-        fun new(list: List<Pair<String, Any>>) = SnyggIdToValueMap(list.toMutableList())
-    }
+fun snyggIdToValueMapOf(vararg pairs: Pair<String, Any>): SnyggIdToValueMap {
+    val map = mutableMapOf<String, String>()
+    map.add(*pairs)
+    return map
+}
 
-    fun <T : Any> getOrNull(id: String): T? {
-        return try {
-            list.find { it.first == id }?.second as? T
-        } catch (e: Exception) {
-            null
+fun SnyggIdToValueMap.getInt(id: String): Int {
+    return getValue(id).toInt()
+}
+
+fun SnyggIdToValueMap.getFloat(id: String): Float {
+    return getValue(id).toFloat()
+}
+
+fun SnyggIdToValueMap.getString(id: String): String {
+    return getValue(id)
+}
+
+fun SnyggIdToValueMap.add(vararg pairs: Pair<String, Any>) {
+    pairs.forEach { (id, value) ->
+        if (value is Number) {
+            put(id, value.toStringWithoutDotZero())
+        } else {
+            put(id, value.toString())
         }
-    }
-
-    @Throws(ClassCastException::class, NullPointerException::class)
-    fun <T : Any> getOrThrow(id: String): T {
-        return list.find { it.first == id }!!.second as T
-    }
-
-    fun <T : Any> add(pair: Pair<String, T>) {
-        list.add(pair)
     }
 }

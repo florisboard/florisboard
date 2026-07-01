@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright (C) 2025 The FlorisBoard Contributors
  *
@@ -16,17 +19,21 @@
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
 }
 
 val projectMinSdk: String by project
 val projectCompileSdk: String by project
-val projectNdkVersion: String by project
 
-android {
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+configure<LibraryExtension> {
     namespace = "org.florisboard.libnative"
     compileSdk = projectCompileSdk.toInt()
-    ndkVersion = projectNdkVersion
+    ndkVersion = tools.versions.ndk.get()
 
     defaultConfig {
         minSdk = projectMinSdk.toInt()
@@ -35,7 +42,7 @@ android {
             cmake {
                 targets("fl_native")
                 arguments(
-                    "-DCMAKE_ANDROID_API=" + minSdk.toString(),
+                    "-DCMAKE_ANDROID_API=$minSdk",
                 )
             }
         }
@@ -60,23 +67,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    sourceSets {
-        maybeCreate("main").apply {
-            java {
-                srcDirs("src/main/kotlin")
-            }
-        }
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     externalNativeBuild {
         cmake {
+            version = tools.versions.cmake.get()
             path("src/main/rust/CMakeLists.txt")
         }
     }

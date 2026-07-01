@@ -16,13 +16,15 @@
 
 package org.florisboard.lib.snygg.value
 
+import org.florisboard.lib.kotlin.getKeyByValue
+
 /**
  * SnyggValueEncoder is responsible for the representation of a [SnyggValue] specification and for providing methods
  * for encoding and decoding a [SnyggValue] for the serialization process.
  *
- * A SnyggValueEncoder is typically implemented in the Companion of a SnyggValue sub-class, as this allows to use the
- * value class name in the Snygg stylesheet spec's `supportedValues` field. This is not an requirement though and any
- * sub-class / object is allowed to be used.
+ * A SnyggValueEncoder is typically implemented in the Companion of a SnyggValue subclass, as this allows to use the
+ * value class name in the Snygg stylesheet spec's `supportedValues` field. This is not a requirement though and any
+ * subclass / object is allowed to be used.
  */
 interface SnyggValueEncoder {
     /**
@@ -56,4 +58,36 @@ interface SnyggValueEncoder {
      * a failed result.
      */
     fun deserialize(v: String): Result<SnyggValue>
+}
+
+abstract class SnyggEnumLikeValueEncoder<V> internal constructor(
+    val serializationId: String,
+    val serializationMapping: Map<String, V>,
+    val default: V,
+    val construct: (V) -> SnyggValue,
+    val destruct: (SnyggValue) -> V,
+) : SnyggValueEncoder {
+    final override val spec = SnyggValueSpec {
+        keywords(serializationId, serializationMapping.keys.toList())
+    }
+
+    final override fun defaultValue() = construct(default)
+
+    @Suppress("UNCHECKED_CAST")
+    final override fun serialize(v: SnyggValue) = runCatching<String> {
+        val entry = destruct(v)
+        val map = snyggIdToValueMapOf(
+            serializationId to serializationMapping.getKeyByValue(entry)
+        )
+        return@runCatching spec.pack(map)
+    }
+
+    final override fun deserialize(v: String) = runCatching<SnyggValue> {
+        val map = snyggIdToValueMapOf()
+        spec.parse(v, map)
+        val entry = serializationMapping.getOrElse(map.getString(serializationId)) {
+            error("Given value \"v\" is not valid")
+        }
+        return@runCatching construct(entry)
+    }
 }

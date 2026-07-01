@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -78,7 +78,7 @@ data class DebugLayoutComputationResult(
  * Class which manages layout loading and caching.
  */
 class LayoutManager(context: Context) {
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()
@@ -110,7 +110,7 @@ class LayoutManager(context: Context) {
                 return@withLock cached
             } else {
                 flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '${ltn.name}'" }
-                val meta = keyboardManager.resources.layouts.value?.get(ltn.type)?.get(ltn.name)
+                val meta = keyboardManager.resources.layouts.value[ltn.type]?.get(ltn.name)
                     ?: error("No indexed entry found for ${ltn.type} - ${ltn.name}")
                 val ext = extensionManager.getExtensionById(ltn.name.extensionId)
                     ?: error("Extension ${ltn.name.extensionId} not found")
@@ -137,7 +137,7 @@ class LayoutManager(context: Context) {
                 return@withLock cached
             } else {
                 flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$name'" }
-                val meta = keyboardManager.resources.popupMappings.value?.get(name)
+                val meta = keyboardManager.resources.popupMappings.value[name]
                     ?: error("No indexed entry found for $name")
                 val ext = extensionManager.getExtensionById(name.extensionId)
                     ?: error("Extension ${name.extensionId} not found")

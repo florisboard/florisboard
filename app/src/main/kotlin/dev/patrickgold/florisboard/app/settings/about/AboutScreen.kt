@@ -41,12 +41,12 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.lib.util.launchUrl
-import org.florisboard.lib.android.stringRes
-import dev.patrickgold.florisboard.lib.compose.FlorisCanvasIcon
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import org.florisboard.lib.android.stringRes
+import org.florisboard.lib.compose.FlorisCanvasIcon
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun AboutScreen() = FlorisScreen {

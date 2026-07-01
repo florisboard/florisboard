@@ -1,5 +1,5 @@
 <p><i>FlorisBoard</i> is an open-source keyboard aimed at providing you with an easy way to type while respecting your privacy.</p>
-<p><b>Note:</b> This project is currently in early-beta stage. If you want to see a feature being implemented or want to report a bug, please visit this project's repository (linked in the end of the description) on GitHub and file an issue. This helps making FlorisBoard even better! Thank you!</p>
+<p><b>Note:</b> This project is currently in beta stage. If you want to see a feature being implemented or want to report a bug, please visit this project's repository (linked in the end of the description) on GitHub and file an issue. This helps making FlorisBoard even better! Thank you!</p>
 <p><b>Currently implemented and fully working features:</b></p>
 <ul>
     <li>Huge variety of Latin keyboard layouts</li>

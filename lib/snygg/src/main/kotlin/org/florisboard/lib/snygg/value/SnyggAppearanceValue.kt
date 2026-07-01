@@ -17,48 +17,44 @@
 package org.florisboard.lib.snygg.value
 
 import androidx.compose.ui.graphics.Color
+import org.florisboard.lib.color.ColorPalette
 import kotlin.math.roundToInt
 
 sealed interface SnyggAppearanceValue : SnyggValue
 
 object RgbaColor {
     const val HexId = "hex"
-    val Hex6Matcher = """^#[a-fA-F0-9]{6}$""".toRegex()
-    val Hex8Matcher = """^#[a-fA-F0-9]{8}$""".toRegex()
+    val Hex6Matcher = """#[a-fA-F0-9]{6}""".toRegex()
+    val Hex8Matcher = """#[a-fA-F0-9]{8}""".toRegex()
 
-    const val TransparentId = "hex"
-    val TransparentMatcher = """^transparent$""".toRegex()
+    const val TransparentId = "transparent"
+    val TransparentMatcher = """transparent""".toRegex()
 
     const val RedId = "r"
-    const val RedMin = 0
-    const val RedMax = 255
-    val Red = RedMin..RedMax
-
     const val GreenId = "g"
-    const val GreenMin = 0
-    const val GreenMax = 255
-    val Green = GreenMin..GreenMax
-
     const val BlueId = "b"
-    const val BlueMin = 0
-    const val BlueMax = 255
-    val Blue = BlueMin..BlueMax
-
     const val AlphaId = "a"
-    const val AlphaMin = 0.0f
-    const val AlphaMax = 1.0f
-    val Alpha = AlphaMin..AlphaMax
+
+    const val ColorRangeMin = 0
+    const val ColorRangeMax = 255
+    val ColorRange = ColorRangeMin..ColorRangeMax
+    val ColorRangePattern = """25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]""".toRegex()
+
+    const val AlphaRangeMin = 0f
+    const val AlphaRangeMax = 1f
+    val AlphaRange = AlphaRangeMin..AlphaRangeMax
+    val AlphaRangePattern = """1(?:[.]0)?|0(?:[.][0-9]*)?|[.][0-9]+""".toRegex()
 }
 
-data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
+data class SnyggStaticColorValue(val color: Color) : SnyggAppearanceValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
             function(name = "rgba") {
                 commaList {
-                    +int(id = RgbaColor.RedId, min = RgbaColor.RedMin, max = RgbaColor.RedMax)
-                    +int(id = RgbaColor.GreenId, min = RgbaColor.GreenMin, max = RgbaColor.GreenMax)
-                    +int(id = RgbaColor.BlueId, min = RgbaColor.BlueMin, max = RgbaColor.BlueMax)
-                    +float(id = RgbaColor.AlphaId, min = RgbaColor.AlphaMin, max = RgbaColor.AlphaMax)
+                    +int(id = RgbaColor.RedId, numberPattern = RgbaColor.ColorRangePattern)
+                    +int(id = RgbaColor.GreenId, numberPattern = RgbaColor.ColorRangePattern)
+                    +int(id = RgbaColor.BlueId, numberPattern = RgbaColor.ColorRangePattern)
+                    +float(id = RgbaColor.AlphaId, numberPattern = RgbaColor.AlphaRangePattern)
                 }
             }
         }
@@ -67,9 +63,9 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
             SnyggValueSpec {
                 function(name = "rgb") {
                     commaList {
-                        +int(id = RgbaColor.RedId, min = RgbaColor.RedMin, max = RgbaColor.RedMax)
-                        +int(id = RgbaColor.GreenId, min = RgbaColor.GreenMin, max = RgbaColor.GreenMax)
-                        +int(id = RgbaColor.BlueId, min = RgbaColor.BlueMin, max = RgbaColor.BlueMax)
+                        +int(id = RgbaColor.RedId, numberPattern = RgbaColor.ColorRangePattern)
+                        +int(id = RgbaColor.GreenId, numberPattern = RgbaColor.ColorRangePattern)
+                        +int(id = RgbaColor.BlueId, numberPattern = RgbaColor.ColorRangePattern)
                     }
                 }
             },
@@ -84,64 +80,124 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
             },
         )
 
-        override fun defaultValue() = SnyggSolidColorValue(Color.Black)
+        override fun defaultValue() = SnyggStaticColorValue(Color.Black)
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggSolidColorValue)
-            val map = SnyggIdToValueMap.new(
-                RgbaColor.RedId to (v.color.red * RgbaColor.RedMax).roundToInt(),
-                RgbaColor.GreenId to (v.color.green * RgbaColor.GreenMax).roundToInt(),
-                RgbaColor.BlueId to (v.color.blue * RgbaColor.BlueMax).roundToInt(),
+            require(v is SnyggStaticColorValue)
+            val map = snyggIdToValueMapOf(
+                RgbaColor.RedId to (v.color.red * RgbaColor.ColorRangeMax).roundToInt(),
+                RgbaColor.GreenId to (v.color.green * RgbaColor.ColorRangeMax).roundToInt(),
+                RgbaColor.BlueId to (v.color.blue * RgbaColor.ColorRangeMax).roundToInt(),
                 RgbaColor.AlphaId to v.color.alpha,
             )
             return@runCatching spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            val map = SnyggIdToValueMap.new()
-            try {
-                spec.parse(v, map)
-                val r = map.getOrThrow<Int>(RgbaColor.RedId).coerceIn(RgbaColor.Red).toFloat() / RgbaColor.RedMax
-                val g = map.getOrThrow<Int>(RgbaColor.GreenId).coerceIn(RgbaColor.Green).toFloat() / RgbaColor.GreenMax
-                val b = map.getOrThrow<Int>(RgbaColor.BlueId).coerceIn(RgbaColor.Blue).toFloat() / RgbaColor.BlueMax
-                val a = map.getOrThrow<Float>(RgbaColor.AlphaId).coerceIn(RgbaColor.Alpha)
-                return@runCatching SnyggSolidColorValue(Color(r, g, b, a))
-            } catch (e: Exception) {
-                for ((n, alternativeSpec) in alternativeSpecs.withIndex()) {
-                    try {
-                        alternativeSpec.parse(v, map)
-                        when (n) {
-                            0 -> {
-                                val r = map.getOrThrow<Int>(RgbaColor.RedId).coerceIn(RgbaColor.Red).toFloat() / RgbaColor.RedMax
-                                val g = map.getOrThrow<Int>(RgbaColor.GreenId).coerceIn(RgbaColor.Green).toFloat() / RgbaColor.GreenMax
-                                val b = map.getOrThrow<Int>(RgbaColor.BlueId).coerceIn(RgbaColor.Blue).toFloat() / RgbaColor.BlueMax
-                                return@runCatching SnyggSolidColorValue(Color(r, g, b, 1.0f))
-                            }
-                            1 -> {
-                                return@runCatching SnyggSolidColorValue(Color(0.0f, 0.0f, 0.0f, 0.0f))
-                            }
-                            2 -> {
-                                val hexStr = map.getOrThrow<String>(RgbaColor.HexId)
-                                val r = hexStr.substring(1..2).toInt(16).toFloat() / RgbaColor.RedMax
-                                val g = hexStr.substring(3..4).toInt(16).toFloat() / RgbaColor.GreenMax
-                                val b = hexStr.substring(5..6).toInt(16).toFloat() / RgbaColor.BlueMax
-                                return@runCatching SnyggSolidColorValue(Color(r, g, b, 1.0f))
-                            }
-                            3 -> {
-                                val hexStr = map.getOrThrow<String>(RgbaColor.HexId)
-                                val r = hexStr.substring(1..2).toInt(16).toFloat() / RgbaColor.RedMax
-                                val g = hexStr.substring(3..4).toInt(16).toFloat() / RgbaColor.GreenMax
-                                val b = hexStr.substring(5..6).toInt(16).toFloat() / RgbaColor.BlueMax
-                                val a = hexStr.substring(7..8).toInt(16).toFloat() / 0xFF
-                                return@runCatching SnyggSolidColorValue(Color(r, g, b, a))
-                            }
-                        }
-                    } catch (e: Exception) {
-                        continue
-                    }
-                }
+            val map = snyggIdToValueMapOf()
+            runCatching { spec.parse(v, map) }.onSuccess {
+                val r = map.getInt(RgbaColor.RedId).toFloat() / RgbaColor.ColorRangeMax
+                val g = map.getInt(RgbaColor.GreenId).toFloat() / RgbaColor.ColorRangeMax
+                val b = map.getInt(RgbaColor.BlueId).toFloat() / RgbaColor.ColorRangeMax
+                val a = map.getFloat(RgbaColor.AlphaId)
+                return@runCatching SnyggStaticColorValue(Color(r, g, b, a))
+            }
+            runCatching { alternativeSpecs[0].parse(v, map) }.onSuccess {
+                val r = map.getInt(RgbaColor.RedId).toFloat() / RgbaColor.ColorRangeMax
+                val g = map.getInt(RgbaColor.GreenId).toFloat() / RgbaColor.ColorRangeMax
+                val b = map.getInt(RgbaColor.BlueId).toFloat() / RgbaColor.ColorRangeMax
+                return@runCatching SnyggStaticColorValue(Color(r, g, b, 1.0f))
+            }
+            runCatching { alternativeSpecs[1].parse(v, map) }.onSuccess {
+                return@runCatching SnyggStaticColorValue(Color(0.0f, 0.0f, 0.0f, 0.0f))
+            }
+            runCatching { alternativeSpecs[2].parse(v, map) }.onSuccess {
+                val hexStr = map.getString(RgbaColor.HexId)
+                val r = hexStr.substring(1..2).toInt(16).toFloat() / RgbaColor.ColorRangeMax
+                val g = hexStr.substring(3..4).toInt(16).toFloat() / RgbaColor.ColorRangeMax
+                val b = hexStr.substring(5..6).toInt(16).toFloat() / RgbaColor.ColorRangeMax
+                return@runCatching SnyggStaticColorValue(Color(r, g, b, 1.0f))
+            }
+            runCatching { alternativeSpecs[3].parse(v, map) }.onSuccess {
+                val hexStr = map.getString(RgbaColor.HexId)
+                val r = hexStr.substring(1..2).toInt(16).toFloat() / RgbaColor.ColorRangeMax
+                val g = hexStr.substring(3..4).toInt(16).toFloat() / RgbaColor.ColorRangeMax
+                val b = hexStr.substring(5..6).toInt(16).toFloat() / RgbaColor.ColorRangeMax
+                val a = hexStr.substring(7..8).toInt(16).toFloat() / 0xFF
+                return@runCatching SnyggStaticColorValue(Color(r, g, b, a))
             }
             error("No matching spec found for \"$v\"")
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
+/// Dynamic Color Value
+
+private const val ColorNameId = "name"
+private val ColorName = ColorPalette.colorNames.joinToString("|").toRegex()
+
+sealed interface SnyggDynamicColorValue : SnyggAppearanceValue {
+    val colorName: String
+}
+
+data class SnyggDynamicLightColorValue(override val colorName: String) : SnyggDynamicColorValue {
+    companion object : SnyggValueEncoder {
+        private const val FunctionName = "dynamic-light-color"
+
+        override val spec = SnyggValueSpec {
+            function(name = FunctionName) {
+                commaList {
+                    +string(id = ColorNameId, regex = ColorName)
+                }
+            }
+        }
+
+        override fun defaultValue() = SnyggDynamicLightColorValue(ColorPalette.Primary.id)
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggDynamicLightColorValue)
+            val map = snyggIdToValueMapOf(ColorNameId to v.colorName)
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = snyggIdToValueMapOf()
+            spec.parse(v, map)
+            val colorName = map.getString(ColorNameId)
+            return@runCatching SnyggDynamicLightColorValue(colorName)
+        }
+    }
+
+    override fun encoder() = Companion
+}
+
+data class SnyggDynamicDarkColorValue(override val colorName: String) : SnyggDynamicColorValue {
+    companion object : SnyggValueEncoder {
+        private const val FunctionName = "dynamic-dark-color"
+
+        override val spec = SnyggValueSpec {
+            function(name = FunctionName) {
+                commaList {
+                    +string(id = ColorNameId, regex = ColorName)
+                }
+            }
+        }
+
+        override fun defaultValue() = SnyggDynamicDarkColorValue(ColorPalette.Primary.id)
+
+        override fun serialize(v: SnyggValue) = runCatching<String> {
+            require(v is SnyggDynamicDarkColorValue)
+            val map = snyggIdToValueMapOf(ColorNameId to v.colorName)
+            return@runCatching spec.pack(map)
+        }
+
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
+            val map = snyggIdToValueMapOf()
+            spec.parse(v, map)
+            val colorName = map.getString(ColorNameId)
+            return@runCatching SnyggDynamicDarkColorValue(colorName)
         }
     }
 

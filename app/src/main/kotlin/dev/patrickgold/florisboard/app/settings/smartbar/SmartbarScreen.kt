@@ -24,10 +24,10 @@ import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun SmartbarScreen() = FlorisScreen {
@@ -68,7 +68,7 @@ fun SmartbarScreen() = FlorisScreen {
             // TODO: schedule to remove this preference in the future, but keep it for now so users
             //  know why the setting is not available anymore. Also force enable it for UI display.
             SideEffect {
-                prefs.smartbar.sharedActionsAutoExpandCollapse.set(true)
+                // prefs.smartbar.sharedActionsAutoExpandCollapse.set(true)
             }
             SwitchPreference(
                 prefs.smartbar.sharedActionsAutoExpandCollapse,

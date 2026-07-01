@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.stream.Collectors
 import android.content.Context
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
@@ -41,10 +41,10 @@ import io.github.reactivecircus.cache4k.Cache
 class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider {
     override val providerId = "org.florisboard.nlp.providers.emoji"
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
     private val lettersRegex = "^[A-Za-z]*$".toRegex()
 
-    private val cachedEmojiMappings = Cache.Builder().build<FlorisLocale, EmojiDataBySkinTone>()
+    private val cachedEmojiMappings = Cache.Builder<FlorisLocale, EmojiDataBySkinTone>().build()
 
     override suspend fun create() {
     }
@@ -70,12 +70,17 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         val candidates = withContext(Dispatchers.Default) {
             emojis.parallelStream()
-                .filter { emoji ->
-                    emoji.name.contains(query, ignoreCase = true) &&
-                        emoji.keywords.any { it.contains(query, ignoreCase = true) }
-                }
-                .limit(maxCandidateCount.toLong())
                 .map { emoji ->
+                    val nameWeight = emoji.name.containsWeighted(query, ignoreCase = true)
+                    val keywordWeight = emoji.keywords
+                        .any { it.contains(query, ignoreCase = true) }
+                        .let { if (it) 1.0 else 0.0 }
+                    emoji to (nameWeight * 0.7 + keywordWeight * 0.3)
+                }
+                .sorted { (_, a), (_, b) -> b.compareTo(a) }
+                .limit(maxCandidateCount.toLong())
+                .filter { (_, a) -> a > 0 }
+                .map { (emoji, _) ->
                     EmojiSuggestionCandidate(
                         emoji = emoji,
                         showName = showName,
@@ -126,5 +131,13 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
             return null
         }
         return emojiPartialName
+    }
+}
+
+private fun String.containsWeighted(other: String, ignoreCase: Boolean = false): Double = let { str ->
+    if (str.contains(other, ignoreCase = ignoreCase)) {
+        other.length.toDouble() / str.length.toDouble()
+    } else {
+        0.0
     }
 }

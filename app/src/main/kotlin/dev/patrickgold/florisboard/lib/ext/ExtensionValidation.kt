@@ -144,23 +144,22 @@ object ExtensionValidation {
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_property)
-                str == "-" || str.startsWith("--") -> resultValid()
                 !SnyggVarValue.VariableNameRegex.matches(str) -> {
                     resultInvalid(error = R.string.ext__validation__error_property, "variable_name_regex" to SnyggVarValue.VariableNameRegex)
                 }
-                else -> resultValid(hint = R.string.ext__validation__hint_property)
+                else -> resultValid()
             }
         }
     }
 
-    val SnyggSolidColorValue = ValidationRule<String> {
-        forKlass = org.florisboard.lib.snygg.value.SnyggSolidColorValue::class
+    val SnyggStaticColorValue = ValidationRule<String> {
+        forKlass = org.florisboard.lib.snygg.value.SnyggStaticColorValue::class
         forProperty = "color"
         validator { input ->
             val str = input.trim()
             when {
                 str.isBlank() -> resultInvalid(error = R.string.ext__validation__enter_color)
-                org.florisboard.lib.snygg.value.SnyggSolidColorValue.deserialize(str).isFailure -> {
+                org.florisboard.lib.snygg.value.SnyggStaticColorValue.deserialize(str).isFailure -> {
                     resultInvalid(error = R.string.ext__validation__error_color)
                 }
                 else -> resultValid()

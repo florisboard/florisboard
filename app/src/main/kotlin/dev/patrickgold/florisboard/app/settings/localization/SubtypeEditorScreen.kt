@@ -37,10 +37,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -58,9 +60,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.app.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
@@ -74,19 +76,19 @@ import dev.patrickgold.florisboard.ime.nlp.han.HanShapeBasedLanguageProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
-import dev.patrickgold.florisboard.lib.compose.FlorisDropdownLikeButton
-import dev.patrickgold.florisboard.lib.compose.FlorisDropdownMenu
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.florisScrollbar
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
+import dev.patrickgold.jetpref.material.ui.JetPrefDropdownMenuDefaults
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import kotlinx.serialization.encodeToString
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisDropdownLikeButton
+import org.florisboard.lib.compose.florisScrollbar
+import org.florisboard.lib.compose.stringRes
+
 
 private val SelectComponentName = ExtensionComponentName("00", "00")
 private val SelectNlpProviderId = SelectComponentName.toString()
@@ -152,7 +154,7 @@ private class SubtypeEditorState(init: Subtype?) {
         layoutMap.value = subtype.layoutMap
     }
 
-    fun toSubtype() = runCatching<Subtype> {
+    fun toSubtype() = runCatching {
         check(primaryLocale.value != SelectLocale)
         check(nlpProviders.value.spelling != SelectNlpProviderId)
         check(nlpProviders.value.suggestion != SelectNlpProviderId)
@@ -186,7 +188,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val selectValue = stringRes(R.string.settings__localization__subtype_select_placeholder)
     val selectListValues = remember(selectValue) { listOf(selectValue) }
 
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -194,12 +196,12 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
     val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
-    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
-    val composers by keyboardManager.resources.composers.observeAsNonNullState()
-    val currencySets by keyboardManager.resources.currencySets.observeAsNonNullState()
-    val layoutExtensions by keyboardManager.resources.layouts.observeAsNonNullState()
-    val popupMappings by keyboardManager.resources.popupMappings.observeAsNonNullState()
-    val subtypePresets by keyboardManager.resources.subtypePresets.observeAsNonNullState()
+    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
+    val composers by keyboardManager.resources.composers.collectAsState()
+    val currencySets by keyboardManager.resources.currencySets.collectAsState()
+    val layoutExtensions by keyboardManager.resources.layouts.collectAsState()
+    val popupMappings by keyboardManager.resources.popupMappings.collectAsState()
+    val subtypePresets by keyboardManager.resources.subtypePresets.collectAsState()
 
     val subtypeEditor = rememberSaveable(saver = SubtypeEditorState.Saver) {
         val subtype = id?.let { subtypeManager.getSubtypeById(id) }
@@ -366,6 +368,7 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                     onClick = {
                         navController.navigate(Routes.Settings.SelectLocale)
                     },
+                    appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_popup_mapping)) {
@@ -375,16 +378,15 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val popupMappingLabels = remember(popupMappings) {
                     selectListValues + popupMappings.values.map { it.label }
                 }
-                var expanded by remember { mutableStateOf(false) }
+                val expanded = remember { mutableStateOf(false) }
                 val selectedIndex = popupMappingIds.indexOf(popupMapping).coerceAtLeast(0)
-                FlorisDropdownMenu(
-                    items = popupMappingLabels,
+                JetPrefDropdown(
+                    options = popupMappingLabels,
                     expanded = expanded,
-                    selectedIndex = selectedIndex,
+                    selectedOptionIndex = selectedIndex,
                     isError = showSelectAsError && selectedIndex == 0,
-                    onSelectItem = { popupMapping = popupMappingIds[it] },
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
+                    onSelectOption = { popupMapping = popupMappingIds[it] },
+                    appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
             SubtypePropertyDropdown(stringRes(R.string.settings__localization__subtype_characters_layout), LayoutType.CHARACTERS)
@@ -405,19 +407,18 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val nlpProviderMappingLabels = remember(nlpProviderMappings) {
                     selectListValues + nlpProviderMappings.values.map { it }
                 }
-                var expanded by remember { mutableStateOf(false) }
+                val expanded = remember { mutableStateOf(false) }
                 val selectedIndex = nlpProviderMappingIds.indexOf(nlpProviders.suggestion).coerceAtLeast(0)
-                FlorisDropdownMenu(
-                    items = nlpProviderMappingLabels,
+                JetPrefDropdown(
+                    options = nlpProviderMappingLabels,
                     expanded = expanded,
-                    selectedIndex = selectedIndex,
+                    selectedOptionIndex = selectedIndex,
                     isError = showSelectAsError && selectedIndex == 0,
-                    onSelectItem = { nlpProviders = SubtypeNlpProviderMap(
+                    onSelectOption = { nlpProviders = SubtypeNlpProviderMap(
                         suggestion = nlpProviderMappingIds[it],
                         spelling = nlpProviderMappingIds[it]
                     ) },
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
+                    appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
 
@@ -433,15 +434,14 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val composerNames = remember(composers) {
                     selectListValues + composers.values.map { it.label }
                 }
-                var expanded by remember { mutableStateOf(false) }
-                FlorisDropdownMenu(
-                    items = composerNames,
+                val expanded = remember { mutableStateOf(false) }
+                JetPrefDropdown(
+                    options = composerNames,
                     expanded = expanded,
-                    selectedIndex = composerIds.indexOf(composer).coerceAtLeast(0),
+                    selectedOptionIndex = composerIds.indexOf(composer).coerceAtLeast(0),
                     isError = showSelectAsError && composer == SelectComponentName,
-                    onSelectItem = { composer = composerIds[it] },
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
+                    onSelectOption = { composer = composerIds[it] },
+                    appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
             SubtypeProperty(stringRes(R.string.settings__localization__subtype_currency_set)) {
@@ -451,15 +451,14 @@ fun SubtypeEditorScreen(id: Long?) = FlorisScreen {
                 val currencySetNames = remember(currencySets) {
                     selectListValues + currencySets.values.map { it.label }
                 }
-                var expanded by remember { mutableStateOf(false) }
-                FlorisDropdownMenu(
-                    items = currencySetNames,
+                val expanded = remember { mutableStateOf(false) }
+                JetPrefDropdown(
+                    options = currencySetNames,
                     expanded = expanded,
-                    selectedIndex = currencySetIds.indexOf(currencySet).coerceAtLeast(0),
+                    selectedOptionIndex = currencySetIds.indexOf(currencySet).coerceAtLeast(0),
                     isError = showSelectAsError && currencySet == SelectComponentName,
-                    onSelectItem = { currencySet = currencySetIds[it] },
-                    onExpandRequest = { expanded = true },
-                    onDismissRequest = { expanded = false },
+                    onSelectOption = { currencySet = currencySetIds[it] },
+                    appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
                 )
             }
 
@@ -557,16 +556,15 @@ private fun SubtypeLayoutDropdown(
     val layoutIds = remember(layouts) { SelectListKeys + layouts.keys.toList() }
     val layoutLabels = remember(layouts) { selectListValues + layouts.values.map { it.label } }
     val layoutId = remember(layoutMap) { layoutMap[layoutType] }
-    var expanded by remember { mutableStateOf(false) }
+    val expanded = remember { mutableStateOf(false) }
     val selectedIndex = layoutIds.indexOf(layoutId).coerceAtLeast(0)
-    FlorisDropdownMenu(
-        items = layoutLabels,
+    JetPrefDropdown(
+        options = layoutLabels,
         expanded = expanded,
-        selectedIndex = selectedIndex,
+        selectedOptionIndex = selectedIndex,
         isError = showSelectAsError && selectedIndex == 0,
-        onSelectItem = { onLayoutMapChanged(layoutMap.copy(layoutType, layoutIds[it])!!) },
-        onExpandRequest = { expanded = true },
-        onDismissRequest = { expanded = false },
+        onSelectOption = { onLayoutMapChanged(layoutMap.copy(layoutType = layoutType, componentName = layoutIds[it])!!) },
+        appearance = JetPrefDropdownMenuDefaults.outlined(shape = ShapeDefaults.Small),
     )
 }
 

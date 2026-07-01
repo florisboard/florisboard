@@ -1,35 +1,38 @@
 <img align="left" width="80" height="80"
 src=".github/repo_icon.png" alt="App icon">
 
-# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![FlorisBoard CI](https://github.com/florisboard/florisboard/actions/workflows/android.yml/badge.svg?event=push)](https://github.com/florisboard/florisboard/actions/workflows/android.yml)
+# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.org) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![FlorisBoard CI](https://github.com/florisboard/florisboard/actions/workflows/android.yml/badge.svg?event=push)](https://github.com/florisboard/florisboard/actions/workflows/android.yml)
 
-**FlorisBoard** is a free and open-source keyboard for Android 7.0+
+**FlorisBoard** is a free and open-source keyboard for Android 8.0+
 devices. It aims at being modern, user-friendly and customizable while
-fully respecting your privacy. Currently in early-beta state.
+fully respecting your privacy. Currently in beta state.
 
 <table>
 <tr>
-<th align="center" width="50%">
+<th style="text-align: center; width: 50%">
 <h3>Stable <a href="https://github.com/florisboard/florisboard/releases/latest"><img alt="Latest stable release" src="https://img.shields.io/github/v/release/florisboard/florisboard?sort=semver&display_name=tag&color=28a745"></a></h3>
 </th>
-<th align="center" width="50%">
+<th style="text-align: center; width: 50%">
 <h3>Preview <a href="https://github.com/florisboard/florisboard/releases"><img alt="Latest preview release" src="https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases&sort=semver&display_name=tag&color=fd7e14"></a></h3>
 </th>
 </tr>
 <tr>
-<td valign="top">
+<td style="vertical-align: top">
 <p><i>Major versions only</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
 </td>
-<td valign="top">
+<td style="vertical-align: top">
 <p><i>Major + Alpha/Beta/Rc versions</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
 </td>
 </tr>
 <tr>
-<td valign="top">
-<p><a href="https://f-droid.org/packages/dev.patrickgold.florisboard"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="64" alt="F-Droid badge"></a></p>
+<td style="vertical-align: top">
+<p>
+<a href="https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge"></a>
+<a href="https://f-droid.org/packages/dev.patrickgold.florisboard"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="64" alt="F-Droid badge"></a>
+</p>
 <p>
 
-**Google Play**: Join the [FlorisBoard Test Group](https://groups.google.com/g/florisboard-public-alpha-test), then visit the [testing page](https://play.google.com/apps/testing/dev.patrickgold.florisboard). Once joined and installed, updates will be delivered like for any other app. ([Store entry](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard))
+**Google Play**: Join the [FlorisBoard Test Group](https://groups.google.com/g/florisboard-closed-beta-test), then visit the [testing page](https://play.google.com/apps/testing/dev.patrickgold.florisboard). Once joined and installed, updates will be delivered like for any other app. ([Store entry](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard))
 
 </p>
 <p>
@@ -43,11 +46,11 @@ fully respecting your privacy. Currently in early-beta state.
 
 </p>
 </td>
-<td valign="top">
+<td style="vertical-align: top">
 <p><a href="https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard.beta"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge"></a></p>
 <p>
 
-**Google Play**: Join the [FlorisBoard Test Group](https://groups.google.com/g/florisboard-public-alpha-test), then visit the [preview testing page](https://play.google.com/apps/testing/dev.patrickgold.florisboard.beta). Once joined and installed, updates will be delivered like for any other app. ([Store entry](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard.beta))
+**Google Play**: Join the [FlorisBoard Test Group](https://groups.google.com/g/florisboard-closed-beta-test), then visit the [preview testing page](https://play.google.com/apps/testing/dev.patrickgold.florisboard.beta). Once joined and installed, updates will be delivered like for any other app. ([Store entry](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard.beta))
 
 </p>
 <p>
@@ -64,7 +67,7 @@ fully respecting your privacy. Currently in early-beta state.
 </tr>
 </table>
 
-Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
+Beginning with v0.7 FlorisBoard will enter the public beta on Google Play.
 
 ## Highlighted features
 - Integrated clipboard manager / history
@@ -74,7 +77,7 @@ Beginning with v0.6.0 FlorisBoard will enter the public beta on Google Play.
 
 > [!IMPORTANT]
 > Word suggestions/spell checking are not included in the current releases
-> and are a major goal for the v0.5 milestone.
+> and are a major goal for the v0.6 milestone.
 
 Feature roadmap: See [ROADMAP.md](ROADMAP.md)
 
@@ -84,7 +87,7 @@ different ways to help out, please see the [contribution guidelines](CONTRIBUTIN
 
 ## Addons Store
 The official [Addons Store](https://beta.addons.florisboard.org) offers the possibility for the community to share and download FlorisBoard extensions.
-Instructions on how to publish addons can be found [here](https://github.com/florisboard/florisboard/wiki/How-to-publish-on-FlorisBoard-Addons).
+Instructions on how to publish addons can be found [here](https://docs.florisboard.org/publishing).
 
 Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store!
 
@@ -93,8 +96,24 @@ Many thanks to Ali ([@4H1R](https://github.com/4H1R)) for implementing the store
 > Later on we plan to add support for language packs and keyboard extensions.
 
 ## List of permissions FlorisBoard requests
-Please refer to this [page](https://github.com/florisboard/florisboard/wiki/List-of-permissions-FlorisBoard-requests)
+Please refer to this [page](https://docs.florisboard.org/permissions)
 to get more information on this topic.
+
+## APK signing certificate hashes
+
+The package names and SHA-256 hashes of the signature certificate are listed below, so you can verify both FlorisBoard variants with apksigner by using `apksigner verify --print-certs florisboard-<version>-<track>.apk` when you download the APK.
+If you have [AppVerifier](https://github.com/soupslurpr/AppVerifier) installed, you can alternatively copy both the package name and the hash of the corresponding track and share them to AppVerifier.
+
+##### Stable track:
+
+dev.patrickgold.florisboard<br>
+0B:80:71:64:50:8E:AF:EB:1F:BB:81:5B:E7:A2:3C:77:FE:68:9D:94:B1:43:75:C9:9B:DA:A9:B6:57:7F:D6:D6
+
+##### Preview track:
+
+dev.patrickgold.florisboard.beta<br>
+0B:80:71:64:50:8E:AF:EB:1F:BB:81:5B:E7:A2:3C:77:FE:68:9D:94:B1:43:75:C9:9B:DA:A9:B6:57:7F:D6:D6
+
 
 ## Used libraries, components and icons
 * [AndroidX libraries](https://github.com/androidx/androidx) by
@@ -114,7 +133,7 @@ Many thanks to [Nikolay Anzarov](https://www.behance.net/nikolayanzarov) ([@Bloo
 
 ## License
 ```
-Copyright 2020-2025 The FlorisBoard Contributors
+Copyright 2020-2026 The FlorisBoard Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

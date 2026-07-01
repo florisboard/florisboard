@@ -22,20 +22,20 @@ import android.os.Build
 import android.os.Debug
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.AppPrefs
+import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
 import dev.patrickgold.florisboard.subtypeManager
-import org.florisboard.lib.android.systemService
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import org.florisboard.lib.android.systemService
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Devtools {
-    fun generateDebugLog(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLog(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             append(generateDebugLogHeader(context, prefs))
             if (includeLogcat) {
@@ -45,7 +45,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogHeader(context: Context, prefs: AppPrefs? = null): String {
+    fun generateDebugLogHeader(context: Context, prefs: FlorisPreferenceModel? = null): String {
         return buildString {
             append(generateSystemInfoLog(context))
             appendLine()
@@ -61,7 +61,7 @@ object Devtools {
         }
     }
 
-    fun generateDebugLogForGithub(context: Context, prefs: AppPrefs? = null, includeLogcat: Boolean = false): String {
+    fun generateDebugLogForGithub(context: Context, prefs: FlorisPreferenceModel? = null, includeLogcat: Boolean = false): String {
         return buildString {
             appendLine("<details>")
             appendLine("<summary>Detailed info (Debug log header)</summary>")
@@ -113,7 +113,7 @@ object Devtools {
         }
     }
 
-    fun generateFeatureConfigLog(prefs: AppPrefs, withTitle: Boolean = true): String {
+    fun generateFeatureConfigLog(prefs: FlorisPreferenceModel, withTitle: Boolean = true): String {
         return buildString {
             if (withTitle) appendLine("======= FEATURE CONFIG =======")
             append("Smartbar enabled            : ").appendLine(prefs.smartbar.enabled.get())
@@ -128,9 +128,9 @@ object Devtools {
         return buildString {
             if (withTitle) appendLine("======= EXTENSION CONFIG =======")
             appendLine("Theme extensions    : ")
-            context.extensionManager().value.themes.value?.forEach { append("    ").appendLine(it.meta.id) }
+            context.extensionManager().value.themes.value.forEach { append("    ").appendLine(it.meta.id) }
             appendLine("Language Packs      : ")
-            context.extensionManager().value.languagePacks.value?.forEach { append("    ").appendLine(it.meta.id) }
+            context.extensionManager().value.languagePacks.value.forEach { append("    ").appendLine(it.meta.id) }
         }
     }
 

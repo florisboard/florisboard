@@ -43,5 +43,7 @@ enum class InputShiftState(val value: Int) {
         fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: UNSHIFTED
     }
 
+    override fun toString() = name.lowercase()
+
     fun toInt() = value
 }

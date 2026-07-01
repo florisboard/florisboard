@@ -19,8 +19,8 @@ package dev.patrickgold.florisboard.ime.clipboard
 import android.content.ClipData
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
@@ -43,27 +43,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
-import dev.patrickgold.florisboard.app.florisPreferenceModel
-import dev.patrickgold.florisboard.lib.compose.ProvideLocalizedResources
-import dev.patrickgold.florisboard.lib.compose.stringRes
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.android.AndroidClipboardManager
+import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.android.systemService
+import org.florisboard.lib.compose.ProvideLocalizedResources
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.kotlin.mimeTypeFilterOf
 
 class FlorisCopyToClipboardActivity : ComponentActivity() {
     private var error: CopyToClipboardError? = null
     private var bitmap: Bitmap? = null
+    private val clipboardManager by lazy { systemService(AndroidClipboardManager::class) }
+    private val filter = mimeTypeFilterOf("image/*")
 
     internal enum class CopyToClipboardError {
         UNKNOWN_ERROR,
-        ANDROID_VERSION_TO_OLD_ERROR,
         TYPE_NOT_SUPPORTED_ERROR;
 
         @Composable
@@ -71,9 +73,18 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
             val textId = when (this) {
                 UNKNOWN_ERROR -> R.string.send_to_clipboard__unknown_error
                 TYPE_NOT_SUPPORTED_ERROR -> R.string.send_to_clipboard__type_not_supported_error
-                ANDROID_VERSION_TO_OLD_ERROR -> R.string.send_to_clipboard__android_version_to_old_error
             }
             return stringRes(id = textId)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        handleIntent(intent)
+
+        setContent {
+            Content()
         }
     }
 
@@ -82,67 +93,74 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         super.onPause()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val systemClipboardManager = this.systemService(AndroidClipboardManager::class)
+    private fun handleIntent(intent: Intent) {
         val type = intent.type
         val action = intent.action
 
-        val prefs by florisPreferenceModel()
-
         if (Intent.ACTION_SEND != action || type == null) {
             error = CopyToClipboardError.UNKNOWN_ERROR
-        } else {
-            if (type.startsWith("image/")) {
-                val hasExtraStream = intent.hasExtra(Intent.EXTRA_STREAM)
-                if (!hasExtraStream) {
-                    error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
-                } else {
-                    // pasting images via virtual keyboard only available since Android 7.1 (API 25)
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
-                        error = CopyToClipboardError.ANDROID_VERSION_TO_OLD_ERROR
-                    } else {
-                        val uri: Uri? =
-                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                                @Suppress("DEPRECATION")
-                                intent.getParcelableExtra(Intent.EXTRA_STREAM)
-                            } else {
-                                intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
-                            }
-                        val clip = ClipData.newUri(contentResolver, "image", uri)
-                        systemClipboardManager.setPrimaryClip(clip)
-                        bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-                    }
-                }
-            } else {
-                error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
-            }
+            return
+        }
+        if (!filter.matches(type) || !intent.hasExtra(Intent.EXTRA_STREAM)) {
+            error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
+            return
         }
 
-        setContent {
-            ProvideLocalizedResources(this, forceLayoutDirection = LayoutDirection.Ltr) {
-                val theme by prefs.advanced.settingsTheme.observeAsState()
-                val accentColor by prefs.advanced.accentColor.observeAsState()
-                FlorisAppTheme(theme, accentColor.isUnspecified) {
-                    BottomSheet {
-                        Row {
-                            Text(
-                                text = error?.showError()
-                                    ?: bitmap?.let { stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard) }
-                                    ?: stringRes(R.string.send_to_clipboard__unknown_error),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.weight(1f),
+        val uri: Uri? =
+            if (AndroidVersion.ATLEAST_API33_T) {
+                intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableExtra(Intent.EXTRA_STREAM)
+            }
+
+        if (uri == null) {
+            error = CopyToClipboardError.TYPE_NOT_SUPPORTED_ERROR
+            return
+        }
+        bitmap = uriToBitmap(uri)
+    }
+
+    private fun uriToBitmap(uri: Uri): Bitmap {
+        val clip = ClipData.newUri(contentResolver, "image", uri)
+        clipboardManager.setPrimaryClip(clip)
+        return if (AndroidVersion.ATLEAST_API28_P) {
+            val source = ImageDecoder.createSource(contentResolver, uri)
+            ImageDecoder.decodeBitmap(source)
+        } else {
+            @Suppress("DEPRECATION")
+            MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        }
+    }
+
+    @Composable
+    private fun Content() {
+        val prefs by FlorisPreferenceStore
+        ProvideLocalizedResources(
+            resourcesContext = this,
+            appName = R.string.app_name,
+            forceLayoutDirection = LayoutDirection.Ltr,
+        ) {
+            val theme by prefs.other.settingsTheme.collectAsState()
+            FlorisAppTheme(theme) {
+                BottomSheet {
+                    Row {
+                        Text(
+                            text = error?.showError()
+                                ?: bitmap?.let { stringRes(id = R.string.send_to_clipboard__description__copied_image_to_clipboard) }
+                                ?: stringRes(R.string.send_to_clipboard__unknown_error),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                    bitmap?.let {
+                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                            Image(
+                                modifier = Modifier
+                                    .padding(start = 64.dp, end = 64.dp, top = 32.dp, bottom = 8.dp),
+                                bitmap = bitmap!!.asImageBitmap(),
+                                contentDescription = null
                             )
-                        }
-                        bitmap?.let {
-                            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                                Image(
-                                    modifier = Modifier
-                                        .padding(start = 64.dp, end = 64.dp, top = 32.dp, bottom = 8.dp),
-                                    bitmap = bitmap!!.asImageBitmap(),
-                                    contentDescription = null
-                                )
-                            }
                         }
                     }
                 }
@@ -150,10 +168,9 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
         }
     }
 
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    internal fun BottomSheet(
+    private fun BottomSheet(
         content: @Composable ColumnScope.() -> Unit,
     ) {
         ModalBottomSheet(
@@ -167,9 +184,7 @@ class FlorisCopyToClipboardActivity : ComponentActivity() {
                         .align(Alignment.End)
                         .padding(16.dp),
                     onClick = { finish() },
-                    colors = ButtonDefaults.textButtonColors(
-                        //containerColor = buttonContainer.background.solidColor(context = context),
-                    )
+                    colors = ButtonDefaults.textButtonColors(),
                 ) {
                     Text(text = stringRes(id = R.string.action__ok))
                 }

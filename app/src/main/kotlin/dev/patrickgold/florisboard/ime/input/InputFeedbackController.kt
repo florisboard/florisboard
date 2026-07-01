@@ -21,7 +21,7 @@ import android.media.AudioManager
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.staticCompositionLocalOf
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -46,7 +46,7 @@ class InputFeedbackController private constructor(private val ims: InputMethodSe
         fun new(ims: InputMethodService) = InputFeedbackController(ims)
     }
 
-    private val prefs by florisPreferenceModel()
+    private val prefs by FlorisPreferenceStore
 
     private val audioManager = ims.systemServiceOrNull(AudioManager::class)
     private val vibrator = ims.systemVibratorOrNull()

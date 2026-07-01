@@ -37,13 +37,13 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.FlorisErrorCard
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.FlorisWarningCard
-import dev.patrickgold.florisboard.lib.compose.stringRes
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
+import org.florisboard.lib.compose.FlorisErrorCard
+import org.florisboard.lib.compose.FlorisWarningCard
+import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun HomeScreen() = FlorisScreen {
@@ -55,7 +55,7 @@ fun HomeScreen() = FlorisScreen {
     val context = LocalContext.current
 
     content {
-        val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
+        val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.collectAsState()
 
         val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
         val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
@@ -152,8 +152,8 @@ fun HomeScreen() = FlorisScreen {
         )
         Preference(
             icon = Icons.Outlined.Build,
-            title = stringRes(R.string.settings__advanced__title),
-            onClick = { navController.navigate(Routes.Settings.Advanced) },
+            title = stringRes(R.string.settings__other__title),
+            onClick = { navController.navigate(Routes.Settings.Other) },
         )
         Preference(
             icon = Icons.Outlined.Info,

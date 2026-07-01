@@ -54,53 +54,63 @@
     <string name="emoji__history__recent">Recent</string>
 
     <!-- Quick action strings -->
-    <string name="quick_action__arrow_up" maxLength="12">Arrow up</string>
+    <string name="quick_action__arrow_up" comment="Please mind the limited available space for the quick action strings">Arrow up</string>
     <string name="quick_action__arrow_up__tooltip">Perform arrow up</string>
-    <string name="quick_action__arrow_down" maxLength="12">Arrow down</string>
+    <string name="quick_action__arrow_down" comment="Please mind the limited available space for the quick action strings">Arrow down</string>
     <string name="quick_action__arrow_down__tooltip">Perform arrow down</string>
-    <string name="quick_action__arrow_left" maxLength="12">Arrow left</string>
+    <string name="quick_action__arrow_left" comment="Please mind the limited available space for the quick action strings">Arrow left</string>
     <string name="quick_action__arrow_left__tooltip">Perform arrow left</string>
-    <string name="quick_action__arrow_right" maxLength="12">Arrow right</string>
+    <string name="quick_action__arrow_right" comment="Please mind the limited available space for the quick action strings">Arrow right</string>
     <string name="quick_action__arrow_right__tooltip">Perform arrow right</string>
-    <string name="quick_action__clipboard_clear_primary_clip" maxLength="12">Clear primary clipboard clip</string>
+    <string name="quick_action__ime_hide_ui" comment="Please mind the limited available space for the quick action strings">Hide keyboard</string>
+    <string name="quick_action__ime_hide_ui__tooltip">Perform hide keyboard</string>
+    <string name="quick_action__clipboard_clear_primary_clip" comment="Please mind the limited available space for the quick action strings">Clear primary clipboard clip</string>
     <string name="quick_action__clipboard_clear_primary_clip__tooltip">Perform clear primary clipboard clip</string>
-    <string name="quick_action__clipboard_copy" maxLength="12">Copy</string>
+    <string name="quick_action__clipboard_copy" comment="Please mind the limited available space for the quick action strings">Copy</string>
     <string name="quick_action__clipboard_copy__tooltip">Perform clipboard copy</string>
-    <string name="quick_action__clipboard_cut" maxLength="12">Cut</string>
+    <string name="quick_action__clipboard_cut" comment="Please mind the limited available space for the quick action strings">Cut</string>
     <string name="quick_action__clipboard_cut__tooltip">Perform clipboard cut</string>
-    <string name="quick_action__clipboard_paste" maxLength="12">Paste</string>
+    <string name="quick_action__clipboard_paste" comment="Please mind the limited available space for the quick action strings">Paste</string>
     <string name="quick_action__clipboard_paste__tooltip">Perform clipboard paste</string>
-    <string name="quick_action__clipboard_select_all" maxLength="12">Select all</string>
+    <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Select all</string>
     <string name="quick_action__clipboard_select_all__tooltip">Perform clipboard select all</string>
-    <string name="quick_action__ime_ui_mode_clipboard" maxLength="12">Clipboard</string>
+    <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Forward delete</string>
+    <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Clipboard</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Open clipboard history</string>
-    <string name="quick_action__ime_ui_mode_media" maxLength="12">Emoji</string>
+    <string name="quick_action__ime_ui_mode_media" comment="Please mind the limited available space for the quick action strings">Emoji</string>
     <string name="quick_action__ime_ui_mode_media__tooltip">Open emoji panel</string>
-    <string name="quick_action__settings" maxLength="12">Settings</string>
+    <string name="quick_action__language_switch" comment="Please mind the limited available space for the quick action strings">Switch language</string>
+    <string name="quick_action__language_switch__tooltip">Perform language switch</string>
+    <string name="quick_action__settings" comment="Please mind the limited available space for the quick action strings">Settings</string>
     <string name="quick_action__settings__tooltip">Open settings</string>
-    <string name="quick_action__undo" maxLength="12">Undo</string>
+    <string name="quick_action__undo" comment="Please mind the limited available space for the quick action strings">Undo</string>
     <string name="quick_action__undo__tooltip">Undo the last input</string>
-    <string name="quick_action__redo" maxLength="12">Redo</string>
+    <string name="quick_action__redo" comment="Please mind the limited available space for the quick action strings">Redo</string>
     <string name="quick_action__redo__tooltip">Redo the last input</string>
-    <string name="quick_action__toggle_actions_overflow" maxLength="12">More actions</string>
+    <string name="quick_action__toggle_actions_overflow" comment="Please mind the limited available space for the quick action strings">More actions</string>
     <string name="quick_action__toggle_actions_overflow__tooltip">Show or hide additional actions</string>
-    <string name="quick_action__toggle_incognito_mode" maxLength="12">Incognito</string>
+    <string name="quick_action__toggle_incognito_mode" comment="Please mind the limited available space for the quick action strings">Incognito</string>
     <string name="quick_action__toggle_incognito_mode__tooltip">Toggle incognito mode</string>
-    <string name="quick_action__toggle_autocorrect" maxLength="12">Autocorrect</string>
+    <string name="quick_action__toggle_autocorrect" comment="Please mind the limited available space for the quick action strings">Autocorrect</string>
     <string name="quick_action__toggle_autocorrect__tooltip">Toggle autocorrect</string>
-    <string name="quick_action__voice_input" maxLength="12">Voice input</string>
+    <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Voice input</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Open voice input provider</string>
-    <string name="quick_action__one_handed_mode" maxLength="12">One-handed</string>
+    <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Floating</string>
+    <string name="quick_action__floating_window_mode__tooltip">Toggle floating keyboard window mode</string>
+    <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">One-handed</string>
     <string name="quick_action__one_handed_mode__tooltip">Toggle one-handed mode</string>
-    <string name="quick_action__drag_marker" maxLength="12" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Drag marker</string>
+    <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Resize</string>
+    <string name="quick_action__resize_mode__tooltip">Toggle resize mode</string>
+    <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Drag marker</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
-    <string name="quick_action__noop" maxLength="12" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">None</string>
+    <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">None</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">No operation</string>
     <string name="quick_actions_overflow__customize_actions_button">Reorder actions</string>
     <string name="quick_actions_editor__header">Customize action order</string>
     <string name="quick_actions_editor__subheader_sticky_action">Sticky action ({n})</string>
     <string name="quick_actions_editor__subheader_dynamic_actions">Dynamic actions ({n})</string>
     <string name="quick_actions_editor__subheader_hidden_actions">Hidden actions ({n})</string>
+    <string name="select_subtype_panel__header">Select subtype</string>
 
     <!-- Incognito mode strings -->
     <string name="incognito_mode__toast_after_enabled">Incognito mode is now enabled\n\n{app_name} will not learn words from your input while this mode is active</string>
@@ -119,6 +129,7 @@
 
     <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
+    <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Display keyboard labels in subtype language</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Add subtype</string>
     <string name="settings__localization__language_pack_title" comment="Title of the language pack manager screen for managing installed and custom language packs">Manage installed language packs</string>
@@ -161,7 +172,7 @@
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Day theme</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Night theme</string>
     <string name="pref__theme__theme_accent_color__label" comment="Label of accent color preference in Theme">
-        Accent color (Material you themes)
+        Accent color (Material You themes)
     </string>
     <string name="settings__theme_manager__title_manage" comment="Title of the theme manager screen for managing installed and custom themes">Manage installed themes</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Assets</string>
@@ -173,21 +184,22 @@
 
     <string name="settings__theme_editor__fine_tune__title">Fine tune editor</string>
     <string name="settings__theme_editor__fine_tune__level">Editing level</string>
-    <string name="settings__theme_editor__fine_tune__display_colors_as">Display colors as</string>
+    <string name="settings__theme_editor__fine_tune__color_representation">Color representation</string>
     <string name="settings__theme_editor__fine_tune__display_kbd_after_dialogs">Display keyboard after dialogs</string>
     <string name="settings__theme_editor__add_rule">Add rule</string>
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
-    <string name="settings__theme_editor__rule_element">Target element</string>
+    <string name="settings__theme_editor__rule_name">Element / Annotation</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_shift_states">Shift states</string>
+    <string name="settings__theme_editor__rule_modes">Target modes (layers)</string>
+    <string name="settings__theme_editor__rule_shift_states">Target shift states</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add key code</string>
     <string name="settings__theme_editor__edit_code">Edit key code</string>
     <string name="settings__theme_editor__no_codes_defined">Apply rule to all target elements.</string>
-    <string name="settings__theme_editor__codes_defined">Apply rule only to target elements with following key codes:</string>
+    <string name="settings__theme_editor__no_enum_value_to_add_anymore">All possible values have been added.</string>
     <string name="settings__theme_editor__code_already_exists">This key code is already defined.</string>
     <string name="settings__theme_editor__code_invalid">This key code is not valid. Ensure that the key code is within the range of {c_min} to {c_max} for characters or {i_min} to {i_max} for internal special keys.</string>
     <string name="settings__theme_editor__code_help_text">Alternatively the following links will help you to find the corresponding key code:</string>
@@ -204,62 +216,157 @@
     <string name="settings__theme_editor__property_value">Property value</string>
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Apply for all corners</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Edit color string</string>
+    <string name="settings__theme_editor__file_selector_dialog_title">Select file</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">No files have been added to this extension yet. Please use the "{action_title}" action in the previous screen to import files.</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">Is night theme</string>
     <string name="settings__theme_editor__component_meta_is_borderless">Is borderless</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Stylesheet path</string>
+    <string name="settings__theme_editor__component_meta_material_you__title">Material You</string>
+    <string name="settings__theme_editor__stylesheet_error_title">Stylesheet error</string>
+    <string name="settings__theme_editor__stylesheet_error_description">{app_name} can try to leniently load the stylesheet and add missing schemas, rules, or remove invalid rules, properties, or values. Do you want {app_name} to apply these changes?</string>
+    <string name="settings__theme_editor__component_meta_material_you__palette_style">Palette style</string>
+    <string name="settings__theme_editor__component_meta_material_you__color_contrast">Color contrast</string>
+    <string name="settings__theme_editor__component_meta_material_you__spec_version">Spec version</string>
 
-    <string name="snygg__rule_element__defines">Variables</string>
-    <string name="snygg__rule_element__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
-    <string name="snygg__rule_element__keyboard">Keyboard window</string>
+    <string name="snygg__rule_annotation__defines">Variables</string>
+    <string name="snygg__rule_annotation__defines_description">Define variables within this rule to re-use common colors or sizes in your stylesheet.</string>
+    <string name="snygg__rule_annotation__font">Font</string>
+    <string name="snygg__rule_annotation__font_name">Font name</string>
+
+    <string name="snygg__rule_element__root">Root</string>
+    <string name="snygg__rule_element__window">Window</string>
+    <string name="snygg__rule_element__window_inner">Window Inner</string>
+
+    <string name="snygg__rule_element__window_move_handle">Window move handle</string>
+    <string name="snygg__rule_element__window_resize_action">Window resize action</string>
+    <string name="snygg__rule_element__window_resize_handle">Window resize handle</string>
+    <string name="snygg__rule_element__window_resize_overlay_fixed">Window resize overlay fixed</string>
+    <string name="snygg__rule_element__floating_dock_to_fixed_indicator">Floating dock to fixed indicator</string>
+
     <string name="snygg__rule_element__key">Key</string>
     <string name="snygg__rule_element__key_hint">Key hint</string>
-    <string name="snygg__rule_element__key_popup">Key popup</string>
+    <string name="snygg__rule_element__key_popup_box">Key popup box</string>
+    <string name="snygg__rule_element__key_popup_element">Key popup element</string>
+    <string name="snygg__rule_element__key_popup_extended_indicator">Key popup extended indicator</string>
+
     <string name="snygg__rule_element__clipboard_header">Clipboard header</string>
+    <string name="snygg__rule_element__clipboard_header_button">Clipboard header button</string>
+    <string name="snygg__rule_element__clipboard_header_text">Clipboard header text</string>
+    <string name="snygg__rule_element__clipboard_subheader">Clipboard subheader</string>
+    <string name="snygg__rule_element__clipboard_content">Clipboard content</string>
+    <string name="snygg__rule_element__clipboard_filter_row">Clipboard filter row</string>
+    <string name="snygg__rule_element__clipboard_filter_chip">Clipboard filter chip</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_icon">Clipboard filter chip icon</string>
+    <string name="snygg__rule_element__clipboard_filter_chip_text">Clipboard filter chip text</string>
+    <string name="snygg__rule_element__clipboard_grid">Clipboard grid</string>
     <string name="snygg__rule_element__clipboard_item">Clipboard item</string>
+    <string name="snygg__rule_element__clipboard_item_description">Clipboard item description</string>
     <string name="snygg__rule_element__clipboard_item_popup">Clipboard item popup</string>
-    <string name="snygg__rule_element__emoji_key">Emoji key</string>
-    <string name="snygg__rule_element__emoji_key_popup">Emoji key popup</string>
-    <string name="snygg__rule_element__emoji_key_tab">Emoji tab</string>
+    <string name="snygg__rule_element__clipboard_item_timestamp">Clipboard item timestamp</string>
+    <string name="snygg__rule_element__clipboard_item_actions">Clipboard item actions</string>
+    <string name="snygg__rule_element__clipboard_item_action">Clipboard item action</string>
+    <string name="snygg__rule_element__clipboard_item_action_icon">Clipboard item action icon</string>
+    <string name="snygg__rule_element__clipboard_item_action_text">Clipboard item action text</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog">Clipboard clear all dialog</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_message">Clipboard clear all dialog message</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_buttons">Clipboard clear all dialog buttons</string>
+    <string name="snygg__rule_element__clipboard_clear_all_dialog_button">Clipboard clear all dialog button</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_title">Clipboard history disabled title</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_message">Clipboard history disabled message</string>
+    <string name="snygg__rule_element__clipboard_history_disabled_button">Clipboard history disabled button</string>
+    <string name="snygg__rule_element__clipboard_history_locked_title">Clipboard history locked title</string>
+    <string name="snygg__rule_element__clipboard_history_locked_message">Clipboard history locked message</string>
+
     <string name="snygg__rule_element__extracted_landscape_input_layout">Landscape input layout</string>
     <string name="snygg__rule_element__extracted_landscape_input_field">Landscape input field</string>
     <string name="snygg__rule_element__extracted_landscape_input_action">Landscape input action</string>
+
     <string name="snygg__rule_element__glide_trail">Glide trail</string>
+
     <string name="snygg__rule_element__incognito_mode_indicator">Incognito mode indicator</string>
+
+    <string name="snygg__rule_element__inline_autofill_chip">Inline autofill chip</string>
+
+    <string name="snygg__rule_element__media">Media</string>
+
+    <string name="snygg__rule_element__media_emoji_subheader">Media emoji subheader</string>
+    <string name="snygg__rule_element__media_emoji_key">Media emoji key</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_box">Media emoji key popup box</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_element">Media emoji key popup element</string>
+    <string name="snygg__rule_element__media_emoji_key_popup_extended_indicator">Media emoji key popup extended indicator</string>
+    <string name="snygg__rule_element__media_emoji_tab">Media emoji tab</string>
+
+    <string name="snygg__rule_element__media_bottom_row">Media bottom row</string>
+    <string name="snygg__rule_element__media_bottom_row_button">Media bottom row button</string>
+
     <string name="snygg__rule_element__one_handed_panel">One-handed panel</string>
+    <string name="snygg__rule_element__one_handed_panel_button">One-handed panel button</string>
+
     <string name="snygg__rule_element__smartbar">Smartbar</string>
     <string name="snygg__rule_element__smartbar_shared_actions_row">Smartbar shared actions row</string>
     <string name="snygg__rule_element__smartbar_shared_actions_toggle">Smartbar shared actions toggle</string>
     <string name="snygg__rule_element__smartbar_extended_actions_row">Smartbar extended actions row</string>
     <string name="snygg__rule_element__smartbar_extended_actions_toggle">Smartbar extended actions toggle</string>
     <string name="snygg__rule_element__smartbar_action_key">Smartbar action key</string>
+
     <string name="snygg__rule_element__smartbar_action_tile">Smartbar action tile</string>
+    <string name="snygg__rule_element__smartbar_action_tile_icon">Smartbar action tile icon</string>
+    <string name="snygg__rule_element__smartbar_action_tile_text">Smartbar action tile text</string>
     <string name="snygg__rule_element__smartbar_actions_overflow">Smartbar actions overflow</string>
     <string name="snygg__rule_element__smartbar_actions_overflow_customize_button">Smartbar actions overflow customize button</string>
+
     <string name="snygg__rule_element__smartbar_actions_editor">Smartbar actions editor</string>
     <string name="snygg__rule_element__smartbar_actions_editor_header">Smartbar actions editor header</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_header_button">Smartbar actions editor header button</string>
     <string name="snygg__rule_element__smartbar_actions_editor_subheader">Smartbar actions editor subheader</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile_grid">Smartbar actions editor tile grid</string>
+    <string name="snygg__rule_element__smartbar_actions_editor_tile">Smartbar actions editor tile</string>
+
     <string name="snygg__rule_element__smartbar_candidates_row">Smartbar candidates row</string>
     <string name="snygg__rule_element__smartbar_candidate_word">Smartbar candidate word</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_text">Smartbar candidate word text</string>
+    <string name="snygg__rule_element__smartbar_candidate_word_secondary_text">Smartbar candidate word secondary text</string>
     <string name="snygg__rule_element__smartbar_candidate_clip">Smartbar candidate clip</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_icon">Smartbar candidate clip icon</string>
+    <string name="snygg__rule_element__smartbar_candidate_clip_text">Smartbar candidate clip text</string>
     <string name="snygg__rule_element__smartbar_candidate_spacer">Smartbar candidate spacer</string>
-    <string name="snygg__rule_element__system_nav_bar">System navigation bar</string>
+
+    <string name="snygg__rule_element__subtype_panel">Subtype panel</string>
+    <string name="snygg__rule_element__subtype_panel_header">Subtype panel header</string>
+    <string name="snygg__rule_element__subtype_panel_list">Subtype panel list</string>
+    <string name="snygg__rule_element__subtype_panel_list_item">Subtype panel list item</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_icon_leading">Subtype panel list item icon (leading)</string>
+    <string name="snygg__rule_element__subtype_panel_list_item_text">Subtype panel list item text</string>
+
     <string name="snygg__rule_selector__pressed">Pressed</string>
     <string name="snygg__rule_selector__focus">Focused</string>
+    <string name="snygg__rule_selector__hover">Hover</string>
     <string name="snygg__rule_selector__disabled">Disabled</string>
-    <string name="snygg__property_name__width">Width</string>
-    <string name="snygg__property_name__height">Height</string>
+
     <string name="snygg__property_name__background">Background</string>
     <string name="snygg__property_name__foreground">Foreground</string>
+    <string name="snygg__property_name__background_image">Background image</string>
+    <string name="snygg__property_name__content_scale">Content scale</string>
     <string name="snygg__property_name__border_color">Border color</string>
     <string name="snygg__property_name__border_style">Border style</string>
     <string name="snygg__property_name__border_width">Border width</string>
     <string name="snygg__property_name__font_family">Font family</string>
     <string name="snygg__property_name__font_size">Font size</string>
     <string name="snygg__property_name__font_style">Font style</string>
-    <string name="snygg__property_name__font_variant">Font variant</string>
     <string name="snygg__property_name__font_weight">Font weight</string>
+    <string name="snygg__property_name__letter_spacing">Letter spacing</string>
+    <string name="snygg__property_name__line_height">Line height</string>
+    <string name="snygg__property_name__margin">Margin</string>
+    <string name="snygg__property_name__padding">Padding</string>
+    <string name="snygg__property_name__shadow_color">Shadow color</string>
     <string name="snygg__property_name__shadow_elevation">Shadow elevation</string>
     <string name="snygg__property_name__shape">Shape</string>
+    <string name="snygg__property_name__clip">Clip</string>
+    <string name="snygg__property_name__src">Source</string>
+    <string name="snygg__property_name__text_align">Text align</string>
+    <string name="snygg__property_name__text_decoration_line">Text decoration line</string>
+    <string name="snygg__property_name__text_max_lines">Text max lines</string>
+    <string name="snygg__property_name__text_overflow">Text overflow</string>
     <string name="snygg__property_name__var_primary">Primary color</string>
     <string name="snygg__property_name__var_primary_variant">Primary color (variant)</string>
     <string name="snygg__property_name__var_secondary">Secondary color</string>
@@ -274,11 +381,19 @@
     <string name="snygg__property_name__var_on_surface_variant">Foreground of surface (variant)</string>
     <string name="snygg__property_name__var_shape">Common shape</string>
     <string name="snygg__property_name__var_shape_variant">Common shape (variant)</string>
+
     <string name="snygg__property_value__explicit_inherit">Inherit</string>
+    <string name="snygg__property_value__defined_var">Var reference</string>
+    <string name="snygg__property_value__yes">Yes</string>
+    <string name="snygg__property_value__no">No</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
     <string name="snygg__property_value__material_you_light_color">Material You color (Light)</string>
     <string name="snygg__property_value__material_you_dark_color">Material You color (Dark)</string>
-    <string name="snygg__property_value__image_ref">Image reference</string>
+    <string name="snygg__property_value__font_family_generic">Font family (generic)</string>
+    <string name="snygg__property_value__font_family_custom">Font family (custom)</string>
+    <string name="snygg__property_value__font_style">Font style</string>
+    <string name="snygg__property_value__font_weight">Font weight</string>
+    <string name="snygg__property_value__padding">Padding or Margin</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
@@ -288,7 +403,12 @@
     <string name="snygg__property_value__dp_size">Size (dp)</string>
     <string name="snygg__property_value__sp_size">Size (sp)</string>
     <string name="snygg__property_value__percentage_size">Size (%)</string>
-    <string name="snygg__property_value__defined_var">Var reference</string>
+    <string name="snygg__property_value__content_scale">Content scale</string>
+    <string name="snygg__property_value__text_align">Text align</string>
+    <string name="snygg__property_value__text_decoration_line">Text decoration line</string>
+    <string name="snygg__property_value__text_max_lines">Text max lines</string>
+    <string name="snygg__property_value__text_overflow">Text overflow</string>
+    <string name="snygg__property_value__uri">URI reference</string>
 
     <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
@@ -308,7 +428,6 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibration strength</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">This feature requires a hardware vibrator, which seems to be missing on this device</string>
     <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">This feature requires hardware amplitude control support, which is missing on your device</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">This feature requires amplitude control support, which is only available on Android 8.0 or newer</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Key press vibration</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Key long press vibration</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Key repeated action vibration</string>
@@ -332,12 +451,8 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
-    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">One-handed mode keyboard width</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
-    <string name="pref__keyboard__height_factor__label" comment="Preference title">Keyboard height</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Bottom offset</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing factor</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
@@ -368,12 +483,9 @@
     <string name="pref__suggestion__display_mode__label" comment="Preference title">Suggestions display mode</string>
     <string name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">Block possibly offensive words</string>
     <string name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
-    <string name="pref__suggestion__clipboard_content_enabled__label" comment="Preference title">Clipboard content suggestions</string>
-    <string name="pref__suggestion__clipboard_content_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
-    <string name="pref__suggestion__clipboard_content_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
-    <string name="pref__suggestion__clipboard_content_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__suggestion__clipboard_content_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
+    <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Incognito mode</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -450,19 +562,18 @@
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
 
-    <string name="settings__advanced__title" comment="Title of Advanced settings">Advanced</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Settings theme</string>
-    <string name="pref__advanced__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Advanced">System default (AMOLED)</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Light</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dark</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Dark</string>
-    <string name="pref__advanced__settings_accent_color__label" comment="Label of accent color preference in Advanced">
+    <string name="settings__other__title" comment="Title of Other settings">Other</string>
+    <string name="pref__other__settings_theme__label" comment="Label of Settings theme preference in Other">Settings theme</string>
+    <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>
+    <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Light</string>
+    <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Dark</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED Dark</string>
+    <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">
         Settings accent color
     </string>
-    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Settings language</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
-    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
-    <string name="pref__advanced__incognito_mode__label" comment="Label of Incognito mode preference in Advanced">Incognito mode</string>
+    <string name="pref__other__settings_language__label" comment="Label of Settings language preference in Other">Settings language</string>
+    <string name="pref__other__show_app_icon__label" comment="Label of Show app icon preference in Other">Show app icon in launcher</string>
+    <string name="pref__other__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Other for Android 10+">Always enabled on Android 10+ due to restrictions of the system</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>
@@ -514,6 +625,14 @@
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
     <string name="setup__finish_up__finish_btn">Start Customizing</string>
+
+    <!-- Physical keyboard -->
+    <string name="physical_keyboard__title">Physical keyboard</string>
+    <string name="physical_keyboard__system_settings__title">System physical keyboard settings</string>
+    <string name="physical_keyboard__system_settings__summary">Layouts, keyboard shortcuts and modifier keys</string>
+    <string name="physical_keyboard__system_settings__summary_not_attached">Only available when keyboard is attached</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__title">Show on-screen keyboard</string>
+    <string name="physical_keyboard__show_on_screen_keyboard__summary">Show on-screen keyboard while using physical keyboard</string>
 
     <!-- Back up & Restore -->
     <string name="backup_and_restore__title">Back up &amp; Restore</string>
@@ -589,14 +708,19 @@
     <string name="clipboard__cleared_primary_clip">Cleared primary clip</string>
     <string name="clipboard__cleared_history">Cleared history</string>
     <string name="clipboard__cleared_full_history">Cleared full history</string>
-    <string name="clipboard__confirm_clear_history__message">Are you sure you want to clear your clipboard history?</string>
+    <string name="clipboard__confirm_clear_unfiltered_history__message">Are you sure you want to clear your full clipboard history? This will affect all items, except pinned ones.</string>
+    <string name="clipboard__confirm_clear_filtered_history__message">Are you sure you want to clear your clipboard history? This will affect all currently filtered items, except pinned ones.</string>
     <string name="settings__clipboard__title">Clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
     <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
-    <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
+    <string name="pref__clipboard__group_clipboard_suggestion__label">Clipboard suggestions</string>
+    <string name="pref__clipboard__suggestion_enabled__label" comment="Preference title">Clipboard content suggestions</string>
+    <string name="pref__clipboard__suggestion_enabled__summary" comment="Preference summary">Suggest previously copied clipboard content</string>
+    <string name="pref__clipboard__num_history_grid_columns__label">Number of grid columns</string>
+    <string name="pref__clipboard__suggestion_timeout__label" comment="Preference title; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__summary` and is the first part">Limit clipboard suggestions to</string>
+    <string name="pref__clipboard__suggestion_timeout__summary" comment="Preference summary; Translators: This should form a sentence together with `pref__clipboard__suggestion_timeout__label` and is the second part">Items copied within the last {v} s</string>
     <string name="pref__clipboard__group_clipboard_history__label">Clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items for quick access</string>
@@ -606,12 +730,12 @@
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Auto clean sensitive items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__label">Clear primary clip affects history</string>
-    <string name="pref__clipboard__clear_primary_clip_deletes_last_item__summary">Clearing the primary clip also deletes the latest history entry</string>
+    <string name="pref__clipboard__history_hide_on_paste__label">Hide history on paste</string>
+    <string name="pref__clipboard__history_hide_on_next_text_field__label">Hide history on next text field</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__label">Clear primary clip affects history</string>
+    <string name="pref__clipboard__clear_primary_clip_affects_history_if_unpinned__summary">Clearing the primary clip also removes it from the history, if not pinned</string>
     <string name="send_to_clipboard__unknown_error">An unknown error occurred. Please try again!</string>
     <string name="send_to_clipboard__type_not_supported_error">This media type is not supported.</string>
-    <string name="send_to_clipboard__android_version_to_old_error">The version of android is to old for this feature.
-    </string>
     <string name="send_to_clipboard__description__copied_image_to_clipboard">Copied below image to clipboard.</string>
 
 
@@ -633,10 +757,20 @@
     <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Render otherwise invisible helpers in drag&amp;drop screens for debugging</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Clear internal user dictionary database</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Clears all words from the dictionary database table</string>
+    <string name="devtools__reset_quick_actions_to_default__label">Reset Smartbar quick actions</string>
+    <string name="devtools__reset_quick_actions_to_default__summary">Reset Smartbar quick actions to default arrangement</string>
+    <string name="devtools__reset_quick_actions_to_default__toast_success">Successfully reset Smartbar quick actions to default</string>
     <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Reset \"{flag_name}\" flag</string>
     <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Debug action to re-show the setup screen</string>
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test crash report screen</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug action to purposely produce a crash</string>
+    <string name="devtools__group_ime_window_tools__title" comment="Title of IME window tools group in Devtools">IME window tools</string>
+    <string name="devtools__show_window_resize_handle_boundaries__label">Show window resize handle boundaries</string>
+    <string name="devtools__show_window_resize_handle_boundaries__summary">Show window resize handle boundaries for debugging</string>
+    <string name="devtools__reset_window_config__label">Reset window config</string>
+    <string name="devtools__reset_window_config__summary">Resets the window config (fixed/floating mode, paddings, offsets) to default</string>
+    <string name="devtools__reset_window_config__toast_success">Successfully reset window config to default</string>
+    <string name="devtools__reset_window_config__toast_failure">Failed to reset window config to default: {message}</string>
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android system tools</string>
     <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Global Android settings</string>
     <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Secure Android settings</string>
@@ -683,6 +817,8 @@
     <string name="ext__editor__metadata__message_invalid">The meta data for this extension is not valid, please check the meta data editor for details!</string>
     <string name="ext__editor__dependencies__title">Manage dependencies</string>
     <string name="ext__editor__files__title">Manage archive files</string>
+    <string name="ext__editor__files__type_fonts">Fonts</string>
+    <string name="ext__editor__files__type_images">Images</string>
     <string name="ext__editor__create_component__title">Create component</string>
     <string name="ext__editor__create_component__title_theme">Create theme</string>
     <string name="ext__editor__create_component__from_empty">Empty</string>
@@ -721,7 +857,6 @@
     <string name="ext__validation__error_stylesheet_path">Please enter a valid stylesheet path matching {stylesheet_path_regex}</string>
     <string name="ext__validation__enter_property">Please enter a variable name</string>
     <string name="ext__validation__error_property">Please enter a valid variable name matching {variable_name_regex}</string>
-    <string name="ext__validation__hint_property" tools:ignore="TypographyDashes">By convention a FlorisCSS variable name starts with two dashes (--)</string>
     <string name="ext__validation__enter_color">Please enter a color string</string>
     <string name="ext__validation__error_color">Please enter a valid color string</string>
     <string name="ext__validation__enter_dp_size">Please enter a dp size</string>
@@ -751,6 +886,7 @@
     <string name="action__delete">Delete</string>
     <string name="action__delete_confirm_title">Confirm delete</string>
     <string name="action__delete_confirm_message">Are you sure you want to delete \"{name}\"? This action can not be undone once executed.</string>
+    <string name="action__reset">Reset</string>
     <string name="action__reset_confirm_title">Confirm reset</string>
     <string name="action__reset_confirm_message">Are you sure you want to reset \"{name}\"? This action can not be undone once executed.</string>
     <string name="action__discard">Discard</string>
@@ -758,9 +894,14 @@
     <string name="action__discard_confirm_message">Are you sure you want to discard your unsaved changes? This action can not be undone once executed.</string>
     <string name="action__edit">Edit</string>
     <string name="action__export">Export</string>
+    <string name="action__export_file">Import file</string>
+    <string name="action__export_files">Import files</string>
     <string name="action__import">Import</string>
+    <string name="action__import_file">Import file</string>
+    <string name="action__import_files">Import files</string>
     <string name="action__no">No</string>
     <string name="action__ok">OK</string>
+    <string name="action__done">Done</string>
     <string name="action__restore">Restore</string>
     <string name="action__save">Save</string>
     <string name="action__select">Select</string>
@@ -782,6 +923,9 @@
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
     <string name="general__unlimited">Unlimited</string>
+    <string name="general__file_name">File name</string>
+    <string name="general__properties">Properties</string>
+    <string name="general__auto" comment="Generic shorthand for 'Automatic' value">Auto</string>
 
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
@@ -806,8 +950,18 @@
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
 
-    <string name="enum__display_colors_as__hex8" comment="Enum value label">Hexadecimal</string>
-    <string name="enum__display_colors_as__rgba" comment="Enum value label">Red Green Blue Alpha</string>
+    <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">No events</string>
+    <string name="enum__clipboard_sync_behavior__no_events__description" comment="Enum value description">No events are synced in this direction. In this mode, sync excludes text content.</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events" comment="Enum value label">Only clear events</string>
+    <string name="enum__clipboard_sync_behavior__only_clear_events__description" comment="Enum value description">Only events clearing clip data are synced in this direction. In this mode, sync excludes text content.</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events" comment="Enum value label">Only set events</string>
+    <string name="enum__clipboard_sync_behavior__only_set_events__description" comment="Enum value description">Only events setting clip data are synced in this direction. In this mode, sync includes text content.</string>
+    <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">All events</string>
+    <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">Both events setting and clearing clip data are synced in this direction. In this mode, sync includes text content.</string>
+
+    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">Red Green Blue</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">Hue Saturation Value</string>
 
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Always show</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Always show the keyboard after closing any editor dialog</string>
@@ -887,13 +1041,20 @@
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Shifted (automatic)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps lock</string>
 
+    <string name="enum__ime_window_mode__fixed" comment="Enum value label">Fixed</string>
+    <string name="enum__ime_window_mode__floating" comment="Enum value label">Floating</string>
+
+    <string name="enum__keyboard_mode__characters" comment="Enum value label">Characters</string>
+    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbols</string>
+    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbols 2</string>
+    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Numeric</string>
+    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Numeric advanced</string>
+    <string name="enum__keyboard_mode__phone" comment="Enum value label">Phone</string>
+    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Phone 2</string>
+
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
-
-    <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
-    <string name="enum__one_handed_mode__start" comment="Enum value label">Left-handed mode</string>
-    <string name="enum__one_handed_mode__end" comment="Enum value label">Right-handed mode</string>
 
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
@@ -941,6 +1102,7 @@
     <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Move cursor to start of page</string>
     <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Move cursor to end of page</string>
     <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Open clipboard manager/history</string>
+    <string name="enum__swipe_action__switch_to_media_context" comment="Enum value label">Open emoji panel</string>
     <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
     <string name="enum__swipe_action__redo" comment="Enum value label">Redo</string>
     <string name="enum__swipe_action__undo" comment="Enum value label">Undo</string>
@@ -950,7 +1112,8 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Switch to next subtype</string>
-    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Toggle Smartbar visibility</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Toggle smartbar visibility</string>
+    <string name="enum__swipe_action__toggle_compact_layout" comment="Enum value label">Toggle compact layout</string>
 
     <string name="enum__theme_mode__always_day" comment="Enum value label">Always day</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Always night</string>

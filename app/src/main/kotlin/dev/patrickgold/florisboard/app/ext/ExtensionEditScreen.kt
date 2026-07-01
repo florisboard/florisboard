@@ -34,7 +34,6 @@ import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,12 +42,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
+import dev.patrickgold.florisboard.app.settings.theme.PrettyPrintConfig
 import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
@@ -60,15 +62,9 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.cache.CacheManager
-import dev.patrickgold.florisboard.lib.compose.FlorisButtonBar
-import dev.patrickgold.florisboard.lib.compose.FlorisIconButton
-import dev.patrickgold.florisboard.lib.compose.FlorisInfoCard
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.FlorisOutlinedTextField
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
-import dev.patrickgold.florisboard.lib.compose.defaultFlorisOutlinedBox
-import dev.patrickgold.florisboard.lib.compose.stringRes
+import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.ext.Extension
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
@@ -83,15 +79,22 @@ import dev.patrickgold.florisboard.lib.ext.validate
 import dev.patrickgold.florisboard.lib.io.FlorisRef
 import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import org.florisboard.lib.snygg.SnyggStylesheetJsonConfig
 import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.vectorResource
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import org.florisboard.lib.android.showLongToast
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import java.util.*
+import org.florisboard.lib.compose.FlorisButtonBar
+import org.florisboard.lib.compose.FlorisIconButton
+import org.florisboard.lib.compose.FlorisInfoCard
+import org.florisboard.lib.compose.FlorisOutlinedBox
+import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import org.florisboard.lib.compose.stringRes
+import org.florisboard.lib.android.showLongToastSync
+import org.florisboard.lib.kotlin.io.deleteContentsRecursively
+import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.kotlin.io.writeJson
-import java.util.UUID
 import kotlin.reflect.KClass
 
 private val TextFieldVerticalPadding = 8.dp
@@ -197,7 +200,7 @@ private fun ExtensionEditScreenSheetSwitcher(
                     ManageDependenciesScreen(workspace)
                 }
                 is EditorAction.ManageFiles -> {
-                    ManageFilesScreen(workspace)
+                    ExtensionEditFilesScreen(workspace)
                 }
                 is EditorAction.CreateComponent<*> -> {
                     CreateComponentScreen(workspace, action.type)
@@ -261,17 +264,33 @@ private fun EditScreen(
             return
         }
         val manifest = extEditor.build()
+        workspace.saverDir.deleteContentsRecursively()
         val manifestFile = workspace.saverDir.subFile(ExtensionDefaults.MANIFEST_FILE_NAME)
         manifestFile.writeJson(manifest, ExtensionJsonConfig)
         when (extEditor) {
             is ThemeExtensionEditor -> {
+                // TODO: this is hacky
+                val fonts = workspace.extDir.subDir("fonts")
+                if (fonts.exists()) {
+                    fonts.copyRecursively(workspace.saverDir.subDir("fonts"), overwrite = true)
+                }
+                val images = workspace.extDir.subDir("images")
+                if (images.exists()) {
+                    images.copyRecursively(workspace.saverDir.subDir("images"), overwrite = true)
+                }
                 for (theme in extEditor.themes) {
                     val stylesheetFile = workspace.saverDir.subFile(theme.stylesheetPath())
                     stylesheetFile.parentFile?.mkdirs()
                     val stylesheetEditor = theme.stylesheetEditor
                     if (stylesheetEditor != null) {
-                        val stylesheet = stylesheetEditor.build()
-                        stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
+                        runCatching {
+                            val stylesheet = stylesheetEditor.build().toJson(PrettyPrintConfig).getOrThrow()
+                            stylesheetFile.writeText(stylesheet)
+                        }.onFailure {
+                            // TODO: better error handling
+                            context.showLongToastSync(it.message.toString())
+                            return
+                        }
                     } else {
                         val unmodifiedStylesheetFile = workspace.extDir.subFile(theme.stylesheetPath())
                         if (unmodifiedStylesheetFile.exists()) {
@@ -334,7 +353,7 @@ private fun EditScreen(
             )
             Preference(
                 onClick = { workspace.currentAction = EditorAction.ManageFiles },
-                icon = vectorResource(R.drawable.ic_file_blank),
+                icon = ImageVector.vectorResource(R.drawable.ic_file_blank),
                 title = stringRes(R.string.ext__editor__files__title),
             )
         }
@@ -582,35 +601,6 @@ private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<
     }
 }
 
-@Composable
-private fun ManageFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
-    title = stringRes(R.string.ext__editor__files__title)
-
-    fun handleBackPress() {
-        workspace.currentAction = null
-    }
-
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.Default.Close,
-        )
-    }
-
-    content {
-        BackHandler {
-            handleBackPress()
-        }
-
-        FlorisInfoCard(
-            modifier = Modifier.padding(all = 8.dp),
-            text = """
-                Managing archive files is currently not supported.
-                """.trimIndent().replace('\n', ' '),
-        )
-    }
-}
-
 private enum class CreateFrom {
     EMPTY,
     EXISTING;
@@ -638,7 +628,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 for (theme in editor.themes) {
                     put(ExtensionComponentName(extId, theme.id), theme)
                 }
-                for ((componentName, theme) in themeManager.indexedThemeConfigs.value ?: emptyMap()) {
+                for ((componentName, theme) in themeManager.indexedThemeConfigs.value.first) {
                     if (componentName.extensionId != extId) {
                         put(componentName, theme)
                     }
@@ -676,7 +666,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                     when (createFrom) {
                         CreateFrom.EMPTY -> {
                             if (editor.themes.any { it.id == newId.trim() }) {
-                                context.showLongToast("A theme with this ID already exists!")
+                                context.showLongToastSync("A theme with this ID already exists!")
                             } else {
                                 val componentEditor = ThemeExtensionComponentEditor(
                                     id = newId.trim(),
@@ -703,15 +693,14 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 val component = editor.themes.find { it.id == componentName.componentId } ?: return
                                 val componentEditor = component.let { c ->
                                     ThemeExtensionComponentEditor(
-                                        componentId, c.label, c.authors, c.isNightTheme, c.isBorderless,
-                                        c.isMaterialYouAware, stylesheetPath = "",
+                                        componentId, c.label, c.authors, c.isNightTheme, stylesheetPath = "",
                                     ).also { it.stylesheetEditor = c.stylesheetEditor }
                                 }
                                 if (componentEditor.stylesheetEditor != null) {
-                                    val stylesheet = componentEditor.stylesheetEditor!!.build()
                                     val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
                                     stylesheetFile.parentFile?.mkdirs()
-                                    stylesheetFile.writeJson(stylesheet, SnyggStylesheetJsonConfig)
+                                    val stylesheet = componentEditor.stylesheetEditor!!.build().toJson(PrettyPrintConfig).getOrThrow()
+                                    stylesheetFile.writeText(stylesheet)
                                     componentEditor.stylesheetEditor = null
                                 } else {
                                     val srcStylesheetFile = workspace.extDir.subFile(component.stylesheetPath())
@@ -721,7 +710,7 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                                 }
                                 editor.themes.add(componentEditor)
                             } else {
-                                val component = themeManager.indexedThemeConfigs.value?.get(componentName) ?: return
+                                val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
                                 val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
                                 componentEditor.id = componentId
                                 componentEditor.stylesheetPath = ""
@@ -813,36 +802,37 @@ private fun <T : ExtensionComponent> CreateComponentScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringRes(R.string.ext__meta__id),
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = newId,
                     onValueChange = { newId = it },
                     singleLine = true,
-                    showValidationError = showValidationErrors,
-                    validationResult = newIdValidation,
                 )
+                Validation(showValidationErrors, newIdValidation)
             }
             DialogProperty(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringRes(R.string.ext__meta__label),
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = newLabel,
                     onValueChange = { newLabel = it },
                     singleLine = true,
-                    showValidationError = showValidationErrors,
-                    validationResult = newLabelValidation,
                 )
+                Validation(showValidationErrors, newLabelValidation)
+
             }
             DialogProperty(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringRes(R.string.ext__meta__authors),
             ) {
-                FlorisOutlinedTextField(
+                JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = newAuthors,
                     onValueChange = { newAuthors = it },
-                    showValidationError = showValidationErrors,
-                    validationResult = newAuthorsValidation,
                 )
+                Validation(showValidationErrors, newAuthorsValidation)
             }
         }
     }
@@ -860,7 +850,6 @@ private fun EditorSheetTextField(
     showValidationError: Boolean = false,
     validationResult: ValidationResult? = null,
 ) {
-    val borderColor = MaterialTheme.colorScheme.outline
     Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
         Row(
             modifier = Modifier
@@ -880,18 +869,13 @@ private fun EditorSheetTextField(
                 )
             }
         }
-        FlorisOutlinedTextField(
+        JetPrefTextField(
             modifier = modifier.fillMaxWidth(),
             enabled = enabled,
             value = value,
             onValueChange = onValueChange,
             singleLine = singleLine,
-            showValidationError = showValidationError,
-            validationResult = validationResult,
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = borderColor,
-                disabledBorderColor = borderColor,
-            )
         )
+        Validation(showValidationError, validationResult)
     }
 }

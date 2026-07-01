@@ -48,6 +48,7 @@
     { "id": "fi", "authors": [ "patrickgold" ] },
     { "id": "fo", "authors": [ "BinFlush" ] },
     { "id": "fr", "authors": [ "patrickgold" ] },
+    { "id": "hi-IN", "authors": [ "npnpatidar" ] },
     { "id": "hr", "authors": [ "hedidnothingwrong" ] },
     { "id": "hu", "authors": [ "zoli111, gabik65" ] },
     { "id": "hy", "authors": [ "PJTSearch" ] },
@@ -56,8 +57,10 @@
     { "id": "it", "authors": [ "patrickgold" ] },
     { "id": "iw", "authors": [ "Antony" ] },
     { "id": "ja-JP-jis", "authors": [ "waelwindows" ] },
+    { "id": "ka-std", "authors": [ "nE" ] },
     { "id": "kab", "authors": [ "yanis867" ] },
     { "id": "ko", "authors": [ "patrickgold", "Hayleia" ] },
+    { "id": "ko-KR", "authors": [ "Shunnuo" ] },
     { "id": "ku", "authors": [ "GoRaN" ] },
     { "id": "lt", "authors": [ "patrickgold" ] },
     { "id": "lv", "authors": [ "patrickgold", "eandersons" ] },
@@ -406,6 +409,16 @@
       "currencySet": "org.florisboard.currencysets:armenian_dram",
       "popupMapping": "org.florisboard.localization:hy",
       "preferred": {
+        "characters": "org.florisboard.layouts:armenian_alt_phonetic",
+        "symbols": "org.florisboard.layouts:armenian"
+      }
+    },
+    {
+      "languageTag": "hy",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:armenian_dram",
+      "popupMapping": "org.florisboard.localization:hy",
+      "preferred": {
         "characters": "org.florisboard.layouts:western_armenian",
         "symbols": "org.florisboard.layouts:armenian"
       }
@@ -418,6 +431,15 @@
       "preferred": {
         "characters": "org.florisboard.layouts:eastern_armenian",
         "symbols": "org.florisboard.layouts:armenian"
+      }
+    },
+    {
+      "languageTag": "ka-GE",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:georgian_lari",
+      "popupMapping": "org.florisboard.localization:ka-std",
+      "preferred": {
+        "characters": "org.florisboard.layouts:georgian_standard"
       }
     },
     {
@@ -596,6 +618,15 @@
       }
     },
     {
+      "languageTag": "ko-KR",
+      "composer": "org.florisboard.composers:hangul-unicode",
+      "currencySet": "org.florisboard.currencysets:south_korean_won",
+      "popupMapping": "org.florisboard.localization:ko",
+      "preferred": {
+        "characters": "org.florisboard.layouts:korean_phonetic"
+      }
+    },
+    {
       "languageTag": "lt-LT",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:euro",
@@ -704,6 +735,16 @@
         "characters": "org.florisboard.layouts:bengali_unijoy",
         "numericRow": "org.florisboard.layouts:bengali",
         "numericAdvanced": "org.florisboard.layouts:bengali"
+      }
+    },
+    {
+      "languageTag": "hi-IN",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:indian_rupee",
+      "popupMapping": "org.florisboard.localization:hi-IN",
+      "preferred": {
+        "characters": "org.florisboard.layouts:hindi_in",
+        "numericRow": "org.florisboard.layouts:devanagari"
       }
     },
     {

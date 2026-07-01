@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
@@ -33,26 +34,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.app.florisPreferenceModel
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.CachedLayout
 import dev.patrickgold.florisboard.ime.keyboard.DebugLayoutComputationResult
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.observeAsNonNullState
 import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
-import org.florisboard.lib.android.AndroidVersion
+import dev.patrickgold.florisboard.themeManager
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import java.text.SimpleDateFormat
 import java.util.*
+import org.florisboard.lib.android.AndroidVersion
+import org.florisboard.lib.snygg.SnyggMissingSchemaException
 
 private val CardBackground = Color.Black.copy(0.6f)
 private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.default().base)
@@ -60,22 +62,25 @@ private val DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", FlorisLocale.
 @Composable
 fun DevtoolsOverlay(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val prefs by florisPreferenceModel()
+    val prefs by FlorisPreferenceStore
+    val appContext by context.appContext()
     val keyboardManager by context.keyboardManager()
+    val themeManager by context.themeManager()
 
-    val devtoolsEnabled by prefs.devtools.enabled.observeAsState()
-    val showPrimaryClip by prefs.devtools.showPrimaryClip.observeAsState()
-    val showInputStateOverlay by prefs.devtools.showInputStateOverlay.observeAsState()
-    val showSpellingOverlay by prefs.devtools.showSpellingOverlay.observeAsState()
-    val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.observeAsState()
+    val devtoolsEnabled by prefs.devtools.enabled.collectAsState()
+    val showPrimaryClip by prefs.devtools.showPrimaryClip.collectAsState()
+    val showInputStateOverlay by prefs.devtools.showInputStateOverlay.collectAsState()
+    val showSpellingOverlay by prefs.devtools.showSpellingOverlay.collectAsState()
+    val showInlineAutofillOverlay by prefs.devtools.showInlineAutofillOverlay.collectAsState()
+    val prefsLoaded by appContext.preferenceStoreLoaded.collectAsState()
 
     val debugLayoutResult by keyboardManager.layoutManager.debugLayoutComputationResultFlow.collectAsState()
+    val themeInfo by themeManager.activeThemeInfo.collectAsState()
 
     CompositionLocalProvider(
         LocalContentColor provides Color.White,
-        LocalLayoutDirection provides LayoutDirection.Ltr,
     ) {
-        Column(modifier = modifier) {
+        Column(modifier = modifier.fillMaxSize()) {
             if (devtoolsEnabled && showPrimaryClip) {
                 DevtoolsClipboardOverlay()
             }
@@ -90,6 +95,10 @@ fun DevtoolsOverlay(modifier: Modifier = Modifier) {
             }
             if (devtoolsEnabled && showInlineAutofillOverlay && AndroidVersion.ATLEAST_API30_R) {
                 DevtoolsInlineAutofillOverlay()
+            }
+            val loadFailure = themeInfo.loadFailure
+            if (loadFailure != null && prefsLoaded) {
+                DevtoolsStylesheetFailedToLoadOverlay(loadFailure)
             }
         }
     }
@@ -153,13 +162,13 @@ private fun DevtoolsLastLayoutComputationOverlay(debugLayoutResult: DebugLayoutC
             return@DevtoolsOverlayBox
         }
         DevtoolsSubGroup(title = "main") {
-            PrintResult(debugLayoutResult!!.main)
+            PrintResult(debugLayoutResult.main)
         }
         DevtoolsSubGroup(title = "mod") {
-            PrintResult(debugLayoutResult!!.mod)
+            PrintResult(debugLayoutResult.mod)
         }
         DevtoolsSubGroup(title = "ext") {
-            PrintResult(debugLayoutResult!!.ext)
+            PrintResult(debugLayoutResult.ext)
         }
     }
 }
@@ -169,7 +178,7 @@ private fun DevtoolsSpellingOverlay() {
     val context = LocalContext.current
     val nlpManager by context.nlpManager()
 
-    val debugOverlayVersion by nlpManager.debugOverlayVersion.observeAsNonNullState()
+    val debugOverlayVersion by nlpManager.debugOverlayVersion.collectAsState()
     val suggestionsInfos = remember(debugOverlayVersion) { nlpManager.debugOverlaySuggestionsInfos.snapshot() }
 
     val sortedEntries = suggestionsInfos.entries.sortedByDescending { it.key }
@@ -220,6 +229,39 @@ private fun DevtoolsInlineAutofillOverlay() {
                 DevtoolsText(text = "info.isPinned: ${info.isPinned}")
                 val view = inlineSuggestion.view
                 DevtoolsText(text = "view: ${view?.javaClass?.name}")
+            }
+        }
+    }
+}
+
+@Composable
+private fun DevtoolsStylesheetFailedToLoadOverlay(loadFailure: ThemeManager.LoadFailure) {
+    DevtoolsOverlayBox(title = "Failed to load stylesheet, fell back to base style") {
+        DevtoolsSubGroup(title = "Extension") {
+            DevtoolsText(text = "id:       ${loadFailure.extension.id}")
+            DevtoolsText(text = "title:    ${loadFailure.extension.title}")
+            DevtoolsText(text = "version:  ${loadFailure.extension.version}")
+        }
+        DevtoolsSubGroup(title = "Component") {
+            DevtoolsText(text = "id:       ${loadFailure.component.id}")
+            DevtoolsText(text = "label:    ${loadFailure.component.label}")
+            DevtoolsText(text = "path:     ${loadFailure.component.stylesheetPath()}")
+        }
+        val cause = loadFailure.cause
+        DevtoolsSubGroup(title = "Cause") {
+            DevtoolsText(text = "${cause.message}")
+        }
+        if (cause is SnyggMissingSchemaException) {
+            DevtoolsSubGroup(title = "Explanation") {
+                DevtoolsText(
+                    text = """
+                    It appears you’re trying to load a theme designed for FlorisBoard v0.4 (Snygg v1), which isn’t compatible with the latest release using Snygg v2.
+
+                    If you are the theme author, please update your theme to support Snygg v2.
+
+                    If you’re a user, please update your theme via the Addons Store. If an updated version isn’t available yet, please select one of the built-in themes during this transition period.
+                """.trimIndent()
+                )
             }
         }
     }

@@ -32,7 +32,7 @@ data class EmojiData(
     val bySkinTone: EmojiDataBySkinTone,
 ) {
     companion object {
-        private val cache = Cache.Builder().build<String, EmojiData>()
+        private val cache = Cache.Builder<String, EmojiData>().build()
         val Fallback = empty()
 
         private fun newByCategory(): EmojiDataByCategoryImpl {
