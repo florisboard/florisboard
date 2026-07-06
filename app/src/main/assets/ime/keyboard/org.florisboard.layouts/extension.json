@@ -275,6 +275,18 @@
         "modifier": "org.florisboard.layouts:jis"
       },
       {
+        "id": "kazakh_cyrillic",
+        "label": "Қазақша",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "kazakh_latin",
+        "label": "Qazaqşa",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
         "id": "korean",
         "label": "South Korean standard",
         "authors": [ "patrickgold", "Hayleia" ],
@@ -318,6 +330,31 @@
         "authors": [ "ostrya" ],
         "direction": "ltr",
         "modifier": "org.florisboard.layouts:neo2"
+      },
+      {
+        "id": "nogai_cyrillic",
+        "label": "Ногайша",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "nogai_latin",
+        "label": "Noğayşa",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "nogai_arabic",
+        "label": "نوغاي",
+        "authors": [ "murza-enikeev" ],
+        "direction": "rtl",
+        "modifier": "org.florisboard.layouts:arabic"
+      },
+      {
+        "id": "nogai_runic",
+        "label": "Nogai (Runic)",
+        "authors": [ "murza-enikeev" ],
+        "direction": "ltr"
       },
       {
         "id": "norwegian",

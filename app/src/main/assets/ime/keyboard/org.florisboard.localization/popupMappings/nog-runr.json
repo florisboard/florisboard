@@ -1,0 +1,81 @@
+{
+  "all": {
+    "𐱃": {
+      "relevant": [
+        { "$": "auto_text_key", "label": "𐱃𐰽" }
+      ]
+    },
+    "𐱁": {
+      "relevant": [
+        { "$": "auto_text_key", "label": "𐱁𐰲" },
+        { "code": 68672, "label": "𐱀" }
+      ]
+    },
+    "𐰔": {
+      "relevant": [
+        { "code": 68629, "label": "𐰕" }
+      ]
+    },
+    "𐰴": {
+      "relevant": [
+        { "code": 68664, "label": "𐰸" }
+      ]
+    },
+    "𐰣": {
+      "relevant": [
+        { "code": 68654, "label": "𐰮" }
+      ]
+    },
+    "𐰤": {
+      "relevant": [
+        { "code": 68648, "label": "𐰨" },
+        { "code": 68650, "label": "𐰪" },
+        { "code": 68649, "label": "𐰩" },
+        { "code": 68646, "label": "𐰦" }
+      ]
+    },
+    "𐰞": {
+      "relevant": [
+        { "code": 68651, "label": "𐰫" }
+      ]
+    },
+    "𐰆": {
+      "relevant": [
+        { "code": 68665, "label": "𐰹" },
+        { "code": 68631, "label": "𐰗" }
+      ]
+    },
+    "𐰇": {
+      "relevant": [
+        { "code": 68600, "label": "𐰈" },
+        { "code": 68636, "label": "𐰜" }
+      ]
+    },
+    "𐰃": {
+      "relevant": [
+        { "code": 68662, "label": "𐰶" }
+      ]
+    },
+    "~right": {
+      "main": { "code": 58, "label": ":" },
+      "relevant": [
+        { "code": 8285, "label": "⁝" },
+        { "code": 44, "label": "," },
+        { "code": 63, "label": "?" },
+        { "code": 33, "label": "!" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".ru"},
+      "relevant": [
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".gov" }
+      ]
+    }
+  }
+}
