@@ -70,7 +70,7 @@
     { "id": "nog-cyrl", "authors": [ "murza-enikeev" ] },
     { "id": "nog-arab", "authors": [ "murza-enikeev" ] },
     { "id": "nog-latn", "authors": [ "murza-enikeev" ] },
-    { "id": "nog-runr", "authors": [ "murza-enikeev" ] },
+    { "id": "nog-orkh", "authors": [ "murza-enikeev" ] },
     { "id": "nn", "authors": [ "patrickgold" ] },
     { "id": "pl", "authors": [ "Mikołaj Biel" ] },
     { "id": "pt", "authors": [ "patrickgold" ] },
@@ -272,7 +272,7 @@
       }
     },
     {
-      "languageTag": "nog-Latin",
+      "languageTag": "nog-Latn",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
       "popupMapping": "org.florisboard.localization:nog-latn",
@@ -290,10 +290,10 @@
       }
     },
     {
-      "languageTag": "nog-Runr",
+      "languageTag": "nog-Orkh",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:russian_ruble",
-      "popupMapping": "org.florisboard.localization:nog-runr",
+      "popupMapping": "org.florisboard.localization:nog-orkh",
       "preferred": {
         "characters": "org.florisboard.layouts:nogai_runic"
       }

@@ -31,6 +31,7 @@
     },
     "к": {
       "relevant": [
+        { "$": "auto_text_key", "label": "къ" },
         { "code": 1179, "label": "қ" },
         { "code": 107, "label": "k" },
         { "code": 113, "label": "q" },
@@ -67,6 +68,7 @@
     },
     "г": {
       "relevant": [
+        { "$": "auto_text_key", "label": "гъ" },
         { "code": 1171, "label": "ғ" },
         { "code": 103, "label": "g" },
         { "code": 287, "label": "ğ" },
