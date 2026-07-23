@@ -23,7 +23,6 @@
         { "code": 117, "label": "u" },
         { "code": 1736, "label": "ۈ" },
         { "code": 1735, "label": "ۇ" },
-        { "code": 1608, "label": "و" },
         { "code": 1575, "label": "ا" },
         { "code": 68614, "label": "𐰆" },
         { "code": 68615, "label": "𐰇" }
@@ -72,8 +71,8 @@
         { "code": 1171, "label": "ғ" },
         { "code": 103, "label": "g" },
         { "code": 287, "label": "ğ" },
-        { "code": 1711, "label": "گ" },
         { "code": 1594, "label": "غ" },
+        { "code": 1711, "label": "گ" },
         { "code": 68621, "label": "𐰍" },
         { "code": 68623, "label": "𐰏" }
       ]
@@ -106,13 +105,15 @@
         { "code": 120, "label": "x" },
         { "code": 1582, "label": "خ" },
         { "code": 1581, "label": "ح" },
+        { "code": 1607, "label": "ه" },
         { "code": 68660, "label": "𐰴" },
         { "code": 68634, "label": "𐰚" }
       ]
     },
     "ъ": {
       "relevant": [
-        { "code": 1569, "label": "ء" }
+        { "code": 1569, "label": "ء" },
+        { "code": 1593, "label": "ع" }
       ]
     },
     "ф": {
@@ -141,7 +142,7 @@
     "в": {
       "relevant": [
         { "code": 118, "label": "v" },
-        { "code": 1608, "label": "و" },
+        { "code": 1739, "label": "ۋ" },
         { "code": 68617, "label": "𐰉" }
       ]
     },
@@ -152,7 +153,7 @@
         { "code": 97, "label": "a" },
         { "code": 1575, "label": "ا" },
         { "code": 1569, "label": "ء" },
-        { "code": 1749, "label": "ە" },
+        { "code": 1570, "label": "آ" },
         { "code": 68610, "label": "𐰂" },
         { "code": 68608, "label": "𐰀" }
       ]
@@ -178,7 +179,6 @@
         { "code": 1257, "label": "ө" },
         { "code": 111, "label": "o" },
         { "code": 1734, "label": "ۆ" },
-        { "code": 1737, "label": "ۉ" },
         { "code": 1608, "label": "و" },
         { "code": 1575, "label": "ا" },
         { "code": 68614, "label": "𐰆" },
@@ -235,6 +235,7 @@
       "relevant": [
         { "code": 115, "label": "s" },
         { "code": 1587, "label": "س" },
+        { "code": 1589, "label": "ص" },
         { "code": 68669, "label": "𐰽" },
         { "code": 68670, "label": "𐰾" }
       ]
@@ -256,7 +257,6 @@
           "lower": { "code":  105, "label": "i" },
           "upper": { "code":  304, "label": "İ" }
         },
-        { "code": 1609, "label": "ى" },
         { "code": 1610, "label": "ي" },
         { "code": 1574, "label": "ئ" },
         { "code": 1575, "label": "ا" },
@@ -267,6 +267,7 @@
       "relevant": [
         { "code": 116, "label": "t" },
         { "code": 1578, "label": "ت" },
+        { "code": 1591, "label": "ط" },
         { "code": 68675, "label": "𐱃" },
         { "code": 68677, "label": "𐱅" }
       ]
@@ -274,7 +275,8 @@
     "ь": {
       "relevant": [
         { "code": 39, "label": "'" },
-        { "code": 1569, "label": "ء" }
+        { "code": 1569, "label": "ء" },
+        { "code": 1593, "label": "ع" }
       ]
     },
     "б": {
@@ -288,8 +290,7 @@
     "ю": {
       "relevant": [
         { "$": "auto_text_key", "label": "yu" },
-        { "$": "auto_text_key", "label": "يو" },
-        { "$": "auto_text_key", "label": "يۋ" },
+        { "$": "auto_text_key", "label": "يۇ" },
         { "$": "auto_text_key", "label": "𐰖𐰆" }
       ]
     },

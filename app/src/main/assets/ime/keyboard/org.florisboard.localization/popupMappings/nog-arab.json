@@ -36,6 +36,7 @@
     },
     "و": {
       "relevant": [
+        { "code": 1739, "label": "ۋ" },
         { "code": 1572, "label": "ؤ" },
         { "code": 1737, "label": "ۉ" }
       ]
