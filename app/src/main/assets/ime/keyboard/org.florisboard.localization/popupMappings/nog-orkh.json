@@ -57,9 +57,10 @@
       ]
     },
     "~right": {
-      "main": { "code": 58, "label": ":" },
+      "main": { "code": 8282, "label": "⁚" },
       "relevant": [
         { "code": 8285, "label": "⁝" },
+        { "code": 46, "label": "." },
         { "code": 44, "label": "," },
         { "code": 63, "label": "?" },
         { "code": 33, "label": "!" }

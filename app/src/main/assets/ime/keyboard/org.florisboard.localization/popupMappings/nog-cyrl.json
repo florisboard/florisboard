@@ -107,13 +107,17 @@
         { "code": 1581, "label": "ح" },
         { "code": 1607, "label": "ه" },
         { "code": 68660, "label": "𐰴" },
-        { "code": 68634, "label": "𐰚" }
+        { "code": 68634, "label": "𐰚" },
+        { "code": 68621, "label": "𐰍" }
       ]
     },
     "ъ": {
       "relevant": [
+        { "code": 39, "label": "'" },
         { "code": 1569, "label": "ء" },
-        { "code": 1593, "label": "ع" }
+        { "code": 1593, "label": "ع" },
+        { "code": 1618, "label": "ْ" },
+        { "code": 8282, "label": "⁚" }
       ]
     },
     "ф": {
@@ -143,7 +147,8 @@
       "relevant": [
         { "code": 118, "label": "v" },
         { "code": 1739, "label": "ۋ" },
-        { "code": 68617, "label": "𐰉" }
+        { "code": 68617, "label": "𐰉" },
+        { "code": 68619, "label": "𐰋" }
       ]
     },
     "а": {
@@ -205,7 +210,9 @@
       "relevant": [
         { "code": 106, "label": "j" },
         { "code": 1580, "label": "ج" },
-        { "code": 68630, "label": "𐰖" }
+        { "code": 68630, "label": "𐰖" },
+        { "code": 68632, "label": "𐰘" },
+        { "code": 68658, "label": "𐰲" }
       ]
     },
     "э": {
@@ -221,7 +228,8 @@
       "relevant": [
         { "$": "auto_text_key", "label": "ya" },
         { "$": "auto_text_key", "label": "يا" },
-        { "$": "auto_text_key", "label": "𐰖𐰀" }
+        { "$": "auto_text_key", "label": "𐰖𐰀" },
+        { "$": "auto_text_key", "label": "𐰘𐰀" }
       ]
     },
     "ч": {
@@ -276,7 +284,9 @@
       "relevant": [
         { "code": 39, "label": "'" },
         { "code": 1569, "label": "ء" },
-        { "code": 1593, "label": "ع" }
+        { "code": 1593, "label": "ع" },
+        { "code": 1618, "label": "ْ" },
+        { "code": 8282, "label": "⁚" }
       ]
     },
     "б": {
@@ -291,7 +301,8 @@
       "relevant": [
         { "$": "auto_text_key", "label": "yu" },
         { "$": "auto_text_key", "label": "يۇ" },
-        { "$": "auto_text_key", "label": "𐰖𐰆" }
+        { "$": "auto_text_key", "label": "𐰖𐰆" },
+        { "$": "auto_text_key", "label": "𐰘𐰇" }
       ]
     },
     "~right": {
