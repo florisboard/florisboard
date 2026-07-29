@@ -13,7 +13,8 @@
         { "$": "auto_text_key", "label": "ts" },
         { "code": 99, "label": "c" },
         { "$": "auto_text_key", "label": "تس" },
-        { "$": "auto_text_key", "label": "𐱃𐰽" }
+        { "$": "auto_text_key", "label": "𐱃𐰽" },
+        { "$": "auto_text_key", "label": "𐱅𐰾" }
       ]
     },
     "у": {
