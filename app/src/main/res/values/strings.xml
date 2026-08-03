@@ -127,7 +127,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
 
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
+    <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages and Layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Display keyboard labels in subtype language</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
@@ -410,7 +410,7 @@
     <string name="snygg__property_value__text_overflow">Text overflow</string>
     <string name="snygg__property_value__uri">URI reference</string>
 
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds and Vibration</string>
     <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Enable audio feedback</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Never play sounds for input events, regardless of system settings</string>
@@ -535,7 +535,7 @@
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
-    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures &amp; Glide typing</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures and Glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
@@ -635,7 +635,7 @@
     <string name="physical_keyboard__show_on_screen_keyboard__summary">Show on-screen keyboard while using physical keyboard</string>
 
     <!-- Back up & Restore -->
-    <string name="backup_and_restore__title">Back up &amp; Restore</string>
+    <string name="backup_and_restore__title">Back up and Restore</string>
     <string name="backup_and_restore__back_up__title">Back up data</string>
     <string name="backup_and_restore__back_up__summary">Generate a backup archive of preferences and customizations</string>
     <string name="backup_and_restore__back_up__destination">Select backup destination</string>
@@ -784,7 +784,7 @@
 
 
     <!-- Extension strings -->
-    <string name="ext__home__title">Addons &amp; Extensions</string>
+    <string name="ext__home__title">Addons and Extensions</string>
     <string name="ext__list__ext_theme">Theme extensions</string>
     <string name="ext__list__ext_keyboard">Keyboard extensions</string>
     <string name="ext__list__ext_languagepack">Language pack extensions</string>
