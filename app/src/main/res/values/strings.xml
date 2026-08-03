@@ -37,11 +37,11 @@
     <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximum candidate count</string>
 
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">People &amp; Body</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals &amp; Nature</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Food &amp; Drink</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Travel &amp; Places</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys and Emotions</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">People and Body</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals and Nature</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Food and Drink</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Travel and Places</string>
     <string name="emoji__category__activities" comment="Emoji category name">Activities</string>
     <string name="emoji__category__objects" comment="Emoji category name">Objects</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
