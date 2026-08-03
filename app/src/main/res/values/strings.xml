@@ -37,11 +37,11 @@
     <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximum candidate count</string>
 
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys and Emotions</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">People and Body</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals and Nature</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Food and Drink</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Travel and Places</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys and emotions</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">People and body</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals and nature</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Food and drink</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Travel and places</string>
     <string name="emoji__category__activities" comment="Emoji category name">Activities</string>
     <string name="emoji__category__objects" comment="Emoji category name">Objects</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
@@ -127,7 +127,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
 
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages and Layouts</string>
+    <string name="settings__localization__title" comment="Title of languages and layout screen">Languages and layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Display keyboard labels in subtype language</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
@@ -162,7 +162,7 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete Confirmation</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete confirmation</string>
     <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Are you sure you want to delete this subtype?</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
@@ -190,7 +190,7 @@
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
-    <string name="settings__theme_editor__rule_name">Element / Annotation</string>
+    <string name="settings__theme_editor__rule_name">Element / annotation</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
     <string name="settings__theme_editor__rule_modes">Target modes (layers)</string>
@@ -235,7 +235,7 @@
 
     <string name="snygg__rule_element__root">Root</string>
     <string name="snygg__rule_element__window">Window</string>
-    <string name="snygg__rule_element__window_inner">Window Inner</string>
+    <string name="snygg__rule_element__window_inner">Window inner</string>
 
     <string name="snygg__rule_element__window_move_handle">Window move handle</string>
     <string name="snygg__rule_element__window_resize_action">Window resize action</string>
@@ -393,7 +393,7 @@
     <string name="snygg__property_value__font_family_custom">Font family (custom)</string>
     <string name="snygg__property_value__font_style">Font style</string>
     <string name="snygg__property_value__font_weight">Font weight</string>
-    <string name="snygg__property_value__padding">Padding or Margin</string>
+    <string name="snygg__property_value__padding">Padding or margin</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
@@ -410,8 +410,8 @@
     <string name="snygg__property_value__text_overflow">Text overflow</string>
     <string name="snygg__property_value__uri">URI reference</string>
 
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds and Vibration</string>
-    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds and vibration</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / sounds</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Enable audio feedback</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Never play sounds for input events, regardless of system settings</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Sound volume for input events</string>
@@ -420,7 +420,7 @@
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Key repeated action sounds</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Gesture swipe sounds</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Gesture moving swipe sounds</string>
-    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptic feedback / Vibration</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptic feedback / vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Enable haptic feedback</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Never vibrate for input events, regardless of system settings</string>
     <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibration mode</string>
@@ -454,7 +454,7 @@
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing factor</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
-    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Accents include symbol popups</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Adds symbol popups to the default layout\'s accents</string>
@@ -465,7 +465,7 @@
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
-    <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Enable smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
     <string name="pref__smartbar__layout__label" comment="Preference title">Layout</string>
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Layout-specific options</string>
@@ -513,8 +513,8 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggest words stored in the internal user dictionary</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal User Dictionary</string>
-    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System User Dictionary</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal user dictionary</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System user dictionary</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">This user dictionary does not contain any words.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequency: {freq}</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequency: {freq} | Shortcut: {shortcut}</string>
@@ -535,7 +535,7 @@
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
-    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures and Glide typing</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures and glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
@@ -548,7 +548,7 @@
     <string name="pref__glide__immediate_backspace_deletes_word__summary">Pressing delete right after a glide deletes the whole word</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
-    <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / gesture thresholds</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe up</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe down</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe left</string>
@@ -567,7 +567,7 @@
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>
     <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Light</string>
     <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Dark</string>
-    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED Dark</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED dark</string>
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">
         Settings accent color
     </string>
@@ -608,23 +608,23 @@
 
     <string name="setup__enable_ime__title">Enable {app_name}</string>
     <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Open the System <i>Language &amp; Input</i> Settings, there enable "{app_name}".</string>
-    <string name="setup__enable_ime__open_settings_btn">Open System Settings</string>
+    <string name="setup__enable_ime__open_settings_btn">Open system settings</string>
 
     <string name="setup__select_ime__title">Select {app_name}</string>
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
-    <string name="setup__select_ime__switch_keyboard_btn">Switch Keyboard</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Switch keyboard</string>
 
-    <string name="setup__grant_notification_permission__title">Permit Crash Report Notifications</string>
+    <string name="setup__grant_notification_permission__title">Permit crash report notifications</string>
     <string name="setup__grant_notification_permission__description">As of Android 13+, apps must ask for permission to
         send notifications. In Florisboard, this is only used to open a crash report screen in the event of a crash.
         This permission can be changed at any time in the system settings.
     </string>
-    <string name="setup__grant_notification_permission__btn">Grant Permission</string>
+    <string name="setup__grant_notification_permission__btn">Grant permission</string>
 
-    <string name="setup__finish_up__title">Finish Up</string>
+    <string name="setup__finish_up__title">Finish up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
-    <string name="setup__finish_up__finish_btn">Start Customizing</string>
+    <string name="setup__finish_up__finish_btn">Start customizing</string>
 
     <!-- Physical keyboard -->
     <string name="physical_keyboard__title">Physical keyboard</string>
@@ -635,7 +635,7 @@
     <string name="physical_keyboard__show_on_screen_keyboard__summary">Show on-screen keyboard while using physical keyboard</string>
 
     <!-- Back up & Restore -->
-    <string name="backup_and_restore__title">Back up and Restore</string>
+    <string name="backup_and_restore__title">Back up and restore</string>
     <string name="backup_and_restore__back_up__title">Back up data</string>
     <string name="backup_and_restore__back_up__summary">Generate a backup archive of preferences and customizations</string>
     <string name="backup_and_restore__back_up__destination">Select backup destination</string>
@@ -784,7 +784,7 @@
 
 
     <!-- Extension strings -->
-    <string name="ext__home__title">Addons and Extensions</string>
+    <string name="ext__home__title">Addons and extensions</string>
     <string name="ext__list__ext_theme">Theme extensions</string>
     <string name="ext__list__ext_keyboard">Keyboard extensions</string>
     <string name="ext__list__ext_languagepack">Language pack extensions</string>
@@ -866,7 +866,7 @@
     <string name="ext__validation__enter_number_between_0_100">Please enter a positive number between 0 and 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
     <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
-    <string name="ext__update_box__search_for_updates">Search for Updates</string>
+    <string name="ext__update_box__search_for_updates">Search for updates</string>
     <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
     <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
@@ -874,7 +874,7 @@
     <string name="ext__home__visit_store">Visit Addons Store</string>
     <string name="ext__home__manage_extensions">Manage installed extensions</string>
     <string name="ext__list__view_details">View details</string>
-    <string name="ext__check_updates__title">Check for Updates</string>
+    <string name="ext__check_updates__title">Check for updates</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>
@@ -1123,7 +1123,7 @@
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
-    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / switch language</string>
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>
