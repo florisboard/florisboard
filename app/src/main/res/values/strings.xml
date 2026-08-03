@@ -945,7 +945,7 @@
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
-    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width and scrollable</string>
 
     <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
@@ -1065,9 +1065,9 @@
     <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Shows only the candidate row, without any action row/toggle or sticky action</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions only</string>
     <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Shows only the actions row, without the candidate row or an explicit sticky action</string>
-    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions &amp; Actions shared</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions and Actions shared</string>
     <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Shared toggleable candidate and actions row, with sticky action</string>
-    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions &amp; Actions extended</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions and Actions extended</string>
     <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Static candidate row and additional toggleable action row, with sticky action</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
