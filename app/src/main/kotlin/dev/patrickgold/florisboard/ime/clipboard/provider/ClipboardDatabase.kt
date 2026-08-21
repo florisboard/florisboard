@@ -27,6 +27,7 @@ import android.provider.BaseColumns
 import android.provider.MediaStore.Images.Media
 import android.provider.OpenableColumns
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.database.getStringOrNull
 import androidx.core.net.toUri
@@ -104,6 +105,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
          */
         private val TEXT_PLAIN = listOf("text/plain")
         private val MEDIA_PROJECTION = arrayOf(OpenableColumns.DISPLAY_NAME)
+        private const val CLIPBAORD_TEXT_MAX_DISPLAY_LENGTH = 5000
 
         const val FLORIS_CLIP_LABEL = "florisboard/clipboard_item"
 
@@ -187,7 +189,7 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
     @Composable
     inline fun displayText(): String {
         val context = LocalContext.current
-        return displayText(context)
+        return remember(this) { displayText(context) }
     }
 
     fun displayText(context: Context): String {
@@ -231,7 +233,11 @@ data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor
 
     fun stringRepresentation(): String {
         return when {
-            text != null -> text
+            text != null -> if (text.length > CLIPBAORD_TEXT_MAX_DISPLAY_LENGTH) {
+                text.take(CLIPBAORD_TEXT_MAX_DISPLAY_LENGTH) + Typography.ellipsis
+            } else {
+                text
+            }
             uri != null -> "(Image) $uri"
             else -> "#ERROR"
         }
