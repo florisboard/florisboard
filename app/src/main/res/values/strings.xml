@@ -74,6 +74,8 @@
     <string name="quick_action__clipboard_paste__tooltip">Perform clipboard paste</string>
     <string name="quick_action__clipboard_select_all" comment="Please mind the limited available space for the quick action strings">Select all</string>
     <string name="quick_action__clipboard_select_all__tooltip">Perform clipboard select all</string>
+    <string name="quick_action__clipboard_share" comment="Please mind the limited available space for the quick action strings">Share</string>
+    <string name="quick_action__clipboard_share__tooltip">Perform clipboard/selected text share</string>
     <string name="quick_action__forward_delete" comment="Please mind the limited available space for the quick action strings">Forward delete</string>
     <string name="quick_action__ime_ui_mode_clipboard" comment="Please mind the limited available space for the quick action strings">Clipboard</string>
     <string name="quick_action__ime_ui_mode_clipboard__tooltip">Open clipboard history</string>

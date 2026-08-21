@@ -711,6 +711,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
             KeyCode.CLIPBOARD_CUT -> editorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> editorInstance.performClipboardCopy()
+            KeyCode.CLIPBOARD_SHARE -> editorInstance.performClipboardShare()
             KeyCode.CLIPBOARD_PASTE -> editorInstance.performClipboardPaste()
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
             KeyCode.CLIPBOARD_SELECT_ALL -> editorInstance.performClipboardSelectAll()
@@ -966,6 +967,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
+                KeyCode.CLIPBOARD_SHARE,
                 KeyCode.CLIPBOARD_COPY,
                 KeyCode.CLIPBOARD_CUT -> {
                     state.isSelectionMode && editorInfo.isRichInputEditor

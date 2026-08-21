@@ -118,6 +118,7 @@ data class TextKeyData(
                 CLIPBOARD_PASTE,
                 CLIPBOARD_SELECT,
                 CLIPBOARD_SELECT_ALL,
+                CLIPBOARD_SHARE,
                 CLIPBOARD_CLEAR_HISTORY,
                 CLIPBOARD_CLEAR_FULL_HISTORY,
                 CLIPBOARD_CLEAR_PRIMARY_CLIP,
@@ -336,7 +337,12 @@ data class TextKeyData(
             code = KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP,
             label = "clipboard_clear_primary_clip",
         )
-
+        /** Predefined key data for [KeyCode.CLIPBOARD_SHARE] */
+        val CLIPBOARD_SHARE = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.CLIPBOARD_SHARE,
+            label = "clipboard_share",
+        )
         /** Predefined key data for [KeyCode.TOGGLE_FLOATING_WINDOW] */
         val TOGGLE_FLOATING_WINDOW = TextKeyData(
             type = KeyType.SYSTEM_GUI,

@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.editor
 import android.content.ClipDescription
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.view.KeyEvent
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
@@ -446,6 +447,41 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
         }
         val activeSelection = activeContent.selection
         return setSelection(activeSelection.end, activeSelection.end)
+    }
+
+    /**
+     * Performs a share command on this editor instance.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performClipboardShare(): Boolean {
+        autoSpace.setInactive()
+        phantomSpace.setInactive()
+        val text = activeContent.selectedText.ifBlank { currentInputConnection()?.getSelectedText(0) }
+        if (text != null && text.isNotBlank()) {
+            try {
+                val context = appContext
+
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, text.toString())
+                    type = "text/plain"
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+
+                val chooser = Intent.createChooser(sendIntent, "Share text via")
+                chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                context.startActivity(chooser)
+                return true
+            } catch (e: Exception) {
+                appContext.showShortToastSync("Failed to share text: %{e.message}")
+            }
+        } else {
+            appContext.showShortToastSync("No text selected to share.")
+        }
+
+        return false
     }
 
     /**

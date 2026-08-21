@@ -45,6 +45,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.ui.graphics.vector.ImageVector
 import dev.patrickgold.florisboard.FlorisImeService
@@ -208,6 +209,9 @@ fun ComputingEvaluator.computeImageVector(data: KeyData): ImageVector? {
         }
         KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> {
             Icons.Default.DeleteSweep
+        }
+        KeyCode.CLIPBOARD_SHARE -> {
+            Icons.Default.Share
         }
         KeyCode.COMPACT_LAYOUT_TO_LEFT,
         KeyCode.COMPACT_LAYOUT_TO_RIGHT,

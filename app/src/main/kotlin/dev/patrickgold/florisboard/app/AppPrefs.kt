@@ -842,6 +842,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE))
                     )
                 }
+                if (QuickAction.InsertKey(TextKeyData.CLIPBOARD_SHARE) !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.CLIPBOARD_SHARE))
+                    )
+                }
                 val json = QuickActionJsonConfig.encodeToString(newArrangement.distinct())
                 entry.transform(rawValue = json)
             }
