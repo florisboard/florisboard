@@ -959,9 +959,9 @@
     <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">All events</string>
     <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">Both events setting and clearing clip data are synced in this direction. In this mode, sync includes text content.</string>
 
-    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
-    <string name="enum__color_representation__rgb" comment="Enum value label">Red Green Blue</string>
-    <string name="enum__color_representation__hsv" comment="Enum value label">Hue Saturation Value</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">HEX</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">RGB</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">HSV</string>
 
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Always show</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Always show the keyboard after closing any editor dialog</string>
@@ -1065,9 +1065,9 @@
     <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Shows only the candidate row, without any action row/toggle or sticky action</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions only</string>
     <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Shows only the actions row, without the candidate row or an explicit sticky action</string>
-    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions and Actions shared</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions and actions shared</string>
     <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Shared toggleable candidate and actions row, with sticky action</string>
-    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions and Actions extended</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions and actions extended</string>
     <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Static candidate row and additional toggleable action row, with sticky action</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
