@@ -75,7 +75,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         /**
          * describes the number of points to sample a gesture at, i.e the resolution.
          */
-        private const val SAMPLING_POINTS: Int = 200
+        private const val SAMPLING_POINTS: Int = 400
 
         /**
          * Standard deviation of the distribution of distances between the shapes of two gestures
@@ -183,12 +183,12 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         }
     }
 
-    private val lruSuggestionCache = LruCache<Pair<Gesture, Int>, List<String>>(SUGGESTION_CACHE_SIZE)
-    override fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String> {
-        return when (val cached = lruSuggestionCache.get(Pair(this.gesture, maxSuggestionCount))) {
+    private val lruSuggestionCache = LruCache<Triple<Gesture, Int, String?>, List<String>>(SUGGESTION_CACHE_SIZE)
+    override fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean, precedingWord: String?): List<String> {
+        return when (val cached = lruSuggestionCache.get(Triple(this.gesture, maxSuggestionCount, precedingWord))) {
             null -> {
-                val suggestions = unCachedGetSuggestions(maxSuggestionCount)
-                lruSuggestionCache.put(Pair(this.gesture.clone(), maxSuggestionCount), suggestions)
+                val suggestions = unCachedGetSuggestions(maxSuggestionCount, precedingWord)
+                lruSuggestionCache.put(Triple(this.gesture.clone(), maxSuggestionCount, precedingWord), suggestions)
 
                 suggestions
             }
@@ -198,7 +198,7 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         }
     }
 
-    private fun unCachedGetSuggestions(maxSuggestionCount: Int): List<String> {
+    private fun unCachedGetSuggestions(maxSuggestionCount: Int, precedingWord: String? = null): List<String> {
         val candidates = arrayListOf<String>()
         val candidateWeights = arrayListOf<Float>()
         val key = keys.firstOrNull() ?: return listOf()
@@ -207,6 +207,12 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
         val userGesture = gesture.resample(SAMPLING_POINTS)
         val normalizedUserGesture: Gesture = userGesture.normalizeByBoxSide()
         remainingWords = pruner.pruneByLength(gesture, remainingWords, keysByCharacter, keys)
+
+        val bigramMap = if (precedingWord != null) {
+            nlpManager.getBigramProbabilities(currentSubtype!!, precedingWord)
+        } else {
+            emptyMap()
+        }
 
         for (i in remainingWords.indices) {
             val word = remainingWords[i]
@@ -219,7 +225,15 @@ class StatisticalGlideTypingClassifier(context: Context) : GlideTypingClassifier
                 val locationDistance = calcLocationDistance(wordGesture, userGesture)
                 val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
                 val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
-                val frequency = 255f * nlpManager.getFrequencyForWord(currentSubtype!!, word).toFloat()
+                val unigramFreq = nlpManager.getFrequencyForWord(currentSubtype!!, word)
+                val bigramProb = if (precedingWord != null) bigramMap[word] ?: 0.0 else 0.0
+                
+                val frequency = if (precedingWord != null && bigramProb > 0.0) {
+                    val boostedScore = (unigramFreq * (1.0 + 0.5 * bigramProb)).toFloat()
+                    255f * boostedScore
+                } else {
+                    255f * unigramFreq.toFloat()
+                }
                 val confidence = 1.0f / (shapeProbability * locationProbability * frequency)
 
                 var candidateDistanceSortedIndex = 0

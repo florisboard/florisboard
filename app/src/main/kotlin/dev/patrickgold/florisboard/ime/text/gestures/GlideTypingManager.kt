@@ -17,8 +17,12 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
+import android.icu.text.BreakIterator
+import android.icu.util.ULocale
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
@@ -28,6 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import kotlin.math.min
 
 /**
@@ -40,6 +45,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     }
 
     private val prefs by FlorisPreferenceStore
+    private val editorInstance by context.editorInstance()
     private val keyboardManager by context.keyboardManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
@@ -49,7 +55,8 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     private var lastTime = System.currentTimeMillis()
 
     override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
-        updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
+        val precedingWord = extractPrecedingWord()
+        updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true, precedingWord) {
             glideTypingClassifier.clear()
         }
     }
@@ -65,8 +72,34 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
 
         val time = System.currentTimeMillis()
         if (prefs.glide.showPreview.get() && time - lastTime > prefs.glide.previewRefreshDelay.get()) {
-            updateSuggestionsAsync(1, false) {}
+            val precedingWord = extractPrecedingWord()
+            updateSuggestionsAsync(1, false, precedingWord) {}
             lastTime = time
+        }
+    }
+
+    private fun extractPrecedingWord(): String? {
+        return try {
+            val text = editorInstance.activeContent.textBeforeSelection.trimEnd()
+            if (text.isEmpty()) return null
+            val locale = subtypeManager.activeSubtype.primaryLocale
+            val uLocale = ULocale.forLocale(locale.base)
+            val breakIterator = BreakIterator.getWordInstance(uLocale)
+            breakIterator.setText(text)
+            var end = breakIterator.last()
+            if (end == BreakIterator.DONE) return null
+            var start = breakIterator.previous()
+            if (start == BreakIterator.DONE) return null
+            while (start < end && !Character.isLetterOrDigit(text[start])) {
+                end = start
+                start = breakIterator.previous()
+                if (start == BreakIterator.DONE) return null
+            }
+            if (start >= end) return null
+            text.substring(start, end).lowercase()
+        } catch (e: Exception) {
+            flogWarning { "Failed to extract preceding word: ${e.message}" }
+            null
         }
     }
 
@@ -87,14 +120,14 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
      * @param callback Called when this function completes. Takes a boolean, which indicates if suggestions
      * were successfully set.
      */
-    private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: (Boolean) -> Unit) {
+    private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, precedingWord: String? = null, callback: (Boolean) -> Unit) {
         if (!glideTypingClassifier.ready) {
             callback.invoke(false)
             return
         }
 
         scope.launch(Dispatchers.Default) {
-            val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
+            val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true, precedingWord)
 
             withContext(Dispatchers.Main) {
                 val suggestionList = buildList {

@@ -197,6 +197,14 @@ interface SuggestionProvider : NlpProvider {
      */
     suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double
 
+    suspend fun getBigramProbability(subtype: Subtype, word1: String, word2: String): Double {
+        return 0.0
+    }
+
+    suspend fun getBigramProbabilities(subtype: Subtype, word1: String): Map<String, Double> {
+        return emptyMap()
+    }
+
     /**
      * When initializing composing text given a new context, the suggestion engine determines the composing range.
      * The default behavior gets the last word according to the current subtype's primaryLocale.
@@ -289,6 +297,14 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
         return 0.0
+    }
+
+    override suspend fun getBigramProbability(subtype: Subtype, word1: String, word2: String): Double {
+        return 0.0
+    }
+
+    override suspend fun getBigramProbabilities(subtype: Subtype, word1: String): Map<String, Double> {
+        return emptyMap()
     }
 
     override suspend fun destroy() {
