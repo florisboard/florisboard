@@ -1,0 +1,39 @@
+[
+  [
+    { "code": 68608, "label": "𐰀" },
+    { "code": 68610, "label": "𐰂" },
+    { "code": 68611, "label": "𐰃" },
+    { "code": 68614, "label": "𐰆" },
+    { "code": 68615, "label": "𐰇" },
+    { "code": 68630, "label": "𐰖" },
+    { "code": 68632, "label": "𐰘" },
+    { "code": 68666, "label": "𐰺" },
+    { "code": 68668, "label": "𐰼" },
+    { "code": 68675, "label": "𐱃" },
+    { "code": 68677, "label": "𐱅" }
+  ],
+  [
+    { "code": 68621, "label": "𐰍" },
+    { "code": 68623, "label": "𐰏" },
+    { "code": 68660, "label": "𐰴" },
+    { "code": 68634, "label": "𐰚" },
+    { "code": 68638, "label": "𐰞" },
+    { "code": 68640, "label": "𐰠" },
+    { "code": 68643, "label": "𐰣" },
+    { "code": 68644, "label": "𐰤" },
+    { "code": 68625, "label": "𐰑" },
+    { "code": 68627, "label": "𐰓" },
+    { "code": 68653, "label": "𐰭" }
+  ],
+  [
+    { "code": 68669, "label": "𐰽" },
+    { "code": 68670, "label": "𐰾" },
+    { "code": 68617, "label": "𐰉" },
+    { "code": 68619, "label": "𐰋" },
+    { "code": 68642, "label": "𐰢" },
+    { "code": 68655, "label": "𐰯" },
+    { "code": 68658, "label": "𐰲" },
+    { "code": 68673, "label": "𐱁" },
+    { "code": 68628, "label": "𐰔" }
+  ]
+]
