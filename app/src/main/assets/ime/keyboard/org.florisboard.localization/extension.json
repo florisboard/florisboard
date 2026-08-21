@@ -666,6 +666,15 @@
       }
     },
     {
+      "languageTag": "vi-VN",
+      "composer": "org.florisboard.composers:vni",
+      "currencySet": "org.florisboard.currencysets:vietnamese_dong",
+      "popupMapping": "org.florisboard.localization:vi-VN",
+      "preferred": {
+        "characters": "org.florisboard.layouts:qwerty"
+      }
+    },
+    {
       "languageTag": "ig-NG",
       "composer": "org.florisboard.composers:appender",
       "currencySet": "org.florisboard.currencysets:nigerian_naira",
