@@ -74,8 +74,13 @@ class WithRules(
         for (key in ruleOrder) {
             if (str.lowercase().endsWith(key)) {
                 val value = rules.getValue(key)
-                val firstOfKey = str.takeLast(key.length).take(1)
-                return (key.length - 1) to (if (firstOfKey.uppercase() == firstOfKey) value.uppercase() else value)
+                val matchingPart = str.takeLast(key.length) // the part of the string that matches the key
+                val firstOfKey = matchingPart.take(1)
+                return (key.length - 1) to when {
+                    matchingPart.uppercase() == matchingPart -> value.uppercase()
+                    firstOfKey.uppercase() == firstOfKey -> value.replaceFirstChar(Char::titlecase)
+                    else -> value
+                }
             }
         }
         return 0 to toInsert
