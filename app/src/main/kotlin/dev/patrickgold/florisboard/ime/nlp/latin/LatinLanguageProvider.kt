@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -32,6 +33,8 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.readText
 import org.florisboard.lib.kotlin.guardedByLock
+import java.util.Locale
+import kotlin.math.abs
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
@@ -43,12 +46,16 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private val appContext by context.appContext()
 
     private val wordData = guardedByLock { mutableMapOf<String, Int>() }
+    private val learnedWords = guardedByLock { mutableMapOf<String, Int>() }
+    private val learnedBigrams = guardedByLock { mutableMapOf<String, Int>() }
     private val wordDataSerializer = MapSerializer(String.serializer(), Int.serializer())
+    private val preferences = context.getSharedPreferences("latin_language_provider", Context.MODE_PRIVATE)
+    private var previousWord: String? = null
 
     override val providerId = ProviderId
 
     override suspend fun create() {
-        // Here we initialize our provider, set up all things which are not language dependent.
+        loadLearnedData()
     }
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
@@ -87,14 +94,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): SpellingResult {
-        return when (word.lowercase()) {
-            // Use typo for typing errors
-            "typo" -> SpellingResult.typo(arrayOf("typo1", "typo2", "typo3"))
-            // Use grammar error if the algorithm can detect this. On Android 11 and lower grammar errors are visually
-            // marked as typos due to a lack of support
-            "gerror" -> SpellingResult.grammarError(arrayOf("grammar1", "grammar2", "grammar3"))
-            // Use valid word for valid input
-            else -> SpellingResult.validWord()
+        val normalized = word.lowercase(subtype.primaryLocale.base)
+        val candidates = findCandidates(normalized, maxSuggestionCount)
+        return when {
+            isKnownWord(normalized) -> SpellingResult.validWord()
+            candidates.isEmpty() -> SpellingResult.typo(emptyArray())
+            else -> SpellingResult.typo(candidates.toTypedArray(), candidates.first().length > normalized.length / 2)
         }
     }
 
@@ -105,26 +110,36 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
-        return emptyList()
-        /*val word = content.composingText.ifBlank { "next" }
-        val suggestions = buildList {
-            for (n in 0 until maxCandidateCount) {
-                add(WordSuggestionCandidate(
-                    text = "$word$n",
-                    secondaryText = if (n % 2 == 1) "secondary" else null,
-                    confidence = 0.5,
-                    isEligibleForAutoCommit = false,//n == 0 && word.startsWith("auto"),
-                    // We set ourselves as the source provider so we can get notify events for our candidate
-                    sourceProvider = this@LatinLanguageProvider,
-                ))
-            }
+        val currentWord = content.composingText.lowercase(subtype.primaryLocale.base)
+        val candidates = if (currentWord.isBlank()) {
+            nextWords(content.textBeforeSelection, maxCandidateCount)
+        } else {
+            findCandidates(currentWord, maxCandidateCount)
         }
-        return suggestions*/
+
+        previousWord = content.textBeforeSelection
+            .trim()
+            .split(Regex("\\s+"))
+            .lastOrNull { it.any(Char::isLetter) }
+            ?.lowercase(subtype.primaryLocale.base)
+
+        return candidates.mapIndexed { index, candidate ->
+            val isCorrection = currentWord.isNotBlank() && candidate != currentWord && editDistance(currentWord, candidate) <= 1
+            WordSuggestionCandidate(
+                text = preserveCase(content.composingText, candidate),
+                confidence = if (isCorrection) 0.95 else (0.9 - index * 0.05).coerceAtLeast(0.5),
+                isEligibleForAutoCommit = isCorrection && index == 0 && currentWord.length > 2,
+                isEligibleForUserRemoval = learnedWords.withLock { it.containsKey(candidate) },
+                sourceProvider = this@LatinLanguageProvider,
+            )
+        }
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
-        // We can use flogDebug, flogInfo, flogWarning and flogError for debug logging, which is a wrapper for Logcat
-        flogDebug { candidate.toString() }
+        val word = candidate.text.toString().lowercase(subtype.primaryLocale.base)
+        if (word.any(Char::isLetter) && word.length > 1) {
+            learn(word, previousWord)
+        }
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
@@ -132,20 +147,121 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
-        flogDebug { candidate.toString() }
-        return false
+        val word = candidate.text.toString().lowercase(subtype.primaryLocale.base)
+        val removed = learnedWords.withLock { it.remove(word) != null }
+        if (removed) saveLearnedData()
+        return removed
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> {
-        return wordData.withLock { it.keys.toList() }
+        val dictionaryWords = wordData.withLock { it.keys.toList() }
+        val learnedWordList = learnedWords.withLock { it.keys.toList() }
+        return dictionaryWords + learnedWordList
     }
 
     override suspend fun getFrequencyForWord(subtype: Subtype, word: String): Double {
-        return wordData.withLock { it.getOrDefault(word, 0) / 255.0 }
+        val normalized = word.lowercase(subtype.primaryLocale.base)
+        return (learnedWords.withLock { it[normalized] } ?: wordData.withLock { it[normalized] } ?: 0) / 255.0
     }
 
     override suspend fun destroy() {
-        // Here we have the chance to de-allocate memory and finish our work. However this might never be called if
-        // the app process is killed (which will most likely always be the case).
+        saveLearnedData()
+    }
+
+    private suspend fun isKnownWord(word: String): Boolean =
+        learnedWords.withLock { it.containsKey(word) } || wordData.withLock { it.containsKey(word) }
+
+    private suspend fun findCandidates(input: String, limit: Int): List<String> {
+        val words = wordData.withLock { it.toMap() } + learnedWords.withLock { it.toMap() }
+        val prefix = words.filterKeys { it.startsWith(input) }
+            .entries
+            .sortedByDescending { it.value }
+            .map { it.key }
+        val fuzzy = if (prefix.size >= limit || input.length < 3) emptyList() else words.entries
+            .asSequence()
+            .filter { abs(it.key.length - input.length) <= 2 }
+            .map { it.key to editDistance(input, it.key) }
+            .filter { it.second <= 2 }
+            .sortedWith(compareBy<Pair<String, Int>> { it.second }.thenByDescending { words[it.first] ?: 0 })
+            .map { it.first }
+            .toList()
+        return (prefix + fuzzy).distinct().take(limit)
+    }
+
+    private suspend fun nextWords(textBeforeSelection: String, limit: Int): List<String> {
+        val lastWord = textBeforeSelection.trim().split(Regex("\\s+"))
+            .lastOrNull { it.any(Char::isLetter) }
+            ?.lowercase(Locale.getDefault()) ?: return emptyList()
+        return learnedBigrams.withLock { bigrams ->
+            bigrams.entries.asSequence()
+                .filter { it.key.startsWith("$lastWord\\u0000") }
+                .sortedByDescending { it.value }
+                .map { it.key.substringAfter("\\u0000") }
+                .distinct()
+                .take(limit)
+                .toList()
+        }
+    }
+
+    private suspend fun learn(word: String, previous: String?) {
+        val updated = learnedWords.withLock {
+            val frequency = (it[word] ?: 160) + 1
+            it[word] = frequency.coerceAtMost(255)
+            frequency
+        }
+        if (!previous.isNullOrBlank()) {
+            learnedBigrams.withLock {
+                val key = "${previous.lowercase(Locale.getDefault())}\\u0000$word"
+                it[key] = ((it[key] ?: 0) + 1).coerceAtMost(255)
+            }
+        }
+        if (updated > 0) saveLearnedData()
+    }
+
+    private suspend fun loadLearnedData() {
+        runCatching {
+            preferences.getString("words", null)?.let { raw ->
+                val values = Json.decodeFromString(wordDataSerializer, raw)
+                learnedWords.withLock { it.putAll(values) }
+            }
+            preferences.getString("bigrams", null)?.let { raw ->
+                val values = Json.decodeFromString(wordDataSerializer, raw)
+                learnedBigrams.withLock { it.putAll(values) }
+            }
+        }
+    }
+
+    private suspend fun saveLearnedData() {
+        runCatching {
+            val words = learnedWords.withLock { it.toMap() }
+            val bigrams = learnedBigrams.withLock { it.toMap() }
+            preferences.edit()
+                .putString("words", Json.encodeToString(wordDataSerializer, words))
+                .putString("bigrams", Json.encodeToString(wordDataSerializer, bigrams))
+                .apply()
+        }
+    }
+
+    private fun preserveCase(original: String, candidate: String): String = when {
+        original.all(Char::isUpperCase) -> candidate.uppercase()
+        original.firstOrNull()?.isUpperCase() == true -> candidate.replaceFirstChar { it.uppercase() }
+        else -> candidate
+    }
+
+    private fun editDistance(first: String, second: String): Int {
+        var previous = IntArray(second.length + 1) { it }
+        for (i in first.indices) {
+            val current = IntArray(second.length + 1)
+            current[0] = i + 1
+            for (j in second.indices) {
+                current[j + 1] = minOf(
+                    current[j] + 1,
+                    previous[j + 1] + 1,
+                    previous[j] + if (first[i] == second[j]) 0 else 1,
+                )
+            }
+            previous = current
+        }
+        return previous.last()
     }
 }

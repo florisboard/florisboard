@@ -65,3 +65,5 @@ debug/
 target/
 **/*.rs.bk
 *.pdb
+FHb.code-workspace
+FHb-crossbreed/android-ndk-r29-windows.zip

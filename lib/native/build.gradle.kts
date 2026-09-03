@@ -33,6 +33,7 @@ kotlin {
 configure<LibraryExtension> {
     namespace = "org.florisboard.libnative"
     compileSdk = projectCompileSdk.toInt()
+    ndkPath = "V:/android-ndk-r29"
     ndkVersion = tools.versions.ndk.get()
 
     defaultConfig {
@@ -88,3 +89,4 @@ tasks.named("clean") {
 dependencies {
     // none
 }
+
