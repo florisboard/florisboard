@@ -16,12 +16,15 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -32,11 +35,10 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 val GlobalStateNumPopupsShowing = MutableStateFlow(0)
 
 @Composable
-fun TouchKeySimplePopupBox(
+fun LongPressBox(
+    longPress: LongPress,
     modifier: Modifier = Modifier,
-    attributes: SnyggQueryAttributes,
-    shouldIndicateExtendedPopups: Boolean,
-    display: @Composable () -> Unit,
+    attributes: SnyggQueryAttributes = emptyMap(),
 ) {
     DisposableEffect(Unit) {
         GlobalStateNumPopupsShowing.update { it + 1 }
@@ -45,19 +47,38 @@ fun TouchKeySimplePopupBox(
         }
     }
 
-    SnyggBox(
-        elementName = FlorisImeUi.KeyPopupBox.elementName,
-        attributes = attributes,
-        modifier = modifier,
-    ) {
-        display()
-        if (shouldIndicateExtendedPopups) {
-            SnyggIcon(
-                elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
-                attributes = attributes,
-                modifier = Modifier.align(Alignment.CenterEnd),
-                imageVector = Icons.Default.MoreHoriz,
+    if (longPress.shouldShowSimplePopup()) {
+        SnyggBox(
+            elementName = FlorisImeUi.KeyPopupBox.elementName,
+            attributes = attributes,
+            modifier = modifier.layoutNormalized(longPress.simpleBounds),
+        ) {
+            Display3(
+                display = longPress.simpleLabel,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 10.dp),
             )
+            if (longPress.simpleIndicateExtended) {
+                SnyggIcon(
+                    elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
+                    attributes = attributes,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .offset(y = (-8).dp),
+                    imageVector = Icons.Default.MoreHoriz,
+                )
+            }
+        }
+    }
+
+    if (longPress.shouldShowExtendedPopup()) {
+        SnyggBox(
+            elementName = FlorisImeUi.KeyPopupBox.elementName,
+            attributes = attributes,
+            modifier = modifier.layoutNormalized(longPress.extendedBounds),
+        ) {
+            // TODO
         }
     }
 }

@@ -120,7 +120,7 @@ fun ImeKeyboardBox(
                     val placeable = measurable.measure(effConstraints)
                     layout(placeable.width, placeable.height) { placeable.place(0, 0) }
                 }
-                .pointerInput(Unit) {
+                .pointerInput(model) {
                     val currentContext = currentCoroutineContext()
                     awaitPointerEventScope {
                         while (currentContext.isActive) {
@@ -205,6 +205,7 @@ private fun ImeKeyboardKeyBox(
     }
 
     val numPointersFocused by touchKey.numPointersFocused.collectAsState()
+    val longPress by touchKey.longPressFlow.collectAsState()
     val selector by remember {
         derivedStateOf {
             if (numPointersFocused > 0) SnyggSelector.PRESSED else SnyggSelector.NONE
@@ -223,5 +224,8 @@ private fun ImeKeyboardKeyBox(
                 .align(Alignment.Center),
             display = label,
         )
+    }
+    longPress?.let { longPress ->
+        LongPressBox(longPress, attributes = attributes)
     }
 }

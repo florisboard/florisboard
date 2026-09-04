@@ -21,6 +21,8 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.PointerId
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.platform.LocalDensity
@@ -34,12 +36,14 @@ import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionKind
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKeyboard
+import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchPopupKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import org.k3lp.lib.text.K3StringOrDescriptor
 import org.k3lp.model.layer.K3LayerId
 import kotlin.math.pow
 
@@ -55,6 +59,24 @@ data class TrackedPointer(
     val currKey: TouchKey?,
     val repeatJob: Job?,
 )
+
+data class LongPress(
+    val job: Job?,
+    val simpleBounds: Rect,
+    val simpleLabel: K3StringOrDescriptor,
+    val simpleIndicateExtended: Boolean,
+    val extendedBounds: Rect,
+    val extendedKeys: List<TouchPopupKey>,
+    val extendedFocusedIndex: Int,
+) {
+    fun shouldShowSimplePopup(): Boolean {
+        return !simpleBounds.isEmpty
+    }
+
+    fun shouldShowExtendedPopup(): Boolean {
+        return !extendedBounds.isEmpty
+    }
+}
 
 data class PeekLine(
     val start: Offset,
@@ -95,6 +117,7 @@ class PointerTracker(
 
         val keyRepeatTimeout = interactionController.getKeyRepeatTimeout(downKey.data.output)
         val keyRepeatDelay = interactionController.getKeyRepeatDelay(downKey.data.output)
+        val longPressTimeout = interactionController.getLongPressTimeout(downKey.data.output)
 
         val trackedPointer = TrackedPointer(
             id = down.id,
@@ -117,12 +140,42 @@ class PointerTracker(
                         delay(keyRepeatDelay)
                     }
                 }
-            } else null
+            } else null,
         )
+        val longPress = if (downKey.isSuitableForPopup) {
+            LongPress(
+                job = if (downKey.isSuitableForExtendedPopup) {
+                    scope.launch {
+                        delay(longPressTimeout)
+                        // TODO
+                    }
+                } else null,
+                simpleBounds = if (downKey.isSuitableForSimplePopup) {
+                    downKey.bounds.let { bounds ->
+                        val popupWidth = 0.1f
+                        val popupHeight = bounds.height * 2f
+                        val popupX = bounds.bottomCenter.x - popupWidth / 2f
+                        val popupY = bounds.bottom - popupHeight
+                        Rect(
+                            offset = Offset(popupX, popupY),
+                            size = Size(popupWidth, popupHeight),
+                        )
+                    }
+                } else Rect.Zero,
+                simpleLabel = downKey.label,
+                simpleIndicateExtended = downKey.isSuitableForExtendedPopup,
+                extendedBounds = Rect.Zero,
+                extendedKeys = downKey.extendedPopupKeys,
+                extendedFocusedIndex = 0,
+            )
+        } else null
         require(!trackedPointers.contains(trackedPointer.id))
         trackedPointers[trackedPointer.id] = trackedPointer
         if (downKey.data.layerId == null) {
             downKey.numPointersFocused.update { it + 1 }
+        }
+        if (longPress != null) {
+            downKey.longPressFlow.update { longPress }
         }
         interactionController.performFeedback(InteractionKind.KeyPress)
 
@@ -159,6 +212,7 @@ class PointerTracker(
     fun onUp(up: PointerInputChange, size: IntSize) {
         val trackedPointer = trackedPointers[up.id] ?: return
         trackedPointer.repeatJob?.cancel()
+        trackedPointer.downKey.longPressFlow.update { null }
         if (trackedPointer.downKey.data.layerId == null) {
             trackedPointer.downKey.numPointersFocused.update { it - 1 }
         }
@@ -190,6 +244,7 @@ class PointerTracker(
     fun onCancel(id: PointerId) {
         val trackedPointer = trackedPointers[id]
         requireNotNull(trackedPointer)
+        trackedPointer.downKey.longPressFlow.update { null }
         trackedPointer.repeatJob?.cancel()
         trackedPointer.currKey?.numPointersFocused?.update { it - 1 }
         trackedPointer.peekKey?.numPointersFocused?.update { it - 1 }

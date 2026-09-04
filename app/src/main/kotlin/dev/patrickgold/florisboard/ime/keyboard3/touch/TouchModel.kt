@@ -20,6 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.ui.LongPress
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -33,6 +34,7 @@ import org.k3lp.model.flick.K3Flick
 import org.k3lp.model.key.K3Key
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.model.layer.K3TouchLayers
+import java.util.Collections
 import kotlin.math.roundToInt
 
 sealed interface TouchModel {
@@ -105,7 +107,19 @@ class TouchKey(
     val data: K3Key,
     val flick: K3Flick?,
     val isRepeatable: Boolean,
+    val isSuitableForSimplePopup: Boolean,
+    val isSuitableForExtendedPopup: Boolean,
+    val extendedPopupKeys: List<TouchPopupKey>,
     val numPointersFocused: MutableStateFlow<Int>,
+    val longPressFlow: MutableStateFlow<LongPress?>,
+) {
+    val isSuitableForPopup: Boolean
+        get() = isSuitableForSimplePopup || isSuitableForExtendedPopup
+}
+
+class TouchPopupKey(
+    val label: K3StringOrDescriptor,
+    val data: K3Key,
 )
 
 context(scope: CoroutineScope)
@@ -196,6 +210,23 @@ private fun computeTouchKeyboard(
                     // else same as bounds
                     else -> keyBoundsPx
                 }
+                val popups = key.longPressKeyIds?.let { longPressKeyIds ->
+                    val defaultKeyId = key.longPressDefaultKeyId ?: longPressKeyIds.first()
+                    val defaultKeyIndex = longPressKeyIds.indexOf(defaultKeyId)
+                    buildList {
+                        longPressKeyIds.forEach { keyId ->
+                            val key = model.keys.byKeyId[keyId]!!
+                            val popupKey = TouchPopupKey(
+                                label = computeKeyDisplay(model, key),
+                                data = key,
+                            )
+                            add(popupKey)
+                        }
+                        if (defaultKeyIndex > 0) {
+                            Collections.swap(this, 0, defaultKeyIndex)
+                        }
+                    }
+                }
                 val touchKey = TouchKey(
                     bounds = keyBoundsPx,
                     hitbox = hitbox,
@@ -203,7 +234,11 @@ private fun computeTouchKeyboard(
                     data = key,
                     flick = key.flickId?.let { model.flicks.byFlickId[it] },
                     isRepeatable = key.output?.isRepeatable() ?: false,
+                    isSuitableForSimplePopup = key.isSuitableForSimplePopup() ?: false,
+                    isSuitableForExtendedPopup = popups?.isNotEmpty() ?: false,
+                    extendedPopupKeys = popups ?: emptyList(),
                     numPointersFocused = MutableStateFlow(0),
+                    longPressFlow = MutableStateFlow(null),
                 )
                 touchKeys.add(touchKey)
                 currentX += keyWidthPx
@@ -239,4 +274,9 @@ fun K3StringOrDescriptor.isRepeatable(): Boolean {
         is K3String -> false
         is K3Descriptor -> ImeActions.Repeatable.contains(this)
     }
+}
+
+private val ASCII_SPACE = " ".asK3String()
+fun K3Key.isSuitableForSimplePopup(): Boolean {
+    return layerId == null && output is K3String && output != ASCII_SPACE
 }
