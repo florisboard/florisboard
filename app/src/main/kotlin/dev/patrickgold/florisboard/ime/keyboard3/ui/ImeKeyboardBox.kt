@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -105,7 +104,10 @@ fun ImeKeyboardBox(
                 ?: activeTouchKeyboard.layers[K3LayerId.BASE]
                 ?: TouchLayer.Empty
         }
+
         val pointerTracker = rememberPointerTracker(activeTouchKeyboard)
+        val trackedOutputPointer by pointerTracker.trackedOutputPointer.collectAsState()
+        val trackedPeekPointer by pointerTracker.trackedPeekPointer.collectAsState()
 
         val keyboardRowHeightDp = FlorisImeSizing.keyboardRowBaseHeight
         val peekLineWidthPx = with(density) { 8.dp.toPx() }
@@ -130,12 +132,16 @@ fun ImeKeyboardBox(
                             //  mouse leave&re-enter in the emulator => OOB checks
                             val event = awaitPointerEvent()
                             // TODO evaluate this cancellation logic
-                            pointerTracker.trackedPointers.toMap().forEach { (id, _) ->
-                                val change = event.changes.fastFirstOrNull { it.id == id }
+                            pointerTracker.trackedPeekPointer.value?.let { trackedPointer ->
+                                val change = event.changes.fastFirstOrNull { it.id == trackedPointer.id }
                                 if (change == null) {
-                                    // we can safely call remove() in onCancel(), as we iterate over the
-                                    // immutable snapshot of the map returned by onMap()
-                                    pointerTracker.onCancel(id)
+                                    pointerTracker.onCancel(trackedPointer.id)
+                                }
+                            }
+                            pointerTracker.trackedOutputPointer.value?.let { trackedPointer ->
+                                val change = event.changes.fastFirstOrNull { it.id == trackedPointer.id }
+                                if (change == null) {
+                                    pointerTracker.onCancel(trackedPointer.id)
                                 }
                             }
                             event.changes.fastForEach { change ->
@@ -146,15 +152,16 @@ fun ImeKeyboardBox(
                                 } else if (!change.isConsumed) {
                                     pointerTracker.onMove(change, size)
                                 }
+                                change.consume()
                             }
                         }
                     }
                 }
                 .drawWithContent {
                     drawContent()
-                    for ((_, trackedPointer) in pointerTracker.trackedPointers) {
-                        val peekLine = trackedPointer.peekLine
-                        if (trackedPointer.peekLine != null) {
+                    trackedPeekPointer?.let { trackedPeekPointer ->
+                        val peekLine = trackedPeekPointer.peekLine
+                        if (peekLine != null) {
                             drawLine(
                                 color = Color.Red, // TODO customizable
                                 start = peekLine.start,
@@ -167,12 +174,25 @@ fun ImeKeyboardBox(
                 }
         ) {
             for (touchKey in activeTouchLayer.keys) {
-                if (touchKey.data.gap) {
+                if (touchKey.attrs.gap) {
                     continue
+                }
+                val touchKey by rememberUpdatedState(touchKey)
+                val isPressed by remember {
+                    derivedStateOf {
+                        trackedOutputPointer?.downKey == touchKey ||
+                            trackedPeekPointer?.peekKey == touchKey
+                    }
+                }
+                val longPress by remember {
+                    derivedStateOf {
+                        trackedOutputPointer?.takeIf { it.downKey == touchKey }?.longPress
+                    }
                 }
                 ImeKeyboardKeyBox(
                     touchKey = touchKey,
-                    pointerTracker = pointerTracker,
+                    isPressed = isPressed,
+                    longPress = longPress,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -195,20 +215,12 @@ fun ImeKeyboardBox(
 @Composable
 private fun ImeKeyboardKeyBox(
     touchKey: TouchKey,
-    pointerTracker: PointerTracker,
+    isPressed: Boolean,
+    longPress: LongPress?,
     modifier: Modifier = Modifier,
 ) {
-    val touchKeyState = rememberUpdatedState(touchKey)
-    val trackedPointer by remember {
-        derivedStateOf {
-            pointerTracker.trackedPointers.values.firstOrNull { trackedPointer ->
-                trackedPointer.focusedKey == touchKeyState.value
-            }
-        }
-    }
-
     val label = touchKey.label // TODO for space replace label by active subtype language
-    val output = touchKey.data.output
+    val output = touchKey.attrs.output
     val attributes: SnyggQueryAttributes = remember(output) {
         buildMap {
             if (output != null) {
@@ -216,14 +228,7 @@ private fun ImeKeyboardKeyBox(
             }
         }
     }
-    val selector by remember {
-        derivedStateOf {
-            when {
-                trackedPointer != null -> SnyggSelector.PRESSED
-                else -> SnyggSelector.NONE
-            }
-        }
-    }
+    val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
 
     SnyggBox(
         FlorisImeUi.Key.elementName,
@@ -238,7 +243,7 @@ private fun ImeKeyboardKeyBox(
             display = label,
         )
     }
-    trackedPointer?.longPress?.let { longPress ->
+    longPress?.let { longPress ->
         LongPressBox(longPress, attributes = attributes)
     }
 }
