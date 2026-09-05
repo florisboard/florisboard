@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,7 +41,6 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchPopupKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.k3lp.lib.text.K3StringOrDescriptor
@@ -56,7 +56,8 @@ data class TrackedPointer(
     val peekKey: TouchKey?,
     val peekLine: PeekLine?,
     val peekMustSwitchBack: Boolean,
-    val currKey: TouchKey?,
+    val focusedKey: TouchKey?,
+    val longPress: LongPress?,
     val repeatJob: Job?,
 )
 
@@ -96,9 +97,17 @@ fun rememberPointerTracker(
     // TODO make configurable
     val peekDistanceSqMin = with(density) { 30.dp.toPx().pow(2) }
 
-    return remember(touchKeyboard) {
+    val pointerTracker = remember(touchKeyboard) {
         PointerTracker(touchKeyboard, imeController, interactionController, scope, peekDistanceSqMin)
     }
+
+    DisposableEffect(pointerTracker) {
+        onDispose {
+            pointerTracker.cancelAll()
+        }
+    }
+
+    return pointerTracker
 }
 
 class PointerTracker(
@@ -128,7 +137,34 @@ class PointerTracker(
             peekKey = null,
             peekLine = null,
             peekMustSwitchBack = false,
-            currKey = downKey,
+            focusedKey = downKey.takeIf { it.data.layerId == null },
+            longPress = if (downKey.isSuitableForPopup) {
+                LongPress(
+                    job = if (downKey.isSuitableForExtendedPopup) {
+                        scope.launch {
+                            delay(longPressTimeout)
+                            // TODO
+                        }
+                    } else null,
+                    simpleBounds = if (downKey.isSuitableForSimplePopup) {
+                        downKey.bounds.let { bounds ->
+                            val popupWidth = 0.1f
+                            val popupHeight = bounds.height * 2f
+                            val popupX = bounds.bottomCenter.x - popupWidth / 2f
+                            val popupY = bounds.bottom - popupHeight
+                            Rect(
+                                offset = Offset(popupX, popupY),
+                                size = Size(popupWidth, popupHeight),
+                            )
+                        }
+                    } else Rect.Zero,
+                    simpleLabel = downKey.label,
+                    simpleIndicateExtended = downKey.isSuitableForExtendedPopup,
+                    extendedBounds = Rect.Zero,
+                    extendedKeys = downKey.extendedPopupKeys,
+                    extendedFocusedIndex = 0,
+                )
+            } else null,
             repeatJob = if (downKey.isRepeatable) {
                 scope.launch {
                     delay(keyRepeatTimeout)
@@ -142,41 +178,8 @@ class PointerTracker(
                 }
             } else null,
         )
-        val longPress = if (downKey.isSuitableForPopup) {
-            LongPress(
-                job = if (downKey.isSuitableForExtendedPopup) {
-                    scope.launch {
-                        delay(longPressTimeout)
-                        // TODO
-                    }
-                } else null,
-                simpleBounds = if (downKey.isSuitableForSimplePopup) {
-                    downKey.bounds.let { bounds ->
-                        val popupWidth = 0.1f
-                        val popupHeight = bounds.height * 2f
-                        val popupX = bounds.bottomCenter.x - popupWidth / 2f
-                        val popupY = bounds.bottom - popupHeight
-                        Rect(
-                            offset = Offset(popupX, popupY),
-                            size = Size(popupWidth, popupHeight),
-                        )
-                    }
-                } else Rect.Zero,
-                simpleLabel = downKey.label,
-                simpleIndicateExtended = downKey.isSuitableForExtendedPopup,
-                extendedBounds = Rect.Zero,
-                extendedKeys = downKey.extendedPopupKeys,
-                extendedFocusedIndex = 0,
-            )
-        } else null
         require(!trackedPointers.contains(trackedPointer.id))
         trackedPointers[trackedPointer.id] = trackedPointer
-        if (downKey.data.layerId == null) {
-            downKey.numPointersFocused.update { it + 1 }
-        }
-        if (longPress != null) {
-            downKey.longPressFlow.update { longPress }
-        }
         interactionController.performFeedback(InteractionKind.KeyPress)
 
         if (trackedPointer.peekLayerId != null) {
@@ -194,16 +197,12 @@ class PointerTracker(
         if (trackedPointer.peekLayerId != null) {
             val distanceSq = (move.position - trackedPointer.down.position).getDistanceSquared()
             if (trackedPointer.peekLine != null || distanceSq >= peekDistanceSqMin) {
-                val oldPeekKey = trackedPointer.peekKey
                 val newPeekKey = touchKeyboard.findKey(trackedPointer.peekLayerId, move.position.normalized(size))
-                if (newPeekKey !== oldPeekKey) {
-                    oldPeekKey?.numPointersFocused?.update { it - 1 }
-                    newPeekKey?.numPointersFocused?.update { it + 1 }
-                }
                 trackedPointers[trackedPointer.id] = trackedPointer.copy(
                     peekKey = newPeekKey,
                     peekLine = PeekLine(trackedPointer.down.position, move.position),
                     peekMustSwitchBack = true,
+                    focusedKey = newPeekKey,
                 )
             }
         }
@@ -211,24 +210,18 @@ class PointerTracker(
 
     fun onUp(up: PointerInputChange, size: IntSize) {
         val trackedPointer = trackedPointers[up.id] ?: return
+        trackedPointer.longPress?.job?.cancel()
         trackedPointer.repeatJob?.cancel()
-        trackedPointer.downKey.longPressFlow.update { null }
-        if (trackedPointer.downKey.data.layerId == null) {
-            trackedPointer.downKey.numPointersFocused.update { it - 1 }
-        }
         up.consume()
         scope.launch {
             imeController.updateState {
                 if (trackedPointer.peekLayerId != null) {
+                    trackedPointer.peekKey?.data?.output?.let { emit(it) }
                     if (trackedPointer.peekMustSwitchBack) {
                         switchTouchLayer(trackedPointer.downLayerId)
                     }
-                    if (trackedPointer.peekKey != null) {
-                        trackedPointer.peekKey.numPointersFocused.update { it - 1 }
-                        trackedPointer.peekKey.data.output?.let { emit(it) }
-                    }
                 } else {
-                    trackedPointer.currKey?.data?.output?.let { emit(it) }
+                    trackedPointer.focusedKey?.data?.output?.let { emit(it) }
                     for (otherId in trackedPointers.keys.toList()) {
                         val otherTp = trackedPointers[otherId]!!
                         if (otherTp.peekLayerId != null) {
@@ -244,10 +237,8 @@ class PointerTracker(
     fun onCancel(id: PointerId) {
         val trackedPointer = trackedPointers[id]
         requireNotNull(trackedPointer)
-        trackedPointer.downKey.longPressFlow.update { null }
+        trackedPointer.longPress?.job?.cancel()
         trackedPointer.repeatJob?.cancel()
-        trackedPointer.currKey?.numPointersFocused?.update { it - 1 }
-        trackedPointer.peekKey?.numPointersFocused?.update { it - 1 }
         if (trackedPointer.peekLayerId != null) {
             scope.launch {
                 imeController.updateState {
@@ -256,6 +247,12 @@ class PointerTracker(
             }
         }
         trackedPointers.remove(id)
+    }
+
+    fun cancelAll() {
+        trackedPointers.toMap().forEach { (id, _) ->
+            onCancel(id)
+        }
     }
 
     private fun Offset.normalized(size: IntSize): Offset {

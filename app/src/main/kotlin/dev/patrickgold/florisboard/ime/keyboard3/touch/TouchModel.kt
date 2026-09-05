@@ -20,11 +20,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
-import dev.patrickgold.florisboard.ime.keyboard3.ui.LongPress
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.k3lp.lib.text.K3Descriptor
 import org.k3lp.lib.text.K3String
 import org.k3lp.lib.text.K3StringOrDescriptor
@@ -34,7 +32,7 @@ import org.k3lp.model.flick.K3Flick
 import org.k3lp.model.key.K3Key
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.model.layer.K3TouchLayers
-import java.util.Collections
+import java.util.*
 import kotlin.math.roundToInt
 
 sealed interface TouchModel {
@@ -110,8 +108,6 @@ class TouchKey(
     val isSuitableForSimplePopup: Boolean,
     val isSuitableForExtendedPopup: Boolean,
     val extendedPopupKeys: List<TouchPopupKey>,
-    val numPointersFocused: MutableStateFlow<Int>,
-    val longPressFlow: MutableStateFlow<LongPress?>,
 ) {
     val isSuitableForPopup: Boolean
         get() = isSuitableForSimplePopup || isSuitableForExtendedPopup
@@ -237,8 +233,6 @@ private fun computeTouchKeyboard(
                     isSuitableForSimplePopup = key.isSuitableForSimplePopup() ?: false,
                     isSuitableForExtendedPopup = popups?.isNotEmpty() ?: false,
                     extendedPopupKeys = popups ?: emptyList(),
-                    numPointersFocused = MutableStateFlow(0),
-                    longPressFlow = MutableStateFlow(null),
                 )
                 touchKeys.add(touchKey)
                 currentX += keyWidthPx

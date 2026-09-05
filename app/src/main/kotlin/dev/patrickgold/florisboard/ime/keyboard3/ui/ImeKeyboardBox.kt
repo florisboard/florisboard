@@ -21,11 +21,13 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -169,6 +171,8 @@ fun ImeKeyboardBox(
                     continue
                 }
                 ImeKeyboardKeyBox(
+                    touchKey = touchKey,
+                    pointerTracker = pointerTracker,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -182,7 +186,6 @@ fun ImeKeyboardBox(
                             )
                             layout(placeable.width, placeable.height) { placeable.place(offset) }
                         },
-                    touchKey = touchKey,
                 )
             }
         }
@@ -192,8 +195,18 @@ fun ImeKeyboardBox(
 @Composable
 private fun ImeKeyboardKeyBox(
     touchKey: TouchKey,
+    pointerTracker: PointerTracker,
     modifier: Modifier = Modifier,
 ) {
+    val touchKeyState = rememberUpdatedState(touchKey)
+    val trackedPointer by remember {
+        derivedStateOf {
+            pointerTracker.trackedPointers.values.firstOrNull { trackedPointer ->
+                trackedPointer.focusedKey == touchKeyState.value
+            }
+        }
+    }
+
     val label = touchKey.label // TODO for space replace label by active subtype language
     val output = touchKey.data.output
     val attributes: SnyggQueryAttributes = remember(output) {
@@ -203,12 +216,12 @@ private fun ImeKeyboardKeyBox(
             }
         }
     }
-
-    val numPointersFocused by touchKey.numPointersFocused.collectAsState()
-    val longPress by touchKey.longPressFlow.collectAsState()
     val selector by remember {
         derivedStateOf {
-            if (numPointersFocused > 0) SnyggSelector.PRESSED else SnyggSelector.NONE
+            when {
+                trackedPointer != null -> SnyggSelector.PRESSED
+                else -> SnyggSelector.NONE
+            }
         }
     }
 
@@ -225,7 +238,7 @@ private fun ImeKeyboardKeyBox(
             display = label,
         )
     }
-    longPress?.let { longPress ->
+    trackedPointer?.longPress?.let { longPress ->
         LongPressBox(longPress, attributes = attributes)
     }
 }
