@@ -17,17 +17,21 @@
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.PointerId
 import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.changedToDown
+import androidx.compose.ui.input.pointer.changedToUp
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastAll
+import androidx.compose.ui.util.fastForEach
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
@@ -39,12 +43,20 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchPopupKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import org.k3lp.lib.text.K3StringOrDescriptor
+import org.k3lp.model.K3Model
 import org.k3lp.model.layer.K3LayerId
 import kotlin.math.pow
 
@@ -96,44 +108,34 @@ data class PeekLine(
     val end: Offset,
 )
 
-@Composable
-fun rememberPointerTracker(
-    touchKeyboard: TouchKeyboard,
-): PointerTracker {
-    val prefs by FlorisPreferenceStore
-    val density = LocalDensity.current
-    val imeController = LocalImeController.current
-    val interactionController = LocalInteractionController.current
-    val scope = rememberCoroutineScope()
-
-    // TODO make configurable
-    val peekDistanceSqMin = with(density) { 30.dp.toPx().pow(2) }
-
-    val pointerTracker = remember(touchKeyboard) {
-        PointerTracker(touchKeyboard, imeController, interactionController, scope, peekDistanceSqMin)
-    }
-
-    DisposableEffect(pointerTracker) {
-        onDispose {
-            pointerTracker.cancelAll()
-        }
-    }
-
-    return pointerTracker
-}
-
-// TODO better sync and async processing
 class PointerTracker(
     val touchKeyboard: TouchKeyboard,
     val imeController: ImeController,
     val interactionController: InteractionController,
-    val scope: CoroutineScope,
     val peekDistanceSqMin: Float,
 ) {
-    val trackedPeekPointer = MutableStateFlow<TrackedPointer.Peek?>(null)
-    val trackedOutputPointer = MutableStateFlow<TrackedPointer.Output?>(null)
+    private val mutationGuard = Mutex()
 
-    fun onDown(down: PointerInputChange, size: IntSize) {
+    val trackedPeekPointer: StateFlow<TrackedPointer.Peek?>
+        field = MutableStateFlow(null)
+
+    val trackedOutputPointer: StateFlow<TrackedPointer.Output?>
+        field = MutableStateFlow(null)
+
+    suspend fun mutateLocked(action: suspend PointerTracker.() -> Unit) {
+        mutationGuard.withLock { action() }
+    }
+
+    suspend fun handleDown(down: PointerInputChange, size: IntSize, scope: CoroutineScope) {
+        trackedPeekPointer.value?.let { trackedPointer ->
+            if (trackedPointer.peekKey != null) {
+                handleUp(down.copy(id = trackedPointer.id), size)
+            }
+        }
+        trackedOutputPointer.value?.let { trackedPointer ->
+            handleUp(down.copy(id = trackedPointer.id), size)
+        }
+
         val downLayerId = imeController.snapshotState().touchLayerId
         val downKey = touchKeyboard.findKey(downLayerId, down.position.normalized(size)) ?: return
 
@@ -144,9 +146,6 @@ class PointerTracker(
         val peekLayerId = downKey.attrs.layerId
         if (peekLayerId != null) {
             // this is a peek key action
-            if (trackedPeekPointer.value != null) {
-                return
-            }
             trackedPeekPointer.value = TrackedPointer.Peek(
                 id = down.id,
                 down = down,
@@ -157,14 +156,11 @@ class PointerTracker(
                 peekLine = null,
                 peekMustSwitchBack = false,
             )
-            scope.launch {
-                imeController.updateState {
-                    switchTouchLayer(peekLayerId)
-                }
+            imeController.updateState {
+                switchTouchLayer(peekLayerId)
             }
             interactionController.performFeedback(InteractionKind.KeyPress)
         } else {
-            trackedOutputPointer.value?.let { onUp(down.copy(id = it.id), size) }
             trackedOutputPointer.value = TrackedPointer.Output(
                 id = down.id,
                 down = down,
@@ -174,7 +170,15 @@ class PointerTracker(
                         job = if (downKey.isSuitableForExtendedPopup) {
                             scope.launch {
                                 delay(longPressTimeout)
-                                // TODO
+                                mutateLocked {
+                                    trackedOutputPointer.update { trackedPointer ->
+                                        trackedPointer?.copy(
+                                            longPress = trackedPointer.longPress?.copy(
+                                                simpleIndicateExtended = false,
+                                            )
+                                        )
+                                    }
+                                }
                             }
                         } else null,
                         simpleBounds = if (downKey.isSuitableForSimplePopup) {
@@ -213,7 +217,7 @@ class PointerTracker(
         }
     }
 
-    fun onMove(move: PointerInputChange, size: IntSize) {
+    suspend fun handleMove(move: PointerInputChange, size: IntSize) {
         trackedPeekPointer.value?.takeIf { it.id == move.id }?.let { trackedPointer ->
             val distanceSq = (move.position - trackedPointer.down.position).getDistanceSquared()
             if (trackedPointer.peekLine != null || distanceSq >= peekDistanceSqMin) {
@@ -230,14 +234,12 @@ class PointerTracker(
         }
     }
 
-    fun onUp(up: PointerInputChange, size: IntSize) {
+    suspend fun handleUp(up: PointerInputChange, size: IntSize) {
         trackedPeekPointer.value?.takeIf { it.id == up.id }?.let { trackedPointer ->
-            scope.launch {
-                imeController.updateState {
-                    trackedPointer.peekKey?.attrs?.output?.let { emit(it) }
-                    if (trackedPointer.peekMustSwitchBack) {
-                        switchTouchLayer(trackedPointer.downLayerId)
-                    }
+            imeController.updateState {
+                trackedPointer.peekKey?.attrs?.output?.let { emit(it) }
+                if (trackedPointer.peekMustSwitchBack) {
+                    switchTouchLayer(trackedPointer.downLayerId)
                 }
             }
             trackedPeekPointer.value = null
@@ -245,38 +247,115 @@ class PointerTracker(
         trackedOutputPointer.value?.takeIf { it.id == up.id }?.let { trackedPointer ->
             trackedPointer.longPress?.job?.cancel()
             trackedPointer.repeatJob?.cancel()
-            scope.launch {
-                imeController.updateState {
-                    trackedPointer.downKey.attrs.output?.let { emit(it) }
-                    trackedPeekPointer.update { it?.copy(peekMustSwitchBack = true) }
-                }
+            imeController.updateState {
+                trackedPointer.downKey.attrs.output?.let { emit(it) }
             }
+            trackedPeekPointer.update { it?.copy(peekMustSwitchBack = true) }
             trackedOutputPointer.value = null
         }
     }
 
-    fun onCancel(id: PointerId) {
-        trackedPeekPointer.value?.takeIf { it.id == id }?.let { trackedPointer ->
-            scope.launch {
-                imeController.updateState {
-                    switchTouchLayer(trackedPointer.downLayerId)
-                }
+    suspend fun cancelNonPresent(changes: List<PointerInputChange>) {
+        trackedPeekPointer.value?.id?.let { id ->
+            if (changes.fastAll { it.id != id }) {
+                cancelPeek()
             }
-            trackedPeekPointer.value = null
         }
-        trackedOutputPointer.value?.takeIf { it.id == id }?.let { trackedPointer ->
-            trackedPointer.longPress?.job?.cancel()
-            trackedPointer.repeatJob?.cancel()
-            trackedOutputPointer.value = null
+        trackedOutputPointer.value?.id?.let { id ->
+            if (changes.fastAll { it.id != id }) {
+                cancelOutput()
+            }
         }
     }
 
-    fun cancelAll() {
-        trackedPeekPointer.value?.let { onCancel(it.id) }
-        trackedOutputPointer.value?.let { onCancel(it.id) }
+    suspend fun cancelAll() {
+        cancelPeek()
+        cancelOutput()
+    }
+
+    private suspend fun cancelPeek() {
+        val trackedPointer = trackedPeekPointer.getAndUpdate { null } ?: return
+        imeController.updateState {
+            switchTouchLayer(trackedPointer.downLayerId)
+        }
+    }
+
+    private suspend fun cancelOutput() {
+        val trackedPointer = trackedOutputPointer.getAndUpdate { null } ?: return
+        trackedPointer.longPress?.job?.cancel()
+        trackedPointer.repeatJob?.cancel()
     }
 
     private fun Offset.normalized(size: IntSize): Offset {
         return Offset(x / size.width, y / size.height)
+    }
+}
+
+@Composable
+fun rememberPointerTracker(
+    touchKeyboard: TouchKeyboard,
+): PointerTracker {
+    val prefs by FlorisPreferenceStore
+    val density = LocalDensity.current
+    val imeController = LocalImeController.current
+    val interactionController = LocalInteractionController.current
+
+    // TODO make configurable
+    val peekDistanceSqMin = with(density) { 30.dp.toPx().pow(2) }
+
+    val pointerTracker = remember(touchKeyboard) {
+        PointerTracker(touchKeyboard, imeController, interactionController, peekDistanceSqMin)
+    }
+
+    return pointerTracker
+}
+
+fun Modifier.trackPointerInput(
+    pointerTracker: PointerTracker,
+    model: K3Model,
+) = this.pointerInput(pointerTracker, model) {
+    try {
+        coroutineScope {
+            val scope = this
+            awaitPointerEventScope {
+                while (true) {
+                    val event = awaitPointerEvent()
+                    val sizeAtEvent = size
+                    scope.launch {
+                        pointerTracker.mutateLocked {
+                            cancelNonPresent(event.changes)
+                        }
+                    }
+                    event.changes.fastForEach { change ->
+                        if (change.changedToDown()) {
+                            scope.launch {
+                                pointerTracker.mutateLocked {
+                                    handleDown(change, sizeAtEvent, scope)
+                                }
+                            }
+                        } else if (change.changedToUp()) {
+                            scope.launch {
+                                pointerTracker.mutateLocked {
+                                    handleUp(change, sizeAtEvent)
+                                }
+                            }
+                        } else if (!change.isConsumed) {
+                            scope.launch {
+                                pointerTracker.mutateLocked {
+                                    handleMove(change, sizeAtEvent)
+                                }
+                            }
+                        }
+                        change.consume()
+                    }
+                }
+            }
+        }
+    } finally {
+        withContext(NonCancellable) {
+            pointerTracker.mutateLocked {
+                cancelAll()
+            }
+        }
     }
 }

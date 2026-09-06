@@ -44,7 +44,7 @@ import kotlin.time.Duration.Companion.milliseconds
 private class AndroidInteractionController(
     val composeView: WeakReference<View>,
     val audioManager: WeakReference<AudioManager>,
-    val scope: CoroutineScope,
+    scope: CoroutineScope,
     prefs: FlorisPreferenceModel,
 ) : InteractionController {
     private val timingOptionsFlow = combine(
@@ -160,42 +160,38 @@ private class AndroidInteractionController(
         val composeView = composeView.get() ?: return
         if (!composeView.isSoundEffectsEnabled) return
         val audioManager = audioManager.get() ?: return
-        scope.launch {
-            val effect = when (output) {
-                ImeActions.Backspace -> AudioManager.FX_KEYPRESS_DELETE
-                ImeActions.Enter -> AudioManager.FX_KEYPRESS_RETURN
-                ASCII_SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-                else -> AudioManager.FX_KEYPRESS_STANDARD
-            }
-            val factor = when (kind) {
-                InteractionKind.KeyPress -> 1.0
-                InteractionKind.KeyRelease -> 0.7
-                InteractionKind.KeyRepeat -> 0.4
-                InteractionKind.LongPress -> 0.7
-                InteractionKind.GestureSwipe -> 0.7
-                InteractionKind.TextHandleMove -> 0.4
-            }
-            val volume = (feedbackOptions.getAudioVolume() * factor) / 100.0
-            if (volume in 0.01..1.00) {
-                audioManager.playSoundEffect(effect, volume.toFloat())
-            }
+        val effect = when (output) {
+            ImeActions.Backspace -> AudioManager.FX_KEYPRESS_DELETE
+            ImeActions.Enter -> AudioManager.FX_KEYPRESS_RETURN
+            ASCII_SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
+            else -> AudioManager.FX_KEYPRESS_STANDARD
+        }
+        val factor = when (kind) {
+            InteractionKind.KeyPress -> 1.0
+            InteractionKind.KeyRelease -> 0.7
+            InteractionKind.KeyRepeat -> 0.4
+            InteractionKind.LongPress -> 0.7
+            InteractionKind.GestureSwipe -> 0.7
+            InteractionKind.TextHandleMove -> 0.4
+        }
+        val volume = (feedbackOptions.getAudioVolume() * factor) / 100.0
+        if (volume in 0.01..1.00) {
+            audioManager.playSoundEffect(effect, volume.toFloat())
         }
     }
 
     override fun performHapticFeedback(kind: InteractionKind, output: K3StringOrDescriptor?) {
         val composeView = composeView.get() ?: return
         if (!composeView.isHapticFeedbackEnabled) return
-        scope.launch {
-            val hfc = when (kind) {
-                InteractionKind.KeyPress -> HFC_KEYBOARD_PRESS
-                InteractionKind.KeyRelease -> HFC_KEYBOARD_RELEASE
-                InteractionKind.KeyRepeat -> HFC_TEXT_HANDLE_MOVE
-                InteractionKind.LongPress -> HFC_LONG_PRESS
-                InteractionKind.GestureSwipe -> 0
-                InteractionKind.TextHandleMove -> HFC_TEXT_HANDLE_MOVE
-            }
-            composeView.performHapticFeedback(hfc)
+        val hfc = when (kind) {
+            InteractionKind.KeyPress -> HFC_KEYBOARD_PRESS
+            InteractionKind.KeyRelease -> HFC_KEYBOARD_RELEASE
+            InteractionKind.KeyRepeat -> HFC_TEXT_HANDLE_MOVE
+            InteractionKind.LongPress -> HFC_LONG_PRESS
+            InteractionKind.GestureSwipe -> 0
+            InteractionKind.TextHandleMove -> HFC_TEXT_HANDLE_MOVE
         }
+        composeView.performHapticFeedback(hfc)
     }
 
     companion object {

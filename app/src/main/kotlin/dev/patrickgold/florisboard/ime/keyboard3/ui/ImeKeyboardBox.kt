@@ -33,16 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.input.pointer.changedToDown
-import androidx.compose.ui.input.pointer.changedToUp
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.fastFirstOrNull
-import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastRoundToInt
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
@@ -53,8 +48,6 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.toMm
 import org.florisboard.lib.snygg.SnyggQueryAttributes
@@ -124,39 +117,7 @@ fun ImeKeyboardBox(
                     val placeable = measurable.measure(effConstraints)
                     layout(placeable.width, placeable.height) { placeable.place(0, 0) }
                 }
-                .pointerInput(model) {
-                    val currentContext = currentCoroutineContext()
-                    awaitPointerEventScope {
-                        while (currentContext.isActive) {
-                            // TODO this pointer logic is VERY KEEN on sending up, even survives
-                            //  mouse leave&re-enter in the emulator => OOB checks
-                            val event = awaitPointerEvent()
-                            // TODO evaluate this cancellation logic
-                            pointerTracker.trackedPeekPointer.value?.let { trackedPointer ->
-                                val change = event.changes.fastFirstOrNull { it.id == trackedPointer.id }
-                                if (change == null) {
-                                    pointerTracker.onCancel(trackedPointer.id)
-                                }
-                            }
-                            pointerTracker.trackedOutputPointer.value?.let { trackedPointer ->
-                                val change = event.changes.fastFirstOrNull { it.id == trackedPointer.id }
-                                if (change == null) {
-                                    pointerTracker.onCancel(trackedPointer.id)
-                                }
-                            }
-                            event.changes.fastForEach { change ->
-                                if (change.changedToDown()) {
-                                    pointerTracker.onDown(change, size)
-                                } else if (change.changedToUp()) {
-                                    pointerTracker.onUp(change, size)
-                                } else if (!change.isConsumed) {
-                                    pointerTracker.onMove(change, size)
-                                }
-                                change.consume()
-                            }
-                        }
-                    }
-                }
+                .trackPointerInput(pointerTracker, model)
                 .drawWithContent {
                     drawContent()
                     trackedPeekPointer?.let { trackedPeekPointer ->
