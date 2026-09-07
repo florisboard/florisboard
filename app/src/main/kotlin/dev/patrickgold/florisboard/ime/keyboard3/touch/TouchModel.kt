@@ -104,6 +104,7 @@ class TouchKey(
     val attrs: K3Key,
     val flick: K3Flick?,
     val isRepeatable: Boolean,
+    val isSuitableForLanguageNameDisplay: Boolean,
     val isSuitableForSimplePopup: Boolean,
     val isSuitableForExtendedPopup: Boolean,
     val extendedPopupKeys: List<TouchPopupKey>,
@@ -236,6 +237,7 @@ private fun computeTouchKeyboard(
                     attrs = key,
                     flick = key.flickId?.let { model.flicks.byFlickId[it] },
                     isRepeatable = key.output?.isRepeatable() ?: false,
+                    isSuitableForLanguageNameDisplay = key.isSuitableForLanguageNameDisplay(),
                     isSuitableForSimplePopup = key.isSuitableForSimplePopup(),
                     isSuitableForExtendedPopup = popups.isNotEmpty(),
                     extendedPopupKeys = popups,
@@ -277,6 +279,10 @@ fun K3StringOrDescriptor.isRepeatable(): Boolean {
 }
 
 private val ASCII_SPACE = " ".asK3String()
+
+fun K3Key.isSuitableForLanguageNameDisplay(): Boolean {
+    return layerId == null && output is K3String && output == ASCII_SPACE
+}
 fun K3Key.isSuitableForSimplePopup(): Boolean {
     return layerId == null && output is K3String && output != ASCII_SPACE
 }

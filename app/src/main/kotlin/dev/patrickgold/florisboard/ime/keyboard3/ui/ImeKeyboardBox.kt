@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Constraints
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastRoundToInt
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
@@ -50,12 +52,16 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchLayer
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.compose.toMm
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
+import org.k3lp.lib.text.K3String
+import org.k3lp.lib.text.asK3String
 import org.k3lp.model.layer.K3LayerId
 
 @Composable
@@ -87,6 +93,19 @@ fun ImeKeyboardBox(
             imeController.touchModelCache.getOrComputeFor(model)
         }
     }
+
+    val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
+    val languageName = remember(model, displayLanguageNamesIn) {
+        // TODO this might not be the right locale, get from new suntypes once impl
+        val locale = FlorisLocale.from(model.locales.getOrElse(0) { "en" })
+        when (displayLanguageNamesIn) {
+            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+        }.asK3String()
+    }
+
+    val devtoolsEnabled by prefs.devtools.enabled.collectAsState()
+    val debugShowTouchBoundaries by prefs.devtools.showKeyTouchBoundaries.collectAsState()
 
     BoxWithConstraints {
         val deviceWidthMm = remember(constraints.maxWidth) {
@@ -157,6 +176,7 @@ fun ImeKeyboardBox(
                     touchKey = touchKey,
                     isPressed = isPressed,
                     longPress = longPress,
+                    languageName = languageName,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -171,6 +191,19 @@ fun ImeKeyboardBox(
                             layout(placeable.width, placeable.height) { placeable.place(offset) }
                         },
                 )
+                if (devtoolsEnabled && debugShowTouchBoundaries) {
+                    Box(
+                        modifier = Modifier
+                            .layoutNormalized(touchKey.hitbox)
+                            .drawWithContent {
+                                drawContent()
+                                drawRect(
+                                    color = Color.Red,
+                                    style = Stroke(width = 1.dp.toPx()),
+                                )
+                            }
+                    )
+                }
             }
         }
     }
@@ -181,9 +214,14 @@ private fun ImeKeyboardKeyBox(
     touchKey: TouchKey,
     isPressed: Boolean,
     longPress: LongPress,
+    languageName: K3String,
     modifier: Modifier = Modifier,
 ) {
-    val label = touchKey.label // TODO for space replace label by active subtype language
+    val display = if (touchKey.isSuitableForLanguageNameDisplay) {
+        languageName
+    } else {
+        touchKey.label
+    }
     val output = touchKey.attrs.output
     val attributes: SnyggQueryAttributes = remember(output) {
         buildMap {
@@ -192,6 +230,7 @@ private fun ImeKeyboardKeyBox(
             }
         }
     }
+    // TODO some keys an be disabled (copy cut etc)
     val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
 
     SnyggBox(
@@ -204,7 +243,7 @@ private fun ImeKeyboardKeyBox(
             modifier = Modifier
                 .wrapContentSize()
                 .align(Alignment.Center),
-            display = label,
+            display = display,
         )
     }
     LongPressBox(longPress, attributes = attributes)
