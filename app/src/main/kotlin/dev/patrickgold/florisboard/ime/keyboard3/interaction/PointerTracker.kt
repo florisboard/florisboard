@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.keyboard3.ui
+package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -32,17 +32,13 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAll
 import androidx.compose.ui.util.fastCoerceIn
+import androidx.compose.ui.util.fastFold
 import androidx.compose.ui.util.fastForEach
-import androidx.compose.ui.util.fastForEachIndexed
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
-import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionController
-import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionKind
-import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKeyboard
-import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchPopupKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -58,8 +54,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.k3lp.lib.text.K3String
-import org.k3lp.lib.text.K3StringOrDescriptor
 import org.k3lp.model.K3Model
 import org.k3lp.model.layer.K3LayerId
 import kotlin.math.pow
@@ -90,38 +84,6 @@ sealed interface TrackedPointer {
     ) : TrackedPointer
 }
 
-data class LongPress(
-    val anchorBounds: Rect = Rect.Zero,
-    val simpleBounds: Rect = Rect.Zero,
-    val simpleLabel: K3StringOrDescriptor = K3String.empty(),
-    val simpleIndicateExtended: Boolean = false,
-    val extendedBounds: Rect = Rect.Zero,
-    val extendedKeys: List<TouchPopupKey> = emptyList(),
-    val extendedFocusedIndex: Int = 0,
-    val extendedJob: Job? = null,
-) {
-    fun shouldShowSimplePopup(): Boolean {
-        return !simpleBounds.isEmpty
-    }
-
-    fun shouldShowExtendedPopup(): Boolean {
-        return !extendedBounds.isEmpty
-    }
-
-    fun getNearestKeyIndex(position: Offset): Int {
-        extendedKeys.fastForEachIndexed { index, extendedKey ->
-            if (extendedKey.bounds.contains(position)) {
-                return index
-            }
-        }
-        return extendedFocusedIndex
-    }
-
-    companion object {
-        val None = LongPress()
-    }
-}
-
 data class PeekLine(
     val start: Offset,
     val end: Offset,
@@ -145,7 +107,8 @@ class PointerTracker(
         mutationGuard.withLock { action() }
     }
 
-    suspend fun handleDown(down: PointerInputChange, size: IntSize, scope: CoroutineScope) {
+    context(scope: CoroutineScope)
+    suspend fun handleDown(down: PointerInputChange, size: IntSize) {
         trackedPeekPointer.value?.let { trackedPointer ->
             if (trackedPointer.peekKey != null) {
                 handleUp(down.copy(id = trackedPointer.id), size)
@@ -186,10 +149,11 @@ class PointerTracker(
                 downKey = downKey,
                 longPress = if (downKey.isSuitableForPopup) {
                     val anchorBounds = downKey.bounds.let { bounds ->
+                        // TODO this is only tested for PHONE_PORTRAIT, test+fix other form factors!
                         val w = 0.1f
-                        val h = bounds.height
+                        val h = bounds.height * 0.9f
                         val x = bounds.bottomCenter.x - w / 2f
-                        val y = bounds.bottom - h * 2f
+                        val y = bounds.bottom - h * 2.3f
                         Rect(
                             offset = Offset(x, y),
                             size = Size(w, h),
@@ -199,7 +163,7 @@ class PointerTracker(
                         anchorBounds = anchorBounds,
                         simpleBounds = if (downKey.isSuitableForSimplePopup) {
                             anchorBounds.copy(
-                                bottom = anchorBounds.bottom + anchorBounds.height,
+                                bottom = anchorBounds.bottom + anchorBounds.height * 1.2f,
                             )
                         } else Rect.Zero,
                         simpleLabel = downKey.label,
@@ -208,7 +172,7 @@ class PointerTracker(
                         extendedKeys = downKey.extendedPopupKeys,
                         extendedFocusedIndex = 0,
                         extendedJob = if (downKey.isSuitableForExtendedPopup) {
-                            scope.launchExtendedLongPressJob(longPressTimeout)
+                            launchExtendedLongPressJob(longPressTimeout)
                         } else null,
                     )
                 } else LongPress.None,
@@ -324,43 +288,29 @@ class PointerTracker(
         return Offset(x / size.width, y / size.height)
     }
 
-    private fun CoroutineScope.launchExtendedLongPressJob(
+    context(scope: CoroutineScope)
+    private fun launchExtendedLongPressJob(
         longPressTimeout: Duration,
-    ): Job = launch(Dispatchers.Default) {
+    ): Job = scope.launch(Dispatchers.Default) {
         delay(longPressTimeout)
         mutateLocked {
-            trackedOutputPointer.update { trackedPointer ->
-                if (trackedPointer != null) {
-                    val longPress = trackedPointer.longPress
-                    // TODO the placement and siszing is more than wonky
-                    val anchorBounds = longPress.anchorBounds
-                    val extendedBounds = anchorBounds.copy(
-                        right = anchorBounds.right + (longPress.extendedKeys.size - 1) * anchorBounds.width,
-                    )
-                    val extendedKeys = longPress.extendedKeys.mapIndexed { index, popupKey ->
-                        val bounds = anchorBounds.translate(
-                            translateX = index * anchorBounds.width,
-                            translateY = 0f,
-                        )
-                        popupKey.withNewBounds(
-                            bounds = bounds,
-                            localBounds = Rect(
-                                left = (bounds.left - extendedBounds.left) / extendedBounds.width,
-                                top = (bounds.top - extendedBounds.top) / extendedBounds.height,
-                                right = (bounds.right - extendedBounds.left) / extendedBounds.width,
-                                bottom = (bounds.bottom - extendedBounds.top) / extendedBounds.height,
-                            )
-                        )
-                    }
-                    trackedPointer.copy(
-                        longPress = trackedPointer.longPress.copy(
-                            simpleIndicateExtended = false,
-                            extendedBounds = extendedBounds,
-                            extendedKeys = extendedKeys,
-                        ),
-                    )
-                } else trackedPointer
-            }
+            val trackedPointer = trackedOutputPointer.value ?: return@mutateLocked
+            val longPress = trackedPointer.longPress
+            val anchorBounds = longPress.anchorBounds
+            val extendedKeys = layoutExtendedLongPressKeys(longPress.extendedKeys, anchorBounds)
+            val extendedBounds = anchorBounds.copy(
+                left = extendedKeys.fastFold(anchorBounds.left) { acc, key -> minOf(acc, key.bounds.left) },
+                top = extendedKeys.fastFold(anchorBounds.top) { acc, key -> minOf(acc, key.bounds.top) },
+                right = extendedKeys.fastFold(anchorBounds.right) { acc, key -> maxOf(acc, key.bounds.right) },
+                bottom = extendedKeys.fastFold(anchorBounds.bottom) { acc, key -> maxOf(acc, key.bounds.bottom) },
+            )
+            trackedOutputPointer.value = trackedPointer.copy(
+                longPress = trackedPointer.longPress.copy(
+                    simpleIndicateExtended = false,
+                    extendedBounds = extendedBounds,
+                    extendedKeys = extendedKeys,
+                ),
+            )
         }
     }
 }
@@ -404,7 +354,7 @@ fun Modifier.trackPointerInput(
                         if (change.changedToDown()) {
                             scope.launch {
                                 pointerTracker.mutateLocked {
-                                    handleDown(change, sizeAtEvent, scope)
+                                    handleDown(change, sizeAtEvent)
                                 }
                             }
                         } else if (change.changedToUp()) {

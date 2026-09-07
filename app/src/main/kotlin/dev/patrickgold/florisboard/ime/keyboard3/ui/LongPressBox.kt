@@ -16,8 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.runtime.Composable
@@ -25,7 +24,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.geometry.Rect
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,21 +59,19 @@ fun LongPressBox(
             attributes = attributes,
             modifier = modifier.layoutNormalized(longPress.simpleBounds),
         ) {
-            Display3(
-                display = longPress.simpleLabel,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 10.dp),
-            )
-            if (longPress.simpleIndicateExtended) {
-                SnyggIcon(
-                    elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
-                    attributes = attributes,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .offset(y = (-8).dp),
-                    imageVector = Icons.Default.MoreHoriz,
+            Box(Modifier.layoutNormalized(longPress.anchorBounds.localTo(longPress.simpleBounds))) {
+                Display3(
+                    display = longPress.simpleLabel,
+                    modifier = Modifier.align(Alignment.Center),
                 )
+                if (longPress.simpleIndicateExtended) {
+                    SnyggIcon(
+                        elementName = FlorisImeUi.KeyPopupExtendedIndicator.elementName,
+                        attributes = attributes,
+                        modifier = Modifier.align(Alignment.BottomEnd),
+                        imageVector = Icons.Default.MoreHoriz,
+                    )
+                }
             }
         }
     }
@@ -100,7 +98,7 @@ fun LongPressBox(
                     elementName = FlorisImeUi.KeyPopupElement.elementName,
                     attributes = attributes,
                     selector = selector,
-                    modifier = modifier.layoutNormalized(extendedKey.localBounds),
+                    modifier = modifier.layoutNormalized(extendedKey.bounds.localTo(longPress.extendedBounds)),
                 ) {
                     Display3(
                         display = extendedKey.label,
@@ -110,4 +108,13 @@ fun LongPressBox(
             }
         }
     }
+}
+
+private fun Rect.localTo(parentBounds: Rect): Rect {
+    return Rect(
+        left = (left - parentBounds.left) / parentBounds.width,
+        top = (top - parentBounds.top) / parentBounds.height,
+        right = (right - parentBounds.left) / parentBounds.width,
+        bottom = (bottom - parentBounds.top) / parentBounds.height,
+    )
 }

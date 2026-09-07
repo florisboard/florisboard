@@ -32,7 +32,6 @@ import org.k3lp.model.flick.K3Flick
 import org.k3lp.model.key.K3Key
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.model.layer.K3TouchLayers
-import java.util.*
 import kotlin.math.roundToInt
 
 sealed interface TouchModel {
@@ -115,12 +114,11 @@ class TouchKey(
 
 class TouchPopupKey(
     val bounds: Rect,
-    val localBounds: Rect,
     val label: K3StringOrDescriptor,
     val data: K3Key,
 ) {
-    fun withNewBounds(bounds: Rect, localBounds: Rect): TouchPopupKey {
-        return TouchPopupKey(bounds, localBounds, label, data)
+    fun withNewBounds(bounds: Rect): TouchPopupKey {
+        return TouchPopupKey(bounds, label, data)
     }
 }
 
@@ -220,14 +218,14 @@ private fun computeTouchKeyboard(
                             val key = model.keys.byKeyId[keyId]!!
                             val popupKey = TouchPopupKey(
                                 bounds = Rect.Zero,
-                                localBounds = Rect.Zero,
                                 label = computeKeyDisplay(model, key),
                                 data = key,
                             )
                             add(popupKey)
                         }
                         if (defaultKeyIndex > 0) {
-                            Collections.swap(this, 0, defaultKeyIndex)
+                            val defaultPopupKey = removeAt(defaultKeyIndex)
+                            add(0, defaultPopupKey)
                         }
                     }
                 } ?: emptyList()

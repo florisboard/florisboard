@@ -147,7 +147,7 @@
         <key id="e-tilde" output="ẽ" />
         <key id="e-ring" output="ė" />
         <key id="e-charon" output="ē" />
-        <key id="f" output="f" longPressKeyIds="care-of percent permille"
+        <key id="f" output="f" longPressKeyIds="percent permille care-of"
              longPressDefaultKeyId="percent" />
         <key id="g" output="g" longPressKeyIds="amp" longPressDefaultKeyId="amp" />
         <key id="h" output="h" />

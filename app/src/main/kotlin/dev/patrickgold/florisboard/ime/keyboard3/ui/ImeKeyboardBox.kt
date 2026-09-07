@@ -42,6 +42,9 @@ import androidx.compose.ui.util.fastRoundToInt
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberPointerTracker
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.trackPointerInput
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchLayer
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModel
