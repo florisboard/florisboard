@@ -31,7 +31,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAll
+import androidx.compose.ui.util.fastCoerceIn
 import androidx.compose.ui.util.fastForEach
+import androidx.compose.ui.util.fastForEachIndexed
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
@@ -42,6 +44,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchPopupKey
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.coroutineScope
@@ -55,10 +58,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import org.k3lp.lib.text.K3String
 import org.k3lp.lib.text.K3StringOrDescriptor
 import org.k3lp.model.K3Model
 import org.k3lp.model.layer.K3LayerId
 import kotlin.math.pow
+import kotlin.time.Duration
 
 sealed interface TrackedPointer {
     val id: PointerId
@@ -80,19 +85,20 @@ sealed interface TrackedPointer {
         override val id: PointerId,
         override val down: PointerInputChange,
         override val downKey: TouchKey,
-        val longPress: LongPress?,
+        val longPress: LongPress,
         val repeatJob: Job?,
     ) : TrackedPointer
 }
 
 data class LongPress(
-    val job: Job?,
-    val simpleBounds: Rect,
-    val simpleLabel: K3StringOrDescriptor,
-    val simpleIndicateExtended: Boolean,
-    val extendedBounds: Rect,
-    val extendedKeys: List<TouchPopupKey>,
-    val extendedFocusedIndex: Int,
+    val anchorBounds: Rect = Rect.Zero,
+    val simpleBounds: Rect = Rect.Zero,
+    val simpleLabel: K3StringOrDescriptor = K3String.empty(),
+    val simpleIndicateExtended: Boolean = false,
+    val extendedBounds: Rect = Rect.Zero,
+    val extendedKeys: List<TouchPopupKey> = emptyList(),
+    val extendedFocusedIndex: Int = 0,
+    val extendedJob: Job? = null,
 ) {
     fun shouldShowSimplePopup(): Boolean {
         return !simpleBounds.isEmpty
@@ -100,6 +106,19 @@ data class LongPress(
 
     fun shouldShowExtendedPopup(): Boolean {
         return !extendedBounds.isEmpty
+    }
+
+    fun getNearestKeyIndex(position: Offset): Int {
+        extendedKeys.fastForEachIndexed { index, extendedKey ->
+            if (extendedKey.bounds.contains(position)) {
+                return index
+            }
+        }
+        return extendedFocusedIndex
+    }
+
+    companion object {
+        val None = LongPress()
     }
 }
 
@@ -166,40 +185,33 @@ class PointerTracker(
                 down = down,
                 downKey = downKey,
                 longPress = if (downKey.isSuitableForPopup) {
+                    val anchorBounds = downKey.bounds.let { bounds ->
+                        val w = 0.1f
+                        val h = bounds.height
+                        val x = bounds.bottomCenter.x - w / 2f
+                        val y = bounds.bottom - h * 2f
+                        Rect(
+                            offset = Offset(x, y),
+                            size = Size(w, h),
+                        )
+                    }
                     LongPress(
-                        job = if (downKey.isSuitableForExtendedPopup) {
-                            scope.launch {
-                                delay(longPressTimeout)
-                                mutateLocked {
-                                    trackedOutputPointer.update { trackedPointer ->
-                                        trackedPointer?.copy(
-                                            longPress = trackedPointer.longPress?.copy(
-                                                simpleIndicateExtended = false,
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                        } else null,
+                        anchorBounds = anchorBounds,
                         simpleBounds = if (downKey.isSuitableForSimplePopup) {
-                            downKey.bounds.let { bounds ->
-                                val popupWidth = 0.1f
-                                val popupHeight = bounds.height * 2f
-                                val popupX = bounds.bottomCenter.x - popupWidth / 2f
-                                val popupY = bounds.bottom - popupHeight
-                                Rect(
-                                    offset = Offset(popupX, popupY),
-                                    size = Size(popupWidth, popupHeight),
-                                )
-                            }
+                            anchorBounds.copy(
+                                bottom = anchorBounds.bottom + anchorBounds.height,
+                            )
                         } else Rect.Zero,
                         simpleLabel = downKey.label,
                         simpleIndicateExtended = downKey.isSuitableForExtendedPopup,
                         extendedBounds = Rect.Zero,
                         extendedKeys = downKey.extendedPopupKeys,
                         extendedFocusedIndex = 0,
+                        extendedJob = if (downKey.isSuitableForExtendedPopup) {
+                            scope.launchExtendedLongPressJob(longPressTimeout)
+                        } else null,
                     )
-                } else null,
+                } else LongPress.None,
                 repeatJob = if (downKey.isRepeatable) {
                     scope.launch {
                         delay(keyRepeatTimeout)
@@ -230,7 +242,23 @@ class PointerTracker(
             }
         }
         trackedOutputPointer.value?.takeIf { it.id == move.id }?.let { trackedPointer ->
-            // TODO
+            val longPress = trackedPointer.longPress
+            if (longPress.shouldShowExtendedPopup()) {
+                val position = move.position.normalized(size).let { position ->
+                    Offset(
+                        x = (position.x)
+                            .fastCoerceIn(longPress.extendedBounds.left, longPress.extendedBounds.right),
+                        y = (position.y - longPress.anchorBounds.height)
+                            .fastCoerceIn(longPress.extendedBounds.top, longPress.extendedBounds.bottom - 0.01f),
+                    )
+                }
+                val newFocusedIndex = longPress.getNearestKeyIndex(position)
+                if (newFocusedIndex != longPress.extendedFocusedIndex) {
+                    trackedOutputPointer.value = trackedPointer.copy(
+                        longPress = longPress.copy(extendedFocusedIndex = newFocusedIndex),
+                    )
+                }
+            }
         }
     }
 
@@ -245,10 +273,16 @@ class PointerTracker(
             trackedPeekPointer.value = null
         }
         trackedOutputPointer.value?.takeIf { it.id == up.id }?.let { trackedPointer ->
-            trackedPointer.longPress?.job?.cancel()
+            trackedPointer.longPress.extendedJob?.cancel()
             trackedPointer.repeatJob?.cancel()
             imeController.updateState {
-                trackedPointer.downKey.attrs.output?.let { emit(it) }
+                val output = if (trackedPointer.longPress.shouldShowExtendedPopup()) {
+                    trackedPointer.longPress.extendedKeys.getOrNull(trackedPointer.longPress.extendedFocusedIndex)
+                        ?.data?.output
+                } else {
+                    trackedPointer.downKey.attrs.output
+                }
+                output?.let { emit(it) }
             }
             trackedPeekPointer.update { it?.copy(peekMustSwitchBack = true) }
             trackedOutputPointer.value = null
@@ -282,12 +316,52 @@ class PointerTracker(
 
     private suspend fun cancelOutput() {
         val trackedPointer = trackedOutputPointer.getAndUpdate { null } ?: return
-        trackedPointer.longPress?.job?.cancel()
+        trackedPointer.longPress.extendedJob?.cancel()
         trackedPointer.repeatJob?.cancel()
     }
 
     private fun Offset.normalized(size: IntSize): Offset {
         return Offset(x / size.width, y / size.height)
+    }
+
+    private fun CoroutineScope.launchExtendedLongPressJob(
+        longPressTimeout: Duration,
+    ): Job = launch(Dispatchers.Default) {
+        delay(longPressTimeout)
+        mutateLocked {
+            trackedOutputPointer.update { trackedPointer ->
+                if (trackedPointer != null) {
+                    val longPress = trackedPointer.longPress
+                    // TODO the placement and siszing is more than wonky
+                    val anchorBounds = longPress.anchorBounds
+                    val extendedBounds = anchorBounds.copy(
+                        right = anchorBounds.right + (longPress.extendedKeys.size - 1) * anchorBounds.width,
+                    )
+                    val extendedKeys = longPress.extendedKeys.mapIndexed { index, popupKey ->
+                        val bounds = anchorBounds.translate(
+                            translateX = index * anchorBounds.width,
+                            translateY = 0f,
+                        )
+                        popupKey.withNewBounds(
+                            bounds = bounds,
+                            localBounds = Rect(
+                                left = (bounds.left - extendedBounds.left) / extendedBounds.width,
+                                top = (bounds.top - extendedBounds.top) / extendedBounds.height,
+                                right = (bounds.right - extendedBounds.left) / extendedBounds.width,
+                                bottom = (bounds.bottom - extendedBounds.top) / extendedBounds.height,
+                            )
+                        )
+                    }
+                    trackedPointer.copy(
+                        longPress = trackedPointer.longPress.copy(
+                            simpleIndicateExtended = false,
+                            extendedBounds = extendedBounds,
+                            extendedKeys = extendedKeys,
+                        ),
+                    )
+                } else trackedPointer
+            }
+        }
     }
 }
 

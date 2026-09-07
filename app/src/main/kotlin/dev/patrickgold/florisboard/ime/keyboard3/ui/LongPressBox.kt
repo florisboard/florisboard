@@ -22,17 +22,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import org.florisboard.lib.snygg.SnyggQueryAttributes
+import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 
-val GlobalStateNumPopupsShowing = MutableStateFlow(0)
+val GlobalStateNumPopupsShowing: StateFlow<Int>
+    field = MutableStateFlow(0)
 
 @Composable
 fun LongPressBox(
@@ -40,10 +44,12 @@ fun LongPressBox(
     modifier: Modifier = Modifier,
     attributes: SnyggQueryAttributes = emptyMap(),
 ) {
-    DisposableEffect(Unit) {
-        GlobalStateNumPopupsShowing.update { it + 1 }
+    val isPopupShowing = longPress.shouldShowSimplePopup() || longPress.shouldShowExtendedPopup()
+    DisposableEffect(isPopupShowing) {
+        val delta = if (isPopupShowing) 1 else 0
+        GlobalStateNumPopupsShowing.update { it + delta }
         onDispose {
-            GlobalStateNumPopupsShowing.update { it - 1 }
+            GlobalStateNumPopupsShowing.update { it - delta }
         }
     }
 
@@ -78,7 +84,30 @@ fun LongPressBox(
             attributes = attributes,
             modifier = modifier.layoutNormalized(longPress.extendedBounds),
         ) {
-            // TODO
+            val extendedKeys = longPress.extendedKeys
+            val focusedIndex = longPress.extendedFocusedIndex
+            extendedKeys.forEachIndexed { index, extendedKey ->
+                val output = extendedKey.data.output
+                val attributes = remember(attributes, extendedKey) {
+                    if (output != null) {
+                        attributes.plus(FlorisImeUi.Attr.Output to output.asAttrValue())
+                    } else {
+                        attributes
+                    }
+                }
+                val selector = if (focusedIndex == index) SnyggSelector.FOCUS else null
+                SnyggBox(
+                    elementName = FlorisImeUi.KeyPopupElement.elementName,
+                    attributes = attributes,
+                    selector = selector,
+                    modifier = modifier.layoutNormalized(extendedKey.localBounds),
+                ) {
+                    Display3(
+                        display = extendedKey.label,
+                        modifier = Modifier.align(Alignment.Center),
+                    )
+                }
+            }
         }
     }
 }

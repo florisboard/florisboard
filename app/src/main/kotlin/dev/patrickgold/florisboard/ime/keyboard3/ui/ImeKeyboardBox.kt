@@ -147,7 +147,7 @@ fun ImeKeyboardBox(
                 }
                 val longPress by remember {
                     derivedStateOf {
-                        trackedOutputPointer?.takeIf { it.downKey == touchKey }?.longPress
+                        trackedOutputPointer?.takeIf { it.downKey == touchKey }?.longPress ?: LongPress.None
                     }
                 }
                 ImeKeyboardKeyBox(
@@ -177,7 +177,7 @@ fun ImeKeyboardBox(
 private fun ImeKeyboardKeyBox(
     touchKey: TouchKey,
     isPressed: Boolean,
-    longPress: LongPress?,
+    longPress: LongPress,
     modifier: Modifier = Modifier,
 ) {
     val label = touchKey.label // TODO for space replace label by active subtype language
@@ -204,7 +204,5 @@ private fun ImeKeyboardKeyBox(
             display = label,
         )
     }
-    longPress?.let { longPress ->
-        LongPressBox(longPress, attributes = attributes)
-    }
+    LongPressBox(longPress, attributes = attributes)
 }

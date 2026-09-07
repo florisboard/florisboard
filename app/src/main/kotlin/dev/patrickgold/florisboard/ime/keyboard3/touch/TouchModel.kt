@@ -114,9 +114,15 @@ class TouchKey(
 }
 
 class TouchPopupKey(
+    val bounds: Rect,
+    val localBounds: Rect,
     val label: K3StringOrDescriptor,
     val data: K3Key,
-)
+) {
+    fun withNewBounds(bounds: Rect, localBounds: Rect): TouchPopupKey {
+        return TouchPopupKey(bounds, localBounds, label, data)
+    }
+}
 
 context(scope: CoroutineScope)
 suspend fun computeTouchModel(
@@ -213,6 +219,8 @@ private fun computeTouchKeyboard(
                         longPressKeyIds.forEach { keyId ->
                             val key = model.keys.byKeyId[keyId]!!
                             val popupKey = TouchPopupKey(
+                                bounds = Rect.Zero,
+                                localBounds = Rect.Zero,
                                 label = computeKeyDisplay(model, key),
                                 data = key,
                             )
@@ -222,7 +230,7 @@ private fun computeTouchKeyboard(
                             Collections.swap(this, 0, defaultKeyIndex)
                         }
                     }
-                }
+                } ?: emptyList()
                 val touchKey = TouchKey(
                     bounds = keyBoundsPx,
                     hitbox = hitbox,
@@ -230,9 +238,9 @@ private fun computeTouchKeyboard(
                     attrs = key,
                     flick = key.flickId?.let { model.flicks.byFlickId[it] },
                     isRepeatable = key.output?.isRepeatable() ?: false,
-                    isSuitableForSimplePopup = key.isSuitableForSimplePopup() ?: false,
-                    isSuitableForExtendedPopup = popups?.isNotEmpty() ?: false,
-                    extendedPopupKeys = popups ?: emptyList(),
+                    isSuitableForSimplePopup = key.isSuitableForSimplePopup(),
+                    isSuitableForExtendedPopup = popups.isNotEmpty(),
+                    extendedPopupKeys = popups,
                 )
                 touchKeys.add(touchKey)
                 currentX += keyWidthPx

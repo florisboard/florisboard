@@ -30,9 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.patrickgold.florisboard.ime.keyboard.Key
-import dev.patrickgold.florisboard.ime.keyboard3.ui.GlobalStateNumPopupsShowing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import kotlinx.coroutines.flow.update
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -49,9 +47,9 @@ fun PopupBaseBox(
     shouldIndicateExtendedPopups: Boolean,
 ): Unit = with(LocalDensity.current) {
     DisposableEffect(key) {
-        GlobalStateNumPopupsShowing.update { it + 1 }
+        //GlobalStateNumPopupsShowing.update { it + 1 }
         onDispose {
-            GlobalStateNumPopupsShowing.update { it - 1 }
+            //GlobalStateNumPopupsShowing.update { it - 1 }
         }
     }
 
