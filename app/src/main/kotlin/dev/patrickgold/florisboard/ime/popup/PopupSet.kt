@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import kotlinx.serialization.Serializable
@@ -142,27 +141,27 @@ class MutablePopupSet<T : AbstractKeyData>(
         }
     }
 
-    fun merge(other: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) {
-        mergeInternal(other, evaluator, relevant, true)
+    fun merge(other: PopupSet<AbstractKeyData>) {
+        mergeInternal(other, relevant, true)
     }
 
-    fun mergeSymbolHint(hintPopups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) {
-        mergeInternal(hintPopups, evaluator, symbolPopups)
+    fun mergeSymbolHint(hintPopups: PopupSet<AbstractKeyData>) {
+        mergeInternal(hintPopups, symbolPopups)
     }
 
-    fun mergeNumberHint(hintPopups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) {
-        mergeInternal(hintPopups, evaluator, numberPopups)
+    fun mergeNumberHint(hintPopups: PopupSet<AbstractKeyData>) {
+        mergeInternal(hintPopups, numberPopups)
     }
 
-    private fun mergeInternal(other: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator, targetList: MutableList<T>, useMain: Boolean = false) {
+    private fun mergeInternal(other: PopupSet<AbstractKeyData>, targetList: MutableList<T>, useMain: Boolean = false) {
         other.relevant.forEach {
-            val data = it.compute(evaluator) as? T
+            val data = null //it.compute(evaluator) as? T
             if (data != null) {
                 targetList.add(data)
             }
         }
         other.main?.let {
-            val data = it.compute(evaluator) as? T
+            val data = null //it.compute(evaluator) as? T
             if (data != null) {
                 if (useMain && main == null) {
                     main = data

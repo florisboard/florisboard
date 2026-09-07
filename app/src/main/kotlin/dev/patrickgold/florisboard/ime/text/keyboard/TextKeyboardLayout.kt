@@ -64,13 +64,9 @@ import dev.patrickgold.florisboard.glideTypingManager
 import dev.patrickgold.florisboard.ime.editor.OperationScope
 import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
-import dev.patrickgold.florisboard.ime.popup.ExceptionsForKeyCodes
-import dev.patrickgold.florisboard.ime.popup.PopupUiController
-import dev.patrickgold.florisboard.ime.popup.rememberPopupUiController
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture

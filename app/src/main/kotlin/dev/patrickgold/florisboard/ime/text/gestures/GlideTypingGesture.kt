@@ -20,7 +20,6 @@ import android.content.Context
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.util.ViewUtils
 import kotlin.math.pow
@@ -51,6 +50,7 @@ class GlideTypingGesture {
          *
          * @return whether or not the event was interpreted as part of a gesture.
          */
+        /*
         fun onTouchEvent(event: MotionEvent, initialKey: TextKey?): Boolean {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN,
@@ -131,6 +131,8 @@ class GlideTypingGesture {
             }
             return false
         }
+
+         */
 
         fun registerListener(listener: Listener) {
             listeners.add(listener)
