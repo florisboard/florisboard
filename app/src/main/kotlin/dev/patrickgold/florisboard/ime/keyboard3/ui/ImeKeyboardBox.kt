@@ -43,6 +43,8 @@ import androidx.compose.ui.util.fastRoundToInt
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
@@ -62,6 +64,7 @@ import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.k3lp.lib.text.K3String
+import org.k3lp.lib.text.K3StringOrDescriptor
 import org.k3lp.lib.text.asK3String
 
 @Composable
@@ -95,14 +98,21 @@ fun ImeKeyboardBox(
         }
     }
 
+    val spaceBarMode by prefs.keyboard.spaceBarMode.collectAsState()
     val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
-    val languageName = remember(model, displayLanguageNamesIn) {
-        // TODO this might not be the right locale, get from new suntypes once impl
-        val locale = FlorisLocale.from(model.locales.getOrElse(0) { "en" })
-        when (displayLanguageNamesIn) {
-            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
-            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
-        }.asK3String()
+    val spaceBarDisplayOverride = remember(model, spaceBarMode, displayLanguageNamesIn) {
+        when (spaceBarMode) {
+            SpaceBarMode.NOTHING -> K3String.Empty
+            SpaceBarMode.CURRENT_LANGUAGE -> {
+                // TODO this might not be the right locale, get from new suntypes once impl
+                val locale = FlorisLocale.from(model.locales.getOrElse(0) { "en" })
+                when (displayLanguageNamesIn) {
+                    DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                    DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                }.asK3String()
+            }
+            SpaceBarMode.SPACE_BAR_KEY -> ImeIcons.SpaceBar
+        }
     }
 
     val devtoolsEnabled by prefs.devtools.enabled.collectAsState()
@@ -183,7 +193,7 @@ fun ImeKeyboardBox(
                     touchKey = touchKey,
                     isPressed = isPressed,
                     longPress = longPress,
-                    languageName = languageName,
+                    spaceBarDisplayOverride = spaceBarDisplayOverride,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -221,11 +231,11 @@ private fun ImeKeyboardKeyBox(
     touchKey: TouchKey,
     isPressed: Boolean,
     longPress: LongPress,
-    languageName: K3String,
+    spaceBarDisplayOverride: K3StringOrDescriptor,
     modifier: Modifier = Modifier,
 ) {
-    val display = if (touchKey.isSuitableForLanguageNameDisplay) {
-        languageName
+    val display = if (touchKey.isSuitableForSpaceBarDisplayOverride) {
+        spaceBarDisplayOverride
     } else {
         touchKey.label
     }
