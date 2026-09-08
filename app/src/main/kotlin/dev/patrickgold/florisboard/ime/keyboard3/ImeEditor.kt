@@ -83,6 +83,27 @@ open class ImeEditor(
         ic.endBatchEdit()
     }
 
+    fun composeMozcInput(
+        range: IntRange,
+        text: String,
+        newSelection: K3TextRange,
+        newComposition: K3TextRange,
+    ) {
+        val ic = ic.get() ?: return
+        ic.beginBatchEdit()
+        ic.setComposingRegion(range.first, range.last + 1)
+        // TODO: Try and see if i can highlight it in the 'autocomplete' blue that Google Japanese Input used
+        ic.commitText(text, 1)
+        ic.setSelection(newSelection.start, newSelection.end)
+        ic.setComposingRegion(newComposition.start, newComposition.end)
+        ic.endBatchEdit()
+    }
+
+    fun finishComposingMozc() {
+        val ic = ic.get() ?: return
+        ic.finishComposingText()
+    }
+
     fun deleteSurroundingText(charsBefore: Int, charsAfter: Int) {
         val ic = ic.get() ?: return
         ic.deleteSurroundingText(charsBefore, charsAfter)

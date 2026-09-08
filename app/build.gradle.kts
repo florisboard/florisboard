@@ -15,6 +15,7 @@
  */
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.google.protobuf.gradle.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -26,6 +27,7 @@ plugins {
     alias(libs.plugins.mikepenz.aboutlibraries)
     alias(libs.plugins.kotest)
     alias(libs.plugins.kotlinx.kover)
+    id("com.google.protobuf") version "0.10.0"
 }
 
 val projectVersionName = providers.gradleProperty("projectVersionName").get()
@@ -78,6 +80,12 @@ configure<ApplicationExtension> {
         sourceSets {
             maybeCreate("main").apply {
                 assets.directories += "src/main/assets"
+                jniLibs.directories.add("src/main/lib")
+                proto {
+                    srcDir("src/main/proto")
+                }
+                // fix intellij weirdness
+                java.directories.add("build/generated/java/generateDebugProto/java")
             }
         }
     }
@@ -215,6 +223,7 @@ dependencies {
     implementation(projects.lib.kotlin)
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
+    implementation("com.google.protobuf:protobuf-javalite:4.35.0")
 
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.property)
@@ -239,4 +248,20 @@ fun getGitCommitHash(short: Boolean = false): Provider<String> {
         }
     }
     return execProvider.standardOutput.asText.map { it.trim() }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.35.0"
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

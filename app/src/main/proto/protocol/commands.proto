@@ -1,0 +1,1460 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Protocol messages to be used for mozc client/server communication.
+//
+// The Command message contains all the input/output values for
+// client/server commnication.  The messages structure of Command and
+// its child messages are here:
+
+syntax = "proto2";
+
+package mozc.commands;
+
+import "protocol/candidate_window.proto";
+import "protocol/config.proto";
+import "protocol/engine_builder.proto";
+import "protocol/user_dictionary_storage.proto";
+
+option java_outer_classname = "ProtoCommands";
+option java_package = "org.mozc.android.inputmethod.japanese.protobuf";
+
+// This enum is used by SessionCommand::input_mode with
+// CHANGE_INPUT_MODE and Output::mode.
+enum CompositionMode {
+  DIRECT = 0;
+  HIRAGANA = 1;
+  FULL_KATAKANA = 2;
+  HALF_ASCII = 3;
+  FULL_ASCII = 4;
+  HALF_KATAKANA = 5;
+  NUM_OF_COMPOSITIONS = 6;
+}
+
+message KeyEvent {
+  // LINT.IfChange
+  enum SpecialKey {
+    NO_SPECIALKEY = 0;
+    DIGIT = 1;
+    // On Windows, SpecialKey::On and SpecialKey::OFF are obsolete. Use
+    // TURN_ON_IME session command should be used instead. See b/10216365.
+    // On other platforms, especially on Mac, please note that
+    // client/client.cc still relies on SpecialKey::On for session playback.
+    // We need to fix b/10250883 first.
+    // TODO(team): Unsupport SpecialKey::On and SpecialKey::OFF.
+    ON = 2;
+    OFF = 3;
+    SPACE = 4;
+    ENTER = 5;
+    LEFT = 6;
+    RIGHT = 7;
+    UP = 8;
+    DOWN = 9;
+    ESCAPE = 10;
+    // Not DELETE because DELETE is reserved in MSVC.
+    DEL = 11;  // GUI label is "Delete".
+    BACKSPACE = 12;
+    HENKAN = 13;
+    MUHENKAN = 14;
+    // VK_DBE_HIRAGANA(Win), kVK_JIS_Kana(Mac)
+    // The "Katakana Hiragana Romaji" key (w/o modifiers) returns this key code.
+    KANA = 15;  // GUI label is "Hiragana".
+    HOME = 16;
+    END = 17;
+    TAB = 18;
+    F1 = 19;
+    F2 = 20;
+    F3 = 21;
+    F4 = 22;
+    F5 = 23;
+    F6 = 24;
+    F7 = 25;
+    F8 = 26;
+    F9 = 27;
+    F10 = 28;
+    F11 = 29;
+    F12 = 30;
+    PAGE_UP = 31;
+    PAGE_DOWN = 32;
+    INSERT = 33;
+    F13 = 34;
+    F14 = 35;
+    F15 = 36;
+    F16 = 37;
+    F17 = 38;
+    F18 = 39;
+    F19 = 40;
+    F20 = 41;
+    F21 = 42;
+    F22 = 43;
+    F23 = 44;
+    F24 = 45;
+    EISU = 46;  // alphanumeric  VK_DBE_ALPHANUMERIC(Win), kVK_JIS_Eisu(Mac)
+    NUMPAD0 = 47;
+    NUMPAD1 = 48;
+    NUMPAD2 = 49;
+    NUMPAD3 = 50;
+    NUMPAD4 = 51;
+    NUMPAD5 = 52;
+    NUMPAD6 = 53;
+    NUMPAD7 = 54;
+    NUMPAD8 = 55;
+    NUMPAD9 = 56;
+    MULTIPLY = 57;    // Numpad [*]
+    ADD = 58;         // Numpad [+]
+    SEPARATOR = 59;   // Numpad [enter]
+    SUBTRACT = 60;    // Numpad [-]
+    DECIMAL = 61;     // Numpad [.]
+    DIVIDE = 62;      // Numpad [/]
+    EQUALS = 63;      // Numpad [=]
+    TEXT_INPUT = 64;  // Meta key event representing any text input.
+    HANKAKU = 65;     // GUI label is "Hankaku/Zenkaku".
+    KANJI = 66;
+    // The "Katakana Hiragana Romaji" key with Shift returns this key code.
+    KATAKANA = 67;  // VK_DBE_KATAKANA(Win)
+    CAPS_LOCK = 68;
+    // Unsupported keys (e.g. PrtSc, Pause) fall back to UNDEFINED_KEY.
+    UNDEFINED_KEY = 69;
+    COMMA = 70;          // Numpad [,]
+    CLEAR = 71;          // Numpad [5] without NUMLOCK
+    VIRTUAL_LEFT = 72;   // Left key on virtual (software) keyboard
+    VIRTUAL_RIGHT = 73;  // Right key on virtual (software) keyboard
+    VIRTUAL_ENTER = 74;  // Enter key on virtual (software) keyboard
+    VIRTUAL_UP = 75;     // Up key on virtual (software) keyboard
+    VIRTUAL_DOWN = 76;   // Down key on virtual (software) keyboard
+
+    // Special IME action on mobile software keyboard.
+    // The actual content is in key_string.
+    IME_ACTION = 77;
+
+    NUM_SPECIALKEYS = 78;
+  }
+
+  // CTRL, ALT and SHIFT cover both LEFT and RIGHT keys.  If the
+  // difference between LEFT and RIGHT is no matter, using CTRL (or ALT, SHIFT)
+  // is preferred.
+  // If LEFT (or RIGHT) CTRL(or ALT, SHIFT) is pressed, LEFT_CTRL is set on
+  // Windows or Mac client, or LEFT_CTRL and CTRL are set on Unix client.
+  // Mozc key translation logic is as follows
+  //
+  //             ---- Modifier Keys -----
+  //             |                      |
+  //             |         B            |
+  //    ---------+------        -- -----+-------
+  //    |        |  D  |        |   E   |      |
+  //    |    A   +---- +--------+--------  C   |
+  //    |              |   F    |              |
+  //    --Special Keys--        ---Other Keys---
+  //
+  // A:Press only a special key
+  //   => Send special key event with no modifier.
+  // B:Press only modifier keys
+  //   => Send modifier key event with no key_code.
+  // C:Press an other key
+  //   => Send KeyEvent with no modifier.
+  // D:Press a special key with one or more modifier keys
+  //   => Send special key event with modifiers.
+  // E:Press an other key with one or more modifier keys
+  //   => If combined key is printable, replace keycodes. Otherwise, just send
+  //   with modifier keys. Note that, unless the whole combined key is
+  //   printable, keycodes are not replaced even if a subset of combined key is
+  //   printable.
+  // F:Otherwise
+  //   => Send nothing.
+  //
+  // Following example shows expected behaviours.
+  // E.g. )
+  //    case   |  Pressed Key  |   translated key event
+  //  ----------------------------------------------------
+  //     A     |      SP       |  special_key = 4
+  //     A     |      F1       |  special_key = 19
+  //     B     |     CTRL      |  modifier_key = {CTRL}
+  //     B     |     SHIFT     |  modifier_key = {SHIFT}
+  //     B     |   CTRL+SHIFT  |  modifier_key = {CTRL,SHIFT}
+  //     C     |      'a'      |  key_code = \x61 = 'a'
+  //     D     |    CTRL+BS    |  special_key = 12, modifier_key = {CTRL}
+  //     D     | CTRL+SHIFT+BS |  special_key = 12, modifier_key = {CTRL,SHIFT}
+  //     E     |   SHIFT+'a'   |  key_code = \x41 = 'A'
+  //     E     |   CTRL+'a'    |  key_code = \x61, modifier_key = {CTRL}
+  //     E     | CTRL+ALT+'a'  |  key_code = \x61, modifier_key = {CTRL,ALT}
+  //     E     | CTRL+SHIFT+'a'|  key_code = \x61, modifier_key = {CTRL,SHIFT}
+  //     F     | CTRL+BS+SP    |  send nothing
+  //
+  // In addition, we treat CAPS lock independently besides alphabet keys,
+  // though it is a member of modifier keys. Following example shows currently
+  // expected behaviours with Caps lock set.
+  //
+  // E.g. ) While CAPS is set on.
+  //    Pressed Key  |   translated key event
+  //  ----------------------------------------------------
+  //       'a'       |  key_code = \x41 = 'A', modifier_key = {CAPS}
+  //     SHIFT+'a'   |  key_code = \x61 = 'a', modifier_key = {CAPS}
+  //     CTRL+'a'    |  key_code = \x41, modifier_key = {CTRL,CAPS}
+  //   CTRL+ALT+'a'  |  key_code = \x41, modifier_key = {CTRL,ALT,CAPS}
+  //   CTRL+SHIFT+'a'|  key_code = \x41, modifier_key = {CTRL,SHIFT,CAPS}
+  //
+  // However, only in short-cut judgement, we should convert capital characters
+  // into lower cases.
+  // TODO(peria): Specify exceptions with CAPS, and unify with the above table.
+
+  enum ModifierKey {
+    CTRL = 1;
+    ALT = 2;
+    SHIFT = 4;
+    KEY_DOWN = 8;
+    KEY_UP = 16;
+    LEFT_CTRL = 32;
+    LEFT_ALT = 64;
+    LEFT_SHIFT = 128;
+    RIGHT_CTRL = 256;
+    RIGHT_ALT = 512;
+    RIGHT_SHIFT = 1024;
+    CAPS = 2048;
+  }
+  // LINT.ThenChange(
+  //     composer/key_parser.cc,
+  //     gui/config_dialog/keybinding_editor.cc,
+  //     unix/ibus/key_translator.cc,
+  // )
+
+  // Probable key event, mainly for touch screen.
+  // User's input has ambiguity (e.g. the touch position is merginal)
+  // so this message expresses the probable event.
+  message ProbableKeyEvent {
+    // message ID is the same as Input message.
+    optional uint32 key_code = 1;
+    optional SpecialKey special_key = 3;     // Unprintable key listed above.
+    repeated ModifierKey modifier_keys = 4;  // ModifierKeys
+    // Sum of probabilities must be lesser or equal than 1.
+    // 0<= probability <= 1
+    optional double probability = 10;
+  }
+
+  // Printable key in UCS4.  If key_code is empty, key_string is used
+  // as a raw input.
+  optional uint32 key_code = 1;
+  optional uint32 modifiers = 2;           // Going to be obsolete.
+  optional SpecialKey special_key = 3;     // Unprintable key listed above.
+  repeated ModifierKey modifier_keys = 4;  // ModifierKeys
+
+  // String used for preedit.  Kana characters and strings typed from
+  // a software keyboard are supposed to be stored here.  If key_code
+  // is also set, key_code is treated as the raw input and key_string is
+  // treated as the composition input.  For example, to set Kana value,
+  // when key_string is "ち", key_code should be 'a' (97).  If key_code
+  // is empty, key_string is also treated as the raw input.
+  optional string key_string = 5;
+
+  enum InputStyle {
+    // Follow the current input mode (default).
+    FOLLOW_MODE = 0;
+    // Do not transliterate key_string and use it as-is.
+    AS_IS = 1;
+    // Immediately output key_string on the precomposition mode.
+    // Same with AS_IS on the preedit mode.
+    DIRECT_INPUT = 2;
+  }
+  optional InputStyle input_style = 6 [default = FOLLOW_MODE];
+
+  // Composition mode
+  // For histrical reasons, this field expects a temporary conversion
+  // mode rather than comeback input mode.
+  optional CompositionMode mode = 7;
+
+  // Probable key events
+  // Even if you can fill this field,
+  // don't omit Input.key_code and so on
+  // because preedit string is composed based on them.
+  repeated ProbableKeyEvent probable_key_event = 8;
+
+  // IME on/off mode
+  // You can use this field to change the IME on/off mode indirectly without
+  // sending SpecialKey:ON or SpecialKey:OFF events.
+  // If the internal ImeContext::State is DIRECT and this field is true, the
+  // converter will change the state to PRECONPOSITION and then handles this key
+  // event.
+  // If the internal ImeContext::State is not DIRECT and this field is false,
+  // the converter will change the state to DIRECT and then handles this key
+  // event.
+  // Implementation note: We need both |mode| and |activated| to support
+  // indirect IME off, where |mode| should contain the next mode. If this field
+  // is not set, the server will act as if indirect on/off was not supported.
+  optional bool activated = 9;
+
+  // Timestamp of this key event in millisecond.
+  optional int64 timestamp_msec = 10;
+}
+
+message SessionCommand {
+  enum CommandType {
+    // Do nothing.
+    NONE = 0;
+
+    // Revert the session, this is usually similar to type ESC several times.
+    REVERT = 1;
+    // Commit the session, this is usually similar to type Enter.
+    // SUBMIT session command is accepted in any status.
+    // Pre-condition:
+    // - Any states of IME are acceptable.
+    // Post-condition:
+    // - Preedit text becomes empty.
+    SUBMIT = 2;
+    // Select the specified candidate word by id. This command is
+    // usually used with mouse clicking.
+    SELECT_CANDIDATE = 3;
+
+    // Set the focus to the candidate by id. This is usually used
+    // with mouse dragging or selection of word usage dictionary.
+    // The difference from SELECT_CANDIDATE is that
+    // HIGHLIGHT_CANDIDATE does not close the candidate window
+    // while SELECT_CANDIDATE closes the candidate window.
+    HIGHLIGHT_CANDIDATE = 4;
+
+    // Specify the composition mode.  This command should be used with
+    // composition_mode.
+    SWITCH_COMPOSITION_MODE = 5;
+
+    // Return the current status such as composition mode, preedit method, etc.
+    GET_STATUS = 6;
+
+    // This command is typically used for mobile IME's partial conversion,
+    // but currently it is on the way. This description is for current spec.
+    //
+    // This command requires that candidates exist.
+    //
+    // If there is a focused candidate (Conversion or Prediction state),
+    // the candidate matched with the given id in the first segment is
+    // submitted, even though the selected segment is not the first segment
+    // (Important thing is whether focused candidate exists
+    // or not. Focused index itself is ignored).
+    // This behavior should be updated because current cursor position and
+    // position of focused segment affects nothing.
+    // We should fix this non-intuitive behavior. Intuitive behavior might be
+    // submitting segments from first one to focused one (inclusive).
+    //
+    // If no focused candidate (Suggestion, including ZeroQuery suggestion),
+    // first (and only) segment's candidate of which id is equal to id field of
+    // Input message is submitted.
+    // This behavior should be fixed because current cursor position affects
+    // nothing. In future, the characters after the cursor should be kept
+    // as preedit.
+    //
+    // This command's pre- and post- conditions are differenct from
+    // SUBMIT command's. Following conditions will be kept after updating
+    // the behavior.
+    // Pre-condition:
+    // - There should be candidate.
+    // Post-condition:
+    // - No guarantee on preedit text.
+    // TODO(yamaguchi): Update corresponding implementation please.
+    SUBMIT_CANDIDATE = 7;
+
+    // Perform reverse conversion.
+    CONVERT_REVERSE = 8;
+
+    // Perform Undo.
+    UNDO = 9;
+
+    // Reset convert history and revert current composition.
+    // This is usually used by moving cursor with mouse clicking.
+    RESET_CONTEXT = 10;
+
+    // Change cursor position in preedit.
+    MOVE_CURSOR = 11;
+
+    // Specify the input field type.
+    SWITCH_INPUT_FIELD_TYPE = 12;
+
+    reserved 13;
+    reserved "USAGE_STATS_EVENT";
+
+    // This command is used in only Android.
+    // Works UNDO or rewind HIRAGANA characters based on the state.
+    UNDO_OR_REWIND = 14;
+
+    // Obsolete command. Used only in old Android clients.
+    reserved 15;
+    reserved "EXPAND_SUGGESTION";
+
+    // Obsolete command. Used only in old IBus client.
+    reserved 16;
+    reserved "SEND_CARET_LOCATION";
+
+    // Obsolete command. Don't simply remove this command.
+    reserved 17;
+    reserved "SEND_LANGUAGE_BAR_COMMAND";
+
+    // Obsolete command. Don't simply remove this command.
+    reserved 18;
+    reserved "GET_ASYNC_RESULT";
+
+    // Commit the raw text of the composed string.
+    COMMIT_RAW_TEXT = 19;
+
+    // Call ConvertPrevPage session command to show the previous page of
+    // candidates.
+    CONVERT_PREV_PAGE = 20;
+
+    // Call ConvertNextPage session command to show the next page of
+    // candidates.
+    CONVERT_NEXT_PAGE = 21;
+
+    // Make sure IME is turned on. Optionally you can also provide new input
+    // mode in |composition_mode| (but you must not set DIRECT to it).
+    // |composition_mode| is honored even when IME is already turned on.
+    TURN_ON_IME = 22;
+
+    // Make sure IME is turned off. Optionally you can also provide new input
+    // mode in |composition_mode| (but you must not set DIRECT to it). If IME
+    // |composition_mode| is honored even when IME is already turned off.
+    TURN_OFF_IME = 23;
+
+    // Delete the candidate specified with |id = 2| from the user history.
+    DELETE_CANDIDATE_FROM_HISTORY = 24;
+
+    // Stops key toggling of the composer if its table is a toggle-supported
+    // layout (e.g., 12-key toggle flick.)
+    STOP_KEY_TOGGLING = 25;
+
+    // Update composition with |compoisition_events|.
+    // Unlike SEND_KEY command, this command completely replaces the composition
+    // rather than appending to the existing composition.
+    // The command will be used for supporting handwriting.
+    UPDATE_COMPOSITION = 26;
+
+    // Explicitly request Next Word Prediction (NWP, zero query suggestion) from
+    // the surrounding text.
+    // Note: This command resets the internal states (history segments) of the
+    // converter.
+    REQUEST_NWP = 27;
+  }
+  required CommandType type = 1;
+
+  // Unique number specifying a candidate word.
+  // Note: This value is NOT an index of the candidate window or the candidate
+  // list. This value is a return value of CandidateWord::id().
+  optional int32 id = 2;
+
+  // This is used with SWITCH_COMPOSITION_MODE, TURN_ON_IME and TURN_OFF_IME.
+  optional CompositionMode composition_mode = 3;
+
+  // Text argument.  This is used by CONVERT_REVERSE at this moment.
+  optional string text = 4;
+
+  // New cursor position in preedit. Used with MOVE_CURSOR.
+  optional uint32 cursor_position = 5;
+
+  reserved 6;  // Deprecated input_field_type
+
+  reserved 7;  // Deprecated usage_stats_event
+  reserved 9;  // Deprecated usage_stats_event_int_value
+
+  reserved 8;  // Deprecated caret_rectangle
+
+  reserved 10;  // Deprecated asynchronous_request_id
+
+  // Used by UPDATE_COMPOSITION event
+  message CompositionEvent {
+    optional string composition_string = 1;
+    // Sum of probabilities must be lesser or equal than 1.
+    // 0<= probability <= 1
+    optional double probability = 2;
+  }
+
+  // Assumes that the entries are sorted by the probability.
+  // The most probable event should be at the top.
+  repeated CompositionEvent composition_events = 11;
+}
+
+message Context {
+  // Former part of surrounding text.
+  optional string preceding_text = 1;
+
+  // Latter part of surrounding text.
+  optional string following_text = 2;
+
+  // If this is true, suggestion feature is disabled regardless the
+  // configuration.  If this is false, suggestion feature is followed
+  // by the user's configuration.  If you want to omit interim
+  // suggestions during the key typing, you might want to use
+  // request_suggestion.
+  optional bool suppress_suggestion = 3 [default = false];
+
+  // Input field type.
+  // The types are based on the input types defined in HTML5.
+  // http://dev.w3.org/html5/spec/Overview.html#attr-input-type
+  // Other types are to be added later.
+  enum InputFieldType {
+    // No restrictions nor special functions. The IME operates as usual.
+    NORMAL = 1;
+
+    // Password field. Text is hidden after input.
+    // For Android,
+    // In order to make the last character visible to the user,
+    // the IME must not hold more than 2 characters in preedit.
+    PASSWORD = 2;
+
+    // Telephone number
+    TEL = 3;
+
+    // Number
+    NUMBER = 4;
+  }
+  // Type of the input field being focused.
+  optional InputFieldType input_field_type = 4;
+
+  // An unique revision ID to specify one specific typing session. A client can
+  // use arbitrary value for this field. The converter is expected to clear its
+  // internal history segments whenever this value is changed. A client should
+  // use the same revision ID whenever the converter should keep it internal
+  // history segments. In order to avoid unexpected history learnings, a client
+  // should update the revision whenever the input focus is changed.
+  optional int32 revision = 5 [default = 0];
+
+  // Repeated fields to be used for experimental features.
+  repeated string experimental_features = 100;
+}
+
+// Clients' capability.
+// Users cannot modify this.
+// The server has to obey this capability.
+message Capability {
+  // Bit fields to notify what the client can do.
+  enum TextDeletionCapabilityType {
+    NO_TEXT_DELETION_CAPABILITY = 0;
+
+    // Can delete preceding text which is adjacent to preedit.
+    DELETE_PRECEDING_TEXT = 1;
+  }
+  optional TextDeletionCapabilityType text_deletion = 1
+      [default = NO_TEXT_DELETION_CAPABILITY];
+}
+
+// Next ID: 151
+// Bundles together some Android experiment flags so that they can be easily
+// retrieved throughout the native code.  These flags are generally specific to
+// the decoder, and are made available when the decoder is initialized.
+message DecoderExperimentParams {
+  reserved 1;
+
+  enum VariationCharacterType {
+    NO_VARIATION = 0;
+    // Standardized variation sequences for Japanese.
+    // https://unicode.org/Public/UNIDATA/StandardizedVariants.txt
+    // It specifies to use SVS characters instead of CJK compatibility
+    // ideographs for Japanese.
+    SVS_JAPANESE = 1;
+  }
+  // Bitmap of enabled variation character types.
+  optional uint32 variation_character_types = 8 [default = 0];
+
+  // Enables final results reranking against literal results.
+  // If zero, the previous implementation is used.
+  optional int32 typing_correction_result_reranker_mode = 95 [default = 0];
+
+  // Promote TC/Literal if w * tc_reranker_score + (1.0 - w) lm_diff > 0.0.
+  optional float typing_correction_result_reranker_interpolation_weight = 100
+      [default = 0.0];
+
+  // Runs Literal-at-least second when original_tc_score + w * tc_reranker_score
+  // > 0.0. otherwise, runs literal-on-top.
+  optional float typing_correction_result_reranker_literal_on_top_weight = 101
+      [default = 0.0];
+
+  // Uses the typing correction in user history predictor. The size specifies
+  // the maximum number of typing corrections used for query lookup.
+  // When zero, typing_correction is not used.
+  optional int32 typing_correction_apply_user_history_size = 85 [default = 0];
+
+  optional bool disable_zero_query_suffix_prediction = 36 [default = false];
+
+  // Changes the size of history with character coverage.
+  optional int32 user_history_prediction_max_char_coverage = 82 [default = 0];
+
+  // Parameter for space-insertion for English compounds
+  // value 0: no insertion. Candidates will be like this.
+  // - "Google"
+  // - "GOOGLE"
+  // - "google"
+  // value 1: expand for all English candidates
+  // This mode adds space-prefixed candidates for three style, like this.
+  // - "Google"
+  // - " Google"
+  // - "GOOGLE"
+  // - " GOOGLE"
+  // - "google"
+  // - " google"
+  optional int32 english_variation_space_insertion_mode = 55 [default = 0];
+
+
+  optional int32 candidate_consistency_cost_max_diff = 63 [default = 0];
+
+  optional int32 max_composition_event_to_process = 64 [default = 2];
+
+  // Offset to promote Katakana candidates in rewriter.
+  // The promotion will be disabled if the value is negative.
+  optional int32 katakana_promotion_offset = 83 [default = 5];
+
+  // Cost offset for handwriting conversion candidate.
+  // default_value: 10*log(500)
+  optional int32 handwriting_conversion_candidate_cost_offset = 102
+      [default = 1151];
+
+  enum BigramNwpFilteringMode {
+    // Control implementation is used. For example,
+    // - Kanji + Katakana will not be filtered.
+    // - If cost(prefix) > cost(original_entry), the candidate will be filtered.
+    // - The reading of the target candidate should be in the dictionary.
+    // - ,etc
+    DEFAULT = 0;
+    // In addition to the default filtering, filter entry if the character
+    // script type does not change from the prefix.
+    FILTER_SAME_CTYPE = 1;
+    // Filter all bigram candidates.
+    FILTER_ALL = 2;
+  }
+
+  // Threshold for suffix NWP transition cost.
+  // If the transition cost is greater than this value, the candidate will be
+  // filtered.
+  // The candidate will not be filtered if this value is zero.
+  optional int32 suffix_nwp_transition_cost_threshold = 107 [default = 0];
+
+  // The wcost of the prefix in a partial match.
+  // Shows the prefix match when [prefix_wcost + suffix_cost <= full_cost].
+  optional int32 user_history_partial_prefix_wcost = 145 [default = 2000];
+
+  // The cost of the prefix in a partial match.
+  // Shows the prefix match as a weak candidate when
+  // [weak_prefix_wcost + suffix_cost <= full_cost].
+  // weak_prefix_wcost should be smaller than prefix_wcost.
+  // The default wcost is zero, which is the most optimistic setting.
+  optional int32 user_history_partial_weak_prefix_wcost = 146 [default = 0];
+
+  // Position of the first symbol rewriter candidate (0-origin).
+  optional int32 symbol_rewriter_candidate_position = 132 [default = 3];
+  // Number of candidates to be promoted.
+  // For example, if symbol_rewriter_candidate_position == 0, and
+  // symbol_rewriter_promotion_size == 5, the first 5 candidates are symbols.
+  optional int32 symbol_rewriter_promotion_size = 133 [default = 15];
+
+  // Cost penalty added to the partial candidate. Partial candidate should not
+  // be ranked lower than normal full candidates.
+  optional int32 partial_candidate_cost_penalty = 143 [default = 5000];
+
+  // Mode to disable legacy rewriters. This flag is used in migration
+  // experiments from legacy modules to new supplemental model and user history
+  // predictor.
+  optional int32 disable_legacy_rewriter_mode = 147 [default = 0];
+
+  // Use NextTopStates instead of NextStates in Predictor.
+  optional bool ngram_use_next_top_states = 149 [default = false];
+
+  // Transition cost bonus for particle omission (e.g. "さかなくう" ->
+  // "魚食う"). This is used for experiments to improve core LM conversion.
+  optional int32 particle_omission_transition_cost_bonus = 150 [default = 0];
+}
+
+// Clients' request to the server.
+// Users cannot modify this.
+// In the future each request may be able to be overwritten by Config.
+// The server does not have to obey this request.
+// Next ID: 26
+message Request {
+  // Enable zero query suggestion.
+  optional bool zero_query_suggestion = 1
+      [default = false];  // true for android
+
+  // Conversion's candidate includes suggestion, prediction and conversion.
+  optional bool mixed_conversion = 2 [default = false];  // true for android
+
+  reserved 3;  // Deprecated combine_all_segments
+
+  // Next ID: 51
+  enum SpecialRomanjiTable {
+    // Do not use special table.
+    // Romanji table is selected based on Config.
+    DEFAULT_TABLE = 0;
+
+    // Use special table for 12keys (to hiragana).
+    TWELVE_KEYS_TO_HIRAGANA = 10;
+
+    // This is a temporary romaji table that is to be used instead of the
+    // current 12keys-to-hiragana table.
+    // TODO(noriyukit): Replace TWELVE_KEYS_TO_HIRAGANA by this.
+    TWELVE_KEYS_TO_HIRAGANA_INTUITIVE = 10000;
+
+    // Use special table for 12keys (to half-width ascii).
+    TWELVE_KEYS_TO_HALFWIDTHASCII = 11;
+
+    // Use special table for flick (to hiragana).
+    FLICK_TO_HIRAGANA = 13;
+
+    // This is a temporary romaji table that is to be used instead of the
+    // current flick-to-hiragana table.
+    // TODO(noriyukit): Replace FLICK_TO_HIRAGANA by this.
+    FLICK_TO_HIRAGANA_INTUITIVE = 10002;
+
+    // Use special table for flick (to half-width ascii).
+    FLICK_TO_HALFWIDTHASCII = 14;
+
+    // Use special table for flick (to alphabet).
+    FLICK_TO_HALFWIDTHASCII_IOS = 44;
+
+    // Use special table for flick (to number).
+    FLICK_TO_NUMBER = 43;
+
+    // Use special table for both toggle and flick (to hiragana).
+    TOGGLE_FLICK_TO_HIRAGANA = 16;
+
+    // This is a temporary romaji table that is to be used instead of the
+    // current toggle_flick_hiragana table.
+    // TODO(noriyukit): Replace TOGGLE_FLICK_HIRAGANA by this.
+    TOGGLE_FLICK_TO_HIRAGANA_INTUITIVE = 10001;
+
+    // Use special table for both toggle and flick (to number).
+    TOGGLE_FLICK_TO_NUMBER = 42;
+
+    // Use special table for both toggle and flick (to alphabet).
+    TOGGLE_FLICK_TO_HALFWIDTHASCII_IOS = 45;
+
+    // Use special table for both toggle and flick (to half-width ascii).
+    TOGGLE_FLICK_TO_HALFWIDTHASCII = 17;
+
+    // Use special table for Qwerty (for Mobile) (to hiragana).
+    QWERTY_MOBILE_TO_HIRAGANA = 20;
+
+    // Use special table for Qwerty (for Mobile) (to half-width ascii).
+    QWERTY_MOBILE_TO_HALFWIDTHASCII = 22;
+
+    // Use special table for Godan (to hiragana).
+    GODAN_TO_HIRAGANA = 30;
+
+    // Use special table for Godan (to half-width ascii).
+    GODAN_TO_HALFWIDTHASCII = 31;
+
+    // Use special table for Notouch (to hiragana).
+    NOTOUCH_TO_HIRAGANA = 40;
+
+    // Use special table for Notouch (to half-width ascii).
+    NOTOUCH_TO_HALFWIDTHASCII = 41;
+
+    // Use special table for 50keys keyboard.
+    FIFTY_KEYS_TO_HIRAGANA = 46;
+
+    // Use special table for Android 12keys tablet keyboard.
+
+    // Obsolete items.
+    reserved 12, 15, 32, 21, 18, 47 to 50;
+    reserved "TWELVE_KEYS_TO_NUMBER";
+    reserved "GODAN_TO_NUMBER";
+    reserved "QWERTY_MOBILE_TO_HIRAGANA_NUMBER";
+    reserved "TWELVE_KEYS_TABLET";
+    reserved "TWELVE_KEYS_TABLET_FLICK";
+    reserved "TWELVE_KEYS_TABLET_TO_HALFWIDTHASCII";
+    reserved "TWELVE_KEYS_TABLET_FLICK_TO_HALFWIDTHASCII";
+  }
+
+  // Use special Romanji table.
+  optional SpecialRomanjiTable special_romanji_table = 4
+      [default = DEFAULT_TABLE];  //  TWELVE_KEYS_TO_HIRAGANA for android.
+
+  reserved 5;
+
+  enum SpaceOnAlphanumeric {
+    // The first input is treated as a space, double input is treated
+    // as a conversion.  If a character is input after the first
+    // input, the composition will remain.  For example, "ab<space>dc"
+    // becomes "ab dc" as a single composition.
+    SPACE_OR_CONVERT_KEEPING_COMPOSITION = 0;
+
+    // The first input is treated as a space, double input is treated
+    // as a conversion.  If a character is input after the first
+    // input, the previous composition will be committed.  For
+    // example, "ab<space>dc" results "ab " as a committed string and
+    // "dc" as a composition.
+    SPACE_OR_CONVERT_COMMITTING_COMPOSITION = 1;
+
+    // Commit the composition and a space.
+    COMMIT = 2;
+  }
+
+  optional SpaceOnAlphanumeric space_on_alphanumeric = 6
+      [default = SPACE_OR_CONVERT_KEEPING_COMPOSITION];
+
+  // Keyboard name for touch devices.
+  // For example, "TWELVE_KEY_TOGGLE_KANA", "QWERTY_KANA_NUMBER".
+  // It is used to analyze touch event usage stats.
+  optional string keyboard_name = 7;
+
+  // Enables Composer's input mode auto updating by using surrounding text.
+  // For example, when a composition string is "ad", a carret is at the end,
+  // and a user selects HIRAGANA mode, if the user moves the carret to between
+  // "a" and "d" the mode will be automatically switch to ASCII (temporarily).
+  // See details in the Composer::UpdateInputMode.
+  optional bool update_input_mode_from_surrounding_text = 8 [default = true];
+
+  // Enables Kana-modifier-insensitive conversion as follows:
+  // 1) Voiced/Semi-voiced kana will be hit by non-modified kana.
+  //    e.g.) "ば" and "ぱ" will be hit by key "は".
+  // 2) Geminate consonant "っ" will be hit by non-modified kana "つ".
+  // 3) Palatalized kana will be hit by non-modified kana.
+  //    e.g.) "ゃ" will be hit by key "や".
+  // Here is an example of the search: "学校" ("がっこう") will be hit
+  // by "かつこう".
+  optional bool kana_modifier_insensitive_conversion = 9 [default = false];
+
+  // Enables Auto partial suggestion (prefix candidates).
+  // For Auto partial suggestion, we can see candidates that match
+  // the prefix of the input reading.
+  // If we commit that candidate, we will show suggestions for remaining part
+  // of key.
+  //
+  // Note: This feature can be enabled only for mobile due to UX design.
+  optional bool auto_partial_suggestion = 10 [default = false];
+
+  // Setting zero to available_emoji_carrier for disabling Emoji conversion is
+  // obsolete. Instead, use emoji_rewriter_capability and set zero there.
+  reserved 11;  // Deprecated available_emoji_carrier status.
+
+  // For emoji rewriter, it is necessary to control when the rewriter runs
+  // based on the clients. The following bit set is sync'ed to
+  // RewriterInterface::CapabilityType (see rewriter_interface.h, too),
+  // so that clients can fill the value.
+  enum RewriterCapability {
+    NOT_AVAILABLE = 0;
+    CONVERSION = 1;
+    PREDICTION = 2;
+    SUGGESTION = 4;
+    ALL = 7;  // CONVERSION | PREDICTION | SUGGESTION.
+  }
+
+  // By default, Emoji rewriter works on conversion mode only.
+  optional int32 emoji_rewriter_capability = 12 [default = 1];
+
+  // Controls the behavior when a user types the left/right key at the edge
+  // of the preedit string (in more precise, the left key at the beginning
+  // of the preedit string, or the right key at the end).
+  enum CrossingEdgeBehavior {
+    // This is the default behavior. The cursor movement at the edge
+    // will make nothing, i.e., keeping the current cursor position (at the
+    // edge), consume the key event.
+    DO_NOTHING = 0;
+
+    // This is the behavior, especially designed for alphabet keyboards on
+    // mobile devices. Assuming the following text:
+    //   XXXXabcde|YYYYY
+    // where XXXX is preceding text, abcde is composing text, YYYYY is
+    // following text and '|' is the caret, when a user sends "RIGHT"
+    // cursor key, we'd like to commit the abcde and move the caret to right.
+    // So the user will get:
+    //   XXXXabcdeY|YYYY
+    // Here, what we need is committing the "abcde" with the appropriate
+    // caret position. (Note that we need to handle the left cursor key, too).
+    // Also, we should *NOT* consume the key, so that the key event will be
+    // handled appropriately by the target application.
+    COMMIT_WITHOUT_CONSUMING = 1;
+  }
+  optional CrossingEdgeBehavior crossing_edge_behavior = 13
+      [default = DO_NOTHING];
+
+  // Controls the behavior of language aware input.  Language aware input
+  // guesses the actual language regardless the input mode.  For example,
+  // if user type "てｓｔ" it will be treated as "test".
+  enum LanguageAwareInputBehavior {
+    // Performs the default behavior considering the platform and channel.
+    DEFAULT_LANGUAGE_AWARE_BEHAVIOR = 0;
+
+    // Does not perform this functionarity.
+    NO_LANGUAGE_AWARE_INPUT = 1;
+
+    // Adds a language aware candidate to the suggestion.
+    LANGUAGE_AWARE_SUGGESTION = 2;
+  }
+  optional LanguageAwareInputBehavior language_aware_input = 14
+      [default = DEFAULT_LANGUAGE_AWARE_BEHAVIOR];
+
+  // Page size of the candidate list.
+  optional int32 candidate_page_size = 15 [default = 9];
+
+  // The maximum limit of the candidates size.
+  // If not set, converter doesn't limit the size.
+  // NOTE: Each segment has at least one candidate and meta candidates even if
+  //       this value is set to 0.
+  optional int32 candidates_size_limit = 16;
+
+  // Experimentally changes the decoder's behavior.
+  // This flag is usually populated through the phenotype flags.
+  optional DecoderExperimentParams decoder_experiment_params = 17;
+
+  // Fills incognito_candidate_words filed of output.
+  optional bool fill_incognito_candidate_words = 18 [default = false];
+
+  reserved 19;  // deprecated one_phase_suggestion
+
+  // Enables a11y support for candidates.
+  // If this field is set to true, a11y description is set to each candidate.
+  optional bool enable_a11y_description = 20 [default = false];
+
+  // Whether TalkBack is enabled.
+  // Some conversion behaviors should be changed when TalkBack is enabled.
+  // e.g. The candidate window should be always visible to propagate the
+  // candidate words to TalkBack.
+  optional bool is_a11y_talkback_enabled = 25 [default = false];
+
+  // Additional Character Group represents certain group of characters, that can
+  // be additionaly requested from the client side, based on font-availability
+  // information.
+  //
+  // This enum is not intended to be used for user preference. 'Additional'
+  // cases can change as time advances. For example, when KANA_SUPPLEMENT_6_0
+  // becomes enough available among environments, this option becomes default
+  // and the case will be removed.
+  //
+  // WARNING: Although cases are mutually exclusive now, they are not
+  // necessarily mutually exclusive. However, the current implementation in
+  // NormalizationRewriter assumes they are mutually exclusive.
+  // LINT.IfChange
+  // Next ID: 15
+  enum AdditionalRenderableCharacterGroup {
+    // Do not use this case. This case is reserved for future usage.
+    // Because 0th element in enum is used as default value, in order to prevend
+    // having unexpected additional group, this case represents empty set of
+    // characters.
+    EMPTY = 0;
+    // This case is reserved for future usage.
+    reserved 1;
+
+    // Additional Hiragana, Katakana, and Hentaigana.
+    //
+    // It only contains KATAKANA / HIRAGANA LETTER ARCHAIC YE (U+1B000 and
+    // U+1B001) since Unicode 6.0. Some fonts including M+ fonts only support
+    // this letter.
+    KANA_SUPPLEMENT_6_0 = 2;
+    // It contains 285 Hentaigana characters supported in KANA_SUPPLEMENT and
+    // KANA_EXTENDED_A (U+1B002 ~ U+1B11E) since Unicode 10.0.
+    KANA_SUPPLEMENT_AND_KANA_EXTENDED_A_10_0 = 3;
+    // It contains four archaic hiraganas/katakanas (U+1B11F ~ U+1B122) since
+    // Unicode 14.0.
+    KANA_EXTENDED_A_14_0 = 4;
+
+    // Additional Emoji
+    // Emoji in enum can be removed and become default several years passed
+    // after the introduction. Emoji 12.1, released October 2019
+    EMOJI_12_1 = 5;
+    // Emoji 13.0, released March 2020
+    EMOJI_13_0 = 6;
+    // Emoji 13.1, released September 2020
+    EMOJI_13_1 = 7;
+    // Emoji 14.0, released September 2021
+    EMOJI_14_0 = 8;
+    // Emoji 15.0, released September 2022
+    EMOJI_15_0 = 9;
+    // Emoji 15.1, released September 2023
+    EMOJI_15_1 = 12;
+    // Emoji 16.0, released September 2024
+    EMOJI_16_0 = 13;
+    // Emoji 17.0, released Octorber 2025
+    EMOJI_17_0 = 14;
+
+    // Additional Hieroglyphs (U+13000 ~ U+1342E)
+    // Unicode 5.2, released October 2009
+    EGYPTIAN_HIEROGLYPH_5_2 = 10;
+
+    // IVS characters in Adobe-Japan1 (U+E0100 ~ U+E010E)
+    IVS_CHARACTER = 11;
+  }
+  // LINT.ThenChange(rewriter/environmental_filter_rewriter.cc)
+
+  // Characters in the union of this list of groups can be contained in
+  // candidates.
+  // This feature is distinct from user preference. Do not make these option
+  // user selectable.
+  repeated AdditionalRenderableCharacterGroup
+      additional_renderable_character_groups = 21 [packed = true];
+
+  // Whether the request is from handwriting. Candidates can be optimized
+  // differently for handwriting.
+  // For example, we support 混ぜ書き conversion ("かん字" → "漢字") for
+  // handwriting.
+  optional bool is_handwriting = 22 [default = false];
+
+  // Whether the conversion is performed in incognito mode.
+  // In incognito mode, the conversion is performed without using
+  // user history and user dictionary.
+  // When any of this value and Config::incognito_mode are true,
+  // incognito mode is enabled.
+  // Clients needs to check ConversionRequest::incognito_mode() instead of
+  // this value directly, as the incognito mode can be set in other ways.
+  optional bool is_incognito_mode = 23 [default = false];
+
+  // Whether the client can accept display_value attribute.
+  enum DisplayValueCapability {
+    NOT_SUPPORTED = 0;
+    PLAIN_TEXT = 1;
+  }
+  optional DisplayValueCapability display_value_capability = 24
+      [default = NOT_SUPPORTED];
+}
+
+// Note there is another ApplicationInfo inside RendererCommand.
+// Since Input is not using nested message, define ApplicationInfo here.
+message ApplicationInfo {
+  optional uint32 process_id = 1;
+  optional uint32 thread_id = 2;
+  reserved 3;  // deprecated timezone_offset
+}
+
+message UserHistoryData {
+  optional string key = 1;
+  optional string value = 2;
+}
+
+message Input {
+  enum CommandType {
+    NONE = 0;
+    CREATE_SESSION = 1;
+    DELETE_SESSION = 2;
+    SEND_KEY = 3;
+
+    // Check only if the key event will be consumed.  This command is
+    // for TSF on Windows.  You do not need to use this command, if it
+    // is not necessary.
+    TEST_SEND_KEY = 4;
+
+    // Evaluate the command specified by SessionCommand.  The output
+    // format should be the same with an output of a SEND_KEY command.
+    SEND_COMMAND = 5;
+
+    // Config accessors.
+    GET_CONFIG = 6;
+    SET_CONFIG = 7;
+    reserved 22;
+    reserved "SET_IMPOSED_CONFIG";
+
+    // Set client's request
+    SET_REQUEST = 17;
+
+    // sync dictionary/history data to local file
+    SYNC_DATA = 8;
+
+    // shutdowon server safely
+    SHUTDOWN = 9;
+
+    // reload mutable data (like config, user-dic, history)
+    RELOAD = 10;
+
+    // realod mutable data and wait for finish
+    // Note: Reloading of user dictionary data is async so that
+    // it will not block the typing.
+    // This command wait for the reloader.
+    RELOAD_AND_WAIT = 15;
+
+    // clear user history data
+    CLEAR_USER_HISTORY = 11;
+
+    // clear user prediction data
+    CLEAR_USER_PREDICTION = 12;
+
+    // clear unused prediction
+    CLEAR_UNUSED_USER_PREDICTION = 16;
+
+    // clean up sessions
+    // shutdwon if session is empty and
+    // mozc_server is launched with timeout mode
+    CLEANUP = 13;
+
+    // no operation
+    // can be used for pinging the server
+    NO_OPERATION = 14;
+
+    // Sync feature is deprecated since 1.13 dev.
+    reserved 18, 23, 24;
+    reserved "START_CLOUD_SYNC";
+    reserved "GET_CLOUD_SYNC_STATUS";
+    reserved "ADD_AUTH_CODE";
+
+    reserved 20, 21, 25;
+    reserved "INSERT_TO_STORAGE";
+    reserved "READ_ALL_FROM_STORAGE";
+    reserved "CLEAR_STORAGE";
+
+    reserved 26;
+    reserved "SEND_USER_DICTIONARY_COMMAND";
+
+    // Send an engine_reload_request (ID: 15) to reload the engine.
+    SEND_ENGINE_RELOAD_REQUEST = 27;
+
+    // Send a spell checking request.
+    reserved 28, 29;
+    reserved "CHECK_SPELLING";
+    reserved "RELOAD_SPELL_CHECKER";
+
+    // Sends reload supplemental model
+    RELOAD_SUPPLEMENTAL_MODEL = 30;
+
+    GET_SERVER_VERSION = 19;
+
+    // Import user dictionary from client.
+    IMPORT_USER_DICTIONARY = 31;
+
+    // Add a specific entry to the user history storage.
+    ADD_USER_HISTORY = 32;
+
+    // Number of commands.
+    // When new command is added, the command should use below number
+    // and NUM_OF_COMMANDS should be incremented.
+    NUM_OF_COMMANDS = 33;
+  }
+  required CommandType type = 1;
+
+  // Session ID created by CREATE_SESSION.
+  optional uint64 id = 2 [jstype = JS_STRING];
+
+  // Key combinations used for SEND_KEY or TEST_SEND_KEY.
+  optional KeyEvent key = 3;
+
+  // Command sent to the session layer used with SEND_COMMAND.
+  optional SessionCommand command = 4;
+
+  // Input config
+  optional mozc.config.Config config = 5;
+
+  // Context data
+  optional Context context = 6;
+
+  // Client capability
+  optional Capability capability = 7;
+
+  // Application information, like process id.
+  // Server may be able to change the behavior by seeing the
+  // the program name.
+  optional ApplicationInfo application_info = 8;
+
+  // Client request
+  optional Request request = 9;
+
+  reserved 10;  // Deprecated storage_entry
+  reserved 11;  // Deprecated auth_code
+
+  enum TouchAction {
+    TOUCH_DOWN = 1;
+    TOUCH_MOVE = 2;
+    TOUCH_UP = 3;
+  }
+  message TouchPosition {
+    optional TouchAction action = 1;
+    // x, y potision: keyboard left-top is (0, 0), right-bottom is (1, 1).
+    optional float x = 2;
+    optional float y = 3;
+    // timestamp (in ms) is set to zero when the touch event starts.
+    optional int64 timestamp = 4;
+  }
+  // TouchEvent contains source_id and stroke.
+  // Touch_events contain all key touch event.
+  // Statistical information are collected for each source_id
+  // by SessionUsageObserver.
+  message TouchEvent {
+    // source_id specifies the user action such as "X button pressed".
+    // It must be unique within the same keyboard_name,
+    // which is set in Request message.
+    optional uint32 source_id = 1;
+    repeated TouchPosition stroke = 2;
+  }
+  repeated TouchEvent touch_events = 12;
+
+  reserved 13;  // deprecated user_dictionary_command
+
+  optional mozc.user_dictionary.UserDictionaryImportData
+      user_dictionary_import_data = 17;
+
+  // A flag to control if the server should return suggest-results or not.
+  // If this is set to false, regardless of other configurations,
+  // the server won't return suggestion results.
+  // This is set to true by default.
+  // Note that even if this flag is set to false, when a suggestion is shown
+  // in the previous phase, it is possible from the client to submit it.
+  // This works only for suggestions for the key insertion, but not for
+  // others commands, such as predictions or conversions.
+  // This flag is used for the performance improvement in terms of the
+  // latency.  If you want to suppress the suggestions for the UX improment,
+  // you may want to use suppress_suggestion in the Context message.
+  optional bool request_suggestion = 14 [default = true];
+
+  optional mozc.EngineReloadRequest engine_reload_request = 15;
+
+  optional UserHistoryData user_history_data = 18;
+
+  reserved 16;  // deprecated check_spelling_request
+}
+
+// Detailed information of Result.
+message ResultToken {
+  // `value` and `key` represents Segment.Candidate. If the candidante has
+  // functional values, they are stored as a sepalate ResultToken.
+  // e.g. A candidate of {value="今日は", content_value="今日"} results
+  // two ResultToken of {value="今日"} and {value="は"}.
+  optional string value = 1;
+  optional string key = 2;
+  // `lid` and `rid` are copied from Segment.Candidate. -1 is used as a unknown
+  // POS. e.g. A candidate of {value="朝は", content_value="朝", lid=2, rid=3}
+  // results two ResultToken of {value="朝", lid=2, rid=-1} and
+  // {value="は", lid=-1, rid=3}.
+  optional int32 lid = 3 [default = -1];
+  optional int32 rid = 4 [default = -1];
+}
+
+// Result contains data to be submitted to the host application by the
+// ime client.
+message Result {
+  enum ResultType {
+    NONE = 0;
+    STRING = 1;
+  }
+  required ResultType type = 1;
+  // The result of conversion.
+  required string value = 2;
+
+  // Source of the value.  It is almost always the reading of the value.
+  optional string key = 3;
+
+  // The caret position after the result submission.
+  // "0" means the end of the result, and a positive value means moving forward
+  // and a negative value backward.
+  // e.g.) "-s", where s is the length of value, means the caret position
+  // after the committing should be the beginning of the committed value.
+  optional int32 cursor_offset = 4 [default = 0];
+
+  // Additional information propagated from the internal status.
+  repeated ResultToken tokens = 5;
+}
+
+// Preedit represents a composition data, which is rendered on the
+// host application by the ime client.  On Japanese IME, the both
+// Preedit and Conversion statuses are represented by this message.
+message Preedit {
+  required uint32 cursor = 1;
+  // The string data of Preedit is separated into Segment messages
+  // presenting the ime server's status.  On Preedit status of
+  // Japanese IME, there are up to three segments; left side chars of
+  // cursor, forcused char, right side chars of cursor.  On Conversion
+  // status of Japanese IME, the messages literally represent the
+  // segments of the conversion.
+  repeated group Segment = 2 {
+    enum Annotation {
+      NONE = 0;
+      UNDERLINE = 1;
+      HIGHLIGHT = 2;
+    }
+    required Annotation annotation = 3;
+    required string value = 4;
+
+    // The length of value in characters.  This is NOT a number in
+    // bytes or logical character units.  So, the length of "abc" and
+    // "あいう" should be 3, "ヴ" should be 1 and "ｳﾞ" and "う゛"
+    // should be 2.
+    required uint32 value_length = 5;
+
+    // Source of the value.  It is almost always the reading of the value.
+    optional string key = 6;
+  }
+
+  // The position of the first segment whose annotation is 'HIGHLIGHT'. Not set
+  // if there are no such segments.
+  optional uint32 highlighted_position = 3;
+
+  // This flag is set to true if the character at the cursor position
+  // is in toggleable state.  For example, when the table is
+  // TOGGLE_FLICK_TO_HIRAGANA and key event '1' is received
+  // repeatedly, the preedit toggles like あ -> い -> う -> ....  This
+  // flag is true during this cycle.  This state is reset when user
+  // types another key or SessionCommand::STOP_KEY_TOGGLING is
+  // received.
+  optional bool is_toggleable = 4 [default = false];
+}
+
+message Status {
+  // Whether IME is ON or OFF
+  optional bool activated = 1;
+
+  // Visible composition mode when IME is activated. This mode may come from a
+  // temporary composition mode. See |comeback_mode|.
+  // TODO(yukawa): Rename this field to "visible_mode".
+  optional CompositionMode mode = 2;
+
+  // True composition mode that is suitable for system global and permanent
+  // composition mode. When a temporary composition mode exists,
+  // |comeback_mode| can be different from |mode|.
+  // TODO(yukawa): Use more appropriate name.
+  optional CompositionMode comeback_mode = 3;
+
+  // Whether Undo operation is available.
+  // The client may enable/disable the Undo key based on this value.
+  optional bool undo_available = 26;
+}
+
+// This message contains which characters are to be deleted by client.
+// E.g. if current composition and surrounding text are
+//     "この感じは[漢字は]" ("漢字は" is the composition)
+// and we send DeletionRange with offset == -3 and length == 3, then they will
+// be rendered like:
+//     "この[漢字は]"
+message DeletionRange {
+  // Offset of start of the deletion range.
+  // Right now,
+  // - Only nagative value is expected.
+  //     In this case, the offset is counted from the beginning of the
+  //     composition (see the message comment right above).
+  // - Positive or 0 value is not sent.
+  //     But not forbidden.
+  //     Though its expectation is not decided yet,
+  //     the client implementation should be prepared (at least, don't crash).
+  optional int32 offset = 1;
+
+  // Length of the range.
+  // Right now offset==abs(length) is expected.
+  // The expectation where the above condition doesn't meet
+  // is not defined yet.
+  // This may be defined in future (when positive offset becomes
+  // supported?).
+  optional int32 length = 2;
+}
+
+// Next ID: 27
+message Output {
+  optional uint64 id = 1 [jstype = JS_STRING];
+
+  // This variable is going to be obsolete. Please use status(13) instead.
+  optional CompositionMode mode = 2;
+
+  optional bool consumed = 3;
+  optional Result result = 4;
+  optional Preedit preedit = 5;
+  optional CandidateWindow candidate_window = 6;
+  optional KeyEvent key = 7;
+
+  // when URL is non empty, UI can open the page with a browser,
+  // after finishing the all rendering part.
+  // We are using this feature for bug-report system.
+  optional string url = 8;
+
+  // Output config
+  optional mozc.config.Config config = 9;
+
+  // PreeditMethod: this is the default input mode of the session.
+  // If the user's config is "kana-input", it returns KANA.  Only
+  // CreateSession response will have this field.
+  enum PreeditMethod {
+    ASCII = 0;
+    KANA = 1;
+  }
+  optional PreeditMethod preedit_method = 10 [default = ASCII];
+
+  // ErrorCode:
+  // if SessionHandler::EvalCommand() returns false,
+  // return output with error_code = SESSION_FAILURE;
+  enum ErrorCode {
+    SESSION_SUCCESS = 0;
+    SESSION_FAILURE = 1;
+  }
+  optional ErrorCode error_code = 11 [default = SESSION_SUCCESS];
+
+  reserved 12;  // Deprecated elapsed_time
+
+  // The current IME status.
+  optional Status status = 13;
+
+  // All flatten candidate words stored in 1D array.  This value is
+  // filled only when the content is changed.
+  optional CandidateList all_candidate_words = 14;
+
+  reserved 15;  // Deprecated performed_command
+
+  // Range of characters to be deleted by client.
+  optional DeletionRange deletion_range = 16;
+
+  // if launch_tool_mode is set, MozcTool is supposed to be launched
+  // by client.
+  enum ToolMode {
+    NO_TOOL = 0;  // no need to launch tool
+    CONFIG_DIALOG = 1;
+    DICTIONARY_TOOL = 2;
+    WORD_REGISTER_DIALOG = 3;
+  }
+  optional ToolMode launch_tool_mode = 17 [default = NO_TOOL];
+
+  // Callback request to the client.
+  message Callback {
+    // Callback command to be sent from the client to the server.  The
+    // optional values such as id and composition_mode can be modified
+    // or added by the client.
+    optional SessionCommand session_command = 1;
+
+    // Callback command should be sent after this delay.
+    optional uint32 delay_millisec = 2;
+  }
+  optional Callback callback = 18;
+
+  reserved 19;  // Deprecated storage_entry
+  reserved 20;  // Deprecated cloud_sync_status
+
+  reserved 21;  // Deprecated user_dictionary_command_status
+
+  optional mozc.EngineReloadResponse engine_reload_response = 22;
+
+  // For debug. Candidate words removed throuth the conversion process.
+  optional CandidateList removed_candidate_words_for_debug = 23;
+
+  reserved 24;  // deprecated check_spelling_response
+
+  // Candidate words stored in 1D array. The field should be filled without
+  // using any personal data.
+  optional CandidateList incognito_candidate_words = 25;
+
+  message VersionInfo {
+    optional string mozc_version = 1;
+    optional string data_version = 2;
+  }
+  optional VersionInfo server_version = 26;
+}
+
+message Command {
+  required Input input = 1;
+  optional Output output = 2;
+}
+
+// Message used by ProtoXDB as "mozc_commands".
+message MozcCommands {
+  repeated Command commands = 1;
+}
+
+message CommandList {
+  // This message is used for unittest.
+  repeated Command commands = 1;
+}

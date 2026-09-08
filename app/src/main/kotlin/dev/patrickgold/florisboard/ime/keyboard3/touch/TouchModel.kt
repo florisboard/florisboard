@@ -218,7 +218,7 @@ private fun computeTouchKeyboard(
                 continue
             }
             val rows = buildList {
-                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift)) {
+                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift || layer.id == ImeLayerIds.Kana)) {
                     add(numberRow)
                 }
                 layer.rows.forEach { row ->
