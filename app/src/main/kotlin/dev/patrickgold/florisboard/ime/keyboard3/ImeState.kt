@@ -26,7 +26,7 @@ class ImeState(
     model: K3Model = FlorisEmptyK3Model,
     editor: ImeEditor = ImeEditor.Disconnected,
     content: K3Content = K3Content.Empty,
-    touchLayerId: K3LayerId = K3LayerId.BASE,
+    touchLayerId: K3LayerId = ImeLayerIds.Base,
     val effRowCount: Int = 4,
     val flags: ImeStateFlags = ImeStateFlags(),
 ) : K3InputMethodState<ImeState, ImeEditor>(

@@ -29,7 +29,6 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
@@ -146,11 +145,11 @@ class ImeController(
             when (info.inputAttributes.type) {
                 InputAttributes.Type.NUMBER -> {
                     keyVariation = KeyVariation.NORMAL
-                    touchLayerId = LAYER_NUMPAD
+                    touchLayerId = ImeLayerIds.Numpad
                 }
                 InputAttributes.Type.PHONE -> {
                     keyVariation = KeyVariation.NORMAL
-                    touchLayerId = LAYER_TELPAD
+                    touchLayerId = ImeLayerIds.Telpad
                 }
                 InputAttributes.Type.TEXT -> {
                     keyVariation = when (info.inputAttributes.variation) {
@@ -172,11 +171,11 @@ class ImeController(
                             KeyVariation.NORMAL
                         }
                     }
-                    touchLayerId = LAYER_BASE
+                    touchLayerId = ImeLayerIds.Base
                 }
                 else -> {
                     keyVariation = KeyVariation.NORMAL
-                    touchLayerId = LAYER_BASE
+                    touchLayerId = ImeLayerIds.Base
                 }
             }
             val initialSelection = info.initialSelection2
@@ -209,7 +208,7 @@ class ImeController(
                     )
                     .withComposingEnabled(
                         when (touchLayerId) {
-                            LAYER_NUMPAD, LAYER_TELPAD -> false
+                            ImeLayerIds.Numpad, ImeLayerIds.Telpad -> false
                             else -> keyVariation != KeyVariation.PASSWORD &&
                                 prefs.suggestion.enabled.get()// &&
                             //!instance.inputAttributes.flagTextAutoComplete &&
@@ -396,21 +395,15 @@ class ImeController(
 
         private fun K3Key.isShiftKey(): Boolean {
             return when (state.touchLayerId) {
-                LAYER_BASE -> layerId == LAYER_SHIFT || layerId == LAYER_CAPS
-                LAYER_SHIFT -> layerId == LAYER_BASE || layerId == LAYER_CAPS
-                LAYER_CAPS -> layerId == LAYER_BASE || layerId == LAYER_SHIFT
+                ImeLayerIds.Base -> layerId == ImeLayerIds.Shift || layerId == ImeLayerIds.Caps
+                ImeLayerIds.Shift -> layerId == ImeLayerIds.Base || layerId == ImeLayerIds.Caps
+                ImeLayerIds.Caps -> layerId == ImeLayerIds.Base || layerId == ImeLayerIds.Shift
                 else -> false
             }
         }
     }
 
     companion object {
-        private val LAYER_BASE = K3LayerId.BASE
-        private val LAYER_SHIFT = K3LayerId("shift")
-        private val LAYER_CAPS = K3LayerId("caps")
-        private val LAYER_NUMPAD = K3LayerId("numpad")
-        private val LAYER_TELPAD = K3LayerId("telpad")
-
         private val NEWLINE_SEQ = "\n".asK3String()
     }
 }

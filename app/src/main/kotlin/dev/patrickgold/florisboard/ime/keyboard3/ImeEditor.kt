@@ -34,7 +34,7 @@ open class ImeEditor(
     val info: FlorisEditorInfo,
 ) : K3Editor {
     fun getSurroundingText(charsBefore: Int, charsAfter: Int): K3SurroundingText {
-        val ic = ic.get() ?: return K3SurroundingText.Zero
+        val ic = ic.get() ?: return K3SurroundingText.Empty
         // TODO maybe use eet for getSurroundingText??
 //        val eet = ic.getExtractedText(
 //            ExtractedTextRequest().apply {
@@ -46,8 +46,8 @@ open class ImeEditor(
 //            0,
 //        )
 //        eet.
-        val textBeforeCursor = ic.getTextBeforeCursor(charsBefore, 0) ?: return K3SurroundingText.Zero
-        val textAfterCursor = ic.getTextAfterCursor(charsAfter, 0) ?: return K3SurroundingText.Zero
+        val textBeforeCursor = ic.getTextBeforeCursor(charsBefore, 0) ?: return K3SurroundingText.Empty
+        val textAfterCursor = ic.getTextAfterCursor(charsAfter, 0) ?: return K3SurroundingText.Empty
         val textSelected = ic.getSelectedText(0) ?: ""
         //val surroundingText = TextUtils.concat(textBeforeCursor, textSelected, textAfterCursor)
         return K3SurroundingText(

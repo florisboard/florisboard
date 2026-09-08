@@ -20,6 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -30,6 +31,7 @@ import org.k3lp.lib.text.asK3String
 import org.k3lp.model.K3Model
 import org.k3lp.model.flick.K3Flick
 import org.k3lp.model.key.K3Key
+import org.k3lp.model.key.K3KeyId
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.model.layer.K3TouchLayers
 import kotlin.math.roundToInt
@@ -63,7 +65,7 @@ class TouchKeyboard(
     val minDeviceWidthMm: Int,
 ) {
     fun findKey(layerId: K3LayerId, position: Offset): TouchKey? {
-        val layer = layers[layerId] ?: layers[K3LayerId.BASE]
+        val layer = layers[layerId] ?: layers[ImeLayerIds.Base]
         if (layer == null || !NormalizedBounds.contains(position)) {
             return null
         }
@@ -81,7 +83,7 @@ class TouchKeyboard(
 
         val Empty = TouchKeyboard(
             layers = mapOf(
-                K3LayerId.BASE to TouchLayer.Empty,
+                ImeLayerIds.Base to TouchLayer.Empty,
             ),
             rowCount = 4,
             minDeviceWidthMm = 0,
@@ -126,32 +128,54 @@ class TouchPopupKey(
 context(scope: CoroutineScope)
 suspend fun computeTouchModel(
     model: K3Model,
+    showNumberRow: Boolean,
 ): TouchModel {
     val layersGroups = model.layersByForm.touch
     return when (layersGroups.size) {
         0 -> TouchModel.Empty
-        1 -> TouchModel.Single(computeTouchKeyboard(model, layersGroups[0]))
+        1 -> TouchModel.Single(computeTouchKeyboard(model, layersGroups[0], showNumberRow))
         else -> {
             val keyboards = layersGroups.map { layersGroup ->
-                scope.async { computeTouchKeyboard(model, layersGroup) }
+                scope.async { computeTouchKeyboard(model, layersGroup, showNumberRow) }
             }.awaitAll()
             TouchModel.Multiple(keyboards)
         }
     }
 }
 
+private fun List<K3KeyId>.withKeysResolved(model: K3Model) = map { keyId ->
+    val key = model.keys.byKeyId[keyId]
+    requireNotNull(key) { "unexpected runtime error: model contract broken" }
+}
+
 private fun computeTouchKeyboard(
     model: K3Model,
     layersGroup: K3TouchLayers,
+    showNumberRow: Boolean,
 ): TouchKeyboard {
     val layers = layersGroup.layers
-    val rowCount = layers.maxOf { (_, layer) -> layer.rows.size }.coerceAtLeast(4)
+
+    val numberRow = if (showNumberRow) {
+        val numberRowLayer = layers[ImeLayerIds.Numrow]
+        if (numberRowLayer != null && numberRowLayer.rows.size == 1) {
+            numberRowLayer.rows[0].withKeysResolved(model)
+        } else null
+    } else null
+
+    val rowCount = layers.maxOf { (_, layer) -> layer.rows.size }.coerceAtLeast(4) +
+        if (numberRow != null) 1 else 0
 
     val touchLayers = layers.mapValues { (_, layer) ->
-        val rows = layer.rows.map {
-            it.map { keyId ->
-                val key = model.keys.byKeyId[keyId]
-                requireNotNull(key) { "unexpected runtime error: model contract broken" }
+        if (layer.id == ImeLayerIds.Numrow) {
+            // the numrow layer is not intended as a standalone layer => do not waste compute time on it here
+            return@mapValues TouchLayer.Empty
+        }
+        val rows = buildList {
+            if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift)) {
+                add(numberRow)
+            }
+            layer.rows.forEach { row ->
+                add(row.withKeysResolved(model))
             }
         }
         val keyHeight = 1f / rows.size
@@ -230,14 +254,15 @@ private fun computeTouchKeyboard(
                         }
                     }
                 } ?: emptyList()
+                val display = computeKeyDisplay(model, key)
                 val touchKey = TouchKey(
                     bounds = keyBoundsPx,
                     hitbox = hitbox,
-                    label = computeKeyDisplay(model, key),
+                    label = display,
                     attrs = key,
                     flick = key.flickId?.let { model.flicks.byFlickId[it] },
                     isRepeatable = key.output?.isRepeatable() ?: false,
-                    isSuitableForLanguageNameDisplay = key.isSuitableForLanguageNameDisplay(),
+                    isSuitableForLanguageNameDisplay = key.isSuitableForLanguageNameDisplay(display),
                     isSuitableForSimplePopup = key.isSuitableForSimplePopup(),
                     isSuitableForExtendedPopup = popups.isNotEmpty(),
                     extendedPopupKeys = popups,
@@ -280,8 +305,8 @@ fun K3StringOrDescriptor.isRepeatable(): Boolean {
 
 private val ASCII_SPACE = " ".asK3String()
 
-fun K3Key.isSuitableForLanguageNameDisplay(): Boolean {
-    return layerId == null && output is K3String && output == ASCII_SPACE
+fun K3Key.isSuitableForLanguageNameDisplay(display: K3StringOrDescriptor): Boolean {
+    return layerId == null && output is K3String && output == ASCII_SPACE && output == display
 }
 fun K3Key.isSuitableForSimplePopup(): Boolean {
     return layerId == null && output is K3String && output != ASCII_SPACE

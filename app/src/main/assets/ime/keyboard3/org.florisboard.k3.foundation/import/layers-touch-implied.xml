@@ -16,13 +16,19 @@ limitations under the License.
 -->
 
 <!--
-This file defines the default touch telpad layer for FlorisBoard,
-To use it in a custom keyboard, it must be explicitly imported:
-<import base="@fl:ext/org.florisboard.k3.foundation" path="layers/telpad.xml" />
+This file provides the implied layers for all keyboards loaded by FlorisBoard.
+All layers may be overridden by keyboard implementations by simply re-declaring the layer.
 -->
 
 <!DOCTYPE layers>
 <layers formId="touch">
+    <layer id="numpad">
+        <row keys="numpad-1 numpad-2 numpad-3 numpad-minus" />
+        <row keys="numpad-4 numpad-5 numpad-6 numpad-space" />
+        <row keys="numpad-7 numpad-8 numpad-9 numpad-bksp" />
+        <row keys="numpad-comma numpad-0 numpad-period numpad-enter" />
+    </layer>
+
     <layer id="telpad">
         <row keys="telpad-1 telpad-2 telpad-3 telpad-minus" />
         <row keys="telpad-4 telpad-5 telpad-6 telpad-space" />
@@ -35,5 +41,9 @@ To use it in a custom keyboard, it must be explicitly imported:
         <row keys="telpad-N telpad-pause telpad-comma telpad-space" />
         <row keys="telpad-asterisk telpad-wait telpad-hash telpad-bksp" />
         <row keys="telpad-to-first telpad-plus telpad-period telpad-enter" />
+    </layer>
+
+    <layer id="numrow">
+        <row keys="numrow-1 numrow-2 numrow-3 numrow-4 numrow-5 numrow-6 numrow-7 numrow-8 numrow-9 numrow-0" />
     </layer>
 </layers>

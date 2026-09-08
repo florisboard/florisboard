@@ -43,6 +43,7 @@ import androidx.compose.ui.util.fastRoundToInt
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberPointerTracker
@@ -62,7 +63,6 @@ import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.k3lp.lib.text.K3String
 import org.k3lp.lib.text.asK3String
-import org.k3lp.model.layer.K3LayerId
 
 @Composable
 fun ImeKeyboardBox(
@@ -85,12 +85,13 @@ fun ImeKeyboardBox(
         derivedStateOf { with(density) { windowSpec.keyMarginV.toPx() } }
     }
 
+    val showNumberRow by prefs.keyboard.numberRow.collectAsState()
     var activeTouchModel by remember {
-        mutableStateOf(imeController.touchModelCache.getFor(model) ?: TouchModel.Empty)
+        mutableStateOf(imeController.touchModelCache.getFor(model, showNumberRow) ?: TouchModel.Empty)
     }
-    LaunchedEffect(model) {
+    LaunchedEffect(model, showNumberRow) {
         activeTouchModel = withContext(Dispatchers.Default) {
-            imeController.touchModelCache.getOrComputeFor(model)
+            imeController.touchModelCache.getOrComputeFor(model, showNumberRow)
         }
     }
 
@@ -114,9 +115,15 @@ fun ImeKeyboardBox(
         val activeTouchKeyboard = remember(activeTouchModel, deviceWidthMm) {
             activeTouchModel.selectKeyboard(deviceWidthMm)
         }
+        // TODO this launched effect is a hack, there must be a better way
+        LaunchedEffect(activeTouchKeyboard) {
+            imeController.updateState {
+                state = state.copy(effRowCount = activeTouchKeyboard.rowCount)
+            }
+        }
         val activeTouchLayer = remember(activeTouchKeyboard, touchLayerId) {
             activeTouchKeyboard.layers[touchLayerId]
-                ?: activeTouchKeyboard.layers[K3LayerId.BASE]
+                ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
                 ?: TouchLayer.Empty
         }
 

@@ -17,7 +17,7 @@ limitations under the License.
 
 <!--
 This file provides the implied display mappings for all keyboards loaded by FlorisBoard.
-All display mappings may be overridden by keyboard implementations simply by re-declaring
+All display mappings may be overridden by keyboard implementations by simply re-declaring
 the mapping to a different display value.
 -->
 

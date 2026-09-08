@@ -27,7 +27,7 @@ import org.k3lp.lib.text.K3StringOrDescriptor
 data class LongPress(
     val anchorBounds: Rect = Rect.Zero,
     val simpleBounds: Rect = Rect.Zero,
-    val simpleLabel: K3StringOrDescriptor = K3String.empty(),
+    val simpleLabel: K3StringOrDescriptor = K3String.Empty,
     val simpleIndicateExtended: Boolean = false,
     val extendedBounds: Rect = Rect.Zero,
     val extendedKeys: List<TouchPopupKey> = emptyList(),

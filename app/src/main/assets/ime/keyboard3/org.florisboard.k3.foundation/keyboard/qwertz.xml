@@ -10,6 +10,7 @@
         <display keyId="numeric" display="${numeric_display}" />
         <display keyId="base-numeric" display="${base_display}" />
         <display keyId="symbols-numeric" display="${symbol_1_display}" />
+        <display keyId="space-numeric" display="@fl:icon/space_bar" />
     </displays>
 
     <keys>
@@ -215,13 +216,13 @@
              longPressKeyIds="close-square close-curly" />
         <key id="percent-numeric" output="%" width="1.8" />
         <key id="space-numeric" output="\u{0020}" width="1.8" />
-        <key id="bksp-numeric" gap="true" width="1.8" />
+        <key id="bksp-numeric" output="@k3:action/backspace" width="1.8" />
         <key id="base-numeric" layerId="base" width="1.8" />
         <key id="comma-numeric" output="," width="1.1" />
         <key id="symbols-numeric" layerId="symbol-1" width="1.9" />
         <key id="equal-numeric" output="=" width="1.9" />
         <key id="period-numeric" output="." width="1.1" />
-        <key id="enter-numeric" gap="true" width="1.8" />
+        <key id="enter-numeric" output="@k3:action/enter" width="1.8" />
         <key id="0-numeric" width="3" output="0" />
         <key id="1-numeric" width="3" output="1" />
         <key id="2-numeric" width="3" output="2" />
@@ -268,8 +269,7 @@
     </layers>
 
     <layers formId="touch" minDeviceWidth="1">
-        <import base="@fl:ext/org.florisboard.k3.foundation" path="layers/numpad.xml" />
-        <import base="@fl:ext/org.florisboard.k3.foundation" path="layers/telpad.xml" />
+        <import base="@fl:ext/org.florisboard.k3.foundation" path="layers-touch-implied.xml" /> <!-- TODO this should be implied! -->
 
         <layer id="base">
             <row keys="q w e r t z u i o p" />
