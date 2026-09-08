@@ -26,9 +26,6 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
 }
 
-val projectMinSdk: String by project
-val projectCompileSdk: String by project
-
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
@@ -40,10 +37,10 @@ kotlin {
 
 configure<LibraryExtension> {
     namespace = "org.florisboard.lib.snygg"
-    compileSdk = projectCompileSdk.toInt()
+    compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
 
     defaultConfig {
-        minSdk = projectMinSdk.toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

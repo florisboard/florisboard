@@ -7,9 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-val projectMinSdk: String by project
-val projectCompileSdk: String by project
-
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
@@ -21,10 +18,10 @@ kotlin {
 
 configure<LibraryExtension> {
     namespace = "org.florisboard.lib.color"
-    compileSdk = projectCompileSdk.toInt()
+    compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
 
     defaultConfig {
-        minSdk = projectMinSdk.toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
     }
 
     buildFeatures {

@@ -41,6 +41,7 @@ dependencyResolutionManagement {
     }
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("NO_IMPLICIT_LOOKUP_IN_PARENT_PROJECTS")
 
 include(":app")
 //include(":benchmark")

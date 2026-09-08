@@ -2,7 +2,7 @@ import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-val projectMinSdk: String by project
-val projectCompileSdk: String by project
-
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
@@ -37,10 +34,10 @@ kotlin {
 
 configure<LibraryExtension> {
     namespace = "org.florisboard.lib.android"
-    compileSdk = projectCompileSdk.toInt()
+    compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
 
     defaultConfig {
-        minSdk = projectMinSdk.toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
