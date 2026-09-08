@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -39,6 +40,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKeyboard
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -93,6 +95,7 @@ class PointerTracker(
     val touchKeyboard: TouchKeyboard,
     val imeController: ImeController,
     val interactionController: InteractionController,
+    val showSimplePopups: Boolean,
     val peekDistanceSqMin: Float,
 ) {
     private val mutationGuard = Mutex()
@@ -161,7 +164,7 @@ class PointerTracker(
                     }
                     LongPress(
                         anchorBounds = anchorBounds,
-                        simpleBounds = if (downKey.isSuitableForSimplePopup) {
+                        simpleBounds = if (showSimplePopups && downKey.isSuitableForSimplePopup) {
                             anchorBounds.copy(
                                 bottom = anchorBounds.bottom + anchorBounds.height * 1.2f,
                             )
@@ -324,11 +327,12 @@ fun rememberPointerTracker(
     val imeController = LocalImeController.current
     val interactionController = LocalInteractionController.current
 
+    val showSimplePopups by prefs.keyboard.popupEnabled.collectAsState()
     // TODO make configurable
     val peekDistanceSqMin = with(density) { 30.dp.toPx().pow(2) }
 
-    val pointerTracker = remember(touchKeyboard) {
-        PointerTracker(touchKeyboard, imeController, interactionController, peekDistanceSqMin)
+    val pointerTracker = remember(touchKeyboard, showSimplePopups) {
+        PointerTracker(touchKeyboard, imeController, interactionController, showSimplePopups, peekDistanceSqMin)
     }
 
     return pointerTracker

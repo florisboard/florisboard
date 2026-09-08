@@ -191,9 +191,12 @@ fun ImeKeyboardBox(
                 }
                 ImeKeyboardKeyBox(
                     touchKey = touchKey,
+                    displayOverride = when {
+                        touchKey.isSuitableForSpaceBarDisplayOverride -> spaceBarDisplayOverride
+                        else -> null
+                    },
                     isPressed = isPressed,
                     longPress = longPress,
-                    spaceBarDisplayOverride = spaceBarDisplayOverride,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -229,16 +232,12 @@ fun ImeKeyboardBox(
 @Composable
 private fun ImeKeyboardKeyBox(
     touchKey: TouchKey,
+    displayOverride: K3StringOrDescriptor?,
     isPressed: Boolean,
     longPress: LongPress,
-    spaceBarDisplayOverride: K3StringOrDescriptor,
     modifier: Modifier = Modifier,
 ) {
-    val display = if (touchKey.isSuitableForSpaceBarDisplayOverride) {
-        spaceBarDisplayOverride
-    } else {
-        touchKey.label
-    }
+    val display = displayOverride ?: touchKey.label
     val output = touchKey.attrs.output
     val attributes: SnyggQueryAttributes = remember(output) {
         buildMap {
