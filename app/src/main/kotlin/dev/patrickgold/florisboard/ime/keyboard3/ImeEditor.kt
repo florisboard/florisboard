@@ -83,7 +83,7 @@ open class ImeEditor(
         ic.endBatchEdit()
     }
 
-    fun composeMozcInput(
+    open fun composeMozcInput(
         range: IntRange,
         text: String,
         newSelection: K3TextRange,
