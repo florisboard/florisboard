@@ -57,7 +57,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private val subtypeManager by context.subtypeManager()
     private val nlpManager by context.nlpManager()
 
-    private val activeState get() = keyboardManager.activeState
+    //private val activeState get() = keyboardManager.activeState
     val autoSpace = AutoSpaceState()
     val phantomSpace = PhantomSpaceState()
     val massSelection = MassSelectionState()
@@ -65,66 +65,6 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private fun currentInputConnection() = FlorisImeService.currentInputConnection()
 
     override fun handleStartInputView(editorInfo: FlorisEditorInfo, isRestart: Boolean) {
-        if (!prefs.correction.rememberCapsLockState.get()) {
-            activeState.inputShiftState = InputShiftState.UNSHIFTED
-        }
-        activeState.isActionsOverflowVisible = false
-        activeState.isActionsEditorVisible = false
-        super.handleStartInputView(editorInfo, isRestart)
-        val keyboardMode = when (editorInfo.inputAttributes.type) {
-            InputAttributes.Type.NUMBER -> {
-                activeState.keyVariation = KeyVariation.NORMAL
-                KeyboardMode.NUMERIC
-            }
-            InputAttributes.Type.PHONE -> {
-                activeState.keyVariation = KeyVariation.NORMAL
-                KeyboardMode.PHONE
-            }
-            InputAttributes.Type.TEXT -> {
-                activeState.keyVariation = when (editorInfo.inputAttributes.variation) {
-                    InputAttributes.Variation.EMAIL_ADDRESS,
-                    InputAttributes.Variation.WEB_EMAIL_ADDRESS,
-                    -> {
-                        KeyVariation.EMAIL_ADDRESS
-                    }
-                    InputAttributes.Variation.PASSWORD,
-                    InputAttributes.Variation.VISIBLE_PASSWORD,
-                    InputAttributes.Variation.WEB_PASSWORD,
-                    -> {
-                        KeyVariation.PASSWORD
-                    }
-                    InputAttributes.Variation.URI -> {
-                        KeyVariation.URI
-                    }
-                    else -> {
-                        KeyVariation.NORMAL
-                    }
-                }
-                KeyboardMode.CHARACTERS
-            }
-            else -> {
-                activeState.keyVariation = KeyVariation.NORMAL
-                KeyboardMode.CHARACTERS
-            }
-        }
-        activeState.keyboardMode = keyboardMode
-        activeState.isComposingEnabled = when (keyboardMode) {
-            KeyboardMode.NUMERIC,
-            KeyboardMode.PHONE,
-            KeyboardMode.PHONE2,
-            -> false
-            else -> activeState.keyVariation != KeyVariation.PASSWORD &&
-                prefs.suggestion.enabled.get()// &&
-            //!instance.inputAttributes.flagTextAutoComplete &&
-            //!instance.inputAttributes.flagTextNoSuggestions
-        }
-        activeState.isIncognitoMode = when (prefs.suggestion.incognitoMode.get()) {
-            IncognitoMode.FORCE_OFF -> false
-            IncognitoMode.FORCE_ON -> true
-            IncognitoMode.DYNAMIC_ON_OFF -> {
-                editorInfo.imeOptions.flagNoPersonalizedLearning || prefs.suggestion.forceIncognitoModeFromDynamic.get()
-            }
-        }
     }
 
     override fun handleSelectionUpdate(oldSelection: EditorRange, newSelection: EditorRange, composing: EditorRange) {
@@ -138,7 +78,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     }
 
     override fun determineComposingEnabled(): Boolean {
-        return activeState.isComposingEnabled && nlpManager.isSuggestionOn()
+        return false // TODO activeState.isComposingEnabled && nlpManager.isSuggestionOn()
     }
 
     override fun determineComposer(composerName: ExtensionComponentName): Composer {
@@ -169,7 +109,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private fun shouldInsertAutoSpaceBefore(text: String): Boolean {
         if (!prefs.correction.autoSpacePunctuation.get() || text.isEmpty()) return false
         if (activeInfo.isRawInputEditor) return false
-        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+        //if (activeState.keyVariation != KeyVariation.NORMAL) return false
 
         val punctuationRule = nlpManager.getActivePunctuationRule()
         val textBefore = activeContent.getTextBeforeCursor(1)
@@ -180,7 +120,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
     private fun shouldInsertAutoSpaceAfter(text: String): Boolean {
         if (!prefs.correction.autoSpacePunctuation.get() || text.isEmpty()) return false
         if (activeInfo.isRawInputEditor) return false
-        if (activeState.keyVariation != KeyVariation.NORMAL) return false
+        //if (activeState.keyVariation != KeyVariation.NORMAL) return false
 
         val punctuationRule = nlpManager.getActivePunctuationRule()
         val content = activeContent
@@ -328,7 +268,7 @@ class EditorInstance(context: Context) : AbstractEditorInstance(context) {
             }
         }.also {
             if (prefs.clipboard.historyHideOnPaste.get()) {
-                keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
+                // TODO keyboardManager.activeState.imeUiMode = ImeUiMode.TEXT
             }
         }
     }

@@ -58,12 +58,12 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionButton
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionsRow
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.ToggleOverflowPanelAction
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
@@ -144,10 +144,11 @@ fun Smartbar() {
 private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
+    val imeController = LocalImeController.current
     val nlpManager by context.nlpManager()
     val scope = rememberCoroutineScope()
 
+    val imeState by imeController.activeState.collectAsState()
     val inlineSuggestions by NlpInlineAutofill.suggestions.collectAsState()
     LaunchedEffect(inlineSuggestions) {
         nlpManager.autoExpandCollapseSmartbarActions(null, inlineSuggestions)
@@ -167,7 +168,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             elementName = FlorisImeUi.SmartbarSharedActionsToggle.elementName,
             onClick = {
                 if (/* was */ sharedActionsExpanded) {
-                    keyboardManager.activeState.isActionsOverflowVisible = false
+                    imeController.updateStateBlocking {
+                        state = state.copy(
+                            flags = state.flags
+                                .withActionsOverflowVisible(false),
+                        )
+                    }
                 }
                 scope.launch {
                     prefs.smartbar.sharedActionsExpanded.set(!sharedActionsExpanded)
@@ -191,7 +197,7 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             }
             val incognitoIcon = ImageVector.vectorResource(id = R.drawable.ic_incognito)
             val incognitoDisplayMode = prefs.keyboard.incognitoDisplayMode.collectAsState()
-            val isIncognitoMode = keyboardManager.activeState.isIncognitoMode
+            val isIncognitoMode = imeState.flags.isIncognitoMode
             val icon = if (isIncognitoMode) {
                 when (incognitoDisplayMode.value) {
                     IncognitoDisplayMode.REPLACE_SHARED_ACTIONS_TOGGLE -> incognitoIcon
@@ -247,7 +253,12 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             FlorisImeUi.SmartbarExtendedActionsToggle.elementName,
             onClick = {
                 if (/* was */ extendedActionsExpanded) {
-                    keyboardManager.activeState.isActionsOverflowVisible = false
+                    imeController.updateStateBlocking {
+                        state = state.copy(
+                            flags = state.flags
+                                .withActionsOverflowVisible(false),
+                        )
+                    }
                 }
                 scope.launch {
                     prefs.smartbar.extendedActionsExpanded.set(!extendedActionsExpanded)
@@ -280,7 +291,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
     @Composable
     fun StickyAction() {
         val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
-        val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
 
         val action = when {
             actionArrangement.stickyAction != null -> {
@@ -298,7 +308,6 @@ private fun SmartbarMainRow(modifier: Modifier = Modifier) {
             QuickActionButton(
                 modifier = Modifier.padding(horizontal = 4.dp),
                 action = action,
-                evaluator = evaluator,
             )
         } else {
             Spacer(

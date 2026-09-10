@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.icu.lang.UCharacter
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -51,16 +50,6 @@ data class TextKeyData(
     override val groupId: Int = KeyData.GROUP_DEFAULT,
     override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
-    override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return if (evaluator.isSlot(this)) {
-            evaluator.slotData(this)?.let { data ->
-                TextKeyData(type, data.code, data.label, groupId, popup)
-            }
-        } else {
-            this
-        }
-    }
-
     override fun asString(isForDisplay: Boolean): String {
         return asString(this, isForDisplay)
     }
@@ -545,17 +534,6 @@ class AutoTextKeyData(
 ) : KeyData {
     @Transient private val state = AutoLetterState()
 
-    override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return if (evaluator.isSlot(this)) {
-            evaluator.slotData(this)?.let { data ->
-                TextKeyData(type, data.code, data.label, groupId, popup)
-            }
-        } else {
-            state.recomputeIfNecessary(evaluator.subtype.primaryLocale)
-            if (evaluator.state.isUppercase) { state.upper } else { state.lower }
-        }
-    }
-
     override fun asString(isForDisplay: Boolean): String {
         return asString(this, isForDisplay)
     }
@@ -602,10 +580,6 @@ class MultiTextKeyData(
     override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
     @Transient override val code: Int = KeyCode.MULTIPLE_CODE_POINTS
-
-    override fun compute(evaluator: ComputingEvaluator): KeyData {
-        return this
-    }
 
     override fun asString(isForDisplay: Boolean): String {
         return buildString {

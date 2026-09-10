@@ -16,34 +16,21 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import androidx.compose.foundation.LocalIndication
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
-import androidx.compose.foundation.indication
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.compose.tooltip.PlainTooltip
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.computeImageVector
-import dev.patrickgold.florisboard.ime.keyboard.computeLabel
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.ui.Display3
+import dev.patrickgold.florisboard.ime.keyboard3.ui.ImeKeyButton
+import dev.patrickgold.florisboard.ime.keyboard3.ui.rememberDerivedEnabledState
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import org.florisboard.lib.snygg.SnyggSelector
-import org.florisboard.lib.snygg.ui.SnyggBox
-import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggText
 
 enum class QuickActionBarType {
@@ -55,111 +42,44 @@ enum class QuickActionBarType {
 @Composable
 fun QuickActionButton(
     action: QuickAction,
-    evaluator: ComputingEvaluator,
     modifier: Modifier = Modifier,
     type: QuickActionBarType = QuickActionBarType.INTERACTIVE_BUTTON,
 ) {
-    val context = LocalContext.current
-    val inputFeedbackController = LocalInputFeedbackController.current
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val isEnabled = type == QuickActionBarType.EDITOR_TILE || evaluator.evaluateEnabled(action.keyData())
+    val imeController = LocalImeController.current
+    val imeState by imeController.activeState.collectAsState()
+    val descriptor  = remember(action) {
+        if (action is QuickAction.InsertK3Descriptor) {
+            action.descriptor
+        } else {
+            ImeActions.NoopSpacer
+        }
+    }
+    val derivedEnabledState by rememberDerivedEnabledState(descriptor)
+    val isEnabled = type != QuickActionBarType.EDITOR_TILE && derivedEnabledState
     val elementName = when (type) {
         QuickActionBarType.INTERACTIVE_BUTTON -> FlorisImeUi.SmartbarActionKey
         QuickActionBarType.INTERACTIVE_TILE -> FlorisImeUi.SmartbarActionTile
         QuickActionBarType.EDITOR_TILE -> FlorisImeUi.SmartbarActionsEditorTile
     }.elementName
-    val attributes = mapOf(FlorisImeUi.Attr.Code to action.keyData().code)
-    val selector = when {
-        isPressed -> SnyggSelector.PRESSED
-        !isEnabled -> SnyggSelector.DISABLED
-        else -> null
-    }
 
-    // Need to manually cancel an action if this composable suddenly leaves the composition to prevent the key from
-    // being stuck in the pressed state
-    DisposableEffect(action, isEnabled) {
-        onDispose {
-            if (action is QuickAction.InsertKey) {
-                action.onPointerCancel(context)
-            }
-        }
-    }
-
-    PlainTooltip(action.computeTooltip(evaluator), enabled = type == QuickActionBarType.INTERACTIVE_BUTTON) {
-        SnyggBox(
+    PlainTooltip(action.computeTooltip(imeState), enabled = type == QuickActionBarType.INTERACTIVE_BUTTON) {
+        ImeKeyButton(
             elementName = elementName,
-            attributes = attributes,
-            selector = selector,
-            modifier = modifier,
-            clickAndSemanticsModifier = Modifier
-                .aspectRatio(1f)
-                .indication(interactionSource, LocalIndication.current)
-                .pointerInput(action, isEnabled) {
-                    awaitEachGesture {
-                        val down = awaitFirstDown()
-                        down.consume()
-                        if (isEnabled && type != QuickActionBarType.EDITOR_TILE) {
-                            val press = PressInteraction.Press(down.position)
-                            inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
-                            interactionSource.tryEmit(press)
-                            action.onPointerDown(context)
-                            val up = waitForUpOrCancellation()
-                            if (up != null) {
-                                up.consume()
-                                interactionSource.tryEmit(PressInteraction.Release(press))
-                                action.onPointerUp(context)
-                            } else {
-                                interactionSource.tryEmit(PressInteraction.Cancel(press))
-                                action.onPointerCancel(context)
-                            }
-                        }
-                    }
-                },
-            contentAlignment = Alignment.Center,
-        ) {
+            output = descriptor,
+            isEnabled = isEnabled,
+            modifier = modifier.aspectRatio(1f),
+        ) { display ->
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Render foreground
-                when (action) {
-                    is QuickAction.InsertKey -> {
-                        val (imageVector, label) = remember(action, evaluator) {
-                            evaluator.computeImageVector(action.data) to evaluator.computeLabel(action.data)
-                        }
-                        if (imageVector != null) {
-                            SnyggBox(
-                                elementName = "$elementName-icon",
-                                attributes = attributes,
-                                selector = selector,
-                            ) {
-                                SnyggIcon(imageVector = imageVector)
-                            }
-                        } else if (label != null) {
-                            SnyggText(
-                                elementName = "$elementName-text",
-                                attributes = attributes,
-                                selector = selector,
-                                text = label,
-                            )
-                        }
-                    }
-
-                    is QuickAction.InsertText -> {
-                        SnyggText(
-                            elementName = "$elementName-text",
-                            attributes = attributes,
-                            selector = selector,
-                            text = action.data.firstOrNull().toString().ifBlank { "?" },
-                        )
-                    }
-                }
-
+                Display3(
+                    display = display,
+                    elementName = "$elementName-icon",
+                )
                 // Render additional info if this is a tile
                 if (type != QuickActionBarType.INTERACTIVE_BUTTON) {
                     SnyggText(
                         elementName = "$elementName-text",
-                        attributes = attributes,
-                        selector = selector,
-                        text = action.computeDisplayName(evaluator = evaluator),
+                        text = action.computeDisplayName(imeState),
                     )
                 }
             }

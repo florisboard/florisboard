@@ -84,9 +84,9 @@ import androidx.emoji2.widget.EmojiTextView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionKind
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -233,7 +233,7 @@ fun EmojiPaletteView(
         activeCategory: EmojiCategory,
         onCategoryChange: (EmojiCategory) -> Unit,
     ) {
-        val inputFeedbackController = LocalInputFeedbackController.current
+        val interactionController = LocalInteractionController.current
         val selectedTabIndex = categoryToPageNumber(activeCategory)
         val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiTab.elementName)
         PrimaryTabRow(
@@ -261,7 +261,7 @@ fun EmojiPaletteView(
                 }
                 Tab(
                     onClick = {
-                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        interactionController.performFeedback(InteractionKind.KeyPress)
                         onCategoryChange(category)
                     },
                     selected = activeCategory == category,
@@ -403,7 +403,7 @@ private fun EmojiKey(
     onEmojiInput: (Emoji) -> Unit,
     onHistoryAction: () -> Unit,
 ) {
-    val inputFeedbackController = LocalInputFeedbackController.current
+    val interactionController = LocalInteractionController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
@@ -414,13 +414,13 @@ private fun EmojiKey(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        interactionController.performFeedback(InteractionKind.KeyPress)
                     },
                     onTap = {
                         onEmojiInput(base)
                     },
                     onLongPress = {
-                        inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                        interactionController.performFeedback(InteractionKind.LongPress)
                         if (variations.isNotEmpty() || isPinned || isRecent) {
                             showVariantsBox = true
                         }

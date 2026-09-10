@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
+@Deprecated("should be fully replaced by ImeState.touchLayerId")
 enum class KeyboardMode(val value: Int) {
     UNSPECIFIED(-1),
     CHARACTERS(0),

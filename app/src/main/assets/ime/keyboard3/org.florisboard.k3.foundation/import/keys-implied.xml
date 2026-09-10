@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 The FlorisBoard Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--
+This file provides the implied key mappings for all keyboards loaded by FlorisBoard.
+All keys may be overridden by keyboard implementations by simply re-declaring the key.
+-->
+
+<!DOCTYPE keys>
+<keys>
+    <key id="numpad-1" output="1" stretch="true" />
+    <key id="numpad-2" output="2" stretch="true" />
+    <key id="numpad-3" output="3" stretch="true" />
+    <key id="numpad-4" output="4" stretch="true" />
+    <key id="numpad-5" output="5" stretch="true" />
+    <key id="numpad-6" output="6" stretch="true" />
+    <key id="numpad-7" output="7" stretch="true" />
+    <key id="numpad-8" output="8" stretch="true" />
+    <key id="numpad-9" output="9" stretch="true" />
+    <key id="numpad-0" output="0" stretch="true" />
+    <key id="numpad-bksp" output="@k3:action/backspace" stretch="true" />
+    <key id="numpad-comma" output="," stretch="true" />
+    <key id="numpad-enter" output="@k3:action/enter" stretch="true" />
+    <key id="numpad-minus" output="-" stretch="true" />
+    <key id="numpad-period" output="." stretch="true" />
+    <key id="numpad-space" output=" " stretch="true" />
+
+    <key id="telpad-1" output="1" stretch="true" />
+    <key id="telpad-2" output="2" stretch="true" />
+    <key id="telpad-3" output="3" stretch="true" />
+    <key id="telpad-4" output="4" stretch="true" />
+    <key id="telpad-5" output="5" stretch="true" />
+    <key id="telpad-6" output="6" stretch="true" />
+    <key id="telpad-7" output="7" stretch="true" />
+    <key id="telpad-8" output="8" stretch="true" />
+    <key id="telpad-9" output="9" stretch="true" />
+    <key id="telpad-0" output="0" stretch="true"
+         longPressKeyIds="telpad-plus" longPressDefaultKeyId="telpad-plus" />
+    <key id="telpad-asterisk" output="*" stretch="true" />
+    <key id="telpad-bksp" output="@k3:action/backspace" stretch="true" />
+    <key id="telpad-enter" output="@k3:action/enter" stretch="true" />
+    <key id="telpad-comma" output="," stretch="true" />
+    <key id="telpad-hash" output="#" stretch="true" />
+    <key id="telpad-minus" output="-" stretch="true" />
+    <key id="telpad-paren-open" output="(" stretch="true" />
+    <key id="telpad-paren-close" output=")" stretch="true" />
+    <key id="telpad-pause" output="," stretch="true" />
+    <key id="telpad-period" output="." stretch="true" />
+    <key id="telpad-plus" output="+" stretch="true" />
+    <key id="telpad-slash" output="/" stretch="true" />
+    <key id="telpad-space" output=" " stretch="true" />
+    <key id="telpad-to-first" layerId="telpad" stretch="true" />
+    <key id="telpad-to-second" layerId="telpad2" stretch="true" />
+    <key id="telpad-wait" output=";" stretch="true" />
+    <key id="telpad-N" output="N" stretch="true" />
+
+    <key id="numrow-1" output="1" />
+    <key id="numrow-2" output="2" />
+    <key id="numrow-3" output="3" />
+    <key id="numrow-4" output="4" />
+    <key id="numrow-5" output="5" />
+    <key id="numrow-6" output="6" />
+    <key id="numrow-7" output="7" />
+    <key id="numrow-8" output="8" />
+    <key id="numrow-9" output="9" />
+    <key id="numrow-0" output="0" />
+</keys>

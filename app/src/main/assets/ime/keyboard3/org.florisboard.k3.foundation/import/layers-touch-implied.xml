@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 The FlorisBoard Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--
+This file provides the implied layers for all keyboards loaded by FlorisBoard.
+All layers may be overridden by keyboard implementations by simply re-declaring the layer.
+-->
+
+<!DOCTYPE layers>
+<layers formId="touch">
+    <layer id="numpad">
+        <row keys="numpad-1 numpad-2 numpad-3 numpad-minus" />
+        <row keys="numpad-4 numpad-5 numpad-6 numpad-space" />
+        <row keys="numpad-7 numpad-8 numpad-9 numpad-bksp" />
+        <row keys="numpad-comma numpad-0 numpad-period numpad-enter" />
+    </layer>
+
+    <layer id="telpad">
+        <row keys="telpad-1 telpad-2 telpad-3 telpad-minus" />
+        <row keys="telpad-4 telpad-5 telpad-6 telpad-space" />
+        <row keys="telpad-7 telpad-8 telpad-9 telpad-bksp" />
+        <row keys="telpad-to-second telpad-0 telpad-period telpad-enter" />
+    </layer>
+
+    <layer id="telpad2">
+        <row keys="telpad-paren-open telpad-slash telpad-paren-close telpad-minus" />
+        <row keys="telpad-N telpad-pause telpad-comma telpad-space" />
+        <row keys="telpad-asterisk telpad-wait telpad-hash telpad-bksp" />
+        <row keys="telpad-to-first telpad-plus telpad-period telpad-enter" />
+    </layer>
+
+    <layer id="numrow">
+        <row keys="numrow-1 numrow-2 numrow-3 numrow-4 numrow-5 numrow-6 numrow-7 numrow-8 numrow-9 numrow-0" />
+    </layer>
+</layers>

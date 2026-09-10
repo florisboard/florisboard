@@ -1,0 +1,318 @@
+<keyboard3 xmlns="https://schemas.unicode.org/cldr/45/keyboard3" conformsTo="45" locale="de">
+    <version number="0.0.1" />
+    <info author="Lars Mühlbauer for k3lp" name="German (QWERTZ)" layout="QWERTZ" indicator="DE" />
+
+    <displays>
+        <display keyId="base" display="${base_display}" />
+        <display keyId="shift" display="${shift_display}" />
+        <display keyId="symbol-1" display="${symbol_1_display}" />
+        <display keyId="symbol-2" display="${symbol_2_display}" />
+        <display keyId="numeric" display="${numeric_display}" />
+        <display keyId="base-numeric" display="${base_display}" />
+        <display keyId="symbols-numeric" display="${symbol_1_display}" />
+        <display keyId="space-numeric" display="@fl:icon/space_bar" />
+    </displays>
+
+    <keys>
+        <import base="cldr" path="45/keys-Zyyy-punctuation.xml" />
+        <import base="cldr" path="45/keys-Zyyy-currency.xml" />
+
+        <key id="shift" layerId="shift" width="1.5" />
+        <key id="numeric" layerId="numeric" />
+        <key id="symbol-1" layerId="symbol-1" width="1.5" />
+        <key id="symbol-2" layerId="symbol-2" width="1.5" />
+        <key id="base" layerId="base" width="1.5" />
+
+        <key id="bksp" output="@k3:action/backspace" stretch="true" />
+        <key id="extra" gap="true" />
+        <key id="enter" output="@k3:action/enter" width="1.6" />
+        <key id="space-no-stretch" output="\u{0020}" />
+        <key id="bksp-no-stretch" output="@k3:action/backspace" />
+
+        <!-- Numbers -->
+        <key id="0" output="0" />
+        <key id="1" output="1" />
+        <key id="2" output="2" />
+        <key id="3" output="3" />
+        <key id="4" output="4" />
+        <key id="5" output="5" />
+        <key id="6" output="6" />
+        <key id="7" output="7" />
+        <key id="8" output="8" />
+        <key id="9" output="9" />
+
+
+        <!-- Capital keys -->
+        <key id="A" output="A"
+             longPressKeyIds="A-umlaut at A-caret A-grave A-acute A-tilde A-ring A-charon"
+             longPressDefaultKeyId="A-umlaut" />
+        <key id="A-umlaut" output="Ä" />
+        <key id="A-grave" output="À" />
+        <key id="A-acute" output="Á" />
+        <key id="A-caret" output="Â" />
+        <key id="A-tilde" output="Ã" />
+        <key id="A-ring" output="Å" />
+        <key id="A-charon" output="Ā" />
+        <key id="B" output="B" />
+        <key id="C" output="C" />
+        <key id="D" output="D" longPressKeyIds="dollar pound yen euro cent"
+             longPressDefaultKeyId="euro" />
+        <key id="E" output="E"
+             longPressKeyIds="E-acute E-charon E-caret E-grave E-umlaut"
+             longPressDefaultKeyId="E-caret" />
+        <key id="E-umlaut" output="Ë" />
+        <key id="E-grave" output="È" />
+        <key id="E-acute" output="É" />
+        <key id="E-caret" output="Ê" />
+        <key id="E-tilde" output="Ẽ" />
+        <key id="E-ring" output="Ė" />
+        <key id="E-charon" output="Ē" />
+        <key id="F" output="F" longPressKeyIds="care-of percent permille"
+             longPressDefaultKeyId="percent" />
+        <key id="G" output="G" longPressKeyIds="amp" longPressDefaultKeyId="amp" />
+        <key id="H" output="H" />
+        <key id="I" output="I" longPressKeyIds="I-acute I-grave I-umlaut I-caret I-charon I-tilde"
+             longPressDefaultKeyId="I-umlaut" />
+        <key id="I-umlaut" output="Ï" />
+        <key id="I-grave" output="Ì" />
+        <key id="I-acute" output="Í" />
+        <key id="I-caret" output="Î" />
+        <key id="I-tilde" output="Ĩ" />
+        <key id="I-charon" output="Ī" />
+        <key id="J" output="J" />
+        <key id="K" output="K" />
+        <key id="L" output="L" />
+        <key id="M" output="M" />
+        <key id="N" output="N" />
+        <key id="O" output="O" longPressKeyIds="O-acute O-grave O-umlaut O-caret O-charon O-tilde"
+             longPressDefaultKeyId="O-umlaut" />
+        <key id="O-umlaut" output="Ö" />
+        <key id="O-grave" output="Ò" />
+        <key id="O-acute" output="Ó" />
+        <key id="O-caret" output="Ô" />
+        <key id="O-tilde" output="Õ" />
+        <key id="O-charon" output="Ō" />
+        <key id="P" output="P" />
+        <key id="Q" output="Q" />
+        <key id="R" output="R" />
+        <key id="S" output="S" longPressDefaultKeyId="hash"
+             longPressKeyIds="S-caron S-sharp hash S-acute numero-sign" />
+        <key id="S-caron" output="Š" />
+        <key id="S-sharp" output="ẞ" />
+        <key id="S-acute" output="Ś" />
+        <key id="T" output="T" />
+        <key id="U" output="U" longPressKeyIds="U-charon U-grave U-umlaut U-caret U-acute"
+             longPressDefaultKeyId="U-umlaut" />
+        <key id="U-umlaut" output="Ü" />
+        <key id="U-grave" output="Ù" />
+        <key id="U-acute" output="Ú" />
+        <key id="U-caret" output="Û" />
+        <key id="U-tilde" output="Ũ" />
+        <key id="U-ring" output="Ů" />
+        <key id="U-charon" output="Ū" />
+        <key id="V" output="V" />
+        <key id="W" output="W" />
+        <key id="X" output="X" />
+        <key id="Y" output="Y" />
+        <key id="Y-umlaut" output="Ÿ" />
+        <key id="Y-grave" output="Ỳ" />
+        <key id="Y-acute" output="Ý" />
+        <key id="Y-caret" output="Ŷ" />
+        <key id="Y-tilde" output="Ỹ" />
+        <key id="Y-charon" output="Ȳ" />
+        <key id="Z" output="Z" />
+
+        <!-- Lowercase keys -->
+        <key id="a" output="a"
+             longPressKeyIds="a-umlaut at a-caret a-grave a-acute a-tilde a-ring a-charon"
+             longPressDefaultKeyId="a-umlaut"
+             flickId="a-flicks" />
+        <key id="a-umlaut" output="ä" />
+        <key id="a-grave" output="à" />
+        <key id="a-acute" output="á" />
+        <key id="a-caret" output="â" />
+        <key id="a-tilde" output="ã" />
+        <key id="a-ring" output="å" />
+        <key id="a-charon" output="ā" />
+        <key id="b" output="b" />
+        <key id="c" output="c" />
+        <key id="d" output="d" longPressKeyIds="dollar pound yen euro cent"
+             longPressDefaultKeyId="euro" />
+        <key id="e" output="e"
+             longPressKeyIds="e-acute e-charon e-caret e-grave e-umlaut"
+             longPressDefaultKeyId="e-caret" />
+        <key id="e-umlaut" output="ë" />
+        <key id="e-grave" output="è" />
+        <key id="e-acute" output="é" />
+        <key id="e-caret" output="ê" />
+        <key id="e-tilde" output="ẽ" />
+        <key id="e-ring" output="ė" />
+        <key id="e-charon" output="ē" />
+        <key id="f" output="f" longPressKeyIds="percent permille care-of"
+             longPressDefaultKeyId="percent" />
+        <key id="g" output="g" longPressKeyIds="amp" longPressDefaultKeyId="amp" />
+        <key id="h" output="h" />
+        <key id="i" output="i" longPressKeyIds="i-acute i-grave i-umlaut i-caret i-charon i-tilde"
+             longPressDefaultKeyId="i-umlaut" />
+        <key id="i-umlaut" output="ï" />
+        <key id="i-grave" output="ì" />
+        <key id="i-acute" output="í" />
+        <key id="i-caret" output="î" />
+        <key id="i-tilde" output="ĩ" />
+        <key id="i-charon" output="ī" />
+        <key id="j" output="j" />
+        <key id="k" output="k" />
+        <key id="l" output="l" />
+        <key id="m" output="m" />
+        <key id="n" output="n" />
+        <key id="o" output="o" longPressKeyIds="o-acute o-grave o-umlaut o-caret o-charon o-tilde"
+             longPressDefaultKeyId="o-umlaut" />
+        <key id="o-umlaut" output="ö" />
+        <key id="o-grave" output="ò" />
+        <key id="o-acute" output="ó" />
+        <key id="o-caret" output="ô" />
+        <key id="o-tilde" output="õ" />
+        <key id="o-charon" output="ō" />
+        <key id="p" output="p" />
+        <key id="q" output="q" />
+        <key id="r" output="r" />
+        <key id="s" output="s" longPressDefaultKeyId="hash"
+             longPressKeyIds="s-caron s-sharp hash s-acute numero-sign" />
+        <key id="s-caron" output="š" />
+        <key id="s-sharp" output="ß" />
+        <key id="s-acute" output="ś" />
+        <key id="t" output="t" />
+        <key id="u" output="u" longPressKeyIds="u-charon u-grave u-umlaut u-caret u-acute"
+             longPressDefaultKeyId="u-umlaut" />
+        <key id="u-umlaut" output="ü" />
+        <key id="u-grave" output="ù" />
+        <key id="u-acute" output="ú" />
+        <key id="u-caret" output="û" />
+        <key id="u-tilde" output="ũ" />
+        <key id="u-ring" output="ů" />
+        <key id="u-charon" output="ū" />
+        <key id="v" output="v" />
+        <key id="w" output="w" />
+        <key id="x" output="x" />
+        <key id="y" output="y" />
+        <key id="y-umlaut" output="ÿ" />
+        <key id="y-grave" output="ỳ" />
+        <key id="y-acute" output="ý" />
+        <key id="y-caret" output="ŷ" />
+        <key id="y-tilde" output="ỹ" />
+        <key id="y-charon" output="ȳ" />
+        <key id="z" output="z" />
+        <!-- extra chars -->
+        <key id="numero-sign" output="\u{2116}" />
+        <key id="permille" output="\u{2030}" />
+        <key id="care-of" output="\u{2105}" />
+        <key id="acute" output="´" />
+
+
+        <!-- numeric layout keys -->
+        <key id="plus-numeric" output="+" width="1.8" longPressKeyIds="hyphen asterisk slash" />
+        <key id="open-paren-numeric" output="(" width="1.8" longPressKeyIds="open-square open-curly" />
+        <key id="close-paren-numeric" output=")" width="1.8"
+             longPressKeyIds="close-square close-curly" />
+        <key id="percent-numeric" output="%" width="1.8" />
+        <key id="space-numeric" output="\u{0020}" width="1.8" />
+        <key id="bksp-numeric" output="@k3:action/backspace" width="1.8" />
+        <key id="base-numeric" layerId="base" width="1.8" />
+        <key id="comma-numeric" output="," width="1.1" />
+        <key id="symbols-numeric" layerId="symbol-1" width="1.9" />
+        <key id="equal-numeric" output="=" width="1.9" />
+        <key id="period-numeric" output="." width="1.1" />
+        <key id="enter-numeric" output="@k3:action/enter" width="1.8" />
+        <key id="0-numeric" width="3" output="0" />
+        <key id="1-numeric" width="3" output="1" />
+        <key id="2-numeric" width="3" output="2" />
+        <key id="3-numeric" width="3" output="3" />
+        <key id="4-numeric" width="3" output="4" />
+        <key id="5-numeric" width="3" output="5" />
+        <key id="6-numeric" width="3" output="6" />
+        <key id="7-numeric" width="3" output="7" />
+        <key id="8-numeric" width="3" output="8" />
+        <key id="9-numeric" width="3" output="9" />
+    </keys>
+
+    <flicks>
+        <flick id="a-flicks">
+            <flickSegment directions="ne s" keyId="b" />
+        </flick>
+    </flicks>
+
+    <layers formId="iso">
+        <layer modifiers="none">
+            <row
+                keys="caret 1 2 3 4 5 6 7 8 9 0 s-sharp acute" />
+            <row keys="q w e r t z u i o p u-umlaut plus" />
+            <row keys="a s d f g h j k l o-umlaut a-umlaut hash" />
+            <row keys="open-angle y x c v b n m comma period hyphen" />
+            <row keys="space" />
+        </layer>
+        <layer modifiers="shift">
+            <row
+                keys="degree bang double-quote section dollar percent amp slash open-paren close-paren equal question grave" />
+            <row keys="Q W E R T Z U I O P U-umlaut asterisk" />
+            <row keys="A S D F G H J K L O-umlaut A-umlaut apos" />
+            <row keys="close-angle Y X C V B N M semi-colon colon underscore" />
+            <row keys="space" />
+        </layer>
+        <layer modifiers="altR">
+            <row
+                keys="not gap gap gap gap gap not open-curly open-square close-square close-curly backslash gap" />
+            <row keys="at gap euro gap gap gap gap gap gap gap gap tilde" />
+            <row keys="gap gap gap gap gap gap gap gap gap gap gap gap" />
+            <row keys="pipe gap gap gap gap gap gap micro gap gap gap" />
+            <row keys="space" />
+        </layer>
+    </layers>
+
+    <layers formId="touch" minDeviceWidth="1">
+        <import base="@fl:ext/org.florisboard.k3.foundation" path="layers-touch-implied.xml" /> <!-- TODO this should be implied! -->
+
+        <layer id="base">
+            <row keys="q w e r t z u i o p" />
+            <row keys="a s d f g h j k l" />
+            <row keys="shift y x c v b n m bksp" />
+            <row keys="symbol-1 comma extra space period enter" />
+        </layer>
+
+        <layer id="shift">
+            <row keys="Q W E R T Z U I O P" />
+            <row keys="A S D F G H J K L" />
+            <row keys="base Y X C V B N M bksp" />
+            <row keys="symbol-1 comma extra space period enter" />
+        </layer>
+
+        <layer id="symbol-1">
+            <row keys="1 2 3 4 5 6 7 8 9 0" />
+            <row keys="at hash euro percent amp hyphen plus open-paren close-paren slash" />
+            <row keys="symbol-2 asterisk double-quote apos colon semi-colon bang question bksp" />
+            <row keys="base comma numeric space period enter" />
+        </layer>
+
+        <layer id="symbol-2">
+            <row keys="tilde grave pipe gap gap gap gap gap gap gap" />
+            <row keys="yen pound dollar cent caret degree equal open-curly close-curly backslash" />
+            <row keys="symbol-1 underscore gap gap gap gap open-square close-square bksp" />
+            <row keys="base open-angle numeric space close-angle enter" />
+        </layer>
+
+        <layer id="numeric">
+            <row keys="plus-numeric 1-numeric 2-numeric 3-numeric percent-numeric" />
+            <row keys="open-paren-numeric 4-numeric 5-numeric 6-numeric space-numeric" />
+            <row keys="close-paren-numeric 7-numeric 8-numeric 9-numeric bksp-numeric" />
+            <row
+                keys="base-numeric comma-numeric symbols-numeric 0-numeric equal-numeric period-numeric enter-numeric" />
+        </layer>
+    </layers>
+
+    <variables>
+        <string id="base_display" value="ABC" />
+        <string id="shift_display" value="\u{21EA}" />
+        <string id="numeric_display" value="1 2&#10;3 4" />
+        <string id="symbol_1_display" value="?123" />
+        <string id="symbol_2_display" value="\u{003D 005C 003C}" />
+    </variables>
+</keyboard3>

@@ -16,9 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.stream.Collectors
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -68,28 +65,17 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         val showName = prefs.emoji.suggestionCandidateShowName.get()
         val query = validateInputQuery(content.composingText) ?: return emptyList()
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
-        val candidates = withContext(Dispatchers.Default) {
-            emojis.parallelStream()
-                .map { emoji ->
-                    val nameWeight = emoji.name.containsWeighted(query, ignoreCase = true)
-                    val keywordWeight = emoji.keywords
-                        .any { it.contains(query, ignoreCase = true) }
-                        .let { if (it) 1.0 else 0.0 }
-                    emoji to (nameWeight * 0.7 + keywordWeight * 0.3)
-                }
-                .sorted { (_, a), (_, b) -> b.compareTo(a) }
-                .limit(maxCandidateCount.toLong())
-                .filter { (_, a) -> a > 0 }
-                .map { (emoji, _) ->
-                    EmojiSuggestionCandidate(
-                        emoji = emoji,
-                        showName = showName,
-                        sourceProvider = this@EmojiSuggestionProvider,
-                    )
-                }
-                .collect(Collectors.toList())
-        }
-        return candidates
+        return emojis.searchByInput(
+            query = query,
+            limit = maxCandidateCount.toLong(),
+            transform = { emoji ->
+                EmojiSuggestionCandidate(
+                    emoji = emoji,
+                    showName = showName,
+                    sourceProvider = this@EmojiSuggestionProvider,
+                )
+            },
+        )
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
@@ -131,13 +117,5 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
             return null
         }
         return emojiPartialName
-    }
-}
-
-private fun String.containsWeighted(other: String, ignoreCase: Boolean = false): Double = let { str ->
-    if (str.contains(other, ignoreCase = ignoreCase)) {
-        other.length.toDouble() / str.length.toDouble()
-    } else {
-        0.0
     }
 }

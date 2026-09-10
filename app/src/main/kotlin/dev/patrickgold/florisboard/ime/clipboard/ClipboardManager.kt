@@ -388,13 +388,11 @@ class ClipboardManager(
      * Returns true if the editor can accept the clip item, else false.
      */
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
-        if (clipItem == null) return false
-
-        return clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo.contentMimeTypes.any { editorType ->
+        return clipItem != null && (clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo.contentMimeTypes.any { editorType ->
             clipItem.mimeTypes.any { clipType ->
                 compareMimeTypes(clipType, editorType)
             }
-        }
+        })
     }
 
     /**

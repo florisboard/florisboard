@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2026 The FlorisBoard Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!--
+This file provides the implied display mappings for all keyboards loaded by FlorisBoard.
+All display mappings may be overridden by keyboard implementations by simply re-declaring
+the mapping to a different display value.
+-->
+
+<!DOCTYPE displays>
+<displays>
+    <display output="@k3:action/backspace" display="@fl:icon/backspace" />
+    <display output="@k3:action/delete" display="@fl:icon/delete" />
+    <display output="@k3:action/enter" display="@fl:icon/enter" />
+
+    <display output="@fl:action/arrow_down" display="@fl:icon/arrow_down" />
+    <display output="@fl:action/arrow_left" display="@fl:icon/arrow_left" />
+    <display output="@fl:action/arrow_right" display="@fl:icon/arrow_right" />
+    <display output="@fl:action/arrow_up" display="@fl:icon/arrow_up" />
+
+    <display output="@fl:action/clipboard_copy" display="@fl:icon/clipboard_copy" />
+    <display output="@fl:action/clipboard_cut" display="@fl:icon/clipboard_cut" />
+    <display output="@fl:action/clipboard_paste" display="@fl:icon/clipboard_paste" />
+    <display output="@fl:action/clipboard_clear_history" display="TODO" />
+    <display output="@fl:action/clipboard_clear_full_history" display="TODO" />
+    <display output="@fl:action/clipboard_clear_primary_clip" display="@fl:icon/clipboard_clear_primary_clip" />
+    <display output="@fl:action/select_all" display="@fl:icon/select_all" />
+
+    <display output="@fl:action/show_ime_window" display="@fl:icon/show_keyboard" />
+    <display output="@fl:action/hide_ime_window" display="@fl:icon/hide_keyboard" />
+    <display output="@fl:action/toggle_floating_window" display="@fl:icon/toggle_floating_window" />
+    <display output="@fl:action/toggle_compact_layout" display="@fl:icon/toggle_compact_layout" />
+    <display output="@fl:action/compact_layout_to_left" display="TODO" />
+    <display output="@fl:action/compact_layout_to_right" display="TODO" />
+    <display output="@fl:action/split_layout" display="TODO" />
+    <display output="@fl:action/merge_layout" display="TODO" />
+    <display output="@fl:action/toggle_resize_mode" display="@fl:icon/toggle_resize_mode" />
+
+    <display output="@fl:action/show_text_panel" display="@fl:icon/text_panel" />
+    <display output="@fl:action/show_media_panel" display="@fl:icon/media_panel" />
+    <display output="@fl:action/show_clipboard_panel" display="@fl:icon/clipboard_panel" />
+
+    <display output="@fl:action/undo" display="@fl:icon/undo" />
+    <display output="@fl:action/redo" display="@fl:icon/redo" />
+
+    <display output="@fl:action/language_switch" display="@fl:icon/language_switch" />
+    <display output="@fl:action/settings" display="@fl:icon/settings" />
+    <display output="@fl:action/toggle_actions_editor" display="TODO" />
+    <display output="@fl:action/toggle_actions_overflow" display="@fl:icon/toggle_actions_overflow" />
+    <display output="@fl:action/toggle_autocorrect" display="@fl:icon/toggle_autocorrect" />
+    <display output="@fl:action/toggle_personalized_learning" display="TODO" />
+
+    <display output="@fl:action/external_voice_input" display="@fl:icon/voice" />
+
+    <display output="@fl:action/noop_drag_marker" display="@fl:icon/drag_marker" />
+    <display output="@fl:action/noop_spacer" display="@fl:icon/close" />
+
+    <display keyId="numpad-space" display="@fl:icon/space_bar" />
+
+    <display keyId="telpad-space" display="@fl:icon/space_bar" />
+    <display keyId="telpad-pause" display="Pause" />
+    <display keyId="telpad-to-first" display="123" />
+    <display keyId="telpad-to-second" display="* #" />
+    <display keyId="telpad-wait" display="Wait" />
+</displays>

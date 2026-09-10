@@ -81,7 +81,7 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                         elementName = FlorisImeUi.SubtypePanelListItem.elementName,
                         onClick = {
                             subtypeManager.switchToSubtypeById(it.id)
-                            keyboardManager.activeState.isSubtypeSelectionVisible = false
+                            // TODO keyboardManager.activeState.isSubtypeSelectionVisible = false
                         },
                         leadingImageVector = when {
                             currentlySelected == it.id -> Icons.Default.RadioButtonChecked

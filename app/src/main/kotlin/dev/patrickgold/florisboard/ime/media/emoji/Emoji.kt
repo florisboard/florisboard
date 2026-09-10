@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -65,10 +64,6 @@ class Emoji(val value: String, val name: String, val keywords: List<String>) : K
         val codePoints = value.codePoints().toList()
         skinTone = EmojiSkinTone.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiSkinTone.DEFAULT
         hairStyle = EmojiHairStyle.entries.firstOrNull { codePoints.contains(it.id) } ?: EmojiHairStyle.DEFAULT
-    }
-
-    override fun compute(evaluator: ComputingEvaluator): KeyData {
-        return this
     }
 
     override fun asString(isForDisplay: Boolean): String {

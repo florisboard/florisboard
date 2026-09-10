@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,13 +29,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.ui.SnyggRow
 
-internal val ToggleOverflowPanelAction = QuickAction.InsertKey(TextKeyData.TOGGLE_ACTIONS_OVERFLOW)
+internal val ToggleOverflowPanelAction = QuickAction.InsertK3Descriptor(ImeActions.ToggleActionsOverflow)
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
@@ -49,7 +48,6 @@ fun QuickActionsRow(
     val keyboardManager by context.keyboardManager()
 
     val flipToggles by prefs.smartbar.flipToggles.collectAsState()
-    val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
     val smartbarLayout by prefs.smartbar.layout.collectAsState()
     val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
     val sharedActionsExpanded by prefs.smartbar.sharedActionsExpanded.collectAsState()
@@ -90,13 +88,13 @@ fun QuickActionsRow(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             if (showOverflowAction && flipToggles) {
-                QuickActionButton(ToggleOverflowPanelAction, evaluator)
+                QuickActionButton(ToggleOverflowPanelAction)
             }
             for (action in visibleActions) {
-                QuickActionButton(action, evaluator)
+                QuickActionButton(action)
             }
             if (showOverflowAction && !flipToggles) {
-                QuickActionButton(ToggleOverflowPanelAction, evaluator)
+                QuickActionButton(ToggleOverflowPanelAction)
             }
         }
     }

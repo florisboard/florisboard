@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.input
+package dev.patrickgold.florisboard.ime.keyboard3
 
-enum class HapticVibrationMode  {
-    USE_VIBRATOR_DIRECTLY,
-    USE_HAPTIC_FEEDBACK_INTERFACE;
+import org.k3lp.model.layer.K3LayerId
+
+object ImeLayerIds {
+    val Base = K3LayerId.BASE
+
+    val Shift = K3LayerId("shift")
+
+    val Caps = K3LayerId("caps")
+
+    val Numpad = K3LayerId("numpad")
+
+    val Telpad = K3LayerId("telpad")
+
+    val Numrow = K3LayerId("numrow")
 }
