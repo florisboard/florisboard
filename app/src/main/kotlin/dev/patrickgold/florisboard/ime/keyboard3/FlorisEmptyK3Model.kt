@@ -41,7 +41,7 @@ val FlorisEmptyK3Model = K3Model(
     K3Flicks(emptyMap()),
     K3Forms(emptyMap()),
     K3LayersByForm(null, emptyList()),
-    K3Variables(emptyMap(), emptyMap(), emptyMap()),
+    K3Variables.Empty,
     K3Transforms(emptyMap()),
     mutableK3MarkerPoolOf(),
 )
