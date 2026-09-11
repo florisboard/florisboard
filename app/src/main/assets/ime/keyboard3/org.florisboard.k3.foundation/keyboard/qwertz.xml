@@ -1,5 +1,4 @@
 <keyboard3 xmlns="https://schemas.unicode.org/cldr/45/keyboard3" conformsTo="45" locale="de">
-    <version number="0.0.1" />
     <info author="Lars Mühlbauer for k3lp" name="German (QWERTZ)" layout="QWERTZ" indicator="DE" />
 
     <displays>

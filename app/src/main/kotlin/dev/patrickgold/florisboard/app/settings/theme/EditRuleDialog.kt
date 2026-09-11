@@ -71,9 +71,6 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.keyboard.Key
-import dev.patrickgold.florisboard.ime.keyboard.Keyboard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
@@ -327,6 +324,7 @@ internal fun EditRuleDialog(
                     }
                 }
 
+                /* TODO migrate to layerId
                 EnumLikeAttributeBox(
                     text = stringRes(R.string.settings__theme_editor__rule_modes),
                     enumClass = KeyboardMode::class,
@@ -335,6 +333,7 @@ internal fun EditRuleDialog(
                     setAttributes = { currentRule = copy(attributes = it) },
                     level = level,
                 )
+                */
 
                 EnumLikeAttributeBox(
                     text = stringRes(R.string.settings__theme_editor__rule_shift_states),

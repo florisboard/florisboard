@@ -25,7 +25,6 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
@@ -378,38 +377,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = ImeWindowMode.FLOATING,
                 label = stringRes(R.string.enum__ime_window_mode__floating),
-            )
-        }
-    },
-    KeyboardMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = KeyboardMode.CHARACTERS,
-                label = stringRes(R.string.enum__keyboard_mode__characters),
-            )
-            entry(
-                key = KeyboardMode.SYMBOLS,
-                label = stringRes(R.string.enum__keyboard_mode__symbols),
-            )
-            entry(
-                key = KeyboardMode.SYMBOLS2,
-                label = stringRes(R.string.enum__keyboard_mode__symbols2),
-            )
-            entry(
-                key = KeyboardMode.NUMERIC,
-                label = stringRes(R.string.enum__keyboard_mode__numeric),
-            )
-            entry(
-                key = KeyboardMode.NUMERIC_ADVANCED,
-                label = stringRes(R.string.enum__keyboard_mode__numeric_advanced),
-            )
-            entry(
-                key = KeyboardMode.PHONE,
-                label = stringRes(R.string.enum__keyboard_mode__phone),
-            )
-            entry(
-                key = KeyboardMode.PHONE2,
-                label = stringRes(R.string.enum__keyboard_mode__phone2),
             )
         }
     },

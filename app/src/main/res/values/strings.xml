@@ -1031,14 +1031,6 @@
     <string name="enum__ime_window_mode__fixed" comment="Enum value label">Fixed</string>
     <string name="enum__ime_window_mode__floating" comment="Enum value label">Floating</string>
 
-    <string name="enum__keyboard_mode__characters" comment="Enum value label">Characters</string>
-    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbols</string>
-    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbols 2</string>
-    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Numeric</string>
-    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Numeric advanced</string>
-    <string name="enum__keyboard_mode__phone" comment="Enum value label">Phone</string>
-    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Phone 2</string>
-
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
