@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.inferFlorisApplication
+import dev.patrickgold.florisboard.ime.nlp.mozc.MozcCandidateProvider
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +65,7 @@ class NlpManager(context: Context) {
         mapOf(
             LatinLanguageProvider.ProviderId to ProviderInstanceWrapper(LatinLanguageProvider(context)),
             //HanShapeBasedLanguageProvider.ProviderId to ProviderInstanceWrapper(HanShapeBasedLanguageProvider(context)),
+            MozcCandidateProvider.ProviderId to ProviderInstanceWrapper(MozcCandidateProvider())
         )
     }
     // lock unnecessary because values constant
