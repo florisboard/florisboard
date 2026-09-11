@@ -98,11 +98,11 @@ fun EmojiSearchLayout(
                 )
             }
 
-            override fun composeMozcInput(range: IntRange, text: String, newSelection: K3TextRange, newComposition: K3TextRange) {
+            override fun composeMozcInput(range: IntRange, text: String, newSelection: K3TextRange, newComposition: K3TextRange?) {
                 value = value.copy(
                     text = value.text.replaceRange(range, text),
                     selection = newSelection.let { TextRange(it.start, it.end) },
-                    composition = newComposition.let { TextRange(it.start, it.end) },
+                    composition = newComposition?.let { TextRange(it.start, it.end) },
                 )
             }
 

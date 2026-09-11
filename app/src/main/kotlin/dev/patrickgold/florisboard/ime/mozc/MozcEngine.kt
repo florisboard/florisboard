@@ -1,16 +1,17 @@
 package dev.patrickgold.florisboard.ime.mozc
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.preference.PreferenceManager
 import android.util.Log
-import androidx.core.content.edit
 import com.google.android.apps.inputmethod.libs.mozc.session.MozcJNI
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCandidateWindow.CandidateWindow
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.CompositionMode
@@ -26,9 +27,7 @@ import java.io.IOException
 // dot166: I didn't do any of the above as I don't really use hardware keyboard and flick requires a finished k3lp
 // someone else can pick up where I left off...
 class MozcEngine {
-    @Deprecated(message = "TODO: REPLACE")
-    // TODO: Replace
-    private var prefs: SharedPreferences? = null
+    private val prefs by NoBackupPreferenceStore
     private var res: Resources? = null
     private var sessionId: Long = 0L
     private val _preedit = MutableStateFlow("")
@@ -79,14 +78,8 @@ class MozcEngine {
             )
 
         sessionId = createResponse.output.id
-        prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
         res = ctx.resources
-        compositionMode = CompositionMode.forNumber(
-            prefs!!.getInt(
-                "libmozc_enabled",
-                CompositionMode.HIRAGANA.number
-            )
-        )
+        compositionMode = prefs.mozcCompositionMode.get()
         isInitialized = true
     }
 
@@ -143,7 +136,9 @@ class MozcEngine {
                     .setAutoPartialSuggestion(true)
                 setRequest(builder)
             }
-            prefs!!.edit { putInt("libmozc_enabled", value.number) }
+            MainScope().launch {
+                prefs.mozcCompositionMode.set(value)
+            }
             _compositionMode = value
         }
 
@@ -197,12 +192,7 @@ class MozcEngine {
 
         sessionId = createResponse.output.id
 
-        compositionMode = CompositionMode.forNumber(
-            prefs!!.getInt(
-                "libmozc_enabled",
-                CompositionMode.HIRAGANA.number
-            )
-        )
+        compositionMode = prefs.mozcCompositionMode.get()
     }
 
     private fun setRequest(builder: ProtoCommands.Request.Builder) {
@@ -270,11 +260,11 @@ class MozcEngine {
             sInstance.initInternal(context)
         }
 
+        @Suppress("DEPRECATION")
         fun getDeviceOrientationString(configuration: Configuration): String {
             when (configuration.orientation) {
                 Configuration.ORIENTATION_PORTRAIT -> return "PORTRAIT"
                 Configuration.ORIENTATION_LANDSCAPE -> return "LANDSCAPE"
-                // TODO: Decide if I should keep ORIENTATION_SQUARE as it doesn't do anything
                 Configuration.ORIENTATION_SQUARE -> return "SQUARE"
                 Configuration.ORIENTATION_UNDEFINED -> return "UNDEFINED"
             }

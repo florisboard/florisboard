@@ -22,6 +22,7 @@ import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
 import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.PreferenceType
+import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands
 
 val NoBackupPreferenceStore = jetprefDataStoreOf(NoBackupPreferenceModel::class)
 
@@ -54,5 +55,9 @@ abstract class NoBackupPreferenceModel : PreferenceModel() {
     val notificationPermissionScreenSeen = boolean(
         key = "internal__notification_permission_screen_seen",
         default = false,
+    )
+    val mozcCompositionMode = enum(
+        key = "internal__mozc_composition_mode",
+        default = ProtoCommands.CompositionMode.HIRAGANA
     )
 }

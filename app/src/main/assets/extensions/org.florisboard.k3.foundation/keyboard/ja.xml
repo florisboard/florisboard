@@ -1,6 +1,6 @@
-<keyboard3 xmlns="https://schemas.unicode.org/cldr/45/keyboard3" conformsTo="45" locale="jp">
+<keyboard3 xmlns="https://schemas.unicode.org/cldr/45/keyboard3" conformsTo="45" locale="ja">
     <version number="0.0.1" />
-    <info author="dot166" name="Japanese (QWERTY)" layout="QWERTY" indicator="mozcJP" />
+    <info author="dot166" name="Japanese (QWERTY)" layout="QWERTY" indicator="mozcJa" />
 
     <displays>
         <display keyId="base" display="${base_display}" />
