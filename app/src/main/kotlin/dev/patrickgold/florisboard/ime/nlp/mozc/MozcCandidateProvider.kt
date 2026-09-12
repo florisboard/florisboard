@@ -43,7 +43,7 @@ class MozcCandidateProvider : SuggestionProvider {
                 add(
                     WordSuggestionCandidate(
                         text = candidate.value,
-                        confidence = (1000 - (n))/1000.0000,
+                        confidence = (candidates.size - (n))/candidates.size.toDouble(),
                         isEligibleForAutoCommit = false,
                         isEligibleForUserRemoval = false, // mozc cant delete a candidate
                         // We set ourselves as the source provider so we can get notify events for our candidate
