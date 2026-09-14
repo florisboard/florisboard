@@ -210,9 +210,11 @@ class ImeController(
                         when (touchLayerId) {
                             ImeLayerIds.Numpad, ImeLayerIds.Telpad -> false
                             else -> keyVariation != KeyVariation.PASSWORD &&
-                                prefs.suggestion.enabled.get()// &&
-                            //!instance.inputAttributes.flagTextAutoComplete &&
-                            //!instance.inputAttributes.flagTextNoSuggestions
+                                // TODO review if this is the correct approach for composing region support detection
+                                //  important: for codemirror6 in browsers, it is important that composing is disabled,
+                                //  else all sorts of weird behavior starts to occur
+                                info.isRichInputEditor &&
+                                info.inputAttributes.flagTextAutoCorrect
                         }
                     )
                     .withIncognitoMode(
@@ -368,7 +370,7 @@ class ImeController(
             selection: K3TextRange,
             surroundingText: K3SurroundingText
         ): K3TextRange? {
-            if (selection.isNotCollapsed()) {
+            if (selection.isNotCollapsed() || !state.flags.isComposingEnabled) {
                 return null
             }
             // TODO rework how we get the primary locale
