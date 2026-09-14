@@ -391,7 +391,7 @@ class ImeController(
                             selection = newSelection,
                             composition = newComposition,
                             surroundingText = newSurroundingText,
-                            inputContext = state.content.inputContext + preedit.asK3String(),
+                            inputContext = (state.content.inputContext.toText().substring(0, localStart) + preedit + state.content.inputContext.toText().substring(localEnd)).asK3String(),
                         ),
                     )
                     state.editor.composeMozcInput(range, text, newSelection, newComposition)
@@ -597,14 +597,16 @@ class ImeController(
                             selection = newSelection,
                             composition = newComposition,
                             surroundingText = newSurroundingText,
-                            inputContext = state.content.inputContext + preedit.asK3String(),
+                            inputContext = (state.content.inputContext.toText().substring(0, localStart) + preedit + state.content.inputContext.toText().substring(localEnd)).asK3String(),
                         ),
                     )
                     state.editor.composeMozcInput(range, text, newSelection, newComposition)
-                    return
+                } else {
+                    super.emitBackspace()
                 }
+            } else {
+                super.emitBackspace()
             }
-            super.emitBackspace()
             expectedContentQueue.push(state.content)
         }
 
