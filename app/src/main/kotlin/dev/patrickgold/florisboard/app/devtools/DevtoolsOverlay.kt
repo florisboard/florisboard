@@ -211,7 +211,7 @@ private fun DevtoolsMozcOverlay() {
             DevtoolsText(text = "Preedit=${mozc.preedit.collectAsState().value}")
         }
         DevtoolsSubGroup(title = "MozcCandidates") {
-            for (candidate in mozc.candidates.collectAsState().value) {
+            for (candidate in mozc.candidates.collectAsState().value.first) {
                 DevtoolsText(text = "candidate:     ${candidate.value}")
             }
         }

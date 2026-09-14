@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.mozc.android.inputmethod.japanese.protobuf.ProtoCandidateWindow.CandidateWindow
+import org.mozc.android.inputmethod.japanese.protobuf.ProtoCandidateWindow
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.CompositionMode
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.KeyEvent.SpecialKey
@@ -32,8 +32,8 @@ class MozcEngine {
     private var sessionId: Long = 0L
     private val _preedit = MutableStateFlow("")
     val preedit: StateFlow<String> = _preedit.asStateFlow()
-    private val _candidates = MutableStateFlow(mutableListOf<CandidateWindow.Candidate>())
-    val candidates: StateFlow<MutableList<CandidateWindow.Candidate>> = _candidates.asStateFlow()
+    private val _candidates: MutableStateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = MutableStateFlow(Pair(mutableListOf<ProtoCandidateWindow.CandidateWord>(), null))
+    val candidates: StateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = _candidates.asStateFlow()
     private var _compositionMode = CompositionMode.HIRAGANA
     private var isInitialized: Boolean = false
 
@@ -157,7 +157,7 @@ class MozcEngine {
 
         sessionId = 0L
         _preedit.value = ""
-        _candidates.value = mutableListOf()
+        _candidates.value = Pair(mutableListOf(), null)
     }
 
     fun sendKey(ch: Char) {
@@ -237,11 +237,17 @@ class MozcEngine {
         }
         _preedit.value = preedit
 
-        var candidateList = mutableListOf<CandidateWindow.Candidate>()
-        if (output.hasCandidateWindow()) {
-            candidateList = output.candidateWindow.candidateList
+        val candidateList = output.allCandidateWords.candidatesList
+        val selectedIndex = if(output.hasCandidateWindow()) {
+            if(output.candidateWindow.hasFocusedIndex()) {
+                output.candidateWindow.focusedIndex
+            } else {
+                null
+            }
+        } else {
+            null
         }
-        _candidates.value = candidateList
+        _candidates.value = Pair(candidateList, selectedIndex)
     }
 
     companion object {
