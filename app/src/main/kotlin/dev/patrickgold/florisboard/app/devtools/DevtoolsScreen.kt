@@ -75,7 +75,7 @@ fun DevtoolsScreen() {
             )
 
             SegmentedListColumn(title = stringRes(R.string.devtools__title)) {
-                val count = 13
+                val count = 14
                 SwitchPreference(
                     prefs.devtools.showPrimaryClip,
                     shapes = ListItemDefaults.segmentedShapes(0, count),
@@ -104,6 +104,12 @@ fun DevtoolsScreen() {
                     summary = stringRes(R.string.devtools__show_inline_autofill_overlay__summary),
                     enabledIf = { prefs.devtools.enabled isEqualTo true },
                     visibleIf = { AndroidVersion.ATLEAST_API30_R },
+                )
+                SwitchPreference(
+                    prefs.devtools.showMozcOverlay,
+                    title = stringRes(R.string.devtools__show_mozc_overlay__label),
+                    summary = stringRes(R.string.devtools__show_mozc_overlay__summary),
+                    enabledIf = { prefs.devtools.enabled isEqualTo true },
                 )
                 SwitchPreference(
                     prefs.devtools.showKeyTouchBoundaries,
