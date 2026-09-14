@@ -36,8 +36,7 @@ class MozcCandidateProvider : SuggestionProvider {
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
     ): List<SuggestionCandidate> {
-        val candidateList = MozcEngine.instance.candidates.value
-        val candidates = candidateList.subList(0, maxCandidateCount.coerceAtMost(candidateList.size))
+        val candidates = MozcEngine.instance.candidates.value
         val suggestions = buildList {
             for ((n, candidate) in candidates.withIndex()) {
                 add(
