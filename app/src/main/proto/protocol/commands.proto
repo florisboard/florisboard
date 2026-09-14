@@ -556,7 +556,7 @@ message Capability {
       [default = NO_TEXT_DELETION_CAPABILITY];
 }
 
-// Next ID: 151
+// Next ID: 157
 // Bundles together some Android experiment flags so that they can be easily
 // retrieved throughout the native code.  These flags are generally specific to
 // the decoder, and are made available when the decoder is initialized.
@@ -626,20 +626,6 @@ message DecoderExperimentParams {
   optional int32 handwriting_conversion_candidate_cost_offset = 102
       [default = 1151];
 
-  enum BigramNwpFilteringMode {
-    // Control implementation is used. For example,
-    // - Kanji + Katakana will not be filtered.
-    // - If cost(prefix) > cost(original_entry), the candidate will be filtered.
-    // - The reading of the target candidate should be in the dictionary.
-    // - ,etc
-    DEFAULT = 0;
-    // In addition to the default filtering, filter entry if the character
-    // script type does not change from the prefix.
-    FILTER_SAME_CTYPE = 1;
-    // Filter all bigram candidates.
-    FILTER_ALL = 2;
-  }
-
   // Threshold for suffix NWP transition cost.
   // If the transition cost is greater than this value, the candidate will be
   // filtered.
@@ -673,12 +659,32 @@ message DecoderExperimentParams {
   // predictor.
   optional int32 disable_legacy_rewriter_mode = 147 [default = 0];
 
+  // Mode to disable legacy rewriters in all conversion modes (even when
+  // mixed_conversion is false).
+  optional int32 disable_legacy_rewriter_in_all_conversion_mode = 155
+      [default = 0];
+
   // Use NextTopStates instead of NextStates in Predictor.
-  optional bool ngram_use_next_top_states = 149 [default = false];
+  optional bool ngram_use_next_top_states = 149 [default = true];
 
   // Transition cost bonus for particle omission (e.g. "さかなくう" ->
   // "魚食う"). This is used for experiments to improve core LM conversion.
   optional int32 particle_omission_transition_cost_bonus = 150 [default = 0];
+
+  // Use precomputed top transitions in NgramFst::NextTopStates.
+  optional bool ngram_use_precomputed_top_states = 151 [default = false];
+
+  // If true, suppresses calling the converter (ConverterInterface) in
+  // RealtimeDecoder.
+  optional bool suppress_realtime_conversion_with_converter = 152
+      [default = false];
+
+  // Enables partial match learning for segment-edited compound nouns.
+  optional bool user_history_enable_compound_noun_partial_match = 153
+      [default = false];
+
+  // If true, enables multi-segment candidate generation.
+  optional bool enable_multi_segment_candidate = 156 [default = false];
 }
 
 // Clients' request to the server.

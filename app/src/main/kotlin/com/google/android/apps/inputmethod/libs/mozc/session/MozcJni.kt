@@ -15,7 +15,7 @@
  */
 package com.google.android.apps.inputmethod.libs.mozc.session
 
-object MozcJNI {
+object MozcJni {
     init {
         System.loadLibrary("mozc")
     }

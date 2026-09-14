@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.Log
-import com.google.android.apps.inputmethod.libs.mozc.session.MozcJNI
+import com.google.android.apps.inputmethod.libs.mozc.session.MozcJni
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
 import kotlinx.coroutines.MainScope
@@ -45,7 +45,7 @@ class MozcEngine {
 
     @Throws(IOException::class)
     private fun initInternal(ctx: Context) {
-        check(MozcJNI.initialize()) { "Failed to initialize JNI" }
+        check(MozcJni.initialize()) { "Failed to initialize JNI" }
 
         // Copy mozc.data from assets
         // TODO: Implement the FlorisBoard Extensions infrastructure so that UT dictionaries can be used, currently only using oss dict
@@ -60,9 +60,9 @@ class MozcEngine {
                 }
             }
         }
-        check(MozcJNI.onPostLoad(ctx.filesDir.absolutePath, outFile.absolutePath)) { "init failed" }
+        check(MozcJni.onPostLoad(ctx.filesDir.absolutePath, outFile.absolutePath)) { "init failed" }
 
-        Log.d(TAG, MozcJNI.dataVersion ?: "")
+        Log.d(TAG, MozcJni.dataVersion ?: "")
 
         val createCommand: ProtoCommands.Command =
             ProtoCommands.Command.newBuilder()
@@ -74,7 +74,7 @@ class MozcEngine {
 
         val createResponse: ProtoCommands.Command =
             ProtoCommands.Command.parseFrom(
-                MozcJNI.evalCommand(createCommand.toByteArray())
+                MozcJni.evalCommand(createCommand.toByteArray())
             )
 
         sessionId = createResponse.output.id
@@ -102,7 +102,7 @@ class MozcEngine {
                 )
                 .build()
 
-            MozcJNI.evalCommand(modeRequest.toByteArray())
+            MozcJni.evalCommand(modeRequest.toByteArray())
             if (value == CompositionMode.HIRAGANA) {
                 val builder: ProtoCommands.Request.Builder = ProtoCommands.Request.newBuilder()
                     .setKeyboardName(
@@ -153,7 +153,7 @@ class MozcEngine {
                 )
                 .build()
 
-        MozcJNI.evalCommand(deleteRequest.toByteArray())
+        MozcJni.evalCommand(deleteRequest.toByteArray())
 
         sessionId = 0L
         _preedit.value = ""
@@ -187,7 +187,7 @@ class MozcEngine {
 
         val createResponse: ProtoCommands.Command =
             ProtoCommands.Command.parseFrom(
-                MozcJNI.evalCommand(createCommand.toByteArray())
+                MozcJni.evalCommand(createCommand.toByteArray())
             )
 
         sessionId = createResponse.output.id
@@ -207,7 +207,7 @@ class MozcEngine {
         val inCommand: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
             .setInput(input)
             .build()
-        MozcJNI.evalCommand(inCommand.toByteArray())
+        MozcJni.evalCommand(inCommand.toByteArray())
     }
 
     private fun sendKeyRequest(keyEvent: ProtoCommands.KeyEvent) {
@@ -220,7 +220,7 @@ class MozcEngine {
             )
             .build()
 
-        val bytes = MozcJNI.evalCommand(keyRequest.toByteArray())
+        val bytes = MozcJni.evalCommand(keyRequest.toByteArray())
         if (bytes == null || bytes.isEmpty()) {
             Log.e(TAG, "returned empty response")
             return
