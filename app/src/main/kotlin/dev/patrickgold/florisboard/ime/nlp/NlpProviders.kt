@@ -140,7 +140,7 @@ interface SuggestionProvider : NlpProvider {
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
-    ): List<SuggestionCandidate>
+    ): SuggestionCandidates
 
     /**
      * Is called when a suggestion has been accepted, either manually by the user or automatically through auto-commit.
@@ -267,8 +267,8 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
-    ): List<SuggestionCandidate> {
-        return emptyList()
+    ): SuggestionCandidates {
+        return SuggestionCandidates.EMPTY
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

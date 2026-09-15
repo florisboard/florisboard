@@ -5,6 +5,7 @@ import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidates
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
@@ -35,7 +36,7 @@ class MozcCandidateProvider : SuggestionProvider {
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
-    ): List<SuggestionCandidate> {
+    ): SuggestionCandidates {
         val candidateList = MozcEngine.instance.candidates.value
         val candidates = candidateList.first
         val suggestions = buildList {
@@ -52,7 +53,7 @@ class MozcCandidateProvider : SuggestionProvider {
                 )
             }
         }
-        return suggestions
+        return SuggestionCandidates(suggestions, candidateList.second)
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

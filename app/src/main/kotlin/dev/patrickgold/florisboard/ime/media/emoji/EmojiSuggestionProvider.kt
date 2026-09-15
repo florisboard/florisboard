@@ -21,6 +21,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidates
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import io.github.reactivecircus.cache4k.Cache
@@ -60,12 +61,12 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean
-    ): List<SuggestionCandidate> {
+    ): SuggestionCandidates {
         val preferredSkinTone = prefs.emoji.preferredSkinTone.get()
         val showName = prefs.emoji.suggestionCandidateShowName.get()
-        val query = content.compositionText?.let { validateInputQuery(it) } ?: return emptyList()
+        val query = content.compositionText?.let { validateInputQuery(it) } ?: return SuggestionCandidates.EMPTY
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
-        return emojis.searchByInput(
+        return SuggestionCandidates(emojis.searchByInput(
             query = query,
             limit = maxCandidateCount.toLong(),
             transform = { emoji ->
@@ -75,7 +76,7 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
                     sourceProvider = this@EmojiSuggestionProvider,
                 )
             },
-        )
+        ))
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {

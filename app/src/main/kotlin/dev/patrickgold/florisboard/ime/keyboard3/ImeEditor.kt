@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard3
 
 import android.content.ClipDescription
 import android.content.ContentUris
+import android.content.Context
 import android.os.SystemClock
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -27,8 +28,14 @@ import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.FlorisApplication
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.core.SubtypeNlpProviderMap
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
+import dev.patrickgold.florisboard.ime.nlp.mozc.MozcCandidateProvider
+import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.nlpManager
+import org.k3lp.runtime.K3Content
 import org.k3lp.runtime.K3Editor
 import org.k3lp.runtime.K3SurroundingText
 import org.k3lp.runtime.K3TextRange
@@ -39,7 +46,9 @@ import kotlin.contracts.contract
 open class ImeEditor(
     val ic: WeakReference<InputConnection>,
     val info: FlorisEditorInfo,
+    ctx: Context?,
 ) : K3Editor {
+    val nlpManager by ctx?.nlpManager() ?: lazy { null }
     fun getSurroundingText(charsBefore: Int, charsAfter: Int): K3SurroundingText {
         val ic = ic.get() ?: return K3SurroundingText.Empty
         // TODO maybe use eet for getSurroundingText??
@@ -97,11 +106,23 @@ open class ImeEditor(
         ic.setSelection(newSelection.start, newSelection.end)
         setCompositionMozc(newComposition)
         ic.endBatchEdit()
+        updateMozcCandidateList()
     }
 
     fun finishComposingMozc() {
         val ic = ic.get() ?: return
         ic.finishComposingText()
+        updateMozcCandidateList()
+    }
+
+    fun updateMozcCandidateList() {
+        // TODO: adapt this code when k3lp has proper subtype support
+        // TODO: do this properly
+        nlpManager?.suggest(Subtype(0, FlorisLocale.fromTag("ja-JP"), emptyList(), SubtypeNlpProviderMap(
+            "",
+            MozcCandidateProvider.ProviderId
+        ),
+        ), K3Content.Empty) // TODO: Link to actual content
     }
 
     fun deleteSurroundingText(charsBefore: Int, charsAfter: Int) {
@@ -252,6 +273,7 @@ open class ImeEditor(
         val Disconnected = ImeEditor(
             ic = WeakReference(null),
             info = FlorisEditorInfo.Unspecified,
+            ctx = null,
         )
     }
 }

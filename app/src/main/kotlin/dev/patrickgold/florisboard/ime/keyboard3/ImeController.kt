@@ -202,6 +202,7 @@ class ImeController(
         fun handleStartInputView(
             ic: WeakReference<InputConnection>,
             info: FlorisEditorInfo,
+            service: FlorisImeService,
         ) {
             val newTouchLayerId: K3LayerId
             val keyVariation: KeyVariation
@@ -252,7 +253,7 @@ class ImeController(
                 state.flags.inputShiftState == InputShiftState.CAPS_LOCK
 
             state = state.copy(
-                editor = ImeEditor(ic, info),
+                editor = ImeEditor(ic, info, service),
                 touchLayerId = when {
                     state.model.info.indicator?.contains("mozcJP") ?: false -> getJapaneseInputLayer(keyVariation = keyVariation)
                     rememberCapsLockState && newTouchLayerId.isTextLayer() -> ImeLayerIds.Caps
