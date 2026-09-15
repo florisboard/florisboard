@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,22 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.math.min
 
-@Serializable(with = ExtensionMaintainerSerializer::class)
+@Serializable(with = ExtensionMaintainer.Serializer::class)
 data class ExtensionMaintainer(
     val name: String,
     val email: String? = null,
     val url: String? = null,
 ) {
+    override fun toString() = buildString {
+        append(name)
+        if (!email.isNullOrBlank()) {
+            append(" <$email>")
+        }
+        if (!url.isNullOrBlank()) {
+            append(" ($url)")
+        }
+    }
+
     companion object {
         private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*$""".toRegex()
 
@@ -58,25 +68,15 @@ data class ExtensionMaintainer(
         }
     }
 
-    override fun toString() = buildString {
-        append(name)
-        if (!email.isNullOrBlank()) {
-            append(" <$email>")
+    class Serializer : KSerializer<ExtensionMaintainer> {
+        override val descriptor = PrimitiveSerialDescriptor("ExtensionMaintainer", PrimitiveKind.STRING)
+
+        override fun serialize(encoder: Encoder, value: ExtensionMaintainer) {
+            encoder.encodeString(value.toString())
         }
-        if (!url.isNullOrBlank()) {
-            append(" ($url)")
+
+        override fun deserialize(decoder: Decoder): ExtensionMaintainer {
+            return fromOrTakeRaw(decoder.decodeString())
         }
-    }
-}
-
-private class ExtensionMaintainerSerializer : KSerializer<ExtensionMaintainer> {
-    override val descriptor = PrimitiveSerialDescriptor("ExtensionMaintainer", PrimitiveKind.STRING)
-
-    override fun serialize(encoder: Encoder, value: ExtensionMaintainer) {
-        encoder.encodeString(value.toString())
-    }
-
-    override fun deserialize(decoder: Decoder): ExtensionMaintainer {
-        return ExtensionMaintainer.fromOrTakeRaw(decoder.decodeString())
     }
 }

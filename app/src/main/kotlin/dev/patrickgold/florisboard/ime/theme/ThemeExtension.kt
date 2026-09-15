@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,46 +16,50 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
-import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
+import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
+import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyMap
+import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
+import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
+import org.florisboard.lib.color.MaterialYouFlags
 
-@SerialName(ThemeExtension.SERIAL_TYPE)
-@Serializable
-class ThemeExtension(
-    override val meta: ExtensionMeta,
-    override val dependencies: List<String>? = null,
-    val themes: List<ThemeExtensionComponentImpl>,
-) : Extension() {
+class ThemeExtension {
+    // TODO
 
     companion object {
         const val SERIAL_TYPE = "ime.extension.theme"
     }
 
-    override fun serialType() = SERIAL_TYPE
+    @SerialName(SERIAL_TYPE)
+    @Serializable
+    data class Manifest(
+        override val meta: ExtensionMeta,
+        override val dependencies: ExtensionDependencyMap = emptyMap(),
+        val themes: List<ThemeComponent>,
+    ) : ExtensionManifest
 
-    override fun components() = themes
+    @OptIn(ExperimentalSerializationApi::class)
+    @Serializable
+    data class ThemeComponent(
+        override val id: String,
+        @JsonNames("label")
+        override val name: String,
+        override val authors: List<String>,
+        @SerialName("isNight")
+        val isNightTheme: Boolean = true,
+        @EncodeDefault
+        val materialYouFlags: MaterialYouFlags = MaterialYouFlags(),
+        @SerialName("stylesheet")
+        val stylesheetPath: String? = null,
+    ) : ExtensionComponent {
+        fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
 
-    override fun edit() = ThemeExtensionEditor(
-        meta = meta,
-        dependencies = dependencies?.toMutableList() ?: mutableListOf(),
-        themes = mutableStateListOf(*themes.map { it.edit() }.toTypedArray()),
-    )
-}
-
-class ThemeExtensionEditor(
-    override var meta: ExtensionMeta,
-    override val dependencies: MutableList<String>,
-    val themes: SnapshotStateList<ThemeExtensionComponentEditor>,
-) : ExtensionEditor {
-
-    override fun build() = ThemeExtension(
-        meta = meta,
-        dependencies = dependencies.takeUnless { it.isEmpty() }?.toList(),
-        themes = themes.map { it.build() },
-    )
+        fun defaultStylesheetPath(id: String): String {
+            return "stylesheets/$id.json"
+        }
+    }
 }
