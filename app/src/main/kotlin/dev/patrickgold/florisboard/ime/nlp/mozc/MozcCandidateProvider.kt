@@ -3,15 +3,11 @@ package dev.patrickgold.florisboard.ime.nlp.mozc
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
-import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.JapaneseWordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidates
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
-import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.florisboard.lib.kotlin.guardedByLock
+import dev.patrickgold.florisboard.lib.devtools.flogError
 
 class MozcCandidateProvider : SuggestionProvider {
     companion object {
@@ -42,8 +38,9 @@ class MozcCandidateProvider : SuggestionProvider {
         val suggestions = buildList {
             for ((n, candidate) in candidates.withIndex()) {
                 add(
-                    WordSuggestionCandidate(
+                    JapaneseWordSuggestionCandidate(
                         text = candidate.value,
+                        candidateId = candidate.id,
                         confidence = (candidates.size - (n))/candidates.size.toDouble(),
                         isEligibleForAutoCommit = false,
                         isEligibleForUserRemoval = false, // mozc cant delete a candidate
@@ -57,7 +54,14 @@ class MozcCandidateProvider : SuggestionProvider {
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
-        // TODO: tell mozc what i chose and tell android to type it, still waiting on upstream to implement k3lp subtypes...
+        if (candidate is JapaneseWordSuggestionCandidate) {
+            // correct provider
+            MozcEngine.instance.selectCandidate(candidate)
+        } else {
+            flogError {
+                "how did a non mozc candidate, end up in the mozc candidade provider???"
+            }
+        }
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {

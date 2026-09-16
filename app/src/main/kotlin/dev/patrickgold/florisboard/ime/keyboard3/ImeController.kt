@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
+import dev.patrickgold.florisboard.ime.mozc.MozcKeyboardSpec
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
@@ -255,7 +256,6 @@ class ImeController(
             state = state.copy(
                 editor = ImeEditor(ic, info, service),
                 touchLayerId = when {
-                    state.model.info.indicator?.contains("mozcJP") ?: false -> getJapaneseInputLayer(keyVariation = keyVariation)
                     rememberCapsLockState && newTouchLayerId.isTextLayer() -> ImeLayerIds.Caps
                     else -> newTouchLayerId
                 },
@@ -298,19 +298,26 @@ class ImeController(
                         }
                     )
             )
+            // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
+            if (state.model.info.indicator?.contains("mozcJa") ?: false) {
+                MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
+            }
             resetContent(initialSelection, initialSurrounding)
             expectedContentQueue.clear()
         }
 
-        fun getJapaneseInputLayer(keyVariation: KeyVariation): K3LayerId {
-            return if (MozcEngine.instance.compositionMode == ProtoCommands.CompositionMode.HIRAGANA && keyVariation == KeyVariation.NORMAL) {
-                ImeLayerIds.Kana
-            } else {
-                if (MozcEngine.instance.compositionMode == ProtoCommands.CompositionMode.HIRAGANA) {
-                    MozcEngine.instance.compositionMode = ProtoCommands.CompositionMode.FULL_ASCII
-                }
-                ImeLayerIds.Base
+        private fun getCurrentConfigSpec(): MozcKeyboardSpec {
+            val keyboardSpecification = when {
+                state.touchLayerId == ImeLayerIds.Kana && state.model.info.layout == "QWERTY" -> // TODO: make kana base layout in japanese input qwerty
+                    MozcKeyboardSpec.QWERTY_KANA
+
+                state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "QWERTY" ->
+                    MozcKeyboardSpec.QWERTY_ALPHABET
+
+                else -> MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
             }
+
+            return keyboardSpecification
         }
 
         fun handleUpdateSelection(newSelection: K3TextRange) {
@@ -409,19 +416,10 @@ class ImeController(
 
         // override this to intercept the swap mode and 'base' buttons
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
-            var layer = newTouchLayerId
+            super.switchTouchLayer(newTouchLayerId)
             // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
             if (state.model.info.indicator?.contains("mozcJa") ?: false) { // assume false if null
-                if (layer == ImeLayerIds.Kana && state.touchLayerId == ImeLayerIds.Base) {
-                    MozcEngine.instance.compositionMode = ProtoCommands.CompositionMode.HIRAGANA
-                } else if (layer == ImeLayerIds.Base && state.touchLayerId == ImeLayerIds.Kana) {
-                    MozcEngine.instance.compositionMode = ProtoCommands.CompositionMode.FULL_ASCII
-                } else if (layer == ImeLayerIds.Base && state.touchLayerId != ImeLayerIds.Kana) {
-                    // assume went from something like symbols to base/kana using key, use correct layout
-                    if (MozcEngine.instance.compositionMode == ProtoCommands.CompositionMode.HIRAGANA) {
-                        layer = ImeLayerIds.Kana
-                    }
-                }
+                MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
                     state = state.copy(
@@ -432,7 +430,6 @@ class ImeController(
                     state.editor.finishComposingMozc()
                 }
             }
-            super.switchTouchLayer(layer)
         }
 
         override fun emitDescriptor(descriptor: K3Descriptor) {

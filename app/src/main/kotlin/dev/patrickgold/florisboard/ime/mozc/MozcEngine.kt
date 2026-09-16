@@ -2,19 +2,16 @@ package dev.patrickgold.florisboard.ime.mozc
 
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.util.Log
 import com.google.android.apps.inputmethod.libs.mozc.session.MozcJni
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
-import kotlinx.coroutines.MainScope
+import dev.patrickgold.florisboard.FlorisApplication
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.ime.nlp.JapaneseWordSuggestionCandidate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCandidateWindow
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands
-import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.CompositionMode
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.KeyEvent.SpecialKey
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.SessionCommand
 import java.io.File
@@ -27,18 +24,16 @@ import java.io.IOException
 // dot166: I didn't do any of the above as I don't really use hardware keyboard and flick requires a finished k3lp
 // someone else can pick up where I left off...
 class MozcEngine {
-    private val prefs by NoBackupPreferenceStore
-    private var res: Resources? = null
     private var sessionId: Long = 0L
     private val _preedit = MutableStateFlow("")
     val preedit: StateFlow<String> = _preedit.asStateFlow()
-    private val _candidates: MutableStateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = MutableStateFlow(Pair(mutableListOf<ProtoCandidateWindow.CandidateWord>(), null))
+    private val _candidates: MutableStateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = MutableStateFlow(Pair(mutableListOf(), null))
     val candidates: StateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = _candidates.asStateFlow()
-    private var _compositionMode = CompositionMode.HIRAGANA
-    private var isInitialized: Boolean = false
+    private var _keyboardSpec = MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
+    private var florisApplication: FlorisApplication? = null
 
     private fun checkInitialized() {
-        if (!isInitialized) {
+        if (florisApplication == null) {
             throw RuntimeException("${MozcEngine::class.java.getSimpleName()} is used before initialization")
         }
     }
@@ -78,19 +73,20 @@ class MozcEngine {
             )
 
         sessionId = createResponse.output.id
-        res = ctx.resources
-        compositionMode = prefs.mozcCompositionMode.get()
-        isInitialized = true
+        val tmpApp by ctx.appContext()
+        florisApplication = tmpApp
     }
 
-    var compositionMode: CompositionMode
+    var keyboardSpec: MozcKeyboardSpec
         get() {
-            return _compositionMode
+            return _keyboardSpec
         }
         set(value) {
+            val request = getRequestBuilder(value, florisApplication!!.resources.configuration, 8) // use max latin spellcheck candidates for hardware keyboards
+            setRequest(request)
             val modeCommand: SessionCommand? = SessionCommand.newBuilder()
                 .setType(SessionCommand.CommandType.SWITCH_COMPOSITION_MODE)
-                .setCompositionMode(value)
+                .setCompositionMode(value.compositionMode)
                 .build()
 
             val modeRequest: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
@@ -103,44 +99,45 @@ class MozcEngine {
                 .build()
 
             MozcJni.evalCommand(modeRequest.toByteArray())
-            if (value == CompositionMode.HIRAGANA) {
-                val builder: ProtoCommands.Request.Builder = ProtoCommands.Request.newBuilder()
-                    .setKeyboardName(
-                        "QWERTY_KANA" + '-' + 0 + '.' + 4 + '.' + 0 + '-' + getDeviceOrientationString(
-                            res!!.configuration
-                        )
-                    )
-                    .setSpecialRomanjiTable(ProtoCommands.Request.SpecialRomanjiTable.QWERTY_MOBILE_TO_HIRAGANA)
-                    .setSpaceOnAlphanumeric(ProtoCommands.Request.SpaceOnAlphanumeric.SPACE_OR_CONVERT_KEEPING_COMPOSITION)
-                    .setKanaModifierInsensitiveConversion(false)
-                    .setCrossingEdgeBehavior(ProtoCommands.Request.CrossingEdgeBehavior.DO_NOTHING)
-                    .setMixedConversion(true)
-                    .setZeroQuerySuggestion(true)
-                    .setUpdateInputModeFromSurroundingText(false)
-                    .setAutoPartialSuggestion(true)
-                setRequest(builder)
-            } else {
-                val builder: ProtoCommands.Request.Builder = ProtoCommands.Request.newBuilder()
-                    .setKeyboardName(
-                        "QWERTY_ALPHABET" + '-' + 0 + '.' + 5 + '.' + 0 + '-' + getDeviceOrientationString(
-                            res!!.configuration
-                        )
-                    )
-                    .setSpecialRomanjiTable(ProtoCommands.Request.SpecialRomanjiTable.QWERTY_MOBILE_TO_HALFWIDTHASCII)
-                    .setSpaceOnAlphanumeric(ProtoCommands.Request.SpaceOnAlphanumeric.COMMIT)
-                    .setKanaModifierInsensitiveConversion(false)
-                    .setCrossingEdgeBehavior(ProtoCommands.Request.CrossingEdgeBehavior.DO_NOTHING)
-                    .setMixedConversion(true)
-                    .setZeroQuerySuggestion(true)
-                    .setUpdateInputModeFromSurroundingText(false)
-                    .setAutoPartialSuggestion(true)
-                setRequest(builder)
-            }
-            MainScope().launch {
-                prefs.mozcCompositionMode.set(value)
-            }
-            _compositionMode = value
+            _keyboardSpec = value
         }
+
+    private fun setHardwareKeyboardRequest(builder: ProtoCommands.Request.Builder, candidatePageSize: Int) {
+        builder.setMixedConversion(false)
+            .setZeroQuerySuggestion(false)
+            .setUpdateInputModeFromSurroundingText(true)
+            .setAutoPartialSuggestion(false)
+            .setCandidatePageSize(candidatePageSize)
+    }
+
+    fun setSoftwareKeyboardRequest(builder: ProtoCommands.Request.Builder) {
+        builder.setMixedConversion(true)
+            .setZeroQuerySuggestion(true)
+            .setUpdateInputModeFromSurroundingText(false)
+            .setAutoPartialSuggestion(true)
+    }
+
+    fun getRequestBuilder(
+        specification: MozcKeyboardSpec,
+        configuration: Configuration, candidatePageSizeForHardware: Int
+    ): ProtoCommands.Request.Builder {
+        val builder: ProtoCommands.Request.Builder = ProtoCommands.Request.newBuilder()
+            .setKeyboardName(
+                specification.specName.formattedKeyboardName(configuration)
+            )
+            .setSpecialRomanjiTable(specification.specialRomanjiTable)
+            .setSpaceOnAlphanumeric(specification.spaceOnAlphanumeric)
+            .setKanaModifierInsensitiveConversion(
+                specification.isKanaModifierInsensitiveConversion
+            )
+            .setCrossingEdgeBehavior(specification.crossingEdgeBehavior)
+        if (specification.isHardwareKeyboard) {
+            setHardwareKeyboardRequest(builder, candidatePageSizeForHardware)
+        } else {
+            setSoftwareKeyboardRequest(builder)
+        }
+        return builder
+    }
 
     fun deleteSession() {
         if (sessionId == 0L) return
@@ -174,6 +171,18 @@ class MozcEngine {
         sendKeyRequest(keyEvent)
     }
 
+    fun selectCandidate(candidate: JapaneseWordSuggestionCandidate) {
+        val submitRequest: ProtoCommands.Input = ProtoCommands.Input.newBuilder()
+            .setType(ProtoCommands.Input.CommandType.SEND_COMMAND)
+            .setCommand(
+                SessionCommand.newBuilder()
+                    .setType(SessionCommand.CommandType.SUBMIT_CANDIDATE)
+                    .setId(candidate.candidateId)
+            )
+            .build()
+        MozcJni.evalCommand(submitRequest.toByteArray())
+    }
+
     @Throws(IOException::class)
     fun resetSession() {
         deleteSession()
@@ -191,14 +200,11 @@ class MozcEngine {
             )
 
         sessionId = createResponse.output.id
-
-        compositionMode = prefs.mozcCompositionMode.get()
     }
 
     private fun setRequest(builder: ProtoCommands.Request.Builder) {
         val inputBuilder: ProtoCommands.Input.Builder = ProtoCommands.Input.newBuilder()
             .setRequest(builder)
-            .addAllTouchEvents(mutableListOf<ProtoCommands.Input.TouchEvent?>())
         val input: ProtoCommands.Input? = inputBuilder
             .setId(sessionId)
             .setType(ProtoCommands.Input.CommandType.SET_REQUEST)
@@ -264,18 +270,6 @@ class MozcEngine {
         @Throws(IOException::class)
         fun init(context: Context) {
             sInstance.initInternal(context)
-        }
-
-        @Suppress("DEPRECATION")
-        fun getDeviceOrientationString(configuration: Configuration): String {
-            when (configuration.orientation) {
-                Configuration.ORIENTATION_PORTRAIT -> return "PORTRAIT"
-                Configuration.ORIENTATION_LANDSCAPE -> return "LANDSCAPE"
-                Configuration.ORIENTATION_SQUARE -> return "SQUARE"
-                Configuration.ORIENTATION_UNDEFINED -> return "UNDEFINED"
-            }
-            // If none of above is matched to the orientation, we return "UNKNOWN".
-            return "UNKNOWN"
         }
     }
 }
