@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
@@ -73,8 +74,8 @@ enum class ExtensionImportScreenType(
         titleResId = R.string.ext__import__ext_any,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
-    EXT_KEYBOARD(
-        id = "ext-keyboard",
+    EXT_KEYBOARD3(
+        id = "ext-keyboard3",
         titleResId = R.string.ext__import__ext_keyboard,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
@@ -94,10 +95,9 @@ enum class ExtensionImportScreenType(
 fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = FlorisScreen {
     title = stringRes(type.titleResId)
 
+    val extensionController = LocalExtensionController.current
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val cacheManager by context.cacheManager()
-    val extensionManager by context.extensionManager()
 
     fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
         return when {
@@ -170,12 +170,11 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                         if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
                             continue
                         }
-                        val ext = fileInfo.ext
-                        when (type) {
-                            ExtensionImportScreenType.EXT_ANY -> {
+                        val ext = when (type) {
+                            ExtensionImportScreenType.EXT_ANY -> fileInfo.ext {
                                 ext?.let { extensionManager.import(it) }
                             }
-                            ExtensionImportScreenType.EXT_KEYBOARD -> {
+                            ExtensionImportScreenType.EXT_KEYBOARD3 -> {
                                 ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
                             }
                             ExtensionImportScreenType.EXT_THEME -> {
@@ -185,6 +184,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                                 ext.takeIf { it is LanguagePackExtension }?.let { extensionManager.import(it) }
                             }
                         }
+                        extensionController.import()
                     }
                 }.onSuccess {
                     workspace.close()

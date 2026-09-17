@@ -19,37 +19,39 @@ package dev.patrickgold.florisboard.app.ext
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.extensionManager
-import org.florisboard.lib.android.showLongToast
+import dev.patrickgold.florisboard.ime.extension.Extension
+import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
 import org.florisboard.lib.android.showLongToastSync
 
 @Composable
 fun ExtensionExportScreen(id: String) {
-    val context = LocalContext.current
-    val extensionManager by context.extensionManager()
+    val extensionController = LocalExtensionController.current
+    val extensionIndex by extensionController.activeIndex.collectAsState()
 
-    val ext = extensionManager.getExtensionById(id)
-    if (ext != null) {
-        ExportScreen(ext)
+    val extension = extensionIndex.extensions[id]
+    if (extension != null) {
+        ExportScreen(extension)
     } else {
         ExtensionNotFoundScreen(id)
     }
 }
 
 @Composable
-private fun ExportScreen(ext: Extension) = FlorisScreen {
-    title = ext.meta.title
+private fun ExportScreen(extension: Extension<*>) = FlorisScreen {
+    title = extension.manifest.meta.title
     scrollable = false
 
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val extensionManager by context.extensionManager()
+    val extensionController = LocalExtensionController.current
 
     val exportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument(),
@@ -61,7 +63,8 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
                 navController.popBackStack()
                 return@rememberLauncherForActivityResult
             }
-            runCatching { extensionManager.export(ext, uri) }.onSuccess {
+            val ref = FlorisRef.from(uri)
+            runCatching { extensionController.export(extension, ref) }.onSuccess {
                 context.showLongToastSync(R.string.ext__export__success)
             }.onFailure { error ->
                 context.showLongToastSync(R.string.ext__export__failure, "error_message" to error.localizedMessage)
@@ -71,6 +74,6 @@ private fun ExportScreen(ext: Extension) = FlorisScreen {
     )
 
     content {
-        exportLauncher.launch(ExtensionDefaults.createFlexName(ext.meta.id))
+        exportLauncher.launch(ExtensionDefaults.createFlexName(extension.manifest.meta.id))
     }
 }

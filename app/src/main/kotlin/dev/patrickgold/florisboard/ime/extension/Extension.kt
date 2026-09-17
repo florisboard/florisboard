@@ -16,10 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.extension
 
-interface ExtensionManifest {
-    val meta: ExtensionMeta
+import dev.patrickgold.florisboard.ime.io.FlorisRef
 
-    val dependencies: ExtensionDependencyDecl
+interface Extension<M : ExtensionManifest> {
+    val manifest: M
+
+    val sourceRef: FlorisRef
+
+    fun canDelete(): Boolean {
+        return sourceRef.isInternal
+    }
 }
-
-typealias ExtensionDependencyDecl = Map<String, String>

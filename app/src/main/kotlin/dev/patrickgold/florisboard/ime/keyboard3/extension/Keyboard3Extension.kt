@@ -16,23 +16,28 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.extension
 
+import dev.patrickgold.florisboard.ime.extension.Extension
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
-import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyMap
+import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyDecl
 import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
 import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-class Keyboard3Extension {
-    // TODO runtime ext impl
-
+data class Keyboard3Extension(
+    override val manifest: Manifest,
+    override val sourceRef: FlorisRef,
+) : Extension<Keyboard3Extension.Manifest> {
     companion object {
         const val SERIAL_TYPE = "ime.extension.keyboard3"
     }
 
+    @SerialName(SERIAL_TYPE)
     @Serializable
     data class Manifest(
         override val meta: ExtensionMeta,
-        override val dependencies: ExtensionDependencyMap = emptyMap(),
+        override val dependencies: ExtensionDependencyDecl = emptyMap(),
         val imports: List<ImportComponent>,
         val keyboards: List<KeyboardComponent>,
         val tests: List<TestComponent>,

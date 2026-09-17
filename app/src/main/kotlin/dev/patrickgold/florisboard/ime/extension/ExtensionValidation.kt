@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.ext
+package dev.patrickgold.florisboard.ime.extension
 
 import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.ValidationRule
 import org.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.lib.validate
 import org.florisboard.lib.snygg.value.SnyggVarValue
 
 object ExtensionValidation {
-    private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*${'$'}""".toRegex()
-    private val ComponentIdRegex = """^[a-z][a-z0-9_]*${'$'}""".toRegex()
-    private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*${'$'}""".toRegex()
+    private val MetaIdRegex = """^[a-z][a-z0-9_]*(\.[a-z0-9][a-z0-9_]*)*$""".toRegex()
+    private val ComponentIdRegex = """^[a-z][a-z0-9_]*$""".toRegex()
+    private val ThemeComponentStylesheetPathRegex = """^[^:*<>"']*$""".toRegex()
 
     val MetaId = ValidationRule<String> {
         forKlass = ExtensionMeta::class
@@ -123,7 +123,7 @@ object ExtensionValidation {
     }
 
     val ThemeComponentStylesheetPath = ValidationRule<String> {
-        forKlass = ThemeExtensionComponent::class
+        forKlass = ThemeExtension.ThemeComponent::class
         forProperty = "stylesheetPath"
         validator { str ->
             when {

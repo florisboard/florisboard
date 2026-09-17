@@ -16,10 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import dev.patrickgold.florisboard.ime.extension.Extension
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
-import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyMap
+import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
+import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyDecl
 import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
 import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
+import dev.patrickgold.florisboard.ime.io.FlorisRef
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
@@ -27,9 +30,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 import org.florisboard.lib.color.MaterialYouFlags
 
-class ThemeExtension {
-    // TODO
-
+class ThemeExtension(
+    override val manifest: Manifest,
+    override val sourceRef: FlorisRef,
+) : Extension<ThemeExtension.Manifest> {
     companion object {
         const val SERIAL_TYPE = "ime.extension.theme"
     }
@@ -38,7 +42,7 @@ class ThemeExtension {
     @Serializable
     data class Manifest(
         override val meta: ExtensionMeta,
-        override val dependencies: ExtensionDependencyMap = emptyMap(),
+        override val dependencies: ExtensionDependencyDecl = emptyMap(),
         val themes: List<ThemeComponent>,
     ) : ExtensionManifest
 
@@ -63,3 +67,13 @@ class ThemeExtension {
         }
     }
 }
+
+fun extCoreTheme(id: String) = ExtensionComponentName(
+    extensionId = "org.florisboard.themes",
+    componentId = id,
+)
+
+fun extPreviewTheme(id: String) = ExtensionComponentName(
+    extensionId = "local.themes.preview",
+    componentId = id,
+)

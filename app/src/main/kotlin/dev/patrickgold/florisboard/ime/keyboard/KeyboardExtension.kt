@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
+/*
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
@@ -95,3 +96,4 @@ inline fun extCorePopupMapping(id: String): ExtensionComponentName {
         componentId = id,
     )
 }
+ */

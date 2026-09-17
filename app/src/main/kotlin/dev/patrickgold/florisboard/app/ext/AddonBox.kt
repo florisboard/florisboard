@@ -35,8 +35,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.generateUpdateUrl
+import dev.patrickgold.florisboard.ime.extension.ExtensionIndex
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
@@ -80,7 +79,7 @@ fun ImportExtensionBox(navController: NavController) {
 }
 
 @Composable
-fun UpdateBox(extensionIndex: List<Extension>) {
+fun UpdateBox(extensionIndex: ExtensionIndex) {
     val context = LocalContext.current
     FlorisOutlinedBox(
         modifier = Modifier.defaultFlorisOutlinedBox(),

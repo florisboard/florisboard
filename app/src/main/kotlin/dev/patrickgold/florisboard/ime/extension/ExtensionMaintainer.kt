@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.ext
+package dev.patrickgold.florisboard.ime.extension
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
