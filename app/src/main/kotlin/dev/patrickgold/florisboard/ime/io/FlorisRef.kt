@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.io
+package dev.patrickgold.florisboard.ime.io
 
-import android.content.Context
 import android.net.Uri
-import androidx.annotation.VisibleForTesting
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -26,9 +24,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.io.File
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
+import org.k3lp.lib.meta.source.SourceFileRef
 
 /**
  * A universal resource reference, capable to point to destinations within
@@ -47,21 +43,16 @@ import kotlin.contracts.contract
  */
 @Serializable(with = FlorisRef.Serializer::class)
 @JvmInline
-value class FlorisRef private constructor(val uri: Uri) {
+value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
     companion object {
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val SCHEME_FLORIS = "florisboard"
 
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_APP_UI = "app-ui"
 
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_ASSETS = "assets"
 
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_CACHE = "cache"
 
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal const val AUTHORITY_INTERNAL = "internal"
 
         private const val URL_HTTP_PREFIX = "http://"
@@ -258,35 +249,6 @@ value class FlorisRef private constructor(val uri: Uri) {
         get() = !isValid
 
     /**
-     * Returns the absolute path on the device file storage for this reference,
-     * depending on the [context] and the [scheme].
-     *
-     * @param context The context used to get the absolute path for various directories.
-     *
-     * @return The absolute path of this reference.
-     */
-    fun absolutePath(context: Context): String {
-        return when {
-            isAppUi || isAssets -> relativePath
-            isCache -> "${context.cacheDir.absolutePath}/$relativePath"
-            isInternal -> "${context.filesDir.absolutePath}/$relativePath"
-            else -> uri.path ?: ""
-        }
-    }
-
-    /**
-     * Returns the absolute file on the device file storage for this reference,
-     * depending on the [context] and the [scheme].
-     *
-     * @param context The context used to get the absolute file for various directories.
-     *
-     * @return The absolute file of this reference.
-     */
-    fun absoluteFile(context: Context): File {
-        return File(absolutePath(context))
-    }
-
-    /**
      * Returns a new reference pointing to a sub directory(file with given [name].
      *
      * @param name The name of the sub file/directory.
@@ -297,44 +259,6 @@ value class FlorisRef private constructor(val uri: Uri) {
         appendEncodedPath(name)
         build()
     })
-
-    /**
-     * Allows this URI to be used depending on where this reference points to.
-     * It is guaranteed that one of the four lambda parameters is executed.
-     *
-     * @param assets The lambda to run when the reference points to the FlorisBoard
-     *  screen UI resources. Defaults to do nothing.
-     * @param assets The lambda to run when the reference points to the FlorisBoard
-     *  APK assets. Defaults to do nothing.
-     * @param cache The lambda to run when the reference points to the FlorisBoard
-     *  cache resources. Defaults to do nothing.
-     * @param internal The lambda to run when the reference points to the FlorisBoard
-     *  internal storage. Defaults to do nothing.
-     * @param external The lambda to run when the reference points to an external
-     * resource. Defaults to do nothing.
-     */
-    fun whenSchemeIs(
-        appUi: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
-        assets: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
-        cache: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
-        internal: (ref: FlorisRef) -> Unit = { /* Do nothing */ },
-        external: (ref: FlorisRef) -> Unit = { /* Do nothing */ }
-    ) {
-        contract {
-            callsInPlace(appUi, InvocationKind.AT_MOST_ONCE)
-            callsInPlace(assets, InvocationKind.AT_MOST_ONCE)
-            callsInPlace(cache, InvocationKind.AT_MOST_ONCE)
-            callsInPlace(internal, InvocationKind.AT_MOST_ONCE)
-            callsInPlace(external, InvocationKind.AT_MOST_ONCE)
-        }
-        when {
-            isAppUi -> appUi(this)
-            isAssets -> assets(this)
-            isCache -> cache(this)
-            isInternal -> internal(this)
-            else -> external(this)
-        }
-    }
 
     /**
      * Returns the encoded string representation of this URI.
