@@ -127,7 +127,7 @@
         <key id="Y-tilde" output="Ỹ" />
         <key id="Y-charon" output="Ȳ" />
         <key id="Z" output="Z" />
-        <key id="ー" output="ー"/>
+        <key id="long-vowel" output="ー"/>
 
         <!-- Lowercase keys -->
         <key id="a" output="a"
@@ -281,7 +281,7 @@
 
         <layer id="base">
             <row keys="q w e r t y u i o p" />
-            <row keys="a s d f g h j k l ー" />
+            <row keys="a s d f g h j k l long-vowel" />
             <row keys="alpha z x c v b n m bksp" />
             <row keys="symbol-1 comma extra space period enter" />
         </layer>
