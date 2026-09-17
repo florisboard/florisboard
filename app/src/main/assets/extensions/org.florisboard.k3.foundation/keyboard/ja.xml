@@ -4,8 +4,9 @@
 
     <displays>
         <display keyId="base" display="${base_display}" />
-        <display keyId="kana" display="@fl:icon/kana" />
-        <display keyId="kana-base" display="@fl:icon/kana" />
+        <display keyId="alpha" display="@fl:icon/alpha" />
+        <display keyId="alpha-base" display="@fl:icon/alpha" />
+        <display keyId="alpha-shift-base" display="${base_display}" />
         <display keyId="shift" display="${shift_display}" />
         <display keyId="symbol-1" display="${symbol_1_display}" />
         <display keyId="symbol-2" display="${symbol_2_display}" />
@@ -24,8 +25,9 @@
         <key id="symbol-1" layerId="symbol-1" width="1.5" />
         <key id="symbol-2" layerId="symbol-2" width="1.5" />
         <key id="base" layerId="base" width="1.5" />
-        <key id="kana" layerId="kana" width="1.5" />
-        <key id="kana-base" layerId="base" width="1.5" />
+        <key id="alpha" layerId="alpha" width="1.5" />
+        <key id="alpha-base" layerId="base" width="1.5" />
+        <key id="alpha-shift-base" layerId="alpha" width="1.5" />
 
         <key id="bksp" output="@k3:action/backspace" stretch="true" />
         <key id="extra" gap="true" />
@@ -279,16 +281,23 @@
 
         <layer id="base">
             <row keys="q w e r t y u i o p" />
+            <row keys="a s d f g h j k l ー" />
+            <row keys="alpha z x c v b n m bksp" />
+            <row keys="symbol-1 comma extra space period enter" />
+        </layer>
+
+        <layer id="alpha">
+            <row keys="q w e r t y u i o p" />
             <row keys="a s d f g h j k l" />
-            <row keys="kana z x c v b n m bksp" />
+            <row keys="alpha-base z x c v b n m bksp" />
             <row keys="symbol-1 comma shift extra space period enter" />
         </layer>
 
         <layer id="shift">
             <row keys="Q W E R T Y U I O P" />
             <row keys="A S D F G H J K L" />
-            <row keys="kana Z X C V B N M bksp" />
-            <row keys="symbol-1 comma base extra space period enter" />
+            <row keys="alpha-base Z X C V B N M bksp" />
+            <row keys="symbol-1 comma alpha-shift-base extra space period enter" />
         </layer>
 
         <layer id="symbol-1">
@@ -311,13 +320,6 @@
             <row keys="close-paren-numeric 7-numeric 8-numeric 9-numeric bksp-numeric" />
             <row
                 keys="base-numeric comma-numeric symbols-numeric 0-numeric equal-numeric period-numeric enter-numeric" />
-        </layer>
-
-        <layer id="kana">
-            <row keys="q w e r t y u i o p" />
-            <row keys="a s d f g h j k l ー" />
-            <row keys="kana-base z x c v b n m bksp" />
-            <row keys="symbol-1 comma extra space period enter" />
         </layer>
     </layers>
 

@@ -308,10 +308,10 @@ class ImeController(
 
         private fun getCurrentConfigSpec(): MozcKeyboardSpec {
             val keyboardSpecification = when {
-                state.touchLayerId == ImeLayerIds.Kana && state.model.info.layout == "QWERTY" -> // TODO: make kana base layout in japanese input qwerty
+                state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "QWERTY" ->
                     MozcKeyboardSpec.QWERTY_KANA
 
-                state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "QWERTY" ->
+                state.touchLayerId == ImeLayerIds.Alpha && state.model.info.layout == "QWERTY" ->
                     MozcKeyboardSpec.QWERTY_ALPHABET
 
                 else -> MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
@@ -341,7 +341,7 @@ class ImeController(
 
         override fun emitText(value: K3String) {
             // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Base || state.touchLayerId == ImeLayerIds.Kana) && state.flags.keyVariation != KeyVariation.PASSWORD) { // assume false if null
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD) { // assume false if null
                 for (key in value.toText()) {
                     if (key == ' ') {
                         // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
@@ -552,7 +552,7 @@ class ImeController(
 
         override fun emitBackspace() {
             // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Base || state.touchLayerId == ImeLayerIds.Kana) && state.flags.keyVariation != KeyVariation.PASSWORD) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.BACKSPACE)
                     sendPreedit(MozcEngine.instance.preedit.value)
@@ -567,7 +567,7 @@ class ImeController(
 
         override fun emitEnter() {
             // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Base || state.touchLayerId == ImeLayerIds.Kana) && state.flags.keyVariation != KeyVariation.PASSWORD) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
                     state = state.copy(

@@ -130,9 +130,10 @@ fun Icon3(
             }
             // TODO incognito mode???
             // TODO char width/kata/hira icons???
-            ImeIcons.Kana -> when (layerId) {
-                ImeLayerIds.Base -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
-                ImeLayerIds.Kana -> context.vectorResource(R.drawable.ic_key_ja_bi_state_hiragana)
+            ImeIcons.Alpha -> when (layerId) {
+                ImeLayerIds.Alpha -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
+                ImeLayerIds.Shift -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
+                ImeLayerIds.Base -> context.vectorResource(R.drawable.ic_key_ja_bi_state_hiragana)
                 else -> null // kana key shouldn't be in any other layouts
             }
             else -> staticIcon3(value, context)
