@@ -55,6 +55,7 @@ object ImeIcons {
     val Undo = flIcon("undo")
     val Voice = flIcon("voice")
     val Alpha = flIcon("alpha")
+    val Dakuten  = flIcon("dakuten")
 
     private fun flIcon(name: String): K3Descriptor {
         return K3Descriptor("fl", "icon", name)

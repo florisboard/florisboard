@@ -162,6 +162,7 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.ClipboardCut -> Icons.Default.ContentCut
         ImeIcons.ClipboardPaste -> Icons.Default.ContentPasteGo
         ImeIcons.Close -> Icons.Default.Close
+        ImeIcons.Dakuten -> context.vectorResource(R.drawable.dakuten)
         ImeIcons.Delete -> Icons.AutoMirrored.Default.ForwardDelete
         ImeIcons.DragMarker -> Icons.Default.Close
         ImeIcons.Enter -> Icons.AutoMirrored.Filled.KeyboardReturn

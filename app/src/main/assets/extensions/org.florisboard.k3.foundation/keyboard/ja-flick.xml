@@ -1,0 +1,380 @@
+<keyboard3 xmlns="https://schemas.unicode.org/cldr/45/keyboard3" conformsTo="45" locale="ja">
+    <version number="0.0.1" />
+    <info author="dot166" name="Japanese (Flick)" layout="Flick" indicator="mozcJa" />
+
+    <displays>
+        <display keyId="base" display="${base_display}" />
+        <display keyId="alpha" display="@fl:icon/alpha" />
+        <display keyId="alpha-base" display="@fl:icon/alpha" />
+        <display keyId="alpha-shift-base" display="${base_display}" />
+        <display keyId="shift" display="${shift_display}" />
+        <display keyId="symbol-1" display="${symbol_1_display}" />
+        <display keyId="symbol-2" display="${symbol_2_display}" />
+        <display keyId="numeric" display="${numeric_display}" />
+        <display keyId="base-numeric" display="${base_display}" />
+        <display keyId="symbols-numeric" display="${symbol_1_display}" />
+        <display keyId="space-numeric" display="@fl:icon/space_bar" />
+        <display keyId="ja-a" display="${display_ja_a}" />
+        <display keyId="ja-i" display="${display_ja_i}" />
+        <display keyId="ja-u" display="${display_ja_u}" />
+        <display keyId="ja-e" display="${display_ja_e}" />
+        <display keyId="ja-o" display="${display_ja_o}" />
+        <display keyId="ja-ka" display="${display_ja_ka}" />
+        <display keyId="ja-ki" display="${display_ja_ki}" />
+        <display keyId="ja-ku" display="${display_ja_ku}" />
+        <display keyId="ja-ke" display="${display_ja_ke}" />
+        <display keyId="ja-ko" display="${display_ja_ko}" />
+        <display keyId="ja-sa" display="${display_ja_sa}" />
+        <display keyId="ja-shi" display="${display_ja_shi}" />
+        <display keyId="ja-su" display="${display_ja_su}" />
+        <display keyId="ja-se" display="${display_ja_se}" />
+        <display keyId="ja-so" display="${display_ja_so}" />
+        <display keyId="ja-ta" display="${display_ja_ta}" />
+        <display keyId="ja-chi" display="${display_ja_chi}" />
+        <display keyId="ja-tsu" display="${display_ja_tsu}" />
+        <display keyId="ja-te" display="${display_ja_te}" />
+        <display keyId="ja-to" display="${display_ja_to}" />
+        <display keyId="ja-na" display="${display_ja_na}" />
+        <display keyId="ja-ni" display="${display_ja_ni}" />
+        <display keyId="ja-nu" display="${display_ja_nu}" />
+        <display keyId="ja-ne" display="${display_ja_ne}" />
+        <display keyId="ja-no" display="${display_ja_no}" />
+        <display keyId="ja-ha" display="${display_ja_ha}" />
+        <display keyId="ja-hi" display="${display_ja_hi}" />
+        <display keyId="ja-hu" display="${display_ja_hu}" />
+        <display keyId="ja-he" display="${display_ja_he}" />
+        <display keyId="ja-ho" display="${display_ja_ho}" />
+        <display keyId="ja-ma" display="${display_ja_ma}" />
+        <display keyId="ja-mi" display="${display_ja_mi}" />
+        <display keyId="ja-mu" display="${display_ja_mu}" />
+        <display keyId="ja-me" display="${display_ja_me}" />
+        <display keyId="ja-mo" display="${display_ja_mo}" />
+        <display keyId="ja-ya" display="${display_ja_ya}" />
+        <display keyId="ja-yu" display="${display_ja_yu}" />
+        <display keyId="ja-yo" display="${display_ja_yo}" />
+        <display keyId="ja-ra" display="${display_ja_ra}" />
+        <display keyId="ja-ri" display="${display_ja_ri}" />
+        <display keyId="ja-ru" display="${display_ja_ru}" />
+        <display keyId="ja-re" display="${display_ja_re}" />
+        <display keyId="ja-ro" display="${display_ja_ro}" />
+        <display keyId="ja-wa" display="${display_ja_wa}" />
+        <display keyId="ja-wo" display="${display_ja_wo}" />
+        <display keyId="ja-n" display="${display_ja_n}" />
+        <display keyId="ja-long-vowel" display="${display_ja_long_vowel}"/>
+        <display keyId="ja-daku" display="${display_ja_daku}"/>
+        <display keyId="ja-daku-root" display="@fl:icon/dakuten"/>
+        <display keyId="ja-hand" display="${display_ja_hand}"/>
+        <display keyId="ja-small" display="${display_ja_small}"/>
+    </displays>
+
+    <keys>
+        <import base="cldr" path="45/keys-Zyyy-punctuation.xml" />
+        <import base="cldr" path="45/keys-Zyyy-currency.xml" />
+
+        <key id="shift" layerId="shift" width="1.5" />
+        <key id="numeric" layerId="numeric" />
+        <key id="symbol-1" layerId="symbol-1" width="1.5" />
+        <key id="symbol-2" layerId="symbol-2" width="1.5" />
+        <key id="base" layerId="base" width="1.5" />
+        <key id="alpha" layerId="alpha" width="3" />
+        <key id="alpha-base" layerId="base" width="3" />
+        <key id="alpha-shift-base" layerId="alpha" width="1.5" />
+
+        <key id="bksp" output="@k3:action/backspace" width="3" />
+        <key id="extra" gap="true" width="3" />
+        <key id="enter" output="@k3:action/enter" width="3" />
+        <key id="space-no-stretch" output="\u{0020}" />
+        <key id="left-arrow" output="@fl:action/arrow_left" width="3" />
+        <key id="right-arrow" output="@fl:action/arrow_right" width="3" />
+
+        <!-- Numbers -->
+        <key id="0" output="0" />
+        <key id="1" output="1" />
+        <key id="2" output="2" />
+        <key id="3" output="3" />
+        <key id="4" output="4" />
+        <key id="5" output="5" />
+        <key id="6" output="6" />
+        <key id="7" output="7" />
+        <key id="8" output="8" />
+        <key id="9" output="9" />
+
+        <key id="ja-a" output="1" width="3" flickId="ja-a-flick" />
+        <key id="ja-i" output="_" width="3" />
+        <key id="ja-u" output=";" width="3" />
+        <key id="ja-e" output=":" width="3" />
+        <key id="ja-o" output="@" width="3" />
+        <key id="ja-ka" output="2" width="3" flickId="ja-ka-flick" />
+        <key id="ja-ki" output="a" width="3" />
+        <key id="ja-ku" output="b" width="3" />
+        <key id="ja-ke" output="c" width="3" />
+        <key id="ja-ko" output="|" width="3" />
+        <key id="ja-sa" output="3" width="3" flickId="ja-sa-flick" />
+        <key id="ja-shi" output="d" width="3" />
+        <key id="ja-su" output="e" width="3" />
+        <key id="ja-se" output="f" width="3" />
+        <key id="ja-so" output="~" width="3" />
+        <key id="ja-ta" output="4" width="3" flickId="ja-ta-flick" />
+        <key id="ja-chi" output="g" width="3" />
+        <key id="ja-tsu" output="h" width="3" />
+        <key id="ja-te" output="i" width="3" />
+        <key id="ja-to" output="$" width="3" />
+        <key id="ja-na" output="5" width="3" flickId="ja-na-flick" />
+        <key id="ja-ni" output="j" width="3" />
+        <key id="ja-nu" output="k" width="3" />
+        <key id="ja-ne" output="l" width="3" />
+        <key id="ja-no" output="%" width="3" />
+        <key id="ja-ha" output="6" width="3" flickId="ja-ha-flick" />
+        <key id="ja-hi" output="m" width="3" />
+        <key id="ja-hu" output="n" width="3" />
+        <key id="ja-he" output="o" width="3" />
+        <key id="ja-ho" output="&amp;" width="3" />
+        <key id="ja-ma" output="7" width="3" flickId="ja-ma-flick" />
+        <key id="ja-mi" output="p" width="3" />
+        <key id="ja-mu" output="q" width="3" />
+        <key id="ja-me" output="r" width="3" />
+        <key id="ja-mo" output="s" width="3" />
+        <key id="ja-ya" output="8" width="3" flickId="ja-ya-flick" />
+        <key id="ja-yu" output="u" width="3" />
+        <key id="ja-yo" output="^" width="3" />
+        <key id="ja-ra" output="9" width="3" flickId="ja-ra-flick" />
+        <key id="ja-ri" output="w" width="3" />
+        <key id="ja-ru" output="x" width="3" />
+        <key id="ja-re" output="y" width="3" />
+        <key id="ja-ro" output="z" width="3" />
+        <key id="ja-wa" output="0" width="3" flickId="ja-wa-flick" />
+        <key id="ja-wo" output="+" width="3" />
+        <key id="ja-n" output="/" width="3" />
+        <key id="ja-long-vowel" output="-" width="3" />
+        <key id="ja-daku" output="[" width="3" />
+        <key id="ja-daku-root" output="*" width="3" flickId="ja-dakuten-flick" />
+        <key id="ja-hand" output="]" width="3" />
+        <key id="ja-small" output="`" width="3" />
+
+        <!-- numeric layout keys -->
+        <key id="plus-numeric" output="+" width="1.8" longPressKeyIds="hyphen asterisk slash" />
+        <key id="open-paren-numeric" output="(" width="1.8" longPressKeyIds="open-square open-curly" />
+        <key id="close-paren-numeric" output=")" width="1.8"
+            longPressKeyIds="close-square close-curly" />
+        <key id="percent-numeric" output="%" width="1.8" />
+        <key id="space-numeric" output="\u{0020}" width="1.8" />
+        <key id="bksp-numeric" output="@k3:action/backspace" width="1.8" />
+        <key id="base-numeric" layerId="base" width="1.8" />
+        <key id="comma-numeric" output="," width="1.1" />
+        <key id="symbols-numeric" layerId="symbol-1" width="1.9" />
+        <key id="equal-numeric" output="=" width="1.9" />
+        <key id="period-numeric" output="." width="1.1" />
+        <key id="enter-numeric" output="@k3:action/enter" width="1.8" />
+        <key id="0-numeric" width="3" output="0" />
+        <key id="1-numeric" width="3" output="1" />
+        <key id="2-numeric" width="3" output="2" />
+        <key id="3-numeric" width="3" output="3" />
+        <key id="4-numeric" width="3" output="4" />
+        <key id="5-numeric" width="3" output="5" />
+        <key id="6-numeric" width="3" output="6" />
+        <key id="7-numeric" width="3" output="7" />
+        <key id="8-numeric" width="3" output="8" />
+        <key id="9-numeric" width="3" output="9" />
+    </keys>
+
+    <flicks>
+        <flick id="ja-a-flick">
+            <flickSegment directions="w" keyId="ja-i" />
+            <flickSegment directions="n" keyId="ja-u" />
+            <flickSegment directions="e" keyId="ja-e" />
+            <flickSegment directions="s" keyId="ja-o" />
+        </flick>
+        <flick id="ja-ka-flick">
+            <flickSegment directions="w" keyId="ja-ki" />
+            <flickSegment directions="n" keyId="ja-ku" />
+            <flickSegment directions="e" keyId="ja-ke" />
+            <flickSegment directions="s" keyId="ja-ko" />
+        </flick>
+        <flick id="ja-sa-flick">
+            <flickSegment directions="w" keyId="ja-shi" />
+            <flickSegment directions="n" keyId="ja-su" />
+            <flickSegment directions="e" keyId="ja-se" />
+            <flickSegment directions="s" keyId="ja-so" />
+        </flick>
+        <flick id="ja-ta-flick">
+            <flickSegment directions="w" keyId="ja-chi" />
+            <flickSegment directions="n" keyId="ja-tsu" />
+            <flickSegment directions="e" keyId="ja-te" />
+            <flickSegment directions="s" keyId="ja-to" />
+        </flick>
+        <flick id="ja-na-flick">
+            <flickSegment directions="w" keyId="ja-ni" />
+            <flickSegment directions="n" keyId="ja-nu" />
+            <flickSegment directions="e" keyId="ja-ne" />
+            <flickSegment directions="s" keyId="ja-no" />
+        </flick>
+        <flick id="ja-ha-flick">
+            <flickSegment directions="w" keyId="ja-hi" />
+            <flickSegment directions="n" keyId="ja-hu" />
+            <flickSegment directions="e" keyId="ja-he" />
+            <flickSegment directions="s" keyId="ja-ho" />
+        </flick>
+        <flick id="ja-ma-flick">
+            <flickSegment directions="w" keyId="ja-mi" />
+            <flickSegment directions="n" keyId="ja-mu" />
+            <flickSegment directions="e" keyId="ja-me" />
+            <flickSegment directions="s" keyId="ja-mo" />
+        </flick>
+        <flick id="ja-ya-flick">
+            <flickSegment directions="w" keyId="open-paren" />
+            <flickSegment directions="n" keyId="ja-yu" />
+            <flickSegment directions="e" keyId="close-paren" />
+            <flickSegment directions="s" keyId="ja-yo" />
+        </flick>
+        <flick id="ja-ra-flick">
+            <flickSegment directions="w" keyId="ja-ri" />
+            <flickSegment directions="n" keyId="ja-ru" />
+            <flickSegment directions="e" keyId="ja-re" />
+            <flickSegment directions="s" keyId="ja-ro" />
+        </flick>
+        <flick id="ja-dakuten-flick">
+            <flickSegment directions="w" keyId="ja-daku" />
+            <flickSegment directions="n" keyId="ja-small" />
+            <flickSegment directions="e" keyId="ja-hand" />
+        </flick>
+        <flick id="ja-wa-flick">
+            <flickSegment directions="w" keyId="ja-wo" />
+            <flickSegment directions="n" keyId="ja-n" />
+<!--            <flickSegment directions="e" keyId="ja-e" />-->
+<!--            <flickSegment directions="s" keyId="ja-o" />-->
+        </flick>
+<!--        <flick id="ja-a-flick">-->
+<!--            <flickSegment directions="w" keyId="ja-i" />-->
+<!--            <flickSegment directions="n" keyId="ja-u" />-->
+<!--            <flickSegment directions="e" keyId="ja-e" />-->
+<!--            <flickSegment directions="s" keyId="ja-o" />-->
+<!--        </flick>-->
+    </flicks>
+
+    <!-- physical keyboard not yet supported -->
+    <!--<layers formId="iso">
+        <layer modifiers="none">
+            <row
+                keys="caret 1 2 3 4 5 6 7 8 9 0 s-sharp acute" />
+            <row keys="q w e r t z u i o p u-umlaut plus" />
+            <row keys="a s d f g h j k l o-umlaut a-umlaut hash" />
+            <row keys="open-angle y x c v b n m comma period hyphen" />
+            <row keys="space" />
+        </layer>
+        <layer modifiers="shift">
+            <row
+                keys="degree bang double-quote section dollar percent amp slash open-paren close-paren equal question grave" />
+            <row keys="Q W E R T Z U I O P U-umlaut asterisk" />
+            <row keys="A S D F G H J K L O-umlaut A-umlaut apos" />
+            <row keys="close-angle Y X C V B N M semi-colon colon underscore" />
+            <row keys="space" />
+        </layer>
+        <layer modifiers="altR">
+            <row
+                keys="not gap gap gap gap gap not open-curly open-square close-square close-curly backslash gap" />
+            <row keys="at gap euro gap gap gap gap gap gap gap gap tilde" />
+            <row keys="gap gap gap gap gap gap gap gap gap gap gap gap" />
+            <row keys="pipe gap gap gap gap gap gap micro gap gap gap" />
+            <row keys="space" />
+        </layer>
+    </layers>-->
+
+    <layers formId="touch" minDeviceWidth="1">
+        <import base="@fl:ext/org.florisboard.k3.foundation" path="layers-touch-implied.xml" /> <!-- TODO this should be implied! -->
+
+        <layer id="base">
+            <row keys="extra ja-a ja-ka ja-sa bksp" />
+            <row keys="left-arrow ja-ta ja-na ja-ha right-arrow" />
+            <row keys="extra ja-ma ja-ya ja-ra extra" />
+            <row keys="alpha ja-daku-root ja-wa extra enter" />
+        </layer>
+
+<!--        <layer id="alpha">-->
+<!--            <row keys="q w e r t y u i o p" />-->
+<!--            <row keys="a s d f g h j k l" />-->
+<!--            <row keys="alpha-base z x c v b n m bksp" />-->
+<!--            <row keys="symbol-1 comma shift extra space period enter" />-->
+<!--        </layer>-->
+
+        <layer id="symbol-1">
+            <row keys="1 2 3 4 5 6 7 8 9 0" />
+            <row keys="at hash yen percent amp hyphen plus open-paren close-paren slash" />
+            <row keys="symbol-2 asterisk double-quote apos colon semi-colon bang question bksp" />
+            <row keys="base comma numeric space period enter" />
+        </layer>
+
+        <layer id="symbol-2">
+            <row keys="tilde grave pipe gap gap gap gap gap gap gap" />
+            <row keys="euro pound dollar cent caret degree equal open-curly close-curly backslash" />
+            <row keys="symbol-1 underscore gap gap gap gap open-square close-square bksp" />
+            <row keys="base open-angle numeric space close-angle enter" />
+        </layer>
+
+        <layer id="numeric">
+            <row keys="plus-numeric 1-numeric 2-numeric 3-numeric percent-numeric" />
+            <row keys="open-paren-numeric 4-numeric 5-numeric 6-numeric space-numeric" />
+            <row keys="close-paren-numeric 7-numeric 8-numeric 9-numeric bksp-numeric" />
+            <row
+                keys="base-numeric comma-numeric symbols-numeric 0-numeric equal-numeric period-numeric enter-numeric" />
+        </layer>
+        <layer id="numrow"/> <!-- flick cannot support numrow -->
+    </layers>
+
+    <variables>
+        <string id="base_display" value="ABC" />
+        <string id="shift_display" value="\u{21EA}" />
+        <string id="numeric_display" value="1 2&#10;3 4" />
+        <string id="symbol_1_display" value="?123" />
+        <string id="symbol_2_display" value="\u{003D 005C 003C}" />
+        <string id="display_ja_a" value="あ" />
+        <string id="display_ja_i" value="い" />
+        <string id="display_ja_u" value="う" />
+        <string id="display_ja_e" value="え" />
+        <string id="display_ja_o" value="お" />
+        <string id="display_ja_ka" value="か" />
+        <string id="display_ja_ki" value="き" />
+        <string id="display_ja_ku" value="く" />
+        <string id="display_ja_ke" value="け" />
+        <string id="display_ja_ko" value="こ" />
+        <string id="display_ja_sa" value="さ" />
+        <string id="display_ja_shi" value="し" />
+        <string id="display_ja_su" value="す" />
+        <string id="display_ja_se" value="せ" />
+        <string id="display_ja_so" value="そ" />
+        <string id="display_ja_ta" value="た" />
+        <string id="display_ja_chi" value="ち" />
+        <string id="display_ja_tsu" value="つ" />
+        <string id="display_ja_te" value="て" />
+        <string id="display_ja_to" value="と" />
+        <string id="display_ja_na" value="な" />
+        <string id="display_ja_ni" value="に" />
+        <string id="display_ja_nu" value="ぬ" />
+        <string id="display_ja_ne" value="ね" />
+        <string id="display_ja_no" value="の" />
+        <string id="display_ja_ha" value="は" />
+        <string id="display_ja_hi" value="ひ" />
+        <string id="display_ja_hu" value="ふ" />
+        <string id="display_ja_he" value="へ" />
+        <string id="display_ja_ho" value="ほ" />
+        <string id="display_ja_ma" value="ま" />
+        <string id="display_ja_mi" value="み" />
+        <string id="display_ja_mu" value="む" />
+        <string id="display_ja_me" value="め" />
+        <string id="display_ja_mo" value="も" />
+        <string id="display_ja_ya" value="や" />
+        <string id="display_ja_yu" value="ゆ" />
+        <string id="display_ja_yo" value="よ" />
+        <string id="display_ja_ra" value="ら" />
+        <string id="display_ja_ri" value="り" />
+        <string id="display_ja_ru" value="る" />
+        <string id="display_ja_re" value="れ" />
+        <string id="display_ja_ro" value="ろ" />
+        <string id="display_ja_wa" value="わ" />
+        <string id="display_ja_wo" value="を" />
+        <string id="display_ja_n" value="ん" />
+        <string id="display_ja_long_vowel" value="ー"/>
+        <string id="display_ja_daku" value="◌゙"/>
+        <string id="display_ja_hand" value="◌゚"/>
+        <string id="display_ja_small" value="あぁ"/>
+    </variables>
+</keyboard3>

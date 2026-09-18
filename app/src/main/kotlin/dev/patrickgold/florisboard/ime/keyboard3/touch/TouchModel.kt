@@ -381,7 +381,7 @@ private fun computeTouchKeyboard(
     )
 }
 
-private fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor {
+internal fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor {
     val displayByKey = model.displays.byKeyId[key.id]
     if (displayByKey != null) {
         return displayByKey.display
