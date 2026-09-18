@@ -414,6 +414,17 @@ class ImeController(
             state.editor.composeMozcInput(range, text, newSelection, newComposition)
         }
 
+        override fun switchModel(newModel: K3Model) {
+            super.switchModel(newModel)
+            // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
+            if (state.model.info.indicator?.contains("mozcJa") ?: false) {
+                if (state.flags.keyVariation != KeyVariation.NORMAL) {
+                    state = state.copy(touchLayerId = ImeLayerIds.Alpha)
+                }
+                MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
+            }
+        }
+
         // override this to intercept the swap mode and 'base' buttons
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
             super.switchTouchLayer(newTouchLayerId)
