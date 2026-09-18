@@ -308,11 +308,22 @@ class ImeController(
 
         private fun getCurrentConfigSpec(): MozcKeyboardSpec {
             val keyboardSpecification = when {
+                // just in case...
+                state.touchLayerId == ImeLayerIds.Numpad ||
+                    state.touchLayerId == ImeLayerIds.Telpad ->
+                    MozcKeyboardSpec.SYMBOL_NUMBER
+
                 state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "QWERTY" ->
                     MozcKeyboardSpec.QWERTY_KANA
 
                 state.touchLayerId == ImeLayerIds.Alpha && state.model.info.layout == "QWERTY" ->
                     MozcKeyboardSpec.QWERTY_ALPHABET
+
+                state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "Flick" ->
+                    MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
+
+                state.touchLayerId == ImeLayerIds.Alpha && state.model.info.layout == "Flick" ->
+                    MozcKeyboardSpec.TWELVE_KEY_FLICK_ALPHABET
 
                 else -> MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
             }
