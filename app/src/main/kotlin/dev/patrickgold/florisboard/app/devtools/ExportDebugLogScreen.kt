@@ -75,7 +75,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
         ) {
             FlorisButton(
                 onClick = {
-                    clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
+                    debugLog?.let { clipboardManager.addNewPlaintext(it.joinToString("\n")) }
                     context.showShortToastSync(resources.getString(R.string.devtools__debuglog__copied_to_clipboard))
                 },
                 modifier = Modifier,
@@ -84,7 +84,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
             )
             FlorisButton(
                 onClick = {
-                    clipboardManager.addNewPlaintext(formattedDebugLog!!.joinToString("\n"))
+                    formattedDebugLog?.let { clipboardManager.addNewPlaintext(it.joinToString("\n")) }
                     context.showShortToastSync(resources.getString(R.string.devtools__debuglog__copied_to_clipboard))
                 },
                 text = stringRes(R.string.devtools__debuglog__copy_for_github),
