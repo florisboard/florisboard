@@ -491,10 +491,10 @@ class ImeController(
                 // TODO once k3lp supports this remove
                 ImeActions.Delete -> emitForwardDelete()
                 // TODO evaluate use of modern cursor anchor API instead of sending raw key events
-                ImeActions.ArrowDown -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
-                ImeActions.ArrowLeft -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
-                ImeActions.ArrowRight -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
-                ImeActions.ArrowUp -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
+                ImeActions.ArrowDown -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
+                ImeActions.ArrowLeft -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
+                ImeActions.ArrowRight -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+                ImeActions.ArrowUp -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
                 // TODO clipboard manager needs a rewrite to match the new state paradigm
                 ImeActions.ClipboardCopy -> {
                     if (state.editor.info.isRichInputEditor) {
@@ -586,6 +586,26 @@ class ImeController(
                 else -> super.emitDescriptor(descriptor)
             }
             reevaluateInputShiftState()
+        }
+
+        fun sendDownUpKeyEvent(keycode: Int) {
+            when (keycode) {
+                KeyEvent.KEYCODE_DPAD_LEFT -> {
+                    if (MozcEngine.instance.preedit.value.isNotEmpty()) {
+                        MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.LEFT)
+                    } else {
+                        state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
+                    }
+                }
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    if (MozcEngine.instance.preedit.value.isNotEmpty()) {
+                        MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.RIGHT)
+                    } else {
+                        state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+                    }
+                }
+                else -> state.editor.sendDownUpKeyEvent(keycode)
+            }
         }
 
         fun commitMozcOnPanelChange() {
