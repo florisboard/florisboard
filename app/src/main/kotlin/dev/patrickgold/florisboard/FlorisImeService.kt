@@ -281,7 +281,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         FlorisImeServiceReference = WeakReference(this)
         systemLocalesFlow.value = resources.configuration.locales
 
-        WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
+        window.window?.let { WindowCompat.setDecorFitsSystemWindows(it, false) }
         windowController.onConfigurationChanged(resources.configuration)
         windowController.activeWindowConfig.collectLatestIn(lifecycleScope) {
             keyboardManager.updateActiveEvaluators() // TODO: wacky solution, but works for now
