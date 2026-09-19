@@ -72,6 +72,7 @@ import org.k3lp.runtime.K3InputMethod
 import org.k3lp.runtime.K3SurroundingText
 import org.k3lp.runtime.K3TextRange
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands
+import org.mozc.android.inputmethod.japanese.protobuf.ProtoConfig
 import java.lang.ref.WeakReference
 import kotlin.concurrent.atomics.AtomicReference
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
@@ -300,10 +301,40 @@ class ImeController(
             )
             // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
             if (state.model.info.indicator?.contains("mozcJa") ?: false) {
-                MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
+                updateConfig()
             }
             resetContent(initialSelection, initialSurrounding)
             expectedContentQueue.clear()
+        }
+
+        fun updateConfig() {
+            val conf = ProtoConfig.Config.newBuilder().apply {
+                sessionKeymap = ProtoConfig.Config.SessionKeymap.MOBILE
+                selectionShortcut = ProtoConfig.Config.SelectionShortcut.NO_SHORTCUT
+                useEmojiConversion = true
+                spaceCharacterForm = ProtoConfig.Config.FundamentalCharacterForm.FUNDAMENTAL_INPUT_MODE
+                useKanaModifierInsensitiveConversion = true
+                useTypingCorrection = true
+                yenSignCharacter = ProtoConfig.Config.YenSignCharacter.YEN_SIGN
+                historyLearningLevel = when {
+                    state.flags.isIncognitoMode ->
+                        ProtoConfig.Config.HistoryLearningLevel.READ_ONLY
+
+                    //BuildConfig.DEBUG ->
+                    //    ProtoConfig.Config.HistoryLearningLevel.READ_ONLY
+
+                    else ->
+                        ProtoConfig.Config.HistoryLearningLevel.DEFAULT_HISTORY
+                }
+                incognitoMode = false
+                generalConfig = ProtoConfig.GeneralConfig.newBuilder().apply {
+                    uploadUsageStats = false
+                }.build()
+            }.build()
+
+            MozcEngine.instance.applyConfig(conf)
+
+            MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
         }
 
         private fun getCurrentConfigSpec(): MozcKeyboardSpec {
@@ -432,7 +463,7 @@ class ImeController(
                 if (state.flags.keyVariation != KeyVariation.NORMAL) {
                     state = state.copy(touchLayerId = ImeLayerIds.Alpha)
                 }
-                MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
+                updateConfig()
             }
         }
 
@@ -441,7 +472,7 @@ class ImeController(
             super.switchTouchLayer(newTouchLayerId)
             // TODO: find a better way of determining language, probably when the rest of the infra comes with the final impl of k3lp
             if (state.model.info.indicator?.contains("mozcJa") ?: false) { // assume false if null
-                MozcEngine.instance.keyboardSpec = getCurrentConfigSpec()
+                updateConfig()
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
                     state = state.copy(

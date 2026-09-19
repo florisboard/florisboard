@@ -14,6 +14,7 @@ import org.mozc.android.inputmethod.japanese.protobuf.ProtoCandidateWindow
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.KeyEvent.SpecialKey
 import org.mozc.android.inputmethod.japanese.protobuf.ProtoCommands.SessionCommand
+import org.mozc.android.inputmethod.japanese.protobuf.ProtoConfig
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -181,6 +182,14 @@ class MozcEngine {
             )
             .build()
         MozcJni.evalCommand(submitRequest.toByteArray())
+    }
+
+    fun applyConfig(conf: ProtoConfig.Config) {
+        val configRequest: ProtoCommands.Input = ProtoCommands.Input.newBuilder()
+            .setType(ProtoCommands.Input.CommandType.SET_CONFIG)
+            .setConfig(conf)
+            .build()
+        MozcJni.evalCommand(configRequest.toByteArray())
     }
 
     @Throws(IOException::class)
