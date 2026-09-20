@@ -61,6 +61,7 @@
         <display keyId="ja-wo" display="${display_ja_wo}" />
         <display keyId="ja-n" display="${display_ja_n}" />
         <display keyId="ja-long-vowel" display="${display_ja_long_vowel}"/>
+        <display keyId="ja-tilde" display="${display_ja_tilde}"/>
         <display keyId="ja-daku" display="${display_ja_daku}"/>
         <display keyId="ja-daku-root" display="@fl:icon/dakuten"/>
         <display keyId="ja-hand" display="${display_ja_hand}"/>
@@ -128,7 +129,7 @@
         <key id="ja-hi" output="m" width="3" />
         <key id="ja-hu" output="n" width="3" />
         <key id="ja-he" output="o" width="3" />
-        <key id="ja-ho" output="&amp;" width="3" />
+        <key id="ja-ho" output="\u{0026}" width="3" />
         <key id="ja-ma" output="7" width="3" flickId="ja-ma-flick" />
         <key id="ja-mi" output="p" width="3" />
         <key id="ja-mu" output="q" width="3" />
@@ -146,6 +147,7 @@
         <key id="ja-wo" output="+" width="3" />
         <key id="ja-n" output="/" width="3" />
         <key id="ja-long-vowel" output="-" width="3" />
+        <key id="ja-tilde" output="\u{003C}" width="3" />
         <key id="ja-daku" output="[" width="3" />
         <key id="ja-daku-root" output="*" width="3" flickId="ja-dakuten-flick" />
         <key id="ja-hand" output="]" width="3" />
@@ -240,8 +242,8 @@
         <flick id="ja-wa-flick">
             <flickSegment directions="w" keyId="ja-wo" />
             <flickSegment directions="n" keyId="ja-n" />
-<!--            <flickSegment directions="e" keyId="ja-e" />-->
-<!--            <flickSegment directions="s" keyId="ja-o" />-->
+            <flickSegment directions="e" keyId="ja-long-vowel" />
+            <flickSegment directions="s" keyId="ja-tilde" />
         </flick>
 <!--        <flick id="ja-a-flick">-->
 <!--            <flickSegment directions="w" keyId="ja-i" />-->
@@ -373,6 +375,7 @@
         <string id="display_ja_wo" value="を" />
         <string id="display_ja_n" value="ん" />
         <string id="display_ja_long_vowel" value="ー"/>
+        <string id="display_ja_tilde" value="~"/>
         <string id="display_ja_daku" value="◌゙"/>
         <string id="display_ja_hand" value="◌゚"/>
         <string id="display_ja_small" value="あぁ"/>
