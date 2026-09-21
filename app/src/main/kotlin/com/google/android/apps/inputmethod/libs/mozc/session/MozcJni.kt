@@ -29,6 +29,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// note to upstream, this file has to be under the Google package name, as mozc expects it, see https://github.com/google/mozc/blob/master/src/android/jni/mozcjni.cc
+
 package com.google.android.apps.inputmethod.libs.mozc.session
 
 object MozcJni {
