@@ -18,6 +18,7 @@ coil = "3.4.0"
 k3lp = "0.0.1"
 kotlin = "2.4.20"
 kotlinx-coroutines = "1.11.0"
+kotlinx-io = "0.9.1"
 kotlinx-serialization-json = "1.11.0"
 ksp = "2.3.11"
 material-kolor = "4.1.1"
@@ -64,6 +65,7 @@ coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
 k3lp-core = { module = "org.k3lp:k3lp-core", version.ref = "k3lp" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 material-kolor = { module = "com.materialkolor:material-kolor-android", version.ref = "material-kolor" }
 mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }

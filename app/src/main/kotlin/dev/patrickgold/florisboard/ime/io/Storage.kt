@@ -16,66 +16,39 @@
 
 package dev.patrickgold.florisboard.ime.io
 
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.StringFormat
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import kotlinx.io.RawSink
+import kotlinx.io.RawSource
 
+/**
+ * An interface providing basic operations on an underlying storage medium.
+ *
+ * This API is designed to closely follow [kotlinx.io.files.FileSystem].
+ */
 interface Storage {
     fun canAccessUnderlyingMedium(ref: FlorisRef): Boolean
 
-    fun resolveAbsolutePath(ref: FlorisRef): String
+    fun delete(ref: FlorisRef, mustExist: Boolean = true)
 
-    fun resolveCanonicalPath(ref: FlorisRef): String
+    fun deleteContents(ref: FlorisRef) {
+        list(ref).forEach { deleteRecursively(it) }
+    }
 
-    fun basename(ref: FlorisRef): String
+    fun deleteRecursively(ref: FlorisRef) {
+        list(ref).forEach { deleteRecursively(it) }
+        delete(ref)
+    }
 
     fun exists(ref: FlorisRef): Boolean
 
     fun list(ref: FlorisRef): List<FlorisRef>
 
-    fun readText(ref: FlorisRef): String
+    fun mkdirs(ref: FlorisRef)
 
-    fun writeText(ref: FlorisRef, text: String)
+    fun nameOf(ref: FlorisRef): String
 
-    fun copy(srcRef: FlorisRef, dstRef: FlorisRef)
+    fun source(ref: FlorisRef): RawSource
 
-    fun delete(ref: FlorisRef, mustExist: Boolean = true)
-}
+    fun sink(ref: FlorisRef): RawSink
 
-fun <T> Storage.readJson(
-    ref: FlorisRef,
-    serializer: KSerializer<T>,
-    config: StringFormat = Json,
-): T {
-    val jsonStr = readText(ref)
-    return config.decodeFromString(serializer, jsonStr)
-}
-
-inline fun <reified T> Storage.readJson(
-    ref: FlorisRef,
-    config: StringFormat = Json,
-): T {
-    val jsonStr = readText(ref)
-    return config.decodeFromString(jsonStr)
-}
-
-fun <T> Storage.writeJson(
-    ref: FlorisRef,
-    value: T,
-    serializer: KSerializer<T>,
-    config: StringFormat = Json,
-) {
-    val jsonStr = config.encodeToString(serializer, value)
-    writeText(ref, jsonStr)
-}
-
-inline fun <reified T> Storage.writeJson(
-    ref: FlorisRef,
-    value: T,
-    config: StringFormat = Json,
-) {
-    val jsonStr = config.encodeToString(value)
-    writeText(ref, jsonStr)
+    companion object
 }

@@ -133,7 +133,7 @@ class ExtensionController(
             for (extRef in extRefList) {
                 val extId =
                     try {
-                        storage.basename(extRef)
+                        storage.nameOf(extRef)
                     } catch (e: Throwable) {
                         reports.add(
                             ExtensionIndexViolation.UnexpectedError(

@@ -47,7 +47,6 @@ import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
@@ -79,7 +78,6 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by FlorisPreferenceStore
     private val appContext by appContext()
-    private val cacheManager by cacheManager()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
