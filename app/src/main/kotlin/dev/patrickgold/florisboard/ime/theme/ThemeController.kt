@@ -40,6 +40,7 @@ import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.value.SnyggStaticColorValue
 import java.time.LocalTime
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Provides the [ThemeController] instance this composition tree is associated with.
@@ -77,8 +78,9 @@ class ThemeController(
 
     private val effectiveLocalTime = flow {
         while (true) {
-            emit(LocalTime.now())
-            delay(1.minutes)
+            val now = LocalTime.now()
+            emit(now)
+            delay(1.minutes - now.second.seconds)
         }
     }
 

@@ -93,14 +93,6 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
-        storageController = AndroidStorageController(this)
-        extensionController = ExtensionController(storageController)
-        imeController = ImeController()
-        themeController = ThemeController(
-            storageController,
-            extensionController,
-            initialSystemThemeMode = resources.configuration.determineSystemThemeMode(),
-        )
 
         try {
             Flog.install(
@@ -111,6 +103,16 @@ class FlorisApplication : Application() {
                 flogOutputs = Flog.OUTPUT_CONSOLE,
             )
             CrashUtility.install(this)
+
+            storageController = AndroidStorageController(this)
+            extensionController = ExtensionController(storageController)
+            imeController = ImeController()
+            themeController = ThemeController(
+                storageController,
+                extensionController,
+                initialSystemThemeMode = resources.configuration.determineSystemThemeMode(),
+            )
+
             FlorisEmojiCompat.init(this)
             flogError { "dummy result: ${dummyAdd(3,4)}" }
 

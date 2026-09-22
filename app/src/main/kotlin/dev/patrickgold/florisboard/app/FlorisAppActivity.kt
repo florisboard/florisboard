@@ -46,10 +46,12 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
 import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readFromUri
+import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
@@ -174,16 +176,20 @@ class FlorisAppActivity : ComponentActivity() {
 
     @Composable
     private fun AppContent() {
+        val extensionController = appContext.extensionController
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
         val storageController = appContext.storageController
+        val themeController = appContext.themeController
 
         val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
+            LocalExtensionController provides extensionController,
             LocalNavController provides navController,
             LocalPreviewFieldController provides previewFieldController,
             LocalStorageController provides storageController,
+            LocalThemeController provides themeController,
         ) {
             ProvideDefaultDialogPrefStrings(
                 confirmLabel = stringRes(R.string.action__ok),
