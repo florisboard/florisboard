@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.lib.io
+package dev.patrickgold.florisboard.ime.io
 
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import org.florisboard.lib.kotlin.io.FsFile
 
 object FileRegistry {
@@ -52,7 +51,7 @@ object FileRegistry {
         }
     }
 
-    fun matchesFileFilter(fileInfo: CacheManager.FileInfo, filter: List<Entry>): Boolean {
+    /*fun matchesFileFilter(fileInfo: CacheManager.FileInfo, filter: List<Entry>): Boolean {
         val fileExt = fileInfo.file.extension
         filter.forEach {
             if (it.fileExt == fileExt ||
@@ -63,7 +62,7 @@ object FileRegistry {
             }
         }
         return false
-    }
+    }*/
 
     data class Entry(
         val type: Type,

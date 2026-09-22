@@ -35,11 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
@@ -62,6 +58,7 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     })
     previewFieldVisible = true
 
+    /*
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
@@ -143,4 +140,5 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
             }
         }
     }
+    */
 }

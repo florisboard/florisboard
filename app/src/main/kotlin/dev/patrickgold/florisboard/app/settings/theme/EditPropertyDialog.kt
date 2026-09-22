@@ -76,9 +76,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ext.FONTS
 import dev.patrickgold.florisboard.app.ext.IMAGES
 import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
@@ -181,6 +179,7 @@ private enum class PaddingValue {
     }
 }
 
+/*
 @Composable
 internal fun EditPropertyDialog(
     initProperty: PropertyInfo,
@@ -1256,3 +1255,4 @@ private fun ShapeValueEditor(
         }
     }
 }
+*/

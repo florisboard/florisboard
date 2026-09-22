@@ -20,7 +20,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.FileObserver
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode

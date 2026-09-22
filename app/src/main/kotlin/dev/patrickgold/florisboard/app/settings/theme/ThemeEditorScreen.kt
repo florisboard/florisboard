@@ -78,19 +78,12 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.apptheme.Shapes
 import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
@@ -140,6 +133,7 @@ private enum class StylesheetLoadingStrategy {
     TRY_LOAD_OR_PARSE_LENIENT; // user chose to auto-fix errors
 }
 
+/*
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ThemeEditorScreen(
@@ -857,6 +851,7 @@ private fun SnyggRuleRow(
         )
     }
 }
+*/
 
 @Composable
 internal fun DialogProperty(

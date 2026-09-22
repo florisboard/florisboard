@@ -66,8 +66,8 @@ class ImeRootView(val ims: FlorisImeService) : AbstractComposeView(ims) {
         val interactionController = rememberAndroidInteractionController(prefs)
 
         CompositionLocalProvider(
-            LocalInteractionController provides interactionController,
             LocalImeController provides ims.imeController,
+            LocalInteractionController provides interactionController,
             LocalStorageController provides ims.storageController,
             LocalThemeController provides ims.themeController,
             LocalWindowController provides ims.windowController,

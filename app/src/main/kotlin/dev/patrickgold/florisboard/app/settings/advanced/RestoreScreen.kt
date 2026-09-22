@@ -46,15 +46,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.cacheManager
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
 import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
@@ -86,7 +82,7 @@ object Restore {
 }
 
 @Composable
-fun RestoreScreen() = FlorisScreen {
+fun RestoreScreen() {} /*= FlorisScreen {
     title = stringRes(R.string.backup_and_restore__restore__title)
     previewFieldVisible = false
 
@@ -289,7 +285,7 @@ fun RestoreScreen() = FlorisScreen {
         FlorisOutlinedButton(
             onClick = {
                 runCatching {
-                    restoreDataFromFileSystemLauncher.launch("*/*")
+                    restoreDataFromFileSystemLauncher.launch("* / *")
                 }.onFailure { error ->
                     context.showLongToastSync(
                         R.string.backup_and_restore__restore__failure,
@@ -375,4 +371,4 @@ fun RestoreScreen() = FlorisScreen {
             }
         }
     }
-}
+}*/

@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
-import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -26,7 +25,7 @@ import kotlinx.serialization.modules.plus
 import kotlinx.serialization.modules.polymorphic
 import kotlin.contracts.contract
 
-val QuickActionJsonConfig = Json(DefaultJsonConfig) {
+val QuickActionJsonConfig = Json {
     classDiscriminator = "$"
     encodeDefaults = false
     ignoreUnknownKeys = true

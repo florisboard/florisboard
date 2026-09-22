@@ -27,6 +27,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
+/*
 object ZipUtils {
     fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String) = runCatching<String> {
         when {
@@ -173,3 +174,4 @@ object ZipUtils {
         }
     }
 }
+ */

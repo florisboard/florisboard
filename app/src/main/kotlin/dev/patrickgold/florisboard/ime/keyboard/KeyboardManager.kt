@@ -27,33 +27,24 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.OperationUnit
 import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.PunctuationRule
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
-import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.showLongToastSync
-import org.florisboard.lib.kotlin.collectIn
 import java.lang.ref.WeakReference
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
@@ -63,13 +54,11 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val appContext by context.appContext()
     private val clipboardManager by context.clipboardManager()
     private val editorInstance by context.editorInstance()
-    private val extensionManager by context.extensionManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    val resources = KeyboardManagerResources()
     var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
     private var lastToastReference = WeakReference<Toast>(null)
 
@@ -767,69 +756,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 return true
             }
             else -> return false
-        }
-    }
-
-    inner class KeyboardManagerResources {
-        val composers = MutableStateFlow<Map<ExtensionComponentName, Composer>>(emptyMap())
-        val currencySets = MutableStateFlow<Map<ExtensionComponentName, CurrencySet>>(emptyMap())
-        val layouts = MutableStateFlow<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>(emptyMap())
-        val popupMappings = MutableStateFlow<Map<ExtensionComponentName, PopupMappingComponent>>(emptyMap())
-        val punctuationRules = MutableStateFlow<Map<ExtensionComponentName, PunctuationRule>>(emptyMap())
-        val subtypePresets = MutableStateFlow<List<SubtypePreset>>(emptyList())
-
-        val anyChangedVersion = MutableStateFlow(0)
-
-        init {
-            extensionManager.keyboardExtensions.collectIn(scope) { keyboardExtensions ->
-                parseKeyboardExtensions(keyboardExtensions)
-            }
-        }
-
-        private fun parseKeyboardExtensions(keyboardExtensions: List<KeyboardExtension>) {
-            val localComposers = mutableMapOf<ExtensionComponentName, Composer>()
-            val localCurrencySets = mutableMapOf<ExtensionComponentName, CurrencySet>()
-            val localLayouts = mutableMapOf<LayoutType, MutableMap<ExtensionComponentName, LayoutArrangementComponent>>()
-            val localPopupMappings = mutableMapOf<ExtensionComponentName, PopupMappingComponent>()
-            val localPunctuationRules = mutableMapOf<ExtensionComponentName, PunctuationRule>()
-            val localSubtypePresets = mutableListOf<SubtypePreset>()
-            for (layoutType in LayoutType.entries) {
-                localLayouts[layoutType] = mutableMapOf()
-            }
-            for (keyboardExtension in keyboardExtensions) {
-                keyboardExtension.composers.forEach { composer ->
-                    localComposers[ExtensionComponentName(keyboardExtension.meta.id, composer.id)] = composer
-                }
-                keyboardExtension.currencySets.forEach { currencySet ->
-                    localCurrencySets[ExtensionComponentName(keyboardExtension.meta.id, currencySet.id)] = currencySet
-                }
-                keyboardExtension.layouts.forEach { (type, layoutComponents) ->
-                    for (layoutComponent in layoutComponents) {
-                        localLayouts[LayoutType.entries.first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
-                    }
-                }
-                keyboardExtension.popupMappings.forEach { popupMapping ->
-                    localPopupMappings[ExtensionComponentName(keyboardExtension.meta.id, popupMapping.id)] = popupMapping
-                }
-                keyboardExtension.punctuationRules.forEach { punctuationRule ->
-                    localPunctuationRules[ExtensionComponentName(keyboardExtension.meta.id, punctuationRule.id)] = punctuationRule
-                }
-                localSubtypePresets.addAll(keyboardExtension.subtypePresets)
-            }
-            localSubtypePresets.sortBy { it.locale.displayName() }
-            for (languageCode in listOf("en-CA", "en-AU", "en-UK", "en-US")) {
-                val index: Int = localSubtypePresets.indexOfFirst { it.locale.languageTag() == languageCode }
-                if (index > 0) {
-                    localSubtypePresets.add(0, localSubtypePresets.removeAt(index))
-                }
-            }
-            subtypePresets.value = localSubtypePresets
-            composers.value = localComposers
-            currencySets.value = localCurrencySets
-            layouts.value = localLayouts
-            popupMappings.value = localPopupMappings
-            punctuationRules.value = localPunctuationRules
-            anyChangedVersion.update { it + 1 }
         }
     }
 }
