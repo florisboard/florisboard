@@ -64,11 +64,6 @@ abstract class FileStorage(
         fs.createDirectories(path)
     }
 
-    final override fun nameOf(ref: FlorisRef): String {
-        val path = resolveCanonicalPath(ref)
-        return path.name
-    }
-
     override fun source(ref: FlorisRef): RawSource {
         val path = resolveCanonicalPath(ref)
         return fs.source(path)

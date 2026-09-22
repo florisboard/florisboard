@@ -47,7 +47,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -83,6 +82,7 @@ val MIME_TYPES = mapOf(
     ),
 )
 
+/*
 @Composable
 fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
     title = stringRes(R.string.ext__editor__files__title)
@@ -234,7 +234,7 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
             files = fontFiles,
         ) {
             currentImportDest = FONTS
-            importLauncher.launch("*/*")
+            importLauncher.launch("* /*")
         }
 
         FileList(
@@ -290,3 +290,4 @@ fun ExtensionEditFilesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = Fl
         }
     }
 }
+ */

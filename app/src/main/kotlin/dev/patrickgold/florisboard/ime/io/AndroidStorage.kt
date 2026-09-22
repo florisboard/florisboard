@@ -27,7 +27,7 @@ class AndroidStorage(
     val context: Context,
     val isUserUnlocked: Boolean,
 ) : StorageMultiplexer() {
-    private val assetsStorage = object : Storage {
+    val assetsStorage = object : Storage {
         override fun canAccessUnderlyingMedium(ref: FlorisRef): Boolean {
             return ref.isAssets
         }
@@ -58,11 +58,6 @@ class AndroidStorage(
             throw UnsupportedOperationException("Cannot mkdirs within assets ($ref)")
         }
 
-        override fun nameOf(ref: FlorisRef): String {
-            val slashIndex = ref.relativePath.lastIndexOf('/')
-            return ref.relativePath.substring(slashIndex + 1)
-        }
-
         override fun source(ref: FlorisRef): RawSource {
             return context.assets.open(ref.relativePath).asSource()
         }
@@ -72,7 +67,7 @@ class AndroidStorage(
         }
     }
 
-    private val cacheStorage = object : FileStorage() {
+    val cacheStorage = object : FileStorage() {
         override fun getBasePath(): Path {
             return Path(context.noBackupFilesDir.path, "cache")
         }
@@ -82,7 +77,7 @@ class AndroidStorage(
         }
     }
 
-    private val internalStorage = object : FileStorage() {
+    val internalStorage = object : FileStorage() {
         override fun getBasePath(): Path {
             return Path(context.filesDir.path)
         }

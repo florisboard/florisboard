@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.os.Handler
 import android.util.Log
 import androidx.core.os.UserManagerCompat
@@ -38,7 +39,8 @@ import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.SystemThemeMode
+import dev.patrickgold.florisboard.ime.theme.ThemeController
 import dev.patrickgold.florisboard.lib.crashutility.CrashUtility
 import dev.patrickgold.florisboard.lib.devtools.Flog
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
@@ -79,6 +81,7 @@ class FlorisApplication : Application() {
     val storageController = AndroidStorageController(this)
     val extensionController = ExtensionController(storageController)
     val imeController = ImeController()
+    val themeController = ThemeController(storageController, extensionController)
 
     val clipboardManager = lazy { ClipboardManager(this) }
     val editorInstance = lazy { EditorInstance(this) }
@@ -86,11 +89,11 @@ class FlorisApplication : Application() {
     val keyboardManager = lazy { KeyboardManager(this) }
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
-    val themeManager = lazy { ThemeManager(this) }
 
     override fun onCreate() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
+        themeController.activeSystemThemeMode.value = resources.configuration.determineSystemThemeMode()
         try {
             Flog.install(
                 context = this,
@@ -116,6 +119,11 @@ class FlorisApplication : Application() {
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        themeController.activeSystemThemeMode.value = newConfig.determineSystemThemeMode()
+    }
+
     fun init() {
         cacheDir?.deleteContentsRecursively()
         scope.launch {
@@ -128,6 +136,14 @@ class FlorisApplication : Application() {
         }
         clipboardManager.value.initializeForContext(this)
         DictionaryManager.init(this)
+    }
+
+    private fun Configuration.determineSystemThemeMode(): SystemThemeMode {
+        return when (uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> SystemThemeMode.NIGHT
+            Configuration.UI_MODE_NIGHT_NO -> SystemThemeMode.DAY
+            else -> SystemThemeMode.UNKNOWN
+        }
     }
 
     private inner class BootComplete : BroadcastReceiver() {
@@ -172,5 +188,3 @@ fun Context.keyboardManager() = this.inferFlorisApplication().keyboardManager
 fun Context.nlpManager() = this.inferFlorisApplication().nlpManager
 
 fun Context.subtypeManager() = this.inferFlorisApplication().subtypeManager
-
-fun Context.themeManager() = this.inferFlorisApplication().themeManager

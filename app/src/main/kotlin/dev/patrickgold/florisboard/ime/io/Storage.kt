@@ -44,8 +44,6 @@ interface Storage {
 
     fun mkdirs(ref: FlorisRef)
 
-    fun nameOf(ref: FlorisRef): String
-
     fun source(ref: FlorisRef): RawSource
 
     fun sink(ref: FlorisRef): RawSink

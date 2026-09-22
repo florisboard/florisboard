@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2026 The FlorisBoard Contributors
+ * Copyright (C) 2020-2025 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.io
-
-import androidx.compose.runtime.staticCompositionLocalOf
-import kotlinx.coroutines.flow.StateFlow
+package dev.patrickgold.florisboard.ime.theme
 
 /**
- * Provides the [StorageController] instance this composition tree is associated with.
+ * Enum class which specifies all theme modes available. Used in the Settings
+ * to properly manage different use cases when the day or night theme should
+ * be active.
  */
-val LocalStorageController = staticCompositionLocalOf<StorageController> {
-    error("No storage controller is associated with this composition tree.")
-}
-
-interface StorageController {
-    val activeStorage: StateFlow<Storage>
+enum class PreferredThemeMode {
+    ALWAYS_DAY,
+    ALWAYS_NIGHT,
+    FOLLOW_SYSTEM,
+    FOLLOW_TIME;
 }

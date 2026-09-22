@@ -52,34 +52,13 @@ import dev.patrickgold.florisboard.app.settings.advanced.RadioListItem
 import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
 import dev.patrickgold.florisboard.app.settings.theme.PrettyPrintConfig
 import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
-import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
+import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentEditor
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponentImpl
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionEditor
 import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.lib.ext.ExtensionDefaults
-import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
-import dev.patrickgold.florisboard.lib.ext.ExtensionJsonConfig
-import dev.patrickgold.florisboard.lib.ext.ExtensionMaintainer
-import dev.patrickgold.florisboard.lib.ext.ExtensionManager
-import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
-import dev.patrickgold.florisboard.lib.ext.validate
-import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.io.ZipUtils
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
@@ -119,6 +98,7 @@ sealed class EditorAction {
 
 @Composable
 fun ExtensionEditScreen(id: String, createSerialType: String?) {
+    /*
     val context = LocalContext.current
     val cacheManager by context.cacheManager()
     val extensionManager by context.extensionManager()
@@ -178,8 +158,10 @@ fun ExtensionEditScreen(id: String, createSerialType: String?) {
     } else {
         ExtensionNotFoundScreen(id)
     }
+     */
 }
 
+/*
 @Composable
 private fun ExtensionEditScreenSheetSwitcher(
     workspace: CacheManager.ExtEditorWorkspace<*>,
@@ -879,3 +861,4 @@ private fun EditorSheetTextField(
         Validation(showValidationError, validationResult)
     }
 }
+ */

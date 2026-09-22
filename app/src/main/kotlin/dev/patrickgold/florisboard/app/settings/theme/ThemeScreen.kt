@@ -35,7 +35,7 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.app.ext.AddonManagementReferenceBox
 import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.themeManager
@@ -72,13 +72,13 @@ fun ThemeScreen() = FlorisScreen {
             prefs.theme.mode,
             icon = Icons.Default.BrightnessAuto,
             title = stringRes(R.string.pref__theme__mode__label),
-            entries = enumDisplayEntriesOf(ThemeMode::class),
+            entries = enumDisplayEntriesOf(PreferredThemeMode::class),
         )
         Preference(
             icon = Icons.Default.LightMode,
             title = stringRes(R.string.pref__theme__day),
             summary = themeManager.getThemeLabel(dayThemeId),
-            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_NIGHT },
+            enabledIf = { prefs.theme.mode isNotEqualTo PreferredThemeMode.ALWAYS_NIGHT },
             onClick = {
                 navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_DAY))
             },
@@ -87,7 +87,7 @@ fun ThemeScreen() = FlorisScreen {
             icon = Icons.Default.DarkMode,
             title = stringRes(R.string.pref__theme__night),
             summary = themeManager.getThemeLabel(nightThemeId),
-            enabledIf = { prefs.theme.mode isNotEqualTo ThemeMode.ALWAYS_DAY },
+            enabledIf = { prefs.theme.mode isNotEqualTo PreferredThemeMode.ALWAYS_DAY },
             onClick = {
                 navController.navigate(Routes.Settings.ThemeManager(ThemeManagerScreenAction.SELECT_NIGHT))
             },
@@ -96,13 +96,13 @@ fun ThemeScreen() = FlorisScreen {
             pref = prefs.theme.sunriseTime,
             title = stringRes(R.string.pref__theme__sunrise_time__label),
             icon = Icons.Default.WbTwilight,
-            enabledIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+            enabledIf = { prefs.theme.mode isEqualTo PreferredThemeMode.FOLLOW_TIME },
         )
         LocalTimePickerPreference(
             pref = prefs.theme.sunsetTime,
             title = stringRes(R.string.pref__theme__sunset_time__label),
             icon = Icons.Default.Brightness2,
-            enabledIf = { prefs.theme.mode isEqualTo ThemeMode.FOLLOW_TIME },
+            enabledIf = { prefs.theme.mode isEqualTo PreferredThemeMode.FOLLOW_TIME },
         )
         ColorPickerPreference(
             pref = prefs.theme.accentColor,

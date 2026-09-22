@@ -131,18 +131,7 @@ class ExtensionController(
                     return
                 }
             for (extRef in extRefList) {
-                val extId =
-                    try {
-                        storage.nameOf(extRef)
-                    } catch (e: Throwable) {
-                        reports.add(
-                            ExtensionIndexViolation.UnexpectedError(
-                                cause = e,
-                                sourceRange = extRef.asSourceRange(),
-                            )
-                        )
-                        return
-                    }
+                val extId = extRef.pathName
                 val manifestRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
                 val manifest =
                     try {

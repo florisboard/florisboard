@@ -38,7 +38,7 @@ import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
@@ -618,22 +618,22 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    ThemeMode::class to DEFAULT to {
+    PreferredThemeMode::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = ThemeMode.ALWAYS_DAY,
+                key = PreferredThemeMode.ALWAYS_DAY,
                 label = stringRes(R.string.enum__theme_mode__always_day),
             )
             entry(
-                key = ThemeMode.ALWAYS_NIGHT,
+                key = PreferredThemeMode.ALWAYS_NIGHT,
                 label = stringRes(R.string.enum__theme_mode__always_night),
             )
             entry(
-                key = ThemeMode.FOLLOW_SYSTEM,
+                key = PreferredThemeMode.FOLLOW_SYSTEM,
                 label = stringRes(R.string.enum__theme_mode__follow_system),
             )
             entry(
-                key = ThemeMode.FOLLOW_TIME,
+                key = PreferredThemeMode.FOLLOW_TIME,
                 label = stringRes(R.string.enum__theme_mode__follow_time),
             )
         }

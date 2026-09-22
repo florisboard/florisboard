@@ -44,14 +44,10 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.io.FileRegistry
 import org.florisboard.lib.compose.FlorisBulletSpacer
@@ -99,6 +95,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
     val navController = LocalNavController.current
     val context = LocalContext.current
 
+    /*
     fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
         return when {
             !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
@@ -201,7 +198,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         if (initUuid == null) {
             FlorisOutlinedButton(
                 onClick = {
-                    importLauncher.launch("*/*")
+                    importLauncher.launch("* / *")
                 },
                 modifier = Modifier
                     .padding(vertical = 16.dp)
@@ -248,8 +245,10 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             }
         }
     }
+     */
 }
 
+/*
 @Composable
 private fun FileInfoView(
     fileInfo: CacheManager.FileInfo,
@@ -337,3 +336,4 @@ private fun FileInfoView(
         }
     }
 }
+     */

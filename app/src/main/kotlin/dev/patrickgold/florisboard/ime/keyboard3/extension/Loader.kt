@@ -30,7 +30,6 @@ import org.k3lp.lib.meta.source.SourceFileRef
 import org.k3lp.lib.meta.source.TextSourceFile
 import org.k3lp.lib.text.K3Descriptor
 import org.k3lp.lib.text.WillRequireMigrationToRichErrors
-import org.k3lp.model.K3ImpliedImport
 import org.k3lp.model.K3ImpliedImports
 
 private val SCOPE_FOUNDATION = K3Descriptor("fl", "ext", "org.florisboard.k3.foundation")
@@ -49,16 +48,12 @@ suspend fun loadFoundationKeyboard(context: Context, imeController: ImeControlle
         }, xml)
         return sourceFile
     }
-    val importResolver = K3ImportResolver { path, _, _ ->
+    val importResolver = K3ImportResolver { path, _ ->
         loadAssetFile("import/$path")
     }
     val impliedImports = K3ImpliedImports(
-        displays = listOf(
-            K3ImpliedImport("displays-implied.xml", SCOPE_FOUNDATION)
-        ),
-        keys = listOf(
-            K3ImpliedImport("keys-implied.xml", SCOPE_FOUNDATION)
-        ),
+        displays = listOf("flex://org.florisboard.k3.foundation/import/displays-implied.xml"),
+        keys = listOf("flex://org.florisboard.k3.foundation/import/keys-implied.xml"),
     )
     val result = K3lp.compile(loadAssetFile("keyboard/qwertz.xml"), importResolver, impliedImports)
     for (report in result.reports) {

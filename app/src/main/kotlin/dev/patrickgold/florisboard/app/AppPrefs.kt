@@ -47,7 +47,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
 import dev.patrickgold.florisboard.lib.util.VersionName
@@ -689,7 +689,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     inner class Theme {
         val mode = enum(
             key = "theme__mode",
-            default = ThemeMode.FOLLOW_SYSTEM,
+            default = PreferredThemeMode.FOLLOW_SYSTEM,
         )
         val dayThemeId = custom(
             key = "theme__day_theme_id",

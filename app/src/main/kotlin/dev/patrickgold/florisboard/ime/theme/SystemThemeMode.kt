@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.io
+package dev.patrickgold.florisboard.ime.theme
 
-import androidx.compose.runtime.staticCompositionLocalOf
-import kotlinx.coroutines.flow.StateFlow
-
-/**
- * Provides the [StorageController] instance this composition tree is associated with.
- */
-val LocalStorageController = staticCompositionLocalOf<StorageController> {
-    error("No storage controller is associated with this composition tree.")
-}
-
-interface StorageController {
-    val activeStorage: StateFlow<Storage>
+enum class SystemThemeMode {
+    UNKNOWN,
+    DAY,
+    NIGHT,
 }

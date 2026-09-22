@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-/**
- * Enum class which specifies all theme modes available. Used in the Settings
- * to properly manage different use cases when the day or night theme should
- * be active.
- */
-enum class ThemeMode {
-    ALWAYS_DAY,
-    ALWAYS_NIGHT,
-    FOLLOW_SYSTEM,
-    FOLLOW_TIME;
+enum class EffectiveThemeMode {
+    DAY,
+    NIGHT,
 }

@@ -41,7 +41,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
@@ -78,7 +78,7 @@ fun ExtensionComponentView(
             ),
         ) {
             when (component) {
-                is ThemeExtensionComponent -> {
+                is ThemeExtension.ThemeComponent -> {
                     val text = remember(
                         component.authors, component.isNightTheme, component.stylesheetPath(),
                     ) {

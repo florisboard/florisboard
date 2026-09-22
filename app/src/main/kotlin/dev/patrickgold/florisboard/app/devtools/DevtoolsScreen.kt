@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
@@ -52,7 +51,6 @@ fun DevtoolsScreen() = FlorisScreen {
 
     val context = LocalContext.current
     val navController = LocalNavController.current
-    val extensionManager by context.extensionManager()
     val scope = rememberCoroutineScope()
 
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
@@ -231,27 +229,6 @@ fun DevtoolsScreen() = FlorisScreen {
             Preference(
                 title = "prefs.internal.versionLastChangelog",
                 summary = versionLastChangelog,
-            )
-        }
-
-        PreferenceGroup(title = "ExtensionManager index paths") {
-            Preference(
-                title = "keyboardExtensions",
-                summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
-                onClick = {
-                    scope.launch {
-                        context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
-                    }
-                },
-            )
-            Preference(
-                title = "themes",
-                summary = extensionManager.themes.internalModuleDir.absolutePath,
-                onClick = {
-                    scope.launch {
-                        context.showLongToast(extensionManager.themes.internalModuleDir.absolutePath)
-                    }
-                },
             )
         }
 

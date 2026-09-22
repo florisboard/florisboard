@@ -46,7 +46,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
-import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.ime.io.AndroidStorage
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
+import dev.patrickgold.florisboard.ime.io.readFromUri
+import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
@@ -58,6 +62,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
+import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.stringRes
@@ -77,7 +82,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by FlorisPreferenceStore
-    private val appContext by appContext()
+    private val appContext = inferFlorisApplication()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
@@ -171,12 +176,14 @@ class FlorisAppActivity : ComponentActivity() {
     private fun AppContent() {
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
+        val storageController = appContext.storageController
 
         val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
             LocalNavController provides navController,
             LocalPreviewFieldController provides previewFieldController,
+            LocalStorageController provides storageController,
         ) {
             ProvideDefaultDialogPrefStrings(
                 confirmLabel = stringRes(R.string.action__ok),
@@ -208,13 +215,19 @@ class FlorisAppActivity : ComponentActivity() {
                 if (intent.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
                     navController.handleDeepLink(intent)
                 } else {
-                    val data = if (intent.action == Intent.ACTION_VIEW) {
+                    val uri = if (intent.action == Intent.ACTION_VIEW) {
                         intent.data!!
                     } else {
                         intent.clipData!!.getItemAt(0).uri
                     }
-                    val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
-                    navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
+                    try {
+                        val storage = storageController.activeStorage.value as AndroidStorage
+                        val workspaceRef = storage.createWorkspace()
+                        storage.readFromUri(uri, workspaceRef)
+                        navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspaceRef.pathName))
+                    } catch (e: Throwable) {
+                        appContext.showLongToast("Failed to read uri from intent: ${e.message}")
+                    }
                 }
             }
             intentToBeHandled = null

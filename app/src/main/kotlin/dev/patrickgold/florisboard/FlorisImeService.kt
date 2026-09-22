@@ -53,6 +53,7 @@ import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.ime.smartbar.createInlineSuggestionUiStyleBundle
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.ime.window.ImeRootView
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
@@ -258,11 +259,13 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     private val prefs by FlorisPreferenceStore
     private val appContext = inferFlorisApplication()
+    val storageController = appContext.storageController
     val imeController = appContext.imeController
+    val themeController = appContext.themeController
+
     val editorInstance by editorInstance()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
-    private val themeManager by themeManager()
 
     val windowController = ImeWindowController(prefs, lifecycleScope)
 
@@ -352,7 +355,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onConfigurationChanged(newConfig)
         systemLocalesFlow.value = newConfig.locales
         windowController.onConfigurationChanged(newConfig)
-        themeManager.configurationChangeCounter.update { it + 1 }
     }
 
     override fun onDestroy() {
@@ -474,7 +476,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
 
         flogInfo(LogTopic.IMS_EVENTS) { "Creating inline suggestions request" }
-        val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
+        val stylesBundle = createInlineSuggestionUiStyleBundle(this)
         if (stylesBundle == null) {
             flogWarning(LogTopic.IMS_EVENTS) { "Failed to retrieve inline suggestions style bundle" }
             return null

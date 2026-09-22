@@ -50,10 +50,6 @@ abstract class StorageMultiplexer : Storage {
         return selectStorageBy(ref).mkdirs(ref)
     }
 
-    override fun nameOf(ref: FlorisRef): String {
-        return selectStorageBy(ref).nameOf(ref)
-    }
-
     override fun source(ref: FlorisRef): RawSource {
         return selectStorageBy(ref).source(ref)
     }

@@ -237,6 +237,18 @@ value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
         get() = (uri.path ?: "").removePrefix("/")
 
     /**
+     * Returns the name segment of the relative path, that is the last segment in
+     * relative path separated by a slash. Returns the full relative path if no
+     * slashes are present.
+     */
+    val pathName: String
+        get() {
+            val relPath = uri.path ?: return ""
+            val slashIndex = relPath.lastIndexOf('/')
+            return relPath.substring(slashIndex + 1)
+        }
+
+    /**
      * Returns if this URI contains data for all valid parts of a FlorisRef.
      */
     val isValid: Boolean
