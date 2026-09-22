@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard3.extension
 
 import android.content.Context
+import android.net.Uri
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +40,7 @@ private val SCOPE_FOUNDATION = K3Descriptor("fl", "ext", "org.florisboard.k3.fou
 suspend fun loadFoundationKeyboard(context: Context, imeController: ImeController) {
     suspend fun loadAssetFile(path: String): TextSourceFile {
         val xml = withContext(Dispatchers.IO) {
-            context.assets.readText("ime/keyboard3/org.florisboard.k3.foundation/$path")
+            context.assets.readText("extensions/org.florisboard.k3.foundation/$path")
         }
         val sourceFile = TextSourceFile(object : SourceFileRef {
             override fun toString(): String {
@@ -49,7 +50,8 @@ suspend fun loadFoundationKeyboard(context: Context, imeController: ImeControlle
         return sourceFile
     }
     val importResolver = K3ImportResolver { path, _ ->
-        loadAssetFile("import/$path")
+        val relPath = runCatching { Uri.parse(path).path?.removePrefix("/") ?: "" }.getOrDefault("import/$path")
+        loadAssetFile(relPath)
     }
     val impliedImports = K3ImpliedImports(
         displays = listOf("flex://org.florisboard.k3.foundation/import/displays-implied.xml"),

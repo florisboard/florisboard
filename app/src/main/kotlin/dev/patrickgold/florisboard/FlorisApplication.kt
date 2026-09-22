@@ -78,10 +78,10 @@ class FlorisApplication : Application() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val preferenceStoreLoaded = MutableStateFlow(false)
 
-    val storageController = AndroidStorageController(this)
-    val extensionController = ExtensionController(storageController)
-    val imeController = ImeController()
-    val themeController = ThemeController(storageController, extensionController)
+    lateinit var storageController: AndroidStorageController
+    lateinit var extensionController: ExtensionController
+    lateinit var imeController: ImeController
+    lateinit var themeController: ThemeController
 
     val clipboardManager = lazy { ClipboardManager(this) }
     val editorInstance = lazy { EditorInstance(this) }
@@ -93,7 +93,15 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FlorisApplicationReference = WeakReference(this)
-        themeController.activeSystemThemeMode.value = resources.configuration.determineSystemThemeMode()
+        storageController = AndroidStorageController(this)
+        extensionController = ExtensionController(storageController)
+        imeController = ImeController()
+        themeController = ThemeController(
+            storageController,
+            extensionController,
+            initialSystemThemeMode = resources.configuration.determineSystemThemeMode(),
+        )
+
         try {
             Flog.install(
                 context = this,
