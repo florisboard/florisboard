@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.input
+package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
-enum class InputFeedbackActivationMode  {
-    RESPECT_SYSTEM_SETTINGS,
-    IGNORE_SYSTEM_SETTINGS;
+enum class InteractionKind {
+    KeyPress,
+    KeyRelease,
+    KeyRepeat,
+    LongPress,
+    GestureSwipe,
+    TextHandleMove,
 }

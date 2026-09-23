@@ -1,0 +1,14 @@
+{
+  "$": "ime.extension.keyboard3",
+  "meta": {
+    "id": "org.florisboard.k3.foundation",
+    "version": "0.0.0",
+    "title": "Keyboard3 foundational components",
+    "description": "Provides foundational components for keyboard3 within FlorisBoard.",
+    "maintainers": [
+      "patrickgold <patrick@patrickgold.dev>",
+      "lm41 <lm41@lm41.xyz>"
+    ],
+    "license": "apache-2.0"
+  }
+}

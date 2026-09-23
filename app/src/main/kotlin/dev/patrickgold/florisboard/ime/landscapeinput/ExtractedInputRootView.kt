@@ -43,7 +43,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInteractionController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
@@ -79,8 +81,11 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
 
     @Composable
     fun Content() {
+        val prefs by FlorisPreferenceStore
+        val interactionController = rememberAndroidInteractionController(prefs)
+
         CompositionLocalProvider(
-            LocalInputFeedbackController provides ims.inputFeedbackController,
+            LocalInteractionController provides interactionController,
             LocalWindowController provides ims.windowController,
         ) {
             ProvideLocalizedResources(

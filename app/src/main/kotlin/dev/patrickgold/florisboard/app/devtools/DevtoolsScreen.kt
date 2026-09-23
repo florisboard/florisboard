@@ -144,6 +144,12 @@ fun DevtoolsScreen() = FlorisScreen {
                 summaryOff = "Recommended to keep this off!",
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            SwitchPreference(
+                prefs.emoji.experimentalEmojiSearchEnabled,
+                title = "prefs.emoji.experimentalEmojiSearchEnabled",
+                summary = "Enables the technical PoC UI of emoji search. No proper UX yet!",
+                enabledIf = { prefs.devtools.enabled isEqualTo true },
+            )
         }
 
         PreferenceGroup(title = stringRes(R.string.devtools__group_ime_window_tools__title)) {

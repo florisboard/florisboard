@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +41,6 @@ val SubtypeJsonConfig = Json {
  */
 class SubtypeManager(context: Context) {
     private val prefs by FlorisPreferenceStore
-    private val keyboardManager by context.keyboardManager()
     private val scope = CoroutineScope(Dispatchers.Default)
 
     val subtypesFlow: StateFlow<List<Subtype>>
@@ -116,7 +114,8 @@ class SubtypeManager(context: Context) {
      * @return The currency set or a fallback.
      */
     fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return keyboardManager.resources.currencySets.value[subtypeToSearch.currencySet] ?: CurrencySet.Fallback
+        // return keyboardManager.resources.currencySets.value[subtypeToSearch.currencySet] ?: CurrencySet.Fallback
+        return CurrencySet.Fallback
     }
 
     /**
@@ -138,8 +137,9 @@ class SubtypeManager(context: Context) {
      *  found.
      */
     fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
-        val presets = keyboardManager.resources.subtypePresets.value
-        return presets.find { it.locale == locale } ?: presets.find { it.locale.language == locale.language }
+//        val presets = keyboardManager.resources.subtypePresets.value
+//        return presets.find { it.locale == locale } ?: presets.find { it.locale.language == locale.language }
+        return null
     }
 
     /**

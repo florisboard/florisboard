@@ -18,8 +18,8 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -45,23 +45,23 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private var glideTypingClassifier = StatisticalGlideTypingClassifier(context)
+    private var glideTypingClassifier = Unit //StatisticalGlideTypingClassifier(context)
     private var lastTime = System.currentTimeMillis()
 
     override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
-            glideTypingClassifier.clear()
+            //glideTypingClassifier.clear()
         }
     }
 
     override fun onGlideCancelled() {
-        glideTypingClassifier.clear()
+        //glideTypingClassifier.clear()
     }
 
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
         val normalized = GlideTypingGesture.Detector.Position(point.x, point.y)
 
-        this.glideTypingClassifier.addGesturePoint(normalized)
+        //this.glideTypingClassifier.addGesturePoint(normalized)
 
         val time = System.currentTimeMillis()
         if (prefs.glide.showPreview.get() && time - lastTime > prefs.glide.previewRefreshDelay.get()) {
@@ -73,11 +73,11 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     /**
      * Change the layout of the internal gesture classifier
      */
-    fun setLayout(keys: List<TextKey>) {
-        if (keys.isNotEmpty()) {
-            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype)
-        }
-    }
+//    fun setLayout(keys: List<TextKey>) {
+//        if (keys.isNotEmpty()) {
+//            glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype)
+//        }
+//    }
 
     /**
      * Asks gesture classifier for suggestions and then passes that on to the smartbar.
@@ -88,13 +88,15 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
      * were successfully set.
      */
     private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: (Boolean) -> Unit) {
+        return
+        /*
         if (!glideTypingClassifier.ready) {
             callback.invoke(false)
             return
         }
 
         scope.launch(Dispatchers.Default) {
-            val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
+            val suggestions =emptyList<CharSequence>() // glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
                 val suggestionList = buildList {
@@ -113,5 +115,6 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
                 callback.invoke(true)
             }
         }
+        */
     }
 }

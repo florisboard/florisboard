@@ -13,12 +13,7 @@
     <string name="general__empty_string" translatable="false"/>
     <string name="general__invalid_fatal" translatable="false">!! invalid !!</string>
 
-    <string name="key__view_characters" translatable="false">ABC</string>
-    <string name="key__view_numeric" translatable="false">1 2\n3 4</string>
-    <string name="key__view_phone" translatable="false">123</string>
-    <string name="key__view_phone2" translatable="false">* #</string>
-    <string name="key__view_symbols" translatable="false">\?123</string>
-    <string name="key__view_symbols2" translatable="false">=\\&lt;</string>
+    <!-- TODO remove -->
     <string name="key__view_half_space" translatable="false">&#8626;</string>
     <string name="key__view_keshida" translatable="false">"یــــ"</string>
     <string name="key__dotted_circle" translatable="false">&#9676;</string>

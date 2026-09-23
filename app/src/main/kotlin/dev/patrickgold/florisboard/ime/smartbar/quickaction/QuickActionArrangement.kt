@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.lib.io.DefaultJsonConfig
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
@@ -24,6 +24,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.plus
 import kotlinx.serialization.modules.polymorphic
+import kotlin.contracts.contract
 
 val QuickActionJsonConfig = Json(DefaultJsonConfig) {
     classDiscriminator = "$"
@@ -35,6 +36,7 @@ val QuickActionJsonConfig = Json(DefaultJsonConfig) {
         polymorphic(QuickAction::class) {
             subclass(QuickAction.InsertKey::class, QuickAction.InsertKey.serializer())
             subclass(QuickAction.InsertText::class, QuickAction.InsertText.serializer())
+            subclass(QuickAction.InsertK3Descriptor::class, QuickAction.InsertK3Descriptor.serializer())
             defaultDeserializer { QuickAction.InsertKey.serializer() }
         }
     }
@@ -48,6 +50,15 @@ data class QuickActionArrangement(
 ) {
     operator fun contains(action: QuickAction): Boolean {
         return stickyAction == action || dynamicActions.contains(action) || hiddenActions.contains(action)
+    }
+
+    inline fun forEach(block: (QuickAction) -> Unit) {
+        contract {
+            callsInPlace(block)
+        }
+        stickyAction?.let { block(it) }
+        dynamicActions.forEach { block(it) }
+        hiddenActions.forEach { block(it) }
     }
 
     fun distinct(): QuickActionArrangement {
@@ -64,35 +75,42 @@ data class QuickActionArrangement(
         )
     }
 
+    fun migrateToK3Descriptors(): QuickActionArrangement {
+        return QuickActionArrangement(
+            stickyAction = stickyAction?.migrateToK3DescriptorOrNull(),
+            dynamicActions = dynamicActions.mapNotNull { it.migrateToK3DescriptorOrNull() },
+            hiddenActions = hiddenActions.mapNotNull { it.migrateToK3DescriptorOrNull() },
+        )
+    }
+
     companion object {
         val Default = QuickActionArrangement(
-            stickyAction = QuickAction.InsertKey(TextKeyData.VOICE_INPUT),
+            stickyAction = QuickAction.InsertK3Descriptor(ImeActions.ExternalVoiceInput),
             dynamicActions = listOf(
-                QuickAction.InsertKey(TextKeyData.UNDO),
-                QuickAction.InsertKey(TextKeyData.REDO),
-                QuickAction.InsertKey(TextKeyData.SETTINGS),
-                QuickAction.InsertKey(TextKeyData.TOGGLE_FLOATING_WINDOW),
-                QuickAction.InsertKey(TextKeyData.TOGGLE_RESIZE_MODE),
-                QuickAction.InsertKey(TextKeyData.IME_UI_MODE_CLIPBOARD),
-                QuickAction.InsertKey(TextKeyData.IME_UI_MODE_MEDIA),
-                QuickAction.InsertKey(TextKeyData.TOGGLE_COMPACT_LAYOUT),
-                QuickAction.InsertKey(TextKeyData.TOGGLE_AUTOCORRECT),
-                QuickAction.InsertKey(TextKeyData.TOGGLE_INCOGNITO_MODE),
-                QuickAction.InsertKey(TextKeyData.ARROW_UP),
-                QuickAction.InsertKey(TextKeyData.ARROW_DOWN),
-                QuickAction.InsertKey(TextKeyData.ARROW_LEFT),
-                QuickAction.InsertKey(TextKeyData.ARROW_RIGHT),
-                QuickAction.InsertKey(TextKeyData.CLIPBOARD_CLEAR_PRIMARY_CLIP),
-                QuickAction.InsertKey(TextKeyData.CLIPBOARD_COPY),
-                QuickAction.InsertKey(TextKeyData.CLIPBOARD_CUT),
-                QuickAction.InsertKey(TextKeyData.CLIPBOARD_PASTE),
-                QuickAction.InsertKey(TextKeyData.CLIPBOARD_SELECT_ALL),
-                QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH),
-                QuickAction.InsertKey(TextKeyData.FORWARD_DELETE),
-                QuickAction.InsertKey(TextKeyData.IME_HIDE_UI),
+                QuickAction.InsertK3Descriptor(ImeActions.ToggleFloatingWindow),
+                QuickAction.InsertK3Descriptor(ImeActions.ToggleResizeMode),
+                QuickAction.InsertK3Descriptor(ImeActions.Undo),
+                QuickAction.InsertK3Descriptor(ImeActions.Redo),
+                QuickAction.InsertK3Descriptor(ImeActions.ShowClipboardPanel),
+                QuickAction.InsertK3Descriptor(ImeActions.Settings),
+                QuickAction.InsertK3Descriptor(ImeActions.ShowMediaPanel),
+                QuickAction.InsertK3Descriptor(ImeActions.ToggleCompactLayout),
+                QuickAction.InsertK3Descriptor(ImeActions.ToggleAutocorrect),
+                QuickAction.InsertK3Descriptor(ImeActions.TogglePersonalizedLearning),
+                QuickAction.InsertK3Descriptor(ImeActions.ArrowUp),
+                QuickAction.InsertK3Descriptor(ImeActions.ArrowDown),
+                QuickAction.InsertK3Descriptor(ImeActions.ArrowLeft),
+                QuickAction.InsertK3Descriptor(ImeActions.ArrowRight),
+                QuickAction.InsertK3Descriptor(ImeActions.ClipboardClearPrimaryClip),
+                QuickAction.InsertK3Descriptor(ImeActions.ClipboardCopy),
+                QuickAction.InsertK3Descriptor(ImeActions.ClipboardCut),
+                QuickAction.InsertK3Descriptor(ImeActions.ClipboardPaste),
+                QuickAction.InsertK3Descriptor(ImeActions.SelectAll),
+                QuickAction.InsertK3Descriptor(ImeActions.LanguageSwitch),
+                QuickAction.InsertK3Descriptor(ImeActions.Delete),
+                QuickAction.InsertK3Descriptor(ImeActions.HideImeWindow),
             ),
-            hiddenActions = listOf(
-            ),
+            hiddenActions = emptyList(),
         )
     }
 

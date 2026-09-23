@@ -16,141 +16,149 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.ImeState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.compose.stringRes
+import org.k3lp.lib.text.K3Descriptor
 
 @Serializable
 sealed class QuickAction {
-    open fun onPointerDown(context: Context) = Unit
+    abstract fun migrateToK3DescriptorOrNull(): InsertK3Descriptor?
 
-    open fun onPointerUp(context: Context) = Unit
+    @Serializable
+    @SerialName("insert_k3descriptor")
+    data class InsertK3Descriptor(val descriptor: K3Descriptor) : QuickAction() {
+        override fun migrateToK3DescriptorOrNull(): InsertK3Descriptor {
+            return this
+        }
+    }
 
-    open fun onPointerCancel(context: Context) = Unit
-
+    @Deprecated("InsertKey is deprecated, and must exclusively be used in the preference migration logic!")
     @Serializable
     @SerialName("insert_key")
     data class InsertKey(val data: KeyData) : QuickAction() {
-        override fun onPointerDown(context: Context) {
-            val keyboardManager by context.keyboardManager()
-            keyboardManager.inputEventDispatcher.sendDown(data)
-        }
-
-        override fun onPointerUp(context: Context) {
-            val keyboardManager by context.keyboardManager()
-            keyboardManager.inputEventDispatcher.sendUp(data)
-            if (!keyboardManager.inputEventDispatcher.isRepeatable(data) &&
-                data.code != KeyCode.TOGGLE_ACTIONS_OVERFLOW && data.code != KeyCode.CLIPBOARD_SELECT_ALL) {
-                keyboardManager.activeState.isActionsOverflowVisible = false
+        override fun migrateToK3DescriptorOrNull(): InsertK3Descriptor? {
+            return when (data.code) {
+                KeyCode.UNDO -> InsertK3Descriptor(ImeActions.Undo)
+                KeyCode.REDO -> InsertK3Descriptor(ImeActions.Redo)
+                KeyCode.SETTINGS -> InsertK3Descriptor(ImeActions.Settings)
+                KeyCode.TOGGLE_FLOATING_WINDOW -> InsertK3Descriptor(ImeActions.ToggleFloatingWindow)
+                KeyCode.TOGGLE_RESIZE_MODE -> InsertK3Descriptor(ImeActions.ToggleResizeMode)
+                KeyCode.IME_UI_MODE_CLIPBOARD -> InsertK3Descriptor(ImeActions.ShowClipboardPanel)
+                KeyCode.IME_UI_MODE_MEDIA -> InsertK3Descriptor(ImeActions.ShowMediaPanel)
+                KeyCode.TOGGLE_COMPACT_LAYOUT, KeyCode.COMPACT_LAYOUT_TO_RIGHT -> InsertK3Descriptor(ImeActions.ToggleCompactLayout)
+                KeyCode.TOGGLE_AUTOCORRECT -> InsertK3Descriptor(ImeActions.ToggleAutocorrect)
+                KeyCode.TOGGLE_INCOGNITO_MODE -> InsertK3Descriptor(ImeActions.TogglePersonalizedLearning)
+                KeyCode.ARROW_UP -> InsertK3Descriptor(ImeActions.ArrowUp)
+                KeyCode.ARROW_DOWN -> InsertK3Descriptor(ImeActions.ArrowDown)
+                KeyCode.ARROW_LEFT -> InsertK3Descriptor(ImeActions.ArrowLeft)
+                KeyCode.ARROW_RIGHT -> InsertK3Descriptor(ImeActions.ArrowRight)
+                KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> InsertK3Descriptor(ImeActions.ClipboardClearPrimaryClip)
+                KeyCode.CLIPBOARD_COPY -> InsertK3Descriptor(ImeActions.ClipboardCopy)
+                KeyCode.CLIPBOARD_CUT -> InsertK3Descriptor(ImeActions.ClipboardCut)
+                KeyCode.CLIPBOARD_PASTE -> InsertK3Descriptor(ImeActions.ClipboardPaste)
+                KeyCode.CLIPBOARD_SELECT_ALL -> InsertK3Descriptor(ImeActions.SelectAll)
+                KeyCode.LANGUAGE_SWITCH -> InsertK3Descriptor(ImeActions.LanguageSwitch)
+                KeyCode.FORWARD_DELETE -> InsertK3Descriptor(ImeActions.Delete)
+                KeyCode.IME_HIDE_UI -> InsertK3Descriptor(ImeActions.HideImeWindow)
+                else -> null
             }
-        }
-
-        override fun onPointerCancel(context: Context) {
-            val keyboardManager by context.keyboardManager()
-            keyboardManager.inputEventDispatcher.sendCancel(data)
         }
     }
 
+    @Deprecated("InsertText is deprecated, and must exclusively be used in the preference migration logic!")
     @Serializable
     @SerialName("insert_text")
     data class InsertText(val data: String) : QuickAction() {
-        override fun onPointerUp(context: Context) {
-            val editorInstance by context.editorInstance()
-            editorInstance.commitText(data)
+        override fun migrateToK3DescriptorOrNull(): InsertK3Descriptor? {
+            return null
         }
     }
 }
 
-fun QuickAction.keyData(): KeyData {
-    return if (this is QuickAction.InsertKey) data else TextKeyData.UNSPECIFIED
-}
-
 @Composable
-fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
+fun QuickAction.computeDisplayName(imeState: ImeState): String {
     return when (this) {
-        is QuickAction.InsertKey -> stringRes(when (data.code) {
-            KeyCode.ARROW_UP -> R.string.quick_action__arrow_up
-            KeyCode.ARROW_DOWN -> R.string.quick_action__arrow_down
-            KeyCode.ARROW_LEFT -> R.string.quick_action__arrow_left
-            KeyCode.ARROW_RIGHT -> R.string.quick_action__arrow_right
-            KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> R.string.quick_action__clipboard_clear_primary_clip
-            KeyCode.CLIPBOARD_COPY -> R.string.quick_action__clipboard_copy
-            KeyCode.CLIPBOARD_CUT -> R.string.quick_action__clipboard_cut
-            KeyCode.CLIPBOARD_PASTE -> R.string.quick_action__clipboard_paste
-            KeyCode.CLIPBOARD_SELECT_ALL -> R.string.quick_action__clipboard_select_all
-            KeyCode.FORWARD_DELETE -> R.string.quick_action__forward_delete
-            KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard
-            KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media
-            KeyCode.LANGUAGE_SWITCH -> R.string.quick_action__language_switch
-            KeyCode.SETTINGS -> R.string.quick_action__settings
-            KeyCode.UNDO -> R.string.quick_action__undo
-            KeyCode.REDO -> R.string.quick_action__redo
-            KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow
-            KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode
-            KeyCode.TOGGLE_AUTOCORRECT -> R.string.quick_action__toggle_autocorrect
-            KeyCode.VOICE_INPUT -> R.string.quick_action__voice_input
-            KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui
-            KeyCode.TOGGLE_FLOATING_WINDOW -> R.string.quick_action__floating_window_mode
+        is QuickAction.InsertK3Descriptor -> stringRes(when (descriptor) {
+            ImeActions.Delete -> R.string.quick_action__forward_delete
+            ImeActions.ArrowDown -> R.string.quick_action__arrow_down
+            ImeActions.ArrowLeft -> R.string.quick_action__arrow_left
+            ImeActions.ArrowRight -> R.string.quick_action__arrow_right
+            ImeActions.ArrowUp -> R.string.quick_action__arrow_up
+            ImeActions.ClipboardClearPrimaryClip -> R.string.quick_action__clipboard_clear_primary_clip
+            ImeActions.ClipboardCopy -> R.string.quick_action__clipboard_copy
+            ImeActions.ClipboardCut -> R.string.quick_action__clipboard_cut
+            ImeActions.ClipboardPaste -> R.string.quick_action__clipboard_paste
+            ImeActions.SelectAll -> R.string.quick_action__clipboard_select_all
+            ImeActions.Settings -> R.string.quick_action__settings
+            ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media
+            ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard
+            ImeActions.HideImeWindow -> R.string.quick_action__ime_hide_ui
+            ImeActions.LanguageSwitch -> R.string.quick_action__language_switch
+            ImeActions.ToggleActionsOverflow -> R.string.quick_action__toggle_actions_overflow
+            ImeActions.ToggleAutocorrect -> R.string.quick_action__toggle_autocorrect
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> R.string.quick_action__one_handed_mode
-            KeyCode.TOGGLE_RESIZE_MODE -> R.string.quick_action__resize_mode
-            KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
+            ImeActions.ToggleCompactLayout -> R.string.quick_action__one_handed_mode
+            ImeActions.ToggleFloatingWindow -> R.string.quick_action__floating_window_mode
+            ImeActions.TogglePersonalizedLearning -> R.string.quick_action__toggle_incognito_mode
+            ImeActions.ToggleResizeMode -> R.string.quick_action__resize_mode
+            ImeActions.Undo -> R.string.quick_action__undo
+            ImeActions.Redo -> R.string.quick_action__redo
+            ImeActions.ExternalVoiceInput -> R.string.quick_action__voice_input
+            ImeActions.NoopDragMarker -> if (imeState.flags.debugShowDragAndDropHelpers) {
                 R.string.quick_action__drag_marker
             } else {
                 R.string.general__empty_string
             }
-            KeyCode.NOOP -> R.string.quick_action__noop
+            ImeActions.NoopSpacer -> R.string.quick_action__noop
             else -> R.string.general__invalid_fatal
         })
-        is QuickAction.InsertText -> data
+        else -> "unsupported"
     }
 }
 
 @Composable
-fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
+fun QuickAction.computeTooltip(imeState: ImeState): String {
     return when (this) {
-        is QuickAction.InsertKey -> stringRes(when (data.code) {
-            KeyCode.ARROW_UP -> R.string.quick_action__arrow_up__tooltip
-            KeyCode.ARROW_DOWN -> R.string.quick_action__arrow_down__tooltip
-            KeyCode.ARROW_LEFT -> R.string.quick_action__arrow_left__tooltip
-            KeyCode.ARROW_RIGHT -> R.string.quick_action__arrow_right__tooltip
-            KeyCode.CLIPBOARD_CLEAR_PRIMARY_CLIP -> R.string.quick_action__clipboard_clear_primary_clip__tooltip
-            KeyCode.CLIPBOARD_COPY -> R.string.quick_action__clipboard_copy__tooltip
-            KeyCode.CLIPBOARD_CUT -> R.string.quick_action__clipboard_cut__tooltip
-            KeyCode.CLIPBOARD_PASTE -> R.string.quick_action__clipboard_paste__tooltip
-            KeyCode.CLIPBOARD_SELECT_ALL -> R.string.quick_action__clipboard_select_all__tooltip
-            KeyCode.IME_UI_MODE_CLIPBOARD -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
-            KeyCode.IME_UI_MODE_MEDIA -> R.string.quick_action__ime_ui_mode_media__tooltip
-            KeyCode.LANGUAGE_SWITCH -> R.string.quick_action__language_switch__tooltip
-            KeyCode.SETTINGS -> R.string.quick_action__settings__tooltip
-            KeyCode.UNDO -> R.string.quick_action__undo__tooltip
-            KeyCode.REDO -> R.string.quick_action__redo__tooltip
-            KeyCode.TOGGLE_ACTIONS_OVERFLOW -> R.string.quick_action__toggle_actions_overflow__tooltip
-            KeyCode.TOGGLE_INCOGNITO_MODE -> R.string.quick_action__toggle_incognito_mode__tooltip
-            KeyCode.TOGGLE_AUTOCORRECT -> R.string.quick_action__toggle_autocorrect__tooltip
-            KeyCode.VOICE_INPUT -> R.string.quick_action__voice_input__tooltip
-            KeyCode.IME_HIDE_UI -> R.string.quick_action__ime_hide_ui__tooltip
-            KeyCode.TOGGLE_FLOATING_WINDOW -> R.string.quick_action__floating_window_mode__tooltip
+        is QuickAction.InsertK3Descriptor -> stringRes(when (descriptor) {
+            ImeActions.ArrowDown -> R.string.quick_action__arrow_down__tooltip
+            ImeActions.ArrowLeft -> R.string.quick_action__arrow_left__tooltip
+            ImeActions.ArrowRight -> R.string.quick_action__arrow_right__tooltip
+            ImeActions.ArrowUp -> R.string.quick_action__arrow_up__tooltip
+            ImeActions.ClipboardClearPrimaryClip -> R.string.quick_action__clipboard_clear_primary_clip__tooltip
+            ImeActions.ClipboardCopy -> R.string.quick_action__clipboard_copy__tooltip
+            ImeActions.ClipboardCut -> R.string.quick_action__clipboard_cut__tooltip
+            ImeActions.ClipboardPaste -> R.string.quick_action__clipboard_paste__tooltip
+            ImeActions.SelectAll -> R.string.quick_action__clipboard_select_all__tooltip
+            ImeActions.Settings -> R.string.quick_action__settings__tooltip
+            ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media__tooltip
+            ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
+            ImeActions.HideImeWindow -> R.string.quick_action__ime_hide_ui__tooltip
+            ImeActions.LanguageSwitch -> R.string.quick_action__language_switch__tooltip
+            ImeActions.ToggleActionsOverflow -> R.string.quick_action__toggle_actions_overflow__tooltip
+            ImeActions.ToggleAutocorrect -> R.string.quick_action__toggle_autocorrect__tooltip
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
-            KeyCode.TOGGLE_COMPACT_LAYOUT -> R.string.quick_action__one_handed_mode__tooltip
-            KeyCode.TOGGLE_RESIZE_MODE -> R.string.quick_action__resize_mode__tooltip
-            KeyCode.DRAG_MARKER -> if (evaluator.state.debugShowDragAndDropHelpers) {
+            ImeActions.ToggleCompactLayout -> R.string.quick_action__one_handed_mode__tooltip
+            ImeActions.ToggleFloatingWindow -> R.string.quick_action__floating_window_mode__tooltip
+            ImeActions.TogglePersonalizedLearning -> R.string.quick_action__toggle_incognito_mode__tooltip
+            ImeActions.ToggleResizeMode -> R.string.quick_action__resize_mode__tooltip
+            ImeActions.Undo -> R.string.quick_action__undo__tooltip
+            ImeActions.Redo -> R.string.quick_action__redo__tooltip
+            ImeActions.ExternalVoiceInput -> R.string.quick_action__voice_input__tooltip
+            ImeActions.NoopDragMarker -> if (imeState.flags.debugShowDragAndDropHelpers) {
                 R.string.quick_action__drag_marker__tooltip
             } else {
                 R.string.general__empty_string
             }
-            KeyCode.NOOP -> R.string.quick_action__noop__tooltip
+            ImeActions.NoopSpacer -> R.string.quick_action__noop__tooltip
             else -> R.string.general__invalid_fatal
         })
-        is QuickAction.InsertText -> "Insert text '$data'"
+        else -> "unsupported"
     }
 }

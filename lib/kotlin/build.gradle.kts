@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The FlorisBoard Contributors
+ * Copyright (C) 2024-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,6 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.kotest)
 }
-
-val projectGroupId: String by project
-val artifactId = "florisboard-lib-kotlin"
-val projectVersion: String by project
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11

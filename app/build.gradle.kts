@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +28,7 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
 }
 
-val projectMinSdk: String by project
-val projectTargetSdk: String by project
-val projectCompileSdk: String by project
-val projectVersionCode: String by project
-val projectVersionName: String by project
+val projectVersionName = providers.gradleProperty("projectVersionName").get()
 val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { suffix ->
     if (suffix.isNotEmpty()) {
         "-$suffix"
@@ -57,7 +53,7 @@ kotlin {
 
 configure<ApplicationExtension> {
     namespace = "dev.patrickgold.florisboard"
-    compileSdk = projectCompileSdk.toInt()
+    compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
 
@@ -68,9 +64,9 @@ configure<ApplicationExtension> {
 
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
-        minSdk = projectMinSdk.toInt()
-        targetSdk = projectTargetSdk.toInt()
-        versionCode = projectVersionCode.toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
+        targetSdk = providers.gradleProperty("projectTargetSdk").get().toInt()
+        versionCode = providers.gradleProperty("projectVersionCode").get().toInt()
         versionName = projectVersionName.substringBefore("-")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -179,6 +175,7 @@ dependencies {
     implementation(composeBom)
     // testImplementation(composeBom)
     // androidTestImplementation(composeBom)
+    // My connection security code is: 9 8 5 0, check that you see the same numbers in my connection approval dialog.
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
@@ -200,6 +197,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
+    implementation(libs.k3lp.core)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.json)

@@ -93,7 +93,7 @@ class ImeWindowController(
      * Holds the active window spec, which is computed based on the root insets and window config.
      */
     val activeWindowSpec: StateFlow<ImeWindowSpec>
-        field = MutableStateFlow<ImeWindowSpec>(ImeWindowSpec.Fallback)
+        field = MutableStateFlow(ImeWindowSpec.Fallback)
 
     /**
      * Holds the state if the window is currently shown to the user, as reported by the IME service class.

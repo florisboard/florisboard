@@ -28,6 +28,7 @@ import android.util.Size
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
@@ -44,10 +45,10 @@ import androidx.lifecycle.lifecycleScope
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
-import dev.patrickgold.florisboard.ime.input.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.isFullscreenInputRequired
+import dev.patrickgold.florisboard.ime.keyboard3.ImeEditor
+import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
@@ -56,21 +57,25 @@ import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.ime.window.ImeRootView
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
 import dev.patrickgold.florisboard.lib.devtools.LogTopic
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
+import org.k3lp.runtime.K3TextRange
 import java.lang.ref.WeakReference
 
 /**
@@ -93,10 +98,6 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         fun currentInputConnection(): InputConnection? {
             return FlorisImeServiceReference.get()?.currentInputConnection
-        }
-
-        fun inputFeedbackController(): InputFeedbackController? {
-            return FlorisImeServiceReference.get()?.inputFeedbackController
         }
 
         /**
@@ -257,15 +258,13 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     private val prefs by FlorisPreferenceStore
     val editorInstance by editorInstance()
-    private val keyboardManager by keyboardManager()
+    val imeController by imeController()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
     private val themeManager by themeManager()
 
     val windowController = ImeWindowController(prefs, lifecycleScope)
 
-    private val activeState get() = keyboardManager.activeState
-    val inputFeedbackController by lazy { InputFeedbackController.new(this) }
     private val systemLocalesFlow = MutableStateFlow(LocaleList())
     var resourcesContext by mutableStateOf(this as Context)
         private set
@@ -284,7 +283,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         WindowCompat.setDecorFitsSystemWindows(window.window!!, false)
         windowController.onConfigurationChanged(resources.configuration)
         windowController.activeWindowConfig.collectLatestIn(lifecycleScope) {
-            keyboardManager.updateActiveEvaluators() // TODO: wacky solution, but works for now
+            // TODO update inputMethod state
         }
 
         combine(
@@ -307,6 +306,10 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectIn(lifecycleScope) {
             updateInputViewShown()
+        }
+
+        lifecycleScope.launch(Dispatchers.Default) {
+            loadFoundationKeyboard(this@FlorisImeService, imeController)
         }
 
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
@@ -358,24 +361,20 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onStartInput(info: EditorInfo?, restarting: Boolean) {
-        flogInfo { "restarting=$restarting info=${info?.debugSummarize()}" }
+        flogInfo { "info=${info?.debugSummarize()} restarting=$restarting" }
         super.onStartInput(info, restarting)
         if (info == null) return
-        val editorInfo = FlorisEditorInfo.wrap(info)
-        editorInstance.handleStartInput(editorInfo)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        flogInfo { "restarting=$restarting info=${info?.debugSummarize()}" }
+        flogInfo { "info=${info?.debugSummarize()} restarting=$restarting" }
         super.onStartInputView(info, restarting)
         if (info == null) return
+        currentInputConnection?.requestCursorUpdates(ImeEditor.CURSOR_UPDATES)
+        val ic = WeakReference(currentInputConnection)
         val editorInfo = FlorisEditorInfo.wrap(info)
-        activeState.batchEdit {
-            if (activeState.imeUiMode != ImeUiMode.CLIPBOARD || prefs.clipboard.historyHideOnNextTextField.get()) {
-                activeState.imeUiMode = ImeUiMode.TEXT
-            }
-            activeState.isSelectionMode = editorInfo.initialSelection.isSelectionMode
-            editorInstance.handleStartInputView(editorInfo, isRestart = restarting)
+        imeController.updateStateBlocking {
+            handleStartInputView(ic, editorInfo)
         }
     }
 
@@ -386,36 +385,32 @@ class FlorisImeService : LifecycleInputMethodService() {
             || prefs.physicalKeyboard.showOnScreenKeyboard.get()
     }
 
-    override fun onUpdateSelection(
-        oldSelStart: Int,
-        oldSelEnd: Int,
-        newSelStart: Int,
-        newSelEnd: Int,
-        candidatesStart: Int,
-        candidatesEnd: Int,
-    ) {
-        flogInfo { "old={start=$oldSelStart,end=$oldSelEnd} new={start=$newSelStart,end=$newSelEnd} composing={start=$candidatesStart,end=$candidatesEnd}" }
-        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
-        activeState.batchEdit {
-            activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
-            editorInstance.handleSelectionUpdate(
-                oldSelection = EditorRange.normalized(oldSelStart, oldSelEnd),
-                newSelection = EditorRange.normalized(newSelStart, newSelEnd),
-                composing = EditorRange.normalized(candidatesStart, candidatesEnd),
-            )
+    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
+        if (cursorAnchorInfo == null) {
+            return
+        }
+        val newSelection = K3TextRange(
+            start = cursorAnchorInfo.selectionStart,
+            end = cursorAnchorInfo.selectionEnd,
+        )
+        flogInfo { "new=$newSelection" }
+        imeController.updateStateBlocking {
+            handleUpdateSelection(newSelection)
         }
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         flogInfo { "finishing=$finishingInput" }
         super.onFinishInputView(finishingInput)
-        editorInstance.handleFinishInputView()
+        currentInputConnection?.requestCursorUpdates(0)
+        imeController.updateStateBlocking {
+            handleFinishInputView()
+        }
     }
 
     override fun onFinishInput() {
         flogInfo { "(no args)" }
         super.onFinishInput()
-        editorInstance.handleFinishInput()
         NlpInlineAutofill.clearInlineSuggestions()
     }
 
@@ -423,7 +418,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onWindowShown()
         if (windowController.onWindowShown()) {
             flogInfo(LogTopic.IMS_EVENTS)
-            inputFeedbackController.updateSystemPrefsState()
         } else {
             flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
         }
@@ -433,10 +427,13 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onWindowHidden()
         if (windowController.onWindowHidden()) {
             flogInfo(LogTopic.IMS_EVENTS)
-            activeState.batchEdit {
-                activeState.imeUiMode = ImeUiMode.TEXT
-                activeState.isActionsOverflowVisible = false
-                activeState.isActionsEditorVisible = false
+            imeController.updateStateBlocking {
+                state = state.copy(
+                    flags = state.flags
+                        .withImeUiMode(ImeUiMode.TEXT)
+                        .withActionsEditorVisible(false)
+                        .withActionsOverflowVisible(false),
+                )
             }
         } else {
             flogWarning(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
@@ -506,8 +503,8 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onComputeInsets(outInsets: Insets?) {
         if (outInsets == null) return
-        val state = keyboardManager.activeState.snapshot()
-        windowController.onComputeInsets(outInsets, state.isFullscreenInputRequired())
+        val imeState = imeController.snapshotState()
+        windowController.onComputeInsets(outInsets, imeState.isFullscreenInputRequired())
     }
 
     override fun getTextForImeAction(imeOptions: Int): String? {
@@ -528,10 +525,12 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return keyboardManager.onHardwareKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
+        flogDebug { "onKeyDown(keyCode=$keyCode, event=$event)" }
+        return imeController.onHardwareKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        return keyboardManager.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
+        flogDebug { "onKeyUp(keyCode=$keyCode, event=$event)" }
+        return imeController.onHardwareKeyUp(keyCode, event) || super.onKeyUp(keyCode, event)
     }
 }

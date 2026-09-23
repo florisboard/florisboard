@@ -224,7 +224,13 @@
   "smartbar-actions-editor-tile[code=-999]": {
     "foreground": "var(--on-background-disabled)"
   },
+  "smartbar-actions-editor-tile[output=`@floris:action/noop_spacer`]": {
+    "foreground": "var(--on-background-disabled)"
+  },
   "smartbar-actions-editor-tile[code=-991]": {
+    "foreground": "var(--drag-marker)"
+  },
+  "smartbar-actions-editor-tile[output=`@floris:action/noop_drag_marker`]": {
     "foreground": "var(--drag-marker)"
   },
 
@@ -457,6 +463,7 @@
     "foreground": "var(--primary)"
   },
   "media-bottom-row-button": {
+    "font-size": "22sp",
     "padding": "16dp 0dp",
     "shape": "var(--shape)"
   },

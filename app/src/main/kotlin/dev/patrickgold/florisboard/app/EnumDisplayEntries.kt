@@ -23,8 +23,6 @@ import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
-import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
-import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
@@ -295,22 +293,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    HapticVibrationMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = HapticVibrationMode.USE_VIBRATOR_DIRECTLY,
-                label = stringRes(R.string.enum__haptic_vibration_mode__use_vibrator_directly),
-                description = stringRes(R.string.enum__haptic_vibration_mode__use_vibrator_directly__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-            entry(
-                key = HapticVibrationMode.USE_HAPTIC_FEEDBACK_INTERFACE,
-                label = stringRes(R.string.enum__haptic_vibration_mode__use_haptic_feedback_interface),
-                description = stringRes(R.string.enum__haptic_vibration_mode__use_haptic_feedback_interface__description),
-                showDescriptionOnlyIfSelected = true,
-            )
-        }
-    },
     KeyHintMode::class to DEFAULT to {
         listPrefEntries {
             entry(
@@ -364,30 +346,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
                 label = stringRes(R.string.enum__incognito_mode__force_on),
                 description = stringRes(R.string.enum__incognito_mode__force_on__description),
                 showDescriptionOnlyIfSelected = true,
-            )
-        }
-    },
-    InputFeedbackActivationMode::class to "audio" to {
-        listPrefEntries {
-            entry(
-                key = InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__audio_respect_system_settings),
-            )
-            entry(
-                key = InputFeedbackActivationMode.IGNORE_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__audio_ignore_system_settings),
-            )
-        }
-    },
-    InputFeedbackActivationMode::class to "haptic" to {
-        listPrefEntries {
-            entry(
-                key = InputFeedbackActivationMode.RESPECT_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__haptic_respect_system_settings),
-            )
-            entry(
-                key = InputFeedbackActivationMode.IGNORE_SYSTEM_SETTINGS,
-                label = stringRes(R.string.enum__input_feedback_activation_mode__haptic_ignore_system_settings),
             )
         }
     },

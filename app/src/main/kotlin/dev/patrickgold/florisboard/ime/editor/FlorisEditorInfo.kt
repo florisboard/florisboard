@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.editor
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.emoji2.text.EmojiCompat
+import org.k3lp.runtime.K3TextRange
 
 class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val inputAttributes = InputAttributes.wrap(base.inputType)
@@ -39,6 +40,13 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
             EditorRange.normalized(base.initialSelStart, base.initialSelEnd)
         } else {
             EditorRange.Unspecified
+        }
+
+    val initialSelection2: K3TextRange
+        get() = if (base.initialSelStart >= 0 && base.initialSelEnd >= 0) {
+            K3TextRange(base.initialSelStart, base.initialSelEnd)
+        } else {
+            K3TextRange.Zero
         }
 
     val initialCapsMode: InputAttributes.CapsMode

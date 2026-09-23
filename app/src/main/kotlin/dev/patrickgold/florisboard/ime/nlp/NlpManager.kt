@@ -167,7 +167,7 @@ class NlpManager(context: Context) {
             followingWords = followingWords,
             maxSuggestionCount = maxSuggestionCount,
             allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-            isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+            isPrivateSession = false// TODO keyboardManager.activeState.isIncognitoMode,
         )
     }
 
@@ -203,7 +203,7 @@ class NlpManager(context: Context) {
                         content = content,
                         maxCandidateCount = prefs.emoji.suggestionCandidateMaxCount.get(),
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                        isPrivateSession = false // TODO keyboardManager.activeState.isIncognitoMode,
                     )
                 }
                 else -> emptyList()
@@ -218,7 +218,7 @@ class NlpManager(context: Context) {
                         content = content,
                         maxCandidateCount = 8,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                        isPrivateSession = false // TODO keyboardManager.activeState.isIncognitoMode,
                     )
                 }
             }
@@ -283,7 +283,7 @@ class NlpManager(context: Context) {
                         content = editorInstance.activeContent,
                         maxCandidateCount = 8,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                        isPrivateSession = keyboardManager.activeState.isIncognitoMode,
+                        isPrivateSession = false // TODO keyboardManager.activeState.isIncognitoMode,
                     ).ifEmpty {
                         buildList {
                             internalSuggestionsGuard.withLock {
