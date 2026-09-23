@@ -88,13 +88,13 @@ fun ImeKeyboardBox(
         derivedStateOf { with(density) { windowSpec.keyMarginV.toPx() } }
     }
 
-    val showNumberRow by prefs.keyboard.numberRow.collectAsState()
+    val touchModelOptions by imeController.activeTouchModelOptions.collectAsState()
     var activeTouchModel by remember {
-        mutableStateOf(imeController.touchModelCache.getFor(model, showNumberRow) ?: TouchModel.Empty)
+        mutableStateOf(imeController.touchModelCache.getFor(model, touchModelOptions) ?: TouchModel.Empty)
     }
-    LaunchedEffect(model, showNumberRow) {
+    LaunchedEffect(model, touchModelOptions) {
         activeTouchModel = withContext(Dispatchers.Default) {
-            imeController.touchModelCache.getOrComputeFor(model, showNumberRow)
+            imeController.touchModelCache.getOrComputeFor(model, touchModelOptions)
         }
     }
 
@@ -261,6 +261,25 @@ private fun ImeKeyboardKeyBox(
                 .align(Alignment.Center),
             display = display,
         )
+        if (touchKey.longPressKeyHint != null) {
+            Display3(
+                elementName = FlorisImeUi.KeyHint.elementName,
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(touchKey.longPressKeyHintPlacement.alignment),
+                display = touchKey.longPressKeyHint,
+            )
+        }
+        if (touchKey.multiTapKeyHint != null) {
+            Display3(
+                elementName = FlorisImeUi.KeyHint.elementName,
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(touchKey.multiTapKeyHintPlacement.alignment),
+                display = touchKey.multiTapKeyHint,
+            )
+        }
+        // TODO flick hints
     }
     LongPressBox(longPress, attributes = attributes)
 }

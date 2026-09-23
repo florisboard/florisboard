@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.key
+package dev.patrickgold.florisboard.ime.keyboard3.hint
 
-/**
- * Enum for the key hint modes.
- */
-enum class KeyHintMode {
-    DISABLED,
-    HINT_PRIORITY,
-    ACCENT_PRIORITY,
-    SMART_PRIORITY;
+import org.k3lp.model.flick.K3FlickDirection
+
+enum class FlickKeyHintPlacement(
+    private val predicate: (K3FlickDirection) -> Boolean,
+) {
+    CARDINAL({ it.isCardinal }),
+    INTERCARDINAL({ it.isIntercardinal }),
+    CARDINAL_AND_INTERCARDINAL({ true });
+
+    fun evaluate(directions: List<K3FlickDirection>): Boolean {
+        return directions.size == 1 && predicate(directions[0])
+    }
 }

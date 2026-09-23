@@ -21,6 +21,8 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
+import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -110,6 +112,11 @@ class TouchKey(
     val isSuitableForSimplePopup: Boolean,
     val isSuitableForExtendedPopup: Boolean,
     val extendedPopupKeys: List<TouchPopupKey>,
+    val longPressKeyHint: K3StringOrDescriptor?,
+    val longPressKeyHintPlacement: KeyHintPlacement,
+    val multiTapKeys: List<K3Key>,
+    val multiTapKeyHint: K3StringOrDescriptor?,
+    val multiTapKeyHintPlacement: KeyHintPlacement,
 ) {
     val isSuitableForPopup: Boolean
         get() = isSuitableForSimplePopup || isSuitableForExtendedPopup
@@ -128,15 +135,15 @@ class TouchPopupKey(
 context(scope: CoroutineScope)
 suspend fun computeTouchModel(
     model: K3Model,
-    showNumberRow: Boolean,
+    options: TouchModelOptions,
 ): TouchModel {
     val layersGroups = model.layersByForm.touch
     return when (layersGroups.size) {
         0 -> TouchModel.Empty
-        1 -> TouchModel.Single(computeTouchKeyboard(model, layersGroups[0], showNumberRow))
+        1 -> TouchModel.Single(computeTouchKeyboard(model, layersGroups[0], options))
         else -> {
             val keyboards = layersGroups.map { layersGroup ->
-                scope.async { computeTouchKeyboard(model, layersGroup, showNumberRow) }
+                scope.async { computeTouchKeyboard(model, layersGroup, options) }
             }.awaitAll()
             TouchModel.Multiple(keyboards)
         }
@@ -151,11 +158,11 @@ private fun List<K3KeyId>.withKeysResolved(model: K3Model) = map { keyId ->
 private fun computeTouchKeyboard(
     model: K3Model,
     layersGroup: K3TouchLayers,
-    showNumberRow: Boolean,
+    options: TouchModelOptions,
 ): TouchKeyboard {
     val layers = layersGroup.layers
 
-    val numberRow = if (showNumberRow) {
+    val numberRow = if (options.showNumberRow) {
         val numberRowLayer = layers[ImeLayerIds.Numrow]
         if (numberRowLayer != null && numberRowLayer.rows.size == 1) {
             numberRowLayer.rows[0].withKeysResolved(model)
@@ -254,6 +261,7 @@ private fun computeTouchKeyboard(
                         }
                     }
                 } ?: emptyList()
+                val multiTapKeys = key.multiTapKeyIds?.withKeysResolved(model) ?: emptyList()
                 val display = computeKeyDisplay(model, key)
                 val touchKey = TouchKey(
                     bounds = keyBoundsPx,
@@ -266,6 +274,14 @@ private fun computeTouchKeyboard(
                     isSuitableForSimplePopup = key.isSuitableForSimplePopup(),
                     isSuitableForExtendedPopup = popups.isNotEmpty(),
                     extendedPopupKeys = popups,
+                    longPressKeyHint = if (options.longPressKeyHintEnabled) popups.firstOrNull()?.label else null,
+                    longPressKeyHintPlacement = options.longPressKeyHintPlacement,
+                    multiTapKeys = multiTapKeys, // TODO multtap support in UI
+                    multiTapKeyHint = if (options.multiTapKeyHintEnabled) {
+                        multiTapKeys.firstOrNull()?.let { computeKeyDisplay(model, it) }
+                    } else null,
+                    multiTapKeyHintPlacement = options.multiTapKeyHintPlacement,
+                    // TODO flick support
                 )
                 touchKeys.add(touchKey)
                 currentX += keyWidthPx

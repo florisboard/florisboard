@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
@@ -44,8 +45,6 @@ import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
@@ -461,22 +460,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__number_row",
             default = false,
         )
-        val hintedNumberRowEnabled = boolean(
-            key = "keyboard__hinted_number_row_enabled",
-            default = true,
-        )
-        val hintedNumberRowMode = enum(
-            key = "keyboard__hinted_number_row_mode",
-            default = KeyHintMode.SMART_PRIORITY,
-        )
-        val hintedSymbolsEnabled = boolean(
-            key = "keyboard__hinted_symbols_enabled",
-            default = true,
-        )
-        val hintedSymbolsMode = enum(
-            key = "keyboard__hinted_symbols_mode",
-            default = KeyHintMode.SMART_PRIORITY,
-        )
         val utilityKeyEnabled = boolean(
             key = "keyboard__utility_key_enabled",
             default = true,
@@ -517,10 +500,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__popup_enabled",
             default = true,
         )
-        val mergeHintPopupsEnabled = boolean(
-            key = "keyboard__merge_hint_popups_enabled",
-            default = false,
-        )
         val longPressDelay = int(
             key = "keyboard__long_press_delay",
             default = 300,
@@ -534,19 +513,30 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
         )
 
-        fun keyHintConfiguration(): KeyHintConfiguration {
-            return KeyHintConfiguration(
-                numberHintMode = when {
-                    hintedNumberRowEnabled.get() -> hintedNumberRowMode.get()
-                    else -> KeyHintMode.DISABLED
-                },
-                symbolHintMode = when {
-                    hintedSymbolsEnabled.get() -> hintedSymbolsMode.get()
-                    else -> KeyHintMode.DISABLED
-                },
-                mergeHintPopups = mergeHintPopupsEnabled.get(),
-            )
-        }
+        val longPressKeyHintEnabled = boolean(
+            key = "keyboard__long_press_key_hint_enabled",
+            default = TouchModelOptions.Default.longPressKeyHintEnabled,
+        )
+        val longPressKeyHintPlacement = enum(
+            key = "keyboard__long_press_key_hint_placement",
+            default = TouchModelOptions.Default.longPressKeyHintPlacement,
+        )
+        val multiTapKeyHintEnabled = boolean(
+            key = "keyboard__multi_tap_key_hint_enabled",
+            default = TouchModelOptions.Default.multiTapKeyHintEnabled,
+        )
+        val multiTapKeyHintPlacement = enum(
+            key = "keyboard__multi_tap_key_hint_placement",
+            default = TouchModelOptions.Default.multiTapKeyHintPlacement,
+        )
+        val flickKeyHintEnabled = boolean(
+            key = "keyboard__flick_key_hint_enabled",
+            default = TouchModelOptions.Default.flickKeyHintEnabled,
+        )
+        val flickKeyHintPlacement = enum(
+            key = "keyboard__flick_key_hint_placement",
+            default = TouchModelOptions.Default.flickKeyHintPlacement,
+        )
     }
 
     val localization = Localization()

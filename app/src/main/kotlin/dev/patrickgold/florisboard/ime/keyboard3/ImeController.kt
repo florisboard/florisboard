@@ -29,6 +29,9 @@ import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
+import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
@@ -38,7 +41,9 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.kotlin.collectIn
 import org.k3lp.lib.text.K3Descriptor
@@ -70,6 +75,26 @@ class ImeController(
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val breakIterators = BreakIterators()
     private val expectedContentQueue = ExpectedContentQueue()
+
+    val activeTouchModelOptions = combine<Any, TouchModelOptions>(
+        prefs.keyboard.numberRow.asFlow(),
+        prefs.keyboard.longPressKeyHintEnabled.asFlow(),
+        prefs.keyboard.longPressKeyHintPlacement.asFlow(),
+        prefs.keyboard.multiTapKeyHintEnabled.asFlow(),
+        prefs.keyboard.multiTapKeyHintPlacement.asFlow(),
+        prefs.keyboard.flickKeyHintEnabled.asFlow(),
+        prefs.keyboard.flickKeyHintPlacement.asFlow(),
+    ) { values ->
+        TouchModelOptions(
+            showNumberRow = values[0] as Boolean,
+            longPressKeyHintEnabled = values[1] as Boolean,
+            longPressKeyHintPlacement = values[2] as KeyHintPlacement,
+            multiTapKeyHintEnabled = values[3] as Boolean,
+            multiTapKeyHintPlacement = values[4] as KeyHintPlacement,
+            flickKeyHintEnabled = values[5] as Boolean,
+            flickKeyHintPlacement = values[6] as FlickKeyHintPlacement,
+        )
+    }.stateIn(scope, SharingStarted.Eagerly, TouchModelOptions.Default)
 
     init {
         combine(

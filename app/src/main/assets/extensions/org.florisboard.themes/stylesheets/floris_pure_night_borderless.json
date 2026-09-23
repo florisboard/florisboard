@@ -106,7 +106,7 @@
     "foreground": "var(--on-surface-variant)",
     "font-size": "12sp",
     "font-family": "monospace",
-    "padding": "0dp 1dp 1dp 0dp",
+    "padding": "1dp",
     "text-max-lines": "1"
   },
   "key-popup-box": {

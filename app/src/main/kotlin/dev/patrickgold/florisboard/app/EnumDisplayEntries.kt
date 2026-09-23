@@ -26,6 +26,8 @@ import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -36,7 +38,6 @@ import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
@@ -292,25 +293,19 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    KeyHintMode::class to DEFAULT to {
+    FlickKeyHintPlacement::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = KeyHintMode.ACCENT_PRIORITY,
-                label = stringRes(R.string.enum__key_hint_mode__accent_priority),
-                description = stringRes(R.string.enum__key_hint_mode__accent_priority__description),
-                showDescriptionOnlyIfSelected = true,
+                key = FlickKeyHintPlacement.CARDINAL,
+                label = "CARDINAL",
             )
             entry(
-                key = KeyHintMode.HINT_PRIORITY,
-                label = stringRes(R.string.enum__key_hint_mode__hint_priority),
-                description = stringRes(R.string.enum__key_hint_mode__hint_priority__description),
-                showDescriptionOnlyIfSelected = true,
+                key = FlickKeyHintPlacement.INTERCARDINAL,
+                label = "INTERCARDINAL",
             )
             entry(
-                key = KeyHintMode.SMART_PRIORITY,
-                label = stringRes(R.string.enum__key_hint_mode__smart_priority),
-                description = stringRes(R.string.enum__key_hint_mode__smart_priority__description),
-                showDescriptionOnlyIfSelected = true,
+                key = FlickKeyHintPlacement.CARDINAL_AND_INTERCARDINAL,
+                label = "CARDINAL_AND_INTERCARDINAL",
             )
         }
     },
@@ -377,6 +372,42 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = ImeWindowMode.FLOATING,
                 label = stringRes(R.string.enum__ime_window_mode__floating),
+            )
+        }
+    },
+    KeyHintPlacement::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = KeyHintPlacement.TOP_START,
+                label = "TOP_START",
+            )
+            entry(
+                key = KeyHintPlacement.TOP_CENTER,
+                label = "TOP_CENTER",
+            )
+            entry(
+                key = KeyHintPlacement.TOP_END,
+                label = "TOP_END",
+            )
+            entry(
+                key = KeyHintPlacement.CENTER_START,
+                label = "CENTER_START",
+            )
+            entry(
+                key = KeyHintPlacement.CENTER_END,
+                label = "CENTER_END",
+            )
+            entry(
+                key = KeyHintPlacement.BOTTOM_START,
+                label = "BOTTOM_START",
+            )
+            entry(
+                key = KeyHintPlacement.BOTTOM_CENTER,
+                label = "BOTTOM_CENTER",
+            )
+            entry(
+                key = KeyHintPlacement.BOTTOM_END,
+                label = "BOTTOM_END",
             )
         }
     },

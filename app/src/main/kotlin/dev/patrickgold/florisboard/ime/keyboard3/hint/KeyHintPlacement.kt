@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.key
+package dev.patrickgold.florisboard.ime.keyboard3.hint
 
-/**
- * Helper class for summarizing all hint preferences in one single object.
- */
-data class KeyHintConfiguration(
-    val symbolHintMode: KeyHintMode,
-    val numberHintMode: KeyHintMode,
-    val mergeHintPopups: Boolean
-) {
-    companion object {
-        val HINTS_DISABLED = KeyHintConfiguration(KeyHintMode.DISABLED, KeyHintMode.DISABLED, false)
-    }
+import androidx.compose.ui.Alignment
+
+enum class KeyHintPlacement(val alignment: Alignment) {
+    TOP_START(Alignment.TopStart),
+    TOP_CENTER(Alignment.TopCenter),
+    TOP_END(Alignment.TopEnd),
+    CENTER_START(Alignment.CenterStart),
+    CENTER_END(Alignment.CenterEnd),
+    BOTTOM_START(Alignment.BottomStart),
+    BOTTOM_CENTER(Alignment.BottomCenter),
+    BOTTOM_END(Alignment.BottomEnd),
 }

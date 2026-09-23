@@ -23,9 +23,10 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -49,21 +50,6 @@ fun KeyboardScreen() = FlorisScreen {
             prefs.keyboard.numberRow,
             title = stringRes(R.string.pref__keyboard__number_row__label),
             summary = stringRes(R.string.pref__keyboard__number_row__summary),
-        )
-        ListPreference(
-            listPref = prefs.keyboard.hintedNumberRowMode,
-            switchPref = prefs.keyboard.hintedNumberRowEnabled,
-            title = stringRes(R.string.pref__keyboard__hinted_number_row_mode__label),
-            summarySwitchDisabled = stringRes(R.string.state__disabled),
-            entries = enumDisplayEntriesOf(KeyHintMode::class),
-            enabledIf = { prefs.keyboard.numberRow.isFalse() }
-        )
-        ListPreference(
-            listPref = prefs.keyboard.hintedSymbolsMode,
-            switchPref = prefs.keyboard.hintedSymbolsEnabled,
-            title = stringRes(R.string.pref__keyboard__hinted_symbols_mode__label),
-            summarySwitchDisabled = stringRes(R.string.state__disabled),
-            entries = enumDisplayEntriesOf(KeyHintMode::class),
         )
         SwitchPreference(
             prefs.keyboard.utilityKeyEnabled,
@@ -132,11 +118,6 @@ fun KeyboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__keyboard__popup_enabled__label),
                 summary = stringRes(R.string.pref__keyboard__popup_enabled__summary),
             )
-            SwitchPreference(
-                prefs.keyboard.mergeHintPopupsEnabled,
-                title = stringRes(R.string.pref__keyboard__merge_hint_popups_enabled__label),
-                summary = stringRes(R.string.pref__keyboard__merge_hint_popups_enabled__summary),
-            )
             DialogSliderPreference(
                 prefs.keyboard.longPressDelay,
                 title = stringRes(R.string.pref__keyboard__long_press_delay__label),
@@ -149,6 +130,42 @@ fun KeyboardScreen() = FlorisScreen {
                 prefs.keyboard.spaceBarSwitchesToCharacters,
                 title = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__label),
                 summary = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__summary),
+            )
+        }
+
+        PreferenceGroup(title = "Key hints") {
+            SwitchPreference(
+                prefs.keyboard.longPressKeyHintEnabled,
+                title = "Show long press hints",
+                summary = "Displays the default long press key as a hint",
+            )
+            ListPreference(
+                prefs.keyboard.longPressKeyHintPlacement,
+                title = "Long press hint placement",
+                entries = enumDisplayEntriesOf(KeyHintPlacement::class),
+                enabledIf = { prefs.keyboard.longPressKeyHintEnabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.keyboard.multiTapKeyHintEnabled,
+                title = "Show multi tap hints",
+                summary = "Displays the multi tap key as a hint",
+            )
+            ListPreference(
+                prefs.keyboard.multiTapKeyHintPlacement,
+                title = "Multi tap hint placement",
+                entries = enumDisplayEntriesOf(KeyHintPlacement::class),
+                enabledIf = { prefs.keyboard.multiTapKeyHintEnabled isEqualTo true },
+            )
+            SwitchPreference(
+                prefs.keyboard.flickKeyHintEnabled,
+                title = "Show flick hints",
+                summary = "Displays the flick key as a hint",
+            )
+            ListPreference(
+                prefs.keyboard.flickKeyHintPlacement,
+                title = "Flick hint placement",
+                entries = enumDisplayEntriesOf(FlickKeyHintPlacement::class),
+                enabledIf = { prefs.keyboard.flickKeyHintEnabled isEqualTo true },
             )
         }
     }
