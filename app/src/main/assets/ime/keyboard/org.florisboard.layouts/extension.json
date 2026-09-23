@@ -45,6 +45,12 @@
         "direction": "ltr"
       },
       {
+        "id": "azerbaijani_alt",
+        "label": "Azerbaijani Alt",
+        "authors": [ "os-guy-original" ],
+        "direction": "ltr"
+      },
+      {
         "id": "azerty",
         "label": "AZERTY",
         "authors": [ "patrickgold" ],
