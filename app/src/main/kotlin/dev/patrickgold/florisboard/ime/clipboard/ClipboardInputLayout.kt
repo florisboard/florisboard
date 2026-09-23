@@ -125,6 +125,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import kotlin.time.Duration.Companion.milliseconds
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -166,7 +167,7 @@ fun ClipboardInputLayout(
     fun isPopupSurfaceActive() = popupItem != null || showClearAllHistory
 
     LaunchedEffect(isFilterRowShown) {
-        delay(AnimationDuration.toLong())
+        delay(AnimationDuration.milliseconds)
         if (!isFilterRowShown) {
             activeFilterTypes.clear()
         }
@@ -352,7 +353,7 @@ fun ClipboardInputLayout(
                     )
                 }
             } else {
-                val text = item.stringRepresentation()
+                val text = remember(item) { item.stringRepresentation() }
                 Column {
                     ClipTextItemDescription(
                         elementName = FlorisImeUi.ClipboardItemDescription.elementName,
