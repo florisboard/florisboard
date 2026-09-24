@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readFromUri
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -176,20 +177,18 @@ class FlorisAppActivity : ComponentActivity() {
 
     @Composable
     private fun AppContent() {
-        val extensionController = appContext.extensionController
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
-        val storageController = appContext.storageController
-        val themeController = appContext.themeController
 
         val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
-            LocalExtensionController provides extensionController,
+            LocalExtensionController provides appContext.extensionController,
+            LocalImeController provides appContext.imeController,
             LocalNavController provides navController,
             LocalPreviewFieldController provides previewFieldController,
-            LocalStorageController provides storageController,
-            LocalThemeController provides themeController,
+            LocalStorageController provides appContext.storageController,
+            LocalThemeController provides appContext.themeController,
         ) {
             ProvideDefaultDialogPrefStrings(
                 confirmLabel = stringRes(R.string.action__ok),
@@ -227,7 +226,7 @@ class FlorisAppActivity : ComponentActivity() {
                         intent.clipData!!.getItemAt(0).uri
                     }
                     try {
-                        val storage = storageController.activeStorage.value as AndroidStorage
+                        val storage = appContext.storageController.activeStorage.value as AndroidStorage
                         val workspaceRef = storage.createWorkspace()
                         storage.readFromUri(uri, workspaceRef)
                         navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspaceRef.pathName))

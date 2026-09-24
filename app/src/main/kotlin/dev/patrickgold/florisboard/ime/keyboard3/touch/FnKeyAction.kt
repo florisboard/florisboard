@@ -22,6 +22,5 @@ import org.k3lp.lib.text.K3Descriptor
 @Serializable
 data class FnKeyAction(
     val output: K3Descriptor,
-    val stretch: Boolean = false,
     val width: Double = 1.0,
 )

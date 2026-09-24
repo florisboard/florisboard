@@ -35,6 +35,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -57,10 +58,13 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyType
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
+import dev.patrickgold.florisboard.ime.keyboard3.touch.computeKeyDisplay
 import dev.patrickgold.florisboard.ime.keyboard3.ui.staticIcon3
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -71,11 +75,12 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.stringRes
+import org.k3lp.lib.text.K3Descriptor
+import org.k3lp.model.K3Model
 import kotlin.math.roundToInt
 
 private const val ACTION_HEADLINE = "@fl:action/"
@@ -84,10 +89,13 @@ private const val ACTION_HEADLINE = "@fl:action/"
 fun FnKeyScreen() = FlorisScreen {
     title = stringRes(R.string.settings__fn_key__title)
     previewFieldVisible = true
-    iconSpaceReserved = false
 
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
+
+    val imeController = LocalImeController.current
+    val imeState by imeController.activeState.collectAsState()
+    val model by remember { derivedStateOf { imeState.model } }
 
     val fnKeyEnabled by prefs.keyboard.fnKeyEnabled.collectAsState()
     val fnKeyType by prefs.keyboard.fnKeyType.collectAsState()
@@ -140,6 +148,7 @@ fun FnKeyScreen() = FlorisScreen {
             enabledIf = { prefs.keyboard.fnKeyEnabled isEqualTo true },
         ) {
             ActionPreference(
+                model = model,
                 action = fnKeyArrangement.simpleAction,
                 onClick = { showSimpleActionEditor = true },
             )
@@ -162,7 +171,7 @@ fun FnKeyScreen() = FlorisScreen {
         }
 
         when (fnKeyType) {
-            FnKeyType.MULTI_KEY -> MultiKeyEditor(fnKeyArrangement, scope)
+            FnKeyType.MULTI_KEY -> MultiKeyEditor(model, fnKeyArrangement, scope)
             FnKeyType.LAYER_KEY -> LayerKeyEditor(fnKeyArrangement, scope)
         }
 
@@ -192,6 +201,7 @@ fun FnKeyScreen() = FlorisScreen {
 
 @Composable
 private fun PreferenceUiScope<FlorisPreferenceModel>.MultiKeyEditor(
+    model: K3Model,
     arrangement: FnKeyArrangement,
     scope: CoroutineScope,
 ) {
@@ -205,6 +215,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.MultiKeyEditor(
 
         for ((index, action) in longPressActions.withIndex()) key(action) {
             ActionPreference(
+                model = model,
                 action = action,
                 onClick = { showEditActionDialog = action },
                 trailing = {
@@ -338,16 +349,19 @@ private val OutputOptions by lazy {
 
 @Composable
 private fun ActionPreference(
+    model: K3Model,
     action: FnKeyAction,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     trailing: @Composable (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val display = remember(model, action) {
+        computeKeyDisplay(model, action.output) as? K3Descriptor ?: ImeIcons.Noop
+    }
     Preference(
         modifier = modifier,
-        icon = staticIcon3(action.output, context),
-        iconSpaceReserved = true,
+        icon = staticIcon3(display, context),
         overlineText = ACTION_HEADLINE,
         title = action.output.name,
         onClick = onClick,
@@ -371,7 +385,6 @@ private fun ActionEditorDialog(
             ?: 0
         mutableIntStateOf(initialIndex)
     }
-    var stretch by remember { mutableStateOf(initial?.stretch ?: false) }
     var width by remember { mutableDoubleStateOf(initial?.width ?: 1.0) }
     val confirmEnabled by remember { derivedStateOf { outputIndex > 0 } }
 
@@ -386,7 +399,6 @@ private fun ActionEditorDialog(
         onConfirm = {
             val newAction = FnKeyAction(
                 output = OutputOptions[outputIndex],
-                stretch = stretch,
                 width = width,
             )
             if (initial == null) {
@@ -426,17 +438,6 @@ private fun ActionEditorDialog(
                 },
             )
             if (allowExtendedConfig) {
-                Row(
-                    modifier = Modifier
-                        .toggleable(stretch) { stretch  = it },
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text("stretch?")
-                    Switch(
-                        checked = stretch,
-                        onCheckedChange = null,
-                    )
-                }
                 Row(
                     modifier = Modifier,
                     verticalAlignment = Alignment.CenterVertically,

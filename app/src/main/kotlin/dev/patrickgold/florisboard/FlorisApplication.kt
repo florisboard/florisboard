@@ -106,7 +106,7 @@ class FlorisApplication : Application() {
 
             storageController = AndroidStorageController(this)
             extensionController = ExtensionController(storageController)
-            imeController = ImeController()
+            imeController = ImeController(storageController)
             themeController = ThemeController(
                 storageController,
                 extensionController,

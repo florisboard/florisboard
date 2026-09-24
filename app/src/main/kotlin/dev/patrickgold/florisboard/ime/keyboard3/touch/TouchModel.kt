@@ -177,7 +177,6 @@ private fun FnKeyAction.asK3Key(): K3Key {
     return K3Key(
         id = K3KeyId(hashCode().toString()),
         output = output,
-        stretch = stretch,
         width = width,
         origin = TouchModelComputeRef,
     )
@@ -306,11 +305,11 @@ private fun computeTouchKeyboard(
                         } ?: emptyList()
                     }
                     val multiTapKeys = when {
-                        isFnKey -> emptyList()
+                        isFnKey -> emptyList() // TODO
                         else -> key.multiTapKeyIds?.withKeysResolved(model) ?: emptyList()
                     }
                     val flicks = when {
-                        isFnKey -> null
+                        isFnKey -> null // TODO
                         else -> key.flickId?.let { model.flicks.byFlickId[it] }
                     }
                     val attrs = if (isFnKey) options.fnKeyArrangement.simpleAction.asK3Key() else key
@@ -336,7 +335,6 @@ private fun computeTouchKeyboard(
                     )
                     touchKeys.add(touchKey)
                     currentX += keyWidthPx
-                    // TODO
                 }
                 currentY += keyHeight
             }
@@ -364,6 +362,10 @@ private fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor 
         }
     }
     return key.output ?: key.id.value.asK3String()
+}
+
+fun computeKeyDisplay(model: K3Model, output: K3StringOrDescriptor): K3StringOrDescriptor {
+    return model.displays.byOutput[output]?.display ?: output
 }
 
 fun K3StringOrDescriptor.isRepeatable(): Boolean {

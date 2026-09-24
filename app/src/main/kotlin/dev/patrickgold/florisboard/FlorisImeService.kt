@@ -48,7 +48,6 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.keyboard3.isFullscreenInputRequired
 import dev.patrickgold.florisboard.ime.keyboard3.ImeEditor
-import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
@@ -65,10 +64,8 @@ import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.showShortToastSync
@@ -309,10 +306,6 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         prefs.physicalKeyboard.showOnScreenKeyboard.asFlow().collectIn(lifecycleScope) {
             updateInputViewShown()
-        }
-
-        lifecycleScope.launch(Dispatchers.Default) {
-            loadFoundationKeyboard(this@FlorisImeService, imeController)
         }
 
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes

@@ -28,7 +28,9 @@ import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
 import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.io.StorageController
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
@@ -46,6 +48,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.florisboard.lib.kotlin.collectIn
 import org.k3lp.lib.text.K3Descriptor
@@ -68,6 +71,7 @@ val LocalImeController = staticCompositionLocalOf<ImeController> {
 }
 
 class ImeController(
+    storageController: StorageController,
     initialState: ImeState = ImeState(),
     val touchModelCache: TouchModelCache = TouchModelCache(),
 ) : K3InputMethod<ImeState, ImeEditor, ImeController.UpdateImeStateScope>(
@@ -117,6 +121,11 @@ class ImeController(
                         .withDebugShowDragAndDropHelpers(showDragAndDropHelpers),
                 )
             }
+        }
+
+        // TODO proper stateful compilation
+        scope.launch {
+            loadFoundationKeyboard(this@ImeController, storageController.activeStorage.value)
         }
     }
 
