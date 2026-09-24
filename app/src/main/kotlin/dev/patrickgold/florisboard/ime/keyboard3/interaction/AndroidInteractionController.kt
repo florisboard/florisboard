@@ -146,7 +146,7 @@ private class AndroidInteractionController(
     override fun getLongPressTimeout(output: K3StringOrDescriptor?): Duration {
         val factor = when (output) {
             ASCII_SPACE -> 2.5
-            ImeActions.LanguageSwitch -> 2.0
+            ImeActions.SwitchToNextSubtype -> 2.0
             else -> 1.0
         }
         return timingOptions.longPressTimeout * factor

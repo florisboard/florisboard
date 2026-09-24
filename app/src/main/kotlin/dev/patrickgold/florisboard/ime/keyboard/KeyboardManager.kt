@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -312,44 +311,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 //        }
 //        revertPreviouslyAcceptedCandidate()
 //        editorInstance.deleteForwards(unit)
-    }
-
-    /**
-     * Handles a [KeyCode.ENTER] event.
-     */
-    private fun handleEnter() {
-        val info = editorInstance.activeInfo
-        val isShiftPressed = inputEventDispatcher.isPressed(KeyCode.SHIFT)
-        if (editorInstance.tryPerformEnterCommitRaw()) {
-            return
-        }
-        if (info.imeOptions.flagNoEnterAction || info.inputAttributes.flagTextMultiLine && isShiftPressed) {
-            editorInstance.performEnter()
-        } else {
-            when (val action = info.imeOptions.action) {
-                ImeOptions.Action.DONE,
-                ImeOptions.Action.GO,
-                ImeOptions.Action.NEXT,
-                ImeOptions.Action.PREVIOUS,
-                ImeOptions.Action.SEARCH,
-                ImeOptions.Action.SEND -> {
-                    editorInstance.performEnterAction(action)
-                }
-                else -> editorInstance.performEnter()
-            }
-        }
-    }
-
-    /**
-     * Handles a [KeyCode.LANGUAGE_SWITCH] event. Also handles if the language switch should cycle
-     * FlorisBoard internal or system-wide.
-     */
-    private fun handleLanguageSwitch() {
-        when (prefs.keyboard.utilityKeyAction.get()) {
-            UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-            UtilityKeyAction.SWITCH_LANGUAGE -> subtypeManager.switchToNextSubtype()
-            else -> FlorisImeService.switchToNextInputMethod()
-        }
     }
 
     /**
@@ -738,7 +699,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 return true
             }
             KeyEvent.KEYCODE_ENTER -> {
-                handleEnter()
                 return true
             }
             KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {

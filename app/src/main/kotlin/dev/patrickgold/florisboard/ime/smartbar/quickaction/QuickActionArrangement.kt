@@ -105,7 +105,7 @@ data class QuickActionArrangement(
                 QuickAction.InsertK3Descriptor(ImeActions.ClipboardCut),
                 QuickAction.InsertK3Descriptor(ImeActions.ClipboardPaste),
                 QuickAction.InsertK3Descriptor(ImeActions.SelectAll),
-                QuickAction.InsertK3Descriptor(ImeActions.LanguageSwitch),
+                QuickAction.InsertK3Descriptor(ImeActions.SwitchToNextSubtype),
                 QuickAction.InsertK3Descriptor(ImeActions.Delete),
                 QuickAction.InsertK3Descriptor(ImeActions.HideImeWindow),
             ),

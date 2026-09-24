@@ -55,10 +55,16 @@ object ImeActions {
     val Undo = flAction("undo")
     val Redo = flAction("redo")
 
-    val LanguageSwitch = flAction("language_switch")
-    // TODO subtype rework?
-
     val Settings = flAction("settings")
+
+    val ShowSubtypePicker = flAction("show_subtype_picker")
+    val SwitchToPrevSubtype = flAction("switch_to_prev_subtype")
+    val SwitchToNextSubtype = flAction("switch_to_next_subtype")
+
+    val ShowInputMethodPicker = flAction("show_input_method_picker")
+    val SwitchToPrevInputMethod = flAction("switch_to_prev_input_method")
+    val SwitchToNextInputMethod = flAction("switch_to_next_input_method")
+
     val ToggleActionsEditor = flAction("toggle_actions_editor")
     val ToggleActionsOverflow = flAction("toggle_actions_overflow")
     val ToggleAutocorrect = flAction("toggle_autocorrect")

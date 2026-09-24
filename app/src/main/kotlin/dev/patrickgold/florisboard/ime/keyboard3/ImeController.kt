@@ -275,13 +275,22 @@ class ImeController(
         override fun emitDescriptor(descriptor: K3Descriptor) {
             val windowController = FlorisImeService.windowControllerOrNull()
             when (descriptor) {
+                // TODO once k3lp supports this remove
+                ImeActions.Delete -> emitForwardDelete()
                 // TODO evaluate use of modern cursor anchor API instead of sending raw key events
                 ImeActions.ArrowDown -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
                 ImeActions.ArrowLeft -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
                 ImeActions.ArrowRight -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
                 ImeActions.ArrowUp -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
-                ImeActions.Delete -> emitForwardDelete()
-                ImeActions.Settings -> FlorisImeService.launchSettings()
+                ImeActions.ClipboardCopy -> {} // TODO
+                ImeActions.ClipboardCut -> {} // TODO
+                ImeActions.ClipboardPaste -> {} // TODO
+                ImeActions.ClipboardClearHistory -> {} // TODO
+                ImeActions.ClipboardClearFullHistory -> {} // TODO
+                ImeActions.ClipboardClearPrimaryClip -> {} // TODO
+                ImeActions.SelectAll -> {} // TODO
+                ImeActions.ShowImeWindow -> FlorisImeService.showUi()
+                ImeActions.HideImeWindow -> FlorisImeService.hideUi()
                 ImeActions.ShowTextPanel -> {
                     state = state.copy(
                         flags = state.flags
@@ -300,8 +309,13 @@ class ImeController(
                             .withImeUiMode(ImeUiMode.CLIPBOARD),
                     )
                 }
-                ImeActions.ShowImeWindow -> FlorisImeService.showUi()
-                ImeActions.HideImeWindow -> FlorisImeService.hideUi()
+                ImeActions.Settings -> FlorisImeService.launchSettings()
+                ImeActions.ShowInputMethodPicker -> FlorisImeService.showImePicker()
+                ImeActions.SwitchToPrevInputMethod -> FlorisImeService.switchToPrevInputMethod()
+                ImeActions.SwitchToNextInputMethod -> FlorisImeService.switchToNextInputMethod()
+                ImeActions.ShowSubtypePicker -> {} // TODO
+                ImeActions.SwitchToPrevSubtype -> {} // TODO
+                ImeActions.SwitchToNextSubtype -> {} // TODO
                 ImeActions.ToggleActionsEditor -> {
                     state = state.copy(
                         flags = state.flags
