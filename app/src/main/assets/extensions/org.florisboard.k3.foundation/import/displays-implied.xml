@@ -56,9 +56,10 @@ the mapping to a different display value.
 
     <display output="@fl:action/undo" display="@fl:icon/undo" />
     <display output="@fl:action/redo" display="@fl:icon/redo" />
-
-    <display output="@fl:action/language_switch" display="@fl:icon/language_switch" />
     <display output="@fl:action/settings" display="@fl:icon/settings" />
+
+    <display output="@fl:action/switch_to_next_subtype" display="@fl:icon/language_switch" />
+
     <display output="@fl:action/toggle_actions_editor" display="TODO" />
     <display output="@fl:action/toggle_actions_overflow" display="@fl:icon/toggle_actions_overflow" />
     <display output="@fl:action/toggle_autocorrect" display="@fl:icon/toggle_autocorrect" />

@@ -21,11 +21,11 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
-import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import org.k3lp.lib.meta.source.SourceFileRef
 import org.k3lp.lib.text.K3Descriptor
 import org.k3lp.lib.text.K3String
 import org.k3lp.lib.text.K3StringOrDescriptor
@@ -36,6 +36,7 @@ import org.k3lp.model.key.K3Key
 import org.k3lp.model.key.K3KeyId
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.model.layer.K3TouchLayers
+import kotlin.contracts.contract
 import kotlin.math.roundToInt
 
 sealed interface TouchModel {
@@ -120,6 +121,10 @@ class TouchKey(
 ) {
     val isSuitableForPopup: Boolean
         get() = isSuitableForSimplePopup || isSuitableForExtendedPopup
+
+    companion object {
+        val FnKeyId = K3KeyId("fn-key")
+    }
 }
 
 class TouchPopupKey(
@@ -150,9 +155,32 @@ suspend fun computeTouchModel(
     }
 }
 
-private fun List<K3KeyId>.withKeysResolved(model: K3Model) = map { keyId ->
-    val key = model.keys.byKeyId[keyId]
-    requireNotNull(key) { "unexpected runtime error: model contract broken" }
+private inline fun List<K3KeyId>.withKeysResolved(
+    model: K3Model,
+    predicate: (K3Key) -> Boolean = { true },
+): List<K3Key> {
+    contract {
+        callsInPlace(predicate)
+    }
+    return mapNotNull { keyId ->
+        val key = model.keys.byKeyId[keyId]
+        key?.takeIf(predicate)
+    }
+}
+
+private data object TouchModelComputeRef : SourceFileRef {
+    override fun toString(): String {
+        return "TouchModelComputeRef"
+    }
+}
+private fun FnKeyAction.asK3Key(): K3Key {
+    return K3Key(
+        id = K3KeyId(hashCode().toString()),
+        output = output,
+        stretch = stretch,
+        width = width,
+        origin = TouchModelComputeRef,
+    )
 }
 
 private fun computeTouchKeyboard(
@@ -161,134 +189,160 @@ private fun computeTouchKeyboard(
     options: TouchModelOptions,
 ): TouchKeyboard {
     val layers = layersGroup.layers
+    val keyPredicate = { key: K3Key -> options.fnKeyEnabled || key.id != TouchKey.FnKeyId }
 
     val numberRow = if (options.showNumberRow) {
         val numberRowLayer = layers[ImeLayerIds.Numrow]
         if (numberRowLayer != null && numberRowLayer.rows.size == 1) {
-            numberRowLayer.rows[0].withKeysResolved(model)
+            numberRowLayer.rows[0].withKeysResolved(model, keyPredicate)
         } else null
     } else null
 
     val rowCount = layers.maxOf { (_, layer) -> layer.rows.size }.coerceAtLeast(4) +
         if (numberRow != null) 1 else 0
 
-    val touchLayers = layers.mapValues { (_, layer) ->
-        if (layer.id == ImeLayerIds.Numrow) {
-            // the numrow layer is not intended as a standalone layer => do not waste compute time on it here
-            return@mapValues TouchLayer.Empty
-        }
-        val rows = buildList {
-            if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift)) {
-                add(numberRow)
+    val touchLayers = buildMap {
+        for ((_, layer) in layers) {
+            if (layer.id == ImeLayerIds.Numrow) {
+                // the numrow layer is not intended as a standalone layer => do not waste compute time on it here
+                put(layer.id, TouchLayer.Empty)
+                continue
             }
-            layer.rows.forEach { row ->
-                add(row.withKeysResolved(model))
-            }
-        }
-        val keyHeight = 1f / rows.size
-        val touchKeys = mutableListOf<TouchKey>()
-        var currentY = 0f
-        for (row in rows) {
-            val desiredWeightSum = 10f
-            val fullWeightSum = row.fold(0f) { acc, key -> acc + key.width.toFloat() }
-            val stretchWeightSum = row.fold(0f) { acc, key -> acc + (if (key.stretch) key.width.toFloat() else 0f) }
-            val nonStretchSum = fullWeightSum - stretchWeightSum
-            val mayGrowKeys = fullWeightSum <= desiredWeightSum
-            val mayStretchKeys = mayGrowKeys && stretchWeightSum != 0f
-            val desiredKeyWidth = when {
-                mayGrowKeys -> 1f / 10f
-                else -> desiredWeightSum / fullWeightSum / 10f
-            }
-            val desiredStretchKeyWidth = when {
-                mayGrowKeys && mayStretchKeys -> (desiredWeightSum - nonStretchSum) / desiredWeightSum
-                else -> 0f
-            }
-            var keyWidthSum = 0f
-            val keyWidths = mutableListOf<Float>()
-            for (key in row) {
-                val keyWidthPx = when {
-                    mayStretchKeys && key.stretch -> desiredStretchKeyWidth * key.width.toFloat()
-                        .roundToInt() / stretchWeightSum
-                    else -> desiredKeyWidth * key.width.toFloat()
+            val rows = buildList {
+                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift)) {
+                    add(numberRow)
                 }
-                keyWidths.add(keyWidthPx)
-                keyWidthSum += keyWidthPx
-            }
-            var currentX = when {
-                mayGrowKeys && !mayStretchKeys -> (1f - keyWidthSum) / 2
-                else -> 0f
-            }
-            for ((i, key) in row.withIndex()) {
-                val keyWidthPx = keyWidths[i]
-                val keyBoundsPx = Rect(
-                    offset = Offset(currentX, currentY),
-                    size = Size(keyWidthPx, keyHeight),
-                )
-                val hitbox = when (i) {
-                    // if first key -> extend to left edge of keyboard
-                    0 -> {
-                        Rect(
-                            offset = Offset(0f, currentY),
-                            size = Size(currentX + keyWidthPx, keyHeight),
-                        )
-                    }
-                    // if last key -> extend to right edge of keyboard
-                    row.size - 1 -> {
-                        Rect(
-                            offset = Offset(currentX, currentY),
-                            size = Size(1f - currentX, keyHeight),
-                        )
-                    }
-                    // else same as bounds
-                    else -> keyBoundsPx
+                layer.rows.forEach { row ->
+                    add(row.withKeysResolved(model, keyPredicate))
                 }
-                val popups = key.longPressKeyIds?.let { longPressKeyIds ->
-                    val defaultKeyId = key.longPressDefaultKeyId ?: longPressKeyIds.first()
-                    val defaultKeyIndex = longPressKeyIds.indexOf(defaultKeyId)
-                    buildList {
-                        longPressKeyIds.forEach { keyId ->
-                            val key = model.keys.byKeyId[keyId]!!
-                            val popupKey = TouchPopupKey(
-                                bounds = Rect.Zero,
-                                label = computeKeyDisplay(model, key),
-                                data = key,
+            }
+            val keyHeight = 1f / rows.size
+            val touchKeys = mutableListOf<TouchKey>()
+            var currentY = 0f
+            for (row in rows) {
+                val desiredWeightSum = 10f
+                val fullWeightSum = row.fold(0f) { acc, key -> acc + key.width.toFloat() }
+                val stretchWeightSum = row.fold(0f) { acc, key -> acc + (if (key.stretch) key.width.toFloat() else 0f) }
+                val nonStretchSum = fullWeightSum - stretchWeightSum
+                val mayGrowKeys = fullWeightSum <= desiredWeightSum
+                val mayStretchKeys = mayGrowKeys && stretchWeightSum != 0f
+                val desiredKeyWidth = when {
+                    mayGrowKeys -> 1f / 10f
+                    else -> desiredWeightSum / fullWeightSum / 10f
+                }
+                val desiredStretchKeyWidth = when {
+                    mayGrowKeys && mayStretchKeys -> (desiredWeightSum - nonStretchSum) / desiredWeightSum
+                    else -> 0f
+                }
+                var keyWidthSum = 0f
+                val keyWidths = mutableListOf<Float>()
+                for (key in row) {
+                    val keyWidthPx = when {
+                        mayStretchKeys && key.stretch -> desiredStretchKeyWidth * key.width.toFloat()
+                            .roundToInt() / stretchWeightSum
+                        else -> desiredKeyWidth * key.width.toFloat()
+                    }
+                    keyWidths.add(keyWidthPx)
+                    keyWidthSum += keyWidthPx
+                }
+                var currentX = when {
+                    mayGrowKeys && !mayStretchKeys -> (1f - keyWidthSum) / 2
+                    else -> 0f
+                }
+                for ((i, key) in row.withIndex()) {
+                    val isFnKey = key.id == TouchKey.FnKeyId
+                    val keyWidthPx = keyWidths[i]
+                    val keyBoundsPx = Rect(
+                        offset = Offset(currentX, currentY),
+                        size = Size(keyWidthPx, keyHeight),
+                    )
+                    val hitbox = when (i) {
+                        // if first key -> extend to left edge of keyboard
+                        0 -> {
+                            Rect(
+                                offset = Offset(0f, currentY),
+                                size = Size(currentX + keyWidthPx, keyHeight),
                             )
-                            add(popupKey)
                         }
-                        if (defaultKeyIndex > 0) {
-                            val defaultPopupKey = removeAt(defaultKeyIndex)
-                            add(0, defaultPopupKey)
+                        // if last key -> extend to right edge of keyboard
+                        row.size - 1 -> {
+                            Rect(
+                                offset = Offset(currentX, currentY),
+                                size = Size(1f - currentX, keyHeight),
+                            )
                         }
+                        // else same as bounds
+                        else -> keyBoundsPx
                     }
-                } ?: emptyList()
-                val multiTapKeys = key.multiTapKeyIds?.withKeysResolved(model) ?: emptyList()
-                val display = computeKeyDisplay(model, key)
-                val touchKey = TouchKey(
-                    bounds = keyBoundsPx,
-                    hitbox = hitbox,
-                    label = display,
-                    attrs = key,
-                    flick = key.flickId?.let { model.flicks.byFlickId[it] },
-                    isRepeatable = key.output?.isRepeatable() ?: false,
-                    isSuitableForSpaceBarDisplayOverride = key.isSuitableForSpaceBarDisplayOverride(display),
-                    isSuitableForSimplePopup = key.isSuitableForSimplePopup(),
-                    isSuitableForExtendedPopup = popups.isNotEmpty(),
-                    extendedPopupKeys = popups,
-                    longPressKeyHint = if (options.longPressKeyHintEnabled) popups.firstOrNull()?.label else null,
-                    longPressKeyHintPlacement = options.longPressKeyHintPlacement,
-                    multiTapKeys = multiTapKeys, // TODO multtap support in UI
-                    multiTapKeyHint = if (options.multiTapKeyHintEnabled) {
-                        multiTapKeys.firstOrNull()?.let { computeKeyDisplay(model, it) }
-                    } else null,
-                    multiTapKeyHintPlacement = options.multiTapKeyHintPlacement,
-                    // TODO flick support
-                )
-                touchKeys.add(touchKey)
-                currentX += keyWidthPx
+                    val popups = when {
+                        isFnKey -> if (options.fnKeyType == FnKeyType.MULTI_KEY) {
+                            options.fnKeyArrangement.longPressActions.map { action ->
+                                val key = action.asK3Key()
+                                TouchPopupKey(
+                                    bounds = Rect.Zero,
+                                    label = computeKeyDisplay(model, key),
+                                    data = key,
+                                )
+                            }
+                        } else emptyList()
+                        else -> key.longPressKeyIds?.let { longPressKeyIds ->
+                            val defaultKeyId = key.longPressDefaultKeyId ?: longPressKeyIds.first()
+                            val defaultKeyIndex = longPressKeyIds.indexOf(defaultKeyId)
+                            buildList {
+                                longPressKeyIds.forEach { keyId ->
+                                    val key = model.keys.byKeyId[keyId]!!
+                                    val popupKey = TouchPopupKey(
+                                        bounds = Rect.Zero,
+                                        label = computeKeyDisplay(model, key),
+                                        data = key,
+                                    )
+                                    add(popupKey)
+                                }
+                                if (defaultKeyIndex > 0) {
+                                    val defaultPopupKey = removeAt(defaultKeyIndex)
+                                    add(0, defaultPopupKey)
+                                }
+                            }
+                        } ?: emptyList()
+                    }
+                    val multiTapKeys = when {
+                        isFnKey -> emptyList()
+                        else -> key.multiTapKeyIds?.withKeysResolved(model) ?: emptyList()
+                    }
+                    val flicks = when {
+                        isFnKey -> null
+                        else -> key.flickId?.let { model.flicks.byFlickId[it] }
+                    }
+                    val attrs = if (isFnKey) options.fnKeyArrangement.simpleAction.asK3Key() else key
+                    val display = computeKeyDisplay(model, attrs)
+                    val touchKey = TouchKey(
+                        bounds = keyBoundsPx,
+                        hitbox = hitbox,
+                        label = display,
+                        attrs = attrs,
+                        flick = flicks,
+                        isRepeatable = attrs.output?.isRepeatable() ?: false,
+                        isSuitableForSpaceBarDisplayOverride = attrs.isSuitableForSpaceBarDisplayOverride(display),
+                        isSuitableForSimplePopup = attrs.isSuitableForSimplePopup(),
+                        isSuitableForExtendedPopup = popups.isNotEmpty(),
+                        extendedPopupKeys = popups,
+                        longPressKeyHint = if (options.longPressKeyHintEnabled) popups.firstOrNull()?.label else null,
+                        longPressKeyHintPlacement = options.longPressKeyHintPlacement,
+                        multiTapKeys = multiTapKeys, // TODO multtap support in UI
+                        multiTapKeyHint = if (options.multiTapKeyHintEnabled) {
+                            multiTapKeys.firstOrNull()?.let { computeKeyDisplay(model, it) }
+                        } else null,
+                        multiTapKeyHintPlacement = options.multiTapKeyHintPlacement,
+                    )
+                    touchKeys.add(touchKey)
+                    currentX += keyWidthPx
+                    // TODO
+                }
+                currentY += keyHeight
             }
-            currentY += keyHeight
+            val touchLayer = TouchLayer(touchKeys.toList())
+            put(layer.id, touchLayer)
         }
-        TouchLayer(touchKeys.toList())
     }
 
     return TouchKeyboard(

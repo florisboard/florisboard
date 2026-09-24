@@ -75,6 +75,42 @@ object ImeActions {
     val NoopDragMarker = flAction("noop_drag_marker")
     val NoopSpacer = flAction("noop_spacer")
 
+    /**
+     * All actions that are capable to be shown on the fn-key and/or its secondary actions.
+     *
+     * The order of actions matches the order of the actions shown during configuration of the fn-key.
+     */
+    val FnKeyCapable = listOf(
+        SwitchToNextSubtype,
+        SwitchToPrevSubtype,
+        ShowSubtypePicker,
+        SwitchToNextInputMethod,
+        SwitchToPrevInputMethod,
+        ShowInputMethodPicker,
+        ShowMediaPanel,
+        ShowClipboardPanel,
+        Settings,
+        Undo,
+        Redo,
+        ArrowDown,
+        ArrowLeft,
+        ArrowRight,
+        ArrowUp,
+        ClipboardCopy,
+        ClipboardCut,
+        ClipboardPaste,
+        ClipboardClearHistory,
+        ClipboardClearFullHistory,
+        ClipboardClearPrimaryClip,
+        SelectAll,
+        ToggleFloatingWindow,
+        ToggleCompactLayout,
+        CompactLayoutToLeft,
+        CompactLayoutToRight,
+        ToggleResizeMode,
+        ExternalVoiceInput,
+    )
+
     val Repeatable = listOf(
         ArrowDown,
         ArrowLeft,

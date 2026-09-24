@@ -27,7 +27,6 @@ import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
@@ -50,17 +49,6 @@ fun KeyboardScreen() = FlorisScreen {
             prefs.keyboard.numberRow,
             title = stringRes(R.string.pref__keyboard__number_row__label),
             summary = stringRes(R.string.pref__keyboard__number_row__summary),
-        )
-        SwitchPreference(
-            prefs.keyboard.utilityKeyEnabled,
-            title = stringRes(R.string.pref__keyboard__utility_key_enabled__label),
-            summary = stringRes(R.string.pref__keyboard__utility_key_enabled__summary),
-        )
-        ListPreference(
-            prefs.keyboard.utilityKeyAction,
-            title = stringRes(R.string.pref__keyboard__utility_key_action__label),
-            entries = enumDisplayEntriesOf(UtilityKeyAction::class),
-            visibleIf = { prefs.keyboard.utilityKeyEnabled isEqualTo true },
         )
         ListPreference(
             prefs.keyboard.spaceBarMode,
@@ -90,6 +78,11 @@ fun KeyboardScreen() = FlorisScreen {
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_layout__label)) {
+            Preference(
+                title = stringRes(R.string.settings__fn_key__title),
+                summary = stringRes(R.string.settings__fn_key__summary),
+                onClick = { navController.navigate(Routes.Settings.Keyboard.FnKey) },
+            )
             ListPreference(
                 prefs.keyboard.landscapeInputUiMode,
                 title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
@@ -111,7 +104,7 @@ fun KeyboardScreen() = FlorisScreen {
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_keypress__label)) {
             Preference(
                 title = stringRes(R.string.settings__input_feedback__title),
-                onClick = { navController.navigate(Routes.Settings.InputFeedback) },
+                onClick = { navController.navigate(Routes.Settings.Keyboard.InputFeedback) },
             )
             SwitchPreference(
                 prefs.keyboard.popupEnabled,

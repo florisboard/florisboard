@@ -31,6 +31,9 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
+import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
@@ -45,7 +48,6 @@ import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
@@ -460,14 +462,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__number_row",
             default = false,
         )
-        val utilityKeyEnabled = boolean(
-            key = "keyboard__utility_key_enabled",
-            default = true,
-        )
-        val utilityKeyAction = enum(
-            key = "keyboard__utility_key_action",
-            default = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-        )
         val spaceBarMode = enum(
             key = "keyboard__space_bar_display_mode",
             default = SpaceBarMode.CURRENT_LANGUAGE,
@@ -511,6 +505,20 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val incognitoDisplayMode = enum(
             key = "keyboard__incognito_indicator",
             default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
+        )
+
+        val fnKeyEnabled = boolean(
+            key = "keyboard__fn_key_enabled",
+            default = TouchModelOptions.Default.fnKeyEnabled,
+        )
+        val fnKeyType = enum(
+            key = "keyboard__fn_key_type",
+            default = TouchModelOptions.Default.fnKeyType,
+        )
+        val fnKeyArrangement = custom(
+            key = "keyboard__fn_key_arrangement",
+            default = TouchModelOptions.Default.fnKeyArrangement,
+            serializer = FnKeyArrangement.Serializer,
         )
 
         val longPressKeyHintEnabled = boolean(
@@ -857,6 +865,29 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 } else {
                     entry.keepAsIs()
                 }
+            }
+
+            // Migrate utility key -> fn key
+            // Keep migration rules until: 0.8 dev cycle
+            "keyboard__utility_key_enabled" -> {
+                entry.transform(key = "keyboard__fn_key_enabled")
+            }
+            "keyboard__utility_key_action" -> {
+                entry.transform(
+                    key = "keyboard__fn_key_arrangement",
+                    rawValue = let {
+                        val fnKey = FnKeyArrangement(
+                            simpleAction = FnKeyAction(when (entry.rawValue) {
+                                "SWITCH_TO_EMOJIS" -> ImeActions.ShowMediaPanel
+                                "SWITCH_KEYBOARD_APP" -> ImeActions.SwitchToNextInputMethod
+                                else -> ImeActions.SwitchToNextSubtype
+                            }),
+                            longPressActions = FnKeyArrangement.Default.longPressActions,
+                            layeredActions = FnKeyArrangement.Default.layeredActions,
+                        )
+                        Json.encodeToString(fnKey)
+                    },
+                )
             }
 
             // Default: keep entry

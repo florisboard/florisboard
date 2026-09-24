@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.key
+package dev.patrickgold.florisboard.ime.keyboard3.touch
 
-/**
- * Enum for declaring the utility key actions.
- */
-enum class UtilityKeyAction {
-    SWITCH_TO_EMOJIS,
-    SWITCH_LANGUAGE,
-    SWITCH_KEYBOARD_APP,
-    DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-    DISABLED;
+enum class FnKeyType {
+    MULTI_KEY,
+    LAYER_KEY,
 }

@@ -23,7 +23,6 @@
         <key id="base" layerId="base" width="1.5" />
 
         <key id="bksp" output="@k3:action/backspace" stretch="true" />
-        <key id="extra" gap="true" />
         <key id="enter" output="@k3:action/enter" width="1.6" />
         <key id="space-no-stretch" output="\u{0020}" />
         <key id="bksp-no-stretch" output="@k3:action/backspace" />
@@ -274,14 +273,14 @@
             <row keys="q w e r t z u i o p" />
             <row keys="a s d f g h j k l" />
             <row keys="shift y x c v b n m bksp" />
-            <row keys="symbol-1 comma extra space period enter" />
+            <row keys="symbol-1 comma fn-key space period enter" />
         </layer>
 
         <layer id="shift">
             <row keys="Q W E R T Z U I O P" />
             <row keys="A S D F G H J K L" />
             <row keys="base Y X C V B N M bksp" />
-            <row keys="symbol-1 comma extra space period enter" />
+            <row keys="symbol-1 comma fn-key space period enter" />
         </layer>
 
         <layer id="symbol-1">

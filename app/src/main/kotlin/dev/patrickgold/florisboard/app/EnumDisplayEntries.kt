@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyType
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -38,7 +39,6 @@ import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
@@ -306,6 +306,18 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = FlickKeyHintPlacement.CARDINAL_AND_INTERCARDINAL,
                 label = "CARDINAL_AND_INTERCARDINAL",
+            )
+        }
+    },
+    FnKeyType::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = FnKeyType.MULTI_KEY,
+                label = "MULTI_KEY",
+            )
+            entry(
+                key = FnKeyType.LAYER_KEY,
+                label = "LAYER_KEY",
             )
         }
     },
@@ -666,26 +678,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = PreferredThemeMode.FOLLOW_TIME,
                 label = stringRes(R.string.enum__theme_mode__follow_time),
-            )
-        }
-    },
-    UtilityKeyAction::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = UtilityKeyAction.SWITCH_TO_EMOJIS,
-                label = stringRes(R.string.enum__utility_key_action__switch_to_emojis),
-            )
-            entry(
-                key = UtilityKeyAction.SWITCH_LANGUAGE,
-                label = stringRes(R.string.enum__utility_key_action__switch_language),
-            )
-            entry(
-                key = UtilityKeyAction.SWITCH_KEYBOARD_APP,
-                label = stringRes(R.string.enum__utility_key_action__switch_keyboard_app),
-            )
-            entry(
-                key = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-                label = stringRes(R.string.enum__utility_key_action__dynamic_switch_language_emojis),
             )
         }
     },

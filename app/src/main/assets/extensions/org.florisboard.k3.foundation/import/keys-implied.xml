@@ -22,6 +22,8 @@ All keys may be overridden by keyboard implementations by simply re-declaring th
 
 <!DOCTYPE keys>
 <keys>
+    <key id="fn-key" gap="true" />
+
     <key id="numpad-1" output="1" stretch="true" />
     <key id="numpad-2" output="2" stretch="true" />
     <key id="numpad-3" output="3" stretch="true" />

@@ -435,9 +435,6 @@
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Keyboard</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Number row</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Show a number row above the character layout</string>
-    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Show utility key</string>
-    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Shows a configurable utility key next to space bar</string>
-    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
@@ -451,6 +448,9 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
+
+    <string name="settings__fn_key__title" comment="Title of Fn key screen">Fn key and actions</string>
+    <string name="settings__fn_key__summary" comment="Summary of Fn key screen">Configure Fn key and its associated actions</string>
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
@@ -1087,11 +1087,6 @@
     <string name="enum__theme_mode__always_night" comment="Enum value label">Always night</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Follow system</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">Follow time</string>
-
-    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
-    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
-    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
-    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: switch to emojis / switch language</string>
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>
