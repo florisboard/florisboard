@@ -311,11 +311,6 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
         registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
-        try {
-            MozcEngine.init(this);
-        } catch (e: IOException) {
-            throw RuntimeException(e);
-        }
     }
 
     override fun onCreateInputView(): View? {
@@ -359,7 +354,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onDestroy()
         unregisterReceiver(wallpaperChangeReceiver)
         FlorisImeServiceReference = WeakReference(null)
-        MozcEngine.instance.deleteSession();
     }
 
     override fun onStartInput(info: EditorInfo?, restarting: Boolean) {

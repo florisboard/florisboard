@@ -121,8 +121,7 @@ open class ImeEditor(
         nlpManager?.suggest(Subtype(0, FlorisLocale.fromTag("ja-JP"), emptyList(), SubtypeNlpProviderMap(
             "",
             MozcCandidateProvider.ProviderId
-        ),
-        ), K3Content.Empty) // TODO: Link to actual content
+        ),), K3Content.Empty) // TODO: Link to actual content
     }
 
     fun deleteSurroundingText(charsBefore: Int, charsAfter: Int) {
