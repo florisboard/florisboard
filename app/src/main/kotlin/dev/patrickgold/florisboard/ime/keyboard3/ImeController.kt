@@ -32,8 +32,8 @@ import dev.patrickgold.florisboard.ime.io.StorageController
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
-import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
@@ -88,7 +88,6 @@ class ImeController(
         prefs.keyboard.longPressKeyHintEnabled.asFlow(),
         prefs.keyboard.longPressKeyHintPlacement.asFlow(),
         prefs.keyboard.multiTapKeyHintEnabled.asFlow(),
-        prefs.keyboard.multiTapKeyHintPlacement.asFlow(),
         prefs.keyboard.flickKeyHintEnabled.asFlow(),
         prefs.keyboard.flickKeyHintPlacement.asFlow(),
     ) { values ->
@@ -97,11 +96,10 @@ class ImeController(
             fnKeyEnabled = values[1] as Boolean,
             fnKeyArrangement = values[2] as FnKeyArrangement,
             longPressKeyHintEnabled = values[3] as Boolean,
-            longPressKeyHintPlacement = values[4] as KeyHintPlacement,
+            longPressKeyHintPlacement = values[4] as LongPressKeyHintPlacement,
             multiTapKeyHintEnabled = values[5] as Boolean,
-            multiTapKeyHintPlacement = values[6] as KeyHintPlacement,
-            flickKeyHintEnabled = values[7] as Boolean,
-            flickKeyHintPlacement = values[8] as FlickKeyHintPlacement,
+            flickKeyHintEnabled = values[6] as Boolean,
+            flickKeyHintPlacement = values[7] as FlickKeyHintPlacement,
         )
     }.stateIn(scope, SharingStarted.Eagerly, TouchModelOptions.Default)
 

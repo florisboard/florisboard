@@ -16,8 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
@@ -36,3 +42,24 @@ fun Modifier.layoutNormalized(bounds: Rect) =
         )
         layout(placeable.width, placeable.height) { placeable.place(offset) }
     }
+
+fun Modifier.scaleToFitHorizontally() = composed {
+    var scale by remember { mutableFloatStateOf(1f) }
+    this
+        .layout { measurable, constraints ->
+            val infConstraints = constraints.copy(maxWidth = Int.MAX_VALUE)
+            val placeable = measurable.measure(infConstraints)
+            val scaleMaxWidth = constraints.maxWidth * 0.7f
+            scale = when {
+                placeable.width > scaleMaxWidth -> {
+                    scaleMaxWidth / placeable.width.toFloat()
+                }
+                else -> 1f
+            }
+            layout(placeable.width, placeable.height) { placeable.place(IntOffset.Zero) }
+        }
+        .graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        }
+}

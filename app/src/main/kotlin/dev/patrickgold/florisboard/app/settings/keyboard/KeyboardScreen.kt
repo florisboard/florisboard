@@ -24,7 +24,7 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
-import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -135,19 +135,13 @@ fun KeyboardScreen() = FlorisScreen {
             ListPreference(
                 prefs.keyboard.longPressKeyHintPlacement,
                 title = "Long press hint placement",
-                entries = enumDisplayEntriesOf(KeyHintPlacement::class),
+                entries = enumDisplayEntriesOf(LongPressKeyHintPlacement::class),
                 enabledIf = { prefs.keyboard.longPressKeyHintEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.keyboard.multiTapKeyHintEnabled,
                 title = "Show multi tap hints",
                 summary = "Displays the multi tap key as a hint",
-            )
-            ListPreference(
-                prefs.keyboard.multiTapKeyHintPlacement,
-                title = "Multi tap hint placement",
-                entries = enumDisplayEntriesOf(KeyHintPlacement::class),
-                enabledIf = { prefs.keyboard.multiTapKeyHintEnabled isEqualTo true },
             )
             SwitchPreference(
                 prefs.keyboard.flickKeyHintEnabled,

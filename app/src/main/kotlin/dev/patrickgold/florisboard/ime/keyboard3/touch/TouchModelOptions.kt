@@ -17,16 +17,15 @@
 package dev.patrickgold.florisboard.ime.keyboard3.touch
 
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
-import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 
 data class TouchModelOptions(
     val showNumberRow: Boolean,
     val fnKeyEnabled: Boolean,
     val fnKeyArrangement: FnKeyArrangement,
     val longPressKeyHintEnabled: Boolean,
-    val longPressKeyHintPlacement: KeyHintPlacement,
+    val longPressKeyHintPlacement: LongPressKeyHintPlacement,
     val multiTapKeyHintEnabled: Boolean,
-    val multiTapKeyHintPlacement: KeyHintPlacement,
     val flickKeyHintEnabled: Boolean,
     val flickKeyHintPlacement: FlickKeyHintPlacement,
 ) {
@@ -36,9 +35,8 @@ data class TouchModelOptions(
             fnKeyEnabled = true,
             fnKeyArrangement = FnKeyArrangement.Default,
             longPressKeyHintEnabled = true,
-            longPressKeyHintPlacement = KeyHintPlacement.TOP_END,
+            longPressKeyHintPlacement = LongPressKeyHintPlacement.TOP_END,
             multiTapKeyHintEnabled = true,
-            multiTapKeyHintPlacement = KeyHintPlacement.BOTTOM_END,
             flickKeyHintEnabled = false,
             flickKeyHintPlacement = FlickKeyHintPlacement.CARDINAL,
         )

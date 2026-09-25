@@ -21,7 +21,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
-import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -105,7 +105,7 @@ class TouchLayer(
 class TouchKey(
     val bounds: Rect,
     val hitbox: Rect,
-    val label: K3StringOrDescriptor,
+    val display: K3StringOrDescriptor,
     val attrs: K3Key,
     val flick: K3Flick?,
     val isRepeatable: Boolean,
@@ -114,10 +114,8 @@ class TouchKey(
     val isSuitableForExtendedPopup: Boolean,
     val extendedPopupKeys: List<TouchPopupKey>,
     val longPressKeyHint: K3StringOrDescriptor?,
-    val longPressKeyHintPlacement: KeyHintPlacement,
-    val multiTapKeys: List<K3Key>,
-    val multiTapKeyHint: K3StringOrDescriptor?,
-    val multiTapKeyHintPlacement: KeyHintPlacement,
+    val longPressKeyHintPlacement: LongPressKeyHintPlacement,
+    val multiTapKeys: List<TouchMultiTapKey>,
 ) {
     val isSuitableForPopup: Boolean
         get() = isSuitableForSimplePopup || isSuitableForExtendedPopup
@@ -129,13 +127,18 @@ class TouchKey(
 
 class TouchPopupKey(
     val bounds: Rect,
-    val label: K3StringOrDescriptor,
+    val display: K3StringOrDescriptor,
     val data: K3Key,
 ) {
     fun withNewBounds(bounds: Rect): TouchPopupKey {
-        return TouchPopupKey(bounds, label, data)
+        return TouchPopupKey(bounds, display, data)
     }
 }
+
+class TouchMultiTapKey(
+    val display: K3StringOrDescriptor,
+    val data: K3Key,
+)
 
 context(scope: CoroutineScope)
 suspend fun computeTouchModel(
@@ -278,7 +281,7 @@ private fun computeTouchKeyboard(
                             val key = action.asK3Key()
                             TouchPopupKey(
                                 bounds = Rect.Zero,
-                                label = computeKeyDisplay(model, key),
+                                display = computeKeyDisplay(model, key),
                                 data = key,
                             )
                         }
@@ -290,7 +293,7 @@ private fun computeTouchKeyboard(
                                     val key = model.keys.byKeyId[keyId]!!
                                     val popupKey = TouchPopupKey(
                                         bounds = Rect.Zero,
-                                        label = computeKeyDisplay(model, key),
+                                        display = computeKeyDisplay(model, key),
                                         data = key,
                                     )
                                     add(popupKey)
@@ -303,8 +306,26 @@ private fun computeTouchKeyboard(
                         } ?: emptyList()
                     }
                     val multiTapKeys = when {
-                        isFnKey -> emptyList() // TODO
-                        else -> key.multiTapKeyIds?.withKeysResolved(model) ?: emptyList()
+                        isFnKey -> emptyList() // no support for multi-tap on fn key
+                        else -> key.multiTapKeyIds?.let { multiTapKeyIds ->
+                            buildList {
+                                add(
+                                    TouchMultiTapKey(
+                                        display = computeKeyDisplay(model, key),
+                                        data = key,
+                                    )
+                                )
+                                for (multiTapKeyId in multiTapKeyIds) {
+                                    val multiTapKey = model.keys.byKeyId[multiTapKeyId] ?: continue
+                                    add(
+                                        TouchMultiTapKey(
+                                            display = computeKeyDisplay(model, multiTapKey),
+                                            data = multiTapKey,
+                                        )
+                                    )
+                                }
+                            }
+                        } ?: emptyList()
                     }
                     val flicks = when {
                         isFnKey -> null // TODO
@@ -315,7 +336,7 @@ private fun computeTouchKeyboard(
                     val touchKey = TouchKey(
                         bounds = keyBoundsPx,
                         hitbox = hitbox,
-                        label = display,
+                        display = display,
                         attrs = attrs,
                         flick = flicks,
                         isRepeatable = attrs.output?.isRepeatable() ?: false,
@@ -323,13 +344,9 @@ private fun computeTouchKeyboard(
                         isSuitableForSimplePopup = attrs.isSuitableForSimplePopup(),
                         isSuitableForExtendedPopup = popups.isNotEmpty(),
                         extendedPopupKeys = popups,
-                        longPressKeyHint = if (options.longPressKeyHintEnabled) popups.firstOrNull()?.label else null,
+                        longPressKeyHint = if (options.longPressKeyHintEnabled) popups.firstOrNull()?.display else null,
                         longPressKeyHintPlacement = options.longPressKeyHintPlacement,
-                        multiTapKeys = multiTapKeys, // TODO multtap support in UI
-                        multiTapKeyHint = if (options.multiTapKeyHintEnabled) {
-                            multiTapKeys.firstOrNull()?.let { computeKeyDisplay(model, it) }
-                        } else null,
-                        multiTapKeyHintPlacement = options.multiTapKeyHintPlacement,
+                        multiTapKeys = multiTapKeys,
                     )
                     touchKeys.add(touchKey)
                     currentX += keyWidthPx

@@ -169,7 +169,7 @@ class PointerTracker(
                                 bottom = anchorBounds.bottom + anchorBounds.height * 1.2f,
                             )
                         } else Rect.Zero,
-                        simpleLabel = downKey.label,
+                        simpleLabel = downKey.display,
                         simpleIndicateExtended = downKey.isSuitableForExtendedPopup,
                         extendedBounds = Rect.Zero,
                         extendedKeys = downKey.extendedPopupKeys,

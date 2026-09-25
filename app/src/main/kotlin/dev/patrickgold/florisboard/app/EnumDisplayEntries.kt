@@ -27,7 +27,7 @@ import dev.patrickgold.florisboard.ime.input.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
-import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -374,42 +374,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    KeyHintPlacement::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = KeyHintPlacement.TOP_START,
-                label = "TOP_START",
-            )
-            entry(
-                key = KeyHintPlacement.TOP_CENTER,
-                label = "TOP_CENTER",
-            )
-            entry(
-                key = KeyHintPlacement.TOP_END,
-                label = "TOP_END",
-            )
-            entry(
-                key = KeyHintPlacement.CENTER_START,
-                label = "CENTER_START",
-            )
-            entry(
-                key = KeyHintPlacement.CENTER_END,
-                label = "CENTER_END",
-            )
-            entry(
-                key = KeyHintPlacement.BOTTOM_START,
-                label = "BOTTOM_START",
-            )
-            entry(
-                key = KeyHintPlacement.BOTTOM_CENTER,
-                label = "BOTTOM_CENTER",
-            )
-            entry(
-                key = KeyHintPlacement.BOTTOM_END,
-                label = "BOTTOM_END",
-            )
-        }
-    },
     LandscapeInputUiMode::class to DEFAULT to {
         listPrefEntries {
             entry(
@@ -423,6 +387,34 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = LandscapeInputUiMode.DYNAMICALLY_SHOW,
                 label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
+            )
+        }
+    },
+    LongPressKeyHintPlacement::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = LongPressKeyHintPlacement.TOP_START,
+                label = "TOP_START",
+            )
+            entry(
+                key = LongPressKeyHintPlacement.TOP_CENTER,
+                label = "TOP_CENTER",
+            )
+            entry(
+                key = LongPressKeyHintPlacement.TOP_END,
+                label = "TOP_END",
+            )
+            entry(
+                key = LongPressKeyHintPlacement.BOTTOM_START,
+                label = "BOTTOM_START",
+            )
+            entry(
+                key = LongPressKeyHintPlacement.BOTTOM_CENTER,
+                label = "BOTTOM_CENTER",
+            )
+            entry(
+                key = LongPressKeyHintPlacement.BOTTOM_END,
+                label = "BOTTOM_END",
             )
         }
     },

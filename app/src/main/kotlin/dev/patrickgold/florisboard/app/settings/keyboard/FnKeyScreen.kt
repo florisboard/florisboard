@@ -87,8 +87,7 @@ fun FnKeyScreen() = FlorisScreen {
     val resetBtnEnabled by remember {
         val def = TouchModelOptions.Default
         derivedStateOf {
-            fnKeyEnabled != def.fnKeyEnabled ||
-                fnKeyArrangement != def.fnKeyArrangement
+            fnKeyEnabled && fnKeyArrangement != def.fnKeyArrangement
         }
     }
     var resetRequested by remember { mutableStateOf(false) }

@@ -18,12 +18,10 @@ package dev.patrickgold.florisboard.ime.keyboard3.hint
 
 import androidx.compose.ui.Alignment
 
-enum class KeyHintPlacement(val alignment: Alignment) {
+enum class LongPressKeyHintPlacement(val alignment: Alignment) {
     TOP_START(Alignment.TopStart),
     TOP_CENTER(Alignment.TopCenter),
     TOP_END(Alignment.TopEnd),
-    CENTER_START(Alignment.CenterStart),
-    CENTER_END(Alignment.CenterEnd),
     BOTTOM_START(Alignment.BottomStart),
     BOTTOM_CENTER(Alignment.BottomCenter),
     BOTTOM_END(Alignment.BottomEnd),

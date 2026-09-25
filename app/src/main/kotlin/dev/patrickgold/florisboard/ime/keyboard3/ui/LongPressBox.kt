@@ -62,7 +62,9 @@ fun LongPressBox(
             Box(Modifier.layoutNormalized(longPress.anchorBounds.localTo(longPress.simpleBounds))) {
                 Display3(
                     display = longPress.simpleLabel,
-                    modifier = Modifier.align(Alignment.Center),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .scaleToFitHorizontally(),
                 )
                 if (longPress.simpleIndicateExtended) {
                     SnyggIcon(
@@ -101,8 +103,10 @@ fun LongPressBox(
                     modifier = modifier.layoutNormalized(extendedKey.bounds.localTo(longPress.extendedBounds)),
                 ) {
                     Display3(
-                        display = extendedKey.label,
-                        modifier = Modifier.align(Alignment.Center),
+                        display = extendedKey.display,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .scaleToFitHorizontally(),
                     )
                 }
             }

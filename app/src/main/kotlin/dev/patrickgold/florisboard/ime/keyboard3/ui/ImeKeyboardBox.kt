@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard3.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -237,7 +238,7 @@ private fun ImeKeyboardKeyBox(
     longPress: LongPress,
     modifier: Modifier = Modifier,
 ) {
-    val display = displayOverride ?: touchKey.label
+    val display = displayOverride ?: touchKey.display
     val output = touchKey.attrs.output
     val attributes: SnyggQueryAttributes = remember(output) {
         buildMap {
@@ -255,28 +256,29 @@ private fun ImeKeyboardKeyBox(
         selector = selector,
         modifier = modifier,
     ) {
-        Display3(
+        val multiTapKeys = touchKey.multiTapKeys
+        Row(
             modifier = Modifier
-                .wrapContentSize()
-                .align(Alignment.Center),
-            display = display,
-        )
+                .align(Alignment.Center)
+                .scaleToFitHorizontally(),
+        ) {
+            if (multiTapKeys.isEmpty()) {
+                Display3(display)
+            } else {
+                for (multiTapKey in multiTapKeys) {
+                    Display3(
+                        display = multiTapKey.display,
+                    )
+                }
+            }
+        }
         if (touchKey.longPressKeyHint != null) {
             Display3(
                 elementName = FlorisImeUi.KeyHint.elementName,
                 modifier = Modifier
-                    .wrapContentSize()
-                    .align(touchKey.longPressKeyHintPlacement.alignment),
+                    .align(touchKey.longPressKeyHintPlacement.alignment)
+                    .scaleToFitHorizontally(),
                 display = touchKey.longPressKeyHint,
-            )
-        }
-        if (touchKey.multiTapKeyHint != null) {
-            Display3(
-                elementName = FlorisImeUi.KeyHint.elementName,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .align(touchKey.multiTapKeyHintPlacement.alignment),
-                display = touchKey.multiTapKeyHint,
             )
         }
         // TODO flick hints

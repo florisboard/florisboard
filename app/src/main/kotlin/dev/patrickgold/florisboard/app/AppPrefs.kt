@@ -529,10 +529,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__multi_tap_key_hint_enabled",
             default = TouchModelOptions.Default.multiTapKeyHintEnabled,
         )
-        val multiTapKeyHintPlacement = enum(
-            key = "keyboard__multi_tap_key_hint_placement",
-            default = TouchModelOptions.Default.multiTapKeyHintPlacement,
-        )
         val flickKeyHintEnabled = boolean(
             key = "keyboard__flick_key_hint_enabled",
             default = TouchModelOptions.Default.flickKeyHintEnabled,
