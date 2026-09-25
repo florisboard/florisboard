@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.KeyHintPlacement
-import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyType
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -306,18 +305,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = FlickKeyHintPlacement.CARDINAL_AND_INTERCARDINAL,
                 label = "CARDINAL_AND_INTERCARDINAL",
-            )
-        }
-    },
-    FnKeyType::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = FnKeyType.MULTI_KEY,
-                label = "MULTI_KEY",
-            )
-            entry(
-                key = FnKeyType.LAYER_KEY,
-                label = "LAYER_KEY",
             )
         }
     },

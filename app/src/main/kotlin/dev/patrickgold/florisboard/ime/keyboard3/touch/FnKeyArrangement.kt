@@ -26,7 +26,6 @@ import org.florisboard.lib.kotlin.tryOrNull
 data class FnKeyArrangement(
     val simpleAction: FnKeyAction,
     val longPressActions: List<FnKeyAction>,
-    val layeredActions: List<List<FnKeyAction>>,
 ) {
     object Serializer : PreferenceSerializer<FnKeyArrangement> {
         override fun serialize(value: FnKeyArrangement): String? {
@@ -44,7 +43,6 @@ data class FnKeyArrangement(
             longPressActions = listOf(
                 FnKeyAction(ImeActions.ShowInputMethodPicker),
             ),
-            layeredActions = emptyList(),
         )
     }
 }

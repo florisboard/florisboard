@@ -511,10 +511,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__fn_key_enabled",
             default = TouchModelOptions.Default.fnKeyEnabled,
         )
-        val fnKeyType = enum(
-            key = "keyboard__fn_key_type",
-            default = TouchModelOptions.Default.fnKeyType,
-        )
         val fnKeyArrangement = custom(
             key = "keyboard__fn_key_arrangement",
             default = TouchModelOptions.Default.fnKeyArrangement,
@@ -883,7 +879,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                                 else -> ImeActions.SwitchToNextSubtype
                             }),
                             longPressActions = FnKeyArrangement.Default.longPressActions,
-                            layeredActions = FnKeyArrangement.Default.layeredActions,
                         )
                         Json.encodeToString(fnKey)
                     },

@@ -16,24 +16,20 @@
 
 package dev.patrickgold.florisboard.app.settings.keyboard
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -49,33 +45,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.Role.Companion
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
-import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
-import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyType
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.computeKeyDisplay
 import dev.patrickgold.florisboard.ime.keyboard3.ui.staticIcon3
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
-import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
-import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.stringRes
@@ -98,53 +83,45 @@ fun FnKeyScreen() = FlorisScreen {
     val model by remember { derivedStateOf { imeState.model } }
 
     val fnKeyEnabled by prefs.keyboard.fnKeyEnabled.collectAsState()
-    val fnKeyType by prefs.keyboard.fnKeyType.collectAsState()
     val fnKeyArrangement by prefs.keyboard.fnKeyArrangement.collectAsState()
     val resetBtnEnabled by remember {
         val def = TouchModelOptions.Default
         derivedStateOf {
             fnKeyEnabled != def.fnKeyEnabled ||
-                fnKeyType != def.fnKeyType ||
                 fnKeyArrangement != def.fnKeyArrangement
         }
     }
     var resetRequested by remember { mutableStateOf(false) }
 
     actions {
-        TextButton(
+        FilledTonalIconButton(
             onClick = { resetRequested = true },
             enabled = resetBtnEnabled,
-            colors = ButtonDefaults.textButtonColors(
+            colors = IconButtonDefaults.filledTonalIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
                 contentColor = MaterialTheme.colorScheme.error,
             ),
         ) {
             Icon(
-                modifier = Modifier
-                    .size(24.dp)
-                    .padding(end = 8.dp),
                 painter = painterResource(R.drawable.ic_reset_settings),
                 contentDescription = null,
             )
-            Text("Reset")
         }
     }
 
     content {
-        SwitchPreference(
-            prefs.keyboard.fnKeyEnabled,
-            title = "enable",
-            summary = "enable",
+        SpotlightText(
+            text = stringRes(R.string.settings__fn_key__spotlight_text),
         )
-        ListPreference(
-            prefs.keyboard.fnKeyType,
-            title = "type",
-            entries = enumDisplayEntriesOf(FnKeyType::class),
-            enabledIf = { prefs.keyboard.fnKeyEnabled isEqualTo true },
+
+        SpotlightSwitchPreference(
+            prefs.keyboard.fnKeyEnabled,
+            title = stringRes(R.string.settings__fn_key__spotlight_switch_text),
         )
 
         var showSimpleActionEditor by remember { mutableStateOf(false) }
         PreferenceGroup(
-            title = "simple action",
+            title = stringRes(R.string.settings__fn_key__short_press_group_title),
             enabledIf = { prefs.keyboard.fnKeyEnabled isEqualTo true },
         ) {
             ActionPreference(
@@ -170,9 +147,125 @@ fun FnKeyScreen() = FlorisScreen {
             )
         }
 
-        when (fnKeyType) {
-            FnKeyType.MULTI_KEY -> MultiKeyEditor(model, fnKeyArrangement, scope)
-            FnKeyType.LAYER_KEY -> LayerKeyEditor(fnKeyArrangement, scope)
+        PreferenceGroup(
+            title = stringRes(R.string.settings__fn_key__long_press_group_title),
+            enabledIf = { prefs.keyboard.fnKeyEnabled isEqualTo true },
+        ) {
+            val longPressActions = fnKeyArrangement.longPressActions
+            var showAddActionDialog by remember { mutableStateOf(false) }
+            var showEditActionDialog by remember { mutableStateOf<FnKeyAction?>(null) }
+
+            for ((index, action) in longPressActions.withIndex()) key(action) {
+                ActionPreference(
+                    model = model,
+                    action = action,
+                    onClick = { showEditActionDialog = action },
+                    trailing = {
+                        Row {
+                            FlorisIconButton(
+                                onClick = {
+                                    scope.launch {
+                                        val newArrangement = fnKeyArrangement.copy(
+                                            longPressActions = buildList {
+                                                addAll(longPressActions)
+                                                removeAt(index)
+                                                add(index - 1, action)
+                                            },
+                                        )
+                                        prefs.keyboard.fnKeyArrangement.set(newArrangement)
+                                    }
+                                },
+                                icon = Icons.Default.KeyboardArrowUp,
+                                iconColor = MaterialTheme.colorScheme.primary,
+                                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                enabled = index > 0,
+                            )
+                            FlorisIconButton(
+                                onClick = {
+                                    scope.launch {
+                                        val newArrangement = fnKeyArrangement.copy(
+                                            longPressActions = buildList {
+                                                addAll(longPressActions)
+                                                removeAt(index)
+                                                add(index + 1, action)
+                                            },
+                                        )
+                                        prefs.keyboard.fnKeyArrangement.set(newArrangement)
+                                    }
+                                },
+                                icon = Icons.Default.KeyboardArrowDown,
+                                iconColor = MaterialTheme.colorScheme.primary,
+                                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                enabled = index + 1 < longPressActions.size,
+                            )
+                        }
+                    },
+                )
+            }
+            Preference(
+                icon = Icons.Default.Add,
+                title = stringRes(R.string.settings__fn_key__long_press_add_action_btn),
+                onClick = { showAddActionDialog = true },
+            )
+
+            if (showAddActionDialog) {
+                ActionEditorDialog(
+                    initial = null,
+                    onAdd = { newAction ->
+                        scope.launch {
+                            val newArrangement = fnKeyArrangement.copy(
+                                longPressActions = buildList {
+                                    addAll(longPressActions)
+                                    add(newAction)
+                                }
+                            )
+                            prefs.keyboard.fnKeyArrangement.set(newArrangement)
+                            showAddActionDialog = false
+                        }
+                    },
+                    onDismiss = { showAddActionDialog = false },
+                    allowExtendedConfig = false,
+                )
+            }
+
+            showEditActionDialog?.let { actionToBeEdited ->
+                ActionEditorDialog(
+                    initial = actionToBeEdited,
+                    onEdit = { newAction ->
+                        scope.launch {
+                            val newArrangement = fnKeyArrangement.copy(
+                                longPressActions = buildList {
+                                    addAll(longPressActions)
+                                    val indexToReplace = indexOf(actionToBeEdited)
+                                    if (indexToReplace != -1) {
+                                        set(indexToReplace, newAction)
+                                    }
+                                }
+                            )
+                            prefs.keyboard.fnKeyArrangement.set(newArrangement)
+                            showEditActionDialog = null
+                        }
+                    },
+                    onDelete = {
+                        scope.launch {
+                            val newArrangement = fnKeyArrangement.copy(
+                                longPressActions = buildList {
+                                    addAll(longPressActions)
+                                    val indexToReplace = indexOf(actionToBeEdited)
+                                    if (indexToReplace != -1) {
+                                        removeAt(indexToReplace)
+                                    }
+                                }
+                            )
+                            prefs.keyboard.fnKeyArrangement.set(newArrangement)
+                            showEditActionDialog = null
+                        }
+                    },
+                    onDismiss = { showEditActionDialog = null },
+                    allowExtendedConfig = false,
+                    allowDelete = true,
+                )
+            }
         }
 
         if (resetRequested) {
@@ -185,7 +278,6 @@ fun FnKeyScreen() = FlorisScreen {
                 onConfirm = {
                     scope.launch {
                         prefs.keyboard.fnKeyEnabled.reset()
-                        prefs.keyboard.fnKeyType.reset()
                         prefs.keyboard.fnKeyArrangement.reset()
                         resetRequested = false
                     }
@@ -196,147 +288,6 @@ fun FnKeyScreen() = FlorisScreen {
                 Text(text = stringRes(R.string.action__reset_confirm_message, "name" to title))
             }
         }
-    }
-}
-
-@Composable
-private fun PreferenceUiScope<FlorisPreferenceModel>.MultiKeyEditor(
-    model: K3Model,
-    arrangement: FnKeyArrangement,
-    scope: CoroutineScope,
-) {
-    PreferenceGroup(
-        title = "long press actions",
-        enabledIf = { prefs.keyboard.fnKeyEnabled isEqualTo true },
-    ) {
-        val longPressActions = arrangement.longPressActions
-        var showAddActionDialog by remember { mutableStateOf(false) }
-        var showEditActionDialog by remember { mutableStateOf<FnKeyAction?>(null) }
-
-        for ((index, action) in longPressActions.withIndex()) key(action) {
-            ActionPreference(
-                model = model,
-                action = action,
-                onClick = { showEditActionDialog = action },
-                trailing = {
-                    Row {
-                        FlorisIconButton(
-                            onClick = {
-                                scope.launch {
-                                    val newArrangement = arrangement.copy(
-                                        longPressActions = buildList {
-                                            addAll(longPressActions)
-                                            removeAt(index)
-                                            add(index - 1, action)
-                                        },
-                                    )
-                                    this@MultiKeyEditor.prefs.keyboard.fnKeyArrangement.set(newArrangement)
-                                }
-                            },
-                            icon = Icons.Default.KeyboardArrowUp,
-                            iconColor = MaterialTheme.colorScheme.primary,
-                            iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                            enabled = index > 0,
-                        )
-                        FlorisIconButton(
-                            onClick = {
-                                scope.launch {
-                                    val newArrangement = arrangement.copy(
-                                        longPressActions = buildList {
-                                            addAll(longPressActions)
-                                            removeAt(index)
-                                            add(index + 1, action)
-                                        },
-                                    )
-                                    this@MultiKeyEditor.prefs.keyboard.fnKeyArrangement.set(newArrangement)
-                                }
-                            },
-                            icon = Icons.Default.KeyboardArrowDown,
-                            iconColor = MaterialTheme.colorScheme.primary,
-                            iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                            enabled = index + 1 < longPressActions.size,
-                        )
-                    }
-                },
-            )
-        }
-        Preference(
-            icon = Icons.Default.Add,
-            title = "add long press action",
-            onClick = { showAddActionDialog = true },
-        )
-
-        if (showAddActionDialog) {
-            ActionEditorDialog(
-                initial = null,
-                onAdd = { newAction ->
-                    scope.launch {
-                        val newArrangement = arrangement.copy(
-                            longPressActions = buildList {
-                                addAll(longPressActions)
-                                add(newAction)
-                            }
-                        )
-                        prefs.keyboard.fnKeyArrangement.set(newArrangement)
-                        showAddActionDialog = false
-                    }
-                },
-                onDismiss = { showAddActionDialog = false },
-                allowExtendedConfig = false,
-            )
-        }
-
-        showEditActionDialog?.let { actionToBeEdited ->
-            ActionEditorDialog(
-                initial = actionToBeEdited,
-                onEdit = { newAction ->
-                    scope.launch {
-                        val newArrangement = arrangement.copy(
-                            longPressActions = buildList {
-                                addAll(longPressActions)
-                                val indexToReplace = indexOf(actionToBeEdited)
-                                if (indexToReplace != -1) {
-                                    set(indexToReplace, newAction)
-                                }
-                            }
-                        )
-                        prefs.keyboard.fnKeyArrangement.set(newArrangement)
-                        showEditActionDialog = null
-                    }
-                },
-                onDelete = {
-                    scope.launch {
-                        val newArrangement = arrangement.copy(
-                            longPressActions = buildList {
-                                addAll(longPressActions)
-                                val indexToReplace = indexOf(actionToBeEdited)
-                                if (indexToReplace != -1) {
-                                    removeAt(indexToReplace)
-                                }
-                            }
-                        )
-                        prefs.keyboard.fnKeyArrangement.set(newArrangement)
-                        showEditActionDialog = null
-                    }
-                },
-                onDismiss = { showEditActionDialog = null },
-                allowExtendedConfig = false,
-                allowDelete = true,
-            )
-        }
-    }
-}
-
-@Composable
-private fun PreferenceUiScope<FlorisPreferenceModel>.LayerKeyEditor(
-    arrangement: FnKeyArrangement,
-    scope: CoroutineScope,
-) {
-    PreferenceGroup(
-        title = "layer arrangement",
-        enabledIf = { prefs.keyboard.fnKeyEnabled isEqualTo true },
-    ) {
-        Text("TODO")
     }
 }
 
@@ -389,11 +340,13 @@ private fun ActionEditorDialog(
     val confirmEnabled by remember { derivedStateOf { outputIndex > 0 } }
 
     JetPrefAlertDialog(
-        title = if (initial == null) {
-            "add action"
-        } else {
-            "edit action"
-        },
+        title = stringRes(
+            if (initial == null) {
+                R.string.settings__fn_key__add_action_dialog_title
+            } else {
+                R.string.settings__fn_key__edit_action_dialog_title
+            }
+        ),
         confirmLabel = stringRes(R.string.action__apply),
         confirmEnabled = confirmEnabled,
         onConfirm = {

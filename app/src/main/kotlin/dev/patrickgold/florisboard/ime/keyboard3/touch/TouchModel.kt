@@ -274,16 +274,14 @@ private fun computeTouchKeyboard(
                         else -> keyBoundsPx
                     }
                     val popups = when {
-                        isFnKey -> if (options.fnKeyType == FnKeyType.MULTI_KEY) {
-                            options.fnKeyArrangement.longPressActions.map { action ->
-                                val key = action.asK3Key()
-                                TouchPopupKey(
-                                    bounds = Rect.Zero,
-                                    label = computeKeyDisplay(model, key),
-                                    data = key,
-                                )
-                            }
-                        } else emptyList()
+                        isFnKey -> options.fnKeyArrangement.longPressActions.map { action ->
+                            val key = action.asK3Key()
+                            TouchPopupKey(
+                                bounds = Rect.Zero,
+                                label = computeKeyDisplay(model, key),
+                                data = key,
+                            )
+                        }
                         else -> key.longPressKeyIds?.let { longPressKeyIds ->
                             val defaultKeyId = key.longPressDefaultKeyId ?: longPressKeyIds.first()
                             val defaultKeyIndex = longPressKeyIds.indexOf(defaultKeyId)
