@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAll
+import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.compose.ui.util.fastCoerceIn
 import androidx.compose.ui.util.fastFold
 import androidx.compose.ui.util.fastForEach
@@ -86,11 +87,20 @@ sealed interface TrackedPointer {
     ) : TrackedPointer
 }
 
+data class TrackedMultiTapSeq(
+    val touchKey: TouchKey,
+    val multiTapIndex: Int,
+    val commit: suspend () -> Unit,
+    val cycleNext: suspend () -> Unit,
+    val commitJob: Job,
+)
+
 data class PeekLine(
     val start: Offset,
     val end: Offset,
 )
 
+// TODO the sync of this class is a bit messy
 class PointerTracker(
     val touchKeyboard: TouchKeyboard,
     val imeController: ImeController,
@@ -104,6 +114,9 @@ class PointerTracker(
         field = MutableStateFlow(null)
 
     val trackedOutputPointer: StateFlow<TrackedPointer.Output?>
+        field = MutableStateFlow(null)
+
+    val trackedMultiTapSeq: StateFlow<TrackedMultiTapSeq?>
         field = MutableStateFlow(null)
 
     suspend fun mutateLocked(action: suspend PointerTracker.() -> Unit) {
@@ -127,10 +140,14 @@ class PointerTracker(
         val keyRepeatTimeout = interactionController.getKeyRepeatTimeout(downKey.attrs.output)
         val keyRepeatDelay = interactionController.getKeyRepeatDelay(downKey.attrs.output)
         val longPressTimeout = interactionController.getLongPressTimeout(downKey.attrs.output)
+        val multiPressTimeout = interactionController.getMultiPressTimeout(downKey.attrs.output)
 
         val peekLayerId = downKey.attrs.layerId
         if (peekLayerId != null) {
             // this is a peek key action
+            trackedMultiTapSeq.value?.let { multiTapSeq ->
+                multiTapSeq.commit()
+            }
             trackedPeekPointer.value = TrackedPointer.Peek(
                 id = down.id,
                 down = down,
@@ -146,6 +163,7 @@ class PointerTracker(
             }
             interactionController.performFeedback(InteractionKind.KeyPress)
         } else {
+            var longPressExtendJob: Job? = null
             trackedOutputPointer.value = TrackedPointer.Output(
                 id = down.id,
                 down = down,
@@ -175,7 +193,7 @@ class PointerTracker(
                         extendedKeys = downKey.extendedPopupKeys,
                         extendedFocusedIndex = 0,
                         extendedJob = if (downKey.isSuitableForExtendedPopup) {
-                            launchExtendedLongPressJob(longPressTimeout)
+                            launchExtendedLongPressJob(longPressTimeout).also { longPressExtendJob = it }
                         } else null,
                     )
                 } else LongPress.None,
@@ -192,6 +210,54 @@ class PointerTracker(
                     }
                 } else null,
             )
+            trackedMultiTapSeq.value.let { multiTapSeq ->
+                if (multiTapSeq != null) {
+                    if (multiTapSeq.touchKey !== downKey) {
+                        multiTapSeq.commit()
+                    } else if (downKey.multiTapKeys.isNotEmpty()) {
+                        multiTapSeq.cycleNext()
+                    }
+                } else if (downKey.multiTapKeys.isNotEmpty()) {
+                    val commit = suspend commit@{
+                        val multiTapSeq = trackedMultiTapSeq.value ?: return@commit
+                        val multiTapKey = multiTapSeq.touchKey.multiTapKeys.getOrNull(multiTapSeq.multiTapIndex)
+                            ?: return@commit
+                        val output = multiTapKey.data.output ?: return@commit
+                        imeController.updateState {
+                            emit(output)
+                        }
+                        trackedMultiTapSeq.value = null
+                    }
+                    val launchNewCommitJob = {
+                        scope.launch {
+                            delay(multiPressTimeout)
+                            longPressExtendJob?.join()
+                            mutateLocked {
+                                if (trackedOutputPointer.value?.longPress?.extendedBounds?.isEmpty == false) {
+                                    return@mutateLocked
+                                }
+                                commit()
+                            }
+                        }
+                    }
+                    val cycleNext = suspend cycleNext@{
+                        val multiTapSeq = trackedMultiTapSeq.value ?: return@cycleNext
+                        multiTapSeq.commitJob.cancel()
+                        val newIndex = (multiTapSeq.multiTapIndex + 1) % multiTapSeq.touchKey.multiTapKeys.size.fastCoerceAtLeast(1)
+                        trackedMultiTapSeq.value = multiTapSeq.copy(
+                            multiTapIndex = newIndex,
+                            commitJob = launchNewCommitJob(),
+                        )
+                    }
+                    trackedMultiTapSeq.value = TrackedMultiTapSeq(
+                        touchKey = downKey,
+                        multiTapIndex = 0,
+                        commitJob = launchNewCommitJob(),
+                        commit = commit,
+                        cycleNext = cycleNext,
+                    )
+                }
+            }
             interactionController.performFeedback(InteractionKind.KeyPress)
         }
     }
@@ -243,11 +309,13 @@ class PointerTracker(
             trackedPointer.longPress.extendedJob?.cancel()
             trackedPointer.repeatJob?.cancel()
             imeController.updateState {
-                val output = if (trackedPointer.longPress.shouldShowExtendedPopup()) {
-                    trackedPointer.longPress.extendedKeys.getOrNull(trackedPointer.longPress.extendedFocusedIndex)
-                        ?.data?.output
-                } else {
-                    trackedPointer.downKey.attrs.output
+                val output = when {
+                    trackedPointer.downKey == trackedMultiTapSeq.value?.touchKey -> null
+                    trackedPointer.longPress.shouldShowExtendedPopup() -> {
+                        trackedPointer.longPress.extendedKeys.getOrNull(trackedPointer.longPress.extendedFocusedIndex)
+                            ?.data?.output
+                    }
+                    else -> trackedPointer.downKey.attrs.output
                 }
                 output?.let { emit(it) }
             }
@@ -282,9 +350,15 @@ class PointerTracker(
     }
 
     private suspend fun cancelOutput() {
+        cancelMultiTap()
         val trackedPointer = trackedOutputPointer.getAndUpdate { null } ?: return
         trackedPointer.longPress.extendedJob?.cancel()
         trackedPointer.repeatJob?.cancel()
+    }
+
+    private suspend fun cancelMultiTap() {
+        val multiTapSeq = trackedMultiTapSeq.getAndUpdate { null } ?: return
+        multiTapSeq.commitJob.cancel()
     }
 
     private fun Offset.normalized(size: IntSize): Offset {
@@ -297,6 +371,10 @@ class PointerTracker(
     ): Job = scope.launch(Dispatchers.Default) {
         delay(longPressTimeout)
         mutateLocked {
+            trackedMultiTapSeq.value?.let { multiTapSeq ->
+                multiTapSeq.commitJob.cancel()
+                trackedMultiTapSeq.value = null
+            }
             val trackedPointer = trackedOutputPointer.value ?: return@mutateLocked
             val longPress = trackedPointer.longPress
             val anchorBounds = longPress.anchorBounds

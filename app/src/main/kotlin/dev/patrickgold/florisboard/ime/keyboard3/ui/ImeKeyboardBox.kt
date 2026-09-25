@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -141,6 +142,7 @@ fun ImeKeyboardBox(
         val pointerTracker = rememberPointerTracker(activeTouchKeyboard)
         val trackedOutputPointer by pointerTracker.trackedOutputPointer.collectAsState()
         val trackedPeekPointer by pointerTracker.trackedPeekPointer.collectAsState()
+        val trackedMultiTapSeq by pointerTracker.trackedMultiTapSeq.collectAsState()
 
         val keyboardRowHeightDp = FlorisImeSizing.keyboardRowBaseHeight
         val peekLineWidthPx = with(density) { 8.dp.toPx() }
@@ -190,6 +192,11 @@ fun ImeKeyboardBox(
                         trackedOutputPointer?.takeIf { it.downKey == touchKey }?.longPress ?: LongPress.None
                     }
                 }
+                val multiTapIndex by remember {
+                    derivedStateOf {
+                        trackedMultiTapSeq?.takeIf { it.touchKey == touchKey }?.multiTapIndex ?: -1
+                    }
+                }
                 ImeKeyboardKeyBox(
                     touchKey = touchKey,
                     displayOverride = when {
@@ -198,6 +205,7 @@ fun ImeKeyboardBox(
                     },
                     isPressed = isPressed,
                     longPress = longPress,
+                    multiTapIndex = multiTapIndex,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -236,6 +244,7 @@ private fun ImeKeyboardKeyBox(
     displayOverride: K3StringOrDescriptor?,
     isPressed: Boolean,
     longPress: LongPress,
+    multiTapIndex: Int,
     modifier: Modifier = Modifier,
 ) {
     val display = displayOverride ?: touchKey.display
@@ -249,6 +258,7 @@ private fun ImeKeyboardKeyBox(
     }
     // TODO some keys an be disabled (copy cut etc)
     val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
+    val multiTapKeys = touchKey.multiTapKeys
 
     SnyggBox(
         FlorisImeUi.Key.elementName,
@@ -256,20 +266,22 @@ private fun ImeKeyboardKeyBox(
         selector = selector,
         modifier = modifier,
     ) {
-        val multiTapKeys = touchKey.multiTapKeys
         Row(
             modifier = Modifier
                 .align(Alignment.Center)
                 .scaleToFitHorizontally(),
         ) {
-            if (multiTapKeys.isEmpty()) {
-                Display3(display)
-            } else {
-                for (multiTapKey in multiTapKeys) {
+            if (touchKey.shouldOverrideDisplayWithMultiTapKeys) {
+                for ((index, multiTapKey) in multiTapKeys.withIndex()) {
                     Display3(
+                        modifier = if (index == multiTapIndex) {
+                            Modifier.background(Color.Red) // TODO customizable
+                        } else Modifier,
                         display = multiTapKey.display,
                     )
                 }
+            } else {
+                Display3(display)
             }
         }
         if (touchKey.longPressKeyHint != null) {
@@ -283,5 +295,9 @@ private fun ImeKeyboardKeyBox(
         }
         // TODO flick hints
     }
-    LongPressBox(longPress, attributes = attributes)
+    LongPressBox(
+        longPress = longPress,
+        longPressSimpleDisplayOverride = multiTapKeys.getOrNull(multiTapIndex)?.display,
+        attributes = attributes,
+    )
 }

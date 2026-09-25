@@ -115,6 +115,7 @@ class TouchKey(
     val extendedPopupKeys: List<TouchPopupKey>,
     val longPressKeyHint: K3StringOrDescriptor?,
     val longPressKeyHintPlacement: LongPressKeyHintPlacement,
+    val shouldOverrideDisplayWithMultiTapKeys: Boolean,
     val multiTapKeys: List<TouchMultiTapKey>,
 ) {
     val isSuitableForPopup: Boolean
@@ -346,6 +347,8 @@ private fun computeTouchKeyboard(
                         extendedPopupKeys = popups,
                         longPressKeyHint = if (options.longPressKeyHintEnabled) popups.firstOrNull()?.display else null,
                         longPressKeyHintPlacement = options.longPressKeyHintPlacement,
+                        shouldOverrideDisplayWithMultiTapKeys =
+                            model.displays.byKeyId[key.id] == null && multiTapKeys.isNotEmpty(),
                         multiTapKeys = multiTapKeys,
                     )
                     touchKeys.add(touchKey)

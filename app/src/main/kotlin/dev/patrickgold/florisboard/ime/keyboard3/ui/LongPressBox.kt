@@ -34,6 +34,7 @@ import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.k3lp.lib.text.K3StringOrDescriptor
 
 val GlobalStateNumPopupsShowing: StateFlow<Int>
     field = MutableStateFlow(0)
@@ -41,6 +42,7 @@ val GlobalStateNumPopupsShowing: StateFlow<Int>
 @Composable
 fun LongPressBox(
     longPress: LongPress,
+    longPressSimpleDisplayOverride: K3StringOrDescriptor? = null,
     modifier: Modifier = Modifier,
     attributes: SnyggQueryAttributes = emptyMap(),
 ) {
@@ -61,7 +63,7 @@ fun LongPressBox(
         ) {
             Box(Modifier.layoutNormalized(longPress.anchorBounds.localTo(longPress.simpleBounds))) {
                 Display3(
-                    display = longPress.simpleLabel,
+                    display = longPressSimpleDisplayOverride ?: longPress.simpleLabel,
                     modifier = Modifier
                         .align(Alignment.Center)
                         .scaleToFitHorizontally(),
