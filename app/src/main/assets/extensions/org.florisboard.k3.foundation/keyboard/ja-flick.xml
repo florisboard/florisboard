@@ -1,5 +1,4 @@
 <keyboard3 xmlns="https://schemas.unicode.org/cldr/45/keyboard3" conformsTo="45" locale="ja">
-    <version number="0.0.1" />
     <info author="dot166" name="Japanese (Flick)" layout="Flick" indicator="mozcJa" />
 
     <displays>
@@ -282,7 +281,7 @@
     </layers>-->
 
     <layers formId="touch" minDeviceWidth="1">
-        <import path="flex://org.florisboard.k3.foundation/layers-touch-implied.xml" /> <!-- TODO this should be implied! -->
+        <import path="flex://org.florisboard.k3.foundation/layers-touch.xml" />
 
         <layer id="base">
             <row keys="extra ja-a ja-ka ja-sa bksp" />
