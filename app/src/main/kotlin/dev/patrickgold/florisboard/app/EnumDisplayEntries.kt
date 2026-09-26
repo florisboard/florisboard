@@ -394,27 +394,27 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
         listPrefEntries {
             entry(
                 key = LongPressKeyHintPlacement.TOP_START,
-                label = "TOP_START",
+                label = stringRes(R.string.enum__long_press_key_hint_placement__top_start),
             )
             entry(
                 key = LongPressKeyHintPlacement.TOP_CENTER,
-                label = "TOP_CENTER",
+                label = stringRes(R.string.enum__long_press_key_hint_placement__top_center),
             )
             entry(
                 key = LongPressKeyHintPlacement.TOP_END,
-                label = "TOP_END",
+                label = stringRes(R.string.enum__long_press_key_hint_placement__top_end),
             )
             entry(
                 key = LongPressKeyHintPlacement.BOTTOM_START,
-                label = "BOTTOM_START",
+                label = stringRes(R.string.enum__long_press_key_hint_placement__bottom_start),
             )
             entry(
                 key = LongPressKeyHintPlacement.BOTTOM_CENTER,
-                label = "BOTTOM_CENTER",
+                label = stringRes(R.string.enum__long_press_key_hint_placement__bottom_center),
             )
             entry(
                 key = LongPressKeyHintPlacement.BOTTOM_END,
-                label = "BOTTOM_END",
+                label = stringRes(R.string.enum__long_press_key_hint_placement__bottom_end),
             )
         }
     },

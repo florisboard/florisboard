@@ -84,15 +84,15 @@ fun KeyboardScreen() = FlorisScreen {
             title = stringRes(R.string.pref__keyboard__number_row__label),
             summary = stringRes(R.string.pref__keyboard__number_row__summary),
         )
+        Preference(
+            title = stringRes(R.string.settings__fn_key__title),
+            summary = stringRes(R.string.settings__fn_key__summary),
+            onClick = { navController.navigate(Routes.Settings.Keyboard.FnKey) },
+        )
         ListPreference(
             prefs.keyboard.spaceBarMode,
             title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
             entries = enumDisplayEntriesOf(SpaceBarMode::class),
-        )
-        ListPreference(
-            prefs.keyboard.capitalizationBehavior,
-            title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
-            entries = enumDisplayEntriesOf(CapitalizationBehavior::class),
         )
         DialogSliderPreference(
             primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
@@ -105,35 +105,32 @@ fun KeyboardScreen() = FlorisScreen {
             max = 150,
             stepIncrement = 5,
         )
+        DialogSliderPreference(
+            primaryPref = prefs.keyboard.keySpacingVertical,
+            secondaryPref = prefs.keyboard.keySpacingHorizontal,
+            title = stringRes(R.string.pref__keyboard__key_spacing__label),
+            primaryLabel = stringRes(R.string.screen_orientation__vertical),
+            secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
+            valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+            min = 50,
+            max = 150,
+            stepIncrement = 5,
+        )
+        ListPreference(
+            prefs.keyboard.landscapeInputUiMode,
+            title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
+            entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
+        )
         ListPreference(
             listPref = prefs.keyboard.incognitoDisplayMode,
             title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
             entries = enumDisplayEntriesOf(IncognitoDisplayMode::class),
         )
-
-        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_layout__label)) {
-            Preference(
-                title = stringRes(R.string.settings__fn_key__title),
-                summary = stringRes(R.string.settings__fn_key__summary),
-                onClick = { navController.navigate(Routes.Settings.Keyboard.FnKey) },
-            )
-            ListPreference(
-                prefs.keyboard.landscapeInputUiMode,
-                title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
-                entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
-            )
-            DialogSliderPreference(
-                primaryPref = prefs.keyboard.keySpacingVertical,
-                secondaryPref = prefs.keyboard.keySpacingHorizontal,
-                title = stringRes(R.string.pref__keyboard__key_spacing__label),
-                primaryLabel = stringRes(R.string.screen_orientation__vertical),
-                secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
-                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-                min = 50,
-                max = 150,
-                stepIncrement = 5,
-            )
-        }
+        ListPreference(
+            prefs.keyboard.capitalizationBehavior,
+            title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
+            entries = enumDisplayEntriesOf(CapitalizationBehavior::class),
+        )
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_keypress__label)) {
             Preference(
@@ -152,7 +149,7 @@ fun KeyboardScreen() = FlorisScreen {
             )
         }
 
-        PreferenceGroup(title = "Long press") {
+        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_long_press__label)) {
             TimeoutPreference(
                 prefs.keyboard.longPressTimeoutUseSystem,
                 prefs.keyboard.longPressTimeout,
@@ -164,18 +161,18 @@ fun KeyboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.keyboard.longPressKeyHintEnabled,
-                title = "Show long press hints",
-                summary = "Displays the default long press key as a hint",
+                title = stringRes(R.string.pref__keyboard__long_press_key_hint_enabled__label),
+                summary = stringRes(R.string.pref__keyboard__long_press_key_hint_enabled__summary),
             )
             ListPreference(
                 prefs.keyboard.longPressKeyHintPlacement,
-                title = "Long press hint placement",
+                title = stringRes(R.string.pref__keyboard__long_press_key_hint_placement__label),
                 entries = enumDisplayEntriesOf(LongPressKeyHintPlacement::class),
                 enabledIf = { prefs.keyboard.longPressKeyHintEnabled isEqualTo true },
             )
         }
 
-        PreferenceGroup(title = "Multi tap") {
+        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_multi_tap__label)) {
             TimeoutPreference(
                 prefs.keyboard.multiTapTimeoutUseSystem,
                 prefs.keyboard.multiTapTimeout,
@@ -187,12 +184,12 @@ fun KeyboardScreen() = FlorisScreen {
             )
             SwitchPreference(
                 prefs.keyboard.multiTapKeyHintEnabled,
-                title = "Show multi tap hints",
-                summary = "Displays the multi tap key as a hint",
+                title = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__label),
+                summary = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__summary),
             )
         }
 
-        PreferenceGroup(title = "Flicks") {
+        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_flicks__label)) {
             SwitchPreference(
                 prefs.keyboard.flickKeyHintEnabled,
                 title = "Show flick hints",

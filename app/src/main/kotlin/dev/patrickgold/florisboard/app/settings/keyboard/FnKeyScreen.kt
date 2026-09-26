@@ -177,7 +177,7 @@ fun FnKeyScreen() = FlorisScreen {
                                 icon = Icons.Default.KeyboardArrowUp,
                                 iconColor = MaterialTheme.colorScheme.primary,
                                 iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                enabled = index > 0,
+                                enabled = fnKeyEnabled && index > 0,
                             )
                             FlorisIconButton(
                                 onClick = {
@@ -195,7 +195,7 @@ fun FnKeyScreen() = FlorisScreen {
                                 icon = Icons.Default.KeyboardArrowDown,
                                 iconColor = MaterialTheme.colorScheme.primary,
                                 iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                enabled = index + 1 < longPressActions.size,
+                                enabled = fnKeyEnabled && index + 1 < longPressActions.size,
                             )
                         }
                     },

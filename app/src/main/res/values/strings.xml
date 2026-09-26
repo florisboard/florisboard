@@ -438,7 +438,6 @@
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
-    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing factor</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
@@ -449,8 +448,16 @@
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
     <string name="pref__keyboard__timeout_pref_use_system_summary" comment="Summary of the long press/multi tap timeout pref to indicate that the current mode is infer from system. {v} refers to the current system value in ms.">Use system ({v} ms)</string>
     <string name="pref__keyboard__timeout_pref_use_system_switch" comment="Label of the 'Use system' switch within the long press/multi tap timeout dialogs">Use system</string>
+    <string name="pref__keyboard__group_long_press__label" comment="Preference group title">Long press</string>
     <string name="pref__keyboard__long_press_timeout__label" comment="Preference title">Long press timeout</string>
+    <string name="pref__keyboard__long_press_key_hint_enabled__label" comment="Preference title">Show hints</string>
+    <string name="pref__keyboard__long_press_key_hint_enabled__summary" comment="Preference summary">Displays each key\'s default long press key, if any, as a hint</string>
+    <string name="pref__keyboard__long_press_key_hint_placement__label" comment="Preference title">Hint placement</string>
+    <string name="pref__keyboard__group_multi_tap__label" comment="Preference group title">Multi tap</string>
+    <string name="pref__keyboard__multi_tap_key_hint_enabled__label" comment="Preference title">Show multi tap highlight</string>
+    <string name="pref__keyboard__multi_tap_key_hint_enabled__summary" comment="Preference summary">Highlight pending output while multi tap gesture is active</string>
     <string name="pref__keyboard__multi_tap_timeout__label" comment="Preference title">Multi tap timeout</string>
+    <string name="pref__keyboard__group_flicks__label" comment="Preference group title">Flicks</string>
 
     <string name="settings__fn_key__title" comment="Title of Fn key screen">Fn key and actions</string>
     <string name="settings__fn_key__summary" comment="Summary of Fn key screen (shown in Keyboard screen)">Configure Fn key and its associated actions</string>
@@ -1033,6 +1040,13 @@
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
+
+    <string name="enum__long_press_key_hint_placement__top_start" comment="Enum value label">Top start</string>
+    <string name="enum__long_press_key_hint_placement__top_center" comment="Enum value label">Top center</string>
+    <string name="enum__long_press_key_hint_placement__top_end" comment="Enum value label">Top end</string>
+    <string name="enum__long_press_key_hint_placement__bottom_start" comment="Enum value label">Bottom start</string>
+    <string name="enum__long_press_key_hint_placement__bottom_center" comment="Enum value label">Bottom center</string>
+    <string name="enum__long_press_key_hint_placement__bottom_end" comment="Enum value label">Bottom end</string>
 
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
