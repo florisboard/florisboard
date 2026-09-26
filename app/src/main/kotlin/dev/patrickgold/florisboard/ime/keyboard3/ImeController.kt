@@ -87,7 +87,7 @@ class ImeController(
         prefs.keyboard.fnKeyArrangement.asFlow(),
         prefs.keyboard.longPressKeyHintEnabled.asFlow(),
         prefs.keyboard.longPressKeyHintPlacement.asFlow(),
-        prefs.keyboard.multiTapKeyHintEnabled.asFlow(),
+        prefs.keyboard.multiTapHighlightEnabled.asFlow(),
         prefs.keyboard.flickKeyHintEnabled.asFlow(),
         prefs.keyboard.flickKeyHintPlacement.asFlow(),
     ) { values ->
@@ -97,7 +97,7 @@ class ImeController(
             fnKeyArrangement = values[2] as FnKeyArrangement,
             longPressKeyHintEnabled = values[3] as Boolean,
             longPressKeyHintPlacement = values[4] as LongPressKeyHintPlacement,
-            multiTapKeyHintEnabled = values[5] as Boolean,
+            multiTapHighlightEnabled = values[5] as Boolean,
             flickKeyHintEnabled = values[6] as Boolean,
             flickKeyHintPlacement = values[7] as FlickKeyHintPlacement,
         )

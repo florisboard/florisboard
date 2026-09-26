@@ -20,7 +20,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -274,7 +273,7 @@ private fun ImeKeyboardKeyBox(
             if (touchKey.shouldOverrideDisplayWithMultiTapKeys) {
                 for ((index, multiTapKey) in multiTapKeys.withIndex()) {
                     Display3(
-                        modifier = if (index == multiTapIndex) {
+                        modifier = if (touchKey.shouldHighlightPendingMultiTapKey && index == multiTapIndex) {
                             Modifier.background(Color.Red) // TODO customizable
                         } else Modifier,
                         display = multiTapKey.display,

@@ -25,7 +25,7 @@ data class TouchModelOptions(
     val fnKeyArrangement: FnKeyArrangement,
     val longPressKeyHintEnabled: Boolean,
     val longPressKeyHintPlacement: LongPressKeyHintPlacement,
-    val multiTapKeyHintEnabled: Boolean,
+    val multiTapHighlightEnabled: Boolean,
     val flickKeyHintEnabled: Boolean,
     val flickKeyHintPlacement: FlickKeyHintPlacement,
 ) {
@@ -36,7 +36,7 @@ data class TouchModelOptions(
             fnKeyArrangement = FnKeyArrangement.Default,
             longPressKeyHintEnabled = true,
             longPressKeyHintPlacement = LongPressKeyHintPlacement.TOP_END,
-            multiTapKeyHintEnabled = true,
+            multiTapHighlightEnabled = true,
             flickKeyHintEnabled = false,
             flickKeyHintPlacement = FlickKeyHintPlacement.CARDINAL,
         )

@@ -159,7 +159,7 @@ fun KeyboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__keyboard__long_press_timeout__label),
                 min = 100,
                 max = 700,
-                stepIncrement = 10,
+                stepIncrement = 50,
                 systemTimeout = systemTimingOptions.longPressTimeout,
             )
             SwitchPreference(
@@ -180,13 +180,13 @@ fun KeyboardScreen() = FlorisScreen {
                 prefs.keyboard.multiTapTimeoutUseSystem,
                 prefs.keyboard.multiTapTimeout,
                 title = stringRes(R.string.pref__keyboard__multi_tap_timeout__label),
-                min = 100,
-                max = 700,
-                stepIncrement = 10,
-                systemTimeout = systemTimingOptions.multiPressTimeout,
+                min = 300,
+                max = 1500,
+                stepIncrement = 50,
+                systemTimeout = systemTimingOptions.multiTapTimeout,
             )
             SwitchPreference(
-                prefs.keyboard.multiTapKeyHintEnabled,
+                prefs.keyboard.multiTapHighlightEnabled,
                 title = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__label),
                 summary = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__summary),
             )
@@ -310,7 +310,7 @@ private fun TimeoutPreference(
                         .padding(JetPrefAlertDialogDefaults.ContentPadding)
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 16.dp),
-                    text = stringRes(R.string.unit__milliseconds__symbol, "v" to newTimeout),
+                    text = stringRes(R.string.unit__milliseconds__symbol, "v" to newTimeout.roundToInt()),
                 )
                 Slider(
                     modifier = Modifier

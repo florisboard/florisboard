@@ -90,9 +90,9 @@ sealed interface TrackedPointer {
 data class TrackedMultiTapSeq(
     val touchKey: TouchKey,
     val multiTapIndex: Int,
+    val commitJob: Job?,
     val commit: suspend () -> Unit,
     val cycleNext: suspend () -> Unit,
-    val commitJob: Job,
 )
 
 data class PeekLine(
@@ -141,7 +141,6 @@ class PointerTracker(
         val keyRepeatTimeout = timingOptions.getKeyRepeatTimeout(downKey.attrs.output)
         val keyRepeatDelay = timingOptions.getKeyRepeatDelay(downKey.attrs.output)
         val longPressTimeout = timingOptions.getLongPressTimeout(downKey.attrs.output)
-        val multiPressTimeout = timingOptions.getMultiPressTimeout(downKey.attrs.output)
 
         val peekLayerId = downKey.attrs.layerId
         if (peekLayerId != null) {
@@ -164,7 +163,6 @@ class PointerTracker(
             }
             interactionController.performFeedback(InteractionKind.KeyPress)
         } else {
-            var longPressExtendJob: Job? = null
             trackedOutputPointer.value = TrackedPointer.Output(
                 id = down.id,
                 down = down,
@@ -194,7 +192,7 @@ class PointerTracker(
                         extendedKeys = downKey.extendedPopupKeys,
                         extendedFocusedIndex = 0,
                         extendedJob = if (downKey.isSuitableForExtendedPopup) {
-                            launchExtendedLongPressJob(longPressTimeout).also { longPressExtendJob = it }
+                            launchExtendedLongPressJob(longPressTimeout)
                         } else null,
                     )
                 } else LongPress.None,
@@ -229,31 +227,19 @@ class PointerTracker(
                         }
                         trackedMultiTapSeq.value = null
                     }
-                    val launchNewCommitJob = {
-                        scope.launch {
-                            delay(multiPressTimeout)
-                            longPressExtendJob?.join()
-                            mutateLocked {
-                                if (trackedOutputPointer.value?.longPress?.extendedBounds?.isEmpty == false) {
-                                    return@mutateLocked
-                                }
-                                commit()
-                            }
-                        }
-                    }
                     val cycleNext = suspend cycleNext@{
                         val multiTapSeq = trackedMultiTapSeq.value ?: return@cycleNext
-                        multiTapSeq.commitJob.cancel()
+                        multiTapSeq.commitJob?.cancel()
                         val newIndex = (multiTapSeq.multiTapIndex + 1) % multiTapSeq.touchKey.multiTapKeys.size.fastCoerceAtLeast(1)
                         trackedMultiTapSeq.value = multiTapSeq.copy(
                             multiTapIndex = newIndex,
-                            commitJob = launchNewCommitJob(),
+                            commitJob = null,
                         )
                     }
                     trackedMultiTapSeq.value = TrackedMultiTapSeq(
                         touchKey = downKey,
                         multiTapIndex = 0,
-                        commitJob = launchNewCommitJob(),
+                        commitJob = null,
                         commit = commit,
                         cycleNext = cycleNext,
                     )
@@ -296,6 +282,7 @@ class PointerTracker(
         }
     }
 
+    context(scope: CoroutineScope)
     suspend fun handleUp(up: PointerInputChange, size: IntSize) {
         trackedPeekPointer.value?.takeIf { it.id == up.id }?.let { trackedPointer ->
             imeController.updateState {
@@ -322,6 +309,23 @@ class PointerTracker(
             }
             trackedPeekPointer.update { it?.copy(peekMustSwitchBack = true) }
             trackedOutputPointer.value = null
+        }
+        trackedMultiTapSeq.update { multiTapSeq ->
+            if (multiTapSeq != null) {
+                multiTapSeq.commitJob?.cancel() // should never happen, but still ensure we never have 2 active jobs
+                multiTapSeq.copy(
+                    commitJob = scope.launch {
+                        val timingOptions = interactionController.activeTimingOptions.value
+                        delay(timingOptions.multiTapTimeout)
+                        mutateLocked {
+                            if (trackedOutputPointer.value?.longPress?.extendedBounds?.isEmpty == false) {
+                                return@mutateLocked
+                            }
+                            multiTapSeq.commit()
+                        }
+                    }
+                )
+            } else null
         }
     }
 
@@ -359,7 +363,7 @@ class PointerTracker(
 
     private suspend fun cancelMultiTap() {
         val multiTapSeq = trackedMultiTapSeq.getAndUpdate { null } ?: return
-        multiTapSeq.commitJob.cancel()
+        multiTapSeq.commitJob?.cancel()
     }
 
     private fun Offset.normalized(size: IntSize): Offset {
@@ -373,7 +377,7 @@ class PointerTracker(
         delay(longPressTimeout)
         mutateLocked {
             trackedMultiTapSeq.value?.let { multiTapSeq ->
-                multiTapSeq.commitJob.cancel()
+                multiTapSeq.commitJob?.cancel()
                 trackedMultiTapSeq.value = null
             }
             val trackedPointer = trackedOutputPointer.value ?: return@mutateLocked

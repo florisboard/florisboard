@@ -64,12 +64,13 @@ private class AndroidInteractionController(
                 longPressTimeoutUseSystem -> system.longPressTimeout
                 else -> longPressTimeout.milliseconds
             },
-            multiPressTimeout = when {
-                multiTapTimeOutUseSystem -> system.multiPressTimeout
+            multiTapTimeout = when {
+                multiTapTimeOutUseSystem -> system.multiTapTimeout
                 else -> multiTapTimeout.milliseconds
             },
+            multiPressTimeout = system.multiPressTimeout,
         )
-    }.stateIn(scope, SharingStarted.Eagerly, InteractionTimingOptions.Fallback)
+    }.stateIn(scope, SharingStarted.Eagerly, InteractionTimingOptions.Default)
 
     override val activeFeedbackOptions = combine<Any, InteractionFeedbackOptions>(
         // Audio
@@ -218,6 +219,8 @@ private fun androidTimingOptions(): InteractionTimingOptions {
         keyRepeatTimeout = ViewConfiguration.getKeyRepeatTimeout().milliseconds,
         keyRepeatDelay = ViewConfiguration.getKeyRepeatDelay().milliseconds,
         longPressTimeout = ViewConfiguration.getLongPressTimeout().milliseconds,
+        // no system constant available for multi tap timeout on Android
+        multiTapTimeout = InteractionTimingOptions.Default.multiTapTimeout,
         multiPressTimeout = when {
             AndroidVersion.ATLEAST_API31_S -> ViewConfiguration.getMultiPressTimeout()
             else -> 300

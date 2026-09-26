@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionTimingOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
@@ -519,7 +520,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val longPressTimeout = int(
             key = "keyboard__long_press_timeout",
-            default = 300,
+            default = InteractionTimingOptions.Default.longPressTimeout.inWholeMilliseconds.toInt(),
         )
         val longPressKeyHintEnabled = boolean(
             key = "keyboard__long_press_key_hint_enabled",
@@ -536,11 +537,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val multiTapTimeout = int(
             key = "keyboard__multi_tap_timeout",
-            default = 300,
+            default = InteractionTimingOptions.Default.multiTapTimeout.inWholeMilliseconds.toInt(),
         )
-        val multiTapKeyHintEnabled = boolean(
-            key = "keyboard__multi_tap_key_hint_enabled",
-            default = TouchModelOptions.Default.multiTapKeyHintEnabled,
+        val multiTapHighlightEnabled = boolean(
+            key = "keyboard__multi_tap_highlight_enabled",
+            default = TouchModelOptions.Default.multiTapHighlightEnabled,
         )
 
         val flickKeyHintEnabled = boolean(
