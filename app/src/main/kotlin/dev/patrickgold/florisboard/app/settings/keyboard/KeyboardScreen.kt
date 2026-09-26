@@ -27,6 +27,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -77,6 +78,8 @@ fun KeyboardScreen() = FlorisScreen {
 
     val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
+
+    val systemTimingOptions by interactionController.activeSystemTimingOptions.collectAsState()
 
     content {
         SwitchPreference(
@@ -157,7 +160,7 @@ fun KeyboardScreen() = FlorisScreen {
                 min = 100,
                 max = 700,
                 stepIncrement = 10,
-                getSystemValue = { interactionController.getSystemLongPressTimeout() },
+                systemTimeout = systemTimingOptions.longPressTimeout,
             )
             SwitchPreference(
                 prefs.keyboard.longPressKeyHintEnabled,
@@ -180,7 +183,7 @@ fun KeyboardScreen() = FlorisScreen {
                 min = 100,
                 max = 700,
                 stepIncrement = 10,
-                getSystemValue = { interactionController.getSystemMultiPressTimeout() },
+                systemTimeout = systemTimingOptions.multiPressTimeout,
             )
             SwitchPreference(
                 prefs.keyboard.multiTapKeyHintEnabled,
@@ -215,7 +218,7 @@ private fun TimeoutPreference(
     min: Int,
     max: Int,
     stepIncrement: Int,
-    getSystemValue: () -> Duration,
+    systemTimeout: Duration,
 ) {
     val scope = rememberCoroutineScope()
     val dialogStrings = LocalDefaultDialogPrefStrings.current
@@ -231,7 +234,7 @@ private fun TimeoutPreference(
         summary = when {
             useSystem -> stringRes(
                 R.string.pref__keyboard__timeout_pref_use_system_summary,
-                "v" to getSystemValue().inWholeMilliseconds,
+                "v" to systemTimeout.inWholeMilliseconds,
             )
             else -> stringRes(R.string.unit__milliseconds__symbol, "v" to timeout)
         },
@@ -242,10 +245,10 @@ private fun TimeoutPreference(
 
     if (isDialogOpen) {
         var newUseSystem by remember { mutableStateOf(useSystem) }
-        var newTimeout by remember {
+        var newTimeout by remember(systemTimeout) {
             mutableFloatStateOf(
                 when {
-                    useSystem -> getSystemValue().inWholeMilliseconds.toFloat()
+                    useSystem -> systemTimeout.inWholeMilliseconds.toFloat()
                     else -> timeout.toFloat()
                 }
             )
@@ -285,7 +288,7 @@ private fun TimeoutPreference(
                             onValueChange = {
                                 newUseSystem = it
                                 if (newUseSystem) {
-                                    newTimeout = getSystemValue().inWholeMilliseconds.toFloat()
+                                    newTimeout = systemTimeout.inWholeMilliseconds.toFloat()
                                 }
                             },
                             role = Role.Switch,

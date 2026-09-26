@@ -16,6 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import org.k3lp.lib.text.K3StringOrDescriptor
+import org.k3lp.lib.text.asK3String
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -25,6 +28,33 @@ data class InteractionTimingOptions(
     val longPressTimeout: Duration,
     val multiPressTimeout: Duration,
 ) {
+    fun getKeyRepeatTimeout(output: K3StringOrDescriptor? = null): Duration {
+        return keyRepeatTimeout
+    }
+
+    fun getKeyRepeatDelay(output: K3StringOrDescriptor? = null): Duration {
+        val factor = when (output) {
+            ImeActions.BackspaceWord,
+            ImeActions.DeleteWord,
+            ImeActions.Undo,
+            ImeActions.Redo -> 5.0
+            else -> 1.0
+        }
+        return keyRepeatDelay * factor
+    }
+
+    fun getLongPressTimeout(output: K3StringOrDescriptor? = null): Duration {
+        val factor = when (output) {
+            ASCII_SPACE -> 2.5
+            else -> 1.0
+        }
+        return longPressTimeout * factor
+    }
+
+    fun getMultiPressTimeout(output: K3StringOrDescriptor? = null): Duration {
+        return multiPressTimeout
+    }
+
     companion object {
         val Fallback = InteractionTimingOptions(
             keyRepeatTimeout = 300.milliseconds,
@@ -32,5 +62,7 @@ data class InteractionTimingOptions(
             longPressTimeout = 300.milliseconds,
             multiPressTimeout = 300.milliseconds,
         )
+
+        val ASCII_SPACE = " ".asK3String()
     }
 }

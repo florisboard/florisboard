@@ -83,8 +83,9 @@ fun ImeKeyButton(
     val display = remember(model, output) { model.displays.byOutput[output]?.display ?: output }
 
     val isRepeatable = output.isRepeatable()
-    val keyRepeatTimeout = interactionController.getKeyRepeatTimeout(output)
-    val keyRepeatDelay = interactionController.getKeyRepeatDelay(output)
+    val timingOptions by interactionController.activeTimingOptions.collectAsState()
+    val keyRepeatTimeout = timingOptions.getKeyRepeatTimeout(output)
+    val keyRepeatDelay = timingOptions.getKeyRepeatDelay(output)
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()

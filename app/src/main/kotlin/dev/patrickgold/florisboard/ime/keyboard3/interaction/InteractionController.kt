@@ -19,32 +19,17 @@ package dev.patrickgold.florisboard.ime.keyboard3.interaction
 import androidx.compose.runtime.compositionLocalOf
 import kotlinx.coroutines.flow.StateFlow
 import org.k3lp.lib.text.K3StringOrDescriptor
-import kotlin.time.Duration
 
 val LocalInteractionController = compositionLocalOf<InteractionController> {
     error("no touch feedback handler provided")
 }
 
 interface InteractionController {
+    val activeSystemTimingOptions: StateFlow<InteractionTimingOptions>
+
     val activeTimingOptions: StateFlow<InteractionTimingOptions>
 
     val activeFeedbackOptions: StateFlow<InteractionFeedbackOptions>
-
-    fun getKeyRepeatTimeout(output: K3StringOrDescriptor? = null): Duration
-
-    fun getKeyRepeatDelay(output: K3StringOrDescriptor? = null): Duration
-
-    fun getLongPressTimeout(output: K3StringOrDescriptor? = null): Duration
-
-    fun getMultiPressTimeout(output: K3StringOrDescriptor? = null): Duration
-
-    fun getSystemKeyRepeatTimeout(): Duration
-
-    fun getSystemKeyRepeatDelay(): Duration
-
-    fun getSystemLongPressTimeout(): Duration
-
-    fun getSystemMultiPressTimeout(): Duration
 
     fun performFeedback(
         kind: InteractionKind,

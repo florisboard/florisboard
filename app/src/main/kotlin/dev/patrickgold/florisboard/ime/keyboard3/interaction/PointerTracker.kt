@@ -137,10 +137,11 @@ class PointerTracker(
         val downLayerId = imeController.snapshotState().touchLayerId
         val downKey = touchKeyboard.findKey(downLayerId, down.position.normalized(size)) ?: return
 
-        val keyRepeatTimeout = interactionController.getKeyRepeatTimeout(downKey.attrs.output)
-        val keyRepeatDelay = interactionController.getKeyRepeatDelay(downKey.attrs.output)
-        val longPressTimeout = interactionController.getLongPressTimeout(downKey.attrs.output)
-        val multiPressTimeout = interactionController.getMultiPressTimeout(downKey.attrs.output)
+        val timingOptions = interactionController.activeTimingOptions.value
+        val keyRepeatTimeout = timingOptions.getKeyRepeatTimeout(downKey.attrs.output)
+        val keyRepeatDelay = timingOptions.getKeyRepeatDelay(downKey.attrs.output)
+        val longPressTimeout = timingOptions.getLongPressTimeout(downKey.attrs.output)
+        val multiPressTimeout = timingOptions.getMultiPressTimeout(downKey.attrs.output)
 
         val peekLayerId = downKey.attrs.layerId
         if (peekLayerId != null) {
