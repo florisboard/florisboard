@@ -30,9 +30,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.systemServiceOrNull
 import org.k3lp.lib.text.K3StringOrDescriptor
@@ -47,26 +45,31 @@ private class AndroidInteractionController(
     scope: CoroutineScope,
     prefs: FlorisPreferenceModel,
 ) : InteractionController {
-    private val timingOptionsFlow = combine(
-        prefs.keyboard.longPressDelay.asFlow(),
-        flowOf(0), // TODO placeholder so we can use type-safe combine variant here
-    ) { longPressTimeout, _ ->
-        val keyRepeatTimeout = ViewConfiguration.getKeyRepeatTimeout()
-        val keyRepeatDelay = ViewConfiguration.getKeyRepeatDelay()
-        val multiPressTimeout = if (AndroidVersion.ATLEAST_API31_S) {
-            ViewConfiguration.getMultiPressTimeout()
-        } else {
-            300
+    override val activeTimingOptions = combine(
+        prefs.keyboard.longPressTimeoutUseSystem.asFlow(),
+        prefs.keyboard.longPressTimeout.asFlow(),
+        prefs.keyboard.multiTapTimeoutUseSystem.asFlow(),
+        prefs.keyboard.multiTapTimeout.asFlow(),
+    ) { longPressTimeoutUseSystem, longPressTimeout, multiTapTimeOutUseSystem, multiTapTimeout ->
+        val keyRepeatTimeout = getSystemKeyRepeatTimeout()
+        val keyRepeatDelay = getSystemKeyRepeatDelay()
+        val longPressTimeout = when {
+            longPressTimeoutUseSystem -> getSystemLongPressTimeout()
+            else -> longPressTimeout.milliseconds
+        }
+        val multiPressTimeout = when {
+            multiTapTimeOutUseSystem -> getSystemMultiPressTimeout()
+            else -> multiTapTimeout.milliseconds
         }
         InteractionTimingOptions(
-            keyRepeatTimeout.milliseconds,
-            keyRepeatDelay.milliseconds,
-            longPressTimeout.milliseconds,
-            multiPressTimeout.milliseconds,
+            keyRepeatTimeout,
+            keyRepeatDelay,
+            longPressTimeout,
+            multiPressTimeout,
         )
     }.stateIn(scope, SharingStarted.Eagerly, InteractionTimingOptions.Fallback)
 
-    private val feedbackOptionsFlow = combine<Any, InteractionFeedbackOptions>(
+    override val activeFeedbackOptions = combine<Any, InteractionFeedbackOptions>(
         // Audio
         prefs.inputFeedback.audioEnabled.asFlow(),
         prefs.inputFeedback.audioVolume.asFlow(),
@@ -122,17 +125,13 @@ private class AndroidInteractionController(
         }
     }.stateIn(scope, SharingStarted.Eagerly, InteractionFeedbackOptions.Fallback)
 
-    override val timingOptions: InteractionTimingOptions
-        get() = timingOptionsFlow.value
-
-    override val feedbackOptions: InteractionFeedbackOptions
-        get() = feedbackOptionsFlow.value
-
     override fun getKeyRepeatTimeout(output: K3StringOrDescriptor?): Duration {
+        val timingOptions = activeTimingOptions.value
         return timingOptions.keyRepeatTimeout
     }
 
     override fun getKeyRepeatDelay(output: K3StringOrDescriptor?): Duration {
+        val timingOptions = activeTimingOptions.value
         val factor = when (output) {
             ImeActions.BackspaceWord,
             ImeActions.DeleteWord,
@@ -144,6 +143,7 @@ private class AndroidInteractionController(
     }
 
     override fun getLongPressTimeout(output: K3StringOrDescriptor?): Duration {
+        val timingOptions = activeTimingOptions.value
         val factor = when (output) {
             ASCII_SPACE -> 2.5
             else -> 1.0
@@ -152,10 +152,31 @@ private class AndroidInteractionController(
     }
 
     override fun getMultiPressTimeout(output: K3StringOrDescriptor?): Duration {
+        val timingOptions = activeTimingOptions.value
         return timingOptions.multiPressTimeout
     }
 
+    override fun getSystemKeyRepeatTimeout(): Duration {
+        return ViewConfiguration.getKeyRepeatTimeout().milliseconds
+    }
+
+    override fun getSystemKeyRepeatDelay(): Duration {
+        return ViewConfiguration.getKeyRepeatDelay().milliseconds
+    }
+
+    override fun getSystemLongPressTimeout(): Duration {
+        return ViewConfiguration.getLongPressTimeout().milliseconds
+    }
+
+    override fun getSystemMultiPressTimeout(): Duration {
+        return when {
+            AndroidVersion.ATLEAST_API31_S -> ViewConfiguration.getMultiPressTimeout()
+            else -> 300
+        }.milliseconds
+    }
+
     override fun performAudioFeedback(kind: InteractionKind, output: K3StringOrDescriptor?) {
+        val feedbackOptions = activeFeedbackOptions.value
         val composeView = composeView.get() ?: return
         if (!composeView.isSoundEffectsEnabled) return
         val audioManager = audioManager.get() ?: return

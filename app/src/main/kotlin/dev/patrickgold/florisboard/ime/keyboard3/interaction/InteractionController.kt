@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
 import androidx.compose.runtime.compositionLocalOf
+import kotlinx.coroutines.flow.StateFlow
 import org.k3lp.lib.text.K3StringOrDescriptor
 import kotlin.time.Duration
 
@@ -25,9 +26,9 @@ val LocalInteractionController = compositionLocalOf<InteractionController> {
 }
 
 interface InteractionController {
-    val timingOptions: InteractionTimingOptions
+    val activeTimingOptions: StateFlow<InteractionTimingOptions>
 
-    val feedbackOptions: InteractionFeedbackOptions
+    val activeFeedbackOptions: StateFlow<InteractionFeedbackOptions>
 
     fun getKeyRepeatTimeout(output: K3StringOrDescriptor? = null): Duration
 
@@ -37,10 +38,19 @@ interface InteractionController {
 
     fun getMultiPressTimeout(output: K3StringOrDescriptor? = null): Duration
 
+    fun getSystemKeyRepeatTimeout(): Duration
+
+    fun getSystemKeyRepeatDelay(): Duration
+
+    fun getSystemLongPressTimeout(): Duration
+
+    fun getSystemMultiPressTimeout(): Duration
+
     fun performFeedback(
         kind: InteractionKind,
         output: K3StringOrDescriptor? = null,
     ) {
+        val feedbackOptions = activeFeedbackOptions.value
         if (feedbackOptions.isAudioFeedbackEnabled(kind)) {
             performAudioFeedback(kind, output)
         }

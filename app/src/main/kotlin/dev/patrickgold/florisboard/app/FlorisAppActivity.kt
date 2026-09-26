@@ -52,6 +52,8 @@ import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readFromUri
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInteractionController
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -177,6 +179,7 @@ class FlorisAppActivity : ComponentActivity() {
 
     @Composable
     private fun AppContent() {
+        val interactionController = rememberAndroidInteractionController(prefs)
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
 
@@ -185,6 +188,7 @@ class FlorisAppActivity : ComponentActivity() {
         CompositionLocalProvider(
             LocalExtensionController provides appContext.extensionController,
             LocalImeController provides appContext.imeController,
+            LocalInteractionController provides interactionController,
             LocalNavController provides navController,
             LocalPreviewFieldController provides previewFieldController,
             LocalStorageController provides appContext.storageController,

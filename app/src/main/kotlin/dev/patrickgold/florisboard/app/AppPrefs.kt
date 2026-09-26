@@ -494,10 +494,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__popup_enabled",
             default = true,
         )
-        val longPressDelay = int(
-            key = "keyboard__long_press_delay",
-            default = 300,
-        )
         val spaceBarSwitchesToCharacters = boolean(
             key = "keyboard__space_bar_switches_to_characters",
             default = true,
@@ -517,6 +513,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             serializer = FnKeyArrangement.Serializer,
         )
 
+        val longPressTimeoutUseSystem = boolean(
+            key = "keyboard__long_press_timeout_use_system",
+            default = true,
+        )
+        val longPressTimeout = int(
+            key = "keyboard__long_press_timeout",
+            default = 300,
+        )
         val longPressKeyHintEnabled = boolean(
             key = "keyboard__long_press_key_hint_enabled",
             default = TouchModelOptions.Default.longPressKeyHintEnabled,
@@ -525,10 +529,20 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__long_press_key_hint_placement",
             default = TouchModelOptions.Default.longPressKeyHintPlacement,
         )
+
+        val multiTapTimeoutUseSystem = boolean(
+            key = "keyboard__multi_tap_timeout_use_system",
+            default = true,
+        )
+        val multiTapTimeout = int(
+            key = "keyboard__multi_tap_timeout",
+            default = 300,
+        )
         val multiTapKeyHintEnabled = boolean(
             key = "keyboard__multi_tap_key_hint_enabled",
             default = TouchModelOptions.Default.multiTapKeyHintEnabled,
         )
+
         val flickKeyHintEnabled = boolean(
             key = "keyboard__flick_key_hint_enabled",
             default = TouchModelOptions.Default.flickKeyHintEnabled,
@@ -879,6 +893,12 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                         Json.encodeToString(fnKey)
                     },
                 )
+            }
+
+            // Migrate long press delay name
+            // Keep migration rules until: 0.8 dev cycle
+            "keyboard__long_press_delay" -> {
+                entry.transform(key = "keyboard__long_press_timeout")
             }
 
             // Default: keep entry

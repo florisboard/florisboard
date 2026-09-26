@@ -62,7 +62,7 @@ class InputEventDispatcher private constructor(private val repeatableKeyCodes: I
     var keyEventReceiver: InputKeyEventReceiver? = null
 
     private fun determineLongPressDelay(data: KeyData): Long {
-        val delayMillis = prefs.keyboard.longPressDelay.get().toLong()
+        val delayMillis = 300//prefs.keyboard.longPressDelay.get().toLong()
         val factor = when (data.code) {
             KeyCode.SPACE, KeyCode.CJK_SPACE, KeyCode.SHIFT -> 2.5f
             else -> 1.0f

@@ -16,7 +16,29 @@
 
 package dev.patrickgold.florisboard.app.settings.keyboard
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
@@ -25,16 +47,27 @@ import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.model.PreferenceData
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
+import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreferenceDefaults
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.LocalDefaultDialogPrefStrings
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialogDefaults
+import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
+import kotlin.math.round
+import kotlin.math.roundToInt
+import kotlin.time.Duration
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
@@ -42,6 +75,7 @@ fun KeyboardScreen() = FlorisScreen {
     title = stringRes(R.string.settings__keyboard__title)
     previewFieldVisible = true
 
+    val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
 
     content {
@@ -111,14 +145,6 @@ fun KeyboardScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__keyboard__popup_enabled__label),
                 summary = stringRes(R.string.pref__keyboard__popup_enabled__summary),
             )
-            DialogSliderPreference(
-                prefs.keyboard.longPressDelay,
-                title = stringRes(R.string.pref__keyboard__long_press_delay__label),
-                valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
-                min = 100,
-                max = 700,
-                stepIncrement = 10,
-            )
             SwitchPreference(
                 prefs.keyboard.spaceBarSwitchesToCharacters,
                 title = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__label),
@@ -126,7 +152,16 @@ fun KeyboardScreen() = FlorisScreen {
             )
         }
 
-        PreferenceGroup(title = "Key hints") {
+        PreferenceGroup(title = "Long press") {
+            TimeoutPreference(
+                prefs.keyboard.longPressTimeoutUseSystem,
+                prefs.keyboard.longPressTimeout,
+                title = stringRes(R.string.pref__keyboard__long_press_timeout__label),
+                min = 100,
+                max = 700,
+                stepIncrement = 10,
+                getSystemValue = { interactionController.getSystemLongPressTimeout() },
+            )
             SwitchPreference(
                 prefs.keyboard.longPressKeyHintEnabled,
                 title = "Show long press hints",
@@ -138,11 +173,26 @@ fun KeyboardScreen() = FlorisScreen {
                 entries = enumDisplayEntriesOf(LongPressKeyHintPlacement::class),
                 enabledIf = { prefs.keyboard.longPressKeyHintEnabled isEqualTo true },
             )
+        }
+
+        PreferenceGroup(title = "Multi tap") {
+            TimeoutPreference(
+                prefs.keyboard.multiTapTimeoutUseSystem,
+                prefs.keyboard.multiTapTimeout,
+                title = stringRes(R.string.pref__keyboard__multi_tap_timeout__label),
+                min = 100,
+                max = 700,
+                stepIncrement = 10,
+                getSystemValue = { interactionController.getSystemMultiPressTimeout() },
+            )
             SwitchPreference(
                 prefs.keyboard.multiTapKeyHintEnabled,
                 title = "Show multi tap hints",
                 summary = "Displays the multi tap key as a hint",
             )
+        }
+
+        PreferenceGroup(title = "Flicks") {
             SwitchPreference(
                 prefs.keyboard.flickKeyHintEnabled,
                 title = "Show flick hints",
@@ -154,6 +204,127 @@ fun KeyboardScreen() = FlorisScreen {
                 entries = enumDisplayEntriesOf(FlickKeyHintPlacement::class),
                 enabledIf = { prefs.keyboard.flickKeyHintEnabled isEqualTo true },
             )
+        }
+    }
+}
+
+@Composable
+private fun TimeoutPreference(
+    useSystemPref: PreferenceData<Boolean>,
+    timeoutPref: PreferenceData<Int>,
+    modifier: Modifier = Modifier,
+    icon: ImageVector? = null,
+    title: String,
+    min: Int,
+    max: Int,
+    stepIncrement: Int,
+    getSystemValue: () -> Duration,
+) {
+    val scope = rememberCoroutineScope()
+    val dialogStrings = LocalDefaultDialogPrefStrings.current
+
+    val useSystem by useSystemPref.collectAsState()
+    val timeout by timeoutPref.collectAsState()
+    var isDialogOpen by remember { mutableStateOf(false) }
+
+    Preference(
+        modifier = modifier,
+        icon = icon,
+        title = title,
+        summary = when {
+            useSystem -> stringRes(
+                R.string.pref__keyboard__timeout_pref_use_system_summary,
+                "v" to getSystemValue().inWholeMilliseconds,
+            )
+            else -> stringRes(R.string.unit__milliseconds__symbol, "v" to timeout)
+        },
+        onClick = {
+            isDialogOpen = true
+        },
+    )
+
+    if (isDialogOpen) {
+        var newUseSystem by remember { mutableStateOf(useSystem) }
+        var newTimeout by remember {
+            mutableFloatStateOf(
+                when {
+                    useSystem -> getSystemValue().inWholeMilliseconds.toFloat()
+                    else -> timeout.toFloat()
+                }
+            )
+        }
+
+        JetPrefAlertDialog(
+            title = title,
+            confirmLabel = dialogStrings.confirmLabel,
+            onConfirm = {
+                scope.launch {
+                    useSystemPref.set(newUseSystem)
+                    timeoutPref.set(newTimeout.roundToInt())
+                }
+                isDialogOpen = false
+            },
+            dismissLabel = dialogStrings.dismissLabel,
+            onDismiss = {
+                isDialogOpen = false
+            },
+            neutralLabel = dialogStrings.neutralLabel,
+            onNeutral = {
+                scope.launch {
+                    useSystemPref.reset()
+                    timeoutPref.reset()
+                }
+                isDialogOpen = false
+            },
+            contentPadding = PaddingValues.Zero,
+        ) {
+            Column {
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .clip(MaterialTheme.shapes.large)
+                        .toggleable(
+                            value = newUseSystem,
+                            onValueChange = {
+                                newUseSystem = it
+                                if (newUseSystem) {
+                                    newTimeout = getSystemValue().inWholeMilliseconds.toFloat()
+                                }
+                            },
+                            role = Role.Switch,
+                        )
+                        .padding(all = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = stringRes(R.string.pref__keyboard__timeout_pref_use_system_switch),
+                    )
+                    Switch(
+                        checked = newUseSystem,
+                        onCheckedChange = null,
+                    )
+                }
+                Text(
+                    modifier = Modifier
+                        .padding(JetPrefAlertDialogDefaults.ContentPadding)
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 16.dp),
+                    text = stringRes(R.string.unit__milliseconds__symbol, "v" to newTimeout),
+                )
+                Slider(
+                    modifier = Modifier
+                        .padding(JetPrefAlertDialogDefaults.ContentPadding)
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
+                    enabled = !newUseSystem,
+                    value = newTimeout,
+                    valueRange = min.toFloat()..max.toFloat(),
+                    steps = ((max.toFloat() - min.toFloat()) / stepIncrement.toFloat()).roundToInt() - 1,
+                    onValueChange = { newTimeout = round(it) },
+                    colors = DialogSliderPreferenceDefaults.sliderColors(),
+                )
+            }
         }
     }
 }

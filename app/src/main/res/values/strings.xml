@@ -444,14 +444,17 @@
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
-    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
+    <string name="pref__keyboard__timeout_pref_use_system_summary" comment="Summary of the long press/multi tap timeout pref to indicate that the current mode is infer from system. {v} refers to the current system value in ms.">Use system ({v} ms)</string>
+    <string name="pref__keyboard__timeout_pref_use_system_switch" comment="Label of the 'Use system' switch within the long press/multi tap timeout dialogs">Use system</string>
+    <string name="pref__keyboard__long_press_timeout__label" comment="Preference title">Long press timeout</string>
+    <string name="pref__keyboard__multi_tap_timeout__label" comment="Preference title">Multi tap timeout</string>
 
     <string name="settings__fn_key__title" comment="Title of Fn key screen">Fn key and actions</string>
     <string name="settings__fn_key__summary" comment="Summary of Fn key screen (shown in Keyboard screen)">Configure Fn key and its associated actions</string>
-    <string name="settings__fn_key__spotlight_text" comment="Spotlight text of Fn key screen (shown at the top of the Fn key screen)">Show a universal Fn key across all keyboard layouts that support it. Typically the Fn key is left to the space bar, but the exact position may vary.</string>
+    <string name="settings__fn_key__spotlight_text" comment="Spotlight text of Fn key screen (shown at the top of the Fn key screen)">Show a universal Fn key across all keyboard layouts that support it. Typically, the Fn key is left to the space bar, but the exact position may vary.</string>
     <string name="settings__fn_key__spotlight_switch_text" comment="Spotlight switch text of Fn key screen (shown at the top of the Fn key screen)">Show universal Fn key</string>
     <string name="settings__fn_key__short_press_group_title">Short press action</string>
     <string name="settings__fn_key__long_press_group_title">Long press actions</string>
