@@ -436,7 +436,6 @@
     <string name="pref__keyboard__number_row__label" comment="Preference title">Number row</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Show a number row above the character layout</string>
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
-    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
     <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing factor</string>
@@ -483,6 +482,14 @@
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>
+
+    <string name="pref__typing_caps_group__title" comment="Title of Typing > Caps group">Capitalization</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
+    <string name="pref__typing__shift_key_behavior__label" comment="Preference title">Shift key behavior</string>
+
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">Display suggestions</string>
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Provides suggestions while you type</string>
@@ -493,12 +500,8 @@
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
     <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Incognito mode</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Auto-space after punctuation</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatically insert a space after a punctuation</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
     <string name="pref__spelling__title" comment="Preference group title">Spelling</string>

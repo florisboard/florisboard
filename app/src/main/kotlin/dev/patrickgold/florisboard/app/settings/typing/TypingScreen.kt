@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,11 +38,11 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
-import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -51,7 +51,6 @@ import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisErrorCard
 import org.florisboard.lib.compose.stringRes
 
-@OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
 fun TypingScreen() = FlorisScreen {
     title = stringRes(R.string.settings__typing__title)
@@ -60,12 +59,29 @@ fun TypingScreen() = FlorisScreen {
     val navController = LocalNavController.current
 
     content {
+        PreferenceGroup(title = stringRes(R.string.pref__typing_caps_group__title)) {
+            SwitchPreference(
+                prefs.typing.autoCapitalization,
+                title = stringRes(R.string.pref__correction__auto_capitalization__label),
+                summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
+            )
+            SwitchPreference(
+                prefs.typing.rememberCapsLockState,
+                title = stringRes(R.string.pref__correction__remember_caps_lock_state__label),
+                summary = stringRes(R.string.pref__correction__remember_caps_lock_state__summary),
+            )
+            ListPreference(
+                prefs.typing.shiftKeyBehavior,
+                title = stringRes(R.string.pref__typing__shift_key_behavior__label),
+                entries = enumDisplayEntriesOf(ShiftKeyBehavior::class),
+            )
+        }
+
         // This card is temporary and is therefore not using a string resource (not so temporary as we thought...)
         FlorisErrorCard(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).padding(top = 32.dp),
             text = """
-                Suggestions (except system autofill) and spell checking are not available in this release. All
-                preferences in the "Corrections" group are properly implemented though.
+                Suggestions (except system autofill) and spell checking are not available in this release.
             """.trimIndent().replace('\n', ' '),
         )
 
@@ -96,11 +112,6 @@ fun TypingScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__correction__title)) {
-            SwitchPreference(
-                prefs.correction.autoCapitalization,
-                title = stringRes(R.string.pref__correction__auto_capitalization__label),
-                summary = stringRes(R.string.pref__correction__auto_capitalization__summary),
-            )
             val isAutoSpacePunctuationEnabled by prefs.correction.autoSpacePunctuation.collectAsState()
             SwitchPreference(
                 prefs.correction.autoSpacePunctuation,
@@ -125,11 +136,6 @@ fun TypingScreen() = FlorisScreen {
                     }
                 }
             }
-            SwitchPreference(
-                prefs.correction.rememberCapsLockState,
-                title = stringRes(R.string.pref__correction__remember_caps_lock_state__label),
-                summary = stringRes(R.string.pref__correction__remember_caps_lock_state__summary),
-            )
             SwitchPreference(
                 prefs.correction.doubleSpacePeriod,
                 title = stringRes(R.string.pref__correction__double_space_period__label),
@@ -165,7 +171,7 @@ fun TypingScreen() = FlorisScreen {
             )
         }
 
-        PreferenceGroup(title = stringRes(R.string.settings__dictionary__title)) {
+        PreferenceGroup(title = stringRes(R.string.settings__dictionary__title), enabledIf = { false }) {
             Preference(
                 icon = Icons.AutoMirrored.Filled.LibraryBooks,
                 title = stringRes(R.string.settings__dictionary__title),

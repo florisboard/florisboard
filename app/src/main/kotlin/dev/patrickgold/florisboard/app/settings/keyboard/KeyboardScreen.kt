@@ -44,7 +44,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
@@ -128,11 +127,6 @@ fun KeyboardScreen() = FlorisScreen {
             listPref = prefs.keyboard.incognitoDisplayMode,
             title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
             entries = enumDisplayEntriesOf(IncognitoDisplayMode::class),
-        )
-        ListPreference(
-            prefs.keyboard.capitalizationBehavior,
-            title = stringRes(R.string.pref__keyboard__capitalization_behavior__label),
-            entries = enumDisplayEntriesOf(CapitalizationBehavior::class),
         )
 
         PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_keypress__label)) {

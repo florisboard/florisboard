@@ -22,7 +22,7 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
@@ -90,14 +90,14 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    CapitalizationBehavior::class to DEFAULT to {
+    ShiftKeyBehavior::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP,
+                key = ShiftKeyBehavior.CAPSLOCK_BY_DOUBLE_TAP,
                 label = stringRes(R.string.enum__capitalization_behavior__capslock_by_double_tap),
             )
             entry(
-                key = CapitalizationBehavior.CAPSLOCK_BY_CYCLE,
+                key = ShiftKeyBehavior.CAPSLOCK_BY_CYCLE,
                 label = stringRes(R.string.enum__capitalization_behavior__capslock_by_cycle),
             )
         }

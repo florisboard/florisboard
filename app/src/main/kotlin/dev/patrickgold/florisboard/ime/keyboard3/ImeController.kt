@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
-import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
@@ -223,7 +223,7 @@ class ImeController(
                 textAfter = info.getInitialTextAfterCursor(20)?.toString() ?: "",
             )
 
-            val rememberCapsLockState = prefs.correction.rememberCapsLockState.get() &&
+            val rememberCapsLockState = prefs.typing.rememberCapsLockState.get() &&
                 state.flags.inputShiftState == InputShiftState.CAPS_LOCK
 
             state = state.copy(
@@ -427,15 +427,15 @@ class ImeController(
         }
 
         fun cycleInputShiftState(isDoubleTap: Boolean) {
-            val capitalizationBehavior = prefs.keyboard.capitalizationBehavior.get()
+            val shiftKeyBehavior = prefs.typing.shiftKeyBehavior.get()
             val oldInputShiftState = state.flags.inputShiftState
-            val newInputShiftState = when (capitalizationBehavior) {
-                CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP -> when {
+            val newInputShiftState = when (shiftKeyBehavior) {
+                ShiftKeyBehavior.CAPSLOCK_BY_DOUBLE_TAP -> when {
                     isDoubleTap -> InputShiftState.CAPS_LOCK
                     oldInputShiftState == InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
                     else -> InputShiftState.UNSHIFTED
                 }
-                CapitalizationBehavior.CAPSLOCK_BY_CYCLE -> when (oldInputShiftState) {
+                ShiftKeyBehavior.CAPSLOCK_BY_CYCLE -> when (oldInputShiftState) {
                     InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
                     InputShiftState.SHIFTED_MANUAL -> InputShiftState.CAPS_LOCK
                     InputShiftState.SHIFTED_AUTOMATIC -> InputShiftState.UNSHIFTED
@@ -459,10 +459,10 @@ class ImeController(
         }
 
         fun reevaluateInputShiftState() {
-            if (!prefs.correction.autoCapitalization.get()) return
             if (state.flags.inputShiftState == InputShiftState.CAPS_LOCK) return
             val capsMode = state.content.cursorCapsMode(state.editor.info.inputAttributes)
-            val shift = capsMode != InputAttributes.CapsMode.NONE
+            val shift = prefs.typing.autoCapitalization.get()
+                && capsMode != InputAttributes.CapsMode.NONE
                 // && subtypeManager.activeSubtype.primaryLocale.supportsCapitalization
             val inputShiftState = when {
                 shift -> InputShiftState.SHIFTED_AUTOMATIC

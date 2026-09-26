@@ -28,7 +28,7 @@ import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
-import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
@@ -155,10 +155,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
     val correction = Correction()
     inner class Correction {
-        val autoCapitalization = boolean(
-            key = "correction__auto_capitalization",
-            default = true,
-        )
         val autoSpacePunctuation = boolean(
             key = "correction__auto_space_punctuation",
             default = false,
@@ -166,10 +162,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val doubleSpacePeriod = boolean(
             key = "correction__double_space_period",
             default = true,
-        )
-        val rememberCapsLockState = boolean(
-            key = "correction__remember_caps_lock_state",
-            default = false,
         )
     }
 
@@ -467,10 +459,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__space_bar_display_mode",
             default = SpaceBarMode.CURRENT_LANGUAGE,
         )
-        val capitalizationBehavior = enum(
-            key = "keyboard__capitalization_behavior",
-            default = CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP,
-        )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",
             default = 100,
@@ -733,6 +721,22 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    val typing = Typing()
+    inner class Typing {
+        val autoCapitalization = boolean(
+            key = "typing__auto_capitalization",
+            default = true,
+        )
+        val rememberCapsLockState = boolean(
+            key = "typing__remember_caps_lock_state",
+            default = false,
+        )
+        val shiftKeyBehavior = enum(
+            key = "typing__shift_key_behavior",
+            default = ShiftKeyBehavior.CAPSLOCK_BY_DOUBLE_TAP,
+        )
+    }
+
     override fun migrate(entry: PreferenceMigrationEntry): PreferenceMigrationEntry {
         return when (entry.key) {
 
@@ -900,6 +904,18 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             // Keep migration rules until: 0.8 dev cycle
             "keyboard__long_press_delay" -> {
                 entry.transform(key = "keyboard__long_press_timeout")
+            }
+
+            // Migrate shift/caps-related prefs to typing
+            // Keep migration rules until: 0.8 dev cycle
+            "correction__auto_capitalization" -> {
+                entry.transform(key = "typing__auto_capitalization")
+            }
+            "correction__remember_caps_lock_state" -> {
+                entry.transform(key = "typing__remember_caps_lock_state")
+            }
+            "keyboard__capitalization_behavior" -> {
+                entry.transform(key = "typing__shift_key_behavior")
             }
 
             // Default: keep entry

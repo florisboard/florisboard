@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.touch
 
-enum class CapitalizationBehavior {
+enum class ShiftKeyBehavior {
     CAPSLOCK_BY_DOUBLE_TAP,
     CAPSLOCK_BY_CYCLE;
 }
